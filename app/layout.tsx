@@ -2,7 +2,7 @@ import './globals.css'
 import type { Metadata } from 'next'
 
 import { Sora } from 'next/font/google'
-import { ThemeProvider } from '@/components/theme-provider'
+import { Providers } from './providers'
 
 const sora = Sora({ subsets: ['latin'] })
 
@@ -22,9 +22,9 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.ico" sizes="any" />
       </head>
       <body className={sora.className}>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        <Providers>
           {children}
-        </ThemeProvider>
+        </Providers>
       </body>
     </html>
   )
