@@ -1,3 +1,5 @@
+'use client'
+
 import { EnvironmentType, type DatastoreOpenConfig, type IDatastore } from "@verida/types";
 import { WebUser, type WebUserProfile } from "@verida/web-helpers";
 import React, {

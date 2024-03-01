@@ -18,7 +18,7 @@ const logLevel: LogLevel =
 // Verida variables
 const veridaContextName = 'Verida: ';
 
-const veridaConnectLogoUrl = `${window.location.origin}/images/logo_for_verida_connect.png`;
+const veridaConnectLogoUrl = `/images/logo_for_verida_connect.png`;
 
 const veridaEnvironment: EnvironmentType =
   process.env.REACT_APP_VERIDA_ENV === "local"

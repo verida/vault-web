@@ -1,6 +1,7 @@
+'use client'
+
 import React from 'react'
 import { Button } from '../ui/button'
-import Link from 'next/link'
 import { useVerida } from '@/features/verida'
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
 import { Skeleton } from '../ui/skeleton'
@@ -8,9 +9,7 @@ import { Skeleton } from '../ui/skeleton'
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
@@ -21,7 +20,6 @@ function useAuth(): { authenticated: boolean } {
     authenticated: false
   }
 }
-
 
 const Account = (props: Props) => {
   const { connect, isConnecting, isCheckingConnection, isConnected, did, disconnect, isReady, profile } = useVerida();
