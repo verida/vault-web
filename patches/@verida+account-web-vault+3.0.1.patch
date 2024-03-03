@@ -1,0 +1,42 @@
+diff --git a/node_modules/@verida/account-web-vault/package.json b/node_modules/@verida/account-web-vault/package.json
+index 5421a68..20d0987 100644
+--- a/node_modules/@verida/account-web-vault/package.json
++++ b/node_modules/@verida/account-web-vault/package.json
+@@ -1,7 +1,7 @@
+ {
+   "name": "@verida/account-web-vault",
+   "version": "3.0.1",
+-  "main": "dist/index.js",
++  "main": "src/index.ts",
+   "license": "ISC",
+   "directories": {
+     "src": "src",
+diff --git a/node_modules/@verida/account-web-vault/src/vault-modal-login.ts b/node_modules/@verida/account-web-vault/src/vault-modal-login.ts
+index 5af7559..55c80d0 100644
+--- a/node_modules/@verida/account-web-vault/src/vault-modal-login.ts
++++ b/node_modules/@verida/account-web-vault/src/vault-modal-login.ts
+@@ -1,7 +1,6 @@
+ import AuthClient from "./auth-client";
+ 
+ // @ts-ignore
+-import Sora from "./assets/fonts/Sora-Regular.ttf";
+ import { AccountVaultConfig } from "@verida/types";
+ const _ = require("lodash");
+ const store = require("store");
+@@ -48,7 +47,7 @@ export default async function (
+           </div>
+         </div>
+         <div class="desktop-content">
+-           <canvas id="verida-auth-client-canvas" class="verida-modal-qr"></canvas><img src="" alt="" id="image" />
++           <canvas id="verida-auth-client-canvas" class="verida-modal-qr"></canvas>
+         </div>
+         <div class="mobile-content">
+           <h3 class="verida-modal-title mobile">
+@@ -64,7 +63,6 @@ export default async function (
+     <style>
+     @font-face {
+       font-family: "Sora";
+-      src: url(${Sora}) format("truetype");
+     }
+ 
+      #verida-auth-client-canvas {
