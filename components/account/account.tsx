@@ -22,7 +22,7 @@ function useAuth(): { authenticated: boolean } {
 }
 
 const Account = (props: Props) => {
-  const { connect, isConnecting, isConnected, did, disconnect, profile } = useVerida();
+  const { connect, isConnecting, isConnected, disconnect, profile } = useVerida();
   if (isConnecting) return <div className="flex items-center space-x-4">
     <Skeleton className="h-10 w-10 rounded-full" />
     <div className="space-y-2">
