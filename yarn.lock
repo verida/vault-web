@@ -5177,18 +5177,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"json-stable-stringify@npm:^1.0.2":
-  version: 1.1.1
-  resolution: "json-stable-stringify@npm:1.1.1"
-  dependencies:
-    call-bind: "npm:^1.0.5"
-    isarray: "npm:^2.0.5"
-    jsonify: "npm:^0.0.1"
-    object-keys: "npm:^1.1.1"
-  checksum: 10c0/3801e3eeccbd030afb970f54bea690a079cfea7d9ed206a1b17ca9367f4b7772c764bf77a48f03e56b50e5f7ee7d11c52339fe20d8d7ccead003e4ca69e4cfde
-  languageName: node
-  linkType: hard
-
 "json.sortify@npm:^2.2.2":
   version: 2.2.2
   resolution: "json.sortify@npm:2.2.2"
@@ -5217,13 +5205,6 @@ __metadata:
     graceful-fs:
       optional: true
   checksum: 10c0/4f95b5e8a5622b1e9e8f33c96b7ef3158122f595998114d1e7f03985649ea99cb3cd99ce1ed1831ae94c8c8543ab45ebd044207612f31a56fd08462140e46865
-  languageName: node
-  linkType: hard
-
-"jsonify@npm:^0.0.1":
-  version: 0.0.1
-  resolution: "jsonify@npm:0.0.1"
-  checksum: 10c0/7f5499cdd59a0967ed35bda48b7cec43d850bbc8fb955cdd3a1717bb0efadbe300724d5646de765bb7a99fc1c3ab06eb80d93503c6faaf99b4ff50a3326692f6
   languageName: node
   linkType: hard
 
@@ -6186,9 +6167,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"patch-package@npm:^8.0.0":
-  version: 8.0.0
-  resolution: "patch-package@npm:8.0.0"
+"patch-package@npm:7.0.2":
+  version: 7.0.2
+  resolution: "patch-package@npm:7.0.2"
   dependencies:
     "@yarnpkg/lockfile": "npm:^1.1.0"
     chalk: "npm:^4.1.2"
@@ -6196,7 +6177,6 @@ __metadata:
     cross-spawn: "npm:^7.0.3"
     find-yarn-workspace-root: "npm:^2.0.0"
     fs-extra: "npm:^9.0.0"
-    json-stable-stringify: "npm:^1.0.2"
     klaw-sync: "npm:^6.0.0"
     minimist: "npm:^1.2.6"
     open: "npm:^7.4.2"
@@ -6207,7 +6187,7 @@ __metadata:
     yaml: "npm:^2.2.2"
   bin:
     patch-package: index.js
-  checksum: 10c0/690eab0537e953a3fd7d32bb23f0e82f97cd448f8244c3227ed55933611a126f9476397325c06ad2c11d881a19b427a02bd1881bee78d89f1731373fc4fe0fee
+  checksum: 10c0/f17ce30ca57f85c2891f81bdf501211599514844bb6be1f7a0dd5adae9840b448046269eea96797a367435b894999127d508d93d28af7b27e2feb8ceea7b91d2
   languageName: node
   linkType: hard
 
@@ -7965,7 +7945,7 @@ __metadata:
     lucide-react: "npm:^0.317.0"
     next: "npm:14.1.0"
     next-themes: "npm:^0.2.1"
-    patch-package: "npm:^8.0.0"
+    patch-package: "npm:7.0.2"
     postcss: "npm:^8"
     react: "npm:^18"
     react-dom: "npm:^18"
