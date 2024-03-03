@@ -55,7 +55,7 @@ export class Logger {
     }
   }
 
-  public error(message: string, data?: Record<string, unknown>) {
+  public error(message: any, data?: Record<string, unknown>) {
     this.log("error", message, data);
   }
 

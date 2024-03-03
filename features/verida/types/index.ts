@@ -76,3 +76,5 @@ export type ReceivedMessage<D> = {
     replyId?: string;
   };
 };
+
+export type VeridaRecord<T = Record<string, unknown>> = VeridaBaseRecord & T
