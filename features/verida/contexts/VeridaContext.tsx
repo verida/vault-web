@@ -1,7 +1,7 @@
 'use client'
 
 import { EnvironmentType, type DatastoreOpenConfig, type IDatastore } from "@verida/types";
-import { WebUser, type WebUserProfile } from "@verida/web-helpers";
+import { WebUser } from "@verida/web-helpers";
 import React, {
   useCallback,
   useEffect,
@@ -15,6 +15,8 @@ import {
   VERIDA_CONNECT_SESSION_LOCAL_STORAGE_KEY,
 } from "../constants";
 import { Logger } from "@/features/logger";
+import { getPublicProfile } from "@/features/profiles";
+import { PublicProfile } from "@/features/profiles/@types";
 
 const logger = new Logger("verida")
 
@@ -46,7 +48,7 @@ type VeridaContextType = {
   isDisconnecting: boolean;
   isCheckingConnection: boolean;
   did: string | undefined;
-  profile: WebUserProfile | undefined;
+  profile?: PublicProfile;
   connect: () => Promise<boolean>;
   disconnect: () => Promise<void>;
   openDatastore: (
@@ -73,7 +75,7 @@ export const VeridaProvider: React.FunctionComponent<VeridaProviderProps> = (
   const [isDisconnecting, setIsDisconnecting] = useState(false);
   const [isCheckingConnection, setIsCheckingConnection] = useState(false);
   const [did, setDid] = useState<string>();
-  const [profile, setProfile] = useState<WebUserProfile>();
+  const [profile, setProfile] = useState<PublicProfile>();
 
   const updateStates = useCallback(async () => {
     // isConnected
@@ -109,7 +111,8 @@ export const VeridaProvider: React.FunctionComponent<VeridaProviderProps> = (
 
     //getPublicProfile
     try {
-      const newProfile = await webUserInstance.getPublicProfile(true);
+      const newProfile = await getPublicProfile(webUserInstance.getDid())
+      console.log('Context', newProfile)
       setProfile(newProfile);
     } catch (error: unknown) {
       if (

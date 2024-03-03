@@ -18,8 +18,6 @@ const DataPage = () => {
         'credential'
       )
 
-      console.log('DB', db)
-
       setDB(db)
     }
 

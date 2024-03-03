@@ -26,6 +26,7 @@ import {
 import { getPublicProfile } from "@/features/profiles";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Image from "next/image";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const FolderPage = ({
   params,
@@ -35,14 +36,12 @@ const FolderPage = ({
 
   const router = useRouter()
   const [db, setDB] = React.useState<IDatabase | undefined>()
-  const [Loading, setLoading] = React.useState(true)
+  const [loading, setLoading] = React.useState(true)
   const { webUserInstanceRef, isConnected, isReady } = useVerida();
   const [folder, setFolder] = React.useState<DataFolderDefinition>()
   const [items, setItems] = React.useState<any[]>([])
   const pathName = usePathname()
   const searchParams = useSearchParams()
-
-  console.log('Pathname', pathName)
 
   const itemId = searchParams.get('id')
   const selectedItem = items?.find(it => it._id === itemId)
@@ -80,9 +79,9 @@ const FolderPage = ({
 
     }
 
-    isReady && fetchData()
+    isConnected && fetchData()
 
-  }, [params.folder, webUserInstanceRef, isReady])
+  }, [params.folder, webUserInstanceRef, isConnected])
 
   console.log('Selected item', JSON.stringify(selectedItem, null, 2))
 
@@ -104,9 +103,7 @@ const FolderPage = ({
       // TODO: make the call to API work so we have a server cache for public profiles
       // const res = await fetch('/api/profile/' + dat.iss) 
       // console.log('profile', await res.json())
-      console.log('load profile', did)
       const profile = await getPublicProfile(did)
-      console.log('Profile:', profile)
       setIssuer(profile)
     }
 
@@ -119,28 +116,32 @@ const FolderPage = ({
       <Button variant={"ghost"} className="flex gap-5 text-sm font-medium items-center mb-4 h-16" onClick={() => router.push(pathName.split('/').slice(0, -1).join('/'))}><ArrowLeft /> Back</Button>
 
       <h1 className="text-xl font-medium mb-6">{folder?.title}</h1>
-      {folder?.database ?
-        <div className="flex flex-col gap-2" >
-          <div className="flex p-4 flex-row items-center w-full">
-            <p className="text-sm text-gray-500 w-1/4">Name</p>
-            <p className="text-sm text-gray-500 w-1/4">Source</p>
-            <p className="text-sm text-gray-500 w-1/4">Date</p>
-            <p className="text-sm text-gray-500 w-1/4">Credential Status</p>
-          </div>
-          {items.map((item => <CredentialItem key={item._id} credential={item.didJwtVc} fallbackAvatar="" href={`?id=${item._id}`} title={item.name} date={new Date(item.insertedAt).getTime()} source="Government of New South Wales" status="valid" />))}
 
-          {/* <CredentialItem logo='/logos/nsw-gov.png' href="#" title="Forklift Driver Licence" date={new Date().getTime()} source="Government of New South Wales" status="valid" />
-          <CredentialItem logo='/logos/nsw-gov.png' href="#" title="Forklift Driver Licence" date={new Date().getTime()} source="Government of New South Wales" status="valid" />
-          <CredentialItem logo='/logos/nsw-gov.png' href="#" title="Forklift Driver Licence" date={new Date().getTime()} source="Government of New South Wales" status="valid" />
-          <CredentialItem logo='/logos/nsw-gov.png' href="#" title="Forklift Driver Licence" date={new Date().getTime()} source="Government of New South Wales" status="valid" /> */}
-        </div>
-        : folder?.display === 'folders'
-          ? <div className="grid grid-cols-4 gap-6">{folder?.folders.map((folderName) => {
-            const nestedFolder = dataFolders.find(folder => folder.name === folderName)
-            return nestedFolder ? <Category key={nestedFolder.name} icon={nestedFolder.icon} href={`/data/${nestedFolder.name}`} title={nestedFolder.title} description="0 items" /> : null
-          })}
+      {loading ? <div className="flex w-full flex-col gap-4">
+        <Skeleton className="w-full h-10" />
+        <Skeleton className="w-full h-10" />
+        <Skeleton className="w-full h-10" />
+        <Skeleton className="w-full h-10" />
+        <Skeleton className="w-full h-10" />
+        <Skeleton className="w-full h-10" />
+      </div> :
+        folder?.database ?
+          <div className="flex flex-col gap-2" >
+            <div className="flex p-4 flex-row items-center w-full">
+              <p className="text-sm text-gray-500 w-1/4">Name</p>
+              <p className="text-sm text-gray-500 w-1/4">Source</p>
+              <p className="text-sm text-gray-500 w-1/4">Date</p>
+              <p className="text-sm text-gray-500 w-1/4">Credential Status</p>
+            </div>
+            {items.map((item => <CredentialItem key={item._id} credential={item.didJwtVc} fallbackAvatar="" href={`?id=${item._id}`} title={item.name} date={new Date(item.insertedAt).getTime()} source="Government of New South Wales" status="valid" />))}
           </div>
-          : null
+          : folder?.display === 'folders'
+            ? <div className="grid grid-cols-4 gap-6">{folder?.folders.map((folderName) => {
+              const nestedFolder = dataFolders.find(folder => folder.name === folderName)
+              return nestedFolder ? <Category key={nestedFolder.name} icon={nestedFolder.icon} href={`/data/${nestedFolder.name}`} title={nestedFolder.title} description="0 items" /> : null
+            })}
+            </div>
+            : null
       }
 
 
@@ -157,6 +158,15 @@ const FolderPage = ({
               <p className="text-sm text-wrap">{issuer?.name}</p>
             </div>
           </DrawerHeader>
+          {loading && <div className="flex w-full flex-col gap-4">
+            <Skeleton className="w-full h-10" />
+            <Skeleton className="w-full h-10" />
+            <Skeleton className="w-full h-10" />
+            <Skeleton className="w-full h-10" />
+            <Skeleton className="w-full h-10" />
+            <Skeleton className="w-full h-10" />
+          </div>}
+
           {selectedItem &&
             <div className="flex flex-col">
               {

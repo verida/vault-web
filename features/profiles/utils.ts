@@ -3,6 +3,7 @@ import { AccountNodeDIDClientConfig, EnvironmentType } from "@verida/types"
 import { Client } from '@verida/client-ts'
 import { PublicProfile } from "./@types"
 import { isEqual } from "lodash"
+import { getProfilesCache } from "./cache"
 
 export const VERIDA_DID_REGEXP =
   /did:vda:(devnet|mainnet|testnet):0x[0-9a-fA-F]{40}/
@@ -88,7 +89,7 @@ export async function getPublicProfileDatastore(
       client = new Client(config)
       currentConfig = config
     }
-  
+
     return client.openPublicProfile(
       did,
       contextName,
@@ -107,50 +108,76 @@ export async function getPublicProfile(
   contextName = 'Verida: Vault',
   fallbackToVaultContext = true
 ): Promise<PublicProfile> {
-  try {
-    const profileDb = await getPublicProfileDatastore(
-      did,
-      contextName,
-      fallbackToVaultContext
-    )
+  const profileCache = getProfilesCache()
+  const profileId = `${contextName}-${did}`
+  const loadedProfile = profileCache.get(profileId)?.value
+  const shouldRefetchProfile = Date.now() - (profileCache.get(profileId)?.timestamp ?? 0) > 10 * 60 * 1000 // 10 minutes
 
-    if (!profileDb) {
+  const fetchPublicProfileAndUpdateCache = async () => {
+    try {
+      const profileDb = await getPublicProfileDatastore(
+        did,
+        contextName,
+        fallbackToVaultContext
+      )
+
+      if (!profileDb) {
+        return {
+          name: '',
+        }
+      }
+
+      const [
+        nameResult,
+        avatarResult,
+        descriptionResult,
+        countryResult,
+        websiteResult,
+      ] = await Promise.allSettled([
+        await profileDb.get('name'),
+        await profileDb.get('avatar'),
+        await profileDb.get('description'),
+        await profileDb.get('country'),
+        await profileDb.get('website'),
+      ])
+
+      const p = {
+        name: nameResult.status === 'fulfilled' ? nameResult.value : '',
+        avatar:
+          avatarResult.status === 'fulfilled' ? avatarResult.value : undefined,
+        description:
+          descriptionResult.status === 'fulfilled'
+            ? descriptionResult.value
+            : undefined,
+        country:
+          countryResult.status === 'fulfilled' ? countryResult.value : undefined,
+        website:
+          websiteResult.status === 'fulfilled' ? websiteResult.value : undefined,
+      }
+
+      profileCache.set(profileId, {
+        ...p
+      })
+
+      return p
+    } catch (error) {
+      console.error(error)
+
+      profileCache.set(profileId, {
+        name: 'Unknown',
+      })
+
       return {
         name: '',
       }
     }
+  }
 
-    const [
-      nameResult,
-      avatarResult,
-      descriptionResult,
-      countryResult,
-      websiteResult,
-    ] = await Promise.allSettled([
-      await profileDb.get('name'),
-      await profileDb.get('avatar'),
-      await profileDb.get('description'),
-      await profileDb.get('country'),
-      await profileDb.get('website'),
-    ])
 
-    return {
-      name: nameResult.status === 'fulfilled' ? nameResult.value : '',
-      avatar:
-        avatarResult.status === 'fulfilled' ? avatarResult.value : undefined,
-      description:
-        descriptionResult.status === 'fulfilled'
-          ? descriptionResult.value
-          : undefined,
-      country:
-        countryResult.status === 'fulfilled' ? countryResult.value : undefined,
-      website:
-        websiteResult.status === 'fulfilled' ? websiteResult.value : undefined,
-    }
-  } catch (error) {
-    console.error(error)
-    return {
-      name: '',
-    }
+  if (loadedProfile) {
+    shouldRefetchProfile && fetchPublicProfileAndUpdateCache()
+    return loadedProfile as any
+  } else {
+    return await fetchPublicProfileAndUpdateCache()
   }
 }
