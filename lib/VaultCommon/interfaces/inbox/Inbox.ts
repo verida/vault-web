@@ -6,7 +6,6 @@ export enum InboxType {
 }
 
 export interface Inbox {
-  // eslint-disable-next-line @typescript-eslint/ban-types
   save: (data: InboxEntry) => {}
   errors: any[]
 }

@@ -94,7 +94,6 @@ export interface MessageSendConfig {
 export interface Datastore {
   save: (payload: any) => Document
   get: (key: string, options?: any) => Document
-  // eslint-disable-next-line @typescript-eslint/ban-types
   delete: (key: string) => {}
   getMany: (filter: any, options?: any) => Document[]
   getDb: () => Database
@@ -104,7 +103,6 @@ export interface Datastore {
 export interface Database {
   save: (payload: any) => Document
   get: (key: string, options?: any) => Document
-  // eslint-disable-next-line @typescript-eslint/ban-types
   delete: (key: string) => {}
   getMany: (filter: any, options?: any) => Document[]
   getInstance: () => any
