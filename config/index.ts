@@ -27,7 +27,7 @@ const veridaEnvironment: EnvironmentType =
       ? EnvironmentType.MAINNET
       : EnvironmentType.TESTNET;
 
-const veridaRpcUrl = process.env.REACT_APP_VERIDA_RPC_URL || undefined;
+const veridaRpcUrl = 'https://polygon-mumbai.g.alchemy.com/v2/Q4NRuRlwTNyI90dDCgiX_KT_vS_2gpbN'
 
 export const config = {
   appVersion: version,
@@ -38,9 +38,5 @@ export const config = {
     contextName: veridaContextName,
     connectLogoUrl: veridaConnectLogoUrl,
     rpcUrl: veridaRpcUrl,
-  },
-  claim: {
-    minPoints: Number(process.env.REACT_APP_MIN_XP_POINT_TO_CLAIM || 0),
-    apiBaseUrl: process.env.REACT_APP_XP_POINT_CLAIM_API_BASE_URL,
   },
 };

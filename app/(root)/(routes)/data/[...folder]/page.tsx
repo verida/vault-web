@@ -75,7 +75,7 @@ const FolderPage = ({
             <p className="text-sm text-gray-500 w-1/4">Date</p>
             <p className="text-sm text-gray-500 w-1/4">Credential Status</p>
           </div>
-          {items.map((item => <CredentialItem key={item._id} fallbackAvatar="A" href="#" title={item.name} date={new Date(item.insertedAt).getTime()} source="Government of New South Wales" status="valid" />))}
+          {items.map((item => <CredentialItem key={item._id} credential={item.didJwtVc} fallbackAvatar="" href="#" title={item.name} date={new Date(item.insertedAt).getTime()} source="Government of New South Wales" status="valid" />))}
 
           {/* <CredentialItem logo='/logos/nsw-gov.png' href="#" title="Forklift Driver Licence" date={new Date().getTime()} source="Government of New South Wales" status="valid" />
           <CredentialItem logo='/logos/nsw-gov.png' href="#" title="Forklift Driver Licence" date={new Date().getTime()} source="Government of New South Wales" status="valid" />

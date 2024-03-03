@@ -3,15 +3,6 @@
 import React from "react";
 
 import { Category } from "@/components/category/category";
-import { FolderCredentials } from "@/components/icons/folder-credentials";
-import { FolderTickets } from "@/components/icons/folder-tickets";
-import { FolderQualifications } from "@/components/icons/folder-qualifications";
-import { FolderNft } from "@/components/icons/folder-nft";
-import { FolderLoyalty } from "@/components/icons/folder-loyalty";
-import { FolderContacts } from "@/components/icons/folder-contacts";
-import { FolderHealth } from "@/components/icons/folder-health";
-import { FolderIdentity } from "@/components/icons/folder-identity";
-import { FolderSocial } from "@/components/icons/folder-social";
 import { useVerida } from "@/features/verida";
 import { IDatabase } from "@verida/types";
 import { dataFolders } from "@/features/data";
@@ -21,11 +12,8 @@ const DataPage = () => {
   const [db, setDB] = React.useState<IDatabase | undefined>()
   const [Loading, setLoading] = React.useState(true)
 
-
   React.useEffect(() => {
-    const x = async () => {
-      console.log('22222 Open DB Credentials', webUserInstanceRef.current)
-
+    const fetchFolder = async () => {
       const db = await webUserInstanceRef.current?.openDatabase(
         'credential'
       )
@@ -34,8 +22,6 @@ const DataPage = () => {
 
       setDB(db)
     }
-
-    isConnected && x()
 
   }, [webUserInstanceRef, isConnected])
 
