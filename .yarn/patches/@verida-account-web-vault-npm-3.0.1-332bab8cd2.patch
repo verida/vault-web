@@ -1,0 +1,26 @@
+diff --git a/package.json b/package.json
+index 5421a68bcf30722fda098c32732937d27d40a3b9..f6c7c496b9d98d9d94c9defaddfe72bf38fabbd0 100644
+--- a/package.json
++++ b/package.json
+@@ -1,7 +1,7 @@
+ {
+   "name": "@verida/account-web-vault",
+   "version": "3.0.1",
+-  "main": "dist/index.js",
++  "main": "src/index.js",
+   "license": "ISC",
+   "directories": {
+     "src": "src",
+diff --git a/src/vault-modal-login.ts b/src/vault-modal-login.ts
+index 5af7559dbceeedd691960d79edbe82c3eb436865..df3a1c7b47b67c7547687080e2a40c1809b4e070 100644
+--- a/src/vault-modal-login.ts
++++ b/src/vault-modal-login.ts
+@@ -48,7 +48,7 @@ export default async function (
+           </div>
+         </div>
+         <div class="desktop-content">
+-           <canvas id="verida-auth-client-canvas" class="verida-modal-qr"></canvas><img src="" alt="" id="image" />
++           <canvas id="verida-auth-client-canvas" class="verida-modal-qr"></canvas>
+         </div>
+         <div class="mobile-content">
+           <h3 class="verida-modal-title mobile">
