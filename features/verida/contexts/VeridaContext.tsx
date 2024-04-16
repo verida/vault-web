@@ -23,10 +23,9 @@ const logger = new Logger("verida")
 const webUserInstance = new WebUser({
   debug: true,
   clientConfig: {
-    environment: EnvironmentType.TESTNET,
+    environment: EnvironmentType.MAINNET,
     didClientConfig: {
-      network: EnvironmentType.TESTNET,
-      rpcUrl: 'https://polygon-mumbai.g.alchemy.com/v2/Q4NRuRlwTNyI90dDCgiX_KT_vS_2gpbN',
+      network: EnvironmentType.MAINNET,
     },
   },
   contextConfig: {
@@ -36,7 +35,7 @@ const webUserInstance = new WebUser({
     request: {
       logoUrl: '', // TODO
     },
-    environment: EnvironmentType.TESTNET,
+    environment: EnvironmentType.MAINNET,
   },
 });
 
