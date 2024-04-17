@@ -37,12 +37,16 @@ const MarketingPage = () => {
   );
 
   return (
-    <div className='flex flex-col p-10'>
+    <div className='flex flex-col py-10'>
       <div className='flex flex-col md:flex-row items-center justify-between'>
         <h1 className='text-2xl font-medium'>Discover Connections</h1>
-        <nav className='flex flex-col md:flex-row space-x-3'>
+        <nav className='flex space-x-3 w-full md:w-auto'>
           <SearchInput onValueChange={handleSearchInputChange} />
-          <Button variant='outline' size='lg' className='text-gray-500 h-12'>
+          <Button
+            variant='outline'
+            size='lg'
+            className='text-gray-500 h-12 px-4'
+          >
             <Filter /> Filter
           </Button>
         </nav>

@@ -17,7 +17,7 @@ const Modal = React.forwardRef<
   return (
     <div className='z-[100]'>
       <div className='fixed inset-0 bg-black/40' onClick={onClose}></div>
-      <div className='fixed inset-0 flex justify-center items-center pointer-events-none'>
+      <div className='fixed inset-0 flex justify-center items-center pointer-events-none px-4'>
         <div
           ref={ref}
           className={cn(
