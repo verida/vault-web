@@ -1,5 +1,6 @@
 import { Connection } from "@/features/connections";
 import { Card, CardContent, CardFooter, CardHeader } from "../ui/card";
+import { Switch, SwitchThumb } from "../ui/switch";
 import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
 
@@ -51,8 +52,11 @@ function ConnectionCard(props: Props) {
         </CardContent>
         {isConnected && (
           <CardFooter>
-            <div className='pt-4 w-full border-t border-border flex'>
+            <div className='pt-4 w-full border-t border-border flex justify-between items-end'>
               <p className='text-sm'>Display on Verida One profile</p>
+              <Switch defaultChecked className='w-10 h-6'>
+                <SwitchThumb />
+              </Switch>
             </div>
           </CardFooter>
         )}
