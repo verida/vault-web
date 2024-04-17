@@ -15,7 +15,7 @@ const Modal = React.forwardRef<
   if (!isOpen) return null;
 
   return (
-    <div className='z-10'>
+    <div className='z-[100]'>
       <div className='fixed inset-0 bg-black/40' onClick={onClose}></div>
       <div className='fixed inset-0 flex justify-center items-center pointer-events-none'>
         <div
