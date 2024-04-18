@@ -10,7 +10,7 @@ type Props = {
 } & Connection;
 
 function ConnectionCard(props: Props) {
-  const { id, item, onConnect, isConnected = false } = props;
+  const { id, item, description, onConnect, isConnected = false } = props;
   return (
     <div className='h-full flex flex-col'>
       {!isConnected && (
@@ -46,9 +46,7 @@ function ConnectionCard(props: Props) {
         </CardHeader>
         <CardContent className='p-6 pt-0'>
           {id && <h3 className='text-xl font-semibold mt-6'>{id}</h3>}
-          {item && id && (
-            <p className='text-gray-500 mt-2'>{`Connect your ${id} Account to share your ${item} with us.`}</p>
-          )}
+          {description && <p className='text-gray-500 mt-2'>{description}</p>}
         </CardContent>
         {isConnected && (
           <CardFooter>
