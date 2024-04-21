@@ -16,7 +16,7 @@ const logLevel: LogLevel =
         : "info";
 
 // Verida variables
-const veridaContextName = 'Verida: ';
+const veridaContextName = 'Verida: Vault';
 
 const veridaConnectLogoUrl = `/images/logo_for_verida_connect.png`;
 
@@ -27,7 +27,7 @@ const veridaEnvironment: EnvironmentType =
       ? EnvironmentType.MAINNET
       : EnvironmentType.TESTNET;
 
-const veridaRpcUrl = 'https://polygon-mumbai.g.alchemy.com/v2/Q4NRuRlwTNyI90dDCgiX_KT_vS_2gpbN'
+const veridaRpcUrl = undefined
 
 export const config = {
   appVersion: version,
