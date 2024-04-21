@@ -5,12 +5,15 @@ import { cn } from "@/lib/utils";
 import { connections } from "@/features/connections";
 import { ConnectionCard } from "@/components/connection/connection-card";
 import { ConnectionModal } from "@/components/connection/connection-modal";
-import { useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Filter } from "@/components/icons/filter";
 import { SearchInput } from "@/components/search-input";
+import { useVerida } from "@/features/verida";
+import DataConnectorsManager from "@/lib/DataConnectorManager";
 
 const MarketingPage = () => {
+  const { webUserInstanceRef } = useVerida();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [connectionId, setConnectionId] = useState<string>("");
   const [searchKey, setSearchKey] = useState<string>("");
@@ -35,6 +38,27 @@ const MarketingPage = () => {
       ),
     [searchKey]
   );
+
+  // Example showing how `DataConnectorsManager` works
+  React.useEffect(() => {
+    const init = async () => {
+      console.log('Connection page init')
+      const context = webUserInstanceRef.current?.getContext()
+      const dcm = new DataConnectorsManager(context, webUserInstanceRef.current.getDid())
+
+      // Get all the available connections
+      const connections = await dcm.getConnections()
+      console.log(connections)
+
+      const discordConnection = await dcm.getConnection('discord')
+      const discordConnectUrl = await discordConnection.getConnectUrl()
+      
+      console.log('Discord connect URL:', discordConnectUrl)
+    }
+
+    init()
+  })
+  // End Example
 
   return (
     <div className='flex flex-col py-10'>
