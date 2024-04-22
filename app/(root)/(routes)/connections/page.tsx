@@ -42,22 +42,25 @@ const MarketingPage = () => {
   // Example showing how `DataConnectorsManager` works
   React.useEffect(() => {
     const init = async () => {
-      console.log('Connection page init')
-      const context = webUserInstanceRef.current?.getContext()
-      const dcm = new DataConnectorsManager(context, webUserInstanceRef.current.getDid())
+      console.log("Connection page init");
+      const context = webUserInstanceRef.current?.getContext();
+      const dcm = new DataConnectorsManager(
+        context,
+        webUserInstanceRef.current.getDid()
+      );
 
       // Get all the available connections
-      const connections = await dcm.getConnections()
-      console.log(connections)
+      const connections = await dcm.getConnections();
+      console.log(connections);
 
-      const discordConnection = await dcm.getConnection('discord')
-      const discordConnectUrl = await discordConnection.getConnectUrl()
-      
-      console.log('Discord connect URL:', discordConnectUrl)
-    }
+      const discordConnection = await dcm.getConnection("discord");
+      const discordConnectUrl = await discordConnection.getConnectUrl();
 
-    init()
-  })
+      console.log("Discord connect URL:", discordConnectUrl);
+    };
+
+    init();
+  }, [webUserInstanceRef]);
   // End Example
 
   return (
