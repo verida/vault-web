@@ -3,7 +3,7 @@ import { useVerida } from "@/features/verida";
 import DataConnectorsManager from "@/lib/DataConnectorManager";
 import { Connection } from "@/features/connections";
 
-export const useConnect = () => {
+export const useConnect = ({ provider, authParams }: any) => {
   const [connectLoading, setConnectLoading] = useState<boolean>(false);
   const [dcm, setDcm] = useState<DataConnectorsManager>();
   const [connections, setConnections] = useState<Connection[]>([]);
@@ -16,10 +16,21 @@ export const useConnect = () => {
       const connectionUrl = await connection?.getConnectUrl();
 
       setConnectLoading(false);
-      window.open(connectionUrl ?? "", "__blank");
+      window.location.href = connectionUrl ?? "";
     },
     [dcm]
   );
+
+  useEffect(() => {
+    const authComplete = async () => {
+      if (!dcm || !provider) {
+        return;
+      }
+      await dcm?.authComplete(provider, authParams);
+    };
+
+    authComplete();
+  }, [dcm, provider, authParams]);
 
   useEffect(() => {
     const init = async () => {

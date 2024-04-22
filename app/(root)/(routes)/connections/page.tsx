@@ -6,17 +6,19 @@ import React, { useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Filter } from "@/components/icons/filter";
 import { SearchInput } from "@/components/search-input";
-import { useVerida } from "@/features/verida";
-import DataConnectorsManager from "@/lib/DataConnectorManager";
-import { Connection } from "@/features/connections";
 import { useConnect } from "@/hooks/useConnect";
+import { useSearchParams } from "next/navigation";
+import { useConnectionAuthParams } from "@/hooks/useConnectionAuthParams";
 
 const MarketingPage = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [connectionId, setConnectionId] = useState<string>("");
   const [searchKey, setSearchKey] = useState<string>("");
-  const { connections, connect, connectLoading } = useConnect();
-
+  const { provider, authParams } = useConnectionAuthParams();
+  const { connections, connect, connectLoading } = useConnect({
+    provider,
+    authParams,
+  });
   const handleOpenConnectionModal = (id: string) => {
     setIsOpen(true);
     setConnectionId(id);
