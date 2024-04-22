@@ -3,6 +3,7 @@ import { Card, CardContent, CardFooter, CardHeader } from "../ui/card";
 import { Switch, SwitchThumb } from "../ui/switch";
 import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 type Props = {
   onConnect: () => void;
@@ -10,7 +11,7 @@ type Props = {
 } & Connection;
 
 function ConnectionCard(props: Props) {
-  const { id, item, description, onConnect, isConnected = false } = props;
+  const { label, name, description, onConnect, isConnected = false } = props;
   return (
     <div className='h-full flex flex-col'>
       {!isConnected && (
@@ -22,7 +23,17 @@ function ConnectionCard(props: Props) {
         <CardHeader className='pb-0 flex flex-row justify-between'>
           {props.icon && (
             <>
-              <props.icon />
+              {typeof props.icon === "string" ? (
+                <Image
+                  width={48}
+                  height={48}
+                  src={props.icon}
+                  alt='icon'
+                  className='rounded-full'
+                />
+              ) : (
+                <props.icon />
+              )}
             </>
           )}
           {!isConnected ? (
@@ -45,7 +56,7 @@ function ConnectionCard(props: Props) {
           )}
         </CardHeader>
         <CardContent className='p-6 pt-0'>
-          {id && <h3 className='text-xl font-semibold mt-6'>{id}</h3>}
+          {label && <h3 className='text-xl font-semibold mt-6'>{label}</h3>}
           {description && <p className='text-gray-500 mt-2'>{description}</p>}
         </CardContent>
         {isConnected && (

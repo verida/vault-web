@@ -13,6 +13,16 @@ const nextConfig = {
     };
     return config;
   },
+  images: {
+    remotePatterns: [
+      {
+        // protocol: 'http',
+        hostname: '127.0.0.1',
+        port: '5021',
+        // pathname: '/account123/**',
+      },
+    ],
+  }
 };
 
 export default nextConfig;

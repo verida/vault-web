@@ -18,7 +18,7 @@ const delay = async (ms: number) => {
 
 let CONNECTION_CACHE: any
 
-const DATA_CONNECTOR_URL = 'http://localhost:5021'
+const DATA_CONNECTOR_URL = 'http://127.0.0.1:5021'
 const RETRY_INTERVAL = 5000
 const RETRY_LIMIT = 10
 
@@ -218,7 +218,7 @@ class DataConnection extends EventEmitter {
     }
 
     public async getConnectUrl() {
-        return `${DATA_CONNECTOR_URL}/connect/${this.source}?did=${this.did}&key=${this.encryptionKey}&redirect=http://localhost:3001/connections`
+        return `${DATA_CONNECTOR_URL}/connect/${this.source}?did=${this.did}&key=${this.encryptionKey}&redirect=http://localhost:3000/connections`
     }
 
     public async save(): Promise<any> {

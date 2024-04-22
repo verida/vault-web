@@ -7,13 +7,20 @@ import { useMemo } from "react";
 
 type Props = {
   isOpen: boolean;
+  connectLoading: boolean;
   onClose: () => void;
+  onConnect: () => void;
   connectionId: string;
 } & React.PropsWithChildren;
 
-function ConnectionModal({ connectionId, ...props }: Props) {
+function ConnectionModal({
+  connectLoading,
+  connectionId,
+  onConnect,
+  ...props
+}: Props) {
   const connection = useMemo(() => {
-    return connections.find((c) => c.id === connectionId);
+    return connections.find((c) => c.name === connectionId);
   }, [connectionId]);
 
   return (
@@ -30,16 +37,21 @@ function ConnectionModal({ connectionId, ...props }: Props) {
 
       {connection && (
         <p className='text-sm leading-5 mt-4'>
-          When you connect {connection.id} and Verida, your {connection.id}{" "}
+          When you connect {connection.name} and Verida, your {connection.name}{" "}
           activities will automatically show up on Verida for all your friends
-          to see. Additionally, {connection.item} and content shared via{" "}
-          {connection.id} will automatically contribute to your Verida all-day
+          to see. Additionally, {connection.name} and content shared via{" "}
+          {connection.name} will automatically contribute to your Verida all-day
           stats like mentions and engagement.
         </p>
       )}
 
-      <Button variant='outline' className='w-full mt-8'>
-        Connect
+      <Button
+        variant='outline'
+        className='w-full mt-8'
+        onClick={onConnect}
+        disabled={connectLoading}
+      >
+        {connectLoading ? "Connecting" : "Connect"}
       </Button>
     </Modal>
   );
