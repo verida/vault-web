@@ -21,6 +21,12 @@ const nextConfig = {
         port: '5021',
         // pathname: '/account123/**',
       },
+      {
+        // protocol: 'http',
+        hostname: '192.168.68.137',
+        port: '5021',
+        // pathname: '/account123/**',
+      },
     ],
   }
 };
