@@ -34,7 +34,6 @@ export function getNetworkFromDID(did: string): EnvironmentType {
 export function getDidClientConfigForNetwork(
   network: EnvironmentType
 ): AccountNodeDIDClientConfig {
-  const rpcUrl = 'https://polygon-mumbai.g.alchemy.com/v2/Q4NRuRlwTNyI90dDCgiX_KT_vS_2gpbN'
   const metaTransactionServerUrl = 'https://devnet-meta-tx-server.tn.verida.tech'
 
   return {
@@ -43,7 +42,6 @@ export function getDidClientConfigForNetwork(
       // TODO: Apparently the `callType` property doesn't exist on web3Config, to double check.
       // @ts-ignore
       callType: 'gasless',
-      rpcUrl,
       serverConfig: {
         headers: {
           'context-name': 'Verida: Vault',
@@ -56,7 +54,6 @@ export function getDidClientConfigForNetwork(
       },
       endpointUrl: metaTransactionServerUrl,
     },
-    rpcUrl,
   }
 }
 
