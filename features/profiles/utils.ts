@@ -34,8 +34,7 @@ export function getNetworkFromDID(did: string): EnvironmentType {
 export function getDidClientConfigForNetwork(
   network: EnvironmentType
 ): AccountNodeDIDClientConfig {
-  const metaTransactionServerUrl = 'https://devnet-meta-tx-server.tn.verida.tech'
-
+  const metaTransactionServerUrl = 'https://meta-tx-server1.tn.verida.tech' // TODO: import from .env
   return {
     callType: 'gasless',
     web3Config: {
