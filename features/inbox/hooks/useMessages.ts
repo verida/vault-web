@@ -1,5 +1,4 @@
 import { useCallback } from "react";
-import { useInbox } from "./useInbox";
 import { useQuery } from "@tanstack/react-query";
 
 export const useMessages = (messagingEngine: any, filters: Object, offset: number, limit: number = 10) => {
@@ -33,5 +32,5 @@ export const useMessages = (messagingEngine: any, filters: Object, offset: numbe
     enabled: !!messagingEngine,
   });
 
-  return { messages };
+  return { messages, isMessagesPending, isMessagesError };
 };

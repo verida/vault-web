@@ -1,14 +1,9 @@
-import { useVerida } from "@/features/verida";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { IMessaging } from "@verida/types";
-import { useCallback, useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { useCallback } from "react";
+import { useInboxContext } from "./useInboxContext";
 
 export const useInbox = () => {
-  const { webUserInstanceRef, isConnected } = useVerida();
-
-  const queryClient = useQueryClient();
-
-  const [messagingEngine, setMessagingEngine] = useState<IMessaging>();
+  const { messagingEngine } = useInboxContext();
 
   const fetchUnreadMessageCount = useCallback(async () => {
     try {
@@ -27,26 +22,7 @@ export const useInbox = () => {
     queryKey: ["unread"],
     queryFn: fetchUnreadMessageCount,
     enabled: !!messagingEngine,
-    refetchInterval: 60000,
   });
 
-  useEffect(() => {
-    const init = async () => {
-      if (!isConnected) {
-        return;
-      }
-
-      const veridaContext = await webUserInstanceRef.current.getContext();
-      const _messagingEngine = await veridaContext.getMessaging();
-      setMessagingEngine(_messagingEngine);
-
-      _messagingEngine.onMessage(() => {
-        queryClient.invalidateQueries({ queryKey: ["unread"] });
-      });
-    };
-
-    init();
-  }, [webUserInstanceRef, isConnected, queryClient]);
-
-  return { messagingEngine };
+  return { unreadMessageCount, isUnreadMessageCountPending, isUnreadMessageCountError };
 };
