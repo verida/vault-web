@@ -8,10 +8,8 @@ import { usePagination } from "@/hooks/usePagination";
 const InboxPage = () => {
   const { messagingEngine } = useInboxContext();
   const { page, offset, limit } = usePagination();
-  const { unreadMessageCount } = useInbox();
+  const { unreadMessageCount, totalMessageCount } = useInbox();
   const { messages } = useMessages(messagingEngine, {}, offset, limit);
-
-  console.log(messages);
 
   return <div className='flex items-center justify-center flex-col p-10'>Inbox</div>;
 };

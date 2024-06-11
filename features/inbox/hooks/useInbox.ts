@@ -14,6 +14,20 @@ export const useInbox = () => {
     }
   }, [messagingEngine]);
 
+  const fetchTotalMessageCount = useCallback(async () => {
+    try {
+      const inbox = await messagingEngine?.getInbox();
+      const inboxDbs = await inbox.getInboxDatastore();
+      const database = await inboxDbs.getDb();
+      const dbInfo = await database.db.info();
+
+      // 1 record in the db is for permit
+      return dbInfo.doc_count - 1;
+    } catch (err) {
+      throw new Error((err as Error).message);
+    }
+  }, [messagingEngine]);
+
   const {
     data: unreadMessageCount,
     isPending: isUnreadMessageCountPending,
@@ -24,5 +38,22 @@ export const useInbox = () => {
     enabled: !!messagingEngine,
   });
 
-  return { unreadMessageCount, isUnreadMessageCountPending, isUnreadMessageCountError };
+  const {
+    data: totalMessageCount,
+    isPending: isTotalMessageCountPending,
+    isError: isTotalMessageCountError,
+  } = useQuery({
+    queryKey: ["total"],
+    queryFn: fetchTotalMessageCount,
+    enabled: !!messagingEngine,
+  });
+
+  return {
+    unreadMessageCount,
+    isUnreadMessageCountPending,
+    isUnreadMessageCountError,
+    totalMessageCount,
+    isTotalMessageCountPending,
+    isTotalMessageCountError,
+  };
 };

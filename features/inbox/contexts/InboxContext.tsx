@@ -1,7 +1,7 @@
 import { useVerida } from "@/features/verida";
 import { useQueryClient } from "@tanstack/react-query";
 import { IMessaging } from "@verida/types";
-import React, { createContext, useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
 type InboxContextType = {
   messagingEngine: IMessaging | undefined;
@@ -24,10 +24,12 @@ export const InboxProvider: React.FunctionComponent<InboxProviderProps> = ({ chi
 
       const veridaContext = await webUserInstanceRef.current.getContext();
       const _messagingEngine = await veridaContext.getMessaging();
+
       setMessagingEngine(_messagingEngine);
 
       _messagingEngine.onMessage(() => {
         queryClient.invalidateQueries({ queryKey: ["unread"] });
+        queryClient.invalidateQueries({ queryKey: ["total"] });
         queryClient.invalidateQueries({ queryKey: ["messages"] });
       });
     };
