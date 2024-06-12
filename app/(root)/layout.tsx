@@ -5,7 +5,7 @@ const MarketingLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className='flex flex-col min-h-screen bg-[#F7F8FA]'>
       <Navbar />
-      <main className='flex-grow pt-[72px] pb-20 container'>{children}</main>
+      <main className='min-h-[calc(100vh-144px)] mt-[72px] container flex flex-col'>{children}</main>
       <Footer />
     </div>
   );
