@@ -22,6 +22,21 @@ export const TablePagination = () => {
         <p className='text-sm'>Page</p>
 
         <ChevronLeft />
+
+        <div className='border border-gray-200 py-[10px] px-3 text-sm rounded-sm bg-background'>
+          <input type='text' className='bg-transparent outline-none text-right w-6' />
+          <span
+            className='pointer-events-none text-gray-500'
+            style={{
+              pointerEvents: "none",
+              color: "grey",
+            }}
+          >
+            {" "}
+            /{3}
+          </span>
+        </div>
+
         <ChevronRight />
       </div>
     </div>

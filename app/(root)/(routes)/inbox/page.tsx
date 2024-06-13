@@ -22,6 +22,8 @@ const InboxPage = () => {
   const { unreadMessageCount, totalMessageCount, isTotalMessageCountPending, isUnreadMessageCountPending } = useInbox();
   const { messages, isMessagesPending, isMessagesError } = useMessages(messagingEngine, {}, offset, limit);
 
+  console.log(messages);
+
   const isLoading = useMemo(() => {
     return isTotalMessageCountPending || isUnreadMessageCountPending || isMessagesPending;
   }, [isTotalMessageCountPending, isUnreadMessageCountPending, isMessagesPending]);
@@ -43,7 +45,8 @@ const InboxPage = () => {
       {isLoading && <LoadingInbox />}
 
       <div className='flex-grow flex flex-col items-center gap-3'>
-        {messages && messages.map((message: any) => <InboxRowItem key={`inbox-row-${message.id}`} />)}
+        {messages &&
+          messages.map((message: any) => <InboxRowItem key={`inbox-row-${message._id}`} message={message} />)}
       </div>
 
       <TablePagination />
