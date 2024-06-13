@@ -13,12 +13,14 @@ import Image from "next/image";
 import NoInboxImage from "@/assets/no-inbox.svg";
 import ErrorInboxImage from "@/assets/error-inbox.svg";
 import { InboxRowItem } from "@/components/inbox/InboxRowItem";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { Spinner } from "@/components/spinner";
 
 const InboxPage = () => {
+  const [offset, setOffset] = useState(0);
+  const [limit, setLimit] = useState(10);
+
   const { messagingEngine } = useInboxContext();
-  const { page, offset, limit } = usePagination();
   const { unreadMessageCount, totalMessageCount, isTotalMessageCountPending, isUnreadMessageCountPending } = useInbox();
   const { messages, isMessagesPending, isMessagesError } = useMessages(messagingEngine, {}, offset, limit);
 
@@ -29,6 +31,11 @@ const InboxPage = () => {
   }, [isTotalMessageCountPending, isUnreadMessageCountPending, isMessagesPending]);
 
   const handleSearchInputChange = (value: string) => {};
+
+  const handlePageChange = (newOffset: number, newLimit: number) => {
+    setOffset(newOffset);
+    setLimit(newLimit);
+  };
 
   return (
     <div className='flex flex-col pt-10 pb-6 gap-6 flex-grow'>
@@ -44,12 +51,15 @@ const InboxPage = () => {
 
       {isLoading && <LoadingInbox />}
 
-      <div className='flex-grow flex flex-col items-center gap-3'>
-        {messages &&
-          messages.map((message: any) => <InboxRowItem key={`inbox-row-${message._id}`} message={message} />)}
-      </div>
+      {!isLoading && messages && (
+        <div className='flex-grow flex flex-col items-center gap-3'>
+          {messages.map((message: any) => (
+            <InboxRowItem key={`inbox-row-${message._id}`} message={message} />
+          ))}
+        </div>
+      )}
 
-      <TablePagination />
+      <TablePagination totalItems={totalMessageCount} onChange={handlePageChange} />
     </div>
   );
 };
@@ -70,9 +80,9 @@ const NoInbox = () => {
 
 const LoadingInbox = () => {
   return (
-    <div className='flex-grow flex flex-col justify-center items-center gap-3'>
+    <div className='flex-grow flex flex-col justify-center items-center gap-6'>
       <Spinner />
-      <div className='text-center mt-8 space-y-2'>
+      <div className='text-center space-y-2'>
         <h4 className='text-xl font-semibold'>Please wait...</h4>
         <p className='text-gray-500'>We&apos;are fetching your latest messages.</p>
       </div>
