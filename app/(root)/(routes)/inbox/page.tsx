@@ -13,12 +13,18 @@ import Image from "next/image";
 import NoInboxImage from "@/assets/no-inbox.svg";
 import ErrorInboxImage from "@/assets/error-inbox.svg";
 import { InboxRowItem } from "@/components/inbox/InboxRowItem";
+import { useMemo } from "react";
+import { Spinner } from "@/components/spinner";
 
 const InboxPage = () => {
   const { messagingEngine } = useInboxContext();
   const { page, offset, limit } = usePagination();
-  const { unreadMessageCount, totalMessageCount } = useInbox();
-  const { messages } = useMessages(messagingEngine, {}, offset, limit);
+  const { unreadMessageCount, totalMessageCount, isTotalMessageCountPending, isUnreadMessageCountPending } = useInbox();
+  const { messages, isMessagesPending, isMessagesError } = useMessages(messagingEngine, {}, offset, limit);
+
+  const isLoading = useMemo(() => {
+    return isTotalMessageCountPending || isUnreadMessageCountPending || isMessagesPending;
+  }, [isTotalMessageCountPending, isUnreadMessageCountPending, isMessagesPending]);
 
   const handleSearchInputChange = (value: string) => {};
 
@@ -34,8 +40,10 @@ const InboxPage = () => {
         </nav>
       </div>
 
-      <div className='flex-grow flex flex-col justify-center items-center'>
-        <InboxRowItem />
+      {isLoading && <LoadingInbox />}
+
+      <div className='flex-grow flex flex-col items-center gap-3'>
+        {messages && messages.map((message: any) => <InboxRowItem key={`inbox-row-${message.id}`} />)}
       </div>
 
       <TablePagination />
@@ -54,6 +62,18 @@ const NoInbox = () => {
         <p className='text-gray-500'>When new messages arrive, they&apos;ll show up here.</p>
       </div>
     </>
+  );
+};
+
+const LoadingInbox = () => {
+  return (
+    <div className='flex-grow flex flex-col justify-center items-center gap-3'>
+      <Spinner />
+      <div className='text-center mt-8 space-y-2'>
+        <h4 className='text-xl font-semibold'>Please wait...</h4>
+        <p className='text-gray-500'>We&apos;are fetching your latest messages.</p>
+      </div>
+    </div>
   );
 };
 

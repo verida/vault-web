@@ -16,13 +16,10 @@ export const useInbox = () => {
 
   const fetchTotalMessageCount = useCallback(async () => {
     try {
-      const inbox = await messagingEngine?.getInbox();
-      const inboxDbs = await inbox.getInboxDatastore();
-      const database = await inboxDbs.getDb();
-      const dbInfo = await database.db.info();
+      const messages = await messagingEngine?.getMessages({}, { limit: 100000000 });
 
       // 1 record in the db is for permit
-      return dbInfo.doc_count - 1;
+      return messages.length ?? 0;
     } catch (err) {
       throw new Error((err as Error).message);
     }
