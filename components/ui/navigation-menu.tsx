@@ -32,7 +32,7 @@ const NavigationMenuList = React.forwardRef<
     ref={ref}
     className={cn(
       "group flex flex-1 list-none justify-center",
-      orientation === "horizontal" ? "space-x-1 items-center" : "flex-col space-y-1 items-stretch",
+      orientation === "horizontal" ? "space-x-1 items-center" : "flex-col items-stretch",
       className
     )}
     {...props}

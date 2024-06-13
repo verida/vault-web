@@ -88,14 +88,15 @@ export const Navbar = () => {
       {isMenuOpened && (
         <div className='fixed left-0 right-0 top-[72px] bottom-12 bg-background'>
           <NavigationMenu orientation='vertical'>
-            <NavigationMenuList className='px-6' orientation='vertical'>
+            <NavigationMenuList className='px-2' orientation='vertical'>
               {headerNavs.map((nav) => (
                 <NavigationMenuItem key={`nav-menu-item-${nav.title}`}>
                   <NavigationMenuLink
                     href={nav.href}
                     className={cn(
                       navigationMenuTriggerStyle({
-                        className: "rounded-none h-[72px] border-transparent font-semibold !text-gray-500",
+                        className:
+                          "rounded-none border-transparent font-semibold !text-gray-500 py-4 h-auto w-full justify-start",
                       }),
                       {
                         "border-gray-800 !text-primary": path.startsWith(nav.href),
