@@ -16,14 +16,14 @@ import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
 import { Data } from "@/components/icons/data";
 import { Connection } from "@/components/icons/connection";
-import { Inbox } from "@/components/icons/inbox";
 import { useState } from "react";
 import { Close } from "./icons/close";
 import { Hamburger } from "./icons/hamburger";
+import { InboxWithBadge } from "./icons/inbox-with-badge";
 
 const headerNavs = [
   {
-    icon: <Inbox />,
+    icon: <InboxWithBadge />,
     title: "Inbox",
     href: "/inbox",
   },

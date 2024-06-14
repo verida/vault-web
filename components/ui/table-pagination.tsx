@@ -23,8 +23,8 @@ export const TablePagination: React.FC<TablePaginationProps> = ({ totalItems = 0
   }, [offset, limit, onChange]);
 
   return (
-    <div className='flex justify-between items-center w-full'>
-      <div className='flex items-center gap-4'>
+    <div className='flex justify-center md:justify-between items-center w-full'>
+      <div className='hidden md:flex items-center gap-4'>
         <p className='text-sm whitespace-nowrap'>Show rows</p>
         <Select defaultValue={currentLimit.toString()} onValueChange={(value) => setCurrentLimit(+value)}>
           <SelectTrigger />

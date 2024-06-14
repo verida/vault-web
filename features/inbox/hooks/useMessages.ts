@@ -1,5 +1,6 @@
 import { useCallback } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { getPublicProfile } from "@/features/profiles";
 
 export const useMessages = (messagingEngine: any, filters: Object, offset: number, limit: number = 10) => {
   const fetchMessages = useCallback(
@@ -13,6 +14,12 @@ export const useMessages = (messagingEngine: any, filters: Object, offset: numbe
             sort: [{ sentAt: "desc" }],
           }
         );
+
+        for (const message of messages) {
+          const { did, contextName } = message.sentBy;
+          const profile = await getPublicProfile(did, contextName);
+          message.sentBy = { ...message.sentBy, ...profile };
+        }
 
         return messages;
       } catch (err) {

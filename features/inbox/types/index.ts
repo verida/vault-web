@@ -8,6 +8,7 @@ export enum InboxType {
 export type InboxEntry = {
   _id: string;
   sentAt: Date | string;
+  sentBy: InboxSentBy;
   read: boolean;
   message: string;
   type: InboxType;
@@ -16,4 +17,6 @@ export type InboxEntry = {
 export type InboxSentBy = {
   did: string;
   context: string;
+  name: string;
+  avatar?: Record<string, any>;
 };

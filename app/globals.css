@@ -66,6 +66,10 @@
   }
 }
 
+[vaul-drawer]:after {
+  @apply !bg-transparent;
+}
+
 @layer base {
   * {
     @apply border-border;
