@@ -7,6 +7,10 @@ export enum InboxType {
 
 export type InboxEntry = {
   _id: string;
+  data: {
+    data: any;
+    status: string;
+  };
   sentAt: Date | string;
   sentBy: InboxSentBy;
   read: boolean;

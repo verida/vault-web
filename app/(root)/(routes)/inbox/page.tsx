@@ -7,17 +7,18 @@ import { TablePagination } from "@/components/ui/table-pagination";
 import { useInbox } from "@/features/inbox/hooks";
 import { useInboxContext } from "@/features/inbox/hooks/useInboxContext";
 import { useMessages } from "@/features/inbox/hooks/useMessages";
-import Image from "next/image";
 
 import { InboxRowItem } from "@/components/inbox/inbox-item";
 import { useMemo, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/components/ui/drawer";
 import { CloseSideRight } from "@/components/icons/close-side-right";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Success } from "@/components/icons/success";
+import { Failed } from "@/components/icons/failed";
 import { LoadingInbox } from "@/components/inbox/inbox-loading";
 import { InboxDetails } from "@/components/inbox/inbox-details";
+import { inboxTypes } from "@/features/inbox/constants";
+import { InboxEntry, InboxType } from "@/features/inbox/types";
 
 const InboxPage = () => {
   const router = useRouter();
@@ -33,7 +34,7 @@ const InboxPage = () => {
 
   const messageId = searchParams.get("id");
 
-  const selectedMessage = messages?.find((message: any) => message._id === messageId);
+  const selectedMessage = messages?.find((message: any) => message._id === messageId) as InboxEntry;
 
   const isLoading = useMemo(() => {
     return isTotalMessageCountPending || isUnreadMessageCountPending || isMessagesPending;
@@ -80,11 +81,30 @@ const InboxPage = () => {
       >
         <DrawerTrigger />
         <DrawerContent>
-          <DrawerHeader className='flex items-center space-x-3'>
-            <CloseSideRight />
-            <DrawerTitle>Message</DrawerTitle>
+          <DrawerHeader className='flex items-center justify-between space-x-3'>
+            <div className='flex items-center space-x-3'>
+              <CloseSideRight />
+              <DrawerTitle>
+                {selectedMessage ? inboxTypes[selectedMessage.type as InboxType].text : "Message"}
+              </DrawerTitle>
+            </div>
+            {selectedMessage?.data.status && (
+              <>
+                {selectedMessage?.data.status === "accept" ? (
+                  <div className='flex gap-2'>
+                    <Success />
+                    <p className='font-semibold'>Accepted</p>
+                  </div>
+                ) : (
+                  <div className='flex gap-2'>
+                    <Failed />
+                    <p className='font-semibold'>Declined</p>
+                  </div>
+                )}
+              </>
+            )}
           </DrawerHeader>
-          <div className='p-6 space-y-6'>{selectedMessage && <InboxDetails message={selectedMessage} />}</div>
+          <div className='py-6 h-full'>{selectedMessage && <InboxDetails message={selectedMessage} />}</div>
         </DrawerContent>
       </Drawer>
     </>
