@@ -48,12 +48,12 @@ const DrawerContent = React.forwardRef<
 DrawerContent.displayName = "DrawerContent";
 
 const DrawerHeader = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
-  <div className={cn("grid gap-1.5 p-6 text-center sm:text-left border-b border-gray-200", className)} {...props} />
+  <div className={cn("grid gap-1.5 p-4 text-center sm:text-left border-b border-gray-200", className)} {...props} />
 );
 DrawerHeader.displayName = "DrawerHeader";
 
 const DrawerFooter = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
-  <div className={cn("mt-auto flex flex-col gap-2 p-6 border-t border-gray-200", className)} {...props} />
+  <div className={cn("mt-auto flex flex-col gap-3 p-6 border-t border-gray-200", className)} {...props} />
 );
 DrawerFooter.displayName = "DrawerFooter";
 

@@ -1,12 +1,13 @@
 import { isEmpty } from "lodash";
 import { InboxDetailsProps } from "../inbox-details";
-import { DrawerHeader, DrawerTitle } from "@/components/ui/drawer";
+import { DrawerFooter, DrawerHeader, DrawerTitle } from "@/components/ui/drawer";
 import { CloseSideRight } from "@/components/icons/close-side-right";
 import { InboxType } from "@/features/inbox/types";
 import { Success } from "@/components/icons/success";
 import { Failed } from "@/components/icons/failed";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Image from "next/image";
+import { Button } from "@/components/ui/button";
 
 export const InboxMessageDetails: React.FC<InboxDetailsProps> = ({ message }) => {
   const { message: title, data } = message;
@@ -44,6 +45,8 @@ export const InboxMessageDetails: React.FC<InboxDetailsProps> = ({ message }) =>
           <p className='text-sm'>{itemData.message}</p>
         </div>
       </div>
+
+      <DrawerFooter>{!!itemData.link && <Button onClick={() => {}}>{itemData.link.text}</Button>}</DrawerFooter>
     </>
   );
 };

@@ -55,7 +55,7 @@ export const DataRequestDetails: React.FC<InboxDetailsProps> = ({ message }) => 
   if (isSelecting) {
     return (
       <>
-        <DrawerHeader className='flex flex-col space-y-5'>
+        <DrawerHeader className='flex flex-col space-y-3'>
           <div className='flex items-center space-x-3'>
             <ArrowLeft onClick={() => setIsSelecting(false)} />
             <DrawerTitle>Select an Item</DrawerTitle>
@@ -94,12 +94,12 @@ export const DataRequestDetails: React.FC<InboxDetailsProps> = ({ message }) => 
       <DrawerHeader className='flex items-center justify-between space-x-3'>
         <div className='flex items-center space-x-3'>
           <CloseSideRight />
-          <DrawerTitle>Incoming Data</DrawerTitle>
+          <DrawerTitle>Data Request</DrawerTitle>
         </div>
       </DrawerHeader>
 
       <div className='p-6'>
-        <div className='flex items-center space-x-2 px-6'>
+        <div className='flex items-center space-x-2'>
           <div className='relative'>
             <Avatar className='shadow'>
               {message.sentBy?.avatar?.uri && (

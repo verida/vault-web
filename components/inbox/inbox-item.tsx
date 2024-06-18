@@ -29,7 +29,7 @@ export const InboxRowItem: React.FC<InboxRowItemProps> = ({ message, href }) => 
               <Avatar>
                 {sentBy.avatar?.uri && (
                   <AvatarImage src={sentBy.avatar?.uri} asChild>
-                    <Image src={BinanceImage} width={48} height={48} alt='' />
+                    <Image src={sentBy.avatar?.uri} width={48} height={48} alt='' />
                   </AvatarImage>
                 )}
                 <AvatarFallback>{"U"}</AvatarFallback>
@@ -39,11 +39,11 @@ export const InboxRowItem: React.FC<InboxRowItemProps> = ({ message, href }) => 
             <p className='font-semibold text-neutral-600'>{sentBy.name}</p>
           </div>
           <div className='flex items-center px-4 gap-4 shrink'>
-            <div className='flex gap-2'>
+            <div className='flex gap-2 items-center'>
               <InboxTypeIcon />
               <p className='font-semibold text-xs'>{inboxTypes[type].text}</p>
             </div>
-            <div className='flex gap-2'>
+            <div className='flex gap-2 items-center'>
               <Success />
               <p className='font-semibold'>Accepted</p>
             </div>
@@ -60,7 +60,7 @@ export const InboxRowItem: React.FC<InboxRowItemProps> = ({ message, href }) => 
             <Avatar>
               {sentBy.avatar?.uri && (
                 <AvatarImage src={sentBy.avatar?.uri} asChild>
-                  <Image src={BinanceImage} width={48} height={48} alt='' />
+                  <Image src={sentBy.avatar?.uri} width={48} height={48} alt='' />
                 </AvatarImage>
               )}
               <AvatarFallback>{"U"}</AvatarFallback>
@@ -78,7 +78,7 @@ export const InboxRowItem: React.FC<InboxRowItemProps> = ({ message, href }) => 
                 <InboxTypeIcon className='w-4 h-4' />
                 <p className='font-semibold text-xs'>{inboxTypes[type].text}</p>
               </div>
-              <span className={cn("size-2 rounded-full bg-purple-500", read ? "opacity-100" : "opacity-100")}></span>
+              <span className={cn("size-2 rounded-full bg-purple-500", read ? "opacity-0" : "opacity-100")}></span>
             </div>
             <p className='text-sm line-clamp-1 font-semibold'>{title}</p>
           </div>

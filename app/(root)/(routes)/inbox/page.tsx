@@ -43,25 +43,6 @@ const InboxPage = () => {
     setLimit(newLimit);
   };
 
-  const sendMessage = () => {
-    const did = "did:vda:mainnet:0x22b1A160b1b418F303F431aD4e893A0Da0A54329";
-    const type = "inbox/type/dataRequest";
-
-    // Generate an inbox message containing an array of data
-    const data = {
-      requestSchema: "https://common.schemas.verida.io/social/contact/v0.1.0/schema.json",
-      filter: {},
-      userSelect: true,
-    };
-    const message = "Please share your contact details";
-    const config = {
-      did,
-      recipientContextName: "Verida: Vault",
-    };
-
-    messagingEngine?.send(did, type, data, message, config);
-  };
-
   console.log(messages);
 
   return (
@@ -77,7 +58,6 @@ const InboxPage = () => {
           </nav>
         </div>
 
-        <button onClick={() => sendMessage()}>Send</button>
         {isLoading && <LoadingInbox />}
 
         {!isLoading && messages && (
@@ -98,7 +78,9 @@ const InboxPage = () => {
         }}
       >
         <DrawerTrigger />
-        <DrawerContent>{selectedMessage && <InboxDetails message={selectedMessage} />}</DrawerContent>
+        <DrawerContent>
+          {selectedMessage && <InboxDetails message={selectedMessage} onClose={() => router.push(pathName)} />}
+        </DrawerContent>
       </Drawer>
     </>
   );
