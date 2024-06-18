@@ -66,6 +66,14 @@
   }
 }
 
+.checkbox-root {
+  @apply border-border bg-slate-100;
+}
+
+.checkbox-root[data-state="checked"] {
+  @apply border-[#5ecea5] bg-[#5ecea5];
+}
+
 [vaul-drawer]:after {
   @apply !bg-transparent;
 }

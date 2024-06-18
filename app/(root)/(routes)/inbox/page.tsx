@@ -11,14 +11,10 @@ import { useMessages } from "@/features/inbox/hooks/useMessages";
 import { InboxRowItem } from "@/components/inbox/inbox-item";
 import { useMemo, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/components/ui/drawer";
-import { CloseSideRight } from "@/components/icons/close-side-right";
-import { Success } from "@/components/icons/success";
-import { Failed } from "@/components/icons/failed";
+import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { LoadingInbox } from "@/components/inbox/inbox-loading";
 import { InboxDetails } from "@/components/inbox/inbox-details";
-import { inboxTypes } from "@/features/inbox/constants";
-import { InboxEntry, InboxType } from "@/features/inbox/types";
+import { InboxEntry } from "@/features/inbox/types";
 
 const InboxPage = () => {
   const router = useRouter();
@@ -47,6 +43,27 @@ const InboxPage = () => {
     setLimit(newLimit);
   };
 
+  const sendMessage = () => {
+    const did = "did:vda:mainnet:0x22b1A160b1b418F303F431aD4e893A0Da0A54329";
+    const type = "inbox/type/dataRequest";
+
+    // Generate an inbox message containing an array of data
+    const data = {
+      requestSchema: "https://common.schemas.verida.io/social/contact/v0.1.0/schema.json",
+      filter: {},
+      userSelect: true,
+    };
+    const message = "Please share your contact details";
+    const config = {
+      did,
+      recipientContextName: "Verida: Vault",
+    };
+
+    messagingEngine?.send(did, type, data, message, config);
+  };
+
+  console.log(messages);
+
   return (
     <>
       <div className='flex flex-col pt-10 pb-6 space-y-6 flex-grow'>
@@ -60,6 +77,7 @@ const InboxPage = () => {
           </nav>
         </div>
 
+        <button onClick={() => sendMessage()}>Send</button>
         {isLoading && <LoadingInbox />}
 
         {!isLoading && messages && (
@@ -80,32 +98,7 @@ const InboxPage = () => {
         }}
       >
         <DrawerTrigger />
-        <DrawerContent>
-          <DrawerHeader className='flex items-center justify-between space-x-3'>
-            <div className='flex items-center space-x-3'>
-              <CloseSideRight />
-              <DrawerTitle>
-                {selectedMessage ? inboxTypes[selectedMessage.type as InboxType].text : "Message"}
-              </DrawerTitle>
-            </div>
-            {selectedMessage?.data.status && (
-              <>
-                {selectedMessage?.data.status === "accept" ? (
-                  <div className='flex gap-2'>
-                    <Success />
-                    <p className='font-semibold'>Accepted</p>
-                  </div>
-                ) : (
-                  <div className='flex gap-2'>
-                    <Failed />
-                    <p className='font-semibold'>Declined</p>
-                  </div>
-                )}
-              </>
-            )}
-          </DrawerHeader>
-          <div className='py-6 h-full'>{selectedMessage && <InboxDetails message={selectedMessage} />}</div>
-        </DrawerContent>
+        <DrawerContent>{selectedMessage && <InboxDetails message={selectedMessage} />}</DrawerContent>
       </Drawer>
     </>
   );
