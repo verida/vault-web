@@ -12,11 +12,8 @@ interface TablePaginationProps {
 
 export const TablePagination: React.FC<TablePaginationProps> = ({ totalItems = 0, onChange }) => {
   const [currentLimit, setCurrentLimit] = useState<number>(10);
-  const { page, offset, limit, totalPages, hasNextPage, hasPrevPage, setCurrentPage } = usePagination(
-    0,
-    currentLimit,
-    totalItems
-  );
+  const { page, offset, limit, totalPages, hasNextPage, hasPrevPage, setCurrentPage, nextPage, prevPage } =
+    usePagination(0, currentLimit, totalItems);
 
   useEffect(() => {
     onChange(offset, limit);
@@ -39,7 +36,10 @@ export const TablePagination: React.FC<TablePaginationProps> = ({ totalItems = 0
         <p className='text-sm'>Page</p>
 
         <div className='flex items-center gap-1'>
-          <ChevronLeft className={cn(hasPrevPage ? "" : "text-gray-200")} />
+          <ChevronLeft
+            className={cn("cursor-pointer", hasPrevPage ? "" : "text-gray-200")}
+            onClick={() => prevPage()}
+          />
 
           <div className='border border-gray-200 py-[10px] px-3 text-sm rounded-sm bg-background'>
             <input
@@ -60,7 +60,10 @@ export const TablePagination: React.FC<TablePaginationProps> = ({ totalItems = 0
             </span>
           </div>
 
-          <ChevronRight className={cn(hasPrevPage ? "" : "text-gray-200")} />
+          <ChevronRight
+            className={cn("cursor-pointer", hasNextPage ? "" : "text-gray-200")}
+            onClick={() => nextPage()}
+          />
         </div>
       </div>
     </div>

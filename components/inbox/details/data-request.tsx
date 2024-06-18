@@ -57,7 +57,7 @@ export const DataRequestDetails: React.FC<InboxDetailsProps> = ({ message }) => 
       <>
         <DrawerHeader className='flex flex-col space-y-3'>
           <div className='flex items-center space-x-3'>
-            <ArrowLeft onClick={() => setIsSelecting(false)} />
+            <ArrowLeft onClick={() => setIsSelecting(false)} className='cursor-pointer' />
             <DrawerTitle>Select an Item</DrawerTitle>
           </div>
           <div className='flex items-center space-x-3'>
@@ -66,19 +66,21 @@ export const DataRequestDetails: React.FC<InboxDetailsProps> = ({ message }) => 
         </DrawerHeader>
 
         <div className='p-6'>
-          {(availableData || []).map((item: any) => (
-            <Card key={`card-${item._id}`} className='px-4 py-3'>
-              <Checkbox
-                label={
-                  <div>
-                    <h6 className='font-bold'>{item.name}</h6>
-                    <p>Government of Western...</p>
-                    <p className='text-xs text-gray-500'>01/05/22 11:00</p>
-                  </div>
-                }
-              />
-            </Card>
-          ))}
+          <div className='space-y-2'>
+            {(availableData || []).map((item: any) => (
+              <Card key={`card-${item._id}`} className='px-4 py-3'>
+                <Checkbox
+                  label={
+                    <div>
+                      <h6 className='font-bold'>{item.name}</h6>
+                      <p>Government of Western...</p>
+                      <p className='text-xs text-gray-500'>01/05/22 11:00</p>
+                    </div>
+                  }
+                />
+              </Card>
+            ))}
+          </div>
         </div>
 
         <DrawerFooter>

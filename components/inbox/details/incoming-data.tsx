@@ -7,9 +7,14 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Success } from "@/components/icons/success";
 import Image from "next/image";
 import Alert from "@/components/alert";
+import { useInboxAction } from "@/features/inbox/hooks/useInboxAction";
+import { InboxType } from "@/features/inbox/types";
 
 const InboxIncomingData: React.FC<InboxDetailsProps> = ({ message, onClose }) => {
   const { message: title, data } = message;
+
+  const { handleAccept, handleReject, isLoading } = useInboxAction();
+
   return (
     <>
       <DrawerHeader className='flex items-center justify-between space-x-3'>
@@ -17,10 +22,10 @@ const InboxIncomingData: React.FC<InboxDetailsProps> = ({ message, onClose }) =>
           <CloseSideRight />
           <DrawerTitle>Incoming Data</DrawerTitle>
         </div>
-        {data.status === "accepted" && (
+        {data.status === "accept" && (
           <div className='flex gap-2 items-center'>
             <Success />
-            <p className='font-semibold'>Accepted</p>
+            <p className='font-semibold text-sm'>Accepted</p>
           </div>
         )}
       </DrawerHeader>
@@ -77,13 +82,18 @@ const InboxIncomingData: React.FC<InboxDetailsProps> = ({ message, onClose }) =>
           <>
             <Alert text='Ignore if you don’t recognize this request' />
             <div className='flex gap-4'>
-              <Button variant='outline' className='w-full h-12 font-semibold'>
+              <Button
+                variant='outline'
+                className='w-full h-12 font-semibold'
+                onClick={() => handleReject(message, InboxType.DATA_SEND, {})}
+                disabled={isLoading}
+              >
                 Decline
               </Button>
               <Button
-                variant='default'
-                disabled
                 className='w-full h-12 bg-purple-500 font-semibold hover:bg-purple-600'
+                onClick={() => handleAccept(message, InboxType.DATA_SEND, {})}
+                disabled={isLoading}
               >
                 Accept
               </Button>

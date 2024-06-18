@@ -28,7 +28,7 @@ const InboxPage = () => {
   const { totalMessageCount, isTotalMessageCountPending, isUnreadMessageCountPending } = useInbox();
   const { messages, isMessagesPending, isMessagesError } = useMessages(messagingEngine, {}, offset, limit);
 
-  const messageId = searchParams.get("id");
+  const [messageId, setMessageId] = useState<string>("");
 
   const selectedMessage = messages?.find((message: any) => message._id === messageId) as InboxEntry;
 
@@ -42,8 +42,6 @@ const InboxPage = () => {
     setOffset(newOffset);
     setLimit(newLimit);
   };
-
-  console.log(messages);
 
   return (
     <>
@@ -63,7 +61,11 @@ const InboxPage = () => {
         {!isLoading && messages && (
           <div className='flex-grow flex flex-col items-center gap-3'>
             {messages.map((message: any) => (
-              <InboxRowItem key={`inbox-row-${message._id}`} message={message} href={`?id=${message._id}`} />
+              <InboxRowItem
+                key={`inbox-row-${message._id}`}
+                message={message}
+                onClick={(id: string) => setMessageId(id)}
+              />
             ))}
           </div>
         )}
@@ -74,12 +76,12 @@ const InboxPage = () => {
         direction='right'
         open={Boolean(messageId)}
         onClose={() => {
-          router.push(pathName);
+          setMessageId("");
         }}
       >
         <DrawerTrigger />
         <DrawerContent>
-          {selectedMessage && <InboxDetails message={selectedMessage} onClose={() => router.push(pathName)} />}
+          {selectedMessage && <InboxDetails message={selectedMessage} onClose={() => setMessageId("")} />}
         </DrawerContent>
       </Drawer>
     </>
