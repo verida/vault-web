@@ -10,70 +10,72 @@ export const useInboxAction = () => {
 
   const handleAccept = useCallback(
     async (inboxEntry: InboxEntry, type: InboxType, payload: unknown) => {
-      if (inboxEntry.data.status) {
-        throw new Error("Data has already been set to " + inboxEntry.data.status);
-      }
+      try {
+        setIsLoading(true);
+        if (inboxEntry.data.status) {
+          throw new Error("Data has already been set to " + inboxEntry.data.status);
+        }
 
-      setIsLoading(true);
+        inboxEntry.data.status = "accept";
 
-      inboxEntry.data.status = "accept";
+        switch (type) {
+          case InboxType.DATA_REQUEST:
+            const { data, sentBy, _id } = inboxEntry;
+            let response = { replyId: _id, data: null };
 
-      switch (type) {
-        case InboxType.DATA_REQUEST:
-          const { data, sentBy, _id } = inboxEntry;
-          let response = { replyId: _id, data: null };
+            if (data.userSelect) {
+              response.data = payload as any;
+            } else {
+              const store = await openDatastore(data.requestSchema);
+              const foundData = await store.getMany(data.filter || {});
+              response.data = [foundData] as any;
+            }
 
-          if (data.userSelect) {
-            response.data = payload as any;
-          } else {
-            const store = await openDatastore(data.requestSchema);
-            const foundData = await store.getMany(data.filter || {});
-            response.data = [foundData] as any;
-          }
+            await messagingEngine?.send(sentBy.did, InboxType.DATA_SEND, response, "Send you the requested data", {
+              did: sentBy.did,
+              recipientContextName: sentBy.context,
+            });
+            break;
+          case InboxType.DATA_SEND:
+            const acceptResult = { success: true, errors: [] };
+            const dataSent = inboxEntry.data.data;
 
-          await messagingEngine?.send(sentBy.did, InboxType.DATA_SEND, response, "Send you the requested data", {
-            did: sentBy.did,
-            recipientContextName: sentBy.context,
-          });
-          break;
-        case InboxType.DATA_SEND:
-          const acceptResult = { success: true, errors: [] };
-          const dataSent = inboxEntry.data.data;
+            for (const i in dataSent) {
+              const dataEntry = dataSent[i];
 
-          for (const i in dataSent) {
-            const dataEntry = dataSent[i];
+              delete dataEntry._rev;
 
-            delete dataEntry._rev;
+              try {
+                const store = await openDatastore(dataEntry.schema);
+                const result = await store.save(dataEntry, { forceUpdate: true });
 
-            try {
-              const store = await openDatastore(dataEntry.schema);
-              const result = await store.save(dataEntry, { forceUpdate: true });
-
-              if (!result) {
+                if (!result) {
+                  acceptResult.success = false;
+                  acceptResult.errors.push({
+                    dataEntry,
+                    errors: store.errors,
+                  } as never);
+                }
+              } catch (error) {
                 acceptResult.success = false;
                 acceptResult.errors.push({
                   dataEntry,
-                  errors: store.errors,
+                  errors: [error],
                 } as never);
               }
-            } catch (error) {
-              acceptResult.success = false;
-              acceptResult.errors.push({
-                dataEntry,
-                errors: [error],
-              } as never);
             }
-          }
-          break;
-        default:
-          break;
+            break;
+          default:
+            break;
+        }
+
+        inboxEntry.read = true;
+        const inbox = await messagingEngine?.getInbox();
+        await inbox.privateInbox.save(inboxEntry);
+      } catch (err) {
+      } finally {
+        setIsLoading(false);
       }
-
-      inboxEntry.read = true;
-      const inbox = await messagingEngine?.getInbox();
-      await inbox.privateInbox.save(inboxEntry);
-
-      setIsLoading(false);
     },
     [openDatastore, messagingEngine]
   );

@@ -21,7 +21,7 @@ export const InboxMessageDetails: React.FC<InboxDetailsProps> = ({ message }) =>
           <DrawerTitle>Message</DrawerTitle>
         </div>
       </DrawerHeader>
-      <div className='py-6 h-full'>
+      <div className='py-6 h-full overflow-y-auto'>
         <div className='flex items-center space-x-2 px-6'>
           <div className='relative'>
             <Avatar className='shadow'>

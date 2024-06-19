@@ -43,6 +43,8 @@ const InboxPage = () => {
     setLimit(newLimit);
   };
 
+  console.log(messages);
+
   return (
     <>
       <div className='flex flex-col pt-10 pb-6 space-y-6 flex-grow'>

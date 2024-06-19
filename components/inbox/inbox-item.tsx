@@ -8,6 +8,7 @@ import { Card } from "../ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import Link from "next/link";
 import { inboxTypes } from "@/features/inbox/constants";
+import { Failed } from "../icons/failed";
 
 interface InboxRowItemProps {
   message: InboxEntry;
@@ -19,7 +20,7 @@ export const InboxRowItem: React.FC<InboxRowItemProps> = ({ message, onClick }) 
   const InboxTypeIcon = inboxTypes[type].icon;
 
   return (
-    <Card className='flex rounded-lg w-full' onClick={() => onClick(_id)}>
+    <Card className='flex rounded-lg w-full cursor-pointer' onClick={() => onClick(_id)}>
       {/* desktop card */}
       <div className='text-sm w-full hidden md:grid grid-cols-[1fr_1fr_1fr_160px] min-h-[72px]'>
         <div className='px-4 flex items-center gap-3 shrink'>
@@ -47,6 +48,12 @@ export const InboxRowItem: React.FC<InboxRowItemProps> = ({ message, onClick }) 
             <div className='flex gap-2 items-center'>
               <Success />
               <p className='font-semibold text-sm'>Accepted</p>
+            </div>
+          )}
+          {data.status === "decline" && (
+            <div className='flex gap-2 items-center'>
+              <Failed />
+              <p className='font-semibold text-sm'>Declined</p>
             </div>
           )}
         </div>

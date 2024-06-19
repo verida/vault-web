@@ -1,18 +1,24 @@
-import { isEmpty } from "lodash";
-import { InboxDetailsProps } from "../inbox-details";
-import { useVerida } from "@/features/verida";
 import { useEffect, useState } from "react";
-import { Card, CardFooter } from "@/components/ui/card";
-import { DrawerFooter, DrawerHeader, DrawerTitle } from "@/components/ui/drawer";
-import { CloseSideRight } from "@/components/icons/close-side-right";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import moment from "moment";
 import Image from "next/image";
-import { Success } from "@/components/icons/success";
-import { Button } from "@/components/ui/button";
-import { SearchInput } from "@/components/search-input";
-import { ArrowLeft } from "@/components/icons/arrow-left";
-import { Checkbox } from "@/components/ui/checkbox";
+
 import Alert from "@/components/alert";
+import { ArrowLeft } from "@/components/icons/arrow-left";
+import { CloseSideRight } from "@/components/icons/close-side-right";
+import { Failed } from "@/components/icons/failed";
+import { Success } from "@/components/icons/success";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Checkbox } from "@/components/ui/checkbox";
+import { DrawerFooter, DrawerHeader, DrawerTitle } from "@/components/ui/drawer";
+import { SearchInput } from "@/components/search-input";
+import { useInboxAction } from "@/features/inbox/hooks/useInboxAction";
+import { InboxType } from "@/features/inbox/types";
+import { useVerida } from "@/features/verida";
+
+import { InboxDetailsProps } from "../inbox-details";
+import { DataRequestItem } from "../data-request-item";
 
 export const DataRequestDetails: React.FC<InboxDetailsProps> = ({ message }) => {
   const { message: title, data } = message;
@@ -20,6 +26,9 @@ export const DataRequestDetails: React.FC<InboxDetailsProps> = ({ message }) => 
 
   const [availableData, setAvailableData] = useState<any>();
   const [isSelecting, setIsSelecting] = useState<boolean>(false);
+  const [selectedItems, setSelectedItems] = useState<any[]>([]);
+
+  const { handleAccept, handleReject, isLoading } = useInboxAction();
 
   const fetchData = async () => {
     try {
@@ -52,6 +61,8 @@ export const DataRequestDetails: React.FC<InboxDetailsProps> = ({ message }) => 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [openDatastore]);
 
+  console.log(selectedItems);
+
   if (isSelecting) {
     return (
       <>
@@ -65,16 +76,35 @@ export const DataRequestDetails: React.FC<InboxDetailsProps> = ({ message }) => 
           </div>
         </DrawerHeader>
 
-        <div className='p-6'>
+        <div className='p-6 overflow-y-auto'>
           <div className='space-y-2'>
             {(availableData || []).map((item: any) => (
               <Card key={`card-${item._id}`} className='px-4 py-3'>
                 <Checkbox
+                  defaultChecked={selectedItems.findIndex((sItem) => sItem._id === item._id) >= 0}
+                  onCheckedChange={(checked) => {
+                    if (!checked) {
+                      setSelectedItems((prev) => prev.filter((sItem) => sItem._id !== item._id));
+                    } else {
+                      setSelectedItems((prev) => [...prev, item]);
+                    }
+                  }}
                   label={
-                    <div>
-                      <h6 className='font-bold'>{item.name}</h6>
-                      <p>Government of Western...</p>
-                      <p className='text-xs text-gray-500'>01/05/22 11:00</p>
+                    <div className='flex items-center gap-2'>
+                      <Image
+                        src={item.icon}
+                        alt='data-request-item'
+                        width='60'
+                        height='60'
+                        className='rounded-full border object-cover aspect-square'
+                      />
+                      <div>
+                        <h6 className='font-bold'>{item.name}</h6>
+                        <p className='text-sm text-gray-500'>{item.summary}</p>
+                        <p className='text-xs text-gray-500 opacity-60'>
+                          {moment(new Date(item.insertedAt)).format("DD/MM/YY hh:mm")}
+                        </p>
+                      </div>
                     </div>
                   }
                 />
@@ -85,7 +115,13 @@ export const DataRequestDetails: React.FC<InboxDetailsProps> = ({ message }) => 
 
         <DrawerFooter>
           <Alert text='Carefully review your seletion' />
-          <Button className='bg-purple-500 hover:bg-purple-700'>Confirm Selection</Button>
+          <Button
+            className='bg-purple-500 hover:bg-purple-700'
+            onClick={() => setIsSelecting(false)}
+            disabled={selectedItems.length <= 0}
+          >
+            Confirm Selection
+          </Button>
         </DrawerFooter>
       </>
     );
@@ -98,6 +134,18 @@ export const DataRequestDetails: React.FC<InboxDetailsProps> = ({ message }) => 
           <CloseSideRight />
           <DrawerTitle>Data Request</DrawerTitle>
         </div>
+        {data.status === "accept" && (
+          <div className='flex gap-2 items-center'>
+            <Success />
+            <p className='font-semibold text-sm'>Accepted</p>
+          </div>
+        )}
+        {data.status === "decline" && (
+          <div className='flex gap-2 items-center'>
+            <Failed />
+            <p className='font-semibold text-sm'>Declined</p>
+          </div>
+        )}
       </DrawerHeader>
 
       <div className='p-6'>
@@ -126,24 +174,27 @@ export const DataRequestDetails: React.FC<InboxDetailsProps> = ({ message }) => 
         <div className='mt-8'>
           <p className='text-sm text-neutral-500'>The following data is being requested</p>
 
-          <Card className='mt-4 p-4 border border-border bg-neutral-50 flex flex-col gap-6'>
-            <div>
-              <h6 className='font-bold'>Employment contract</h6>
-              <p className='text-sm'>Name, employer, start and end date, attachments</p>
-            </div>
-
-            <Button variant='outline' className='w-full' onClick={() => setIsSelecting(true)}>
-              Add
-            </Button>
-          </Card>
+          <DataRequestItem onAdd={() => setIsSelecting(true)} selectedItems={selectedItems} />
         </div>
       </div>
 
       <DrawerFooter>
         <Alert text='Ignore if you don’t recognize this request' />
         <div className='grid grid-cols-2 gap-4'>
-          <Button variant='outline'>Decline</Button>
-          <Button className='bg-purple-500 hover:bg-purple-700'>Share</Button>
+          <Button
+            variant='outline'
+            disabled={isLoading}
+            onClick={() => handleReject(message, InboxType.DATA_REQUEST, {})}
+          >
+            Decline
+          </Button>
+          <Button
+            className='bg-purple-500 hover:bg-purple-700'
+            disabled={isLoading}
+            onClick={() => handleAccept(message, InboxType.DATA_REQUEST, selectedItems)}
+          >
+            Share
+          </Button>
         </div>
       </DrawerFooter>
     </>

@@ -9,6 +9,8 @@ import Image from "next/image";
 import Alert from "@/components/alert";
 import { useInboxAction } from "@/features/inbox/hooks/useInboxAction";
 import { InboxType } from "@/features/inbox/types";
+import { Failed } from "@/components/icons/failed";
+import { IncomingDataItem } from "../incoming-data-item";
 
 const InboxIncomingData: React.FC<InboxDetailsProps> = ({ message, onClose }) => {
   const { message: title, data } = message;
@@ -28,9 +30,15 @@ const InboxIncomingData: React.FC<InboxDetailsProps> = ({ message, onClose }) =>
             <p className='font-semibold text-sm'>Accepted</p>
           </div>
         )}
+        {data.status === "decline" && (
+          <div className='flex gap-2 items-center'>
+            <Failed />
+            <p className='font-semibold text-sm'>Declined</p>
+          </div>
+        )}
       </DrawerHeader>
 
-      <div className='p-6'>
+      <div className='p-6 overflow-y-auto'>
         <div className='flex items-center space-x-2'>
           <div className='relative'>
             <Avatar className='shadow'>
@@ -58,13 +66,7 @@ const InboxIncomingData: React.FC<InboxDetailsProps> = ({ message, onClose }) =>
         <div className='mt-3 space-y-3'>
           {data.data &&
             data.data.map((item: any, _ind: number) => (
-              <div key={`item-${_ind}`} className='bg-neutral-50 rounded-sm p-4 space-y-2'>
-                <div className='flex gap-2 items-center'>
-                  <Image src={item.icon || ""} width='32' height='32' alt='incoming-item-icon' />
-                  <h4 className='font-bold'>{item.name}</h4>
-                </div>
-                <p className='text-sm font-semibold'>{item.summary}</p>
-              </div>
+              <IncomingDataItem item={item} key={`incoming-item-${item._id}`} />
             ))}
         </div>
       </div>
