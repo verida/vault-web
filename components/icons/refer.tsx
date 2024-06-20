@@ -1,8 +1,6 @@
 import { SVGProps } from "react";
 
-interface Props extends SVGProps<SVGSVGElement> {
-
-}
+interface Props extends SVGProps<SVGSVGElement> {}
 
 const Refer = (props: Props) => (
   <svg

@@ -1,13 +1,13 @@
-import React, { useCallback } from "react";
-import { Search } from "./icons/search";
 import { debounce } from "lodash";
+import React, { useCallback } from "react";
+
+import { Search } from "./icons/search";
 
 type SearchInputProps = {
   onValueChange?: React.Dispatch<string>;
 } & React.InputHTMLAttributes<HTMLInputElement>;
 
 function SearchInput({ onValueChange, ...props }: SearchInputProps) {
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   const debounceChangeHandler = useCallback(
     debounce(
       (e: React.ChangeEvent<HTMLInputElement>) =>
@@ -18,12 +18,12 @@ function SearchInput({ onValueChange, ...props }: SearchInputProps) {
   );
 
   return (
-    <div className='py-3 px-4 h-12 bg-white rounded-lg border border-gray-200 flex flex-grow space-x-3'>
-      <Search className='box-content w-6 h-6 text-gray-500' />
+    <div className="flex h-12 flex-grow space-x-3 rounded-lg border border-gray-200 bg-white px-4 py-3">
+      <Search className="box-content h-6 w-6 text-gray-500" />
       <input
         {...props}
-        className='text-sm outline-none bg-transparent'
-        placeholder='Search Data'
+        className="bg-transparent text-sm outline-none"
+        placeholder="Search Data"
         onChange={debounceChangeHandler}
       />
     </div>

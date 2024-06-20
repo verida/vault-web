@@ -1,5 +1,8 @@
+import React from "react";
 
-import React from 'react'
+import { FolderContacts } from "@/components/icons/folder-contacts";
+import { FolderCredentialsIcon } from "@/components/icons/folder-credentials-icon";
+import { FolderSocial } from "@/components/icons/folder-social";
 
 // import DocumentsSvg from 'assets/icons/data/documents.svg'
 // import EmploymentSvg from 'assets/icons/data/employment.svg'
@@ -12,23 +15,20 @@ import React from 'react'
 // import SocialSvg from 'assets/icons/data/social.svg'
 // import SocialFollowingSvg from 'assets/icons/data/social/following.svg'
 // import SocialPostSvg from 'assets/icons/data/social/post.svg'
-import { DataFolderDefinition } from '..'
-import { FolderCredentialsIcon } from '@/components/icons/folder-credentials-icon'
-import { FolderContacts } from '@/components/icons/folder-contacts'
-import { FolderSocial } from '@/components/icons/folder-social'
+import { DataFolderDefinition } from "..";
 // import SubscriptionsSvg from 'assets/icons/data/subscriptions.svg'
 // import TicketsSvg from 'assets/icons/data/tickets.svg'
 
 export const dataFolders: DataFolderDefinition[] = [
   {
-    name: 'credentials',
-    title: 'Credential',
-    titlePlural: 'Credentials',
-    color: '#5BE1B0',
+    name: "credentials",
+    title: "Credential",
+    titlePlural: "Credentials",
+    color: "#5BE1B0",
     icon: <FolderCredentialsIcon />,
     root: true,
-    display: 'grid',
-    database: 'credential',
+    display: "grid",
+    database: "credential",
   },
   // health: {
   //   title: 'Health',
@@ -231,67 +231,67 @@ export const dataFolders: DataFolderDefinition[] = [
   //   folders: [],
   // },
   {
-    name: 'contacts',
-    title: 'Contacts',
-    titlePlural: 'Contacts',
-    color: '#47E6E5',
+    name: "contacts",
+    title: "Contacts",
+    titlePlural: "Contacts",
+    color: "#47E6E5",
     icon: <FolderContacts />,
     root: true,
-    display: 'cards',
-    database: 'social_contact',
+    display: "cards",
+    database: "social_contact",
     layouts: {
-      list: ['firstName', 'lastName', 'email', 'mobile'],
-      view: ['firstName', 'lastName', 'email', 'mobile', 'insertedAt'],
+      list: ["firstName", "lastName", "email", "mobile"],
+      view: ["firstName", "lastName", "email", "mobile", "insertedAt"],
     },
   },
   {
-    name: 'social',
-    title: 'Social',
-    titlePlural: 'Social',
+    name: "social",
+    title: "Social",
+    titlePlural: "Social",
     icon: <FolderSocial />,
     root: true,
-    display: 'folders',
-    folders: ['social/following', 'social/posts'],
+    display: "folders",
+    folders: ["social/following", "social/posts"],
   },
   {
-    name: 'social/following',
-    title: 'Following',
-    titlePlural: 'Following',
-    color: '#7A78E5',
+    name: "social/following",
+    title: "Following",
+    titlePlural: "Following",
+    color: "#7A78E5",
     icon: <FolderSocial />,
     root: false,
-    display: 'cards',
-    database: 'social_following',
+    display: "cards",
+    database: "social_following",
     layouts: {
-      list: ['name', 'sourceApplication'],
+      list: ["name", "sourceApplication"],
       view: [
-        'name',
-        'sourceApplication',
-        'followedTimestamp',
-        'sourceId',
-        'uri',
+        "name",
+        "sourceApplication",
+        "followedTimestamp",
+        "sourceId",
+        "uri",
       ],
     },
   },
   {
-    name: 'social/posts',
-    title: 'Posts',
-    titlePlural: 'Posts',
-    color: '#EE7D91',
+    name: "social/posts",
+    title: "Posts",
+    titlePlural: "Posts",
+    color: "#EE7D91",
     icon: <FolderSocial />,
     root: false,
-    display: 'cards',
-    database: 'social_post',
+    display: "cards",
+    database: "social_post",
     layouts: {
-      list: ['name', 'sourceApplication'],
+      list: ["name", "sourceApplication"],
       view: [
-        'name',
-        'content',
-        'uri',
-        'sourceApplication',
-        'sourceId',
-        'insertedAt',
+        "name",
+        "content",
+        "uri",
+        "sourceApplication",
+        "sourceId",
+        "insertedAt",
       ],
     },
   },
-]
+];

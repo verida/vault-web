@@ -1,8 +1,8 @@
 "use client";
 
-import * as React from "react";
 import * as SwitchPrimitive from "@radix-ui/react-switch";
 import { Check, ChevronRight, Circle } from "lucide-react";
+import * as React from "react";
 
 import { cn } from "@/lib/utils";
 
@@ -15,7 +15,7 @@ const Switch = React.forwardRef<
   <SwitchPrimitive.Root
     ref={ref}
     className={cn(
-      "w-10 h-6 rounded-full relative shadow-[inset_0_1px_2px_0_rgba(0,0,0,.12)] bg-[#f7f7f7] data-[state=checked]:bg-[#5ECEA5] transition-all",
+      "relative h-6 w-10 rounded-full bg-[#f7f7f7] shadow-[inset_0_1px_2px_0_rgba(0,0,0,.12)] transition-all data-[state=checked]:bg-[#5ECEA5]",
       inset && "pl-8",
       className
     )}
@@ -35,7 +35,7 @@ const SwitchThumb = React.forwardRef<
   <SwitchPrimitive.Thumb
     ref={ref}
     className={cn(
-      "block w-5 h-5 rounded-full bg-white shadow-[0_2px_4px_0_rgba(0,0,0,.25)] translate-x-[2px] transition-all data-[state=checked]:!translate-x-[18px]",
+      "block h-5 w-5 translate-x-[2px] rounded-full bg-white shadow-[0_2px_4px_0_rgba(0,0,0,.25)] transition-all data-[state=checked]:!translate-x-[18px]",
       inset && "pl-8",
       className
     )}

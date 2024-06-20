@@ -1,8 +1,9 @@
 import { Connection } from "@/features/connections";
+import { cn } from "@/lib/utils";
+
+import { Button } from "../ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "../ui/card";
 import { Switch, SwitchThumb } from "../ui/switch";
-import { Button } from "../ui/button";
-import { cn } from "@/lib/utils";
 
 type Props = {
   onConnect: () => void;
@@ -12,14 +13,14 @@ type Props = {
 function ConnectionCard(props: Props) {
   const { id, item, description, onConnect, isConnected = false } = props;
   return (
-    <div className='h-full flex flex-col'>
+    <div className="flex h-full flex-col">
       {!isConnected && (
-        <div className='bg-green-100 pt-2 pb-6 text-center font-semibold text-xs rounded-[16px_16px_0_0]'>
+        <div className="rounded-[16px_16px_0_0] bg-green-100 pb-6 pt-2 text-center text-xs font-semibold">
           Earn 100 VDA by connecting to the platform
         </div>
       )}
       <Card className={cn(!isConnected ? "-mt-4" : "", "flex-grow")}>
-        <CardHeader className='pb-0 flex flex-row justify-between'>
+        <CardHeader className="flex flex-row justify-between pb-0">
           {props.icon && (
             <>
               <props.icon />
@@ -27,32 +28,32 @@ function ConnectionCard(props: Props) {
           )}
           {!isConnected ? (
             <Button
-              size='lg'
-              variant='outline'
-              className='px-4 !mt-0'
+              size="lg"
+              variant="outline"
+              className="!mt-0 px-4"
               onClick={onConnect}
             >
               Connect
             </Button>
           ) : (
             <Button
-              size='lg'
-              variant='outline'
-              className='px-4 !mt-0 text-[#FD4F64]'
+              size="lg"
+              variant="outline"
+              className="!mt-0 px-4 text-[#FD4F64]"
             >
               Disconnect
             </Button>
           )}
         </CardHeader>
-        <CardContent className='p-6 pt-0'>
-          {id && <h3 className='text-xl font-semibold mt-6'>{id}</h3>}
-          {description && <p className='text-gray-500 mt-2'>{description}</p>}
+        <CardContent className="p-6 pt-0">
+          {id && <h3 className="mt-6 text-xl font-semibold">{id}</h3>}
+          {description && <p className="mt-2 text-gray-500">{description}</p>}
         </CardContent>
         {isConnected && (
           <CardFooter>
-            <div className='pt-4 w-full border-t border-border flex justify-between items-end'>
-              <p className='text-sm'>Display on Verida One profile</p>
-              <Switch defaultChecked className='w-10 h-6'>
+            <div className="flex w-full items-end justify-between border-t border-border pt-4">
+              <p className="text-sm">Display on Verida One profile</p>
+              <Switch defaultChecked className="h-6 w-10">
                 <SwitchThumb />
               </Switch>
             </div>
