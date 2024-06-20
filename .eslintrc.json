@@ -10,7 +10,7 @@
     },
     "project": "./tsconfig.json"
   },
-  "plugins": ["@typescript-eslint", "prettier",  "import", "simple-import-sort"],
+  "plugins": ["@typescript-eslint", "prettier", "import", "simple-import-sort"],
   "extends": [
     "eslint:recommended",
     "plugin:@typescript-eslint/eslint-recommended",

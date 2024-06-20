@@ -88,6 +88,114 @@ const config = {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
+      fontSize: {
+        'heading-1': [
+          "2rem",
+          {
+            lineHeight: "130%",
+            fontWeight: "700"
+          }
+        ],
+        'heading-2': [
+          "1.5rem",
+          {
+            lineHeight: "140%",
+            fontWeight: "600"
+          }
+        ],
+        'heading-3': [
+          "1.25rem",
+          {
+            lineHeight: "140%",
+            fontWeight: "600"
+          }
+        ],
+        'heading-4': [
+          "1.125rem",
+          {
+            lineHeight: "140%",
+            fontWeight: "600"
+          }
+        ],
+        'heading-5': [
+          "1rem",
+          {
+            lineHeight: "140%",
+            fontWeight: "600"
+          }
+        ],
+        'base-l': [
+          "1rem",
+          {
+            lineHeight: "140%",
+            fontWeight: "400"
+          }
+        ],
+        'base-s-regular': [
+          "0.75rem",
+          {
+            lineHeight: "140%",
+            fontWeight: "400"
+          }
+        ],
+        'base-s-semibold': [
+          "0.75rem",
+          {
+            lineHeight: "140%",
+            fontWeight: "600"
+          }
+        ],
+        'base-regular': [
+          "0.875rem",
+          {
+            lineHeight: "140%",
+            fontWeight: "400"
+          }
+        ],
+        'base-semibold': [
+          "0.875rem",
+          {
+            lineHeight: "140%",
+            fontWeight: "600"
+          }
+        ],
+        'desktop-heading-1': [
+          "2.5rem",
+          {
+            lineHeight: "130%",
+            fontWeight: "700"
+          }
+        ],
+        'desktop-heading-2': [
+          "2rem",
+          {
+            lineHeight: "140%",
+            fontWeight: "600"
+          }
+        ],
+        'desktop-heading-3': [
+          "1.5rem",
+          {
+            lineHeight: "140%",
+            fontWeight: "600"
+          }
+        ],
+        'desktop-heading-4': [
+          "1.25rem",
+          {
+            lineHeight: "140%",
+            fontWeight: "600"
+          }
+        ],
+        'desktop-heading-5': [
+          "1rem",
+          {
+            lineHeight: "140%",
+            fontWeight: "600"
+          }
+        ],
+        
+      },
       keyframes: {
         "accordion-down": {
           from: { height: "0" },
