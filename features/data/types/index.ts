@@ -1,48 +1,48 @@
-import { VeridaRecord } from "@/features/verida"
+import { VeridaRecord } from "@/features/verida";
 
 export type DataField = {
-  field: string
-  value: unknown
-}
+  field: string;
+  value: unknown;
+};
 
 export type DataItem = {
-  data: DataField[]
-  title: string
-}
+  data: DataField[];
+  title: string;
+};
 
-export type DataFolderDisplayType = 'grid' | 'folders' | 'cards'
+export type DataFolderDisplayType = "grid" | "folders" | "cards";
 
 export type DataFolderDefinition = {
-  name: string
-  title: string
-  titlePlural?: string
-  icon: React.ReactNode
-  color?: string
-  root: boolean
-  database?: string,
+  name: string;
+  title: string;
+  titlePlural?: string;
+  icon: React.ReactNode;
+  color?: string;
+  root: boolean;
+  database?: string;
 } & (
   | {
-      display: 'folders'
-      folders: string[]
+      display: "folders";
+      folders: string[];
     }
   | {
-      display: 'grid' | 'cards'
-      database: string
+      display: "grid" | "cards";
+      database: string;
       layouts?: {
-        list?: string[]
-        view?: string[]
-      }
-      sort?: Record<string, unknown>[]
+        list?: string[];
+        view?: string[];
+      };
+      sort?: Record<string, unknown>[];
       fields?: {
         [key: string]: {
-          label: string
-        }
-      }
+          label: string;
+        };
+      };
       card?: {
-        name?: (record: VeridaRecord) => string
-        summary?: (record: VeridaRecord) => string
-      }
-      nameField?: string
-      summaryField?: string
+        name?: (record: VeridaRecord) => string;
+        summary?: (record: VeridaRecord) => string;
+      };
+      nameField?: string;
+      summaryField?: string;
     }
-)
+);

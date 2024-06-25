@@ -1,6 +1,10 @@
-'use client'
+"use client";
 
-import { EnvironmentType, type DatastoreOpenConfig, type IDatastore } from "@verida/types";
+import {
+  type DatastoreOpenConfig,
+  EnvironmentType,
+  type IDatastore,
+} from "@verida/types";
 import { WebUser } from "@verida/web-helpers";
 import React, {
   useCallback,
@@ -10,15 +14,16 @@ import React, {
   useState,
 } from "react";
 
-import {
-  CLEAR_SESSION_AFTER_MAINNET_UPGRADE_LOCAL_STORAGE_KEY,
-  VERIDA_CONNECT_SESSION_LOCAL_STORAGE_KEY,
-} from "../constants";
 import { Logger } from "@/features/logger";
 import { getPublicProfile } from "@/features/profiles";
 import { PublicProfile } from "@/features/profiles/@types";
 
-const logger = new Logger("verida")
+import {
+  CLEAR_SESSION_AFTER_MAINNET_UPGRADE_LOCAL_STORAGE_KEY,
+  VERIDA_CONNECT_SESSION_LOCAL_STORAGE_KEY,
+} from "../constants";
+
+const logger = new Logger("verida");
 
 const webUserInstance = new WebUser({
   debug: true,
@@ -29,11 +34,11 @@ const webUserInstance = new WebUser({
     },
   },
   contextConfig: {
-    name: 'Verida: Vault',
+    name: "Verida: Vault",
   },
   accountConfig: {
     request: {
-      logoUrl: '', // TODO
+      logoUrl: "", // TODO
     },
     environment: EnvironmentType.MAINNET,
   },
@@ -110,8 +115,8 @@ export const VeridaProvider: React.FunctionComponent<VeridaProviderProps> = (
 
     //getPublicProfile
     try {
-      const newProfile = await getPublicProfile(webUserInstance.getDid())
-      console.log('Context', newProfile)
+      const newProfile = await getPublicProfile(webUserInstance.getDid());
+      console.log("Context", newProfile);
       setProfile(newProfile);
     } catch (error: unknown) {
       if (

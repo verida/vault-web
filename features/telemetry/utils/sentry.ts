@@ -10,7 +10,6 @@ export function initSentry() {
   // TODO: Enable performance monitoring
   // TODO: Enable profiling
   // TODO: Double check how it works with code push
-
   // Sentry.init({
   //   enabled: config.sentry.enabled,
   //   dsn: config.sentry.dsn,
@@ -35,7 +34,6 @@ export function initSentry() {
   //       // We may be missing on some issues though
   //       return null
   //     }
-
   //     return event
   //   },
   // })

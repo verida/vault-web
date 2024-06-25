@@ -1,14 +1,15 @@
 "use client";
 
 import Link from "next/link";
-import { cn } from "@/lib/utils";
-import { connections } from "@/features/connections";
+import { useMemo, useState } from "react";
+
 import { ConnectionCard } from "@/components/connection/connection-card";
 import { ConnectionModal } from "@/components/connection/connection-modal";
-import { useMemo, useState } from "react";
-import { Button } from "@/components/ui/button";
 import { Filter } from "@/components/icons/filter";
 import { SearchInput } from "@/components/search-input";
+import { Button } from "@/components/ui/button";
+import { connections } from "@/features/connections";
+import { cn } from "@/lib/utils";
 
 const MarketingPage = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -37,22 +38,22 @@ const MarketingPage = () => {
   );
 
   return (
-    <div className='flex flex-col py-10'>
-      <div className='flex flex-col md:flex-row items-center justify-between'>
-        <h1 className='text-2xl font-medium'>Discover Connections</h1>
-        <nav className='flex space-x-3 w-full md:w-auto'>
+    <div className="flex flex-col py-10">
+      <div className="flex flex-col items-center justify-between md:flex-row">
+        <h1 className="text-2xl font-medium">Discover Connections</h1>
+        <nav className="flex w-full space-x-3 md:w-auto">
           <SearchInput onValueChange={handleSearchInputChange} />
           <Button
-            variant='outline'
-            size='lg'
-            className='text-gray-500 h-12 px-4'
+            variant="outline"
+            size="lg"
+            className="h-12 px-4 text-gray-500"
           >
             <Filter /> Filter
           </Button>
         </nav>
       </div>
 
-      <div className='grid grid-cols-1 gap-6 mt-6 md:grid-cols-2 lg:grid-cols-3'>
+      <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
         {searchedConnections.map((connection) => (
           <ConnectionCard
             {...connection}

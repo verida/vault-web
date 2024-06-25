@@ -1,7 +1,8 @@
 import { EnvironmentType } from "@verida/types";
 
-import { version } from "./version";
 import { LogLevel } from "@/features/logger";
+
+import { version } from "./version";
 
 const devMode = process.env.REACT_APP_DEV_MODE === "true" ? true : false;
 
@@ -16,7 +17,7 @@ const logLevel: LogLevel =
         : "info";
 
 // Verida variables
-const veridaContextName = 'Verida: ';
+const veridaContextName = "Verida: ";
 
 const veridaConnectLogoUrl = `/images/logo_for_verida_connect.png`;
 
@@ -27,7 +28,8 @@ const veridaEnvironment: EnvironmentType =
       ? EnvironmentType.MAINNET
       : EnvironmentType.TESTNET;
 
-const veridaRpcUrl = 'https://polygon-mumbai.g.alchemy.com/v2/Q4NRuRlwTNyI90dDCgiX_KT_vS_2gpbN'
+const veridaRpcUrl =
+  "https://polygon-mumbai.g.alchemy.com/v2/Q4NRuRlwTNyI90dDCgiX_KT_vS_2gpbN";
 
 export const config = {
   appVersion: version,

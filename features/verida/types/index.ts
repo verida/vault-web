@@ -77,4 +77,4 @@ export type ReceivedMessage<D> = {
   };
 };
 
-export type VeridaRecord<T = Record<string, unknown>> = VeridaBaseRecord & T
+export type VeridaRecord<T = Record<string, unknown>> = VeridaBaseRecord & T;

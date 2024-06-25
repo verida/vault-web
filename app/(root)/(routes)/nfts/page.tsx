@@ -1,11 +1,10 @@
 import Link from "next/link";
+
 import { cn } from "@/lib/utils";
 
 const MarketingPage = () => {
   return (
-    <div className="flex items-center justify-center flex-col p-10">
-      NFTs
-    </div>
+    <div className="flex flex-col items-center justify-center p-10">NFTs</div>
   );
 };
 
