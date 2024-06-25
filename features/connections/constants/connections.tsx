@@ -1,10 +1,10 @@
-import { Discord } from "@/components/icons/discord";
-import { Facebook } from "@/components/icons/facebook";
-import { Github } from "@/components/icons/github";
-import { Instagram } from "@/components/icons/instagram";
-import { Telegram } from "@/components/icons/telegram";
-import { Twitter } from "@/components/icons/twitter";
-import { Youtube } from "@/components/icons/youtube";
+import { Discord } from "@/components/icons/connection-discord";
+import { Facebook } from "@/components/icons/connection-facebook";
+import { Github } from "@/components/icons/connection-github";
+import { Instagram } from "@/components/icons/connection-instagram";
+import { Telegram } from "@/components/icons/connection-telegram";
+import { Twitter } from "@/components/icons/connection-twitter";
+import { Youtube } from "@/components/icons/connection-youtube";
 
 import { Connection } from "..";
 

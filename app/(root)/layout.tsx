@@ -1,19 +1,9 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-
 import { Footer } from "@/components/footer";
 import { Navbar } from "@/components/navbar";
-import { useVerida } from "@/features/verida";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
-  const router = useRouter();
-  const { isConnected, isCheckingConnection } = useVerida();
-
-  if (!isConnected && !isCheckingConnection) {
-    router.push("/");
-  }
-
   return (
     <div className="flex min-h-screen flex-col bg-[#F7F8FA]">
       <Navbar />
