@@ -3,6 +3,7 @@
 import * as React from "react";
 
 import { cn } from "@/lib/utils";
+
 import { Close } from "../icons/close";
 
 const Modal = React.forwardRef<
@@ -15,18 +16,18 @@ const Modal = React.forwardRef<
   if (!isOpen) return null;
 
   return (
-    <div className='z-[100]'>
-      <div className='fixed inset-0 bg-black/40' onClick={onClose}></div>
-      <div className='fixed inset-0 flex justify-center items-center pointer-events-none px-4'>
+    <div className="z-[100]">
+      <div className="fixed inset-0 bg-black/40" onClick={onClose}></div>
+      <div className="pointer-events-none fixed inset-0 flex items-center justify-center px-4">
         <div
           ref={ref}
           className={cn(
-            "rounded-lg bg-card text-card-foreground shadow-sm p-6 w-full max-w-[432px] pointer-events-auto",
+            "pointer-events-auto w-full max-w-[432px] rounded-lg bg-card p-6 text-card-foreground shadow-sm",
             className
           )}
         >
-          <Close onClick={onClose} className='ml-auto cursor-pointer' />
-          <div className='flex flex-col' {...props} />
+          <Close onClick={onClose} className="ml-auto cursor-pointer" />
+          <div className="flex flex-col" {...props} />
         </div>
       </div>
     </div>

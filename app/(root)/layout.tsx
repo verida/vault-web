@@ -1,14 +1,20 @@
+import { useRouter } from "next/navigation";
+
 import { Footer } from "@/components/footer";
 import { Navbar } from "@/components/navbar";
+import { useVerida } from "@/features/verida";
 
-const MarketingLayout = ({ children }: { children: React.ReactNode }) => {
+const Layout = ({ children }: { children: React.ReactNode }) => {
+  const router = useRouter();
+  const { isConnected } = useVerida();
+  
   return (
-    <div className='flex flex-col min-h-screen bg-[#F7F8FA]'>
+    <div className="flex min-h-screen flex-col bg-[#F7F8FA]">
       <Navbar />
-      <main className='flex-grow pt-[72px] pb-20 container'>{children}</main>
+      <main className="container flex-grow pb-20 pt-[72px]">{children}</main>
       <Footer />
     </div>
   );
 };
 
-export default MarketingLayout;
+export default Layout;

@@ -1,9 +1,11 @@
+import { useMemo } from "react";
+
 import { Connection, connections } from "@/features/connections";
-import { Modal } from "../ui/modal";
-import { Button } from "../ui/button";
+
 import { VLogo } from "../icons/logo";
 import { Switch } from "../icons/switch";
-import { useMemo } from "react";
+import { Button } from "../ui/button";
+import { Modal } from "../ui/modal";
 
 type Props = {
   isOpen: boolean;
@@ -19,17 +21,17 @@ function ConnectionModal({ connectionId, ...props }: Props) {
   return (
     <Modal {...props}>
       {connection && (
-        <div className='flex space-x-6 mx-auto items-center'>
-          {connection.icon && <connection.icon className='w-20 h-20' />}
+        <div className="mx-auto flex items-center space-x-6">
+          {connection.icon && <connection.icon className="h-20 w-20" />}
           <Switch />
-          <VLogo className='border border-[#e0e3ea] rounded-full' />
+          <VLogo className="rounded-full border border-[#e0e3ea]" />
         </div>
       )}
 
-      <h4 className='font-semibold text-sm mt-8'>What it will do</h4>
+      <h4 className="mt-8 text-sm font-semibold">What it will do</h4>
 
       {connection && (
-        <p className='text-sm leading-5 mt-4'>
+        <p className="mt-4 text-sm leading-5">
           When you connect {connection.id} and Verida, your {connection.id}{" "}
           activities will automatically show up on Verida for all your friends
           to see. Additionally, {connection.item} and content shared via{" "}
@@ -38,7 +40,7 @@ function ConnectionModal({ connectionId, ...props }: Props) {
         </p>
       )}
 
-      <Button variant='outline' className='w-full mt-8'>
+      <Button variant="outline" className="mt-8 w-full">
         Connect
       </Button>
     </Modal>

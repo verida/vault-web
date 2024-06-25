@@ -1,12 +1,12 @@
-import { Connection } from "..";
-
-import { Twitter } from "@/components/icons/twitter";
-import { Instagram } from "@/components/icons/instagram";
 import { Discord } from "@/components/icons/discord";
-import { Telegram } from "@/components/icons/telegram";
-import { Github } from "@/components/icons/github";
 import { Facebook } from "@/components/icons/facebook";
+import { Github } from "@/components/icons/github";
+import { Instagram } from "@/components/icons/instagram";
+import { Telegram } from "@/components/icons/telegram";
+import { Twitter } from "@/components/icons/twitter";
 import { Youtube } from "@/components/icons/youtube";
+
+import { Connection } from "..";
 
 export const connections: Connection[] = [
   {
