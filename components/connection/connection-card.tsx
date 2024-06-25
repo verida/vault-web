@@ -29,7 +29,7 @@ function ConnectionCard(props: Props) {
           {!isConnected ? (
             <Button
               size="lg"
-              variant="outline"
+              variant="secondary"
               className="!mt-0 px-4"
               onClick={onConnect}
             >
@@ -38,7 +38,7 @@ function ConnectionCard(props: Props) {
           ) : (
             <Button
               size="lg"
-              variant="outline"
+              variant="secondary"
               className="!mt-0 px-4 text-[#FD4F64]"
             >
               Disconnect

@@ -40,7 +40,7 @@ function ConnectionModal({ connectionId, ...props }: Props) {
         </p>
       )}
 
-      <Button variant="outline" className="mt-8 w-full">
+      <Button variant="secondary" className="mt-8 w-full">
         Connect
       </Button>
     </Modal>

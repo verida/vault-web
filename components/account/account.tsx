@@ -45,7 +45,7 @@ const Account = () => {
 
   return !isConnected ? (
     <div className="flex w-full items-center justify-between space-x-4 md:block md:w-auto">
-      <Button size="sm" variant="outline" onClick={() => connect()}>
+      <Button size="sm" variant="secondary" onClick={() => connect()}>
         Login
       </Button>
     </div>

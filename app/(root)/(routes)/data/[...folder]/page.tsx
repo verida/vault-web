@@ -105,7 +105,7 @@ const FolderPage = ({ params }: { params: { folder: string[] } }) => {
   return (
     <div className="flex-col">
       <Button
-        variant={"ghost"}
+        variant="secondary"
         className="mb-4 flex h-16 items-center gap-5 text-sm font-medium"
         onClick={() => router.push(pathName.split("/").slice(0, -1).join("/"))}
       >

@@ -44,7 +44,7 @@ const MarketingPage = () => {
         <nav className="flex w-full space-x-3 md:w-auto">
           <SearchInput onValueChange={handleSearchInputChange} />
           <Button
-            variant="outline"
+            variant="secondary"
             size="lg"
             className="h-12 px-4 text-gray-500"
           >
