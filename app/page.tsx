@@ -54,7 +54,7 @@ const Homepage = () => {
                 Try the Verida Vault App
               </Button>
 
-              <div className="mt-12 flex h-full flex-1 flex-col rounded-[32px] rounded-b-none bg-radial-gradient text-white md:hidden">
+              <div className="bg-radial-gradient mt-12 flex h-full flex-1 flex-col rounded-[32px] rounded-b-none text-white md:hidden">
                 <Swiper data={sidebarContent} />
               </div>
             </div>
@@ -63,7 +63,7 @@ const Homepage = () => {
           </div>
         </section>
 
-        <section className="hidden min-h-full flex-1 rounded-[32px] rounded-r-none bg-radial-gradient text-white md:flex md:flex-col">
+        <section className="bg-radial-gradient hidden min-h-full flex-1 rounded-[32px] rounded-r-none text-white md:flex md:flex-col">
           <Swiper data={sidebarContent} />
         </section>
       </div>
