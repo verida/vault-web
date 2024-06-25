@@ -1,11 +1,13 @@
+import { Client } from "@verida/client-ts";
 import { explodeDID } from "@verida/helpers";
 import { AccountNodeDIDClientConfig, EnvironmentType } from "@verida/types";
-import { Client } from "@verida/client-ts";
-import { PublicProfile } from "./@types";
 import { isEqual } from "lodash";
+
+import { PublicProfile } from "./@types";
 import { getProfilesCache } from "./cache";
 
-export const VERIDA_DID_REGEXP = /did:vda:(devnet|mainnet|testnet):0x[0-9a-fA-F]{40}/;
+export const VERIDA_DID_REGEXP =
+  /did:vda:(devnet|mainnet|testnet):0x[0-9a-fA-F]{40}/;
 
 export function isValidVeridaDid(maybeDid: string) {
   return VERIDA_DID_REGEXP.test(maybeDid);
@@ -17,27 +19,31 @@ export function getNetworkFromDID(did: string): EnvironmentType {
     networkAsString === EnvironmentType.MAINNET
       ? EnvironmentType.MAINNET
       : networkAsString === EnvironmentType.TESTNET
-      ? EnvironmentType.TESTNET
-      : networkAsString === EnvironmentType.DEVNET
-      ? EnvironmentType.DEVNET
-      : networkAsString === EnvironmentType.LOCAL
-      ? EnvironmentType.LOCAL
-      : null;
+        ? EnvironmentType.TESTNET
+        : networkAsString === EnvironmentType.DEVNET
+          ? EnvironmentType.DEVNET
+          : networkAsString === EnvironmentType.LOCAL
+            ? EnvironmentType.LOCAL
+            : null;
 
   if (!network) throw new Error(`Invalid Verida Network: ${networkAsString}`);
 
   return network;
 }
 
-export function getDidClientConfigForNetwork(network: EnvironmentType): AccountNodeDIDClientConfig {
-  const rpcUrl = "https://polygon-mainnet.g.alchemy.com/v2/CJgbQjPD-NUTcZNMf4jt-mwb-xOQMq6e";
-  const metaTransactionServerUrl = "https://devnet-meta-tx-server.tn.verida.tech";
+export function getDidClientConfigForNetwork(
+  network: EnvironmentType
+): AccountNodeDIDClientConfig {
+  const rpcUrl =
+    "https://polygon-mainnet.g.alchemy.com/v2/CJgbQjPD-NUTcZNMf4jt-mwb-xOQMq6e";
+  const metaTransactionServerUrl =
+    "https://devnet-meta-tx-server.tn.verida.tech";
 
   return {
     callType: "gasless",
     web3Config: {
       // TODO: Apparently the `callType` property doesn't exist on web3Config, to double check.
-      // @ts-ignore
+      // @ts-expect-error type
       callType: "gasless",
       rpcUrl,
       serverConfig: {
@@ -96,7 +102,11 @@ export async function getPublicProfile(
   fallbackToVaultContext = true
 ): Promise<PublicProfile> {
   try {
-    const profileDb = await getPublicProfileDatastore(did, contextName, fallbackToVaultContext);
+    const profileDb = await getPublicProfileDatastore(
+      did,
+      contextName,
+      fallbackToVaultContext
+    );
 
     if (!profileDb) {
       return {
@@ -104,7 +114,13 @@ export async function getPublicProfile(
       };
     }
 
-    const [nameResult, avatarResult, descriptionResult, countryResult, websiteResult] = await Promise.allSettled([
+    const [
+      nameResult,
+      avatarResult,
+      descriptionResult,
+      countryResult,
+      websiteResult,
+    ] = await Promise.allSettled([
       await profileDb.get("name"),
       await profileDb.get("avatar"),
       await profileDb.get("description"),
@@ -114,10 +130,16 @@ export async function getPublicProfile(
 
     return {
       name: nameResult.status === "fulfilled" ? nameResult.value : "",
-      avatar: avatarResult.status === "fulfilled" ? avatarResult.value : undefined,
-      description: descriptionResult.status === "fulfilled" ? descriptionResult.value : undefined,
-      country: countryResult.status === "fulfilled" ? countryResult.value : undefined,
-      website: websiteResult.status === "fulfilled" ? websiteResult.value : undefined,
+      avatar:
+        avatarResult.status === "fulfilled" ? avatarResult.value : undefined,
+      description:
+        descriptionResult.status === "fulfilled"
+          ? descriptionResult.value
+          : undefined,
+      country:
+        countryResult.status === "fulfilled" ? countryResult.value : undefined,
+      website:
+        websiteResult.status === "fulfilled" ? websiteResult.value : undefined,
     };
   } catch (error) {
     return {

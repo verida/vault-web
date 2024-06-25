@@ -1,16 +1,27 @@
 "use client";
 
-import { EnvironmentType, type DatastoreOpenConfig, type IDatastore } from "@verida/types";
+import {
+  type DatastoreOpenConfig,
+  EnvironmentType,
+  type IDatastore,
+} from "@verida/types";
 import { WebUser } from "@verida/web-helpers";
-import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
+
+import { Logger } from "@/features/logger";
+import { getPublicProfile } from "@/features/profiles";
+import { PublicProfile } from "@/features/profiles/@types";
 
 import {
   CLEAR_SESSION_AFTER_MAINNET_UPGRADE_LOCAL_STORAGE_KEY,
   VERIDA_CONNECT_SESSION_LOCAL_STORAGE_KEY,
 } from "../constants";
-import { Logger } from "@/features/logger";
-import { getPublicProfile } from "@/features/profiles";
-import { PublicProfile } from "@/features/profiles/@types";
 
 const logger = new Logger("verida");
 
@@ -44,16 +55,23 @@ type VeridaContextType = {
   profile?: PublicProfile;
   connect: () => Promise<boolean>;
   disconnect: () => Promise<void>;
-  openDatastore: (schemaUrl: string, config?: DatastoreOpenConfig) => Promise<IDatastore>;
+  openDatastore: (
+    schemaUrl: string,
+    config?: DatastoreOpenConfig
+  ) => Promise<IDatastore>;
 };
 
-export const VeridaContext = React.createContext<VeridaContextType | null>(null);
+export const VeridaContext = React.createContext<VeridaContextType | null>(
+  null
+);
 
 type VeridaProviderProps = {
   children?: React.ReactNode;
 };
 
-export const VeridaProvider: React.FunctionComponent<VeridaProviderProps> = (props) => {
+export const VeridaProvider: React.FunctionComponent<VeridaProviderProps> = (
+  props
+) => {
   const webUserInstanceRef = useRef(webUserInstance);
 
   const [isConnected, setIsConnected] = useState(false);
@@ -101,7 +119,10 @@ export const VeridaProvider: React.FunctionComponent<VeridaProviderProps> = (pro
       console.log("Context", newProfile);
       setProfile(newProfile);
     } catch (error: unknown) {
-      if (error instanceof Error && error.message !== "Not connected to Verida Network") {
+      if (
+        error instanceof Error &&
+        error.message !== "Not connected to Verida Network"
+      ) {
         setProfile(undefined);
       } else {
         // Sentry.captureException(error);
@@ -121,10 +142,15 @@ export const VeridaProvider: React.FunctionComponent<VeridaProviderProps> = (pro
 
     const autoConnect = async () => {
       // Clear the potential Testnet sessions after the Mainnet upgrade
-      const clearedSession = localStorage.getItem(CLEAR_SESSION_AFTER_MAINNET_UPGRADE_LOCAL_STORAGE_KEY);
+      const clearedSession = localStorage.getItem(
+        CLEAR_SESSION_AFTER_MAINNET_UPGRADE_LOCAL_STORAGE_KEY
+      );
       if (!clearedSession || clearedSession !== "true") {
         localStorage.removeItem(VERIDA_CONNECT_SESSION_LOCAL_STORAGE_KEY);
-        localStorage.setItem(CLEAR_SESSION_AFTER_MAINNET_UPGRADE_LOCAL_STORAGE_KEY, "true");
+        localStorage.setItem(
+          CLEAR_SESSION_AFTER_MAINNET_UPGRADE_LOCAL_STORAGE_KEY,
+          "true"
+        );
       }
 
       setIsCheckingConnection(true);
@@ -148,7 +174,11 @@ export const VeridaProvider: React.FunctionComponent<VeridaProviderProps> = (pro
     const connected = await webUserInstanceRef.current.connect();
     setIsConnecting(false);
 
-    logger.info(connected ? "Connection to Verida successful" : "User did not connect to Verida");
+    logger.info(
+      connected
+        ? "Connection to Verida successful"
+        : "User did not connect to Verida"
+    );
 
     return connected;
   }, [webUserInstanceRef]);
@@ -170,7 +200,10 @@ export const VeridaProvider: React.FunctionComponent<VeridaProviderProps> = (pro
         config,
       });
 
-      const datastore = await webUserInstanceRef.current.openDatastore(schemaUrl, config);
+      const datastore = await webUserInstanceRef.current.openDatastore(
+        schemaUrl,
+        config
+      );
 
       logger.info("Verida datastore succesfully opened", {
         schemaUrl,
@@ -209,5 +242,9 @@ export const VeridaProvider: React.FunctionComponent<VeridaProviderProps> = (pro
     ]
   );
 
-  return <VeridaContext.Provider value={contextValue}>{props.children}</VeridaContext.Provider>;
+  return (
+    <VeridaContext.Provider value={contextValue}>
+      {props.children}
+    </VeridaContext.Provider>
+  );
 };

@@ -1,8 +1,12 @@
-import type { Config } from "tailwindcss";
+import type { Config } from "tailwindcss"
 
 const config = {
-  darkMode: ["class"],
-  content: ["./pages/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}", "./app/**/*.{ts,tsx}", "./src/**/*.{ts,tsx}"],
+  content: [
+    './pages/**/*.{ts,tsx}',
+    './components/**/*.{ts,tsx}',
+    './app/**/*.{ts,tsx}',
+    './src/**/*.{ts,tsx}',
+	],
   prefix: "",
   theme: {
     container: {
@@ -13,12 +17,9 @@ const config = {
       },
     },
     fontFamily: {
-      sans: "Sora, sans-serif",
+      sans: 'Sora, sans-serif'
     },
     extend: {
-      backgroundImage: {
-        "gradient-conic": "conic-gradient(from -90deg at 50.62% 100%, #5354D1 0deg, #F7F8FA 233.99999141693115deg)",
-      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -54,39 +55,146 @@ const config = {
           foreground: "hsl(var(--card-foreground))",
         },
         gray: {
-          50: "#F9FAFB",
-          100: "#F3F4F6",
-          200: "#E2E8F0",
-          300: "#D1D5DB",
-          500: "#6B7280",
-          800: "#1F2937",
+          50: '#F9FAFB',
+          100: '#F3F4F6',
+          200: '#E2E8F0',
+          300: '#D1D5DB',
+          500: '#6B7280',
+          800: '#1F2937'
         },
         purple: {
-          50: "#F5F4FF",
-          100: "#ECEBFA",
-          200: "#D9D8F5",
-          400: "#7986F7",
-          500: "#5354D1",
-          700: "#0D0782",
+          50: '#F5F4FF',
+          100: '#ECEBFA',
+          200: '#D9D8F5',
+          400: '#7986F7',
+          500: '#5354D1',
+          700: '#0D0782'
         },
-        green: {
-          100: "#DCFCE7",
-          800: "#166534",
+        green:{
+          100: '#DCFCE7',
+          800: '#166534'
         },
         cyan: {
-          100: "#CFFAFE",
-          800: "#155E75",
+          100: '#CFFAFE',
+          800: '#155E75'
         },
         yellow: {
-          100: "#FEF9C3",
-          500: "#F8A934",
-          800: "#854D0E",
-        },
+          100: '#FEF9C3',
+          800: '#854D0E'
+        }
       },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+      },
+      fontSize: {
+        'heading-1': [
+          "2rem",
+          {
+            lineHeight: "130%",
+            fontWeight: "700"
+          }
+        ],
+        'heading-2': [
+          "1.5rem",
+          {
+            lineHeight: "140%",
+            fontWeight: "600"
+          }
+        ],
+        'heading-3': [
+          "1.25rem",
+          {
+            lineHeight: "140%",
+            fontWeight: "600"
+          }
+        ],
+        'heading-4': [
+          "1.125rem",
+          {
+            lineHeight: "140%",
+            fontWeight: "600"
+          }
+        ],
+        'heading-5': [
+          "1rem",
+          {
+            lineHeight: "140%",
+            fontWeight: "600"
+          }
+        ],
+        'base-l': [
+          "1rem",
+          {
+            lineHeight: "140%",
+            fontWeight: "400"
+          }
+        ],
+        'base-s-regular': [
+          "0.75rem",
+          {
+            lineHeight: "140%",
+            fontWeight: "400"
+          }
+        ],
+        'base-s-semibold': [
+          "0.75rem",
+          {
+            lineHeight: "140%",
+            fontWeight: "600"
+          }
+        ],
+        'base-regular': [
+          "0.875rem",
+          {
+            lineHeight: "140%",
+            fontWeight: "400"
+          }
+        ],
+        'base-semibold': [
+          "0.875rem",
+          {
+            lineHeight: "140%",
+            fontWeight: "600"
+          }
+        ],
+        'desktop-heading-1': [
+          "2.5rem",
+          {
+            lineHeight: "130%",
+            fontWeight: "700"
+          }
+        ],
+        'desktop-heading-2': [
+          "2rem",
+          {
+            lineHeight: "140%",
+            fontWeight: "600"
+          }
+        ],
+        'desktop-heading-3': [
+          "1.5rem",
+          {
+            lineHeight: "140%",
+            fontWeight: "600"
+          }
+        ],
+        'desktop-heading-4': [
+          "1.25rem",
+          {
+            lineHeight: "140%",
+            fontWeight: "600"
+          }
+        ],
+        'desktop-heading-5': [
+          "1rem",
+          {
+            lineHeight: "140%",
+            fontWeight: "600"
+          }
+        ],
+        
       },
       keyframes: {
         "accordion-down": {
@@ -105,6 +213,6 @@ const config = {
     },
   },
   plugins: [require("tailwindcss-animate")],
-} satisfies Config;
+} satisfies Config
 
-export default config;
+export default config

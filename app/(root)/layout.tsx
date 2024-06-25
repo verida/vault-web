@@ -3,9 +3,9 @@ import { Navbar } from "@/components/navbar";
 
 const MarketingLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className='flex flex-col min-h-screen bg-[#F7F8FA]'>
+    <div className="flex min-h-screen flex-col bg-[#F7F8FA]">
       <Navbar />
-      <main className='min-h-[calc(100vh-120px)] mt-[72px] mb-12 container flex flex-col'>{children}</main>
+      <main className="container flex-grow pb-20 pt-[72px]">{children}</main>
       <Footer />
     </div>
   );

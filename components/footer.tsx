@@ -2,11 +2,11 @@ import Link from "next/link";
 
 export const Footer = () => {
   return (
-    <div className='fixed bottom-0 w-full p-4 lg:mx[108px] bg-[#F7F8FA]'>
-      <div className='md:max-w-screen-2xl mx-auto flex items-center w-full justify-between'>
-        <div className='flex items-center justify-between w-full'>
-          <p className='text-xs text-gray-500'>© 2024 Verida Vault</p>
-          <Link href='/terms' className='text-xs text-gray-500'>
+    <div className="lg:mx[108px] fixed bottom-0 w-full bg-[#F7F8FA] p-4">
+      <div className="mx-auto flex w-full items-center justify-between md:max-w-screen-2xl">
+        <div className="flex w-full items-center justify-between">
+          <p className="text-xs text-gray-500">© 2024 Verida Vault</p>
+          <Link href="/terms" className="text-xs text-gray-500">
             Terms & Conditions
           </Link>
         </div>

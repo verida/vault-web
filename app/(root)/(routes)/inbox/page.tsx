@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 "use client";
 
 import { Filter } from "@/components/icons/filter";
@@ -91,3 +92,16 @@ const InboxPage = () => {
 };
 
 export default InboxPage;
+=======
+import Link from "next/link";
+
+import { cn } from "@/lib/utils";
+
+const MarketingPage = () => {
+  return (
+    <div className="flex flex-col items-center justify-center p-10">Inbox</div>
+  );
+};
+
+export default MarketingPage;
+>>>>>>> develop
