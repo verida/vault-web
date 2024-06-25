@@ -48,11 +48,11 @@ export const Swiper: React.FunctionComponent<SwiperProps> = (props) => {
             unMountOnExit
           >
             <div>
-              <div className='flex space-x-3'>
+              <div className="flex space-x-3">
                 {data[currentStep].icon}
-              <Typography variant="heading-2">
-                {data[currentStep].title}
-              </Typography>
+                <Typography variant="heading-2">
+                  {data[currentStep].title}
+                </Typography>
               </div>
               <Typography variant="heading-4" className="mt-4">
                 {data[currentStep].description}
