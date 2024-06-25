@@ -1,8 +1,7 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Navbar } from '@/components/auth/navbar'
 import { Footer } from '@/components/auth/footer'
 import { Button } from '@/components/ui/button'
-import Image from 'next/image'
 import { Swiper } from '@/components/auth/swiper'
 
 const LandingPage = () => {
@@ -33,8 +32,8 @@ const LandingPage = () => {
                 ]}
                 images={[
                   '/images/inbox-page.png',
-                  '/images/inbox-page.png',
-                  '/images/inbox-page.png',
+                  '/images/data-page.png',
+                  '/images/connection-page.png',
                 ]}
               />
             </div>
@@ -54,8 +53,8 @@ const LandingPage = () => {
           ]}
           images={[
             '/images/inbox-page.png',
-            '/images/inbox-page.png',
-            '/images/inbox-page.png',
+            '/images/data-page.png',
+            '/images/connection-page.png',
           ]}
         />
       </div>
