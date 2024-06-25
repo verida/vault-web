@@ -63,8 +63,7 @@ export const DataRequestDetails: React.FC<InboxDetailsProps> = ({
   };
 
   useEffect(() => {
-    if (openDatastore) fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    if (!!openDatastore) fetchData();
   }, [openDatastore]);
 
   console.log(selectedItems);

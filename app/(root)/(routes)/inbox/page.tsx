@@ -1,6 +1,5 @@
 "use client";
 
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useMemo, useState } from "react";
 
 import { Filter } from "@/components/icons/filter";
@@ -17,10 +16,6 @@ import { useMessages } from "@/features/inbox/hooks/useMessages";
 import { InboxEntry } from "@/features/inbox/types";
 
 const InboxPage = () => {
-  const router = useRouter();
-  const pathName = usePathname();
-  const searchParams = useSearchParams();
-
   const [offset, setOffset] = useState(0);
   const [limit, setLimit] = useState(10);
 
@@ -30,7 +25,7 @@ const InboxPage = () => {
     isTotalMessageCountPending,
     isUnreadMessageCountPending,
   } = useInbox();
-  const { messages, isMessagesPending, isMessagesError } = useMessages(
+  const { messages, isMessagesPending } = useMessages(
     messagingEngine,
     {},
     offset,
@@ -61,8 +56,6 @@ const InboxPage = () => {
     setOffset(newOffset);
     setLimit(newLimit);
   };
-
-  console.log(messages);
 
   return (
     <>
