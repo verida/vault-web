@@ -1,7 +1,8 @@
-import { useVerida } from "@/features/verida";
 import { useQueryClient } from "@tanstack/react-query";
 import { IMessaging } from "@verida/types";
 import React, { useEffect, useMemo, useState } from "react";
+
+import { useVerida } from "@/features/verida";
 
 type InboxContextType = {
   messagingEngine: IMessaging | undefined;
@@ -11,7 +12,9 @@ export const InboxContext = React.createContext<InboxContextType | null>(null);
 
 interface InboxProviderProps extends React.PropsWithChildren {}
 
-export const InboxProvider: React.FunctionComponent<InboxProviderProps> = ({ children }) => {
+export const InboxProvider: React.FunctionComponent<InboxProviderProps> = ({
+  children,
+}) => {
   const { webUserInstanceRef, isConnected } = useVerida();
   const [messagingEngine, setMessagingEngine] = useState<IMessaging>();
   const queryClient = useQueryClient();
@@ -41,5 +44,9 @@ export const InboxProvider: React.FunctionComponent<InboxProviderProps> = ({ chi
     return { messagingEngine };
   }, [messagingEngine]);
 
-  return <InboxContext.Provider value={contextValue}>{children}</InboxContext.Provider>;
+  return (
+    <InboxContext.Provider value={contextValue}>
+      {children}
+    </InboxContext.Provider>
+  );
 };

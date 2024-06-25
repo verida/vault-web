@@ -1,8 +1,14 @@
-import { useCallback } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { useCallback } from "react";
+
 import { getPublicProfile } from "@/features/profiles";
 
-export const useMessages = (messagingEngine: any, filters: Object, offset: number, limit: number = 10) => {
+export const useMessages = (
+  messagingEngine: any,
+  filters: Object,
+  offset: number,
+  limit: number = 10
+) => {
   const fetchMessages = useCallback(
     async (offset: number, limit: number) => {
       try {

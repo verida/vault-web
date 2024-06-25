@@ -1,13 +1,22 @@
-import { useState, useCallback, useMemo } from "react";
+import { useCallback, useMemo, useState } from "react";
 
-export const usePagination = (initialPage = 0, initialLimit = 10, totalItems = 0) => {
+export const usePagination = (
+  initialPage = 0,
+  initialLimit = 10,
+  totalItems = 0
+) => {
   const [page, setPage] = useState(initialPage);
   const [limit, setLimit] = useState(initialLimit);
 
-  const totalPages = useMemo(() => Math.ceil(totalItems / limit), [totalItems, limit]);
+  const totalPages = useMemo(
+    () => Math.ceil(totalItems / limit),
+    [totalItems, limit]
+  );
 
   const nextPage = useCallback(() => {
-    setPage((prevPage) => (prevPage + 1 < totalPages ? prevPage + 1 : prevPage));
+    setPage((prevPage) =>
+      prevPage + 1 < totalPages ? prevPage + 1 : prevPage
+    );
   }, [totalPages]);
 
   const prevPage = useCallback(() => {

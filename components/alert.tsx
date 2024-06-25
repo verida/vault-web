@@ -7,10 +7,10 @@ interface AlertProps {
 const Alert: React.FC<AlertProps> = (props) => {
   const { text } = props;
   return (
-    <div className='bg-[#F6F7F9] rounded border-l-2 border-yellow-500 p-2'>
-      <div className='flex gap-2 items-center'>
+    <div className="rounded border-l-2 border-yellow-500 bg-[#F6F7F9] p-2">
+      <div className="flex items-center gap-2">
         <Warning />
-        <p className='text-sm'>{text}</p>
+        <p className="text-sm">{text}</p>
       </div>
     </div>
   );

@@ -1,15 +1,16 @@
 "use client";
 
+import * as SelectPrimitive from "@radix-ui/react-select";
+import { Check } from "lucide-react";
 import * as React from "react";
 
-import * as SelectPrimitive from "@radix-ui/react-select";
-
-import { Check } from "lucide-react";
-
 import { cn } from "@/lib/utils";
+
 import { ChevronDown } from "../icons/chevron-down";
 
-const Select: React.FC<React.ComponentPropsWithoutRef<typeof SelectPrimitive.Root>> = (props) => {
+const Select: React.FC<
+  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Root>
+> = (props) => {
   const { children, ...rootProps } = props;
   return <SelectPrimitive.Root {...rootProps}>{children}</SelectPrimitive.Root>;
 };
@@ -25,15 +26,15 @@ const SelectTrigger = React.forwardRef<
         {...props}
         ref={ref}
         className={cn(
-          "inline-flex items-center justify-between w-full px-3 pr-1 py-2 text-sm font-medium text-gray-700 bg-white border border-border rounded-md shadow-sm hover:bg-gray-50 focus:outline-none relative",
+          "relative inline-flex w-full items-center justify-between rounded-md border border-border bg-white px-3 py-2 pr-1 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none",
           className
         )}
       >
-        <span className='min-w-10 text-left'>
+        <span className="min-w-10 text-left">
           <SelectPrimitive.Value>{children}</SelectPrimitive.Value>
         </span>
         <SelectPrimitive.Icon asChild>
-          <ChevronDown className='ml-1 h-6 w-6 text-gray-400' />
+          <ChevronDown className="ml-1 h-6 w-6 text-gray-400" />
         </SelectPrimitive.Icon>
       </button>
     </SelectPrimitive.Trigger>
@@ -52,12 +53,14 @@ const SelectContent = React.forwardRef<
         asChild={false}
         ref={ref}
         className={cn(
-          "z-50 bg-white shadow-lg rounded-md ring-1 ring-black ring-opacity-5 focus:outline-none",
+          "z-50 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none",
           className
         )}
         {...props}
       >
-        <SelectPrimitive.Viewport className='p-2'>{children}</SelectPrimitive.Viewport>
+        <SelectPrimitive.Viewport className="p-2">
+          {children}
+        </SelectPrimitive.Viewport>
       </SelectPrimitive.Content>
     </SelectPrimitive.Portal>
   );
@@ -75,12 +78,12 @@ const SelectItem = React.forwardRef<
       asChild={false}
       ref={forwardedRef}
       className={cn(
-        "relative px-4 pl-8 py-2 cursor-pointer select-none text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:bg-gray-100 focus:text-gray-900 focus:outline-none",
+        "relative cursor-pointer select-none px-4 py-2 pl-8 text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:bg-gray-100 focus:text-gray-900 focus:outline-none",
         className
       )}
     >
-      <SelectPrimitive.ItemIndicator className='absolute left-2 inline-flex items-center'>
-        <Check className='h-4 w-4 text-indigo-600' />
+      <SelectPrimitive.ItemIndicator className="absolute left-2 inline-flex items-center">
+        <Check className="h-4 w-4 text-indigo-600" />
       </SelectPrimitive.ItemIndicator>
       <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
     </SelectPrimitive.Item>
@@ -92,7 +95,12 @@ const SelectGroup = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Group>,
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.Group>
 >(({ className, ...props }, forwardedRef) => (
-  <SelectPrimitive.Group {...props} asChild={false} ref={forwardedRef} className={cn("", className)} />
+  <SelectPrimitive.Group
+    {...props}
+    asChild={false}
+    ref={forwardedRef}
+    className={cn("", className)}
+  />
 ));
 SelectGroup.displayName = "Select.Group";
 
@@ -122,4 +130,12 @@ const SelectSeparator = React.forwardRef<
 ));
 SelectSeparator.displayName = "Select.Separator";
 
-export { Select, SelectTrigger, SelectContent, SelectGroup, SelectLabel, SelectItem, SelectSeparator };
+export {
+  Select,
+  SelectTrigger,
+  SelectContent,
+  SelectGroup,
+  SelectLabel,
+  SelectItem,
+  SelectSeparator,
+};

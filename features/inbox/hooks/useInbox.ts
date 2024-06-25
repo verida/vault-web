@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { useCallback } from "react";
+
 import { useInboxContext } from "./useInboxContext";
 
 export const useInbox = () => {
@@ -7,7 +8,9 @@ export const useInbox = () => {
 
   const fetchUnreadMessageCount = useCallback(async () => {
     try {
-      const unreadMessages = await messagingEngine?.getMessages({ read: false });
+      const unreadMessages = await messagingEngine?.getMessages({
+        read: false,
+      });
       return unreadMessages.length ?? 0;
     } catch (err) {
       throw new Error((err as Error).message);
@@ -16,7 +19,10 @@ export const useInbox = () => {
 
   const fetchTotalMessageCount = useCallback(async () => {
     try {
-      const messages = await messagingEngine?.getMessages({}, { limit: 100000000 });
+      const messages = await messagingEngine?.getMessages(
+        {},
+        { limit: 100000000 }
+      );
 
       // 1 record in the db is for permit
       return messages.length ?? 0;
