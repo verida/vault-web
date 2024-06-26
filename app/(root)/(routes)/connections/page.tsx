@@ -1,15 +1,12 @@
 "use client";
 
-import Link from "next/link";
 import { useMemo, useState } from "react";
 
 import { ConnectionCard } from "@/components/connection/connection-card";
 import { ConnectionModal } from "@/components/connection/connection-modal";
-import { Filter } from "@/components/icons/filter";
+import { FilterButton } from "@/components/filter-button";
 import { SearchInput } from "@/components/search-input";
-import { Button } from "@/components/ui/button";
 import { connections } from "@/features/connections";
-import { cn } from "@/lib/utils";
 
 const MarketingPage = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -43,13 +40,7 @@ const MarketingPage = () => {
         <h1 className="text-2xl font-medium">Discover Connections</h1>
         <nav className="flex w-full space-x-3 md:w-auto">
           <SearchInput onValueChange={handleSearchInputChange} />
-          <Button
-            variant="secondary"
-            size="lg"
-            className="h-12 px-4 text-gray-500"
-          >
-            <Filter /> Filter
-          </Button>
+          <FilterButton />
         </nav>
       </div>
 

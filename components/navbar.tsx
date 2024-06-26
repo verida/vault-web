@@ -55,10 +55,10 @@ export const Navbar = () => {
                     className={cn(
                       navigationMenuTriggerStyle({
                         className:
-                          "h-[72px] rounded-none border-b-2 border-transparent font-semibold !text-gray-500",
+                          "h-[72px] rounded-none border-b-2 border-transparent font-semibold !text-gray-500 hover:border-gray-500 hover:bg-transparent",
                       }),
                       {
-                        "border-gray-800 !text-primary": path.startsWith(
+                        "border-primary !text-primary": path.startsWith(
                           nav.href
                         ),
                       }
