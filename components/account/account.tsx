@@ -5,12 +5,16 @@ import React from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuLabel,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useVerida } from "@/features/verida";
 
-import { ChevronDown } from "../icons/chevron-down";
+import { Copy } from "../icons/copy";
+import { Logout } from "../icons/logout";
+import { SimpleDown } from "../icons/simple-down";
+import { Typography } from "../typography";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Button } from "../ui/button";
 import { Skeleton } from "../ui/skeleton";
@@ -62,16 +66,50 @@ const Account = () => {
             />
             <AvatarFallback>A</AvatarFallback>
           </Avatar>
-          <p className="hidden text-sm font-semibold text-gray-500 md:block">
+          <Typography
+            variant="heading-5"
+            className="hidden text-gray-500 md:block"
+          >
             {profile?.name}
-          </p>
-          <ChevronDown className="hidden md:block" />
+          </Typography>
+          <SimpleDown className="hidden text-gray-500 md:block" />
         </div>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56">
-        <DropdownMenuLabel onClick={() => disconnect()}>
-          Log out
-        </DropdownMenuLabel>
+      <DropdownMenuContent className="w-72" align="end">
+        <DropdownMenuItem className="gap-3 px-4 py-3">
+          <Avatar>
+            <AvatarImage
+              alt="Avatar"
+              src={profile?.avatar?.uri ?? ""}
+              width={40}
+              height={40}
+            />
+            <AvatarFallback>A</AvatarFallback>
+          </Avatar>
+          <div className="flex-grow overflow-hidden">
+            <Typography
+              variant="heading-5"
+              className="hidden text-gray-500 md:block"
+            >
+              {profile?.name}
+            </Typography>
+            <Typography
+              variant="base-s-regular"
+              className="truncate text-gray-500"
+            >
+              {did}
+            </Typography>
+          </div>
+          <Copy className="flex-shrink-0 cursor-pointer" />
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem
+          onClick={() => disconnect()}
+          className="cursor-pointer gap-3 px-4 py-2 text-[#fd4f64] hover:!text-[#fd4f64]"
+        >
+          <Logout />
+          <Typography variant="base-semibold">Sign Out</Typography>
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
