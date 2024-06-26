@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { ReactNode } from "react";
 
-import { Card, CardContent, CardHeader } from "../ui/card";
+import { Typography } from "../typography";
+import { Card, CardContent } from "../ui/card";
 
 type CategoryProps = {
   icon?: ReactNode;
@@ -16,9 +17,15 @@ function Category({ icon, title, description, href }: CategoryProps) {
       <Card className="rounded-2xl">
         <CardContent className="p-6">
           {icon && icon}
-          {title && <h3 className="mt-6 text-2xl">{title}</h3>}
+          {title && (
+            <Typography variant="heading-4" className="mt-6">
+              {title}
+            </Typography>
+          )}
           {description && (
-            <p className="mt-1 text-sm text-gray-500">{description}</p>
+            <Typography variant="base-l" className="mt-1 text-gray-500">
+              {description}
+            </Typography>
           )}
         </CardContent>
       </Card>

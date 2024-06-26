@@ -1,12 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
-import React, { ReactNode } from "react";
+import React from "react";
 
 import { getPublicProfile } from "@/features/profiles";
 
 import { Valid } from "../icons/valid";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { Card, CardContent, CardHeader } from "../ui/card";
+import { Card } from "../ui/card";
 
 type CredentialItemProps = {
   logo?: string;
@@ -20,7 +20,7 @@ type CredentialItemProps = {
 };
 
 function CredentialItem({
-  logo,
+  // logo,
   title,
   fallbackAvatar,
   credential,
@@ -29,7 +29,7 @@ function CredentialItem({
   status,
   href,
 }: CredentialItemProps) {
-  const [issuer, setIssuer] = React.useState({});
+  const [issuer, setIssuer] = React.useState<any>({});
 
   React.useEffect(() => {
     function parseJwt(token: string) {

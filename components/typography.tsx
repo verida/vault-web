@@ -1,6 +1,7 @@
 import { cva, type VariantProps } from "class-variance-authority";
 import React from "react";
-import { twMerge } from "tailwind-merge";
+
+import { cn } from "@/lib/utils";
 
 const typographyVariants = cva("", {
   variants: {
@@ -58,7 +59,7 @@ export const Typography: React.FunctionComponent<TypographyProps> = (props) => {
 
   const htmlTag = component || mapping[variant || "base-semibold"];
 
-  const classes = twMerge(typographyVariants({ variant }), className);
+  const classes = `${typographyVariants({ variant })} ${className}`;
 
   // TODO: Optimise without the switch
   switch (htmlTag) {

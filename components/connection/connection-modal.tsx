@@ -1,9 +1,10 @@
 import { useMemo } from "react";
 
-import { Connection, connections } from "@/features/connections";
+import { connections } from "@/features/connections";
 
 import { VLogo } from "../icons/logo";
 import { Switch } from "../icons/switch";
+import { Typography } from "../typography";
 import { Button } from "../ui/button";
 import { Modal } from "../ui/modal";
 
@@ -28,16 +29,18 @@ function ConnectionModal({ connectionId, ...props }: Props) {
         </div>
       )}
 
-      <h4 className="mt-8 text-sm font-semibold">What it will do</h4>
-
+      <Typography variant="heading-4" className="mt-8">
+        What it will do
+      </Typography>
       {connection && (
-        <p className="mt-4 text-sm leading-5">
+        <Typography variant="base-regular" className="mt-4">
+          {" "}
           When you connect {connection.id} and Verida, your {connection.id}{" "}
           activities will automatically show up on Verida for all your friends
           to see. Additionally, {connection.item} and content shared via{" "}
           {connection.id} will automatically contribute to your Verida all-day
           stats like mentions and engagement.
-        </p>
+        </Typography>
       )}
 
       <Button variant="secondary" className="mt-8 w-full">
