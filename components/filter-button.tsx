@@ -16,7 +16,7 @@ export const FilterButton: React.FC<FilterButtonProps> = (props) => {
       variant="secondary"
       size="lg"
       className={cn(
-        "h-10 p-[10px] text-gray-500 hover:border-gray-500/40 hover:bg-background md:h-12 md:px-4",
+        "h-10 p-[10px] text-secondary-foreground hover:border-secondary-foreground/40 hover:bg-background md:h-12 md:px-4",
         applied ? "border-purple-500 text-purple-500" : "",
         className
       )}

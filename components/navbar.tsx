@@ -42,7 +42,7 @@ export const Navbar = () => {
   const [isMenuOpened, setIsMenuOpened] = useState<boolean>(false);
 
   return (
-    <div className="lg:mx[108px] fixed top-0 z-20 flex h-[72px] w-full items-center border-b bg-white px-4">
+    <div className="lg:mx[108px] fixed top-0 z-20 flex h-[72px] w-full items-center border-b bg-background px-4">
       <div className="mx-auto flex w-full items-center justify-between md:max-w-screen-2xl">
         <div className="flex items-center gap-14">
           <Logo />
@@ -55,10 +55,10 @@ export const Navbar = () => {
                     className={cn(
                       navigationMenuTriggerStyle({
                         className:
-                          "h-[72px] rounded-none border-b-2 border-transparent font-semibold !text-gray-500 hover:border-gray-500 hover:bg-transparent",
+                          "h-[72px] rounded-none border-b-2 border-transparent font-semibold !text-secondary-foreground hover:border-secondary-foreground hover:bg-transparent",
                       }),
                       {
-                        "border-primary !text-primary": path.startsWith(
+                        "border-foreground !text-foreground": path.startsWith(
                           nav.href
                         ),
                       }
@@ -98,10 +98,10 @@ export const Navbar = () => {
                     className={cn(
                       navigationMenuTriggerStyle({
                         className:
-                          "h-auto w-full justify-start rounded-none border-transparent py-4 font-semibold !text-gray-500",
+                          "h-auto w-full justify-start rounded-none border-transparent py-4 font-semibold !text-secondary-foreground",
                       }),
                       {
-                        "border-gray-800 !text-primary": path.startsWith(
+                        "border-foreground !text-foreground": path.startsWith(
                           nav.href
                         ),
                       }

@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import { Typography } from "../typography";
 import { Button } from "../ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "../ui/card";
-import { Switch, SwitchThumb } from "../ui/switch";
+import { Switch } from "../ui/switch";
 
 type Props = {
   onConnect: () => void;
@@ -13,6 +13,7 @@ type Props = {
 
 function ConnectionCard(props: Props) {
   const { id, item, description, onConnect, isConnected = false } = props;
+
   return (
     <div className="flex h-full flex-col">
       {!isConnected && (
@@ -64,9 +65,7 @@ function ConnectionCard(props: Props) {
               <Typography variant="base-regular">
                 Display on Verida One profile
               </Typography>
-              <Switch defaultChecked className="h-6 w-10">
-                <SwitchThumb />
-              </Switch>
+              <Switch defaultChecked />
             </div>
           </CardFooter>
         )}

@@ -4,16 +4,17 @@ import { Typography } from "./typography";
 
 export const Footer = () => {
   return (
-    <div className="lg:mx[108px] w-full bg-gray-50 p-4">
+    <div className="lg:mx[108px] bg-secondary-background w-full p-4">
       <div className="mx-auto flex w-full items-center justify-between md:max-w-screen-2xl">
-        <div className="flex w-full items-center justify-between">
-          <Typography variant="base-s-regular" className="text-gray-500">
-            © 2024 Verida Vault
-          </Typography>
-          <Link href="/terms" className="text-xs text-gray-500">
-            Terms & Conditions
-          </Link>
-        </div>
+        <Typography
+          variant="base-s-regular"
+          className="text-secondary-foreground"
+        >
+          © 2024 Verida Vault
+        </Typography>
+        <Link href="/terms" className="text-xs text-secondary-foreground">
+          Terms & Conditions
+        </Link>
       </div>
     </div>
   );
