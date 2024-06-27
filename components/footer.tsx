@@ -4,7 +4,7 @@ import { Typography } from "./typography";
 
 export const Footer = () => {
   return (
-    <div className="lg:mx[108px] bg-secondary-background w-full p-4">
+    <div className="lg:mx[108px] w-full bg-secondary-background p-4">
       <div className="mx-auto flex w-full items-center justify-between md:max-w-screen-2xl">
         <Typography
           variant="base-s-regular"

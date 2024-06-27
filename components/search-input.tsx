@@ -18,7 +18,7 @@ function SearchInput({ onValueChange, ...props }: SearchInputProps) {
   );
 
   return (
-    <div className="focus-within:shadow-glow flex h-12 flex-grow space-x-3 rounded-lg border border-border bg-background p-3 transition-all focus-within:!border-purple-500 hover:border-secondary-foreground/40">
+    <div className="flex h-12 flex-grow space-x-3 rounded-lg border border-border bg-background p-3 transition-all focus-within:!border-purple-500 focus-within:shadow-glow hover:border-secondary-foreground/40">
       <Search className="box-content h-6 w-6 text-secondary-foreground" />
       <input
         {...props}
