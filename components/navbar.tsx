@@ -88,7 +88,7 @@ export const Navbar = () => {
       </div>
 
       {isMenuOpened && (
-        <div className="fixed bottom-12 left-0 right-0 top-[72px] bg-background">
+        <div className="fixed bottom-0 left-0 right-0 top-[72px] bg-background">
           <NavigationMenu orientation="vertical">
             <NavigationMenuList className="px-2" orientation="vertical">
               {headerNavs.map((nav) => (
