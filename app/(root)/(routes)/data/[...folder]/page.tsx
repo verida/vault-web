@@ -2,7 +2,6 @@
 
 import { IDatabase } from "@verida/types";
 import Image from "next/image";
-import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React from "react";
 
@@ -11,16 +10,7 @@ import { CredentialItem } from "@/components/credential/credential-item";
 import { ArrowLeft } from "@/components/icons/arrow-left";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "@/components/ui/drawer";
+import { Drawer, DrawerContent, DrawerHeader } from "@/components/ui/drawer";
 import { Skeleton } from "@/components/ui/skeleton";
 import { DataFolderDefinition, dataFolders } from "@/features/data";
 import { getPublicProfile } from "@/features/profiles";
