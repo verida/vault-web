@@ -6,15 +6,6 @@ import { ConnectionCard } from "@/components/connection/connection-card";
 import { ConnectionModal } from "@/components/connection/connection-modal";
 import { FilterButton } from "@/components/filter-button";
 import { SearchInput } from "@/components/search-input";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { connections } from "@/features/connections";
 
 const MarketingPage = () => {
@@ -52,22 +43,6 @@ const MarketingPage = () => {
           <FilterButton />
         </nav>
       </div>
-
-      <Select>
-        <SelectTrigger className="w-[180px]">
-          <SelectValue placeholder="Select a fruit" />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectGroup>
-            <SelectLabel>Fruits</SelectLabel>
-            <SelectItem value="apple">Apple</SelectItem>
-            <SelectItem value="banana">Banana</SelectItem>
-            <SelectItem value="blueberry">Blueberry</SelectItem>
-            <SelectItem value="grapes">Grapes</SelectItem>
-            <SelectItem value="pineapple">Pineapple</SelectItem>
-          </SelectGroup>
-        </SelectContent>
-      </Select>
 
       <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
         {searchedConnections.map((connection) => (
