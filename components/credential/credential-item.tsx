@@ -1,12 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
-import React, { ReactNode } from "react";
+import React from "react";
 
 import { getPublicProfile } from "@/features/profiles";
 
 import { Valid } from "../icons/valid";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { Card, CardContent, CardHeader } from "../ui/card";
+import { Card } from "../ui/card";
 
 type CredentialItemProps = {
   logo?: string;
@@ -20,7 +20,7 @@ type CredentialItemProps = {
 };
 
 function CredentialItem({
-  logo,
+  // logo,
   title,
   fallbackAvatar,
   credential,
@@ -29,7 +29,7 @@ function CredentialItem({
   status,
   href,
 }: CredentialItemProps) {
-  const [issuer, setIssuer] = React.useState({});
+  const [issuer, setIssuer] = React.useState<any>({});
 
   React.useEffect(() => {
     function parseJwt(token: string) {
@@ -82,19 +82,19 @@ function CredentialItem({
             {title && <p className="text-wrap text-sm">{title}</p>}
           </div>
           {source && (
-            <p className="w-1/4 text-wrap text-sm text-gray-500">
+            <p className="w-1/4 text-wrap text-sm text-secondary-foreground">
               {issuer?.name ?? ""}
             </p>
           )}
           {date && (
-            <p className="w-1/4 text-sm text-gray-500">
+            <p className="w-1/4 text-sm text-secondary-foreground">
               {new Date(date).toISOString()}
             </p>
           )}
           {status === "valid" ? (
             <div className="flex w-1/4 gap-2">
               <Valid />
-              <p className="text-sm text-gray-500">{status}</p>{" "}
+              <p className="text-sm text-secondary-foreground">{status}</p>{" "}
             </div>
           ) : null}
         </div>

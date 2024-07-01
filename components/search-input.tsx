@@ -18,8 +18,8 @@ function SearchInput({ onValueChange, ...props }: SearchInputProps) {
   );
 
   return (
-    <div className="flex h-12 flex-grow space-x-3 rounded-lg border border-border bg-white p-3">
-      <Search className="box-content h-6 w-6 text-gray-500" />
+    <div className="flex h-12 flex-grow space-x-3 rounded-lg border border-border bg-primary p-3 transition-all focus-within:!border-primary-button focus-within:shadow-glow hover:border-secondary-foreground/40">
+      <Search className="box-content h-6 w-6 text-secondary-foreground" />
       <input
         {...props}
         className="bg-transparent text-sm outline-none"

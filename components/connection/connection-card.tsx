@@ -1,9 +1,10 @@
 import { Connection } from "@/features/connections";
 import { cn } from "@/lib/utils";
 
+import { Typography } from "../typography";
 import { Button } from "../ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "../ui/card";
-import { Switch, SwitchThumb } from "../ui/switch";
+import { Switch } from "../ui/switch";
 
 type Props = {
   onConnect: () => void;
@@ -12,6 +13,7 @@ type Props = {
 
 function ConnectionCard(props: Props) {
   const { id, item, description, onConnect, isConnected = false } = props;
+
   return (
     <div className="flex h-full flex-col">
       {!isConnected && (
@@ -29,7 +31,7 @@ function ConnectionCard(props: Props) {
           {!isConnected ? (
             <Button
               size="lg"
-              variant="outline"
+              variant="secondary"
               className="!mt-0 px-4"
               onClick={onConnect}
             >
@@ -38,24 +40,35 @@ function ConnectionCard(props: Props) {
           ) : (
             <Button
               size="lg"
-              variant="outline"
-              className="!mt-0 px-4 text-[#FD4F64]"
+              variant="secondary"
+              className="!mt-0 px-4 text-destructive"
             >
               Disconnect
             </Button>
           )}
         </CardHeader>
         <CardContent className="p-6 pt-0">
-          {id && <h3 className="mt-6 text-xl font-semibold">{id}</h3>}
-          {description && <p className="mt-2 text-gray-500">{description}</p>}
+          {id && (
+            <Typography variant="heading-4" className="mt-6">
+              {id}
+            </Typography>
+          )}
+          {description && (
+            <Typography
+              variant="base-l"
+              className="mt-2 text-secondary-foreground"
+            >
+              {description}
+            </Typography>
+          )}
         </CardContent>
         {isConnected && (
           <CardFooter>
             <div className="flex w-full items-end justify-between border-t border-border pt-4">
-              <p className="text-sm">Display on Verida One profile</p>
-              <Switch defaultChecked className="h-6 w-10">
-                <SwitchThumb />
-              </Switch>
+              <Typography variant="base-regular">
+                Display on Verida One profile
+              </Typography>
+              <Switch defaultChecked />
             </div>
           </CardFooter>
         )}

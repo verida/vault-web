@@ -29,10 +29,18 @@ const config = {
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
+          button: {
+            DEFAULT: "hsl(var(--primary-button))",
+            hover: "hsl(var(--primary-button-hover))",
+          },
         },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
           foreground: "hsl(var(--secondary-foreground))",
+          button: {
+            DEFAULT: "hsl(var(--secondary-button))",
+            hover: "hsl(var(--secondary-button-hover))",
+          },
         },
         destructive: {
           DEFAULT: "hsl(var(--destructive))",
@@ -45,14 +53,6 @@ const config = {
         accent: {
           DEFAULT: "hsl(var(--accent))",
           foreground: "hsl(var(--accent-foreground))",
-        },
-        popover: {
-          DEFAULT: "hsl(var(--popover))",
-          foreground: "hsl(var(--popover-foreground))",
-        },
-        card: {
-          DEFAULT: "hsl(var(--card))",
-          foreground: "hsl(var(--card-foreground))",
         },
         gray: {
           50: '#F9FAFB',
@@ -87,6 +87,9 @@ const config = {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+      },
+      boxShadow: {
+        'glow': '0px 0px 4px 0px rgba(83, 84, 209, 0.60)'
       },
       fontSize: {
         'heading-1': [

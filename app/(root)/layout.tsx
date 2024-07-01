@@ -1,9 +1,9 @@
 import { Footer } from "@/components/footer";
 import { Navbar } from "@/components/navbar";
 
-const MarketingLayout = ({ children }: { children: React.ReactNode }) => {
+const AppLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="flex min-h-screen flex-col bg-[#F7F8FA]">
+    <div className="flex min-h-screen flex-col bg-background">
       <Navbar />
       <main className="container flex-grow pb-20 pt-[72px]">{children}</main>
       <Footer />
@@ -11,4 +11,4 @@ const MarketingLayout = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-export default MarketingLayout;
+export default AppLayout;
