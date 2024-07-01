@@ -56,7 +56,7 @@ const Account = () => {
   ) : (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <div className="flex h-[56px] cursor-pointer items-center gap-3 rounded-lg border-gray-200 md:border md:px-3">
+        <div className="flex h-[56px] cursor-pointer items-center gap-3 rounded-lg border-border md:border md:px-3">
           <Avatar>
             <AvatarImage
               alt="Avatar"
