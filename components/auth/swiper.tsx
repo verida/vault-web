@@ -73,7 +73,7 @@ export const Swiper: React.FunctionComponent<SwiperProps> = (props) => {
               <div
                 key={`progress-item-${ind}`}
                 className={cn(
-                  "h-2 cursor-pointer rounded-md bg-white",
+                  "h-2 cursor-pointer rounded-md bg-secondary",
                   currentStep === ind ? "opacity-100" : "opacity-40"
                 )}
                 onClick={() => setCurrentStep(ind)}

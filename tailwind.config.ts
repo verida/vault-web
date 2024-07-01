@@ -35,6 +35,7 @@ const config = {
           button: {
             DEFAULT: "hsl(var(--primary-button))",
             hover: "hsl(var(--primary-button-hover))",
+            foreground: "hsl(var(--primary-button-foreground))",
           },
         },
         secondary: {

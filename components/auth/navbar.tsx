@@ -9,7 +9,7 @@ import { Youtube } from "../icons/youtube";
 
 export const Navbar = () => {
   return (
-    <div className="lg:mx[108px] z-20 flex w-full items-center justify-between bg-white py-4 md:py-6">
+    <div className="lg:mx[108px] z-20 flex w-full items-center justify-between bg-background py-4 md:py-6">
       <Logo />
 
       <div className="flex items-center space-x-3">
