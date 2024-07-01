@@ -23,7 +23,10 @@ function Category({ icon, title, description, href }: CategoryProps) {
             </Typography>
           )}
           {description && (
-            <Typography variant="base-l" className="mt-1 text-gray-500">
+            <Typography
+              variant="base-l"
+              className="mt-1 text-secondary-foreground"
+            >
               {description}
             </Typography>
           )}

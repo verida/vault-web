@@ -42,7 +42,7 @@ export const Navbar = () => {
   const [isMenuOpened, setIsMenuOpened] = useState<boolean>(false);
 
   return (
-    <div className="lg:mx[108px] fixed top-0 z-20 flex h-[72px] w-full items-center border-b bg-background px-4">
+    <div className="lg:mx[108px] fixed top-0 z-20 flex h-[72px] w-full items-center border-b bg-primary px-4">
       <div className="mx-auto flex w-full items-center justify-between md:max-w-screen-2xl">
         <div className="flex items-center gap-14">
           <Logo />
@@ -88,7 +88,7 @@ export const Navbar = () => {
       </div>
 
       {isMenuOpened && (
-        <div className="fixed bottom-0 left-0 right-0 top-[72px] bg-background">
+        <div className="fixed bottom-0 left-0 right-0 top-[72px] bg-primary">
           <NavigationMenu orientation="vertical">
             <NavigationMenuList className="px-2" orientation="vertical">
               {headerNavs.map((nav) => (

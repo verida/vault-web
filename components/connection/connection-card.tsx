@@ -41,7 +41,7 @@ function ConnectionCard(props: Props) {
             <Button
               size="lg"
               variant="secondary"
-              className="!mt-0 px-4 text-[#FD4F64]"
+              className="!mt-0 px-4 text-destructive"
             >
               Disconnect
             </Button>
@@ -54,7 +54,10 @@ function ConnectionCard(props: Props) {
             </Typography>
           )}
           {description && (
-            <Typography variant="base-l" className="mt-2 text-gray-500">
+            <Typography
+              variant="base-l"
+              className="mt-2 text-secondary-foreground"
+            >
               {description}
             </Typography>
           )}

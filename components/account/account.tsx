@@ -68,11 +68,11 @@ const Account = () => {
           </Avatar>
           <Typography
             variant="heading-5"
-            className="hidden text-gray-500 md:block"
+            className="hidden text-secondary-foreground md:block"
           >
             {profile?.name}
           </Typography>
-          <SimpleDown className="hidden text-gray-500 md:block" />
+          <SimpleDown className="hidden text-secondary-foreground md:block" />
         </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-72" align="end">
@@ -89,13 +89,13 @@ const Account = () => {
           <div className="flex-grow overflow-hidden">
             <Typography
               variant="heading-5"
-              className="hidden text-gray-500 md:block"
+              className="hidden text-secondary-foreground md:block"
             >
               {profile?.name}
             </Typography>
             <Typography
               variant="base-s-regular"
-              className="truncate text-gray-500"
+              className="truncate text-secondary-foreground"
             >
               {did}
             </Typography>
@@ -105,7 +105,7 @@ const Account = () => {
         <DropdownMenuSeparator />
         <DropdownMenuItem
           onClick={() => disconnect()}
-          className="cursor-pointer gap-3 px-4 py-2 text-[#fd4f64] hover:!text-[#fd4f64]"
+          className="cursor-pointer gap-3 px-4 py-2 text-destructive hover:!text-destructive"
         >
           <Logout />
           <Typography variant="base-semibold">Sign Out</Typography>

@@ -21,12 +21,38 @@ const config = {
     },
     extend: {
       colors: {
-        background: '#fff',
-        foreground: '#111',
-        border: "#E2E8F0",
+        border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))",
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
+        primary: {
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
+          button: {
+            DEFAULT: "hsl(var(--primary-button))",
+            hover: "hsl(var(--primary-button-hover))",
+          },
+        },
         secondary: {
-          background: '#F9FAFB',
-          foreground: '#6b7280',
+          DEFAULT: "hsl(var(--secondary))",
+          foreground: "hsl(var(--secondary-foreground))",
+          button: {
+            DEFAULT: "hsl(var(--secondary-button))",
+            hover: "hsl(var(--secondary-button-hover))",
+          },
+        },
+        destructive: {
+          DEFAULT: "hsl(var(--destructive))",
+          foreground: "hsl(var(--destructive-foreground))",
+        },
+        muted: {
+          DEFAULT: "hsl(var(--muted))",
+          foreground: "hsl(var(--muted-foreground))",
+        },
+        accent: {
+          DEFAULT: "hsl(var(--accent))",
+          foreground: "hsl(var(--accent-foreground))",
         },
         gray: {
           50: '#F9FAFB',

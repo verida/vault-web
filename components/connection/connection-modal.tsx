@@ -25,7 +25,7 @@ function ConnectionModal({ connectionId, ...props }: Props) {
         <div className="mx-auto flex items-center space-x-6">
           {connection.icon && <connection.icon className="h-20 w-20" />}
           <Switch />
-          <VLogo className="rounded-full border border-[#e0e3ea]" />
+          <VLogo className="rounded-full border border-border" />
         </div>
       )}
 

@@ -82,19 +82,19 @@ function CredentialItem({
             {title && <p className="text-wrap text-sm">{title}</p>}
           </div>
           {source && (
-            <p className="w-1/4 text-wrap text-sm text-gray-500">
+            <p className="w-1/4 text-wrap text-sm text-secondary-foreground">
               {issuer?.name ?? ""}
             </p>
           )}
           {date && (
-            <p className="w-1/4 text-sm text-gray-500">
+            <p className="w-1/4 text-sm text-secondary-foreground">
               {new Date(date).toISOString()}
             </p>
           )}
           {status === "valid" ? (
             <div className="flex w-1/4 gap-2">
               <Valid />
-              <p className="text-sm text-gray-500">{status}</p>{" "}
+              <p className="text-sm text-secondary-foreground">{status}</p>{" "}
             </div>
           ) : null}
         </div>

@@ -116,10 +116,12 @@ const FolderPage = ({ params }: { params: { folder: string[] } }) => {
       ) : folder?.database ? (
         <div className="flex flex-col gap-2">
           <div className="flex w-full flex-row items-center p-4">
-            <p className="w-1/4 text-sm text-gray-500">Name</p>
-            <p className="w-1/4 text-sm text-gray-500">Source</p>
-            <p className="w-1/4 text-sm text-gray-500">Date</p>
-            <p className="w-1/4 text-sm text-gray-500">Credential Status</p>
+            <p className="w-1/4 text-sm text-secondary-foreground">Name</p>
+            <p className="w-1/4 text-sm text-secondary-foreground">Source</p>
+            <p className="w-1/4 text-sm text-secondary-foreground">Date</p>
+            <p className="w-1/4 text-sm text-secondary-foreground">
+              Credential Status
+            </p>
           </div>
           {items.map((item) => (
             <CredentialItem
