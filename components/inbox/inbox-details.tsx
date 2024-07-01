@@ -1,8 +1,5 @@
-import Image from "next/image";
-import { ReactElement, ReactNode, useMemo } from "react";
+import { ReactElement, useMemo } from "react";
 
-import { Success } from "@/components/icons/success";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { InboxEntry, InboxType } from "@/features/inbox/types";
 
 import { DataRequestDetails } from "./details/data-request";

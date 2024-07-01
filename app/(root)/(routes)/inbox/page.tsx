@@ -2,11 +2,13 @@
 
 import { useMemo, useState } from "react";
 
+import { FilterButton } from "@/components/filter-button";
 import { Filter } from "@/components/icons/filter";
 import { InboxDetails } from "@/components/inbox/inbox-details";
 import { InboxRowItem } from "@/components/inbox/inbox-item";
 import { LoadingInbox } from "@/components/inbox/inbox-loading";
 import { SearchInput } from "@/components/search-input";
+import { Typography } from "@/components/typography";
 import { Button } from "@/components/ui/button";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { TablePagination } from "@/components/ui/table-pagination";
@@ -61,16 +63,10 @@ const InboxPage = () => {
     <>
       <div className="flex flex-grow flex-col space-y-6 pb-6 pt-10">
         <div className="flex flex-col items-center justify-between md:flex-row">
-          <h1 className="text-2xl font-semibold">Inbox</h1>
+          <Typography variant="heading-3">Inbox</Typography>
           <nav className="flex w-full space-x-3 md:w-auto">
             <SearchInput onValueChange={handleSearchInputChange} />
-            <Button
-              variant="outline"
-              size="lg"
-              className="space-x-2 p-[10px] py-[10px] text-gray-500 md:px-4"
-            >
-              <Filter /> <span className="hidden md:block">Filter</span>
-            </Button>
+            <FilterButton />
           </nav>
         </div>
 

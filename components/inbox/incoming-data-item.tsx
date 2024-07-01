@@ -1,5 +1,7 @@
 import Image from "next/image";
 
+import { Typography } from "../typography";
+
 interface IncomingDataItemProps {
   item: Record<string, any>;
 }
@@ -14,9 +16,11 @@ export const IncomingDataItem: React.FC<IncomingDataItemProps> = ({ item }) => {
           height="32"
           alt="incoming-item-icon"
         />
-        <h4 className="font-bold">{item.name}</h4>
+        <Typography variant="heading-5">{item.name}</Typography>
       </div>
-      <p className="text-sm font-semibold">{item.summary}</p>
+      <Typography className="text-secondary-foreground">
+        {item.summary}
+      </Typography>
     </div>
   );
 };

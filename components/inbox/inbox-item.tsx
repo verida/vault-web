@@ -1,13 +1,12 @@
 import Image from "next/image";
-import Link from "next/link";
 
-import BinanceImage from "@/assets/binance.svg";
 import { inboxTypes } from "@/features/inbox/constants";
 import { InboxEntry } from "@/features/inbox/types";
 import { cn, formatDate } from "@/lib/utils";
 
 import { Failed } from "../icons/failed";
 import { Success } from "../icons/success";
+import { Typography } from "../typography";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Card } from "../ui/card";
 
@@ -33,7 +32,7 @@ export const InboxRowItem: React.FC<InboxRowItemProps> = ({
         <div className="flex shrink items-center gap-3 px-4">
           <span
             className={cn(
-              "size-2 rounded-full bg-purple-500",
+              "size-2 rounded-full bg-primary-button",
               read ? "opacity-0" : "opacity-100"
             )}
           ></span>
@@ -51,35 +50,43 @@ export const InboxRowItem: React.FC<InboxRowItemProps> = ({
               )}
               <AvatarFallback>{"U"}</AvatarFallback>
             </Avatar>
-            <Success className="absolute bottom-0 right-0 size-4 rounded-full border border-white" />
           </div>
-          <p className="font-semibold text-neutral-600">{sentBy.name}</p>
+          <Typography variant="base-semibold">{sentBy.name}</Typography>
         </div>
         <div className="flex shrink items-center gap-4 px-4">
           <div className="flex items-center gap-2">
             <InboxTypeIcon />
-            <p className="text-sm font-semibold">{inboxTypes[type].text}</p>
+            <Typography variant="base-semibold">
+              {inboxTypes[type].text}
+            </Typography>
           </div>
 
           {data.status === "accept" && (
             <div className="flex items-center gap-2">
               <Success />
-              <p className="text-sm font-semibold">Accepted</p>
+              <Typography variant="base-semibold">Accepted</Typography>
             </div>
           )}
           {data.status === "decline" && (
             <div className="flex items-center gap-2">
               <Failed />
-              <p className="text-sm font-semibold">Declined</p>
+              <Typography variant="base-semibold">Declined</Typography>
             </div>
           )}
         </div>
-        <p className="flex items-center overflow-hidden text-ellipsis whitespace-nowrap px-4 font-semibold">
-          {title}
-        </p>
-        <p className="flex items-center px-4 text-gray-500">
-          {formatDate(sentAt)}
-        </p>
+        <div className="flex items-center px-4">
+          <Typography variant="base-semibold" className="px-4">
+            {title}
+          </Typography>
+        </div>
+        <div className="flex items-center px-4">
+          <Typography
+            variant="base-regular"
+            className="px-4 text-secondary-foreground"
+          >
+            {formatDate(sentAt)}
+          </Typography>
+        </div>
       </div>
 
       {/* mobile card */}
@@ -93,27 +100,32 @@ export const InboxRowItem: React.FC<InboxRowItemProps> = ({
             )}
             <AvatarFallback>{"U"}</AvatarFallback>
           </Avatar>
-          <Success className="absolute bottom-0 right-0 size-4 rounded-full border border-white" />
         </div>
         <div className="flex-grow space-y-[6px]">
           <div className="flex items-center justify-between">
-            <p className="font-semibold text-neutral-600">{sentBy.name}</p>
-            <p className="text-[13px] font-semibold opacity-60">15:40</p>
+            <Typography variant="heading-5">{sentBy.name}</Typography>
+            <Typography variant="base-s-regular">
+              {formatDate(sentAt)}
+            </Typography>
           </div>
 
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <InboxTypeIcon className="h-4 w-4" />
-              <p className="text-xs font-semibold">{inboxTypes[type].text}</p>
+              <Typography variant="base-s-semibold">
+                {inboxTypes[type].text}
+              </Typography>
             </div>
             <span
               className={cn(
-                "size-2 rounded-full bg-purple-500",
+                "size-2 rounded-full bg-primary-button",
                 read ? "opacity-0" : "opacity-100"
               )}
             ></span>
           </div>
-          <p className="line-clamp-1 text-sm font-semibold">{title}</p>
+          <Typography variant="base-s-semibold" className="line-clamp-1">
+            {title}
+          </Typography>
         </div>
       </div>
     </Card>

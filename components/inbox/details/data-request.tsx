@@ -8,6 +8,7 @@ import { CloseSideRight } from "@/components/icons/close-side-right";
 import { Failed } from "@/components/icons/failed";
 import { Success } from "@/components/icons/success";
 import { SearchInput } from "@/components/search-input";
+import { Typography } from "@/components/typography";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -113,13 +114,21 @@ export const DataRequestDetails: React.FC<InboxDetailsProps> = ({
                         className="aspect-square rounded-full border object-cover"
                       />
                       <div>
-                        <h6 className="font-bold">{item.name}</h6>
-                        <p className="text-sm text-gray-500">{item.summary}</p>
-                        <p className="text-xs text-gray-500 opacity-60">
+                        <Typography variant="heading-5">{item.name}</Typography>
+                        <Typography
+                          variant="base-s-semibold"
+                          className="text-secondary-foreground"
+                        >
+                          {item.summary}
+                        </Typography>
+                        <Typography
+                          variant="base-s-semibold"
+                          className="text-secondary-foreground/60"
+                        >
                           {moment(new Date(item.insertedAt)).format(
                             "DD/MM/YY hh:mm"
                           )}
-                        </p>
+                        </Typography>
                       </div>
                     </div>
                   }
@@ -153,13 +162,13 @@ export const DataRequestDetails: React.FC<InboxDetailsProps> = ({
         {data.status === "accept" && (
           <div className="flex items-center gap-2">
             <Success />
-            <p className="text-sm font-semibold">Accepted</p>
+            <Typography variant="base-semibold">Accepted</Typography>
           </div>
         )}
         {data.status === "decline" && (
           <div className="flex items-center gap-2">
             <Failed />
-            <p className="text-sm font-semibold">Declined</p>
+            <Typography variant="base-semibold">Declined</Typography>
           </div>
         )}
       </DrawerHeader>
@@ -180,22 +189,29 @@ export const DataRequestDetails: React.FC<InboxDetailsProps> = ({
               )}
               <AvatarFallback>{"U"}</AvatarFallback>
             </Avatar>
-            <Success className="absolute bottom-0 right-0 size-4 rounded-full border border-white" />
           </div>
           <div>
-            <p className="font-medium text-[#041133]">{message.sentBy?.name}</p>
-            <p className="text-xs text-neutral-500">Today at 5:40 pm</p>
+            <Typography variant="heading-5">{message.sentBy?.name}</Typography>
+            <Typography
+              variant="base-s-semibold"
+              className="text-secondary-foreground"
+            >
+              Today at 5:40 pm
+            </Typography>
           </div>
         </div>
 
         <div className="mt-6 rounded-lg bg-[#f5f4ff] p-4">
-          <h5 className="text-sm text-[#041133]">{title}</h5>
+          <Typography variant="base-s-regular">{title}</Typography>
         </div>
 
         <div className="mt-8">
-          <p className="text-sm text-neutral-500">
+          <Typography
+            variant="base-regular"
+            className="text-secondary-foreground"
+          >
             The following data is being requested
-          </p>
+          </Typography>
 
           <DataRequestItem
             onAdd={() => setIsSelecting(true)}
@@ -208,14 +224,14 @@ export const DataRequestDetails: React.FC<InboxDetailsProps> = ({
         <Alert text="Ignore if you don’t recognize this request" />
         <div className="grid grid-cols-2 gap-4">
           <Button
-            variant="outline"
+            variant="secondary"
             disabled={isLoading}
             onClick={() => handleReject(message, InboxType.DATA_REQUEST, {})}
           >
             Decline
           </Button>
           <Button
-            className="bg-purple-500 hover:bg-purple-700"
+            variant="primary"
             disabled={isLoading}
             onClick={() =>
               handleAccept(message, InboxType.DATA_REQUEST, selectedItems)

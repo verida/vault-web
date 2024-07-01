@@ -20,6 +20,9 @@ const config = {
       sans: 'Sora, sans-serif'
     },
     extend: {
+      backgroundImage: {
+        "gradient-conic": "conic-gradient(from -90deg at 50.62% 100%, #5354D1 0deg, #F7F8FA 233.99999141693115deg)",
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

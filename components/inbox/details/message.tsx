@@ -4,6 +4,7 @@ import Image from "next/image";
 import { CloseSideRight } from "@/components/icons/close-side-right";
 import { Failed } from "@/components/icons/failed";
 import { Success } from "@/components/icons/success";
+import { Typography } from "@/components/typography";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -45,17 +46,21 @@ export const InboxMessageDetails: React.FC<InboxDetailsProps> = ({
               )}
               <AvatarFallback>{"U"}</AvatarFallback>
             </Avatar>
-            <Success className="absolute bottom-0 right-0 size-4 rounded-full border border-white" />
           </div>
           <div>
-            <p className="font-medium text-[#041133]">{message.sentBy?.name}</p>
-            <p className="text-xs text-neutral-500">Today at 5:40 pm</p>
+            <Typography variant="heading-5">{message.sentBy?.name}</Typography>
+            <Typography
+              variant="base-s-semibold"
+              className="text-secondary-foreground"
+            >
+              Today at 5:40 pm
+            </Typography>
           </div>
         </div>
 
-        <div className="m-6 rounded-lg bg-[#f5f4ff] p-4">
-          <h5 className="font-semibold text-[#041133]">{title}</h5>
-          <p className="text-sm">{itemData.message}</p>
+        <div className="m-6 space-y-2 rounded-lg bg-[#f5f4ff] p-4">
+          <Typography variant="base-semibold">{title}</Typography>
+          <Typography variant="base-s-regular">{itemData.message}</Typography>
         </div>
       </div>
 

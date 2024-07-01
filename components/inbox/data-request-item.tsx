@@ -3,6 +3,7 @@ import { useMemo } from "react";
 
 import { cn } from "@/lib/utils";
 
+import { Typography } from "../typography";
 import { Button } from "../ui/button";
 import { Card } from "../ui/card";
 
@@ -23,28 +24,33 @@ export const DataRequestItem: React.FC<DataRequestItemProps> = ({
     <Card
       className={cn(
         "mt-4 flex flex-col gap-6 border border-border bg-neutral-50 p-4",
-        isAdded ? "bg-[#DFF5ED]" : "bg-neutral-50"
+        isAdded ? "border-[#dff5ed] bg-[#DFF5ED]" : "bg-neutral-50"
       )}
     >
       <div>
-        <h6 className="font-bold">Employment contract</h6>
-        <p className="text-sm">
+        <Typography variant="heading-5">Employment contract</Typography>
+        <Typography variant="base-s-regular">
           Name, employer, start and end date, attachments
-        </p>
+        </Typography>
       </div>
 
-      <div className="flex flex-wrap gap-2">
-        {selectedItems.map((item) => (
-          <div
-            className="flex items-center gap-2 rounded-full bg-purple-500 p-2 text-xs text-white"
-            key={`chip-${item._id}`}
-          >
-            <Image src={item.icon} alt="" width="24" height="24" />
-            <p>{item.name}</p>
-          </div>
-        ))}
-      </div>
-      <Button variant="outline" className="w-full" onClick={onAdd}>
+      {selectedItems.length > 0 && (
+        <div className="flex flex-wrap gap-2">
+          {selectedItems.map((item) => (
+            <div
+              className="flex items-center gap-2 rounded-full bg-purple-500 p-1"
+              key={`chip-${item._id}`}
+            >
+              <Image src={item.icon} alt="" width="24" height="24" />
+              <Typography variant="base-s-regular" className="text-primary">
+                {item.name}
+              </Typography>
+            </div>
+          ))}
+        </div>
+      )}
+
+      <Button variant="secondary" className="w-full" onClick={onAdd}>
         Add
       </Button>
     </Card>
