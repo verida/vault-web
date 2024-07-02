@@ -1,5 +1,5 @@
-import { Spinner } from "../spinner";
-import { Typography } from "../typography";
+import { Spinner } from "../../spinner";
+import { Typography } from "../../typography";
 
 export const LoadingInbox = () => {
   return (

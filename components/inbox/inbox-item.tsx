@@ -4,11 +4,10 @@ import { inboxTypes } from "@/features/inbox/constants";
 import { InboxEntry } from "@/features/inbox/types";
 import { cn, formatDate } from "@/lib/utils";
 
-import { Failed } from "../icons/failed";
-import { Success } from "../icons/success";
 import { Typography } from "../typography";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Card } from "../ui/card";
+import { InboxStatusText } from "./inbox-status-text";
 
 interface InboxRowItemProps {
   message: InboxEntry;
@@ -61,18 +60,7 @@ export const InboxRowItem: React.FC<InboxRowItemProps> = ({
             </Typography>
           </div>
 
-          {data.status === "accept" && (
-            <div className="flex items-center gap-2">
-              <Success />
-              <Typography variant="base-semibold">Accepted</Typography>
-            </div>
-          )}
-          {data.status === "decline" && (
-            <div className="flex items-center gap-2">
-              <Failed />
-              <Typography variant="base-semibold">Declined</Typography>
-            </div>
-          )}
+          <InboxStatusText status={data.status} />
         </div>
         <div className="flex items-center px-4">
           <Typography variant="base-semibold" className="px-4">

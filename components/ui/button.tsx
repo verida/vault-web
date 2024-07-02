@@ -10,7 +10,7 @@ const buttonVariants = cva(
     variants: {
       variant: {
         primary:
-          "text-primary bg-primary-button hover:bg-primary-button-hover disabled:bg-primary-button/20",
+          "text-primary bg-primary-button hover:bg-primary-button-hover disabled:bg-primary-button",
         secondary:
           "border border-border bg-secondary-button text-primary-foreground hover:bg-secondary-button-hover disabled:text-secondary-foreground",
       },

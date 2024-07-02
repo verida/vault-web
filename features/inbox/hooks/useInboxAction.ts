@@ -85,6 +85,7 @@ export const useInboxAction = () => {
         const inbox = await messagingEngine?.getInbox();
         await inbox.privateInbox.save(inboxEntry);
       } catch (err) {
+        console.log(err);
       } finally {
         setIsLoading(false);
       }

@@ -13,7 +13,7 @@ const Close = (props: Props) => (
   >
     <path
       d="M17 7L7 17M17 17L7 7"
-      stroke="#111111"
+      stroke="currentColor"
       strokeWidth={2}
       strokeLinecap="round"
     />

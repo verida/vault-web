@@ -37,14 +37,16 @@ DrawerOverlay.displayName = DrawerPrimitive.Overlay.displayName;
 
 const DrawerContent = React.forwardRef<
   React.ElementRef<typeof DrawerPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Content>
->(({ className, children, ...props }, ref) => (
+  React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Content> & {
+    onClose?: () => void;
+  }
+>(({ className, children, onClose, ...props }, ref) => (
   <DrawerPortal>
-    <DrawerOverlay />
+    <DrawerOverlay onClick={onClose} />
     <DrawerPrimitive.Content
       ref={ref}
       className={cn(
-        "fixed bottom-0 right-0 z-50 mt-24 flex h-full w-[480px] flex-col bg-primary",
+        "fixed bottom-0 right-0 z-50 mt-24 flex h-full w-[480px] max-w-full flex-col bg-primary after:!content-none md:bottom-2 md:right-2 md:h-[calc(100%-16px)] md:rounded-md",
         // "fixed inset-x-0 bottom-0 z-50 mt-24 flex h-auto flex-col rounded-t-[10px] border bg-primary,
         className
       )}
@@ -64,7 +66,7 @@ const DrawerHeader = ({
 }: React.HTMLAttributes<HTMLDivElement>) => (
   <div
     className={cn(
-      "grid gap-1.5 border-b border-gray-200 px-6 py-4 text-center sm:text-left",
+      "grid gap-1.5 border-b border-border px-6 py-4 text-center sm:text-left",
       className
     )}
     {...props}
@@ -72,13 +74,21 @@ const DrawerHeader = ({
 );
 DrawerHeader.displayName = "DrawerHeader";
 
+const DrawerBody = ({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement>) => (
+  <div className={cn("p-6", className)} {...props} />
+);
+DrawerBody.displayName = "DrawerBody";
+
 const DrawerFooter = ({
   className,
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) => (
   <div
     className={cn(
-      "mt-auto flex flex-col gap-3 border-t border-gray-200 p-6",
+      "mt-auto flex flex-col gap-3 border-t border-border p-6",
       className
     )}
     {...props}
@@ -121,6 +131,7 @@ export {
   DrawerClose,
   DrawerContent,
   DrawerHeader,
+  DrawerBody,
   DrawerFooter,
   DrawerTitle,
   DrawerDescription,

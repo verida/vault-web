@@ -44,6 +44,7 @@ const config = {
             DEFAULT: "hsl(var(--secondary-button))",
             hover: "hsl(var(--secondary-button-hover))",
           },
+          'activity-sending': 'hsl(var(--secondary-activity-sending))',
         },
         destructive: {
           DEFAULT: "hsl(var(--destructive))",

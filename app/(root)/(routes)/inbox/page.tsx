@@ -3,19 +3,18 @@
 import { useMemo, useState } from "react";
 
 import { FilterButton } from "@/components/filter-button";
-import { Filter } from "@/components/icons/filter";
 import { InboxDetails } from "@/components/inbox/inbox-details";
 import { InboxRowItem } from "@/components/inbox/inbox-item";
-import { LoadingInbox } from "@/components/inbox/inbox-loading";
+import { LoadingInbox } from "@/components/inbox/status/inbox-loading";
 import { SearchInput } from "@/components/search-input";
 import { Typography } from "@/components/typography";
-import { Button } from "@/components/ui/button";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { TablePagination } from "@/components/ui/table-pagination";
 import { useInbox } from "@/features/inbox/hooks";
 import { useInboxContext } from "@/features/inbox/hooks/useInboxContext";
 import { useMessages } from "@/features/inbox/hooks/useMessages";
 import { InboxEntry } from "@/features/inbox/types";
+import { ModalSheet } from "@/components/common/modal-sheet";
 
 const InboxPage = () => {
   const [offset, setOffset] = useState(0);
@@ -62,10 +61,13 @@ const InboxPage = () => {
   return (
     <>
       <div className="flex flex-grow flex-col space-y-6 pb-6 pt-10">
-        <div className="flex flex-col items-center justify-between md:flex-row">
+        <div className="flex items-center justify-between">
           <Typography variant="heading-3">Inbox</Typography>
-          <nav className="flex w-full space-x-3 md:w-auto">
-            <SearchInput onValueChange={handleSearchInputChange} />
+          <nav className="flex space-x-2 md:w-auto md:space-x-3">
+            <SearchInput
+              onValueChange={handleSearchInputChange}
+              className="md:flex-grow"
+            />
             <FilterButton />
           </nav>
         </div>
@@ -89,23 +91,15 @@ const InboxPage = () => {
           onChange={handlePageChange}
         />
       </div>
-      <Drawer
-        direction="right"
-        open={Boolean(messageId)}
-        onClose={() => {
-          setMessageId("");
-        }}
-      >
-        <DrawerTrigger />
-        <DrawerContent>
-          {selectedMessage && (
-            <InboxDetails
-              message={selectedMessage}
-              onClose={() => setMessageId("")}
-            />
-          )}
-        </DrawerContent>
-      </Drawer>
+
+      <ModalSheet open={Boolean(messageId)} onClose={() => setMessageId("")}>
+        {selectedMessage && (
+          <InboxDetails
+            message={selectedMessage}
+            onClose={() => setMessageId("")}
+          />
+        )}
+      </ModalSheet>
     </>
   );
 };

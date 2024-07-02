@@ -8,7 +8,7 @@ interface IncomingDataItemProps {
 
 export const IncomingDataItem: React.FC<IncomingDataItemProps> = ({ item }) => {
   return (
-    <div className="space-y-2 rounded-sm bg-neutral-50 p-4">
+    <div className="bg-secondary-activity-sending space-y-2 rounded-sm p-4">
       <div className="flex items-center gap-2">
         <Image
           src={item.icon || ""}
@@ -18,9 +18,7 @@ export const IncomingDataItem: React.FC<IncomingDataItemProps> = ({ item }) => {
         />
         <Typography variant="heading-5">{item.name}</Typography>
       </div>
-      <Typography className="text-secondary-foreground">
-        {item.summary}
-      </Typography>
+      <Typography variant="base-s-regular">{item.summary}</Typography>
     </div>
   );
 };

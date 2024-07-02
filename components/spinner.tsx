@@ -12,7 +12,7 @@ export const Spinner: React.FC<SpinnerProps> = ({
   return (
     <>
       <div
-        className="bg-gradient-conic h-20 w-20 animate-spin rounded-full"
+        className="h-20 w-20 animate-spin rounded-full bg-gradient-conic"
         style={{
           width,
           height,

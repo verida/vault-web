@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import { Typography } from "../typography";
 import { Button } from "../ui/button";
 import { Card } from "../ui/card";
+import { Chip } from "../common/chip";
 
 interface DataRequestItemProps {
   selectedItems: Record<string, any>[];
@@ -37,15 +38,12 @@ export const DataRequestItem: React.FC<DataRequestItemProps> = ({
       {selectedItems.length > 0 && (
         <div className="flex flex-wrap gap-2">
           {selectedItems.map((item) => (
-            <div
-              className="flex items-center gap-2 rounded-full bg-purple-500 p-1"
+            <Chip
               key={`chip-${item._id}`}
-            >
-              <Image src={item.icon} alt="" width="24" height="24" />
-              <Typography variant="base-s-regular" className="text-primary">
-                {item.name}
-              </Typography>
-            </div>
+              id={item._id}
+              icon={item.icon}
+              text={item.name}
+            />
           ))}
         </div>
       )}

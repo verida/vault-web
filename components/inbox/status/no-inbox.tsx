@@ -2,7 +2,7 @@ import Image from "next/image";
 
 import NoInboxImage from "@/assets/no-inbox.svg";
 
-import { Typography } from "../typography";
+import { Typography } from "../../typography";
 
 export const NoInbox = () => {
   return (
