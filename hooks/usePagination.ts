@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 export const usePagination = (
   initialPage = 0,
@@ -7,6 +7,10 @@ export const usePagination = (
 ) => {
   const [page, setPage] = useState(initialPage);
   const [limit, setLimit] = useState(initialLimit);
+
+  useEffect(() => {
+    setLimit(initialLimit);
+  }, [initialLimit]);
 
   const totalPages = useMemo(
     () => Math.ceil(totalItems / limit),

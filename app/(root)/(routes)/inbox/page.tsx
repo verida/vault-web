@@ -8,7 +8,6 @@ import { InboxRowItem } from "@/components/inbox/inbox-item";
 import { LoadingInbox } from "@/components/inbox/status/inbox-loading";
 import { SearchInput } from "@/components/search-input";
 import { Typography } from "@/components/typography";
-import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { TablePagination } from "@/components/ui/table-pagination";
 import { useInbox } from "@/features/inbox/hooks";
 import { useInboxContext } from "@/features/inbox/hooks/useInboxContext";

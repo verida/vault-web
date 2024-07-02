@@ -49,7 +49,7 @@ export const TablePagination: React.FC<TablePaginationProps> = ({
           defaultValue={currentLimit.toString()}
           onValueChange={(value) => setCurrentLimit(+value)}
         >
-          <SelectTrigger>
+          <SelectTrigger className="w-20">
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
