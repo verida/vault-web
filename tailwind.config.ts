@@ -45,6 +45,7 @@ const config = {
             hover: "hsl(var(--secondary-button-hover))",
           },
           'activity-sending': 'hsl(var(--secondary-activity-sending))',
+          'activity-receiving': 'hsl(var(--secondary-activity-receiving))',
         },
         destructive: {
           DEFAULT: "hsl(var(--destructive))",
@@ -57,6 +58,9 @@ const config = {
         accent: {
           DEFAULT: "hsl(var(--accent))",
           foreground: "hsl(var(--accent-foreground))",
+        },
+        approved: {
+          DEFAULT: "hsl(var(--approved))",
         },
         gray: {
           50: '#F9FAFB',

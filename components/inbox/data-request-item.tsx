@@ -7,6 +7,8 @@ import { Typography } from "../typography";
 import { Button } from "../ui/button";
 import { Card } from "../ui/card";
 import { Chip } from "../common/chip";
+import { Plus } from "../icons/plus";
+import { Check } from "../icons/check";
 
 interface DataRequestItemProps {
   selectedItems: Record<string, any>[];
@@ -24,8 +26,10 @@ export const DataRequestItem: React.FC<DataRequestItemProps> = ({
   return (
     <Card
       className={cn(
-        "mt-4 flex flex-col gap-6 border border-border bg-neutral-50 p-4",
-        isAdded ? "border-[#dff5ed] bg-[#DFF5ED]" : "bg-neutral-50"
+        "bg-secondary-activity-sending mt-4 flex flex-col gap-6 border border-border p-4",
+        isAdded
+          ? "border-secondary-activity-receiving bg-secondary-activity-receiving"
+          : ""
       )}
     >
       <div>
@@ -48,9 +52,17 @@ export const DataRequestItem: React.FC<DataRequestItemProps> = ({
         </div>
       )}
 
-      <Button variant="secondary" className="w-full" onClick={onAdd}>
-        Add
-      </Button>
+      {isAdded ? (
+        <Button variant="secondary" className="text-approved w-full gap-2">
+          <Check />
+          Added
+        </Button>
+      ) : (
+        <Button variant="secondary" className="w-full gap-2" onClick={onAdd}>
+          <Plus />
+          Add
+        </Button>
+      )}
     </Card>
   );
 };
