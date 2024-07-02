@@ -34,7 +34,7 @@ const sidebarContent = [
 ];
 
 const Homepage = () => {
-  const { isConnected, isCheckingConnection } = useVerida();
+  const { isConnected, isCheckingConnection, connect } = useVerida();
 
   if (!isConnected && !isCheckingConnection) {
     return (
@@ -51,11 +51,15 @@ const Homepage = () => {
                 credentials with the Verida Vault App.
               </Typography>
 
-              <Button variant="primary" className="mt-8">
+              <Button
+                variant="primary"
+                className="mt-8"
+                onClick={() => connect()}
+              >
                 Try the Verida Vault App
               </Button>
 
-              <div className="bg-radial-gradient mt-12 flex h-full flex-1 flex-col rounded-[32px] rounded-b-none text-secondary md:hidden">
+              <div className="mt-12 flex h-full flex-1 flex-col rounded-[32px] rounded-b-none bg-radial-gradient text-secondary md:hidden">
                 <Swiper data={sidebarContent} />
               </div>
             </div>
@@ -64,7 +68,7 @@ const Homepage = () => {
           </div>
         </section>
 
-        <section className="bg-radial-gradient hidden min-h-full flex-1 rounded-[32px] rounded-r-none text-secondary md:flex md:flex-col">
+        <section className="hidden min-h-full flex-1 rounded-[32px] rounded-r-none bg-radial-gradient text-secondary md:flex md:flex-col">
           <Swiper data={sidebarContent} />
         </section>
       </div>
