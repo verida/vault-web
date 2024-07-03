@@ -7,6 +7,7 @@ import {
 } from "@/components/common/modal-sheet";
 import { Typography } from "@/components/typography";
 import { Button } from "@/components/ui/button";
+import { ButtonLink } from "@/components/ui/button-link";
 import { useInboxAction } from "@/features/inbox/hooks/useInboxAction";
 import { InboxType } from "@/features/inbox/types";
 
@@ -42,7 +43,9 @@ export const InboxMessageDetails: React.FC<InboxDetailsProps> = ({
         ) : (
           <>
             {!!itemData.link && (
-              <Button onClick={() => {}}>{itemData.link.text}</Button>
+              <ButtonLink href={itemData.link.url}>
+                {itemData.link.text}
+              </ButtonLink>
             )}
             <Button
               onClick={() => handleAccept(message, InboxType.MESSAGE, {})}
