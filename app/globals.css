@@ -11,6 +11,7 @@
     --primary-foreground: 0 0% 6.7%;
     --primary-button: 240 57.8% 57.3%;
     --primary-button-hover: 243 90% 27%;
+    --primary-button-foreground: 0 0% 100%;
 
     --secondary: 210 20% 98%;
     --secondary-foreground: 220 9% 46%;
@@ -76,4 +77,25 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+.fade-enter {
+  opacity: 0;
+}
+
+.fade-enter-active {
+  opacity: 1;
+}
+
+.fade-exit {
+  opacity: 1;
+}
+
+.fade-exit-active {
+  opacity: 0;
+}
+
+.fade-enter-active,
+.fade-exit-active {
+  transition: opacity 300ms;
 }

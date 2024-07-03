@@ -48,5 +48,6 @@
     "import/no-duplicates": "error",
     "no-extra-boolean-cast": "off",
     "no-case-declarations": "off",
+    "prettier/prettier": "warn"
   }
 }
