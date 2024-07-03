@@ -1,4 +1,4 @@
-import type { Config } from "tailwindcss"
+import type { Config } from "tailwindcss";
 
 const config = {
   content: [
@@ -17,9 +17,12 @@ const config = {
       },
     },
     fontFamily: {
-      sans: 'Sora, sans-serif'
+      sans: "Sora, sans-serif",
     },
     extend: {
+      backgroundImage: {
+        "radial-gradient": "radial-gradient(61.06% 61.06% at 50% 50%, #7986F7 0%, #5354D1 100%)",
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -32,6 +35,7 @@ const config = {
           button: {
             DEFAULT: "hsl(var(--primary-button))",
             hover: "hsl(var(--primary-button-hover))",
+            foreground: "hsl(var(--primary-button-foreground))",
           },
         },
         secondary: {
@@ -55,33 +59,33 @@ const config = {
           foreground: "hsl(var(--accent-foreground))",
         },
         gray: {
-          50: '#F9FAFB',
-          100: '#F3F4F6',
-          200: '#E2E8F0',
-          300: '#D1D5DB',
-          500: '#6B7280',
-          800: '#1F2937'
+          50: "#F9FAFB",
+          100: "#F3F4F6",
+          200: "#E2E8F0",
+          300: "#D1D5DB",
+          500: "#6B7280",
+          800: "#1F2937",
         },
         purple: {
-          50: '#F5F4FF',
-          100: '#ECEBFA',
-          200: '#D9D8F5',
-          400: '#7986F7',
-          500: '#5354D1',
-          700: '#0D0782'
+          50: "#F5F4FF",
+          100: "#ECEBFA",
+          200: "#D9D8F5",
+          400: "#7986F7",
+          500: "#5354D1",
+          700: "#0D0782",
         },
-        green:{
-          100: '#DCFCE7',
-          800: '#166534'
+        green: {
+          100: "#DCFCE7",
+          800: "#166534",
         },
         cyan: {
-          100: '#CFFAFE',
-          800: '#155E75'
+          100: "#CFFAFE",
+          800: "#155E75",
         },
         yellow: {
-          100: '#FEF9C3',
-          800: '#854D0E'
-        }
+          100: "#FEF9C3",
+          800: "#854D0E",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -216,6 +220,6 @@ const config = {
     },
   },
   plugins: [require("tailwindcss-animate")],
-} satisfies Config
+} satisfies Config;
 
-export default config
+export default config;
