@@ -1,6 +1,7 @@
 import Image from "next/image";
-import { Typography } from "../typography";
+
 import { Close } from "../icons/close";
+import { Typography } from "../typography";
 
 interface ChipProps {
   id: string;

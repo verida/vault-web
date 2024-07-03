@@ -3,12 +3,12 @@ import { useMemo } from "react";
 
 import { cn } from "@/lib/utils";
 
+import { Chip } from "../common/chip";
+import { Check } from "../icons/check";
+import { Plus } from "../icons/plus";
 import { Typography } from "../typography";
 import { Button } from "../ui/button";
 import { Card } from "../ui/card";
-import { Chip } from "../common/chip";
-import { Plus } from "../icons/plus";
-import { Check } from "../icons/check";
 
 interface DataRequestItemProps {
   selectedItems: Record<string, any>[];
@@ -26,7 +26,7 @@ export const DataRequestItem: React.FC<DataRequestItemProps> = ({
   return (
     <Card
       className={cn(
-        "bg-secondary-activity-sending mt-4 flex flex-col gap-6 border border-border p-4",
+        "mt-4 flex flex-col gap-6 border border-border bg-secondary-activity-sending p-4",
         isAdded
           ? "border-secondary-activity-receiving bg-secondary-activity-receiving"
           : ""
@@ -53,7 +53,7 @@ export const DataRequestItem: React.FC<DataRequestItemProps> = ({
       )}
 
       {isAdded ? (
-        <Button variant="secondary" className="text-approved w-full gap-2">
+        <Button variant="secondary" className="w-full gap-2 text-approved">
           <Check />
           Added
         </Button>

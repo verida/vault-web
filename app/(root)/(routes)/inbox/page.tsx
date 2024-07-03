@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 
+import { ModalSheet } from "@/components/common/modal-sheet";
 import { FilterButton } from "@/components/filter-button";
 import { InboxDetails } from "@/components/inbox/inbox-details";
 import { InboxRowItem } from "@/components/inbox/inbox-item";
@@ -13,7 +14,6 @@ import { useInbox } from "@/features/inbox/hooks";
 import { useInboxContext } from "@/features/inbox/hooks/useInboxContext";
 import { useMessages } from "@/features/inbox/hooks/useMessages";
 import { InboxEntry } from "@/features/inbox/types";
-import { ModalSheet } from "@/components/common/modal-sheet";
 
 const InboxPage = () => {
   const [offset, setOffset] = useState(0);

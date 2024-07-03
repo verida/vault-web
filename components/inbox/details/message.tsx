@@ -1,18 +1,17 @@
 import { isEmpty } from "lodash";
 
-import { Typography } from "@/components/typography";
-import { Button } from "@/components/ui/button";
-
-import { useInboxAction } from "@/features/inbox/hooks/useInboxAction";
-import { InboxType } from "@/features/inbox/types";
-
-import { InboxDetailsProps } from "../inbox-details";
-import { RequesterProfile } from "../requester-profile";
 import {
   ModalSheetBody,
   ModalSheetFooter,
   ModalSheetHeader,
 } from "@/components/common/modal-sheet";
+import { Typography } from "@/components/typography";
+import { Button } from "@/components/ui/button";
+import { useInboxAction } from "@/features/inbox/hooks/useInboxAction";
+import { InboxType } from "@/features/inbox/types";
+
+import { InboxDetailsProps } from "../inbox-details";
+import { RequesterProfile } from "../requester-profile";
 
 export const InboxMessageDetails: React.FC<InboxDetailsProps> = ({
   message,

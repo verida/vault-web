@@ -1,9 +1,13 @@
 import { useEffect, useState } from "react";
 
 import Alert from "@/components/alert";
+import {
+  ModalSheetBody,
+  ModalSheetFooter,
+  ModalSheetHeader,
+} from "@/components/common/modal-sheet";
 import { Typography } from "@/components/typography";
 import { Button } from "@/components/ui/button";
-
 import { useInboxAction } from "@/features/inbox/hooks/useInboxAction";
 import { InboxType } from "@/features/inbox/types";
 import { useVerida } from "@/features/verida";
@@ -11,13 +15,8 @@ import { useVerida } from "@/features/verida";
 import { DataRequestItem } from "../data-request-item";
 import { InboxDetailsProps } from "../inbox-details";
 import { InboxStatusText } from "../inbox-status-text";
-import { RequesterProfile } from "../requester-profile";
 import { RequestDataSelector } from "../request-data-selector";
-import {
-  ModalSheetBody,
-  ModalSheetFooter,
-  ModalSheetHeader,
-} from "@/components/common/modal-sheet";
+import { RequesterProfile } from "../requester-profile";
 
 export const DataRequestDetails: React.FC<InboxDetailsProps> = ({
   message,

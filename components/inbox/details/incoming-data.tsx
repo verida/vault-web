@@ -1,9 +1,13 @@
 import React from "react";
 
 import Alert from "@/components/alert";
+import {
+  ModalSheetBody,
+  ModalSheetFooter,
+  ModalSheetHeader,
+} from "@/components/common/modal-sheet";
 import { Typography } from "@/components/typography";
 import { Button } from "@/components/ui/button";
-
 import { useInboxAction } from "@/features/inbox/hooks/useInboxAction";
 import { InboxType } from "@/features/inbox/types";
 
@@ -11,11 +15,6 @@ import { InboxDetailsProps } from "../inbox-details";
 import { InboxStatusText } from "../inbox-status-text";
 import { IncomingDataItem } from "../incoming-data-item";
 import { RequesterProfile } from "../requester-profile";
-import {
-  ModalSheetBody,
-  ModalSheetFooter,
-  ModalSheetHeader,
-} from "@/components/common/modal-sheet";
 
 const InboxIncomingData: React.FC<InboxDetailsProps> = ({
   message,
