@@ -35,7 +35,7 @@ export function getDidClientConfigForNetwork(
   network: EnvironmentType
 ): AccountNodeDIDClientConfig {
   const rpcUrl =
-    "https://polygon-mumbai.g.alchemy.com/v2/Q4NRuRlwTNyI90dDCgiX_KT_vS_2gpbN";
+    "https://polygon-mainnet.g.alchemy.com/v2/CJgbQjPD-NUTcZNMf4jt-mwb-xOQMq6e";
   const metaTransactionServerUrl =
     "https://devnet-meta-tx-server.tn.verida.tech";
 
@@ -77,24 +77,21 @@ export async function getPublicProfileDatastore(
   try {
     const network = getNetworkFromDID(did);
     const defaultDidConfig = getDidClientConfigForNetwork(network);
-
-    const config = {
+    const client = new Client({
       environment: network,
       didClientConfig: {
         rpcUrl: defaultDidConfig.rpcUrl,
         network: network,
       },
-    };
+    });
 
-    if (!client || !isEqual(config, currentConfig)) {
-      client = new Client(config);
-      currentConfig = config;
-    }
-
-    return client.openPublicProfile(did, contextName, "basicProfile");
+    return client.openPublicProfile(
+      did,
+      contextName,
+      "basicProfile",
+      fallbackToVaultContext ? "Verida: Vault" : undefined
+    );
   } catch (error: unknown) {
-    console.warn(`Not able to fetch public profile of ${did}`);
-    console.error(error);
     return;
   }
 }
@@ -104,80 +101,49 @@ export async function getPublicProfile(
   contextName = "Verida: Vault",
   fallbackToVaultContext = true
 ): Promise<PublicProfile> {
-  const profileCache = getProfilesCache();
-  const profileId = `${contextName}-${did}`;
-  const loadedProfile = profileCache.get(profileId)?.value;
-  const shouldRefetchProfile =
-    Date.now() - (profileCache.get(profileId)?.timestamp ?? 0) > 10 * 60 * 1000; // 10 minutes
+  try {
+    const profileDb = await getPublicProfileDatastore(
+      did,
+      contextName,
+      fallbackToVaultContext
+    );
 
-  const fetchPublicProfileAndUpdateCache = async () => {
-    try {
-      const profileDb = await getPublicProfileDatastore(
-        did,
-        contextName,
-        fallbackToVaultContext
-      );
-
-      if (!profileDb) {
-        return {
-          name: "",
-        };
-      }
-
-      const [
-        nameResult,
-        avatarResult,
-        descriptionResult,
-        countryResult,
-        websiteResult,
-      ] = await Promise.allSettled([
-        await profileDb.get("name"),
-        await profileDb.get("avatar"),
-        await profileDb.get("description"),
-        await profileDb.get("country"),
-        await profileDb.get("website"),
-      ]);
-
-      const p = {
-        name: nameResult.status === "fulfilled" ? nameResult.value : "",
-        avatar:
-          avatarResult.status === "fulfilled" ? avatarResult.value : undefined,
-        description:
-          descriptionResult.status === "fulfilled"
-            ? descriptionResult.value
-            : undefined,
-        country:
-          countryResult.status === "fulfilled"
-            ? countryResult.value
-            : undefined,
-        website:
-          websiteResult.status === "fulfilled"
-            ? websiteResult.value
-            : undefined,
-      };
-
-      profileCache.set(profileId, {
-        ...p,
-      });
-
-      return p;
-    } catch (error) {
-      console.error(error);
-
-      profileCache.set(profileId, {
-        name: "Unknown",
-      });
-
+    if (!profileDb) {
       return {
         name: "",
       };
     }
-  };
 
-  if (loadedProfile) {
-    shouldRefetchProfile && fetchPublicProfileAndUpdateCache();
-    return loadedProfile as any;
-  } else {
-    return await fetchPublicProfileAndUpdateCache();
+    const [
+      nameResult,
+      avatarResult,
+      descriptionResult,
+      countryResult,
+      websiteResult,
+    ] = await Promise.allSettled([
+      await profileDb.get("name"),
+      await profileDb.get("avatar"),
+      await profileDb.get("description"),
+      await profileDb.get("country"),
+      await profileDb.get("website"),
+    ]);
+
+    return {
+      name: nameResult.status === "fulfilled" ? nameResult.value : "",
+      avatar:
+        avatarResult.status === "fulfilled" ? avatarResult.value : undefined,
+      description:
+        descriptionResult.status === "fulfilled"
+          ? descriptionResult.value
+          : undefined,
+      country:
+        countryResult.status === "fulfilled" ? countryResult.value : undefined,
+      website:
+        websiteResult.status === "fulfilled" ? websiteResult.value : undefined,
+    };
+  } catch (error) {
+    return {
+      name: "",
+    };
   }
 }

@@ -19,10 +19,11 @@ import { cn } from "@/lib/utils";
 
 import { Close } from "./icons/close";
 import { Hamburger } from "./icons/hamburger";
+import { InboxWithBadge } from "./icons/inbox-with-badge";
 
 const headerNavs = [
   {
-    icon: <Inbox />,
+    icon: <InboxWithBadge />,
     title: "Inbox",
     href: "/inbox",
   },

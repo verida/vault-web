@@ -21,6 +21,7 @@ const config = {
     },
     extend: {
       backgroundImage: {
+        "gradient-conic": "conic-gradient(from -90deg at 50.62% 100%, #5354D1 0deg, #F7F8FA 233.99999141693115deg)",
         "radial-gradient": "radial-gradient(61.06% 61.06% at 50% 50%, #7986F7 0%, #5354D1 100%)",
       },
       colors: {
@@ -45,6 +46,8 @@ const config = {
             DEFAULT: "hsl(var(--secondary-button))",
             hover: "hsl(var(--secondary-button-hover))",
           },
+          'activity-sending': 'hsl(var(--secondary-activity-sending))',
+          'activity-receiving': 'hsl(var(--secondary-activity-receiving))',
         },
         destructive: {
           DEFAULT: "hsl(var(--destructive))",
@@ -57,6 +60,9 @@ const config = {
         accent: {
           DEFAULT: "hsl(var(--accent))",
           foreground: "hsl(var(--accent-foreground))",
+        },
+        approved: {
+          DEFAULT: "hsl(var(--approved))",
         },
         gray: {
           50: "#F9FAFB",
