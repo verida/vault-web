@@ -17,7 +17,7 @@ interface SwiperProps {
   }[];
 }
 
-const INTERVAL = 5000;
+const INTERVAL = 15000;
 
 export const Swiper: React.FunctionComponent<SwiperProps> = (props) => {
   const { data } = props;
