@@ -6,7 +6,9 @@ import { ModalSheet } from "@/components/common/modal-sheet";
 import { FilterButton } from "@/components/filter-button";
 import { InboxDetails } from "@/components/inbox/inbox-details";
 import { InboxRowItem } from "@/components/inbox/inbox-item";
+import { InboxError } from "@/components/inbox/status/inbox-error";
 import { LoadingInbox } from "@/components/inbox/status/inbox-loading";
+import { NoInbox } from "@/components/inbox/status/no-inbox";
 import { SearchInput } from "@/components/search-input";
 import { Typography } from "@/components/typography";
 import { TablePagination } from "@/components/ui/table-pagination";
@@ -24,6 +26,8 @@ const InboxPage = () => {
     totalMessageCount,
     isTotalMessageCountPending,
     isUnreadMessageCountPending,
+    isTotalMessageCountError,
+    isUnreadMessageCountError,
   } = useInbox();
   const { messages, isMessagesPending } = useMessages(
     messagingEngine,
@@ -50,6 +54,10 @@ const InboxPage = () => {
     isMessagesPending,
   ]);
 
+  const hasError = useMemo(() => {
+    return isTotalMessageCountError || isUnreadMessageCountError;
+  }, [isTotalMessageCountError, isUnreadMessageCountError]);
+
   const handleSearchInputChange = (value: string) => {};
 
   const handlePageChange = (newOffset: number, newLimit: number) => {
@@ -63,15 +71,19 @@ const InboxPage = () => {
         <div className="flex items-center justify-between">
           <Typography variant="heading-3">Inbox</Typography>
           <nav className="flex space-x-2 md:w-auto md:space-x-3">
-            <SearchInput
+            {/* <SearchInput
               onValueChange={handleSearchInputChange}
               className="md:flex-grow"
             />
-            <FilterButton />
+            <FilterButton /> */}
           </nav>
         </div>
 
         {isLoading && <LoadingInbox />}
+
+        {hasError && <InboxError />}
+
+        {!isLoading && totalMessageCount === 0 && <NoInbox />}
 
         {!isLoading && messages && (
           <div className="flex flex-grow flex-col items-center gap-3">

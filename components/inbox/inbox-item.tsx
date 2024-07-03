@@ -60,7 +60,7 @@ export const InboxRowItem: React.FC<InboxRowItemProps> = ({
             </Typography>
           </div>
 
-          <InboxStatusText status={data.status} />
+          <InboxStatusText status={data.status} inboxType={type} />
         </div>
         <div className="flex items-center px-4">
           <Typography variant="base-semibold" className="px-4">
