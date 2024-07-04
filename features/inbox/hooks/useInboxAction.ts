@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 
 import { useVerida } from "@/features/verida";
 
@@ -34,6 +34,8 @@ export const useInboxAction = () => {
               const foundData = await store.getMany(data.filter || {});
               response.data = [foundData] as any;
             }
+
+            inboxEntry.data.requestedData = response.data;
 
             await messagingEngine?.send(
               sentBy.did,
@@ -84,17 +86,17 @@ export const useInboxAction = () => {
         inboxEntry.read = true;
         const inbox = await messagingEngine?.getInbox();
         await inbox.privateInbox.save(inboxEntry);
-      } catch (err) {
-        console.log(err);
-      } finally {
         setIsLoading(false);
+      } catch (err) {
+        setIsLoading(false);
+        console.log(err);
       }
     },
     [openDatastore, messagingEngine]
   );
 
   const handleReject = useCallback(
-    async (inboxEntry: InboxEntry, type: InboxType, payload: unknown) => {
+    async (inboxEntry: InboxEntry) => {
       if (inboxEntry.data.status) {
         throw new Error(
           "Data has already been set to " + inboxEntry.data.status

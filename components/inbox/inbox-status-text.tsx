@@ -6,7 +6,7 @@ import { Typography } from "../typography";
 
 interface InboxStatusProps {
   status?: "accept" | "decline";
-  inboxType: InboxType;
+  inboxType?: InboxType;
 }
 
 export const InboxStatusText: React.FC<InboxStatusProps> = (props) => {

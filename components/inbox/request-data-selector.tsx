@@ -1,6 +1,9 @@
+import { useQuery } from "@tanstack/react-query";
 import moment from "moment";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+import { useVerida } from "@/features/verida";
 
 import Alert from "../alert";
 import { ArrowLeft } from "../icons/arrow-left";
@@ -17,7 +20,8 @@ import {
 } from "../ui/drawer";
 
 interface RequestDataSelectorProps {
-  data?: any[];
+  schemaUrl: string;
+  filter: any;
   defaultItems: any[];
   onClose: () => void;
   onConfirm: (items: any[]) => void;
@@ -26,9 +30,57 @@ interface RequestDataSelectorProps {
 export const RequestDataSelector: React.FC<RequestDataSelectorProps> = (
   props
 ) => {
-  const { data, onClose, onConfirm, defaultItems } = props;
+  const { schemaUrl, filter, onClose, onConfirm, defaultItems } = props;
 
+  const { openDatastore } = useVerida();
+
+  const [searchValue, setSearchValue] = useState<string>("");
   const [selectedItems, setSelectedItems] = useState<any[]>(defaultItems);
+
+  const fetchData = async (searchValue: string) => {
+    try {
+      const requestFilter = filter && typeof filter === "object" ? filter : {};
+
+      const searchFilter =
+        searchValue && searchValue.length > 0
+          ? {
+              $or: [
+                {
+                  name: {
+                    $regex: searchValue,
+                  },
+                },
+                {
+                  summary: {
+                    $regex: searchValue,
+                  },
+                },
+              ],
+            }
+          : {};
+
+      const query = {
+        $and: [requestFilter, searchFilter],
+      };
+
+      const datastore = await openDatastore(schemaUrl, undefined);
+      const result = await datastore?.getMany(query, undefined);
+
+      return result;
+    } catch (err) {
+      console.log("error", err);
+    }
+  };
+
+  useEffect(() => {
+    fetchData("");
+  }, []);
+
+  const { data, isPending } = useQuery({
+    queryKey: ["messages", searchValue],
+    queryFn: () => fetchData(searchValue),
+    staleTime: 0,
+  });
 
   return (
     <>
@@ -38,11 +90,25 @@ export const RequestDataSelector: React.FC<RequestDataSelectorProps> = (
           <DrawerTitle>Select an Item</DrawerTitle>
         </div>
         <div className="flex items-center space-x-3">
-          <SearchInput className="w-full" />
+          <SearchInput
+            className="w-full"
+            onValueChange={(value) => setSearchValue(value)}
+          />
         </div>
       </DrawerHeader>
 
       <DrawerBody className="overflow-y-auto p-6">
+        {isPending && (
+          <Typography variant="base-semibold" className="text-center">
+            Loading...
+          </Typography>
+        )}
+
+        {!isPending && !data?.length && (
+          <Typography variant="base-semibold" className="text-center">
+            No Items
+          </Typography>
+        )}
         <div className="space-y-2">
           {(data || []).map((item: any) => (
             <Card

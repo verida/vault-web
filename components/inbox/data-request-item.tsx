@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { useMemo } from "react";
 
 import { cn } from "@/lib/utils";
@@ -11,13 +10,17 @@ import { Button } from "../ui/button";
 import { Card } from "../ui/card";
 
 interface DataRequestItemProps {
+  data: Record<string, any>;
   selectedItems: Record<string, any>[];
   onAdd: () => void;
+  disabled?: boolean;
 }
 
 export const DataRequestItem: React.FC<DataRequestItemProps> = ({
+  data = {},
   selectedItems,
   onAdd,
+  disabled = false,
 }) => {
   const isAdded = useMemo(() => {
     return selectedItems.length > 0;
@@ -33,10 +36,8 @@ export const DataRequestItem: React.FC<DataRequestItemProps> = ({
       )}
     >
       <div>
-        <Typography variant="heading-5">Employment contract</Typography>
-        <Typography variant="base-s-regular">
-          Name, employer, start and end date, attachments
-        </Typography>
+        <Typography variant="heading-5">{data.title}</Typography>
+        <Typography variant="base-s-regular">{data.description}</Typography>
       </div>
 
       {selectedItems.length > 0 && (
@@ -51,8 +52,9 @@ export const DataRequestItem: React.FC<DataRequestItemProps> = ({
           ))}
         </div>
       )}
-
-      {isAdded ? (
+      {disabled ? (
+        <></>
+      ) : isAdded ? (
         <Button variant="secondary" className="w-full gap-2 text-approved">
           <Check />
           Added

@@ -49,7 +49,10 @@ const InboxIncomingData: React.FC<InboxDetailsProps> = ({
         <div className="mt-3 space-y-3">
           {data.data &&
             data.data.map((item: any, _ind: number) => (
-              <IncomingDataItem item={item} key={`incoming-item-${item._id}`} />
+              <IncomingDataItem
+                item={item}
+                key={`incoming-item-${item._id || _ind}`}
+              />
             ))}
         </div>
       </ModalSheetBody>
@@ -66,7 +69,7 @@ const InboxIncomingData: React.FC<InboxDetailsProps> = ({
               <Button
                 variant="secondary"
                 className="w-full"
-                onClick={() => handleReject(message, InboxType.DATA_SEND, {})}
+                onClick={() => handleReject(message)}
                 disabled={isLoading}
               >
                 Decline

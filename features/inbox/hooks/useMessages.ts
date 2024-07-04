@@ -5,9 +5,9 @@ import { getPublicProfile } from "@/features/profiles";
 
 export const useMessages = (
   messagingEngine: any,
-  filters: Object,
+  filters: Record<string, any>,
   offset: number,
-  limit: number = 10
+  limit: number = 10,
 ) => {
   const fetchMessages = useCallback(
     async (offset: number, limit: number) => {
@@ -21,11 +21,11 @@ export const useMessages = (
           }
         );
 
-        for (const message of messages) {
-          const { did, contextName } = message.sentBy;
-          const profile = await getPublicProfile(did, contextName);
-          message.sentBy = { ...message.sentBy, ...profile };
-        }
+        // for (const message of messages) {
+        //   const { did, contextName } = message.sentBy;
+        //   const profile = await getPublicProfile(did, contextName);
+        //   message.sentBy = { ...message.sentBy, ...profile };
+        // }
 
         return messages;
       } catch (err) {
@@ -43,6 +43,7 @@ export const useMessages = (
     queryKey: ["messages", offset, limit],
     queryFn: () => fetchMessages(offset, limit),
     enabled: !!messagingEngine,
+    staleTime: 0,
   });
 
   return { messages, isMessagesPending, isMessagesError };
