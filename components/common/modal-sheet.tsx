@@ -17,19 +17,8 @@ interface ModalSheetProps extends React.PropsWithChildren {
 const ModalSheet: React.FC<ModalSheetProps> = (props) => {
   const { open, onClose, children } = props;
 
-  const handleOnOpenChange = (open: boolean) => {
-    if (!open) {
-      onClose();
-    }
-  };
-
   return (
-    <Drawer
-      direction="right"
-      open={open}
-      onClose={onClose}
-      onOpenChange={handleOnOpenChange}
-    >
+    <Drawer direction="right" open={open} onClose={onClose}>
       <DrawerTrigger />
       <DrawerContent onClose={onClose}>{children}</DrawerContent>
     </Drawer>
