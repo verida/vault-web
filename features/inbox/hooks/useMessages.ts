@@ -5,21 +5,18 @@ import { getPublicProfile } from "@/features/profiles";
 
 export const useMessages = (
   messagingEngine: any,
-  filters: Object,
+  filters: Record<string, any> = {},
   offset: number,
   limit: number = 10
 ) => {
   const fetchMessages = useCallback(
-    async (offset: number, limit: number) => {
+    async (filters: Record<string, any>, offset: number, limit: number) => {
       try {
-        const messages = await messagingEngine?.getMessages(
-          {},
-          {
-            skip: offset,
-            limit,
-            sort: [{ sentAt: "desc" }],
-          }
-        );
+        const messages = await messagingEngine?.getMessages(filters, {
+          skip: offset,
+          limit,
+          sort: [{ sentAt: "desc" }],
+        });
 
         for (const message of messages) {
           const { did, contextName } = message.sentBy;
@@ -41,7 +38,7 @@ export const useMessages = (
     isError: isMessagesError,
   } = useQuery({
     queryKey: ["messages", offset, limit],
-    queryFn: () => fetchMessages(offset, limit),
+    queryFn: () => fetchMessages(filters, offset, limit),
     enabled: !!messagingEngine,
   });
 

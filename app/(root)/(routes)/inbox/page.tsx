@@ -2,9 +2,7 @@
 
 import { useMemo, useState } from "react";
 
-import { ModalSheet } from "@/components/common/modal-sheet";
 import { FilterButton } from "@/components/filter-button";
-import { InboxDetails } from "@/components/inbox/inbox-details";
 import { InboxRowItem } from "@/components/inbox/inbox-item";
 import { InboxError } from "@/components/inbox/status/inbox-error";
 import { LoadingInbox } from "@/components/inbox/status/inbox-loading";
@@ -15,7 +13,6 @@ import { TablePagination } from "@/components/ui/table-pagination";
 import { useInbox } from "@/features/inbox/hooks";
 import { useInboxContext } from "@/features/inbox/hooks/useInboxContext";
 import { useMessages } from "@/features/inbox/hooks/useMessages";
-import { InboxEntry } from "@/features/inbox/types";
 
 const InboxPage = () => {
   const [offset, setOffset] = useState(0);
@@ -35,12 +32,6 @@ const InboxPage = () => {
     offset,
     limit
   );
-
-  const [messageId, setMessageId] = useState<string>("");
-
-  const selectedMessage = messages?.find(
-    (message: any) => message._id === messageId
-  ) as InboxEntry;
 
   const isLoading = useMemo(() => {
     return (
@@ -91,7 +82,7 @@ const InboxPage = () => {
               <InboxRowItem
                 key={`inbox-row-${message._id}`}
                 message={message}
-                onClick={(id: string) => setMessageId(id)}
+                href={`/inbox/${message._id}`}
               />
             ))}
           </div>
@@ -102,15 +93,6 @@ const InboxPage = () => {
           onChange={handlePageChange}
         />
       </div>
-
-      <ModalSheet open={Boolean(messageId)} onClose={() => setMessageId("")}>
-        {selectedMessage && (
-          <InboxDetails
-            message={selectedMessage}
-            onClose={() => setMessageId("")}
-          />
-        )}
-      </ModalSheet>
     </>
   );
 };
