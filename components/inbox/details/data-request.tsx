@@ -24,7 +24,6 @@ export const DataRequestDetails: React.FC<InboxDetailsProps> = ({
   message,
   onClose,
 }) => {
-  console.log(message);
   const { message: title, data, sentBy } = message;
   const { fallbackAction, requestSchema, filter } = data;
 

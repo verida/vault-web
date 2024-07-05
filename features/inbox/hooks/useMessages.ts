@@ -21,11 +21,11 @@ export const useMessages = (
           }
         );
 
-        // for (const message of messages) {
-        //   const { did, contextName } = message.sentBy;
-        //   const profile = await getPublicProfile(did, contextName);
-        //   message.sentBy = { ...message.sentBy, ...profile };
-        // }
+        for (const message of messages) {
+          const { did, contextName } = message.sentBy;
+          const profile = await getPublicProfile(did, contextName);
+          message.sentBy = { ...message.sentBy, ...profile };
+        }
 
         return messages;
       } catch (err) {
