@@ -32,7 +32,7 @@ export const RequestDataSelector: React.FC<RequestDataSelectorProps> = (
 ) => {
   const { schemaUrl, filter, onClose, onConfirm, defaultItems } = props;
 
-  const { openDatastore } = useVerida();
+  const { openDatastore, did } = useVerida();
 
   const [searchValue, setSearchValue] = useState<string>("");
   const [selectedItems, setSelectedItems] = useState<any[]>(defaultItems);
@@ -77,7 +77,7 @@ export const RequestDataSelector: React.FC<RequestDataSelectorProps> = (
   }, []);
 
   const { data, isPending } = useQuery({
-    queryKey: ["messages", searchValue],
+    queryKey: ["requestedData", searchValue, did, schemaUrl],
     queryFn: () => fetchData(searchValue),
     staleTime: 0,
   });

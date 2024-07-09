@@ -25,8 +25,6 @@ export const DataRequestDetails: React.FC<InboxDetailsProps> = ({
   message,
   onClose,
 }) => {
-  console.log(message);
-
   const { message: title, data, sentBy } = message;
   const { fallbackAction, requestSchema, filter } = data;
 
@@ -40,8 +38,13 @@ export const DataRequestDetails: React.FC<InboxDetailsProps> = ({
   const { handleAccept, handleReject, isLoading, isError } = useInboxAction();
 
   const onClickShare = async () => {
-    await handleAccept(message, InboxType.DATA_REQUEST, selectedItems);
-    setShared(true);
+    try {
+      setShared(false);
+      await handleAccept(message, InboxType.DATA_REQUEST, selectedItems);
+      setShared(true);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const onRemoveChip = (_id: string) => {
@@ -79,7 +82,7 @@ export const DataRequestDetails: React.FC<InboxDetailsProps> = ({
         />
         <ModalSheetBody>
           <InboxLoading
-            title="Loading..."
+            title="Sharing..."
             description="In progress. Wait few seconds."
           />
         </ModalSheetBody>
@@ -96,7 +99,10 @@ export const DataRequestDetails: React.FC<InboxDetailsProps> = ({
           onClose={onClose}
         />
         <ModalSheetBody>
-          <InboxError description="There's been an error when loading the data" />
+          <InboxError
+            description="There's been an error when sharing the data"
+            onClick={onClickShare}
+          />
         </ModalSheetBody>
       </>
     );

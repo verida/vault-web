@@ -13,7 +13,7 @@ export const InboxSuccess: React.FC<InboxSuccessProps> = ({
   description,
 }) => {
   return (
-    <div className="flex flex-col items-center justify-center text-center">
+    <div className="flex flex-grow flex-col items-center justify-center text-center">
       <Image
         src={SuccessShareImage}
         width={120}

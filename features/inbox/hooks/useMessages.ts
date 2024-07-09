@@ -2,13 +2,15 @@ import { useQuery } from "@tanstack/react-query";
 import { useCallback } from "react";
 
 import { getPublicProfile } from "@/features/profiles";
+import { useVerida } from "@/features/verida";
 
 export const useMessages = (
   messagingEngine: any,
   filters: Record<string, any>,
   offset: number,
-  limit: number = 10,
+  limit: number = 10
 ) => {
+  const { did } = useVerida();
   const fetchMessages = useCallback(
     async (offset: number, limit: number) => {
       try {
@@ -40,7 +42,7 @@ export const useMessages = (
     isPending: isMessagesPending,
     isError: isMessagesError,
   } = useQuery({
-    queryKey: ["messages", offset, limit],
+    queryKey: ["messages", offset, limit, did],
     queryFn: () => fetchMessages(offset, limit),
     enabled: !!messagingEngine,
     staleTime: 0,
