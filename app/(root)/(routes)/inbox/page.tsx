@@ -7,7 +7,7 @@ import { FilterButton } from "@/components/filter-button";
 import { InboxDetails } from "@/components/inbox/inbox-details";
 import { InboxRowItem } from "@/components/inbox/inbox-item";
 import { InboxError } from "@/components/inbox/status/inbox-error";
-import { LoadingInbox } from "@/components/inbox/status/inbox-loading";
+import { InboxLoading } from "@/components/inbox/status/inbox-loading";
 import { NoInbox } from "@/components/inbox/status/no-inbox";
 import { SearchInput } from "@/components/search-input";
 import { Typography } from "@/components/typography";
@@ -79,9 +79,16 @@ const InboxPage = () => {
           </nav>
         </div>
 
-        {isLoading && <LoadingInbox />}
+        {isLoading && (
+          <InboxLoading
+            title="Please wait..."
+            description="We'are fetching your latest messages."
+          />
+        )}
 
-        {hasError && <InboxError />}
+        {hasError && (
+          <InboxError description="There was an error getting your inbox, Please try again." />
+        )}
 
         {!isLoading && totalMessageCount === 0 && <NoInbox />}
 

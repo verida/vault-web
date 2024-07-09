@@ -13,14 +13,16 @@ interface DataRequestItemProps {
   data: Record<string, any>;
   selectedItems: Record<string, any>[];
   onAdd: () => void;
+  onRemoveChip: (_id: string) => void;
   disabled?: boolean;
 }
 
 export const DataRequestItem: React.FC<DataRequestItemProps> = ({
+  disabled = false,
   data = {},
   selectedItems,
   onAdd,
-  disabled = false,
+  onRemoveChip,
 }) => {
   const isAdded = useMemo(() => {
     return selectedItems.length > 0;
@@ -48,6 +50,7 @@ export const DataRequestItem: React.FC<DataRequestItemProps> = ({
               id={item._id}
               icon={item.icon}
               text={item.name}
+              onClose={disabled ? () => {} : onRemoveChip}
             />
           ))}
         </div>
@@ -55,7 +58,11 @@ export const DataRequestItem: React.FC<DataRequestItemProps> = ({
       {disabled ? (
         <></>
       ) : isAdded ? (
-        <Button variant="secondary" className="w-full gap-2 text-approved">
+        <Button
+          variant="secondary"
+          className="w-full gap-2 text-approved"
+          onClick={onAdd}
+        >
           <Check />
           Added
         </Button>

@@ -1,7 +1,5 @@
-import Image from "next/image";
 import { useEffect, useState } from "react";
 
-import SuccessShareImage from "@/assets/success.svg";
 import Alert from "@/components/alert";
 import {
   ModalSheetBody,
@@ -19,11 +17,16 @@ import { InboxDetailsProps } from "../inbox-details";
 import { InboxStatusText } from "../inbox-status-text";
 import { RequestDataSelector } from "../request-data-selector";
 import { RequesterProfile } from "../requester-profile";
+import { InboxError } from "../status/inbox-error";
+import { InboxLoading } from "../status/inbox-loading";
+import { InboxSuccess } from "../status/inbox-success";
 
 export const DataRequestDetails: React.FC<InboxDetailsProps> = ({
   message,
   onClose,
 }) => {
+  console.log(message);
+
   const { message: title, data, sentBy } = message;
   const { fallbackAction, requestSchema, filter } = data;
 
@@ -34,11 +37,15 @@ export const DataRequestDetails: React.FC<InboxDetailsProps> = ({
     data.requestedData || []
   );
 
-  const { handleAccept, handleReject, isLoading } = useInboxAction();
+  const { handleAccept, handleReject, isLoading, isError } = useInboxAction();
 
   const onClickShare = async () => {
     await handleAccept(message, InboxType.DATA_REQUEST, selectedItems);
     setShared(true);
+  };
+
+  const onRemoveChip = (_id: string) => {
+    setSelectedItems((prev) => prev.filter((item) => item._id !== _id));
   };
 
   const fetchData = async () => {
@@ -62,6 +69,39 @@ export const DataRequestDetails: React.FC<InboxDetailsProps> = ({
     fetchData();
   }, []);
 
+  if (isLoading) {
+    return (
+      <>
+        <ModalSheetHeader
+          title="Data Request"
+          actions={<InboxStatusText status={data.status} />}
+          onClose={onClose}
+        />
+        <ModalSheetBody>
+          <InboxLoading
+            title="Loading..."
+            description="In progress. Wait few seconds."
+          />
+        </ModalSheetBody>
+      </>
+    );
+  }
+
+  if (isError) {
+    return (
+      <>
+        <ModalSheetHeader
+          title="Data Request"
+          actions={<InboxStatusText status={data.status} />}
+          onClose={onClose}
+        />
+        <ModalSheetBody>
+          <InboxError description="There's been an error when loading the data" />
+        </ModalSheetBody>
+      </>
+    );
+  }
+
   if (shared) {
     return (
       <>
@@ -71,25 +111,18 @@ export const DataRequestDetails: React.FC<InboxDetailsProps> = ({
           onClose={onClose}
         />
         <ModalSheetBody>
-          <div className="flex flex-col items-center justify-center text-center">
-            <Image
-              src={SuccessShareImage}
-              width={120}
-              height={140}
-              alt="success"
-              className="h-[105px] md:h-[140px]"
-            />
-            <Typography variant="heading-4" className="mt-6">
-              Success!
-            </Typography>
-            <Typography className="mt-2 text-secondary-foreground">
-              You successfully shared{" "}
-              <b className="text-primary-foreground">
-                {requestSchemaData.title}
-              </b>{" "}
-              to <b className="text-primary-foreground">{sentBy.name}</b>
-            </Typography>
-          </div>
+          <InboxSuccess
+            title="Success!"
+            description={
+              <>
+                You successfully shared{" "}
+                <b className="text-primary-foreground">
+                  {requestSchemaData.title}
+                </b>{" "}
+                to <b className="text-primary-foreground">{sentBy.name}</b>
+              </>
+            }
+          />
         </ModalSheetBody>
         <ModalSheetFooter>
           <Button onClick={() => setShared(false)}>Done</Button>
@@ -141,6 +174,7 @@ export const DataRequestDetails: React.FC<InboxDetailsProps> = ({
             onAdd={() => setIsSelecting(true)}
             selectedItems={selectedItems}
             disabled={!!data.status}
+            onRemoveChip={onRemoveChip}
           />
         </div>
 

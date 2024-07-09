@@ -49,7 +49,11 @@ const ModalSheetHeader: React.FC<ModalSheetHeaderProps> = (props) => {
 interface ModalSheetBodyProps extends React.PropsWithChildren {}
 
 const ModalSheetBody: React.FC<ModalSheetBodyProps> = (props) => {
-  return <DrawerBody className="flex-grow p-6">{props.children}</DrawerBody>;
+  return (
+    <DrawerBody className="flex flex-grow flex-col p-6">
+      {props.children}
+    </DrawerBody>
+  );
 };
 
 interface ModalSheetFooterProps extends React.PropsWithChildren {}
