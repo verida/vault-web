@@ -1,5 +1,8 @@
 "use client";
 
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useEffect } from "react";
+
 import { Footer } from "@/components/auth/footer";
 import { Navbar } from "@/components/auth/navbar";
 import { Swiper } from "@/components/auth/swiper";
@@ -32,7 +35,18 @@ const sidebarContent = [
 ];
 
 const Homepage = () => {
-  const { connect } = useVerida();
+  const pathName = usePathname();
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const { connect, isConnected, isConnecting } = useVerida();
+
+  useEffect(() => {
+    const redirectUrl = searchParams.get("redirect") || pathName;
+
+    if (isConnected && pathName === "/") {
+      router.push(redirectUrl !== "/" ? redirectUrl : "/data");
+    }
+  }, [isConnected, isConnecting, pathName, searchParams]);
 
   return (
     <div className="flex h-screen min-h-screen">

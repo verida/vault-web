@@ -45,7 +45,7 @@ export const Swiper: React.FunctionComponent<SwiperProps> = (props) => {
             key={currentStep}
             timeout={200}
             classNames="fade"
-            unMountOnExit
+            unmountOnExit
           >
             <div>
               <div className="flex space-x-3">
@@ -88,7 +88,7 @@ export const Swiper: React.FunctionComponent<SwiperProps> = (props) => {
             key={currentStep}
             timeout={200}
             classNames="fade"
-            unMountOnExit
+            unmountOnExit
           >
             <Image
               src={data[currentStep].image}
