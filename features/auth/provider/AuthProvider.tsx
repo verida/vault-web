@@ -9,14 +9,16 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const router = useRouter();
   const { isConnected, isConnecting } = useVerida();
 
-  console.log(isConnected, isConnecting);
-
   useEffect(() => {
+    const redirectUrl = searchParams.get("redirect") || pathName;
+    console.log(redirectUrl);
+
     if (!isConnecting && !isConnected) {
-      router.push("/");
-    }
-    if (isConnected && pathName === "/") {
-      router.push("/data");
+      router.push(
+        `/${redirectUrl !== "/" ? `?redirect=${encodeURIComponent(redirectUrl)}` : ""}`
+      );
+    } else if (isConnected && pathName === "/") {
+      router.push(redirectUrl !== "/" ? redirectUrl : "/data");
     }
   }, [isConnected, isConnecting, pathName, searchParams]);
 

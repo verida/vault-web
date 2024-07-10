@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import React from "react";
 
 import {
@@ -26,6 +27,7 @@ function useAuth(): { authenticated: boolean } {
 }
 
 const Account = () => {
+  const router = useRouter();
   const {
     connect,
     isConnecting,
@@ -36,6 +38,12 @@ const Account = () => {
     isCheckingConnection,
     ...rest
   } = useVerida();
+
+  const handleDisconnect = () => {
+    router.push("/");
+    disconnect();
+  };
+
   if (!did && !profile && (isCheckingConnection || isConnecting)) {
     return (
       <div className="flex items-center space-x-4">
@@ -104,7 +112,7 @@ const Account = () => {
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem
-          onClick={() => disconnect()}
+          onClick={() => handleDisconnect()}
           className="cursor-pointer gap-3 px-4 py-2 text-destructive hover:!text-destructive"
         >
           <Logout />
