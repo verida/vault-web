@@ -1,6 +1,8 @@
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { PropsWithChildren, useEffect } from "react";
 
+import { Spinner } from "@/components/spinner";
+import { Typography } from "@/components/typography";
 import { useVerida } from "@/features/verida";
 
 export const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
@@ -11,7 +13,6 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
 
   useEffect(() => {
     const redirectUrl = searchParams.get("redirect") || pathName;
-    console.log(redirectUrl);
 
     if (!isConnecting && !isConnected) {
       router.push(
@@ -22,8 +23,25 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
     }
   }, [isConnected, isConnecting, pathName, searchParams]);
 
+  console.log(isConnected, isConnecting);
+
   if (isConnecting) {
-    return <div>Loading...</div>;
+    return (
+      <div className="container flex h-screen min-h-screen w-full flex-col items-center justify-center">
+        <Spinner />
+        <Typography variant="heading-1" className="mt-8 text-center">
+          Connecting to Verida...
+        </Typography>
+        <Typography className="mt-4 text-center">
+          Please wait while we establish a secure connection. This might take a
+          few moments.
+        </Typography>
+      </div>
+    );
+  }
+
+  if (!isConnected) {
+    return <></>;
   }
 
   return <>{children}</>;
