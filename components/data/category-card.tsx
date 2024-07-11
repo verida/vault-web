@@ -4,17 +4,22 @@ import { ReactNode } from "react";
 import { Typography } from "../typography";
 import { Card, CardContent } from "../ui/card";
 
-type CategoryProps = {
+type CategoryCardProps = {
   icon?: ReactNode;
   title?: string;
   description: string;
   href?: string;
 };
 
-function Category({ icon, title, description, href }: CategoryProps) {
+export function CategoryCard({
+  icon,
+  title,
+  description,
+  href,
+}: CategoryCardProps) {
   return (
     <Link href={href || "#"}>
-      <Card className="rounded-2xl">
+      <Card className="shadow-card rounded-2xl">
         <CardContent className="p-6">
           {icon && icon}
           {title && (
@@ -35,5 +40,3 @@ function Category({ icon, title, description, href }: CategoryProps) {
     </Link>
   );
 }
-
-export { Category };

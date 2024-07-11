@@ -77,7 +77,7 @@ export const DataRequestDetails: React.FC<InboxDetailsProps> = ({
     <>
       <ModalSheetHeader
         title="Data Request"
-        actions={<InboxStatusText status={data.status} />}
+        actions={<InboxStatusText status={data.status} inboxType={data.type} />}
         onClose={onClose}
       />
 

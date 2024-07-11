@@ -5,6 +5,7 @@ import React from "react";
 import { getPublicProfile } from "@/features/profiles";
 
 import { Valid } from "../icons/valid";
+import { Typography } from "../typography";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Card } from "../ui/card";
 
@@ -63,9 +64,10 @@ function CredentialItem({
 
   return (
     <Link href={href || "#"}>
-      <Card className="flex w-full rounded-lg">
-        <div className="flex w-full flex-row items-center p-4">
-          <div className="flex w-1/4 items-center gap-2">
+      <Card className="shadow-card flex w-full rounded-lg">
+        {/* desktop */}
+        <div className="hidden w-full flex-row items-center px-4 py-3 md:flex">
+          <div className="flex w-1/4 items-center gap-3">
             <Avatar>
               {issuer?.avatar?.uri && (
                 <AvatarImage src={issuer?.avatar?.uri} asChild>
@@ -79,24 +81,82 @@ function CredentialItem({
               )}
               <AvatarFallback>{fallbackAvatar}</AvatarFallback>
             </Avatar>
-            {title && <p className="text-wrap text-sm">{title}</p>}
+            {title && (
+              <Typography
+                variant="base-semibold"
+                className="text-secondary-foreground"
+              >
+                {title}
+              </Typography>
+            )}
           </div>
           {source && (
-            <p className="w-1/4 text-wrap text-sm text-secondary-foreground">
+            <Typography
+              variant="base-semibold"
+              className="w-1/4 text-wrap text-secondary-foreground"
+            >
               {issuer?.name ?? ""}
-            </p>
+            </Typography>
           )}
           {date && (
-            <p className="w-1/4 text-sm text-secondary-foreground">
+            <Typography
+              variant="base-semibold"
+              className="w-1/4 text-secondary-foreground"
+            >
               {new Date(date).toISOString()}
-            </p>
+            </Typography>
           )}
           {status === "valid" ? (
             <div className="flex w-1/4 gap-2">
               <Valid />
-              <p className="text-sm text-secondary-foreground">{status}</p>{" "}
+              <Typography variant="base-semibold">{status}</Typography>
             </div>
           ) : null}
+        </div>
+
+        {/* mobile */}
+        <div className="flex w-full gap-3 px-4 py-3 md:hidden">
+          <Avatar className="h-16 w-16">
+            {issuer?.avatar?.uri && (
+              <AvatarImage src={issuer?.avatar?.uri} asChild>
+                <Image
+                  src={issuer?.avatar?.uri}
+                  width={64}
+                  height={64}
+                  alt="Issuer avatar"
+                />
+              </AvatarImage>
+            )}
+            <AvatarFallback>{fallbackAvatar}</AvatarFallback>
+          </Avatar>
+
+          <div className="flex flex-grow flex-col gap-1">
+            <div className="flex justify-between">
+              {title && <Typography variant="heading-5">{title}</Typography>}
+              {status === "valid" ? (
+                <div className="flex gap-2">
+                  <Valid />
+                  <Typography variant="base-semibold">{status}</Typography>
+                </div>
+              ) : null}
+            </div>
+            {source && (
+              <Typography
+                variant="base-s-semibold"
+                className="text-secondary-foreground"
+              >
+                {source}
+              </Typography>
+            )}
+            {date && (
+              <Typography
+                variant="base-s-semibold"
+                className="text-secondary-foreground"
+              >
+                {new Date(date).toISOString()}
+              </Typography>
+            )}
+          </div>
         </div>
       </Card>
     </Link>

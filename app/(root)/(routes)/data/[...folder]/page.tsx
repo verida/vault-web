@@ -5,9 +5,9 @@ import Image from "next/image";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React from "react";
 
-import { Category } from "@/components/category/category";
-import { CredentialItem } from "@/components/credential/credential-item";
+import { CredentialItem } from "@/components/data/credential-item";
 import { ArrowLeft } from "@/components/icons/arrow-left";
+import { Typography } from "@/components/typography";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Drawer, DrawerContent, DrawerHeader } from "@/components/ui/drawer";
@@ -61,7 +61,7 @@ const FolderPage = ({ params }: { params: { folder: string[] } }) => {
 
   console.log("Selected item", JSON.stringify(selectedItem, null, 2));
 
-  const [issuer, setIssuer] = React.useState({});
+  const [issuer, setIssuer] = React.useState<any>({});
 
   React.useEffect(() => {
     function parseJwt(token: string) {
@@ -92,6 +92,8 @@ const FolderPage = ({ params }: { params: { folder: string[] } }) => {
       fetchIssuerProfile(parseJwt(selectedItem.didJwtVc)?.iss);
   }, [selectedItem]);
 
+  console.log(items);
+
   return (
     <div className="flex-col">
       <Button
@@ -102,7 +104,7 @@ const FolderPage = ({ params }: { params: { folder: string[] } }) => {
         <ArrowLeft /> Back
       </Button>
 
-      <h1 className="mb-6 text-xl font-medium">{folder?.title}</h1>
+      <Typography variant="heading-3">{folder?.title}</Typography>
 
       {loading ? (
         <div className="flex w-full flex-col gap-4">
@@ -113,15 +115,33 @@ const FolderPage = ({ params }: { params: { folder: string[] } }) => {
           <Skeleton className="h-10 w-full" />
           <Skeleton className="h-10 w-full" />
         </div>
-      ) : folder?.database ? (
+      ) : (
         <div className="flex flex-col gap-2">
           <div className="flex w-full flex-row items-center p-4">
-            <p className="w-1/4 text-sm text-secondary-foreground">Name</p>
-            <p className="w-1/4 text-sm text-secondary-foreground">Source</p>
-            <p className="w-1/4 text-sm text-secondary-foreground">Date</p>
-            <p className="w-1/4 text-sm text-secondary-foreground">
+            <Typography
+              variant="base-s-semibold"
+              className="w-1/4 text-secondary-foreground"
+            >
+              Name
+            </Typography>
+            <Typography
+              variant="base-s-semibold"
+              className="w-1/4 text-sm text-secondary-foreground"
+            >
+              Source
+            </Typography>
+            <Typography
+              variant="base-s-semibold"
+              className="w-1/4 text-secondary-foreground"
+            >
+              Date
+            </Typography>
+            <Typography
+              variant="base-s-semibold"
+              className="w-1/4 text-secondary-foreground"
+            >
               Credential Status
-            </p>
+            </Typography>
           </div>
           {items.map((item) => (
             <CredentialItem
@@ -136,24 +156,7 @@ const FolderPage = ({ params }: { params: { folder: string[] } }) => {
             />
           ))}
         </div>
-      ) : folder?.display === "folders" ? (
-        <div className="grid grid-cols-4 gap-6">
-          {folder?.folders.map((folderName) => {
-            const nestedFolder = dataFolders.find(
-              (folder) => folder.name === folderName
-            );
-            return nestedFolder ? (
-              <Category
-                key={nestedFolder.name}
-                icon={nestedFolder.icon}
-                href={`/data/${nestedFolder.name}`}
-                title={nestedFolder.title}
-                description="0 items"
-              />
-            ) : null;
-          })}
-        </div>
-      ) : null}
+      )}
 
       <Drawer
         direction="right"
@@ -195,15 +198,17 @@ const FolderPage = ({ params }: { params: { folder: string[] } }) => {
           {selectedItem && (
             <div className="flex flex-col">
               {selectedItem.credentialData ? (
-                Object.entries(selectedItem.credentialData).map((entry) => (
-                  <div
-                    key={entry[0]}
-                    className="flex justify-between gap-4 px-4 py-4"
-                  >
-                    <p className="text-muted-foreground">{entry[0]}</p>
-                    <p>{entry[1]}</p>
-                  </div>
-                ))
+                Object.entries(selectedItem.credentialData).map(
+                  (entry: any) => (
+                    <div
+                      key={entry[0]}
+                      className="flex justify-between gap-4 px-4 py-4"
+                    >
+                      <p className="text-muted-foreground">{entry[0]}</p>
+                      <p>{entry[1]}</p>
+                    </div>
+                  )
+                )
               ) : (
                 <>
                   <div className="flex justify-between gap-4 px-4 py-4">

@@ -28,7 +28,7 @@ const InboxIncomingData: React.FC<InboxDetailsProps> = ({
     <>
       <ModalSheetHeader
         title="Incoming Data"
-        actions={<InboxStatusText status={data.status} />}
+        actions={<InboxStatusText status={data.status} inboxType={data.type} />}
         onClose={onClose}
       />
 
