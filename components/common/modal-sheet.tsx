@@ -1,3 +1,5 @@
+import { cn } from "@/lib/utils";
+
 import { CloseSideRight } from "../icons/close-side-right";
 import {
   Drawer,
@@ -46,12 +48,17 @@ const ModalSheetHeader: React.FC<ModalSheetHeaderProps> = (props) => {
   );
 };
 
-interface ModalSheetBodyProps extends React.PropsWithChildren {}
+interface ModalSheetBodyProps extends React.PropsWithChildren {
+  className?: string;
+}
 
-const ModalSheetBody: React.FC<ModalSheetBodyProps> = (props) => {
+const ModalSheetBody: React.FC<ModalSheetBodyProps> = ({
+  className,
+  children,
+}) => {
   return (
-    <DrawerBody className="flex flex-grow flex-col p-6">
-      {props.children}
+    <DrawerBody className={cn("flex flex-grow flex-col p-6", className)}>
+      {children}
     </DrawerBody>
   );
 };

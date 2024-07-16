@@ -82,12 +82,12 @@ const InboxPage = () => {
         {isLoading && (
           <InboxLoading
             title="Please wait..."
-            description="We'are fetching your latest messages."
+            description="We are fetching your latest messages"
           />
         )}
 
         {hasError && (
-          <InboxError description="There was an error getting your inbox, Please try again." />
+          <InboxError description="There was an error getting your inbox messages, please try again later" />
         )}
 
         {!isLoading && totalMessageCount === 0 && <NoInbox />}

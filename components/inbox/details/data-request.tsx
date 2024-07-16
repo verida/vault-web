@@ -83,7 +83,7 @@ export const DataRequestDetails: React.FC<InboxDetailsProps> = ({
         <ModalSheetBody>
           <InboxLoading
             title="Sharing..."
-            description="In progress. Wait few seconds."
+            description="In progress. Please wait a moment"
           />
         </ModalSheetBody>
       </>

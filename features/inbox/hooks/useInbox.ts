@@ -39,7 +39,7 @@ export const useInbox = () => {
     isPending: isUnreadMessageCountPending,
     isError: isUnreadMessageCountError,
   } = useQuery({
-    queryKey: ["unread", did],
+    queryKey: [did, "inbox", "unreadMessageCount"],
     queryFn: fetchUnreadMessageCount,
     enabled: !!messagingEngine,
   });
@@ -49,7 +49,7 @@ export const useInbox = () => {
     isPending: isTotalMessageCountPending,
     isError: isTotalMessageCountError,
   } = useQuery({
-    queryKey: ["total", did],
+    queryKey: [did, "inbox", "totalMessageCount"],
     queryFn: fetchTotalMessageCount,
     enabled: !!messagingEngine,
   });

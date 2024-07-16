@@ -39,9 +39,7 @@ export const InboxProvider: React.FunctionComponent<InboxProviderProps> = ({
         return;
       }
 
-      queryClient.invalidateQueries({ queryKey: ["unread"] });
-      queryClient.invalidateQueries({ queryKey: ["total"] });
-      queryClient.invalidateQueries({ queryKey: ["messages"] });
+      queryClient.invalidateQueries({ queryKey: ["inbox"] });
 
       latestNotificationRef.current = newMessage;
     }, []),

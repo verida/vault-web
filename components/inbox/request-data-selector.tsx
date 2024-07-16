@@ -164,7 +164,7 @@ export const RequestDataSelector: React.FC<RequestDataSelectorProps> = (
       </DrawerBody>
 
       <DrawerFooter>
-        <Alert text="Carefully review your seletion" />
+        <Alert text="Carefully review your selection" />
         <Button
           onClick={() => onConfirm(selectedItems)}
           disabled={selectedItems.length <= 0}

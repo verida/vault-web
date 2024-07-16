@@ -42,7 +42,7 @@ export const useMessages = (
     isPending: isMessagesPending,
     isError: isMessagesError,
   } = useQuery({
-    queryKey: ["messages", offset, limit, did],
+    queryKey: [did, "inbox", "messages", offset, limit],
     queryFn: () => fetchMessages(offset, limit),
     enabled: !!messagingEngine,
     staleTime: 0,

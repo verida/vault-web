@@ -50,7 +50,7 @@ export const DataRequestItem: React.FC<DataRequestItemProps> = ({
               id={item._id}
               icon={item.icon}
               text={item.name}
-              onClose={disabled ? () => {} : onRemoveChip}
+              onClose={disabled ? undefined : onRemoveChip}
             />
           ))}
         </div>
