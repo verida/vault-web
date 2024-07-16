@@ -19,7 +19,7 @@ export const InboxRowItem: React.FC<InboxRowItemProps> = ({
   message,
   href,
 }) => {
-  const { _id, message: title, read, sentAt, sentBy, type, data } = message;
+  const { message: title, read, sentAt, sentBy, type, data } = message;
   const InboxTypeIcon = inboxTypes[type].icon;
 
   return (
