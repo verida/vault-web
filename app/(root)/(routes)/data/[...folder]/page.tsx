@@ -5,11 +5,20 @@ import Image from "next/image";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React from "react";
 
+import {
+  FilterSheet,
+  FilterSheetBody,
+  FilterSheetFooter,
+  FilterSheetHeader,
+} from "@/components/common/filter-sheet";
 import { CredentialItem } from "@/components/data/credential-item";
+import { FilterButton } from "@/components/filter-button";
 import { ArrowLeft } from "@/components/icons/arrow-left";
+import { SortSelector } from "@/components/sort-selector";
 import { Typography } from "@/components/typography";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Drawer, DrawerContent, DrawerHeader } from "@/components/ui/drawer";
 import { Skeleton } from "@/components/ui/skeleton";
 import { DataFolderDefinition, dataFolders } from "@/features/data";
@@ -104,7 +113,13 @@ const FolderPage = ({ params }: { params: { folder: string[] } }) => {
         <ArrowLeft /> Back
       </Button>
 
-      <Typography variant="heading-3">{folder?.title}</Typography>
+      <div className="flex items-center justify-between">
+        <Typography variant="heading-3">{folder?.title}</Typography>
+        <nav className="flex space-x-2 md:w-auto md:space-x-3">
+          <SortSelector />
+          <FilterButton />
+        </nav>
+      </div>
 
       {loading ? (
         <div className="flex w-full flex-col gap-4">
@@ -158,6 +173,47 @@ const FolderPage = ({ params }: { params: { folder: string[] } }) => {
         </div>
       )}
 
+      <FilterSheet
+        open={true}
+        onClose={() => {}}
+        className="border-l border-border shadow-sm"
+      >
+        <FilterSheetHeader title="Filter" onClose={() => {}} />
+        <FilterSheetBody>
+          <Typography variant="heading-5">Source</Typography>
+          {[
+            "Facebook",
+            "Twitter",
+            "Ticketeck",
+            "Government of Western Australia",
+            "Government of New South Wales",
+            "Royal Melbourne Hospital",
+            "Metamask",
+            "Discord",
+          ].map((source) => (
+            <div className="flex items-center gap-3 p-2">
+              <Checkbox />
+              <Typography>{source}</Typography>
+            </div>
+          ))}
+
+          <Typography variant="heading-5" className="mt-4">
+            Credential Status
+          </Typography>
+          {["All", "Valid", "Expired"].map((status) => (
+            <div className="flex items-center gap-3 p-2">
+              <Checkbox />
+              <Typography>{status}</Typography>
+            </div>
+          ))}
+        </FilterSheetBody>
+        <FilterSheetFooter>
+          <div className="grid grid-cols-2 gap-4">
+            <Button variant="secondary">Reset All</Button>
+            <Button variant="primary">Apply</Button>
+          </div>
+        </FilterSheetFooter>
+      </FilterSheet>
       <Drawer
         direction="right"
         open={Boolean(itemId)}
