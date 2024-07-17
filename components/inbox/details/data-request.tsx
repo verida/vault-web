@@ -22,7 +22,7 @@ export const DataRequestDetails: React.FC<InboxDetailsProps> = ({
   message,
   onClose,
 }) => {
-  const { message: title, data } = message;
+  const { message: title, data, type } = message;
   const { openDatastore } = useVerida();
 
   const [availableData, setAvailableData] = useState<any>();
@@ -77,7 +77,7 @@ export const DataRequestDetails: React.FC<InboxDetailsProps> = ({
     <>
       <ModalSheetHeader
         title="Data Request"
-        actions={<InboxStatusText status={data.status} />}
+        actions={<InboxStatusText status={data.status} inboxType={type} />}
         onClose={onClose}
       />
 

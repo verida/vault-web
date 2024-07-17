@@ -16,6 +16,7 @@ interface ModalSheetProps extends React.PropsWithChildren {
 
 const ModalSheet: React.FC<ModalSheetProps> = (props) => {
   const { open, onClose, children } = props;
+
   return (
     <Drawer direction="right" open={open} onClose={onClose}>
       <DrawerTrigger />
