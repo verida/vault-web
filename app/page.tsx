@@ -1,13 +1,15 @@
 "use client";
 
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 import { Footer } from "@/components/auth/footer";
 import { Navbar } from "@/components/auth/navbar";
 import { Swiper } from "@/components/auth/swiper";
+import { Spinner } from "@/components/spinner";
 import { Typography } from "@/components/typography";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/features/auth/hooks";
 import { useVerida } from "@/features/verida";
 
 const sidebarContent = [
@@ -35,18 +37,30 @@ const sidebarContent = [
 ];
 
 const Homepage = () => {
-  const pathName = usePathname();
-  const searchParams = useSearchParams();
   const router = useRouter();
   const { connect, isConnected, isConnecting } = useVerida();
+  const { redirectPath } = useAuth();
 
   useEffect(() => {
-    const redirectUrl = searchParams.get("redirect") || pathName;
-
-    if (isConnected && pathName === "/") {
-      router.push(redirectUrl !== "/" ? redirectUrl : "/data");
+    if (isConnected) {
+      router.push(redirectPath !== "/" ? redirectPath : "/data");
     }
-  }, [isConnected, isConnecting, pathName, searchParams]);
+  }, [isConnected]);
+
+  if (isConnecting) {
+    return (
+      <div className="container flex h-screen min-h-screen w-full flex-col items-center justify-center">
+        <Spinner />
+        <Typography variant="heading-1" className="mt-8 text-center">
+          Connecting to Verida...
+        </Typography>
+        <Typography className="mt-4 text-center">
+          Please wait while we establish a secure connection. This might take a
+          few moments.
+        </Typography>
+      </div>
+    );
+  }
 
   return (
     <div className="flex h-screen min-h-screen">

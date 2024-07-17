@@ -39,11 +39,6 @@ const Account = () => {
     ...rest
   } = useVerida();
 
-  const handleDisconnect = () => {
-    router.push("/");
-    disconnect();
-  };
-
   if (!did && !profile && (isCheckingConnection || isConnecting)) {
     return (
       <div className="flex items-center space-x-4">
@@ -112,7 +107,7 @@ const Account = () => {
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem
-          onClick={() => handleDisconnect()}
+          onClick={() => disconnect()}
           className="cursor-pointer gap-3 px-4 py-2 text-destructive hover:!text-destructive"
         >
           <Logout />
