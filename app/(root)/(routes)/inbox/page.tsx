@@ -1,5 +1,6 @@
 "use client";
 
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useMemo, useState } from "react";
 
 import { ModalSheet } from "@/components/common/modal-sheet";
@@ -18,6 +19,10 @@ import { useMessages } from "@/features/inbox/hooks/useMessages";
 import { InboxEntry } from "@/features/inbox/types";
 
 const InboxPage = () => {
+  const router = useRouter();
+  const pathName = usePathname();
+  const searchParams = useSearchParams();
+
   const [offset, setOffset] = useState(0);
   const [limit, setLimit] = useState(10);
 
@@ -36,7 +41,7 @@ const InboxPage = () => {
     limit
   );
 
-  const [messageId, setMessageId] = useState<string>("");
+  const messageId = searchParams.get("id");
 
   const selectedMessage = messages?.find(
     (message: any) => message._id === messageId
@@ -98,7 +103,7 @@ const InboxPage = () => {
               <InboxRowItem
                 key={`inbox-row-${message._id}`}
                 message={message}
-                onClick={(id: string) => setMessageId(id)}
+                href={`?id=${message._id}`}
               />
             ))}
           </div>
@@ -110,11 +115,14 @@ const InboxPage = () => {
         />
       </div>
 
-      <ModalSheet open={Boolean(messageId)} onClose={() => setMessageId("")}>
+      <ModalSheet
+        open={Boolean(messageId)}
+        onClose={() => router.push(pathName)}
+      >
         {selectedMessage && (
           <InboxDetails
             message={selectedMessage}
-            onClose={() => setMessageId("")}
+            onClose={() => router.push(pathName)}
           />
         )}
       </ModalSheet>
