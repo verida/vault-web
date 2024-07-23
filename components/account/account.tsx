@@ -1,6 +1,5 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import React from "react";
 
 import {
@@ -20,14 +19,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Button } from "../ui/button";
 import { Skeleton } from "../ui/skeleton";
 
-function useAuth(): { authenticated: boolean } {
-  return {
-    authenticated: false,
-  };
-}
-
 const Account = () => {
-  const router = useRouter();
   const {
     connect,
     isConnecting,
@@ -36,7 +28,6 @@ const Account = () => {
     disconnect,
     profile,
     isCheckingConnection,
-    ...rest
   } = useVerida();
 
   if (!did && !profile && (isCheckingConnection || isConnecting)) {

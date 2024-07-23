@@ -47,55 +47,55 @@ const Homepage = () => {
     }
   }, [isConnected]);
 
-  if (isConnecting) {
+  if (!isConnected && !isConnecting) {
     return (
-      <div className="container flex h-screen min-h-screen w-full flex-col items-center justify-center">
-        <Spinner />
-        <Typography variant="heading-1" className="mt-8 text-center">
-          Connecting to Verida...
-        </Typography>
-        <Typography className="mt-4 text-center">
-          Please wait while we establish a secure connection. This might take a
-          few moments.
-        </Typography>
+      <div className="flex h-screen min-h-screen">
+        <section className="relative flex min-h-full w-full flex-col md:w-[42%]">
+          <div className="mx-auto flex min-h-full flex-col px-6 md:max-w-[460px]">
+            <Navbar />
+            <div className="flex flex-1 flex-col items-start justify-center py-10">
+              <Typography variant="heading-1">
+                Take control of your personal data
+              </Typography>
+              <Typography variant="base-l" className="mt-4">
+                Manage your crypto, encrypted personal data and zero knowledge
+                credentials with the Verida Vault App.
+              </Typography>
+
+              <Button
+                variant="primary"
+                className="mt-8"
+                onClick={() => connect()}
+              >
+                Try the Verida Vault App
+              </Button>
+
+              <div className="mt-12 flex h-full flex-1 flex-col rounded-[32px] rounded-b-none bg-radial-gradient text-secondary md:hidden">
+                <Swiper data={sidebarContent} />
+              </div>
+            </div>
+
+            <Footer />
+          </div>
+        </section>
+
+        <section className="hidden min-h-full flex-1 rounded-[32px] rounded-r-none bg-radial-gradient text-secondary md:flex md:flex-col">
+          <Swiper data={sidebarContent} />
+        </section>
       </div>
     );
   }
 
   return (
-    <div className="flex h-screen min-h-screen">
-      <section className="relative flex min-h-full w-full flex-col md:w-[42%]">
-        <div className="mx-auto flex min-h-full flex-col px-6 md:max-w-[460px]">
-          <Navbar />
-          <div className="flex flex-1 flex-col items-start justify-center py-10">
-            <Typography variant="heading-1">
-              Take control of your personal data
-            </Typography>
-            <Typography variant="base-l" className="mt-4">
-              Manage your crypto, encrypted personal data and zero knowledge
-              credentials with the Verida Vault App.
-            </Typography>
-
-            <Button
-              variant="primary"
-              className="mt-8"
-              onClick={() => connect()}
-            >
-              Try the Verida Vault App
-            </Button>
-
-            <div className="mt-12 flex h-full flex-1 flex-col rounded-[32px] rounded-b-none bg-radial-gradient text-secondary md:hidden">
-              <Swiper data={sidebarContent} />
-            </div>
-          </div>
-
-          <Footer />
-        </div>
-      </section>
-
-      <section className="hidden min-h-full flex-1 rounded-[32px] rounded-r-none bg-radial-gradient text-secondary md:flex md:flex-col">
-        <Swiper data={sidebarContent} />
-      </section>
+    <div className="container flex h-screen min-h-screen w-full flex-col items-center justify-center">
+      <Spinner />
+      <Typography variant="heading-1" className="mt-8 text-center">
+        Connecting to Verida...
+      </Typography>
+      <Typography className="mt-4 text-center">
+        Please wait while we establish a secure connection. This might take a
+        few moments.
+      </Typography>
     </div>
   );
 };

@@ -5,7 +5,7 @@ import { AuthContext } from "../contexts";
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (context === null) {
-    throw new Error("useVerida must be used within a VeridaProvider");
+    throw new Error("useAuth must be used within a AuthProvider");
   }
   return context;
 };

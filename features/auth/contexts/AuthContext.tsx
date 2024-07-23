@@ -1,7 +1,12 @@
 // context/AuthContext.js
 import { createContext, PropsWithChildren, useState } from "react";
 
-export const AuthContext = createContext<any>(null);
+type AuthContextType = {
+  redirectPath: string;
+  setRedirectPath: (redirectPath: string) => void;
+};
+
+export const AuthContext = createContext<AuthContextType | null>(null);
 
 export const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const [redirectPath, setRedirectPath] = useState("/");

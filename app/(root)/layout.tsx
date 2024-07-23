@@ -1,6 +1,6 @@
 "use client";
 
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 import { Footer } from "@/components/footer";
@@ -16,13 +16,12 @@ const AppLayout = ({
   sheet: React.ReactNode;
 }) => {
   const pathName = usePathname();
-  const searchParams = useSearchParams();
   const router = useRouter();
   const { isConnected } = useVerida();
   const { setRedirectPath } = useAuth();
 
   useEffect(() => {
-    const redirectUrl = searchParams.get("redirect") || pathName;
+    const redirectUrl = pathName;
 
     if (!isConnected) {
       setRedirectPath(redirectUrl);
