@@ -8,7 +8,7 @@ import { InboxMessageDetails } from "./details/message";
 
 export interface InboxDetailsProps {
   message: InboxEntry;
-  onClose: () => void;
+  onClose?: () => void;
 }
 
 export const InboxDetails: React.FC<InboxDetailsProps> = ({
