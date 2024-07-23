@@ -44,7 +44,7 @@ const DataPage = () => {
             fields: [missingIndexName],
           });
 
-          // try to fetch restuls again with index
+          // try to fetch results again with index
           await init();
         }
       } finally {
@@ -62,15 +62,15 @@ const DataPage = () => {
       </Typography>
       <div className="grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-4">
         {dataFolders
-          .filter((folder) => folder.root)
+          // .filter((folder) => folder.root)
           .map((folder) => {
             return (
               <CategoryCard
                 key={folder.name}
                 icon={folder.icon}
+                database={folder.database || ""}
                 href={`/data/${folder.name}`}
-                title={folder.title}
-                description="0 items"
+                title={folder.titlePlural}
               />
             );
           })}

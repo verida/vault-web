@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
+import { DataSchema } from "@/features/data";
 import { getPublicProfile } from "@/features/profiles";
 
 import { Valid } from "../icons/valid";
@@ -64,7 +65,7 @@ function CredentialItem({
 
   return (
     <Link href={href || "#"}>
-      <Card className="shadow-card flex w-full rounded-lg">
+      <Card className="flex w-full rounded-lg shadow-card">
         {/* desktop */}
         <div className="hidden w-full flex-row items-center px-4 py-3 md:flex">
           <div className="flex w-1/4 items-center gap-3">

@@ -16,14 +16,14 @@ export const FilterButton: React.FC<FilterButtonProps> = (props) => {
       variant="secondary"
       size="lg"
       className={cn(
-        "h-10 p-[10px] text-secondary-foreground hover:border-secondary-foreground/40 hover:bg-primary md:h-12 md:px-4",
+        "h-10 w-10 p-0 text-secondary-foreground hover:border-secondary-foreground/40 hover:bg-primary md:h-12 md:w-auto md:p-[10px] md:px-4",
         applied ? "border-primary text-primary" : "",
         className
       )}
       {...props}
     >
       <Filter />
-      <Typography variant="heading-5" className="hidden md:block">
+      <Typography variant="base-semibold" className="hidden md:block">
         Filter
       </Typography>
     </Button>

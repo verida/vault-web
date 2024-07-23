@@ -1,3 +1,5 @@
+import React from "react";
+
 import { CloseSideRight } from "../icons/close-side-right";
 import {
   Drawer,
@@ -25,7 +27,7 @@ const ModalSheet: React.FC<ModalSheetProps> = (props) => {
 };
 
 interface ModalSheetHeaderProps {
-  title: string;
+  title: string | React.ReactNode;
   actions: React.ReactNode;
   onClose: () => void;
 }

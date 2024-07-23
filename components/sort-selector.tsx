@@ -1,8 +1,5 @@
-import { cn } from "@/lib/utils";
-
 import { Sort } from "./icons/sort";
 import { Typography } from "./typography";
-import { Button } from "./ui/button";
 import {
   Select,
   SelectContent,
@@ -19,15 +16,15 @@ export type SortSelectorProps = Omit<
 export const SortSelector: React.FC<SortSelectorProps> = (props) => {
   const { applied = false } = props;
   return (
-    <Select {...props}>
+    <Select {...props} defaultValue="newest">
       <SelectTrigger
-        className="h-10 w-10 md:h-12 md:w-28"
+        className="h-10 w-10 justify-center gap-2 p-0 text-secondary-foreground md:h-12 md:w-auto md:justify-between md:px-3 md:py-2"
         selectIconClassName="hidden md:block"
       >
         <Sort className="block md:hidden" />
-        <p className="hidden md:block">
+        <Typography variant="base-semibold" className="hidden md:block">
           <SelectValue />
-        </p>
+        </Typography>
       </SelectTrigger>
       <SelectContent>
         <SelectItem value="newest">Newest</SelectItem>
