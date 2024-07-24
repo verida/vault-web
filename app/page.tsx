@@ -9,7 +9,7 @@ import { Swiper } from "@/components/auth/swiper";
 import { Spinner } from "@/components/spinner";
 import { Typography } from "@/components/typography";
 import { Button } from "@/components/ui/button";
-import { useAuth } from "@/features/auth/hooks";
+import { useAuth } from "@/features/auth";
 import { useVerida } from "@/features/verida";
 
 const sidebarContent = [

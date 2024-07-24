@@ -5,7 +5,7 @@ import { useEffect } from "react";
 
 import { Footer } from "@/components/footer";
 import { Navbar } from "@/components/navbar";
-import { useAuth } from "@/features/auth/hooks";
+import { useAuth } from "@/features/auth";
 import { useVerida } from "@/features/verida";
 
 const AppLayout = ({

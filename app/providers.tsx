@@ -4,7 +4,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Suspense } from "react";
 
 import { ThemeProvider } from "@/components/theme-provider";
-import { AuthProvider } from "@/features/auth/contexts";
+import { AuthProvider } from "@/features/auth";
 import { InboxProvider } from "@/features/inbox/contexts/InboxContext";
 import { VeridaProvider } from "@/features/verida";
 
