@@ -1,17 +1,16 @@
 "use client";
 
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 
 import { Account } from "@/components/account/account";
 import { Connection } from "@/components/icons/connection";
 import { Data } from "@/components/icons/data";
-import { Inbox } from "@/components/icons/inbox";
 import { Logo } from "@/components/logo";
 import {
   NavigationMenu,
   NavigationMenuItem,
-  NavigationMenuLink,
   NavigationMenuList,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
@@ -51,7 +50,7 @@ export const Navbar = () => {
             <NavigationMenuList className="space-x-2">
               {headerNavs.map((nav) => (
                 <NavigationMenuItem key={`nav-menu-item-${nav.title}`}>
-                  <NavigationMenuLink
+                  <Link
                     href={nav.href}
                     className={cn(
                       navigationMenuTriggerStyle({
@@ -69,7 +68,7 @@ export const Navbar = () => {
                       {nav.icon}
                       {nav.title}
                     </div>
-                  </NavigationMenuLink>
+                  </Link>
                 </NavigationMenuItem>
               ))}
             </NavigationMenuList>
@@ -94,7 +93,7 @@ export const Navbar = () => {
             <NavigationMenuList className="px-2" orientation="vertical">
               {headerNavs.map((nav) => (
                 <NavigationMenuItem key={`nav-menu-item-${nav.title}`}>
-                  <NavigationMenuLink
+                  <Link
                     href={nav.href}
                     className={cn(
                       navigationMenuTriggerStyle({
@@ -112,7 +111,7 @@ export const Navbar = () => {
                       {nav.icon}
                       {nav.title}
                     </div>
-                  </NavigationMenuLink>
+                  </Link>
                 </NavigationMenuItem>
               ))}
             </NavigationMenuList>

@@ -19,12 +19,6 @@ import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Button } from "../ui/button";
 import { Skeleton } from "../ui/skeleton";
 
-function useAuth(): { authenticated: boolean } {
-  return {
-    authenticated: false,
-  };
-}
-
 const Account = () => {
   const {
     connect,
@@ -34,8 +28,8 @@ const Account = () => {
     disconnect,
     profile,
     isCheckingConnection,
-    ...rest
   } = useVerida();
+
   if (!did && !profile && (isCheckingConnection || isConnecting)) {
     return (
       <div className="flex items-center space-x-4">

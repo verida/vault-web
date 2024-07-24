@@ -20,7 +20,7 @@ const InboxIncomingData: React.FC<InboxDetailsProps> = ({
   message,
   onClose,
 }) => {
-  const { message: title, data, sentAt, sentBy } = message;
+  const { message: title, data, sentAt, sentBy, type } = message;
 
   const { handleAccept, handleReject, isLoading } = useInboxAction();
 
@@ -36,7 +36,7 @@ const InboxIncomingData: React.FC<InboxDetailsProps> = ({
     <>
       <ModalSheetHeader
         title="Incoming Data"
-        actions={<InboxStatusText status={data.status} />}
+        actions={<InboxStatusText status={data.status} inboxType={type} />}
         onClose={onClose}
       />
 

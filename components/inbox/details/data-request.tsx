@@ -25,7 +25,7 @@ export const DataRequestDetails: React.FC<InboxDetailsProps> = ({
   message,
   onClose,
 }) => {
-  const { message: title, data, sentBy } = message;
+  const { message: title, data, type, sentBy } = message;
   const { fallbackAction, requestSchema, filter } = data;
 
   const [requestSchemaData, setRequestSchemaData] = useState<any>({});
@@ -157,7 +157,7 @@ export const DataRequestDetails: React.FC<InboxDetailsProps> = ({
     <>
       <ModalSheetHeader
         title="Data Request"
-        actions={<InboxStatusText status={data.status} />}
+        actions={<InboxStatusText status={data.status} inboxType={type} />}
         onClose={onClose}
       />
 

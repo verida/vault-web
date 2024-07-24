@@ -1,13 +1,16 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+
 import { Footer } from "@/components/auth/footer";
 import { Navbar } from "@/components/auth/navbar";
 import { Swiper } from "@/components/auth/swiper";
+import { Spinner } from "@/components/spinner";
 import { Typography } from "@/components/typography";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/features/auth";
 import { useVerida } from "@/features/verida";
-
-import Layout from "./(root)/layout";
 
 const sidebarContent = [
   {
@@ -34,9 +37,17 @@ const sidebarContent = [
 ];
 
 const Homepage = () => {
-  const { isConnected, isCheckingConnection, connect } = useVerida();
+  const router = useRouter();
+  const { connect, isConnected, isConnecting } = useVerida();
+  const { redirectPath } = useAuth();
 
-  if (!isConnected && !isCheckingConnection) {
+  useEffect(() => {
+    if (isConnected) {
+      router.push(redirectPath !== "/" ? redirectPath : "/data");
+    }
+  }, [isConnected]);
+
+  if (!isConnected && !isConnecting) {
     return (
       <div className="flex h-screen min-h-screen">
         <section className="relative flex min-h-full w-full flex-col md:w-[42%]">
@@ -76,9 +87,16 @@ const Homepage = () => {
   }
 
   return (
-    <Layout>
-      <div className="flex flex-col items-center justify-center"></div>
-    </Layout>
+    <div className="container flex h-screen min-h-screen w-full flex-col items-center justify-center">
+      <Spinner />
+      <Typography variant="heading-1" className="mt-8 text-center">
+        Connecting to Verida...
+      </Typography>
+      <Typography className="mt-4 text-center">
+        Please wait while we establish a secure connection. This might take a
+        few moments.
+      </Typography>
+    </div>
   );
 };
 
