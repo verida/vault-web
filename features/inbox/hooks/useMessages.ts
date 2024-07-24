@@ -38,6 +38,7 @@ export const useMessages = (
     data: messages,
     isPending: isMessagesPending,
     isError: isMessagesError,
+    refetch: refetchMessages,
   } = useQuery({
     queryKey: [did, "inbox", "messages", offset, limit],
     queryFn: () => fetchMessages(filters, offset, limit),
@@ -45,5 +46,5 @@ export const useMessages = (
     staleTime: 0,
   });
 
-  return { messages, isMessagesPending, isMessagesError };
+  return { messages, isMessagesPending, isMessagesError, refetchMessages };
 };

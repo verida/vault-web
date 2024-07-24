@@ -34,7 +34,7 @@ const InboxPage = () => {
     isTotalMessageCountError,
     isUnreadMessageCountError,
   } = useInbox();
-  const { messages, isMessagesPending } = useMessages(
+  const { messages, isMessagesPending, refetchMessages } = useMessages(
     messagingEngine,
     {},
     offset,
@@ -123,6 +123,7 @@ const InboxPage = () => {
           <InboxDetails
             message={selectedMessage}
             onClose={() => router.push(pathName)}
+            refresh={refetchMessages}
           />
         )}
       </ModalSheet>

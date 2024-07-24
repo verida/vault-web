@@ -58,7 +58,7 @@ const ModalSheetBody: React.FC<ModalSheetBodyProps> = ({
   children,
 }) => {
   return (
-    <DrawerBody className={cn("flex flex-grow flex-col p-6", className)}>
+    <DrawerBody className={cn("flex-grow p-6", className)}>
       {children}
     </DrawerBody>
   );

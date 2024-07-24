@@ -24,6 +24,7 @@ import { InboxSuccess } from "../status/inbox-success";
 export const DataRequestDetails: React.FC<InboxDetailsProps> = ({
   message,
   onClose,
+  refresh,
 }) => {
   const { message: title, data, sentBy } = message;
   const { fallbackAction, requestSchema, filter } = data;
@@ -41,6 +42,7 @@ export const DataRequestDetails: React.FC<InboxDetailsProps> = ({
     try {
       setShared(false);
       await handleAccept(message, InboxType.DATA_REQUEST, selectedItems);
+      refresh();
       setShared(true);
     } catch (err) {
       console.log(err);
@@ -66,6 +68,11 @@ export const DataRequestDetails: React.FC<InboxDetailsProps> = ({
     } catch (err) {
       console.log("error", err);
     }
+  };
+
+  const onClickDecline = async () => {
+    await handleReject(message);
+    refresh();
   };
 
   useEffect(() => {
@@ -209,7 +216,7 @@ export const DataRequestDetails: React.FC<InboxDetailsProps> = ({
               <Button
                 variant="secondary"
                 disabled={isLoading}
-                onClick={() => handleReject(message)}
+                onClick={onClickDecline}
               >
                 Decline
               </Button>

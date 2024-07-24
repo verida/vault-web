@@ -19,10 +19,21 @@ import { RequesterProfile } from "../requester-profile";
 const InboxIncomingData: React.FC<InboxDetailsProps> = ({
   message,
   onClose,
+  refresh,
 }) => {
   const { message: title, data, sentAt, sentBy } = message;
 
   const { handleAccept, handleReject, isLoading } = useInboxAction();
+
+  const onClickAccept = async () => {
+    await handleAccept(message, InboxType.DATA_SEND, {});
+    refresh();
+  };
+
+  const onClickDecline = async () => {
+    await handleReject(message);
+    refresh();
+  };
 
   return (
     <>
@@ -69,14 +80,14 @@ const InboxIncomingData: React.FC<InboxDetailsProps> = ({
               <Button
                 variant="secondary"
                 className="w-full"
-                onClick={() => handleReject(message)}
+                onClick={onClickDecline}
                 disabled={isLoading}
               >
                 Decline
               </Button>
               <Button
                 className="w-full"
-                onClick={() => handleAccept(message, InboxType.DATA_SEND, {})}
+                onClick={onClickAccept}
                 disabled={isLoading}
               >
                 Accept
