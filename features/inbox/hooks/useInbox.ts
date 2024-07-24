@@ -1,10 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 import { useCallback } from "react";
 
+import { useVerida } from "@/features/verida";
+
 import { useInboxContext } from "./useInboxContext";
 
 export const useInbox = () => {
   const { messagingEngine } = useInboxContext();
+  const { did } = useVerida();
 
   const fetchUnreadMessageCount = useCallback(async () => {
     try {
@@ -36,7 +39,7 @@ export const useInbox = () => {
     isPending: isUnreadMessageCountPending,
     isError: isUnreadMessageCountError,
   } = useQuery({
-    queryKey: ["unread"],
+    queryKey: [did, "inbox", "unreadMessageCount"],
     queryFn: fetchUnreadMessageCount,
     enabled: !!messagingEngine,
   });
@@ -46,7 +49,7 @@ export const useInbox = () => {
     isPending: isTotalMessageCountPending,
     isError: isTotalMessageCountError,
   } = useQuery({
-    queryKey: ["total"],
+    queryKey: [did, "inbox", "totalMessageCount"],
     queryFn: fetchTotalMessageCount,
     enabled: !!messagingEngine,
   });

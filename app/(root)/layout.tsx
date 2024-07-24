@@ -35,7 +35,6 @@ const AppLayout = ({
     <div className="flex min-h-screen flex-col bg-background">
       <Navbar />
       <main className="container flex flex-grow flex-col pt-[72px]">
-        {sheet}
         {children}
       </main>
       <Footer />

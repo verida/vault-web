@@ -24,6 +24,14 @@ const InboxIncomingData: React.FC<InboxDetailsProps> = ({
 
   const { handleAccept, handleReject, isLoading } = useInboxAction();
 
+  const onClickAccept = async () => {
+    await handleAccept(message, InboxType.DATA_SEND, {});
+  };
+
+  const onClickDecline = async () => {
+    await handleReject(message);
+  };
+
   return (
     <>
       <ModalSheetHeader
@@ -49,7 +57,10 @@ const InboxIncomingData: React.FC<InboxDetailsProps> = ({
         <div className="mt-3 space-y-3">
           {data.data &&
             data.data.map((item: any, _ind: number) => (
-              <IncomingDataItem item={item} key={`incoming-item-${item._id}`} />
+              <IncomingDataItem
+                item={item}
+                key={`incoming-item-${item._id || _ind}`}
+              />
             ))}
         </div>
       </ModalSheetBody>
@@ -66,14 +77,14 @@ const InboxIncomingData: React.FC<InboxDetailsProps> = ({
               <Button
                 variant="secondary"
                 className="w-full"
-                onClick={() => handleReject(message, InboxType.DATA_SEND, {})}
+                onClick={onClickDecline}
                 disabled={isLoading}
               >
                 Decline
               </Button>
               <Button
                 className="w-full"
-                onClick={() => handleAccept(message, InboxType.DATA_SEND, {})}
+                onClick={onClickAccept}
                 disabled={isLoading}
               >
                 Accept

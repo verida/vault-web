@@ -1,4 +1,5 @@
-import { useCallback, useEffect, useState } from "react";
+import { useQueryClient } from "@tanstack/react-query";
+import { useCallback, useState } from "react";
 
 import { useVerida } from "@/features/verida";
 
@@ -8,17 +9,22 @@ import { useInboxContext } from "./useInboxContext";
 export const useInboxAction = () => {
   const { openDatastore } = useVerida();
   const { messagingEngine } = useInboxContext();
+  const queryClient = useQueryClient();
+
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isError, setIsError] = useState<boolean>(false);
 
   const handleAccept = useCallback(
     async (inboxEntry: InboxEntry, type: InboxType, payload: unknown) => {
       try {
-        setIsLoading(true);
         if (inboxEntry.data.status) {
           throw new Error(
             "Data has already been set to " + inboxEntry.data.status
           );
         }
+
+        setIsLoading(true);
+        setIsError(false);
 
         inboxEntry.data.status = "accept";
 
@@ -34,6 +40,8 @@ export const useInboxAction = () => {
               const foundData = await store.getMany(data.filter || {});
               response.data = [foundData] as any;
             }
+
+            inboxEntry.data.requestedData = response.data;
 
             await messagingEngine?.send(
               sentBy.did,
@@ -84,17 +92,19 @@ export const useInboxAction = () => {
         inboxEntry.read = true;
         const inbox = await messagingEngine?.getInbox();
         await inbox.privateInbox.save(inboxEntry);
-      } catch (err) {
-        console.log(err);
-      } finally {
+        queryClient.invalidateQueries({ queryKey: ["inbox", "messages"] });
         setIsLoading(false);
+      } catch (err) {
+        setIsLoading(false);
+        setIsError(true);
+        console.log(err);
       }
     },
     [openDatastore, messagingEngine]
   );
 
   const handleReject = useCallback(
-    async (inboxEntry: InboxEntry, type: InboxType, payload: unknown) => {
+    async (inboxEntry: InboxEntry) => {
       if (inboxEntry.data.status) {
         throw new Error(
           "Data has already been set to " + inboxEntry.data.status
@@ -102,16 +112,22 @@ export const useInboxAction = () => {
       }
 
       setIsLoading(true);
+      setIsError(false);
 
-      inboxEntry.data.status = "decline";
-      inboxEntry.read = true;
-      const inbox = await messagingEngine?.getInbox();
-      await inbox.privateInbox.save(inboxEntry);
-
-      setIsLoading(false);
+      try {
+        inboxEntry.data.status = "decline";
+        inboxEntry.read = true;
+        const inbox = await messagingEngine?.getInbox();
+        await inbox.privateInbox.save(inboxEntry);
+        queryClient.invalidateQueries({ queryKey: ["inbox", "messages"] });
+        setIsLoading(false);
+      } catch (err) {
+        setIsLoading(false);
+        setIsError(true);
+      }
     },
     [messagingEngine]
   );
 
-  return { handleAccept, handleReject, isLoading };
+  return { handleAccept, handleReject, isLoading, isError };
 };

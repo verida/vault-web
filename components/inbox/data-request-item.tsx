@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { useMemo } from "react";
 
 import { cn } from "@/lib/utils";
@@ -11,13 +10,19 @@ import { Button } from "../ui/button";
 import { Card } from "../ui/card";
 
 interface DataRequestItemProps {
+  data: Record<string, any>;
   selectedItems: Record<string, any>[];
   onAdd: () => void;
+  onRemoveChip: (_id: string) => void;
+  disabled?: boolean;
 }
 
 export const DataRequestItem: React.FC<DataRequestItemProps> = ({
+  disabled = false,
+  data = {},
   selectedItems,
   onAdd,
+  onRemoveChip,
 }) => {
   const isAdded = useMemo(() => {
     return selectedItems.length > 0;
@@ -33,10 +38,8 @@ export const DataRequestItem: React.FC<DataRequestItemProps> = ({
       )}
     >
       <div>
-        <Typography variant="heading-5">Employment contract</Typography>
-        <Typography variant="base-s-regular">
-          Name, employer, start and end date, attachments
-        </Typography>
+        <Typography variant="heading-5">{data.title}</Typography>
+        <Typography variant="base-s-regular">{data.description}</Typography>
       </div>
 
       {selectedItems.length > 0 && (
@@ -47,13 +50,19 @@ export const DataRequestItem: React.FC<DataRequestItemProps> = ({
               id={item._id}
               icon={item.icon}
               text={item.name}
+              onClose={disabled ? undefined : onRemoveChip}
             />
           ))}
         </div>
       )}
-
-      {isAdded ? (
-        <Button variant="secondary" className="w-full gap-2 text-approved">
+      {disabled ? (
+        <></>
+      ) : isAdded ? (
+        <Button
+          variant="secondary"
+          className="w-full gap-2 text-approved"
+          onClick={onAdd}
+        >
           <Check />
           Added
         </Button>
