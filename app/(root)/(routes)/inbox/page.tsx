@@ -34,7 +34,7 @@ const InboxPage = () => {
     isTotalMessageCountError,
     isUnreadMessageCountError,
   } = useInbox();
-  const { messages, isMessagesPending, refetchMessages } = useMessages(
+  const { messages, isMessagesPending } = useMessages(
     messagingEngine,
     {},
     offset,
@@ -62,8 +62,6 @@ const InboxPage = () => {
   const hasError = useMemo(() => {
     return isTotalMessageCountError || isUnreadMessageCountError;
   }, [isTotalMessageCountError, isUnreadMessageCountError]);
-
-  const handleSearchInputChange = (value: string) => {};
 
   const handlePageChange = (newOffset: number, newLimit: number) => {
     setOffset(newOffset);
@@ -123,7 +121,6 @@ const InboxPage = () => {
           <InboxDetails
             message={selectedMessage}
             onClose={() => router.push(pathName)}
-            refresh={refetchMessages}
           />
         )}
       </ModalSheet>

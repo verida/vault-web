@@ -9,41 +9,21 @@ import { InboxMessageDetails } from "./details/message";
 export interface InboxDetailsProps {
   message: InboxEntry;
   onClose?: () => void;
-  refresh: () => void;
 }
 
 export const InboxDetails: React.FC<InboxDetailsProps> = ({
   message,
   onClose,
-  refresh,
 }) => {
   const DetailsComponent = useMemo((): ReactElement => {
     switch (message.type) {
       case InboxType.DATASTORE_SYNC:
       case InboxType.DATA_REQUEST:
-        return (
-          <DataRequestDetails
-            message={message}
-            onClose={onClose}
-            refresh={refresh}
-          />
-        );
+        return <DataRequestDetails message={message} onClose={onClose} />;
       case InboxType.DATA_SEND:
-        return (
-          <InboxIncomingData
-            message={message}
-            onClose={onClose}
-            refresh={refresh}
-          />
-        );
+        return <InboxIncomingData message={message} onClose={onClose} />;
       default:
-        return (
-          <InboxMessageDetails
-            message={message}
-            onClose={onClose}
-            refresh={refresh}
-          />
-        );
+        return <InboxMessageDetails message={message} onClose={onClose} />;
     }
   }, [message, onClose]);
 

@@ -19,7 +19,6 @@ import { RequesterProfile } from "../requester-profile";
 const InboxIncomingData: React.FC<InboxDetailsProps> = ({
   message,
   onClose,
-  refresh,
 }) => {
   const { message: title, data, sentAt, sentBy } = message;
 
@@ -27,12 +26,10 @@ const InboxIncomingData: React.FC<InboxDetailsProps> = ({
 
   const onClickAccept = async () => {
     await handleAccept(message, InboxType.DATA_SEND, {});
-    refresh();
   };
 
   const onClickDecline = async () => {
     await handleReject(message);
-    refresh();
   };
 
   return (

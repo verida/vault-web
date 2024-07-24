@@ -1,3 +1,4 @@
+import { useQueryClient } from "@tanstack/react-query";
 import { useCallback, useState } from "react";
 
 import { useVerida } from "@/features/verida";
@@ -8,6 +9,8 @@ import { useInboxContext } from "./useInboxContext";
 export const useInboxAction = () => {
   const { openDatastore } = useVerida();
   const { messagingEngine } = useInboxContext();
+  const queryClient = useQueryClient();
+
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);
 
@@ -89,6 +92,7 @@ export const useInboxAction = () => {
         inboxEntry.read = true;
         const inbox = await messagingEngine?.getInbox();
         await inbox.privateInbox.save(inboxEntry);
+        queryClient.invalidateQueries({ queryKey: ["inbox", "messages"] });
         setIsLoading(false);
       } catch (err) {
         setIsLoading(false);
@@ -115,6 +119,7 @@ export const useInboxAction = () => {
         inboxEntry.read = true;
         const inbox = await messagingEngine?.getInbox();
         await inbox.privateInbox.save(inboxEntry);
+        queryClient.invalidateQueries({ queryKey: ["inbox", "messages"] });
         setIsLoading(false);
       } catch (err) {
         setIsLoading(false);

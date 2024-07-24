@@ -17,7 +17,6 @@ import { RequesterProfile } from "../requester-profile";
 export const InboxMessageDetails: React.FC<InboxDetailsProps> = ({
   message,
   onClose,
-  refresh,
 }) => {
   const { message: title, data } = message;
   const itemData = !isEmpty(data.data) ? data.data[0] : null;
@@ -49,10 +48,7 @@ export const InboxMessageDetails: React.FC<InboxDetailsProps> = ({
               </ButtonLink>
             )}
             <Button
-              onClick={async () => {
-                await handleAccept(message, InboxType.MESSAGE, {});
-                refresh();
-              }}
+              onClick={() => handleAccept(message, InboxType.MESSAGE, {})}
               disabled={isLoading}
             >
               Mark as read
