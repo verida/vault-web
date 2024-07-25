@@ -24,10 +24,12 @@ export const Chip: React.FC<ChipProps> = (props) => {
       <Typography variant="base-s-regular" className="text-primary">
         {text}
       </Typography>
-      <Close
-        className="mr-1 h-4 w-4 cursor-pointer text-primary"
-        onClick={() => onClose && onClose(id)}
-      />
+      {!!onClose && (
+        <Close
+          className="mr-1 h-4 w-4 cursor-pointer text-primary"
+          onClick={() => onClose(id)}
+        />
+      )}
     </div>
   );
 };

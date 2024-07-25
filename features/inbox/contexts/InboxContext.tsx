@@ -1,6 +1,13 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { IMessaging } from "@verida/types";
-import React, { useEffect, useMemo, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
+import { useThrottledCallback } from "use-debounce";
 
 import { useVerida } from "@/features/verida";
 
@@ -19,6 +26,26 @@ export const InboxProvider: React.FunctionComponent<InboxProviderProps> = ({
   const [messagingEngine, setMessagingEngine] = useState<IMessaging>();
   const queryClient = useQueryClient();
 
+  const latestNotificationRef = useRef<any>(null);
+
+  const onMessage = useThrottledCallback(
+    useCallback(async function onMessage(newMessage: any) {
+      // TODO: Validate the message with zod, so it is properly typed
+      if (
+        !newMessage ||
+        // Duplicated message, just ignore
+        latestNotificationRef.current?._id === newMessage?._id
+      ) {
+        return;
+      }
+
+      queryClient.invalidateQueries({ queryKey: ["inbox"] });
+
+      latestNotificationRef.current = newMessage;
+    }, []),
+    500
+  );
+
   useEffect(() => {
     const init = async () => {
       if (!isConnected) {
@@ -30,11 +57,8 @@ export const InboxProvider: React.FunctionComponent<InboxProviderProps> = ({
 
       setMessagingEngine(_messagingEngine);
 
-      _messagingEngine.onMessage(() => {
-        queryClient.invalidateQueries({ queryKey: ["unread"] });
-        queryClient.invalidateQueries({ queryKey: ["total"] });
-        queryClient.invalidateQueries({ queryKey: ["messages"] });
-      });
+      _messagingEngine.offMessage(onMessage);
+      _messagingEngine.onMessage(onMessage);
     };
 
     init();

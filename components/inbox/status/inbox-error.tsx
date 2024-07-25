@@ -5,7 +5,15 @@ import { Button } from "@/components/ui/button";
 
 import { Typography } from "../../typography";
 
-export const InboxError = () => {
+interface InboxErrorProps {
+  description: string;
+  onClick?: () => void;
+}
+
+export const InboxError: React.FC<InboxErrorProps> = ({
+  description,
+  onClick,
+}) => {
   return (
     <div className="flex flex-col items-center justify-center gap-6 text-center">
       <Image
@@ -15,10 +23,10 @@ export const InboxError = () => {
         alt="error"
         className="h-[105px] md:h-[140px]"
       />
-      <Typography variant="heading-4">
-        There was an error getting your inbox, Please try again.
-      </Typography>
-      <Button variant="secondary">Reload</Button>
+      <Typography variant="heading-4">{description}</Typography>
+      <Button variant="secondary" onClick={onClick}>
+        Reload
+      </Button>
     </div>
   );
 };

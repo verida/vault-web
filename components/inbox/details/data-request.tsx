@@ -8,61 +8,141 @@ import {
 } from "@/components/common/modal-sheet";
 import { Typography } from "@/components/typography";
 import { Button } from "@/components/ui/button";
+import { ButtonLink } from "@/components/ui/button-link";
 import { useInboxAction } from "@/features/inbox/hooks/useInboxAction";
 import { InboxType } from "@/features/inbox/types";
-import { useVerida } from "@/features/verida";
 
 import { DataRequestItem } from "../data-request-item";
 import { InboxDetailsProps } from "../inbox-details";
 import { InboxStatusText } from "../inbox-status-text";
 import { RequestDataSelector } from "../request-data-selector";
 import { RequesterProfile } from "../requester-profile";
+import { InboxError } from "../status/inbox-error";
+import { InboxLoading } from "../status/inbox-loading";
+import { InboxSuccess } from "../status/inbox-success";
 
 export const DataRequestDetails: React.FC<InboxDetailsProps> = ({
   message,
   onClose,
 }) => {
-  const { message: title, data } = message;
-  const { openDatastore } = useVerida();
+  const { message: title, data, type, sentBy } = message;
+  const { fallbackAction, requestSchema, filter } = data;
 
-  const [availableData, setAvailableData] = useState<any>();
+  const [requestSchemaData, setRequestSchemaData] = useState<any>({});
   const [isSelecting, setIsSelecting] = useState<boolean>(false);
-  const [selectedItems, setSelectedItems] = useState<any[]>([]);
+  const [shared, setShared] = useState<boolean>(false);
+  const [selectedItems, setSelectedItems] = useState<any[]>(
+    data.requestedData || []
+  );
 
-  const { handleAccept, handleReject, isLoading } = useInboxAction();
+  const { handleAccept, handleReject, isLoading, isError } = useInboxAction();
+
+  const onClickShare = async () => {
+    try {
+      setShared(false);
+      await handleAccept(message, InboxType.DATA_REQUEST, selectedItems);
+      setShared(true);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const onRemoveChip = (_id: string) => {
+    setSelectedItems((prev) => prev.filter((item) => item._id !== _id));
+  };
 
   const fetchData = async () => {
     try {
-      const { requestSchema, filter } = data;
+      const { requestSchema } = data;
 
-      const requestFilter = filter && typeof filter === "object" ? filter : {};
-
-      const searchFilter = {};
-
-      const query = {
-        $and: [requestFilter, searchFilter],
-      };
-
-      const datastore = await openDatastore(requestSchema, undefined);
-
-      const result = await datastore?.getMany(query, undefined);
-
-      if (result) {
-        setAvailableData(result);
-      }
+      await fetch(requestSchema)
+        .then((res) => res.json())
+        .then((res) => {
+          setRequestSchemaData({
+            title: res.title,
+            description: res.description,
+          });
+        });
     } catch (err) {
       console.log("error", err);
     }
   };
 
+  const onClickDecline = async () => {
+    await handleReject(message);
+  };
+
   useEffect(() => {
-    if (!!openDatastore) fetchData();
-  }, [openDatastore]);
+    fetchData();
+  }, []);
+
+  if (isLoading) {
+    return (
+      <>
+        <ModalSheetHeader
+          title="Data Request"
+          actions={<InboxStatusText status={data.status} />}
+          onClose={onClose}
+        />
+        <ModalSheetBody>
+          <InboxLoading title="Sharing..." description="Please wait a moment" />
+        </ModalSheetBody>
+      </>
+    );
+  }
+
+  if (isError) {
+    return (
+      <>
+        <ModalSheetHeader
+          title="Data Request"
+          actions={<InboxStatusText status={data.status} />}
+          onClose={onClose}
+        />
+        <ModalSheetBody>
+          <InboxError
+            description="There's been an error when sharing the data"
+            onClick={onClickShare}
+          />
+        </ModalSheetBody>
+      </>
+    );
+  }
+
+  if (shared) {
+    return (
+      <>
+        <ModalSheetHeader
+          title="Data Request"
+          actions={<InboxStatusText status={data.status} />}
+          onClose={onClose}
+        />
+        <ModalSheetBody>
+          <InboxSuccess
+            title="Success!"
+            description={
+              <>
+                You successfully shared{" "}
+                <b className="text-primary-foreground">
+                  {requestSchemaData.title}
+                </b>{" "}
+                to <b className="text-primary-foreground">{sentBy.name}</b>
+              </>
+            }
+          />
+        </ModalSheetBody>
+        <ModalSheetFooter>
+          <Button onClick={() => setShared(false)}>Done</Button>
+        </ModalSheetFooter>
+      </>
+    );
+  }
 
   if (isSelecting) {
     return (
       <RequestDataSelector
-        data={availableData}
+        schemaUrl={requestSchema}
+        filter={filter}
         defaultItems={selectedItems}
         onClose={() => setIsSelecting(false)}
         onConfirm={(items: any[]) => {
@@ -77,7 +157,7 @@ export const DataRequestDetails: React.FC<InboxDetailsProps> = ({
     <>
       <ModalSheetHeader
         title="Data Request"
-        actions={<InboxStatusText status={data.status} inboxType={data.type} />}
+        actions={<InboxStatusText status={data.status} inboxType={type} />}
         onClose={onClose}
       />
 
@@ -97,10 +177,28 @@ export const DataRequestDetails: React.FC<InboxDetailsProps> = ({
           </Typography>
 
           <DataRequestItem
+            data={requestSchemaData}
             onAdd={() => setIsSelecting(true)}
             selectedItems={selectedItems}
+            disabled={!!data.status}
+            onRemoveChip={onRemoveChip}
           />
         </div>
+
+        {fallbackAction && (
+          <div>
+            <Typography
+              variant="base-regular"
+              className="text-secondary-foreground"
+            >
+              If you don't have the requested data
+            </Typography>
+
+            <ButtonLink href={fallbackAction.url}>
+              {fallbackAction.label}
+            </ButtonLink>
+          </div>
+        )}
       </ModalSheetBody>
 
       <ModalSheetFooter>
@@ -115,17 +213,13 @@ export const DataRequestDetails: React.FC<InboxDetailsProps> = ({
               <Button
                 variant="secondary"
                 disabled={isLoading}
-                onClick={() =>
-                  handleReject(message, InboxType.DATA_REQUEST, {})
-                }
+                onClick={onClickDecline}
               >
                 Decline
               </Button>
               <Button
-                disabled={isLoading}
-                onClick={() =>
-                  handleAccept(message, InboxType.DATA_REQUEST, selectedItems)
-                }
+                disabled={isLoading || !selectedItems.length}
+                onClick={() => onClickShare()}
               >
                 Share
               </Button>
