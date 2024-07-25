@@ -16,6 +16,7 @@ import DataItemDetailsSheet from "@/components/data/data-item-details-sheet";
 import SearchBox from "@/components/data/search-box";
 import { FilterButton } from "@/components/filter-button";
 import { ArrowLeft } from "@/components/icons/arrow-left";
+import { InboxError } from "@/components/inbox/status/inbox-error";
 import { SortSelector } from "@/components/sort-selector";
 import { Typography } from "@/components/typography";
 import { Button } from "@/components/ui/button";
@@ -35,13 +36,17 @@ const FolderPage = ({ params }: { params: { folder: string[] } }) => {
     return dataFolders.find((f) => f.name === folderName);
   }, [params]);
 
-  const { dataItems: items, isDataItemsPending: loading } = useData(
-    folder?.database || ""
-  );
+  const {
+    dataItems: items,
+    isDataItemsPending: loading,
+    isDataItemsError,
+  } = useData(folder?.database || "");
 
-  const { dataSchema, isDataSchemaPending: schemaLoading } = useDataSchema(
-    items?.at(0)?.schema
-  );
+  const {
+    dataSchema,
+    isDataSchemaPending: schemaLoading,
+    isDataSchemaError,
+  } = useDataSchema(items?.at(0)?.schema || "");
 
   const searchParams = useSearchParams();
 
@@ -98,7 +103,7 @@ const FolderPage = ({ params }: { params: { folder: string[] } }) => {
         </nav>
       </div>
 
-      {!isConnected || loading || schemaLoading || !dataSchema ? (
+      {!isConnected || loading || schemaLoading ? (
         <div className="flex w-full flex-col gap-4">
           <Skeleton className="h-10 w-full" />
           <Skeleton className="h-10 w-full" />
@@ -107,6 +112,14 @@ const FolderPage = ({ params }: { params: { folder: string[] } }) => {
           <Skeleton className="h-10 w-full" />
           <Skeleton className="h-10 w-full" />
         </div>
+      ) : isDataSchemaError || isDataItemsError ? (
+        <div className="py-40">
+          <InboxError description="There's been an error when loading the data" />
+        </div>
+      ) : items?.length === 0 || !dataSchema ? (
+        <Typography variant={"heading-4"} className="py-40 text-center">
+          No {folder?.titlePlural}
+        </Typography>
       ) : (
         <div className="flex flex-col gap-2">
           <div className="flex w-full flex-row items-center p-4 [&>p]:w-0 [&>p]:grow">

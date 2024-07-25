@@ -4,6 +4,13 @@ import { useCallback } from "react";
 import { DataSchema } from "../types";
 
 export const useDataSchema = (schemaUrl?: string) => {
+  if (!schemaUrl) {
+    return {
+      dataSchema: undefined,
+      isDataSchemaPending: false,
+      isDataSchemaError: false,
+    };
+  }
   const fetchDataSchema = useCallback(async () => {
     if (!schemaUrl) return;
     else {
