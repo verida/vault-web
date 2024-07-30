@@ -1,3 +1,5 @@
+import { StaticImageData } from "next/image";
+
 import { VeridaRecord } from "@/features/verida";
 
 export type DataField = {
@@ -80,4 +82,42 @@ export type DataSchema = {
       }
   )[];
   properties: Record<string, { title: string; type: string }>;
+};
+
+export type CredentialProvider = {
+  name: string;
+  image: StaticImageData;
+  schema: string;
+};
+
+export type Credential = {
+  id: string;
+  name: string;
+  title: string;
+  host: string;
+  icon: string;
+  type: string;
+  description: string;
+  message: string;
+  provider: CredentialProvider;
+};
+
+export enum AddCredentialStatus {
+  Start,
+  Loading,
+  Failed,
+  Success,
+}
+
+export type ZkPassResult = {
+  allocatorAddress: string;
+  allocatorSignature: string;
+  publicFields: any[];
+  publicFieldsHash: string;
+  taskId: string;
+  uHash: string;
+  validatorAddress: string;
+  validatorSignature: string;
+  zkPassSchemaId?: string;
+  zkPassSchemaLabel?: string;
 };

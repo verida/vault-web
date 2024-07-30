@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 
 import {
   FilterSheet,
@@ -10,6 +10,7 @@ import {
   FilterSheetFooter,
   FilterSheetHeader,
 } from "@/components/common/filter-sheet";
+import AddCredentialModal from "@/components/data/add-credential-modal";
 import { CredentialItem } from "@/components/data/credential-item";
 import DataItem from "@/components/data/data-item";
 import DataItemDetailsSheet from "@/components/data/data-item-details-sheet";
@@ -23,8 +24,7 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Skeleton } from "@/components/ui/skeleton";
 import { dataFolders } from "@/features/data";
-import { useData } from "@/features/data/hooks";
-import { useDataSchema } from "@/features/data/hooks/useDataSchema";
+import { useData, useDataSchema } from "@/features/data/hooks";
 import { getPublicProfile } from "@/features/profiles";
 import { useVerida } from "@/features/verida";
 
@@ -53,6 +53,7 @@ const FolderPage = ({ params }: { params: { folder: string[] } }) => {
   const itemId = searchParams.get("id");
   const selectedItem = items?.find((it) => it._id === itemId);
 
+  const [credentialModalOpen, setCredentialModalOpen] = useState(false);
   const [issuer, setIssuer] = React.useState<any>({});
   const [isFilterOpen, setIsFilterOpen] = React.useState(false);
 
@@ -97,7 +98,11 @@ const FolderPage = ({ params }: { params: { folder: string[] } }) => {
           <SearchBox />
           <SortSelector />
           <FilterButton onClick={() => setIsFilterOpen(true)} />
-          <Button size={"lg"} className="hidden h-12 md:flex">
+          <Button
+            size={"lg"}
+            className="hidden h-12 md:flex"
+            onClick={() => setCredentialModalOpen(true)}
+          >
             Add New
           </Button>
         </nav>
@@ -210,6 +215,11 @@ const FolderPage = ({ params }: { params: { folder: string[] } }) => {
         data={selectedItem}
         schema={dataSchema}
         folder={folder}
+      />
+
+      <AddCredentialModal
+        open={credentialModalOpen}
+        setOpen={setCredentialModalOpen}
       />
     </div>
   );
