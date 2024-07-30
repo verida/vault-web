@@ -31,11 +31,11 @@ const headerNavs = [
     title: "Data",
     href: "/data",
   },
-  {
-    icon: <Connection />,
-    title: "Connections",
-    href: "/connections",
-  },
+  // {
+  //   icon: <Connection />,
+  //   title: "Connections",
+  //   href: "/connections",
+  // },
 ];
 export const Navbar = () => {
   const path = usePathname();
