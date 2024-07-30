@@ -41,6 +41,12 @@ const Account = () => {
     );
   }
 
+  const onCopyDid = () => {
+    if (did) {
+      window.navigator.clipboard.writeText(did);
+    }
+  };
+
   return !isConnected ? (
     <div className="flex w-full items-center justify-between space-x-4 md:block md:w-auto">
       <Button size="sm" variant="secondary" onClick={() => connect()}>
@@ -50,15 +56,17 @@ const Account = () => {
   ) : (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <div className="flex h-[56px] cursor-pointer items-center gap-3 rounded-lg border-border md:border md:px-3">
-          <Avatar>
+        <Button variant={"secondary"} className="gap-2 rounded-lg px-3">
+          <Avatar className="h-8 w-8">
             <AvatarImage
               alt="Avatar"
               src={profile?.avatar?.uri ?? ""}
-              width={40}
-              height={40}
+              width={32}
+              height={32}
             />
-            <AvatarFallback>A</AvatarFallback>
+            <AvatarFallback>
+              <Skeleton className="h-8 w-8 rounded-full" />
+            </AvatarFallback>
           </Avatar>
           <Typography
             variant="heading-5"
@@ -67,20 +75,22 @@ const Account = () => {
             {profile?.name}
           </Typography>
           <SimpleDown className="hidden text-secondary-foreground md:block" />
-        </div>
+        </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-72" align="end">
-        <DropdownMenuItem className="gap-3 px-4 py-3">
+      <DropdownMenuContent className="w-80 rounded-xl p-0" align="end">
+        <DropdownMenuItem className="gap-3 px-4 py-3" onClick={onCopyDid}>
           <Avatar>
             <AvatarImage
               alt="Avatar"
               src={profile?.avatar?.uri ?? ""}
-              width={40}
-              height={40}
+              width={48}
+              height={48}
             />
-            <AvatarFallback>A</AvatarFallback>
+            <AvatarFallback>
+              <Skeleton className="h-12 w-12 rounded-full" />
+            </AvatarFallback>
           </Avatar>
-          <div className="flex-grow overflow-hidden">
+          <div className="flex-grow space-y-0.5 overflow-hidden">
             <Typography
               variant="heading-5"
               className="hidden text-secondary-foreground md:block"
@@ -96,10 +106,10 @@ const Account = () => {
           </div>
           <Copy className="flex-shrink-0 cursor-pointer" />
         </DropdownMenuItem>
-        <DropdownMenuSeparator />
+        <DropdownMenuSeparator className="my-0" />
         <DropdownMenuItem
           onClick={() => disconnect()}
-          className="cursor-pointer gap-3 px-4 py-2 text-destructive hover:!text-destructive"
+          className="cursor-pointer gap-3 px-4 py-4 text-destructive hover:!text-destructive"
         >
           <Logout />
           <Typography variant="base-semibold">Sign Out</Typography>
