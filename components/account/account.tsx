@@ -56,7 +56,7 @@ const Account = () => {
   ) : (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant={"secondary"} className="gap-2 rounded-lg px-3">
+        <Button variant={"secondary"} className="h-auto gap-2 rounded-lg px-3">
           <Avatar className="h-8 w-8">
             <AvatarImage
               alt="Avatar"
@@ -64,13 +64,12 @@ const Account = () => {
               width={32}
               height={32}
             />
-            <AvatarFallback>
-              <Skeleton className="h-8 w-8 rounded-full" />
-            </AvatarFallback>
+            <AvatarFallback>{profile?.name[0]?.toUpperCase()}</AvatarFallback>
           </Avatar>
           <Typography
             variant="heading-5"
-            className="hidden text-secondary-foreground md:block"
+            component={"p"}
+            className="hidden leading-none text-secondary-foreground md:block"
           >
             {profile?.name}
           </Typography>
@@ -86,14 +85,12 @@ const Account = () => {
               width={48}
               height={48}
             />
-            <AvatarFallback>
-              <Skeleton className="h-12 w-12 rounded-full" />
-            </AvatarFallback>
+            <AvatarFallback>{profile?.name[0]?.toUpperCase()}</AvatarFallback>
           </Avatar>
           <div className="flex-grow space-y-0.5 overflow-hidden">
             <Typography
               variant="heading-5"
-              className="hidden text-secondary-foreground md:block"
+              className="hidden leading-none text-secondary-foreground md:block"
             >
               {profile?.name}
             </Typography>
