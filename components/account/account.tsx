@@ -66,13 +66,9 @@ const Account = () => {
             />
             <AvatarFallback>{profile?.name[0]?.toUpperCase()}</AvatarFallback>
           </Avatar>
-          <Typography
-            variant="heading-5"
-            component={"p"}
-            className="hidden leading-none text-secondary-foreground md:block"
-          >
+          <p className="hidden text-[1rem] font-semibold text-secondary-foreground md:block">
             {profile?.name}
-          </Typography>
+          </p>
           <SimpleDown className="hidden text-secondary-foreground md:block" />
         </Button>
       </DropdownMenuTrigger>
@@ -88,12 +84,9 @@ const Account = () => {
             <AvatarFallback>{profile?.name[0]?.toUpperCase()}</AvatarFallback>
           </Avatar>
           <div className="flex-grow space-y-0.5 overflow-hidden">
-            <Typography
-              variant="heading-5"
-              className="hidden leading-none text-secondary-foreground md:block"
-            >
+            <p className="text-[1rem] font-semibold text-secondary-foreground">
               {profile?.name}
-            </Typography>
+            </p>
             <Typography
               variant="base-s-regular"
               className="truncate text-secondary-foreground"
