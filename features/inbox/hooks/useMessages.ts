@@ -1,7 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { useCallback } from "react";
 
-import { getPublicProfile } from "@/features/profiles";
 import { useVerida } from "@/features/verida";
 
 export const useMessages = (
@@ -19,12 +18,6 @@ export const useMessages = (
           limit,
           sort: [{ sentAt: "desc" }],
         });
-
-        for (const message of messages) {
-          const { did, contextName } = message.sentBy;
-          const profile = await getPublicProfile(did, contextName);
-          message.sentBy = { ...message.sentBy, ...profile };
-        }
 
         return messages;
       } catch (err) {

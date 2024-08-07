@@ -3,6 +3,7 @@ import Link from "next/link";
 
 import { inboxTypes } from "@/features/inbox/constants";
 import { InboxEntry } from "@/features/inbox/types";
+import { usePublicProfile } from "@/features/profiles";
 import { cn, formatDate } from "@/lib/utils";
 
 import { Typography } from "../typography";
@@ -22,6 +23,8 @@ export const InboxRowItem: React.FC<InboxRowItemProps> = ({
   const { message: title, read, sentAt, sentBy, type, data } = message;
   const InboxTypeIcon = inboxTypes[type].icon;
 
+  const { profile } = usePublicProfile(sentBy.did);
+
   return (
     <Link href={href || "#"} className="w-full">
       <Card className="flex w-full cursor-pointer rounded-lg">
@@ -36,10 +39,10 @@ export const InboxRowItem: React.FC<InboxRowItemProps> = ({
             ></span>
             <div className="relative">
               <Avatar>
-                {sentBy.avatar?.uri && (
-                  <AvatarImage src={sentBy.avatar?.uri} asChild>
+                {profile?.avatar?.uri && (
+                  <AvatarImage src={profile?.avatar?.uri} asChild>
                     <Image
-                      src={sentBy.avatar?.uri}
+                      src={profile?.avatar?.uri}
                       width={48}
                       height={48}
                       alt=""
@@ -49,7 +52,7 @@ export const InboxRowItem: React.FC<InboxRowItemProps> = ({
                 <AvatarFallback>{"U"}</AvatarFallback>
               </Avatar>
             </div>
-            <Typography variant="base-semibold">{sentBy.name}</Typography>
+            <Typography variant="base-semibold">{profile?.name}</Typography>
           </div>
           <div className="flex shrink items-center gap-4 px-4">
             <div className="flex items-center gap-2">
@@ -80,10 +83,10 @@ export const InboxRowItem: React.FC<InboxRowItemProps> = ({
         <div className="flex w-full items-start space-x-3 p-4 md:hidden">
           <div className="relative">
             <Avatar>
-              {sentBy.avatar?.uri && (
-                <AvatarImage src={sentBy.avatar?.uri} asChild>
+              {profile?.avatar?.uri && (
+                <AvatarImage src={profile?.avatar?.uri} asChild>
                   <Image
-                    src={sentBy.avatar?.uri}
+                    src={profile?.avatar?.uri}
                     width={48}
                     height={48}
                     alt=""
@@ -95,7 +98,7 @@ export const InboxRowItem: React.FC<InboxRowItemProps> = ({
           </div>
           <div className="flex-grow space-y-[6px]">
             <div className="flex items-center justify-between">
-              <Typography variant="heading-5">{sentBy.name}</Typography>
+              <Typography variant="heading-5">{profile?.name}</Typography>
               <Typography variant="base-s-regular">
                 {formatDate(sentAt)}
               </Typography>
