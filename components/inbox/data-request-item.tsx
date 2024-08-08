@@ -1,20 +1,20 @@
-import { useMemo } from "react";
+import { useMemo } from "react"
 
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils"
 
-import { Chip } from "../common/chip";
-import { Check } from "../icons/check";
-import { Plus } from "../icons/plus";
-import { Typography } from "../typography";
-import { Button } from "../ui/button";
-import { Card } from "../ui/card";
+import { Chip } from "../common/chip"
+import { Check } from "../icons/check"
+import { Plus } from "../icons/plus"
+import { Typography } from "../typography"
+import { Button } from "../ui/button"
+import { Card } from "../ui/card"
 
 interface DataRequestItemProps {
-  data: Record<string, any>;
-  selectedItems: Record<string, any>[];
-  onAdd: () => void;
-  onRemoveChip: (_id: string) => void;
-  disabled?: boolean;
+  data: Record<string, any>
+  selectedItems: Record<string, any>[]
+  onAdd: () => void
+  onRemoveChip: (_id: string) => void
+  disabled?: boolean
 }
 
 export const DataRequestItem: React.FC<DataRequestItemProps> = ({
@@ -25,8 +25,8 @@ export const DataRequestItem: React.FC<DataRequestItemProps> = ({
   onRemoveChip,
 }) => {
   const isAdded = useMemo(() => {
-    return selectedItems.length > 0;
-  }, [selectedItems]);
+    return selectedItems.length > 0
+  }, [selectedItems])
 
   return (
     <Card
@@ -73,5 +73,5 @@ export const DataRequestItem: React.FC<DataRequestItemProps> = ({
         </Button>
       )}
     </Card>
-  );
-};
+  )
+}

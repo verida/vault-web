@@ -1,4 +1,4 @@
-import { SVGProps } from "react";
+import { SVGProps } from "react"
 
 interface Props extends SVGProps<SVGSVGElement> {}
 
@@ -35,6 +35,6 @@ const FolderLoyaltyIcon = (props: Props) => (
       </g>
     </g>
   </svg>
-);
+)
 
-export { FolderLoyaltyIcon };
+export { FolderLoyaltyIcon }

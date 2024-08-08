@@ -1,40 +1,40 @@
-import { Logger } from "features/telemetry";
+import { Logger } from "features/telemetry"
 
-import { InboxResponse, InboxType } from "../../interfaces/inbox/Inbox";
-import { DataAction } from "./DataAction";
+import { InboxResponse, InboxType } from "../../interfaces/inbox/Inbox"
+import { DataAction } from "./DataAction"
 
-const logger = new Logger("InboxDataRequest");
+const logger = new Logger("InboxDataRequest")
 
-const MSG = "Send you the requested data";
+const MSG = "Send you the requested data"
 
 export class Request extends DataAction {
   async accept() {
-    logger.debug("Accepting data request");
-    const dataRequest = this.inboxEntry.data;
-    const { did, context } = this.inboxEntry.sentBy;
+    logger.debug("Accepting data request")
+    const dataRequest = this.inboxEntry.data
+    const { did, context } = this.inboxEntry.sentBy
 
-    const response = new InboxResponse(this.inboxEntry._id);
+    const response = new InboxResponse(this.inboxEntry._id)
 
     if (dataRequest.userSelect) {
-      response.data = this.payload;
+      response.data = this.payload
     } else {
       const store = await this.vaultCommon.vault.openDatastore(
         this.inboxEntry.data.requestSchema
-      );
-      const foundData = await store.getMany(dataRequest.filter || {});
-      response.data = [foundData];
+      )
+      const foundData = await store.getMany(dataRequest.filter || {})
+      response.data = [foundData]
     }
 
-    logger.debug("Sending data response");
+    logger.debug("Sending data response")
     await this.messaging.send(did, InboxType.DATA_SEND, response, MSG, {
       recipientContextName: context,
-    });
-    logger.debug("Data response sent");
+    })
+    logger.debug("Data response sent")
   }
 
   decline() {}
 
   async metadata() {
-    return {};
+    return {}
   }
 }

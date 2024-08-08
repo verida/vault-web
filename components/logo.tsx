@@ -1,5 +1,5 @@
-import Image from "next/image";
-import Link from "next/link";
+import Image from "next/image"
+import Link from "next/link"
 
 export const Logo = () => {
   return (
@@ -8,5 +8,5 @@ export const Logo = () => {
         <Image src="/logo.svg" alt="Logo" height={32} width={95} />
       </div>
     </Link>
-  );
-};
+  )
+}

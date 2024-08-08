@@ -1,12 +1,12 @@
-import { Messaging } from "../../interfaces/Verida";
-import { InboxEntry } from "../../interfaces/inbox/Inbox";
-import Vault from "../../vault";
+import { Messaging } from "../../interfaces/Verida"
+import { InboxEntry } from "../../interfaces/inbox/Inbox"
+import Vault from "../../vault"
 
 export abstract class DataAction {
-  protected readonly vaultCommon: Vault;
-  protected readonly inboxEntry: InboxEntry;
-  protected readonly payload: any;
-  protected readonly messaging: Messaging;
+  protected readonly vaultCommon: Vault
+  protected readonly inboxEntry: InboxEntry
+  protected readonly payload: any
+  protected readonly messaging: Messaging
 
   constructor(
     vaultCommon: Vault,
@@ -14,12 +14,12 @@ export abstract class DataAction {
     inboxEntry: InboxEntry,
     payload: any = {}
   ) {
-    this.vaultCommon = vaultCommon;
-    this.inboxEntry = inboxEntry;
-    this.payload = payload;
-    this.messaging = messaging;
+    this.vaultCommon = vaultCommon
+    this.inboxEntry = inboxEntry
+    this.payload = payload
+    this.messaging = messaging
   }
 
-  abstract accept(): Promise<unknown>;
-  abstract decline(): any;
+  abstract accept(): Promise<unknown>
+  abstract decline(): any
 }

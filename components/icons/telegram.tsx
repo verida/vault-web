@@ -1,4 +1,4 @@
-import { SVGProps } from "react";
+import { SVGProps } from "react"
 
 interface Props extends SVGProps<SVGSVGElement> {}
 
@@ -16,6 +16,6 @@ const Telegram = (props: Props) => (
       fill="#6B7280"
     />
   </svg>
-);
+)
 
-export { Telegram };
+export { Telegram }

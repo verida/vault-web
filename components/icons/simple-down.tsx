@@ -1,4 +1,4 @@
-import { SVGProps } from "react";
+import { SVGProps } from "react"
 
 interface Props extends SVGProps<SVGSVGElement> {}
 
@@ -16,6 +16,6 @@ const SimpleDown = (props: Props) => (
       fill="currentColor"
     />
   </svg>
-);
+)
 
-export { SimpleDown };
+export { SimpleDown }

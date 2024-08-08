@@ -1,72 +1,72 @@
-"use client";
+"use client"
 
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useMemo, useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation"
+import { useMemo, useState } from "react"
 
-import { ModalSheet } from "@/components/common/modal-sheet";
-import { FilterButton } from "@/components/filter-button";
-import { InboxDetails } from "@/components/inbox/inbox-details";
-import { InboxRowItem } from "@/components/inbox/inbox-item";
-import { InboxError } from "@/components/inbox/status/inbox-error";
-import { InboxLoading } from "@/components/inbox/status/inbox-loading";
-import { NoInbox } from "@/components/inbox/status/no-inbox";
-import { SearchInput } from "@/components/search-input";
-import { Typography } from "@/components/typography";
-import { TablePagination } from "@/components/ui/table-pagination";
-import { useInbox } from "@/features/inbox/hooks";
-import { useInboxContext } from "@/features/inbox/hooks/useInboxContext";
-import { useMessages } from "@/features/inbox/hooks/useMessages";
-import { InboxEntry } from "@/features/inbox/types";
+import { ModalSheet } from "@/components/common/modal-sheet"
+import { FilterButton } from "@/components/filter-button"
+import { InboxDetails } from "@/components/inbox/inbox-details"
+import { InboxRowItem } from "@/components/inbox/inbox-item"
+import { InboxError } from "@/components/inbox/status/inbox-error"
+import { InboxLoading } from "@/components/inbox/status/inbox-loading"
+import { NoInbox } from "@/components/inbox/status/no-inbox"
+import { SearchInput } from "@/components/search-input"
+import { Typography } from "@/components/typography"
+import { TablePagination } from "@/components/ui/table-pagination"
+import { useInbox } from "@/features/inbox/hooks"
+import { useInboxContext } from "@/features/inbox/hooks/useInboxContext"
+import { useMessages } from "@/features/inbox/hooks/useMessages"
+import { InboxEntry } from "@/features/inbox/types"
 
 const InboxPage = () => {
-  const router = useRouter();
-  const pathName = usePathname();
-  const searchParams = useSearchParams();
+  const router = useRouter()
+  const pathName = usePathname()
+  const searchParams = useSearchParams()
 
-  const [offset, setOffset] = useState(0);
-  const [limit, setLimit] = useState(10);
+  const [offset, setOffset] = useState(0)
+  const [limit, setLimit] = useState(10)
 
-  const { messagingEngine } = useInboxContext();
+  const { messagingEngine } = useInboxContext()
   const {
     totalMessageCount,
     isTotalMessageCountPending,
     isUnreadMessageCountPending,
     isTotalMessageCountError,
     isUnreadMessageCountError,
-  } = useInbox();
+  } = useInbox()
   const { messages, isMessagesPending } = useMessages(
     messagingEngine,
     {},
     offset,
     limit
-  );
+  )
 
-  const messageId = searchParams.get("id");
+  const messageId = searchParams.get("id")
 
   const selectedMessage = messages?.find(
     (message: any) => message._id === messageId
-  ) as InboxEntry;
+  ) as InboxEntry
 
   const isLoading = useMemo(() => {
     return (
       isTotalMessageCountPending ||
       isUnreadMessageCountPending ||
       isMessagesPending
-    );
+    )
   }, [
     isTotalMessageCountPending,
     isUnreadMessageCountPending,
     isMessagesPending,
-  ]);
+  ])
 
   const hasError = useMemo(() => {
-    return isTotalMessageCountError || isUnreadMessageCountError;
-  }, [isTotalMessageCountError, isUnreadMessageCountError]);
+    return isTotalMessageCountError || isUnreadMessageCountError
+  }, [isTotalMessageCountError, isUnreadMessageCountError])
 
   const handlePageChange = (newOffset: number, newLimit: number) => {
-    setOffset(newOffset);
-    setLimit(newLimit);
-  };
+    setOffset(newOffset)
+    setLimit(newLimit)
+  }
 
   return (
     <>
@@ -125,7 +125,7 @@ const InboxPage = () => {
         )}
       </ModalSheet>
     </>
-  );
-};
+  )
+}
 
-export default InboxPage;
+export default InboxPage

@@ -1,45 +1,45 @@
-import { useQuery } from "@tanstack/react-query";
-import moment from "moment";
-import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query"
+import moment from "moment"
+import Image from "next/image"
+import { useEffect, useState } from "react"
 
-import { useVerida } from "@/features/verida";
+import { useVerida } from "@/features/verida"
 
-import Alert from "../alert";
-import { ArrowLeft } from "../icons/arrow-left";
-import { SearchInput } from "../search-input";
-import { Typography } from "../typography";
-import { Button } from "../ui/button";
-import { Card } from "../ui/card";
-import { Checkbox } from "../ui/checkbox";
+import Alert from "../alert"
+import { ArrowLeft } from "../icons/arrow-left"
+import { SearchInput } from "../search-input"
+import { Typography } from "../typography"
+import { Button } from "../ui/button"
+import { Card } from "../ui/card"
+import { Checkbox } from "../ui/checkbox"
 import {
   DrawerBody,
   DrawerFooter,
   DrawerHeader,
   DrawerTitle,
-} from "../ui/drawer";
+} from "../ui/drawer"
 
 interface RequestDataSelectorProps {
-  schemaUrl: string;
-  filter: any;
-  defaultItems: any[];
-  onClose: () => void;
-  onConfirm: (items: any[]) => void;
+  schemaUrl: string
+  filter: any
+  defaultItems: any[]
+  onClose: () => void
+  onConfirm: (items: any[]) => void
 }
 
 export const RequestDataSelector: React.FC<RequestDataSelectorProps> = (
   props
 ) => {
-  const { schemaUrl, filter, onClose, onConfirm, defaultItems } = props;
+  const { schemaUrl, filter, onClose, onConfirm, defaultItems } = props
 
-  const { openDatastore, did } = useVerida();
+  const { openDatastore, did } = useVerida()
 
-  const [searchValue, setSearchValue] = useState<string>("");
-  const [selectedItems, setSelectedItems] = useState<any[]>(defaultItems);
+  const [searchValue, setSearchValue] = useState<string>("")
+  const [selectedItems, setSelectedItems] = useState<any[]>(defaultItems)
 
   const fetchData = async (searchValue: string) => {
     try {
-      const requestFilter = filter && typeof filter === "object" ? filter : {};
+      const requestFilter = filter && typeof filter === "object" ? filter : {}
 
       const searchFilter =
         searchValue && searchValue.length > 0
@@ -57,30 +57,30 @@ export const RequestDataSelector: React.FC<RequestDataSelectorProps> = (
                 },
               ],
             }
-          : {};
+          : {}
 
       const query = {
         $and: [requestFilter, searchFilter],
-      };
+      }
 
-      const datastore = await openDatastore(schemaUrl, undefined);
-      const result = await datastore?.getMany(query, undefined);
+      const datastore = await openDatastore(schemaUrl, undefined)
+      const result = await datastore?.getMany(query, undefined)
 
-      return result;
+      return result
     } catch (err) {
-      console.log("error", err);
+      console.log("error", err)
     }
-  };
+  }
 
   useEffect(() => {
-    fetchData("");
-  }, []);
+    fetchData("")
+  }, [])
 
   const { data, isPending } = useQuery({
     queryKey: ["requestedData", searchValue, did, schemaUrl],
     queryFn: () => fetchData(searchValue),
     staleTime: 0,
-  });
+  })
 
   return (
     <>
@@ -151,9 +151,9 @@ export const RequestDataSelector: React.FC<RequestDataSelectorProps> = (
                   if (!checked) {
                     setSelectedItems((prev) =>
                       prev.filter((sItem) => sItem._id !== item._id)
-                    );
+                    )
                   } else {
-                    setSelectedItems((prev) => [...prev, item]);
+                    setSelectedItems((prev) => [...prev, item])
                   }
                 }}
                 id={item._id}
@@ -173,5 +173,5 @@ export const RequestDataSelector: React.FC<RequestDataSelectorProps> = (
         </Button>
       </DrawerFooter>
     </>
-  );
-};
+  )
+}

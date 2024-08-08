@@ -1,38 +1,38 @@
-import { useQuery } from "@tanstack/react-query";
-import { useCallback } from "react";
+import { useQuery } from "@tanstack/react-query"
+import { useCallback } from "react"
 
-import { useVerida } from "@/features/verida";
+import { useVerida } from "@/features/verida"
 
-import { useInboxContext } from "./useInboxContext";
+import { useInboxContext } from "./useInboxContext"
 
 export const useInbox = () => {
-  const { messagingEngine } = useInboxContext();
-  const { did } = useVerida();
+  const { messagingEngine } = useInboxContext()
+  const { did } = useVerida()
 
   const fetchUnreadMessageCount = useCallback(async () => {
     try {
       const unreadMessages = await messagingEngine?.getMessages({
         read: false,
-      });
-      return unreadMessages.length ?? 0;
+      })
+      return unreadMessages.length ?? 0
     } catch (err) {
-      throw new Error((err as Error).message);
+      throw new Error((err as Error).message)
     }
-  }, [messagingEngine]);
+  }, [messagingEngine])
 
   const fetchTotalMessageCount = useCallback(async () => {
     try {
       const messages = await messagingEngine?.getMessages(
         {},
         { limit: 100000000 }
-      );
+      )
 
       // 1 record in the db is for permit
-      return messages.length ?? 0;
+      return messages.length ?? 0
     } catch (err) {
-      throw new Error((err as Error).message);
+      throw new Error((err as Error).message)
     }
-  }, [messagingEngine]);
+  }, [messagingEngine])
 
   const {
     data: unreadMessageCount,
@@ -42,7 +42,7 @@ export const useInbox = () => {
     queryKey: [did, "inbox", "unreadMessageCount"],
     queryFn: fetchUnreadMessageCount,
     enabled: !!messagingEngine,
-  });
+  })
 
   const {
     data: totalMessageCount,
@@ -52,7 +52,7 @@ export const useInbox = () => {
     queryKey: [did, "inbox", "totalMessageCount"],
     queryFn: fetchTotalMessageCount,
     enabled: !!messagingEngine,
-  });
+  })
 
   return {
     unreadMessageCount,
@@ -61,5 +61,5 @@ export const useInbox = () => {
     totalMessageCount,
     isTotalMessageCountPending,
     isTotalMessageCountError,
-  };
-};
+  }
+}

@@ -1,6 +1,6 @@
-"use client";
+"use client"
 
-import React from "react";
+import React from "react"
 
 import {
   DropdownMenu,
@@ -8,16 +8,16 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { useVerida } from "@/features/verida";
+} from "@/components/ui/dropdown-menu"
+import { useVerida } from "@/features/verida"
 
-import { Copy } from "../icons/copy";
-import { Logout } from "../icons/logout";
-import { SimpleDown } from "../icons/simple-down";
-import { Typography } from "../typography";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { Button } from "../ui/button";
-import { Skeleton } from "../ui/skeleton";
+import { Copy } from "../icons/copy"
+import { Logout } from "../icons/logout"
+import { SimpleDown } from "../icons/simple-down"
+import { Typography } from "../typography"
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar"
+import { Button } from "../ui/button"
+import { Skeleton } from "../ui/skeleton"
 
 const Account = () => {
   const {
@@ -28,7 +28,7 @@ const Account = () => {
     disconnect,
     profile,
     isCheckingConnection,
-  } = useVerida();
+  } = useVerida()
 
   if (!did && !profile && (isCheckingConnection || isConnecting)) {
     return (
@@ -38,7 +38,7 @@ const Account = () => {
           <Skeleton className="h-4 w-[100px]" />
         </div>
       </div>
-    );
+    )
   }
 
   return !isConnected ? (
@@ -106,9 +106,9 @@ const Account = () => {
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
-  );
-};
+  )
+}
 
-Account.displayName = "Account";
+Account.displayName = "Account"
 
-export { Account };
+export { Account }

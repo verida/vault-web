@@ -1,9 +1,9 @@
-import Image from "next/image";
+import Image from "next/image"
 
-import { Typography } from "../typography";
+import { Typography } from "../typography"
 
 interface IncomingDataItemProps {
-  item: Record<string, any>;
+  item: Record<string, any>
 }
 
 export const IncomingDataItem: React.FC<IncomingDataItemProps> = ({ item }) => {
@@ -20,5 +20,5 @@ export const IncomingDataItem: React.FC<IncomingDataItemProps> = ({ item }) => {
       </div>
       <Typography variant="base-s-regular">{item.summary}</Typography>
     </div>
-  );
-};
+  )
+}

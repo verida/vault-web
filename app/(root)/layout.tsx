@@ -1,35 +1,35 @@
-"use client";
+"use client"
 
-import { usePathname, useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { usePathname, useRouter } from "next/navigation"
+import { useEffect } from "react"
 
-import { Footer } from "@/components/footer";
-import { Navbar } from "@/components/navbar";
-import { useAuth } from "@/features/auth";
-import { useVerida } from "@/features/verida";
+import { Footer } from "@/components/footer"
+import { Navbar } from "@/components/navbar"
+import { useAuth } from "@/features/auth"
+import { useVerida } from "@/features/verida"
 
 const AppLayout = ({
   children,
   sheet,
 }: {
-  children: React.ReactNode;
-  sheet: React.ReactNode;
+  children: React.ReactNode
+  sheet: React.ReactNode
 }) => {
-  const pathName = usePathname();
-  const router = useRouter();
-  const { isConnected } = useVerida();
-  const { setRedirectPath } = useAuth();
+  const pathName = usePathname()
+  const router = useRouter()
+  const { isConnected } = useVerida()
+  const { setRedirectPath } = useAuth()
 
   useEffect(() => {
-    const redirectUrl = pathName;
+    const redirectUrl = pathName
 
     if (!isConnected) {
-      setRedirectPath(redirectUrl);
-      router.push("/");
+      setRedirectPath(redirectUrl)
+      router.push("/")
     }
-  }, [isConnected, router]);
+  }, [isConnected, router])
 
-  if (!isConnected) return null;
+  if (!isConnected) return null
 
   return (
     <div className="flex min-h-screen flex-col bg-background">
@@ -39,7 +39,7 @@ const AppLayout = ({
       </main>
       <Footer />
     </div>
-  );
-};
+  )
+}
 
-export default AppLayout;
+export default AppLayout

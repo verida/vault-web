@@ -1,6 +1,6 @@
-import Link from "next/link";
+import Link from "next/link"
 
-import { Typography } from "./typography";
+import { Typography } from "./typography"
 
 export const Footer = () => {
   return (
@@ -17,5 +17,5 @@ export const Footer = () => {
         </Link>
       </div>
     </div>
-  );
-};
+  )
+}

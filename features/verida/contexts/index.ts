@@ -1,1 +1,1 @@
-export * from "./VeridaContext";
+export * from "./VeridaContext"

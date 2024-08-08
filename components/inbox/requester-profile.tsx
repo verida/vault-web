@@ -1,17 +1,17 @@
-import moment from "moment";
-import Image from "next/image";
-import React from "react";
+import moment from "moment"
+import Image from "next/image"
+import React from "react"
 
-import { Typography } from "../typography";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { Typography } from "../typography"
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar"
 
 interface RequesterProfileProps {
-  sentBy: Record<string, any>;
-  sentAt: string | Date;
+  sentBy: Record<string, any>
+  sentAt: string | Date
 }
 
 export const RequesterProfile: React.FC<RequesterProfileProps> = (props) => {
-  const { sentBy, sentAt } = props;
+  const { sentBy, sentAt } = props
   return (
     <div className="flex items-center space-x-2">
       <div className="relative">
@@ -34,5 +34,5 @@ export const RequesterProfile: React.FC<RequesterProfileProps> = (props) => {
         </Typography>
       </div>
     </div>
-  );
-};
+  )
+}

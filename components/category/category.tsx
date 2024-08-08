@@ -1,15 +1,15 @@
-import Link from "next/link";
-import { ReactNode } from "react";
+import Link from "next/link"
+import { ReactNode } from "react"
 
-import { Typography } from "../typography";
-import { Card, CardContent } from "../ui/card";
+import { Typography } from "../typography"
+import { Card, CardContent } from "../ui/card"
 
 type CategoryProps = {
-  icon?: ReactNode;
-  title?: string;
-  description: string;
-  href?: string;
-};
+  icon?: ReactNode
+  title?: string
+  description: string
+  href?: string
+}
 
 function Category({ icon, title, description, href }: CategoryProps) {
   return (
@@ -33,7 +33,7 @@ function Category({ icon, title, description, href }: CategoryProps) {
         </CardContent>
       </Card>
     </Link>
-  );
+  )
 }
 
-export { Category };
+export { Category }

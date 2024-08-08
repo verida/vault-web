@@ -1,17 +1,17 @@
-import Image from "next/image";
+import Image from "next/image"
 
-import { Close } from "../icons/close";
-import { Typography } from "../typography";
+import { Close } from "../icons/close"
+import { Typography } from "../typography"
 
 interface ChipProps {
-  id: string;
-  icon: string;
-  text: string;
-  onClose?: (id: string) => void;
+  id: string
+  icon: string
+  text: string
+  onClose?: (id: string) => void
 }
 
 export const Chip: React.FC<ChipProps> = (props) => {
-  const { id, icon, text, onClose } = props;
+  const { id, icon, text, onClose } = props
   return (
     <div className="flex items-center gap-2 rounded-full bg-primary-button p-1">
       <Image
@@ -31,5 +31,5 @@ export const Chip: React.FC<ChipProps> = (props) => {
         />
       )}
     </div>
-  );
-};
+  )
+}
