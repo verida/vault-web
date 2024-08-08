@@ -1,11 +1,7 @@
 node_modules
+.next
 build
-public
 patches
-lib
-tailwind.config.ts
-postcss.config.js
-config-overrides.js
 
-README.md
-tsconfig.json
+.eslintrc
+.prettierrc
