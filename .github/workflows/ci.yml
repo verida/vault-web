@@ -30,12 +30,17 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile
 
-      - name: Check TypeScript compilation
-        run: npx tsc --noEmit
+      - name: Check formatting
+        run: yarn run check:format
 
-      # TODO: Add test in CI when available
-      # - name: Test
-      #   run: yarn run test
-      - name: Build
-        run: yarn run build
-        # Building Next.js also check the linting so no need for a step
+      - name: Check linting
+        run: yarn run check:lint
+
+      - name: Check TypeScript compilation
+        run: yarn run check:ts
+
+      # TODO: Add tests in CI when available
+      #
+      # TODO: Add build in CI. Building needs the env vars to be set.
+      # - name: Build
+      #   run: yarn run build --no-lint
