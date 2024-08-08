@@ -11,12 +11,13 @@ type SearchInputProps = {
 
 function SearchInput({ onValueChange, className, ...props }: SearchInputProps) {
   const debounceChangeHandler = useCallback(
-    debounce(
-      (e: React.ChangeEvent<HTMLInputElement>) =>
-        onValueChange && onValueChange(e.target?.value),
-      300
-    ),
-    [onValueChange, debounce]
+    () =>
+      debounce(
+        (e: React.ChangeEvent<HTMLInputElement>) =>
+          onValueChange && onValueChange(e.target?.value),
+        300
+      ),
+    [onValueChange]
   )
 
   return (

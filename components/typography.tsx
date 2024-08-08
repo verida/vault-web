@@ -59,7 +59,7 @@ export const Typography: React.FunctionComponent<TypographyProps> = (props) => {
 
   const htmlTag = component || mapping[variant || "base-semibold"]
 
-  const classes = `${typographyVariants({ variant })} ${className}`
+  const classes = cn(typographyVariants({ variant }), className)
 
   // TODO: Optimise without the switch
   switch (htmlTag) {

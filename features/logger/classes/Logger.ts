@@ -4,13 +4,6 @@ import { LogLevel } from "@/features/logger"
 const levelOrder: LogLevel[] = ["error", "warn", "info", "debug"]
 const currentLogLevelIndex = levelOrder.indexOf(config.logLevel)
 
-const sentryLevelMapping = {
-  error: "error",
-  warn: "warning",
-  info: "info",
-  debug: "debug",
-} as const
-
 /**
  * Custom logger to use the console and/or add a breadcrumb to Sentry.
  *

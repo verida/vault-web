@@ -2,16 +2,6 @@
 // import { config } from 'config'
 // import { LogLevel, Sentry } from 'features/telemetry'
 
-const levelOrder = ["error", "warn", "info", "debug"]
-// const currentLogLevelIndex = levelOrder.indexOf(config.logLevel)
-
-const sentryLevelMapping = {
-  error: "error",
-  warn: "warning",
-  info: "info",
-  debug: "debug",
-} as const
-
 /**
  * Custom logger to use the console and/or add a breadcrumb to Sentry.
  *
@@ -86,7 +76,7 @@ export class Logger {
     }
   }
 
-  public error(error: Error | unknown, sentryCaptureContext?: any) {
+  public error(error: Error | unknown) {
     // if (config.sentry.enabled) {
     //   Sentry.captureException(error, {
     //     ...sentryCaptureContext,

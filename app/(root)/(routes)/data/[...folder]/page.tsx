@@ -1,6 +1,5 @@
 "use client"
 
-import { IDatabase } from "@verida/types"
 import Image from "next/image"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import React from "react"
@@ -14,13 +13,16 @@ import { Drawer, DrawerContent, DrawerHeader } from "@/components/ui/drawer"
 import { Skeleton } from "@/components/ui/skeleton"
 import { DataFolderDefinition, dataFolders } from "@/features/data"
 import { getPublicProfile } from "@/features/profiles"
+import { PublicProfile } from "@/features/profiles/@types"
 import { useVerida } from "@/features/verida"
+
+// TODO: Use custom logger and remove this eslint by-pass
+/* eslint-disable no-console */
 
 const FolderPage = ({ params }: { params: { folder: string[] } }) => {
   const router = useRouter()
-  const [db, setDB] = React.useState<IDatabase | undefined>()
   const [loading, setLoading] = React.useState(true)
-  const { webUserInstanceRef, isConnected, isReady } = useVerida()
+  const { webUserInstanceRef, isConnected } = useVerida()
   const [folder, setFolder] = React.useState<DataFolderDefinition>()
   const [items, setItems] = React.useState<any[]>([])
   const pathName = usePathname()
@@ -61,7 +63,9 @@ const FolderPage = ({ params }: { params: { folder: string[] } }) => {
 
   console.log("Selected item", JSON.stringify(selectedItem, null, 2))
 
-  const [issuer, setIssuer] = React.useState({})
+  const [issuer, setIssuer] = React.useState<PublicProfile>({
+    name: "",
+  })
 
   React.useEffect(() => {
     function parseJwt(token: string) {
@@ -201,7 +205,7 @@ const FolderPage = ({ params }: { params: { folder: string[] } }) => {
                     className="flex justify-between gap-4 px-4 py-4"
                   >
                     <p className="text-muted-foreground">{entry[0]}</p>
-                    <p>{entry[1]}</p>
+                    <p>{String(entry[1])}</p>
                   </div>
                 ))
               ) : (

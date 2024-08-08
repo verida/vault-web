@@ -108,6 +108,8 @@ export const VeridaProvider: React.FunctionComponent<VeridaProviderProps> = (
     //getPublicProfile
     try {
       const newProfile = await getPublicProfile(webUserInstance.getDid())
+      // TODO: Use custom logger and remove this eslint by-pass
+      // eslint-disable-next-line no-console
       console.log("Context", newProfile)
       setProfile(newProfile)
     } catch (error: unknown) {

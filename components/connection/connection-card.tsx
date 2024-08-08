@@ -12,7 +12,7 @@ type Props = {
 } & Connection
 
 function ConnectionCard(props: Props) {
-  const { id, item, description, onConnect, isConnected = false } = props
+  const { id, description, onConnect, isConnected = false } = props
 
   return (
     <div className="flex h-full flex-col">

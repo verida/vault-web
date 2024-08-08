@@ -6,7 +6,7 @@ export enum InboxType {
 }
 
 export interface Inbox {
-  save: (data: InboxEntry) => {}
+  save: (data: InboxEntry) => void
   errors: any[]
 }
 

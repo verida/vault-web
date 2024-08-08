@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 
 import Alert from "@/components/alert"
 import {
@@ -20,6 +20,9 @@ import { RequesterProfile } from "../requester-profile"
 import { InboxError } from "../status/inbox-error"
 import { InboxLoading } from "../status/inbox-loading"
 import { InboxSuccess } from "../status/inbox-success"
+
+// TODO: Use custom logger and remove this eslint by-pass
+/* eslint-disable no-console */
 
 export const DataRequestDetails: React.FC<InboxDetailsProps> = ({
   message,
@@ -51,7 +54,7 @@ export const DataRequestDetails: React.FC<InboxDetailsProps> = ({
     setSelectedItems((prev) => prev.filter((item) => item._id !== _id))
   }
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     try {
       const { requestSchema } = data
 
@@ -66,7 +69,7 @@ export const DataRequestDetails: React.FC<InboxDetailsProps> = ({
     } catch (err) {
       console.log("error", err)
     }
-  }
+  }, [data])
 
   const onClickDecline = async () => {
     await handleReject(message)
@@ -74,7 +77,7 @@ export const DataRequestDetails: React.FC<InboxDetailsProps> = ({
 
   useEffect(() => {
     fetchData()
-  }, [])
+  }, [fetchData])
 
   if (isLoading) {
     return (
@@ -191,7 +194,7 @@ export const DataRequestDetails: React.FC<InboxDetailsProps> = ({
               variant="base-regular"
               className="text-secondary-foreground"
             >
-              If you don't have the requested data
+              {`If you don't have the requested data`}
             </Typography>
 
             <ButtonLink href={fallbackAction.url}>

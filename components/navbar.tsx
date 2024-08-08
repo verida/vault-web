@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation"
 import { useState } from "react"
 
 import { Account } from "@/components/account/account"
-import { Connection } from "@/components/icons/connection"
+// import { Connection } from "@/components/icons/connection"
 import { Data } from "@/components/icons/data"
 import { Logo } from "@/components/logo"
 import {

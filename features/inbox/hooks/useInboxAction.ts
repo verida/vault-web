@@ -97,10 +97,12 @@ export const useInboxAction = () => {
       } catch (err) {
         setIsLoading(false)
         setIsError(true)
+        // TODO: Use custom logger and remove this eslint by-pass
+        // eslint-disable-next-line no-console
         console.log(err)
       }
     },
-    [openDatastore, messagingEngine]
+    [openDatastore, messagingEngine, queryClient]
   )
 
   const handleReject = useCallback(
@@ -126,7 +128,7 @@ export const useInboxAction = () => {
         setIsError(true)
       }
     },
-    [messagingEngine]
+    [messagingEngine, queryClient]
   )
 
   return { handleAccept, handleReject, isLoading, isError }

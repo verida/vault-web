@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query"
 import moment from "moment"
 import Image from "next/image"
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 
 import { useVerida } from "@/features/verida"
 
@@ -37,44 +37,49 @@ export const RequestDataSelector: React.FC<RequestDataSelectorProps> = (
   const [searchValue, setSearchValue] = useState<string>("")
   const [selectedItems, setSelectedItems] = useState<any[]>(defaultItems)
 
-  const fetchData = async (searchValue: string) => {
-    try {
-      const requestFilter = filter && typeof filter === "object" ? filter : {}
+  const fetchData = useCallback(
+    async (searchValue: string) => {
+      try {
+        const requestFilter = filter && typeof filter === "object" ? filter : {}
 
-      const searchFilter =
-        searchValue && searchValue.length > 0
-          ? {
-              $or: [
-                {
-                  name: {
-                    $regex: searchValue,
+        const searchFilter =
+          searchValue && searchValue.length > 0
+            ? {
+                $or: [
+                  {
+                    name: {
+                      $regex: searchValue,
+                    },
                   },
-                },
-                {
-                  summary: {
-                    $regex: searchValue,
+                  {
+                    summary: {
+                      $regex: searchValue,
+                    },
                   },
-                },
-              ],
-            }
-          : {}
+                ],
+              }
+            : {}
 
-      const query = {
-        $and: [requestFilter, searchFilter],
+        const query = {
+          $and: [requestFilter, searchFilter],
+        }
+
+        const datastore = await openDatastore(schemaUrl, undefined)
+        const result = await datastore?.getMany(query, undefined)
+
+        return result
+      } catch (err) {
+        // TODO: Use custom logger and remove this eslint by-pass
+        // eslint-disable-next-line no-console
+        console.log("error", err)
       }
-
-      const datastore = await openDatastore(schemaUrl, undefined)
-      const result = await datastore?.getMany(query, undefined)
-
-      return result
-    } catch (err) {
-      console.log("error", err)
-    }
-  }
+    },
+    [filter, openDatastore, schemaUrl]
+  )
 
   useEffect(() => {
     fetchData("")
-  }, [])
+  }, [fetchData])
 
   const { data, isPending } = useQuery({
     queryKey: ["requestedData", searchValue, did, schemaUrl],

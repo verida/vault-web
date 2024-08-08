@@ -8,6 +8,9 @@ import { Valid } from "../icons/valid"
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar"
 import { Card } from "../ui/card"
 
+// TODO: Use custom logger and remove this eslint by-pass
+/* eslint-disable no-console */
+
 type CredentialItemProps = {
   logo?: string
   title?: string

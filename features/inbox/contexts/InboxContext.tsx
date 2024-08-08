@@ -23,20 +23,23 @@ export const InboxProvider: React.FunctionComponent<InboxProviderProps> = ({
   const latestNotificationRef = useRef<any>(null)
 
   const onMessage = useThrottledCallback(
-    useCallback(async function onMessage(newMessage: any) {
-      // TODO: Validate the message with zod, so it is properly typed
-      if (
-        !newMessage ||
-        // Duplicated message, just ignore
-        latestNotificationRef.current?._id === newMessage?._id
-      ) {
-        return
-      }
+    useCallback(
+      async function onMessage(newMessage: any) {
+        // TODO: Validate the message with zod, so it is properly typed
+        if (
+          !newMessage ||
+          // Duplicated message, just ignore
+          latestNotificationRef.current?._id === newMessage?._id
+        ) {
+          return
+        }
 
-      queryClient.invalidateQueries({ queryKey: ["inbox"] })
+        queryClient.invalidateQueries({ queryKey: ["inbox"] })
 
-      latestNotificationRef.current = newMessage
-    }, []),
+        latestNotificationRef.current = newMessage
+      },
+      [queryClient]
+    ),
     500
   )
 
@@ -56,7 +59,7 @@ export const InboxProvider: React.FunctionComponent<InboxProviderProps> = ({
     }
 
     init()
-  }, [webUserInstanceRef, isConnected, queryClient])
+  }, [webUserInstanceRef, isConnected, queryClient, onMessage])
 
   const contextValue: InboxContextType = useMemo(() => {
     return { messagingEngine }

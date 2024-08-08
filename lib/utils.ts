@@ -11,7 +11,6 @@ export function formatDate(date: Date | string) {
 
   const diff = now.getTime() - inputDate.getTime()
   const diffMinutes = Math.floor(diff / 1000 / 60)
-  const diffHours = Math.floor(diff / 1000 / 60 / 60)
 
   const isToday = now.toDateString() === inputDate.toDateString()
   const isYesterday =

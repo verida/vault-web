@@ -7,3 +7,4 @@ patches
 
 # This file as an eslint issue for now
 next.config.mjs
+postcss.config.js

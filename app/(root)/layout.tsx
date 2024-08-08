@@ -10,7 +10,6 @@ import { useVerida } from "@/features/verida"
 
 const AppLayout = ({
   children,
-  sheet,
 }: {
   children: React.ReactNode
   sheet: React.ReactNode
@@ -27,7 +26,7 @@ const AppLayout = ({
       setRedirectPath(redirectUrl)
       router.push("/")
     }
-  }, [isConnected, router])
+  }, [isConnected, router, setRedirectPath, pathName])
 
   if (!isConnected) return null
 

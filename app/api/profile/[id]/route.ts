@@ -2,6 +2,9 @@ import { NextResponse } from "next/server"
 
 import { getPublicProfile } from "@/features/profiles"
 
+// TODO: Use custom logger and remove this eslint by-pass
+/* eslint-disable no-console */
+
 /**
  * TODO: Function get public profile
  */

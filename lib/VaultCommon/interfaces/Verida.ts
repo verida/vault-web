@@ -94,7 +94,7 @@ export interface MessageSendConfig {
 export interface Datastore {
   save: (payload: any) => Document
   get: (key: string, options?: any) => Document
-  delete: (key: string) => {}
+  delete: (key: string) => void
   getMany: (filter: any, options?: any) => Document[]
   getDb: () => Database
   errors: []
@@ -103,7 +103,7 @@ export interface Datastore {
 export interface Database {
   save: (payload: any) => Document
   get: (key: string, options?: any) => Document
-  delete: (key: string) => {}
+  delete: (key: string) => void
   getMany: (filter: any, options?: any) => Document[]
   getInstance: () => any
   errors: []

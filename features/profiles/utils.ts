@@ -1,10 +1,8 @@
 import { Client } from "@verida/client-ts"
 import { explodeDID } from "@verida/helpers"
 import { AccountNodeDIDClientConfig, EnvironmentType } from "@verida/types"
-import { isEqual } from "lodash"
 
 import { PublicProfile } from "./@types"
-import { getProfilesCache } from "./cache"
 
 export const VERIDA_DID_REGEXP =
   /did:vda:(devnet|mainnet|testnet):0x[0-9a-fA-F]{40}/
@@ -32,7 +30,8 @@ export function getNetworkFromDID(did: string): EnvironmentType {
 }
 
 export function getDidClientConfigForNetwork(
-  network: EnvironmentType
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  _network: EnvironmentType
 ): AccountNodeDIDClientConfig {
   const rpcUrl =
     "https://polygon-mainnet.g.alchemy.com/v2/CJgbQjPD-NUTcZNMf4jt-mwb-xOQMq6e"
@@ -61,9 +60,6 @@ export function getDidClientConfigForNetwork(
     rpcUrl,
   }
 }
-
-let client: any
-let currentConfig: any
 
 export async function getPublicProfileDatastore(
   did: string,

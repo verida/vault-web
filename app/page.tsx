@@ -45,7 +45,7 @@ const Homepage = () => {
     if (isConnected) {
       router.push(redirectPath !== "/" ? redirectPath : "/data")
     }
-  }, [isConnected])
+  }, [isConnected, redirectPath, router])
 
   if (!isConnected && !isConnecting) {
     return (
