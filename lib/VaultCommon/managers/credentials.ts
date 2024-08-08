@@ -37,4 +37,4 @@ export class CredentialsManager {
 }
 */
 
-export {}
+export {};

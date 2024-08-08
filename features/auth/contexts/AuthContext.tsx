@@ -1,5 +1,5 @@
 // context/AuthContext.js
-import { createContext, PropsWithChildren, useState } from "react";
+import { PropsWithChildren, createContext, useState } from "react";
 
 type AuthContextType = {
   redirectPath: string;

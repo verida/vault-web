@@ -1,4 +1,4 @@
-import { cva, type VariantProps } from "class-variance-authority";
+import { type VariantProps, cva } from "class-variance-authority";
 import React from "react";
 
 import { cn } from "@/lib/utils";
@@ -11,11 +11,11 @@ const typographyVariants = cva("", {
       "heading-3": "text-heading-3 sm:text-desktop-heading-3",
       "heading-4": "text-heading-4 sm:text-desktop-heading-4",
       "heading-5": "text-heading-5 sm:text-desktop-heading-5",
-      "base-regular": "text-base-regular sm:text-desktop-base-regular",
-      "base-semibold": "text-base-semibold sm:text-desktop-base-semibold",
-      "base-l": "text-base-l sm:text-desktop-base-l",
-      "base-s-regular": "text-base-s-regular sm:text-desktop-base-s-regular",
-      "base-s-semibold": "text-base-s-semibold sm:text-desktop-base-s-semibold",
+      "base-regular": "sm:text-desktop-base-regular text-base-regular",
+      "base-semibold": "sm:text-desktop-base-semibold text-base-semibold",
+      "base-l": "sm:text-desktop-base-l text-base-l",
+      "base-s-regular": "sm:text-desktop-base-s-regular text-base-s-regular",
+      "base-s-semibold": "sm:text-desktop-base-s-semibold text-base-s-semibold",
     },
     component: {
       h1: "",

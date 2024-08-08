@@ -1,5 +1,5 @@
 import { Slot } from "@radix-ui/react-slot";
-import { cva, type VariantProps } from "class-variance-authority";
+import { type VariantProps, cva } from "class-variance-authority";
 import * as React from "react";
 
 import { cn } from "@/lib/utils";
@@ -10,7 +10,7 @@ const buttonLinkVariants = cva(
     variants: {
       variant: {
         primary:
-          "text-primary-button-foreground bg-primary-button hover:bg-primary-button-hover disabled:bg-primary-button/50",
+          "bg-primary-button text-primary-button-foreground hover:bg-primary-button-hover disabled:bg-primary-button/50",
         secondary:
           "border border-border bg-secondary-button text-primary-foreground hover:bg-secondary-button-hover disabled:text-secondary-foreground",
       },
