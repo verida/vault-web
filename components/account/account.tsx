@@ -43,9 +43,9 @@ const Account = () => {
 
   const onCopyDid = () => {
     if (did) {
-      window.navigator.clipboard.writeText(did);
+      window.navigator.clipboard.writeText(did)
     }
-  };
+  }
 
   return !isConnected ? (
     <div className="flex w-full items-center justify-between space-x-4 md:block md:w-auto">
