@@ -2,16 +2,6 @@
 // import { config } from 'config'
 // import { LogLevel, Sentry } from 'features/telemetry'
 
-const levelOrder = ["error", "warn", "info", "debug"];
-// const currentLogLevelIndex = levelOrder.indexOf(config.logLevel)
-
-const sentryLevelMapping = {
-  error: "error",
-  warn: "warning",
-  info: "info",
-  debug: "debug",
-} as const;
-
 /**
  * Custom logger to use the console and/or add a breadcrumb to Sentry.
  *
@@ -24,7 +14,7 @@ const sentryLevelMapping = {
  * For `logger.error`, the error will be captured with `Sentry.captureException`.
  */
 export class Logger {
-  private readonly category: string;
+  private readonly category: string
 
   /**
    * Creates a new instance of the logger.
@@ -32,11 +22,11 @@ export class Logger {
    * @param category Used to prefix the message in the console. For instance, set "Polygon ID" for everything related to Polygon ID. Note, the category is also pass into the Sentry breadcrumb, so avoid filename and/or function names, stay high level, by feature.
    */
   constructor(category: string) {
-    this.category = category;
+    this.category = category
   }
 
   private formatMessage(message: string) {
-    return `${new Date().toISOString()} - [${this.category}] ${message}`;
+    return `${new Date().toISOString()} - [${this.category}] ${message}`
   }
 
   private log(
@@ -60,20 +50,20 @@ export class Logger {
 
     if (process.env.NODE_ENV === "production") {
       // Skip `console` if not in dev mode
-      return;
+      return
     }
 
-    const formattedMessage = this.formatMessage(message);
+    const formattedMessage = this.formatMessage(message)
 
-    const extra = [];
-    if (data) extra.push(data);
+    const extra = []
+    if (data) extra.push(data)
 
     // eslint-disable-next-line no-console
-    console.log(formattedMessage, ...extra);
+    console.log(formattedMessage, ...extra)
 
     if (error instanceof Error && error.stack) {
       // eslint-disable-next-line no-console
-      console.log(error.stack);
+      console.log(error.stack)
     }
 
     if (error instanceof Error && error.cause) {
@@ -82,11 +72,11 @@ export class Logger {
         `Caused by: ${error.cause instanceof Error ? error.cause.message : ""}`,
         undefined,
         error.cause
-      );
+      )
     }
   }
 
-  public error(error: Error | unknown, sentryCaptureContext?: any) {
+  public error(error: Error | unknown) {
     // if (config.sentry.enabled) {
     //   Sentry.captureException(error, {
     //     ...sentryCaptureContext,
@@ -105,18 +95,18 @@ export class Logger {
       error instanceof Error ? error.message : "",
       undefined,
       error
-    );
+    )
   }
 
   public warn(message: string, data?: Record<string, unknown>) {
-    this.log("warn", message, data);
+    this.log("warn", message, data)
   }
 
   public info(message: string, data?: Record<string, unknown>) {
-    this.log("info", message, data);
+    this.log("info", message, data)
   }
 
   public debug(message: string, data?: Record<string, unknown>) {
-    this.log("debug", message, data);
+    this.log("debug", message, data)
   }
 }

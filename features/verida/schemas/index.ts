@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from "zod"
 
 export const VeridaBaseRecordSchema = z
   .object({
@@ -9,7 +9,7 @@ export const VeridaBaseRecordSchema = z
     insertedAt: z.string().datetime(),
     modifiedAt: z.string().datetime(),
   })
-  .passthrough();
+  .passthrough()
 
 export const VerifiableCredentialBaseSchema = z
   .object({
@@ -21,4 +21,4 @@ export const VerifiableCredentialBaseSchema = z
     credentialSubject: z.unknown(),
     type: z.array(z.string()),
   })
-  .passthrough();
+  .passthrough()

@@ -1,12 +1,12 @@
 export enum InboxType {
-  DATA_SEND = 'inbox/type/dataSend',
-  DATA_REQUEST = 'inbox/type/dataRequest',
-  DATASTORE_SYNC = 'inbox/type/datastoreSync',
-  MESSAGE = 'inbox/type/message',
+  DATA_SEND = "inbox/type/dataSend",
+  DATA_REQUEST = "inbox/type/dataRequest",
+  DATASTORE_SYNC = "inbox/type/datastoreSync",
+  MESSAGE = "inbox/type/message",
 }
 
 export interface Inbox {
-  save: (data: InboxEntry) => {}
+  save: (data: InboxEntry) => void
   errors: any[]
 }
 

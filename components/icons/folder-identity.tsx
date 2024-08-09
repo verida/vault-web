@@ -1,4 +1,4 @@
-import { SVGProps } from "react";
+import { SVGProps } from "react"
 
 interface Props extends SVGProps<SVGSVGElement> {}
 
@@ -31,6 +31,6 @@ const FolderIdentity = (props: Props) => (
       <path d="M8 33H25" stroke="white" strokeWidth={3} strokeLinecap="round" />
     </g>
   </svg>
-);
+)
 
-export { FolderIdentity };
+export { FolderIdentity }

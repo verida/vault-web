@@ -1,23 +1,26 @@
-import Image from "next/image";
-import Link from "next/link";
-import React from "react";
+import Image from "next/image"
+import Link from "next/link"
+import React from "react"
 
-import { getPublicProfile } from "@/features/profiles";
+import { getPublicProfile } from "@/features/profiles"
 
-import { Valid } from "../icons/valid";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { Card } from "../ui/card";
+import { Valid } from "../icons/valid"
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar"
+import { Card } from "../ui/card"
+
+// TODO: Use custom logger and remove this eslint by-pass
+/* eslint-disable no-console */
 
 type CredentialItemProps = {
-  logo?: string;
-  title?: string;
-  source?: string;
-  date?: number;
-  status?: "valid" | "invalid" | "expired"; // TODO define credential status
-  href?: string;
-  credential?: any;
-  fallbackAvatar?: string;
-};
+  logo?: string
+  title?: string
+  source?: string
+  date?: number
+  status?: "valid" | "invalid" | "expired" // TODO define credential status
+  href?: string
+  credential?: any
+  fallbackAvatar?: string
+}
 
 function CredentialItem({
   // logo,
@@ -29,37 +32,37 @@ function CredentialItem({
   status,
   href,
 }: CredentialItemProps) {
-  const [issuer, setIssuer] = React.useState<any>({});
+  const [issuer, setIssuer] = React.useState<any>({})
 
   React.useEffect(() => {
     function parseJwt(token: string) {
-      const base64Url = token.split(".")[1];
-      const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+      const base64Url = token.split(".")[1]
+      const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/")
       const jsonPayload = decodeURIComponent(
         window
           .atob(base64)
           .split("")
           .map(function (c) {
-            return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+            return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2)
           })
           .join("")
-      );
-      console.log("parseJwt", JSON.parse(jsonPayload));
-      return JSON.parse(jsonPayload);
+      )
+      console.log("parseJwt", JSON.parse(jsonPayload))
+      return JSON.parse(jsonPayload)
     }
 
     async function fetchIssuerProfile(did: string) {
       // TODO: make the call to API work so we have a server cache for public profiles
       // const res = await fetch('/api/profile/' + dat.iss)
       // console.log('profile', await res.json())
-      console.log("load profile", did);
-      const profile = await getPublicProfile(did);
-      console.log("Profile:", profile);
-      setIssuer(profile);
+      console.log("load profile", did)
+      const profile = await getPublicProfile(did)
+      console.log("Profile:", profile)
+      setIssuer(profile)
     }
 
-    credential && fetchIssuerProfile(parseJwt(credential)?.iss);
-  }, [credential]);
+    credential && fetchIssuerProfile(parseJwt(credential)?.iss)
+  }, [credential])
 
   return (
     <Link href={href || "#"}>
@@ -100,7 +103,7 @@ function CredentialItem({
         </div>
       </Card>
     </Link>
-  );
+  )
 }
 
-export { CredentialItem };
+export { CredentialItem }

@@ -1,9 +1,9 @@
-import { useInbox } from "@/features/inbox/hooks";
+import { useInbox } from "@/features/inbox/hooks"
 
-import { Inbox } from "./inbox";
+import { Inbox } from "./inbox"
 
 export const InboxWithBadge = () => {
-  const { unreadMessageCount } = useInbox();
+  const { unreadMessageCount } = useInbox()
   return (
     <div className="relative">
       <Inbox />
@@ -13,5 +13,5 @@ export const InboxWithBadge = () => {
         </div>
       )}
     </div>
-  );
-};
+  )
+}

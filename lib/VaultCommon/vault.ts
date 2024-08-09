@@ -1,6 +1,6 @@
-import { DataManager } from './managers/data'
-import { InboxManager } from './managers/inbox'
-import { SyncManager } from './managers/sync'
+import { DataManager } from "./managers/data"
+import { InboxManager } from "./managers/inbox"
+import { SyncManager } from "./managers/sync"
 
 export default class VaultCommon {
   // client-ts/Client

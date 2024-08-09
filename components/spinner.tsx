@@ -1,8 +1,6 @@
-import Image from "next/image";
-
 interface SpinnerProps {
-  width?: number;
-  height?: number;
+  width?: number
+  height?: number
 }
 
 export const Spinner: React.FC<SpinnerProps> = ({
@@ -31,5 +29,5 @@ export const Spinner: React.FC<SpinnerProps> = ({
         </defs>
       </svg>
     </>
-  );
-};
+  )
+}

@@ -1,7 +1,7 @@
-import Link from "next/link";
+import Link from "next/link"
 
-import { Logo } from "@/components/logo";
-import { veridaLandingSocials } from "@/config/platform";
+import { Logo } from "@/components/logo"
+import { veridaLandingSocials } from "@/config/platform"
 
 export const Navbar = () => {
   return (
@@ -16,5 +16,5 @@ export const Navbar = () => {
         ))}
       </div>
     </div>
-  );
-};
+  )
+}

@@ -1,4 +1,4 @@
-import { SVGProps } from "react";
+import { SVGProps } from "react"
 
 interface Props extends SVGProps<SVGSVGElement> {}
 
@@ -52,6 +52,6 @@ const VLogo = (props: Props) => (
       fill="#37D5C7"
     />
   </svg>
-);
+)
 
-export { VLogo };
+export { VLogo }

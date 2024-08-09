@@ -1,28 +1,28 @@
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useEffect, useState } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react"
+import { useEffect, useState } from "react"
 
-import { usePagination } from "@/hooks/usePagination";
-import { cn } from "@/lib/utils";
+import { usePagination } from "@/hooks/usePagination"
+import { cn } from "@/lib/utils"
 
-import { Typography } from "../typography";
+import { Typography } from "../typography"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "./select";
+} from "./select"
 
 interface TablePaginationProps {
-  totalItems: number;
-  onChange: (offset: number, limit: number) => void;
+  totalItems: number
+  onChange: (offset: number, limit: number) => void
 }
 
 export const TablePagination: React.FC<TablePaginationProps> = ({
   totalItems = 0,
   onChange,
 }) => {
-  const [currentLimit, setCurrentLimit] = useState<number>(10);
+  const [currentLimit, setCurrentLimit] = useState<number>(10)
   const {
     page,
     offset,
@@ -33,11 +33,11 @@ export const TablePagination: React.FC<TablePaginationProps> = ({
     setCurrentPage,
     nextPage,
     prevPage,
-  } = usePagination(0, currentLimit, totalItems);
+  } = usePagination(0, currentLimit, totalItems)
 
   useEffect(() => {
-    onChange(offset, limit);
-  }, [offset, limit, onChange]);
+    onChange(offset, limit)
+  }, [offset, limit, onChange])
 
   return (
     <div className="flex w-full items-center justify-center md:justify-between">
@@ -100,5 +100,5 @@ export const TablePagination: React.FC<TablePaginationProps> = ({
         </div>
       </div>
     </div>
-  );
-};
+  )
+}

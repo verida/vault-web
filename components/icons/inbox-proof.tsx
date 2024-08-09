@@ -1,4 +1,4 @@
-import { SVGProps } from "react";
+import { SVGProps } from "react"
 
 interface Props extends SVGProps<SVGSVGElement> {}
 
@@ -21,6 +21,6 @@ const InboxProof = (props: Props) => (
       fill="white"
     />
   </svg>
-);
+)
 
-export { InboxProof };
+export { InboxProof }

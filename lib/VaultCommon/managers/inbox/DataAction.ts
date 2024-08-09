@@ -1,6 +1,6 @@
-import { InboxEntry } from '../../interfaces/inbox/Inbox'
-import { Messaging } from '../../interfaces/Verida'
-import Vault from '../../vault'
+import { Messaging } from "../../interfaces/Verida"
+import { InboxEntry } from "../../interfaces/inbox/Inbox"
+import Vault from "../../vault"
 
 export abstract class DataAction {
   protected readonly vaultCommon: Vault

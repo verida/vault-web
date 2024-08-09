@@ -1,1 +1,1 @@
-export * from "./useInbox";
+export * from "./useInbox"

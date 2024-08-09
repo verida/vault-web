@@ -1,30 +1,30 @@
-"use client";
+"use client"
 
-import { useMemo, useState } from "react";
+import { useMemo, useState } from "react"
 
-import { ConnectionCard } from "@/components/connection/connection-card";
-import { ConnectionModal } from "@/components/connection/connection-modal";
-import { FilterButton } from "@/components/filter-button";
-import { SearchInput } from "@/components/search-input";
-import { connections } from "@/features/connections";
+import { ConnectionCard } from "@/components/connection/connection-card"
+import { ConnectionModal } from "@/components/connection/connection-modal"
+import { FilterButton } from "@/components/filter-button"
+import { SearchInput } from "@/components/search-input"
+import { connections } from "@/features/connections"
 
 const MarketingPage = () => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [connectionId, setConnectionId] = useState<string>("");
-  const [searchKey, setSearchKey] = useState<string>("");
+  const [isOpen, setIsOpen] = useState<boolean>(false)
+  const [connectionId, setConnectionId] = useState<string>("")
+  const [searchKey, setSearchKey] = useState<string>("")
 
   const handleOpenConnectionModal = (id: string) => {
-    setIsOpen(true);
-    setConnectionId(id);
-  };
+    setIsOpen(true)
+    setConnectionId(id)
+  }
 
   const handleCloseConnectionModal = () => {
-    setIsOpen(false);
-  };
+    setIsOpen(false)
+  }
 
   const handleSearchInputChange = (value: string) => {
-    setSearchKey(value);
-  };
+    setSearchKey(value)
+  }
 
   const searchedConnections = useMemo(
     () =>
@@ -32,7 +32,7 @@ const MarketingPage = () => {
         c.id.toLocaleLowerCase().includes(searchKey.toLowerCase())
       ),
     [searchKey]
-  );
+  )
 
   return (
     <div className="flex flex-col py-10">
@@ -60,7 +60,7 @@ const MarketingPage = () => {
         connectionId={connectionId}
       />
     </div>
-  );
-};
+  )
+}
 
-export default MarketingPage;
+export default MarketingPage

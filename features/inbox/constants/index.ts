@@ -1,1 +1,1 @@
-export * from "./inbox-type";
+export * from "./inbox-type"

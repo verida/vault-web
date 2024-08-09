@@ -1,18 +1,18 @@
-import { Connection } from "@/features/connections";
-import { cn } from "@/lib/utils";
+import { Connection } from "@/features/connections"
+import { cn } from "@/lib/utils"
 
-import { Typography } from "../typography";
-import { Button } from "../ui/button";
-import { Card, CardContent, CardFooter, CardHeader } from "../ui/card";
-import { Switch } from "../ui/switch";
+import { Typography } from "../typography"
+import { Button } from "../ui/button"
+import { Card, CardContent, CardFooter, CardHeader } from "../ui/card"
+import { Switch } from "../ui/switch"
 
 type Props = {
-  onConnect: () => void;
-  isConnected?: boolean;
-} & Connection;
+  onConnect: () => void
+  isConnected?: boolean
+} & Connection
 
 function ConnectionCard(props: Props) {
-  const { id, item, description, onConnect, isConnected = false } = props;
+  const { id, description, onConnect, isConnected = false } = props
 
   return (
     <div className="flex h-full flex-col">
@@ -74,7 +74,7 @@ function ConnectionCard(props: Props) {
         )}
       </Card>
     </div>
-  );
+  )
 }
 
-export { ConnectionCard };
+export { ConnectionCard }

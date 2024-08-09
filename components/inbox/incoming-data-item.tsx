@@ -1,14 +1,14 @@
-import Image from "next/image";
+import Image from "next/image"
 
-import { Typography } from "../typography";
+import { Typography } from "../typography"
 
 interface IncomingDataItemProps {
-  item: Record<string, any>;
+  item: Record<string, any>
 }
 
 export const IncomingDataItem: React.FC<IncomingDataItemProps> = ({ item }) => {
   return (
-    <div className="bg-secondary-activity-sending space-y-2 rounded-sm p-4">
+    <div className="space-y-2 rounded-sm bg-secondary-activity-sending p-4">
       <div className="flex items-center gap-2">
         <Image
           src={item.icon || ""}
@@ -20,5 +20,5 @@ export const IncomingDataItem: React.FC<IncomingDataItemProps> = ({ item }) => {
       </div>
       <Typography variant="base-s-regular">{item.summary}</Typography>
     </div>
-  );
-};
+  )
+}

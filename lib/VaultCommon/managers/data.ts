@@ -1,7 +1,7 @@
-import { dataFolders } from 'features/data'
+import { dataFolders } from "@/features/data"
 
-import VaultCommon from '../vault'
-import Folder from './data/folder'
+import VaultCommon from "../vault"
+import Folder from "./data/folder"
 
 export class DataManager {
   private vaultCommon: VaultCommon
@@ -17,7 +17,7 @@ export class DataManager {
     )
 
     if (!folderDefinition) {
-      throw new Error('Invalid folder specified: ' + folderName)
+      throw new Error("Invalid folder specified: " + folderName)
     }
 
     this.closeFolder()
@@ -29,7 +29,7 @@ export class DataManager {
 
   public folder() {
     if (!this.currentFolder) {
-      throw new Error('No folder selected')
+      throw new Error("No folder selected")
     }
 
     return this.currentFolder

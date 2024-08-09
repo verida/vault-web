@@ -1,23 +1,24 @@
-import { debounce } from "lodash";
-import React, { useCallback } from "react";
+import { debounce } from "lodash"
+import React, { useCallback } from "react"
 
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils"
 
-import { Search } from "./icons/search";
+import { Search } from "./icons/search"
 
 type SearchInputProps = {
-  onValueChange?: React.Dispatch<string>;
-} & React.InputHTMLAttributes<HTMLInputElement>;
+  onValueChange?: React.Dispatch<string>
+} & React.InputHTMLAttributes<HTMLInputElement>
 
 function SearchInput({ onValueChange, className, ...props }: SearchInputProps) {
   const debounceChangeHandler = useCallback(
-    debounce(
-      (e: React.ChangeEvent<HTMLInputElement>) =>
-        onValueChange && onValueChange(e.target?.value),
-      300
-    ),
-    [onValueChange, debounce]
-  );
+    () =>
+      debounce(
+        (e: React.ChangeEvent<HTMLInputElement>) =>
+          onValueChange && onValueChange(e.target?.value),
+        300
+      ),
+    [onValueChange]
+  )
 
   return (
     <div
@@ -34,7 +35,7 @@ function SearchInput({ onValueChange, className, ...props }: SearchInputProps) {
         onChange={debounceChangeHandler}
       />
     </div>
-  );
+  )
 }
 
-export { SearchInput };
+export { SearchInput }

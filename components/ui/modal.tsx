@@ -1,19 +1,19 @@
-"use client";
+"use client"
 
-import * as React from "react";
+import * as React from "react"
 
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils"
 
-import { Close } from "../icons/close";
+import { Close } from "../icons/close"
 
 const Modal = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement> & {
-    isOpen: boolean;
-    onClose: () => void;
+    isOpen: boolean
+    onClose: () => void
   }
 >(({ className, isOpen, onClose, ...props }, ref) => {
-  if (!isOpen) return null;
+  if (!isOpen) return null
 
   return (
     <div className="z-[100]">
@@ -31,9 +31,9 @@ const Modal = React.forwardRef<
         </div>
       </div>
     </div>
-  );
-});
+  )
+})
 
-Modal.displayName = "Modal";
+Modal.displayName = "Modal"
 
-export { Modal };
+export { Modal }

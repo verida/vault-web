@@ -1,96 +1,100 @@
-"use client";
+"use client"
 
-import { IDatabase } from "@verida/types";
-import Image from "next/image";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import React from "react";
+import Image from "next/image"
+import { usePathname, useRouter, useSearchParams } from "next/navigation"
+import React from "react"
 
-import { Category } from "@/components/category/category";
-import { CredentialItem } from "@/components/credential/credential-item";
-import { ArrowLeft } from "@/components/icons/arrow-left";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import { Drawer, DrawerContent, DrawerHeader } from "@/components/ui/drawer";
-import { Skeleton } from "@/components/ui/skeleton";
-import { DataFolderDefinition, dataFolders } from "@/features/data";
-import { getPublicProfile } from "@/features/profiles";
-import { useVerida } from "@/features/verida";
+import { Category } from "@/components/category/category"
+import { CredentialItem } from "@/components/credential/credential-item"
+import { ArrowLeft } from "@/components/icons/arrow-left"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Button } from "@/components/ui/button"
+import { Drawer, DrawerContent, DrawerHeader } from "@/components/ui/drawer"
+import { Skeleton } from "@/components/ui/skeleton"
+import { DataFolderDefinition, dataFolders } from "@/features/data"
+import { getPublicProfile } from "@/features/profiles"
+import { PublicProfile } from "@/features/profiles/@types"
+import { useVerida } from "@/features/verida"
+
+// TODO: Use custom logger and remove this eslint by-pass
+/* eslint-disable no-console */
 
 const FolderPage = ({ params }: { params: { folder: string[] } }) => {
-  const router = useRouter();
-  const [db, setDB] = React.useState<IDatabase | undefined>();
-  const [loading, setLoading] = React.useState(true);
-  const { webUserInstanceRef, isConnected, isReady } = useVerida();
-  const [folder, setFolder] = React.useState<DataFolderDefinition>();
-  const [items, setItems] = React.useState<any[]>([]);
-  const pathName = usePathname();
-  const searchParams = useSearchParams();
+  const router = useRouter()
+  const [loading, setLoading] = React.useState(true)
+  const { webUserInstanceRef, isConnected } = useVerida()
+  const [folder, setFolder] = React.useState<DataFolderDefinition>()
+  const [items, setItems] = React.useState<any[]>([])
+  const pathName = usePathname()
+  const searchParams = useSearchParams()
 
-  const itemId = searchParams.get("id");
-  const selectedItem = items?.find((it) => it._id === itemId);
+  const itemId = searchParams.get("id")
+  const selectedItem = items?.find((it) => it._id === itemId)
 
   React.useEffect(() => {
     const fetchData = async () => {
       try {
-        const folderName = params.folder.join("/");
-        const folder = dataFolders.find((folder) => folder.name === folderName);
-        setFolder(folder);
-        console.log("folderMName", folderName, folder!.database);
+        const folderName = params.folder.join("/")
+        const folder = dataFolders.find((folder) => folder.name === folderName)
+        setFolder(folder)
+        console.log("folderMName", folderName, folder!.database)
         if (folder?.database) {
           const db = await webUserInstanceRef.current?.openDatabase(
             folder!.database
-          );
+          )
 
-          setLoading(true);
+          setLoading(true)
           // TODO: Add stronger typing
-          const fetchedItems = await db?.getMany(null, null);
+          const fetchedItems = await db?.getMany(null, null)
 
-          setItems(fetchedItems);
+          setItems(fetchedItems)
 
-          console.log("fetchedItems", JSON.stringify(fetchedItems, null, 2));
+          console.log("fetchedItems", JSON.stringify(fetchedItems, null, 2))
         }
       } catch (error) {
-        console.error(error);
+        console.error(error)
       } finally {
-        setLoading(false);
+        setLoading(false)
       }
-    };
+    }
 
-    isConnected && fetchData();
-  }, [params.folder, webUserInstanceRef, isConnected]);
+    isConnected && fetchData()
+  }, [params.folder, webUserInstanceRef, isConnected])
 
-  console.log("Selected item", JSON.stringify(selectedItem, null, 2));
+  console.log("Selected item", JSON.stringify(selectedItem, null, 2))
 
-  const [issuer, setIssuer] = React.useState({});
+  const [issuer, setIssuer] = React.useState<PublicProfile>({
+    name: "",
+  })
 
   React.useEffect(() => {
     function parseJwt(token: string) {
-      const base64Url = token.split(".")[1];
-      const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+      const base64Url = token.split(".")[1]
+      const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/")
       const jsonPayload = decodeURIComponent(
         window
           .atob(base64)
           .split("")
           .map(function (c) {
-            return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+            return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2)
           })
           .join("")
-      );
-      console.log("parseJwt", JSON.parse(jsonPayload));
-      return JSON.parse(jsonPayload);
+      )
+      console.log("parseJwt", JSON.parse(jsonPayload))
+      return JSON.parse(jsonPayload)
     }
 
     async function fetchIssuerProfile(did: string) {
       // TODO: make the call to API work so we have a server cache for public profiles
       // const res = await fetch('/api/profile/' + dat.iss)
       // console.log('profile', await res.json())
-      const profile = await getPublicProfile(did);
-      setIssuer(profile);
+      const profile = await getPublicProfile(did)
+      setIssuer(profile)
     }
 
     selectedItem?.didJwtVc &&
-      fetchIssuerProfile(parseJwt(selectedItem.didJwtVc)?.iss);
-  }, [selectedItem]);
+      fetchIssuerProfile(parseJwt(selectedItem.didJwtVc)?.iss)
+  }, [selectedItem])
 
   return (
     <div className="flex-col">
@@ -141,7 +145,7 @@ const FolderPage = ({ params }: { params: { folder: string[] } }) => {
           {folder?.folders.map((folderName) => {
             const nestedFolder = dataFolders.find(
               (folder) => folder.name === folderName
-            );
+            )
             return nestedFolder ? (
               <Category
                 key={nestedFolder.name}
@@ -150,7 +154,7 @@ const FolderPage = ({ params }: { params: { folder: string[] } }) => {
                 title={nestedFolder.title}
                 description="0 items"
               />
-            ) : null;
+            ) : null
           })}
         </div>
       ) : null}
@@ -159,7 +163,7 @@ const FolderPage = ({ params }: { params: { folder: string[] } }) => {
         direction="right"
         open={Boolean(itemId)}
         onClose={() => {
-          router.push(pathName);
+          router.push(pathName)
         }}
       >
         <DrawerContent>
@@ -201,7 +205,7 @@ const FolderPage = ({ params }: { params: { folder: string[] } }) => {
                     className="flex justify-between gap-4 px-4 py-4"
                   >
                     <p className="text-muted-foreground">{entry[0]}</p>
-                    <p>{entry[1]}</p>
+                    <p>{String(entry[1])}</p>
                   </div>
                 ))
               ) : (
@@ -221,7 +225,7 @@ const FolderPage = ({ params }: { params: { folder: string[] } }) => {
         </DrawerContent>
       </Drawer>
     </div>
-  );
-};
+  )
+}
 
-export default FolderPage;
+export default FolderPage

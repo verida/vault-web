@@ -1,23 +1,23 @@
-import { useMemo } from "react";
+import { useMemo } from "react"
 
-import { connections } from "@/features/connections";
+import { connections } from "@/features/connections"
 
-import { VLogo } from "../icons/logo";
-import { Switch } from "../icons/switch";
-import { Typography } from "../typography";
-import { Button } from "../ui/button";
-import { Modal } from "../ui/modal";
+import { VLogo } from "../icons/logo"
+import { Switch } from "../icons/switch"
+import { Typography } from "../typography"
+import { Button } from "../ui/button"
+import { Modal } from "../ui/modal"
 
 type Props = {
-  isOpen: boolean;
-  onClose: () => void;
-  connectionId: string;
-} & React.PropsWithChildren;
+  isOpen: boolean
+  onClose: () => void
+  connectionId: string
+} & React.PropsWithChildren
 
 function ConnectionModal({ connectionId, ...props }: Props) {
   const connection = useMemo(() => {
-    return connections.find((c) => c.id === connectionId);
-  }, [connectionId]);
+    return connections.find((c) => c.id === connectionId)
+  }, [connectionId])
 
   return (
     <Modal {...props}>
@@ -47,7 +47,7 @@ function ConnectionModal({ connectionId, ...props }: Props) {
         Connect
       </Button>
     </Modal>
-  );
+  )
 }
 
-export { ConnectionModal };
+export { ConnectionModal }

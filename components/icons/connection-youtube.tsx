@@ -1,4 +1,4 @@
-import { SVGProps } from "react";
+import { SVGProps } from "react"
 
 interface Props extends SVGProps<SVGSVGElement> {}
 
@@ -29,6 +29,6 @@ const Youtube = (props: Props) => (
       />
     </defs>
   </svg>
-);
+)
 
-export { Youtube };
+export { Youtube }

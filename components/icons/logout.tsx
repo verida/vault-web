@@ -1,4 +1,4 @@
-import { SVGProps } from "react";
+import { SVGProps } from "react"
 
 interface Props extends SVGProps<SVGSVGElement> {}
 
@@ -19,6 +19,6 @@ const Logout = (props: Props) => (
       strokeLinejoin="round"
     />
   </svg>
-);
+)
 
-export { Logout };
+export { Logout }

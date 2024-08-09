@@ -1,59 +1,62 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react"
 
-import Alert from "@/components/alert";
+import Alert from "@/components/alert"
 import {
   ModalSheetBody,
   ModalSheetFooter,
   ModalSheetHeader,
-} from "@/components/common/modal-sheet";
-import { Typography } from "@/components/typography";
-import { Button } from "@/components/ui/button";
-import { ButtonLink } from "@/components/ui/button-link";
-import { useInboxAction } from "@/features/inbox/hooks/useInboxAction";
-import { InboxType } from "@/features/inbox/types";
+} from "@/components/common/modal-sheet"
+import { Typography } from "@/components/typography"
+import { Button } from "@/components/ui/button"
+import { ButtonLink } from "@/components/ui/button-link"
+import { useInboxAction } from "@/features/inbox/hooks/useInboxAction"
+import { InboxType } from "@/features/inbox/types"
 
-import { DataRequestItem } from "../data-request-item";
-import { InboxDetailsProps } from "../inbox-details";
-import { InboxStatusText } from "../inbox-status-text";
-import { RequestDataSelector } from "../request-data-selector";
-import { RequesterProfile } from "../requester-profile";
-import { InboxError } from "../status/inbox-error";
-import { InboxLoading } from "../status/inbox-loading";
-import { InboxSuccess } from "../status/inbox-success";
+import { DataRequestItem } from "../data-request-item"
+import { InboxDetailsProps } from "../inbox-details"
+import { InboxStatusText } from "../inbox-status-text"
+import { RequestDataSelector } from "../request-data-selector"
+import { RequesterProfile } from "../requester-profile"
+import { InboxError } from "../status/inbox-error"
+import { InboxLoading } from "../status/inbox-loading"
+import { InboxSuccess } from "../status/inbox-success"
+
+// TODO: Use custom logger and remove this eslint by-pass
+/* eslint-disable no-console */
 
 export const DataRequestDetails: React.FC<InboxDetailsProps> = ({
   message,
   onClose,
 }) => {
-  const { message: title, data, type, sentBy } = message;
-  const { fallbackAction, requestSchema, filter } = data;
+  const { message: title, data, type, sentBy } = message
+  const { fallbackAction, requestSchema, filter } = data
 
-  const [requestSchemaData, setRequestSchemaData] = useState<any>({});
-  const [isSelecting, setIsSelecting] = useState<boolean>(false);
-  const [shared, setShared] = useState<boolean>(false);
+  const [requestSchemaData, setRequestSchemaData] = useState<any>({})
+  const [isSelecting, setIsSelecting] = useState<boolean>(false)
+  const [shared, setShared] = useState<boolean>(false)
   const [selectedItems, setSelectedItems] = useState<any[]>(
     data.requestedData || []
-  );
+  )
 
-  const { handleAccept, handleReject, isLoading, isError } = useInboxAction();
+  const { handleAccept, handleReject, isLoading, isError } = useInboxAction()
 
   const onClickShare = async () => {
     try {
-      setShared(false);
-      await handleAccept(message, InboxType.DATA_REQUEST, selectedItems);
-      setShared(true);
+      setShared(false)
+      await handleAccept(message, InboxType.DATA_REQUEST, selectedItems)
+      setShared(true)
     } catch (err) {
-      console.log(err);
+      console.log(err)
     }
-  };
+  }
 
   const onRemoveChip = (_id: string) => {
-    setSelectedItems((prev) => prev.filter((item) => item._id !== _id));
-  };
+    setSelectedItems((prev) => prev.filter((item) => item._id !== _id))
+  }
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     try {
-      const { requestSchema } = data;
+      const { requestSchema } = data
 
       await fetch(requestSchema)
         .then((res) => res.json())
@@ -61,20 +64,20 @@ export const DataRequestDetails: React.FC<InboxDetailsProps> = ({
           setRequestSchemaData({
             title: res.title,
             description: res.description,
-          });
-        });
+          })
+        })
     } catch (err) {
-      console.log("error", err);
+      console.log("error", err)
     }
-  };
+  }, [data])
 
   const onClickDecline = async () => {
-    await handleReject(message);
-  };
+    await handleReject(message)
+  }
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    fetchData()
+  }, [fetchData])
 
   if (isLoading) {
     return (
@@ -88,7 +91,7 @@ export const DataRequestDetails: React.FC<InboxDetailsProps> = ({
           <InboxLoading title="Sharing..." description="Please wait a moment" />
         </ModalSheetBody>
       </>
-    );
+    )
   }
 
   if (isError) {
@@ -106,7 +109,7 @@ export const DataRequestDetails: React.FC<InboxDetailsProps> = ({
           />
         </ModalSheetBody>
       </>
-    );
+    )
   }
 
   if (shared) {
@@ -135,7 +138,7 @@ export const DataRequestDetails: React.FC<InboxDetailsProps> = ({
           <Button onClick={() => setShared(false)}>Done</Button>
         </ModalSheetFooter>
       </>
-    );
+    )
   }
 
   if (isSelecting) {
@@ -146,11 +149,11 @@ export const DataRequestDetails: React.FC<InboxDetailsProps> = ({
         defaultItems={selectedItems}
         onClose={() => setIsSelecting(false)}
         onConfirm={(items: any[]) => {
-          setSelectedItems(items);
-          setIsSelecting(false);
+          setSelectedItems(items)
+          setIsSelecting(false)
         }}
       />
-    );
+    )
   }
 
   return (
@@ -191,7 +194,7 @@ export const DataRequestDetails: React.FC<InboxDetailsProps> = ({
               variant="base-regular"
               className="text-secondary-foreground"
             >
-              If you don't have the requested data
+              {`If you don't have the requested data`}
             </Typography>
 
             <ButtonLink href={fallbackAction.url}>
@@ -228,5 +231,5 @@ export const DataRequestDetails: React.FC<InboxDetailsProps> = ({
         )}
       </ModalSheetFooter>
     </>
-  );
-};
+  )
+}

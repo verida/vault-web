@@ -1,24 +1,24 @@
-"use client";
+"use client"
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useState } from "react";
+import Link from "next/link"
+import { usePathname } from "next/navigation"
+import { useState } from "react"
 
-import { Account } from "@/components/account/account";
-import { Connection } from "@/components/icons/connection";
-import { Data } from "@/components/icons/data";
-import { Logo } from "@/components/logo";
+import { Account } from "@/components/account/account"
+// import { Connection } from "@/components/icons/connection"
+import { Data } from "@/components/icons/data"
+import { Logo } from "@/components/logo"
 import {
   NavigationMenu,
   NavigationMenuItem,
   NavigationMenuList,
   navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu";
-import { cn } from "@/lib/utils";
+} from "@/components/ui/navigation-menu"
+import { cn } from "@/lib/utils"
 
-import { Close } from "./icons/close";
-import { Hamburger } from "./icons/hamburger";
-import { InboxWithBadge } from "./icons/inbox-with-badge";
+import { Close } from "./icons/close"
+import { Hamburger } from "./icons/hamburger"
+import { InboxWithBadge } from "./icons/inbox-with-badge"
 
 const headerNavs = [
   {
@@ -36,10 +36,10 @@ const headerNavs = [
   //   title: "Connections",
   //   href: "/connections",
   // },
-];
+]
 export const Navbar = () => {
-  const path = usePathname();
-  const [isMenuOpened, setIsMenuOpened] = useState<boolean>(false);
+  const path = usePathname()
+  const [isMenuOpened, setIsMenuOpened] = useState<boolean>(false)
 
   return (
     <div className="lg:mx[108px] fixed top-0 z-20 flex h-[72px] w-full items-center border-b bg-primary px-4">
@@ -119,5 +119,5 @@ export const Navbar = () => {
         </div>
       )}
     </div>
-  );
-};
+  )
+}

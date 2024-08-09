@@ -1,4 +1,4 @@
-import { SVGProps } from "react";
+import { SVGProps } from "react"
 
 interface Props extends SVGProps<SVGSVGElement> {}
 
@@ -19,6 +19,6 @@ const CloseSideRight = (props: Props) => (
     />
     <path d="M19 5V19" stroke="#6B7280" strokeWidth="2" strokeLinecap="round" />
   </svg>
-);
+)
 
-export { CloseSideRight };
+export { CloseSideRight }

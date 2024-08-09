@@ -1,16 +1,16 @@
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils"
 
-import { Filter } from "./icons/filter";
-import { Typography } from "./typography";
-import { Button } from "./ui/button";
+import { Filter } from "./icons/filter"
+import { Typography } from "./typography"
+import { Button } from "./ui/button"
 
 export type FilterButtonProps = Omit<
   React.ComponentPropsWithRef<typeof Button>,
   "variant" | "size"
-> & { applied?: boolean };
+> & { applied?: boolean }
 
 export const FilterButton: React.FC<FilterButtonProps> = (props) => {
-  const { className, applied = false } = props;
+  const { className, applied = false } = props
   return (
     <Button
       variant="secondary"
@@ -27,5 +27,5 @@ export const FilterButton: React.FC<FilterButtonProps> = (props) => {
         Filter
       </Typography>
     </Button>
-  );
-};
+  )
+}

@@ -1,4 +1,4 @@
-import { SVGProps } from "react";
+import { SVGProps } from "react"
 
 interface Props extends SVGProps<SVGSVGElement> {}
 
@@ -16,6 +16,6 @@ const ChevronLeft = (props: Props) => (
       fill="#111111"
     />
   </svg>
-);
+)
 
-export { ChevronLeft };
+export { ChevronLeft }

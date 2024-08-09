@@ -1,21 +1,20 @@
-import "./globals.css";
+import type { Metadata } from "next"
+import { Sora } from "next/font/google"
 
-import type { Metadata } from "next";
-import { Sora } from "next/font/google";
+import "./globals.css"
+import { Providers } from "./providers"
 
-import { Providers } from "./providers";
-
-const sora = Sora({ subsets: ["latin"] });
+const sora = Sora({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
   title: "Verida Vault",
   description: "Verida Vault",
-};
+}
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
@@ -24,5 +23,5 @@ export default function RootLayout({
         <Providers>{children}</Providers>
       </body>
     </html>
-  );
+  )
 }

@@ -1,4 +1,4 @@
-import { SVGProps } from "react";
+import { SVGProps } from "react"
 
 interface Props extends SVGProps<SVGSVGElement> {}
 
@@ -29,6 +29,6 @@ const InboxIncoming = (props: Props) => (
       </clipPath>
     </defs>
   </svg>
-);
+)
 
-export { InboxIncoming };
+export { InboxIncoming }

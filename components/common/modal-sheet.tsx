@@ -1,6 +1,6 @@
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils"
 
-import { CloseSideRight } from "../icons/close-side-right";
+import { CloseSideRight } from "../icons/close-side-right"
 import {
   Drawer,
   DrawerBody,
@@ -9,32 +9,32 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-} from "../ui/drawer";
+} from "../ui/drawer"
 
 interface ModalSheetProps extends React.PropsWithChildren {
-  open: boolean;
-  onClose: () => void;
+  open: boolean
+  onClose: () => void
 }
 
 const ModalSheet: React.FC<ModalSheetProps> = (props) => {
-  const { open, onClose, children } = props;
+  const { open, onClose, children } = props
 
   return (
     <Drawer direction="right" open={open} onClose={onClose}>
       <DrawerTrigger />
       <DrawerContent onClose={onClose}>{children}</DrawerContent>
     </Drawer>
-  );
-};
+  )
+}
 
 interface ModalSheetHeaderProps {
-  title: string;
-  actions: React.ReactNode;
-  onClose: () => void;
+  title: string
+  actions: React.ReactNode
+  onClose: () => void
 }
 
 const ModalSheetHeader: React.FC<ModalSheetHeaderProps> = (props) => {
-  const { title, actions, onClose } = props;
+  const { title, actions, onClose } = props
   return (
     <DrawerHeader className="gap-4 px-6 py-4 text-left">
       <div className="flex w-full items-center justify-between">
@@ -46,11 +46,11 @@ const ModalSheetHeader: React.FC<ModalSheetHeaderProps> = (props) => {
       </div>
       <DrawerTitle className="block md:hidden">{title}</DrawerTitle>
     </DrawerHeader>
-  );
-};
+  )
+}
 
 interface ModalSheetBodyProps extends React.PropsWithChildren {
-  className?: string;
+  className?: string
 }
 
 const ModalSheetBody: React.FC<ModalSheetBodyProps> = ({
@@ -61,13 +61,13 @@ const ModalSheetBody: React.FC<ModalSheetBodyProps> = ({
     <DrawerBody className={cn("flex-grow p-6", className)}>
       {children}
     </DrawerBody>
-  );
-};
+  )
+}
 
 interface ModalSheetFooterProps extends React.PropsWithChildren {}
 
 const ModalSheetFooter: React.FC<ModalSheetFooterProps> = (props) => {
-  return <DrawerFooter className="p-6">{props.children}</DrawerFooter>;
-};
+  return <DrawerFooter className="p-6">{props.children}</DrawerFooter>
+}
 
-export { ModalSheet, ModalSheetHeader, ModalSheetBody, ModalSheetFooter };
+export { ModalSheet, ModalSheetHeader, ModalSheetBody, ModalSheetFooter }

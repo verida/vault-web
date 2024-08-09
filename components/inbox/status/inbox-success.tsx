@@ -1,11 +1,11 @@
-import Image from "next/image";
+import Image from "next/image"
 
-import SuccessShareImage from "@/assets/success.svg";
-import { Typography } from "@/components/typography";
+import SuccessShareImage from "@/assets/success.svg"
+import { Typography } from "@/components/typography"
 
 interface InboxSuccessProps {
-  title: string;
-  description: React.ReactNode;
+  title: string
+  description: React.ReactNode
 }
 
 export const InboxSuccess: React.FC<InboxSuccessProps> = ({
@@ -28,5 +28,5 @@ export const InboxSuccess: React.FC<InboxSuccessProps> = ({
         {description}
       </Typography>
     </div>
-  );
-};
+  )
+}
