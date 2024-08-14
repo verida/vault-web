@@ -1,6 +1,5 @@
 "use client"
 
-import Head from "next/head"
 import { useRouter } from "next/navigation"
 import { useEffect } from "react"
 
@@ -11,13 +10,7 @@ import { Spinner } from "@/components/spinner"
 import { Typography } from "@/components/typography"
 import { Button } from "@/components/ui/button"
 import { useAuth } from "@/features/auth"
-import {
-  VERIDA_VAULT_DESCRIPTION,
-  VERIDA_VAULT_HERO_IMAGE,
-  VERIDA_VAULT_TITLE,
-  VERIDA_VAULT_URL,
-  useVerida,
-} from "@/features/verida"
+import { useVerida } from "@/features/verida"
 
 const sidebarContent = [
   {
@@ -57,35 +50,6 @@ const Homepage = () => {
   if (!isConnected && !isConnecting) {
     return (
       <div className="flex h-screen min-h-screen">
-        <Head>
-          <title>{VERIDA_VAULT_TITLE}</title>
-          <meta name="description" content={VERIDA_VAULT_DESCRIPTION} />
-          <meta name="keywords" content="verida, vault" />
-          <meta name="author" content="Your Name" />
-          <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1.0"
-          />
-          <link rel="canonical" href={VERIDA_VAULT_URL} />
-
-          <meta property="og:title" content="Verida Vault" />
-          <meta property="og:description" content={VERIDA_VAULT_DESCRIPTION} />
-          <meta property="og:image" content={VERIDA_VAULT_HERO_IMAGE} />
-          <meta property="og:url" content={VERIDA_VAULT_URL} />
-          <meta property="og:type" content="website" />
-
-          {/* Twitter card meta tags */}
-          <meta name="twitter:card" content="summary_large_image" />
-          <meta name="twitter:title" content="Verida Vault" />
-          <meta
-            name="twitter:description"
-            content="This is a brief description of the page content."
-          />
-          <meta
-            name="twitter:image"
-            content="https://www.example.com/path-to-image.jpg"
-          />
-        </Head>
         <section className="relative flex min-h-full w-full flex-col md:w-[42%]">
           <div className="mx-auto flex min-h-full flex-col px-6 md:max-w-[460px]">
             <Navbar />
