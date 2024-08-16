@@ -16,6 +16,8 @@ const logLevel: LogLevel =
         ? "debug"
         : "info"
 
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
+
 // Verida variables
 const veridaContextName = "Verida: "
 
@@ -35,6 +37,7 @@ export const config = {
   appVersion: version,
   devMode,
   logLevel,
+  baseUrl,
   verida: {
     environment: veridaEnvironment,
     contextName: veridaContextName,
