@@ -1,71 +1,60 @@
 "use client"
 
-import Image from "next/image"
-import { usePathname, useRouter, useSearchParams } from "next/navigation"
-import React from "react"
+import Link from "next/link"
+import { useSearchParams } from "next/navigation"
+import React, { useMemo } from "react"
 
-import { Category } from "@/components/category/category"
-import { CredentialItem } from "@/components/credential/credential-item"
+// import {
+//   FilterSheet,
+//   FilterSheetBody,
+//   FilterSheetFooter,
+//   FilterSheetHeader,
+// } from "@/components/common/filter-sheet"
+import { CredentialItem } from "@/components/data/credential-item"
+import DataItem from "@/components/data/data-item"
+import DataItemDetailsSheet from "@/components/data/data-item-details-sheet"
+// import SearchBox from "@/components/data/search-box"
+// import { FilterButton } from "@/components/filter-button"
 import { ArrowLeft } from "@/components/icons/arrow-left"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Button } from "@/components/ui/button"
-import { Drawer, DrawerContent, DrawerHeader } from "@/components/ui/drawer"
+import { InboxError } from "@/components/inbox/status/inbox-error"
+// import { SortSelector } from "@/components/sort-selector"
+import { Typography } from "@/components/typography"
+// import { Button } from "@/components/ui/button"
+// import { Checkbox } from "@/components/ui/checkbox"
 import { Skeleton } from "@/components/ui/skeleton"
-import { DataFolderDefinition, dataFolders } from "@/features/data"
+import { dataFolders } from "@/features/data"
+import { useData } from "@/features/data/hooks"
+import { useDataSchema } from "@/features/data/hooks/useDataSchema"
 import { getPublicProfile } from "@/features/profiles"
-import { PublicProfile } from "@/features/profiles/@types"
 import { useVerida } from "@/features/verida"
 
-// TODO: Use custom logger and remove this eslint by-pass
-/* eslint-disable no-console */
-
 const FolderPage = ({ params }: { params: { folder: string[] } }) => {
-  const router = useRouter()
-  const [loading, setLoading] = React.useState(true)
-  const { webUserInstanceRef, isConnected } = useVerida()
-  const [folder, setFolder] = React.useState<DataFolderDefinition>()
-  const [items, setItems] = React.useState<any[]>([])
-  const pathName = usePathname()
+  const { isConnected } = useVerida()
+
+  const folder = useMemo(() => {
+    const folderName = params.folder.join("/")
+    return dataFolders.find((f) => f.name === folderName)
+  }, [params])
+
+  const {
+    dataItems: items,
+    isDataItemsPending: loading,
+    isDataItemsError,
+  } = useData<any>(folder?.database || "") // TODO: Type properly
+
+  const {
+    dataSchema,
+    isDataSchemaPending: schemaLoading,
+    isDataSchemaError,
+  } = useDataSchema(items?.at(0)?.schema || "")
+
   const searchParams = useSearchParams()
 
   const itemId = searchParams.get("id")
   const selectedItem = items?.find((it) => it._id === itemId)
 
-  React.useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const folderName = params.folder.join("/")
-        const folder = dataFolders.find((folder) => folder.name === folderName)
-        setFolder(folder)
-        console.log("folderMName", folderName, folder!.database)
-        if (folder?.database) {
-          const db = await webUserInstanceRef.current?.openDatabase(
-            folder!.database
-          )
-
-          setLoading(true)
-          // TODO: Add stronger typing
-          const fetchedItems = await db?.getMany(null, null)
-
-          setItems(fetchedItems)
-
-          console.log("fetchedItems", JSON.stringify(fetchedItems, null, 2))
-        }
-      } catch (error) {
-        console.error(error)
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    isConnected && fetchData()
-  }, [params.folder, webUserInstanceRef, isConnected])
-
-  console.log("Selected item", JSON.stringify(selectedItem, null, 2))
-
-  const [issuer, setIssuer] = React.useState<PublicProfile>({
-    name: "",
-  })
+  const [, setIssuer] = React.useState<any>({})
+  // const [isFilterOpen, setIsFilterOpen] = React.useState(false)
 
   React.useEffect(() => {
     function parseJwt(token: string) {
@@ -80,14 +69,11 @@ const FolderPage = ({ params }: { params: { folder: string[] } }) => {
           })
           .join("")
       )
-      console.log("parseJwt", JSON.parse(jsonPayload))
+      // console.log("parseJwt", JSON.parse(jsonPayload))
       return JSON.parse(jsonPayload)
     }
 
     async function fetchIssuerProfile(did: string) {
-      // TODO: make the call to API work so we have a server cache for public profiles
-      // const res = await fetch('/api/profile/' + dat.iss)
-      // console.log('profile', await res.json())
       const profile = await getPublicProfile(did)
       setIssuer(profile)
     }
@@ -97,18 +83,27 @@ const FolderPage = ({ params }: { params: { folder: string[] } }) => {
   }, [selectedItem])
 
   return (
-    <div className="flex-col">
-      <Button
-        variant="secondary"
-        className="mb-4 flex h-16 items-center gap-5 text-sm font-medium"
-        onClick={() => router.push(pathName.split("/").slice(0, -1).join("/"))}
-      >
-        <ArrowLeft /> Back
-      </Button>
+    <div className="flex-col py-5">
+      <div className="flex justify-start">
+        <Link href={"/data"} className="my-5 flex items-center gap-5">
+          <ArrowLeft />
+          <Typography variant={"heading-5"}>Back to all Data</Typography>
+        </Link>
+      </div>
 
-      <h1 className="mb-6 text-xl font-medium">{folder?.title}</h1>
+      <div className="mb-4 flex items-center justify-between gap-4">
+        <Typography variant="heading-3">{folder?.titlePlural}</Typography>
+        <nav className="flex space-x-2 md:w-auto md:space-x-3">
+          {/* <SearchBox /> */}
+          {/* <SortSelector /> */}
+          {/* <FilterButton onClick={() => setIsFilterOpen(true)} /> */}
+          {/* <Button size={"lg"} className="hidden h-12 md:flex">
+            Add New
+          </Button> */}
+        </nav>
+      </div>
 
-      {loading ? (
+      {!isConnected || loading || schemaLoading ? (
         <div className="flex w-full flex-col gap-4">
           <Skeleton className="h-10 w-full" />
           <Skeleton className="h-10 w-full" />
@@ -117,113 +112,105 @@ const FolderPage = ({ params }: { params: { folder: string[] } }) => {
           <Skeleton className="h-10 w-full" />
           <Skeleton className="h-10 w-full" />
         </div>
-      ) : folder?.database ? (
+      ) : isDataSchemaError || isDataItemsError ? (
+        <div className="py-40">
+          <InboxError description="There's been an error when loading the data" />
+        </div>
+      ) : items?.length === 0 || !dataSchema ? (
+        <Typography variant={"heading-4"} className="py-40 text-center">
+          No {folder?.titlePlural}
+        </Typography>
+      ) : (
         <div className="flex flex-col gap-2">
-          <div className="flex w-full flex-row items-center p-4">
-            <p className="w-1/4 text-sm text-secondary-foreground">Name</p>
-            <p className="w-1/4 text-sm text-secondary-foreground">Source</p>
-            <p className="w-1/4 text-sm text-secondary-foreground">Date</p>
-            <p className="w-1/4 text-sm text-secondary-foreground">
-              Credential Status
-            </p>
+          <div className="flex w-full flex-row items-center p-4 [&>p]:w-0 [&>p]:grow">
+            {(items?.at(0)["name"] || items?.at(0)["icon"]) && (
+              <Typography
+                variant="base-s-semibold"
+                className="text-secondary-foreground"
+              >
+                {folder?.title} Name
+              </Typography>
+            )}
+            {dataSchema?.layouts.view.map((key) => (
+              <Typography
+                key={key}
+                variant="base-s-semibold"
+                className="text-secondary-foreground"
+              >
+                {dataSchema?.properties[key]?.title}
+              </Typography>
+            ))}
           </div>
-          {items.map((item) => (
-            <CredentialItem
-              key={item._id}
-              credential={item.didJwtVc}
-              fallbackAvatar=""
-              href={`?id=${item._id}`}
-              title={item.name}
-              date={new Date(item.insertedAt).getTime()}
-              source="Government of New South Wales"
-              status="valid"
-            />
-          ))}
+          {folder?.name === "credentials"
+            ? items?.map((item, index) => (
+                <CredentialItem
+                  key={index}
+                  credential={item.didJwtVc}
+                  fallbackAvatar=""
+                  href={`?id=${item._id}`}
+                  title={item.name}
+                  date={new Date(item.insertedAt).getTime()}
+                  source="Government of New South Wales"
+                  status="valid"
+                />
+              ))
+            : items?.map((item, index) => (
+                <DataItem data={item} key={index} schema={dataSchema} />
+              ))}
         </div>
-      ) : folder?.display === "folders" ? (
-        <div className="grid grid-cols-4 gap-6">
-          {folder?.folders.map((folderName) => {
-            const nestedFolder = dataFolders.find(
-              (folder) => folder.name === folderName
-            )
-            return nestedFolder ? (
-              <Category
-                key={nestedFolder.name}
-                icon={nestedFolder.icon}
-                href={`/data/${nestedFolder.name}`}
-                title={nestedFolder.title}
-                description="0 items"
-              />
-            ) : null
-          })}
-        </div>
-      ) : null}
+      )}
 
-      <Drawer
-        direction="right"
-        open={Boolean(itemId)}
-        onClose={() => {
-          router.push(pathName)
-        }}
+      {/* <FilterSheet
+        open={isFilterOpen}
+        onClose={() => setIsFilterOpen(false)}
+        className="border-l border-border shadow-sm"
       >
-        <DrawerContent>
-          <DrawerHeader className="border-b-2">
-            <div className="flex items-center gap-2">
-              <Avatar>
-                {issuer?.avatar?.uri && (
-                  <AvatarImage src={issuer?.avatar?.uri} asChild>
-                    <Image
-                      src={issuer?.avatar?.uri}
-                      width={40}
-                      height={40}
-                      alt="Issuer avatar"
-                    />
-                  </AvatarImage>
-                )}
-                <AvatarFallback />
-              </Avatar>
-              <p className="text-wrap text-sm">{issuer?.name}</p>
+        <FilterSheetHeader
+          title="Filter"
+          onClose={() => setIsFilterOpen(false)}
+        />
+        <FilterSheetBody>
+          <Typography variant="heading-5">Source</Typography>
+          {[
+            "Facebook",
+            "Twitter",
+            "Ticketeck",
+            "Government of Western Australia",
+            "Government of New South Wales",
+            "Royal Melbourne Hospital",
+            "Metamask",
+            "Discord",
+          ].map((source) => (
+            <div key={source} className="flex items-center gap-3 p-2">
+              <Checkbox />
+              <Typography>{source}</Typography>
             </div>
-          </DrawerHeader>
-          {loading && (
-            <div className="flex w-full flex-col gap-4">
-              <Skeleton className="h-10 w-full" />
-              <Skeleton className="h-10 w-full" />
-              <Skeleton className="h-10 w-full" />
-              <Skeleton className="h-10 w-full" />
-              <Skeleton className="h-10 w-full" />
-              <Skeleton className="h-10 w-full" />
-            </div>
-          )}
+          ))}
 
-          {selectedItem && (
-            <div className="flex flex-col">
-              {selectedItem.credentialData ? (
-                Object.entries(selectedItem.credentialData).map((entry) => (
-                  <div
-                    key={entry[0]}
-                    className="flex justify-between gap-4 px-4 py-4"
-                  >
-                    <p className="text-muted-foreground">{entry[0]}</p>
-                    <p>{String(entry[1])}</p>
-                  </div>
-                ))
-              ) : (
-                <>
-                  <div className="flex justify-between gap-4 px-4 py-4">
-                    <p className="text-muted-foreground">Name</p>
-                    <p>{selectedItem.name}</p>
-                  </div>
-                  <div className="flex justify-between gap-4 px-4 py-4">
-                    <p className="text-muted-foreground">Email</p>
-                    <p>{selectedItem.email}</p>
-                  </div>
-                </>
-              )}
+          <Typography variant="heading-5" className="mt-4">
+            Credential Status
+          </Typography>
+          {["All", "Valid", "Expired"].map((status) => (
+            <div key={status} className="flex items-center gap-3 p-2">
+              <Checkbox />
+              <Typography>{status}</Typography>
             </div>
-          )}
-        </DrawerContent>
-      </Drawer>
+          ))}
+        </FilterSheetBody>
+        <FilterSheetFooter>
+          <div className="grid grid-cols-2 gap-4">
+            <Button variant="secondary">Reset All</Button>
+            <Button variant="primary">Apply</Button>
+          </div>
+        </FilterSheetFooter>
+      </FilterSheet> */}
+
+      <DataItemDetailsSheet
+        open={Boolean(itemId)}
+        data={selectedItem}
+        schema={dataSchema}
+        folder={folder}
+      />
     </div>
   )
 }

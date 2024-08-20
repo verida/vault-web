@@ -3,13 +3,9 @@
 // import { IDatabase } from "@verida/types"
 import React from "react"
 
-import { Category } from "@/components/category/category"
+import { CategoryCard } from "@/components/data/category-card"
+import { Typography } from "@/components/typography"
 import { dataFolders } from "@/features/data"
-
-// import { useVerida } from "@/features/verida"
-
-// TODO: Use custom logger and remove this eslint by-pass
-/* eslint-disable no-console */
 
 const DataPage = () => {
   // const { webUserInstanceRef, isConnected } = useVerida()
@@ -60,18 +56,20 @@ const DataPage = () => {
 
   return (
     <div className="flex-col pt-10">
-      <h1 className="mb-6 text-2xl font-medium">Categories</h1>
-      <div className="grid grid-cols-4 gap-6">
+      <Typography variant="heading-3" className="mb-4">
+        Categories
+      </Typography>
+      <div className="grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-4">
         {dataFolders
-          .filter((folder) => folder.root)
+          // .filter((folder) => folder.root)
           .map((folder) => {
             return (
-              <Category
+              <CategoryCard
                 key={folder.name}
                 icon={folder.icon}
+                database={folder.database || ""}
                 href={`/data/${folder.name}`}
-                title={folder.title}
-                description="0 items"
+                title={folder.titlePlural}
               />
             )
           })}

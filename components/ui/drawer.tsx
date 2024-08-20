@@ -39,14 +39,15 @@ const DrawerContent = React.forwardRef<
   React.ElementRef<typeof DrawerPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Content> & {
     onClose?: () => void
+    overlayClassName?: string
   }
->(({ className, children, onClose, ...props }, ref) => (
+>(({ className, overlayClassName, children, onClose, ...props }, ref) => (
   <DrawerPortal>
-    <DrawerOverlay onClick={onClose} />
+    <DrawerOverlay onClick={onClose} className={overlayClassName} />
     <DrawerPrimitive.Content
       ref={ref}
       className={cn(
-        "fixed bottom-0 right-0 z-50 mt-24 flex h-full w-[480px] max-w-full flex-col bg-primary after:!content-none md:bottom-2 md:right-2 md:h-[calc(100%-16px)] md:rounded-md",
+        "fixed bottom-0 right-0 z-50 mt-24 flex h-full w-[480px] max-w-full flex-col bg-primary outline-none after:!content-none md:bottom-2 md:right-2 md:h-[calc(100%-16px)] md:rounded-md",
         // "fixed inset-x-0 bottom-0 z-50 mt-24 flex h-auto flex-col rounded-t-[10px] border bg-primary,
         className
       )}

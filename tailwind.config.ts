@@ -101,6 +101,7 @@ const config = {
       },
       boxShadow: {
         glow: "0px 0px 4px 0px rgba(83, 84, 209, 0.60)",
+        card: "8px 16px 40px 0px rgba(180, 183, 205, 0.16)",
       },
       fontSize: {
         "heading-1": [

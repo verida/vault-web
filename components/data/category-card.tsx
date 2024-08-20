@@ -1,20 +1,30 @@
 import Link from "next/link"
 import { ReactNode } from "react"
 
+import { useData } from "@/features/data/hooks"
+
 import { Typography } from "../typography"
 import { Card, CardContent } from "../ui/card"
+import { Skeleton } from "../ui/skeleton"
 
-type CategoryProps = {
+type CategoryCardProps = {
   icon?: ReactNode
   title?: string
-  description: string
   href?: string
+  database: string
 }
 
-function Category({ icon, title, description, href }: CategoryProps) {
+export function CategoryCard({
+  icon,
+  title,
+  href,
+  database,
+}: CategoryCardProps) {
+  const { dataItemsCount, isDataItemsCountPending } = useData(database)
+
   return (
     <Link href={href || "#"}>
-      <Card className="rounded-2xl">
+      <Card className="rounded-2xl shadow-card">
         <CardContent className="p-6">
           {icon && icon}
           {title && (
@@ -22,12 +32,14 @@ function Category({ icon, title, description, href }: CategoryProps) {
               {title}
             </Typography>
           )}
-          {description && (
+          {isDataItemsCountPending ? (
+            <Skeleton className="h-[23px] w-20" />
+          ) : (
             <Typography
               variant="base-l"
-              className="mt-1 text-secondary-foreground"
+              className="mt-1 h-[23px] text-secondary-foreground"
             >
-              {description}
+              {dataItemsCount} items
             </Typography>
           )}
         </CardContent>
@@ -35,5 +47,3 @@ function Category({ icon, title, description, href }: CategoryProps) {
     </Link>
   )
 }
-
-export { Category }

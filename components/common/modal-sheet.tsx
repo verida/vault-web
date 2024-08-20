@@ -1,3 +1,5 @@
+import React from "react"
+
 import { cn } from "@/lib/utils"
 
 import { CloseSideRight } from "../icons/close-side-right"
@@ -28,7 +30,7 @@ const ModalSheet: React.FC<ModalSheetProps> = (props) => {
 }
 
 interface ModalSheetHeaderProps {
-  title: string
+  title: string | React.ReactNode
   actions: React.ReactNode
   onClose: () => void
 }
