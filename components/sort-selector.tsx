@@ -11,10 +11,9 @@ import {
 export type SortSelectorProps = Omit<
   React.ComponentPropsWithRef<typeof Select>,
   "variant" | "size"
-> & { applied?: boolean }
+>
 
 export const SortSelector: React.FC<SortSelectorProps> = (props) => {
-  const { applied = false } = props
   return (
     <Select {...props} defaultValue="newest">
       <SelectTrigger

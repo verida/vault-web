@@ -2,7 +2,7 @@ import Image from "next/image"
 import Link from "next/link"
 import React from "react"
 
-import { DataSchema } from "@/features/data"
+// import { DataSchema } from "@/features/data"
 import { getPublicProfile } from "@/features/profiles"
 
 import { Valid } from "../icons/valid"
@@ -46,7 +46,7 @@ function CredentialItem({
           })
           .join("")
       )
-      console.log("parseJwt", JSON.parse(jsonPayload))
+      // console.log("parseJwt", JSON.parse(jsonPayload))
       return JSON.parse(jsonPayload)
     }
 
@@ -54,9 +54,9 @@ function CredentialItem({
       // TODO: make the call to API work so we have a server cache for public profiles
       // const res = await fetch('/api/profile/' + dat.iss)
       // console.log('profile', await res.json())
-      console.log("load profile", did)
+      // console.log("load profile", did)
       const profile = await getPublicProfile(did)
-      console.log("Profile:", profile)
+      // console.log("Profile:", profile)
       setIssuer(profile)
     }
 

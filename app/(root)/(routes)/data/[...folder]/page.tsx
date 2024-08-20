@@ -4,23 +4,23 @@ import Link from "next/link"
 import { useSearchParams } from "next/navigation"
 import React, { useMemo } from "react"
 
-import {
-  FilterSheet,
-  FilterSheetBody,
-  FilterSheetFooter,
-  FilterSheetHeader,
-} from "@/components/common/filter-sheet"
+// import {
+//   FilterSheet,
+//   FilterSheetBody,
+//   FilterSheetFooter,
+//   FilterSheetHeader,
+// } from "@/components/common/filter-sheet"
 import { CredentialItem } from "@/components/data/credential-item"
 import DataItem from "@/components/data/data-item"
 import DataItemDetailsSheet from "@/components/data/data-item-details-sheet"
-import SearchBox from "@/components/data/search-box"
-import { FilterButton } from "@/components/filter-button"
+// import SearchBox from "@/components/data/search-box"
+// import { FilterButton } from "@/components/filter-button"
 import { ArrowLeft } from "@/components/icons/arrow-left"
 import { InboxError } from "@/components/inbox/status/inbox-error"
-import { SortSelector } from "@/components/sort-selector"
+// import { SortSelector } from "@/components/sort-selector"
 import { Typography } from "@/components/typography"
-import { Button } from "@/components/ui/button"
-import { Checkbox } from "@/components/ui/checkbox"
+// import { Button } from "@/components/ui/button"
+// import { Checkbox } from "@/components/ui/checkbox"
 import { Skeleton } from "@/components/ui/skeleton"
 import { dataFolders } from "@/features/data"
 import { useData } from "@/features/data/hooks"
@@ -40,7 +40,7 @@ const FolderPage = ({ params }: { params: { folder: string[] } }) => {
     dataItems: items,
     isDataItemsPending: loading,
     isDataItemsError,
-  } = useData<any>(folder?.database || "") // TODO: Properly type
+  } = useData<any>(folder?.database || "") // TODO: Type properly
 
   const {
     dataSchema,
@@ -53,8 +53,8 @@ const FolderPage = ({ params }: { params: { folder: string[] } }) => {
   const itemId = searchParams.get("id")
   const selectedItem = items?.find((it) => it._id === itemId)
 
-  const [issuer, setIssuer] = React.useState<any>({})
-  const [isFilterOpen, setIsFilterOpen] = React.useState(false)
+  const [, setIssuer] = React.useState<any>({})
+  // const [isFilterOpen, setIsFilterOpen] = React.useState(false)
 
   React.useEffect(() => {
     function parseJwt(token: string) {
@@ -69,7 +69,7 @@ const FolderPage = ({ params }: { params: { folder: string[] } }) => {
           })
           .join("")
       )
-      console.log("parseJwt", JSON.parse(jsonPayload))
+      // console.log("parseJwt", JSON.parse(jsonPayload))
       return JSON.parse(jsonPayload)
     }
 
@@ -94,12 +94,12 @@ const FolderPage = ({ params }: { params: { folder: string[] } }) => {
       <div className="mb-4 flex items-center justify-between gap-4">
         <Typography variant="heading-3">{folder?.titlePlural}</Typography>
         <nav className="flex space-x-2 md:w-auto md:space-x-3">
-          <SearchBox />
-          <SortSelector />
-          <FilterButton onClick={() => setIsFilterOpen(true)} />
-          <Button size={"lg"} className="hidden h-12 md:flex">
+          {/* <SearchBox /> */}
+          {/* <SortSelector /> */}
+          {/* <FilterButton onClick={() => setIsFilterOpen(true)} /> */}
+          {/* <Button size={"lg"} className="hidden h-12 md:flex">
             Add New
-          </Button>
+          </Button> */}
         </nav>
       </div>
 
@@ -160,7 +160,7 @@ const FolderPage = ({ params }: { params: { folder: string[] } }) => {
         </div>
       )}
 
-      <FilterSheet
+      {/* <FilterSheet
         open={isFilterOpen}
         onClose={() => setIsFilterOpen(false)}
         className="border-l border-border shadow-sm"
@@ -203,7 +203,7 @@ const FolderPage = ({ params }: { params: { folder: string[] } }) => {
             <Button variant="primary">Apply</Button>
           </div>
         </FilterSheetFooter>
-      </FilterSheet>
+      </FilterSheet> */}
 
       <DataItemDetailsSheet
         open={Boolean(itemId)}

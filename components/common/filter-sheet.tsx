@@ -16,7 +16,7 @@ interface FilterSheetProps extends React.PropsWithChildren {
 }
 
 const FilterSheet: React.FC<FilterSheetProps> = (props) => {
-  const { open, onClose, children, className } = props
+  const { open, onClose, children } = props
   return (
     <Drawer direction="right" open={open} onClose={onClose}>
       <DrawerTrigger />
