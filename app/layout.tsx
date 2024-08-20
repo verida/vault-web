@@ -18,6 +18,7 @@ export const metadata: Metadata = {
     title: APP_TITLE,
     description: APP_DESCRIPTION,
     images: {
+      // TODO: Change this image url to update the image with proper one.
       url: `${config.baseUrl}/images/inbox-page.png`,
       width: 1200,
       height: 630,
