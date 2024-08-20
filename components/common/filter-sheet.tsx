@@ -1,4 +1,4 @@
-import { CloseSideRight } from "../icons/close-side-right";
+import { CloseSideRight } from "../icons/close-side-right"
 import {
   Drawer,
   DrawerBody,
@@ -7,16 +7,16 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-} from "../ui/drawer";
+} from "../ui/drawer"
 
 interface FilterSheetProps extends React.PropsWithChildren {
-  open: boolean;
-  onClose: () => void;
-  className?: string;
+  open: boolean
+  onClose: () => void
+  className?: string
 }
 
 const FilterSheet: React.FC<FilterSheetProps> = (props) => {
-  const { open, onClose, children, className } = props;
+  const { open, onClose, children, className } = props
   return (
     <Drawer direction="right" open={open} onClose={onClose}>
       <DrawerTrigger />
@@ -28,16 +28,16 @@ const FilterSheet: React.FC<FilterSheetProps> = (props) => {
         {children}
       </DrawerContent>
     </Drawer>
-  );
-};
+  )
+}
 
 interface FilterSheetHeaderProps {
-  title: string;
-  onClose: () => void;
+  title: string
+  onClose: () => void
 }
 
 const FilterSheetHeader: React.FC<FilterSheetHeaderProps> = (props) => {
-  const { title, onClose } = props;
+  const { title, onClose } = props
   return (
     <DrawerHeader className="gap-4 px-6 py-4 text-left">
       <div className="flex w-full items-center justify-between">
@@ -45,19 +45,19 @@ const FilterSheetHeader: React.FC<FilterSheetHeaderProps> = (props) => {
         <CloseSideRight className="cursor-pointer" onClick={onClose} />
       </div>
     </DrawerHeader>
-  );
-};
+  )
+}
 
 interface FilterSheetBodyProps extends React.PropsWithChildren {}
 
 const FilterSheetBody: React.FC<FilterSheetBodyProps> = (props) => {
-  return <DrawerBody className="p-4">{props.children}</DrawerBody>;
-};
+  return <DrawerBody className="p-4">{props.children}</DrawerBody>
+}
 
 interface FilterSheetFooterProps extends React.PropsWithChildren {}
 
 const FilterSheetFooter: React.FC<FilterSheetFooterProps> = (props) => {
-  return <DrawerFooter className="p-4">{props.children}</DrawerFooter>;
-};
+  return <DrawerFooter className="p-4">{props.children}</DrawerFooter>
+}
 
-export { FilterSheet, FilterSheetHeader, FilterSheetBody, FilterSheetFooter };
+export { FilterSheet, FilterSheetHeader, FilterSheetBody, FilterSheetFooter }

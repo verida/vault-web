@@ -1,18 +1,18 @@
-import Link from "next/link";
-import { ReactNode } from "react";
+import Link from "next/link"
+import { ReactNode } from "react"
 
-import { useData } from "@/features/data/hooks";
+import { useData } from "@/features/data/hooks"
 
-import { Typography } from "../typography";
-import { Card, CardContent } from "../ui/card";
-import { Skeleton } from "../ui/skeleton";
+import { Typography } from "../typography"
+import { Card, CardContent } from "../ui/card"
+import { Skeleton } from "../ui/skeleton"
 
 type CategoryCardProps = {
-  icon?: ReactNode;
-  title?: string;
-  href?: string;
-  database: string;
-};
+  icon?: ReactNode
+  title?: string
+  href?: string
+  database: string
+}
 
 export function CategoryCard({
   icon,
@@ -20,7 +20,7 @@ export function CategoryCard({
   href,
   database,
 }: CategoryCardProps) {
-  const { dataItemsCount, isDataItemsCountPending } = useData(database);
+  const { dataItemsCount, isDataItemsCountPending } = useData(database)
 
   return (
     <Link href={href || "#"}>
@@ -45,5 +45,5 @@ export function CategoryCard({
         </CardContent>
       </Card>
     </Link>
-  );
+  )
 }

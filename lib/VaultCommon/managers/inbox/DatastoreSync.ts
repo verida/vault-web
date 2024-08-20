@@ -1,4 +1,4 @@
-import { DataAction } from './DataAction'
+import { DataAction } from "./DataAction"
 
 export class DatastoreSync extends DataAction {
   async accept() {

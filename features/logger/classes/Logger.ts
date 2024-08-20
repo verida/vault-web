@@ -1,15 +1,8 @@
-import { config } from "@/config";
-import { LogLevel } from "@/features/logger";
+import { config } from "@/config"
+import { LogLevel } from "@/features/logger"
 
-const levelOrder: LogLevel[] = ["error", "warn", "info", "debug"];
-const currentLogLevelIndex = levelOrder.indexOf(config.logLevel);
-
-const sentryLevelMapping = {
-  error: "error",
-  warn: "warning",
-  info: "info",
-  debug: "debug",
-} as const;
+const levelOrder: LogLevel[] = ["error", "warn", "info", "debug"]
+const currentLogLevelIndex = levelOrder.indexOf(config.logLevel)
 
 /**
  * Custom logger to use the console and/or add a breadcrumb to Sentry.
@@ -25,10 +18,10 @@ const sentryLevelMapping = {
  * @todo Add the `Sentry.captureException` as part of this logger.
  */
 export class Logger {
-  private readonly category: string;
+  private readonly category: string
 
   constructor(category: string) {
-    this.category = category;
+    this.category = category
   }
 
   private log(
@@ -37,37 +30,37 @@ export class Logger {
     data?: Record<string, unknown>
   ) {
     if (levelOrder.indexOf(level) > currentLogLevelIndex) {
-      return;
+      return
     }
 
     if (!config.devMode) {
       // Simply skip `console` if not in dev mode
-      return;
+      return
     }
 
     // To avoid the 'undefined' being displayed in the console
     if (data) {
       // eslint-disable-next-line no-console
-      console[level](`[${this.category}] ${message}`, data);
+      console[level](`[${this.category}] ${message}`, data)
     } else {
       // eslint-disable-next-line no-console
-      console[level](`[${this.category}] ${message}`);
+      console[level](`[${this.category}] ${message}`)
     }
   }
 
   public error(message: any, data?: Record<string, unknown>) {
-    this.log("error", message, data);
+    this.log("error", message, data)
   }
 
   public warn(message: string, data?: Record<string, unknown>) {
-    this.log("warn", message, data);
+    this.log("warn", message, data)
   }
 
   public info(message: string, data?: Record<string, unknown>) {
-    this.log("info", message, data);
+    this.log("info", message, data)
   }
 
   public debug(message: string, data?: Record<string, unknown>) {
-    this.log("debug", message, data);
+    this.log("debug", message, data)
   }
 }

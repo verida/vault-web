@@ -1,16 +1,16 @@
-import Image from "next/image";
-import Link from "next/link";
-import React from "react";
+import Image from "next/image"
+import Link from "next/link"
+import React from "react"
 
-import { DataSchema } from "@/features/data";
+import { DataSchema } from "@/features/data"
 
-import { Typography } from "../typography";
-import { Card } from "../ui/card";
+import { Typography } from "../typography"
+import { Card } from "../ui/card"
 
 type Props = {
-  data: any;
-  schema: DataSchema;
-};
+  data: any
+  schema: DataSchema
+}
 
 const DataItem = ({ data, schema }: Props) => {
   return (
@@ -51,7 +51,7 @@ const DataItem = ({ data, schema }: Props) => {
         </div>
       </Card>
     </Link>
-  );
-};
+  )
+}
 
-export default DataItem;
+export default DataItem

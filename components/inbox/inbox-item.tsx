@@ -1,26 +1,26 @@
-import Image from "next/image";
-import Link from "next/link";
+import Image from "next/image"
+import Link from "next/link"
 
-import { inboxTypes } from "@/features/inbox/constants";
-import { InboxEntry } from "@/features/inbox/types";
-import { cn, formatDate } from "@/lib/utils";
+import { inboxTypes } from "@/features/inbox/constants"
+import { InboxEntry } from "@/features/inbox/types"
+import { cn, formatDate } from "@/lib/utils"
 
-import { Typography } from "../typography";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { Card } from "../ui/card";
-import { InboxStatusText } from "./inbox-status-text";
+import { Typography } from "../typography"
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar"
+import { Card } from "../ui/card"
+import { InboxStatusText } from "./inbox-status-text"
 
 interface InboxRowItemProps {
-  message: InboxEntry;
-  href?: string;
+  message: InboxEntry
+  href?: string
 }
 
 export const InboxRowItem: React.FC<InboxRowItemProps> = ({
   message,
   href,
 }) => {
-  const { message: title, read, sentAt, sentBy, type, data } = message;
-  const InboxTypeIcon = inboxTypes[type].icon;
+  const { message: title, read, sentAt, sentBy, type, data } = message
+  const InboxTypeIcon = inboxTypes[type].icon
 
   return (
     <Link href={href || "#"} className="w-full">
@@ -122,5 +122,5 @@ export const InboxRowItem: React.FC<InboxRowItemProps> = ({
         </div>
       </Card>
     </Link>
-  );
-};
+  )
+}

@@ -1,4 +1,4 @@
-import { SVGProps } from "react";
+import { SVGProps } from "react"
 
 interface Props extends SVGProps<SVGSVGElement> {}
 
@@ -21,6 +21,6 @@ const Search = (props: Props) => (
       <circle cx={11} cy={11} r={7} stroke="currentColor" strokeWidth={2} />
     </g>
   </svg>
-);
+)
 
-export { Search };
+export { Search }

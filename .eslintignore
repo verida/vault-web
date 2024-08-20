@@ -1,13 +1,10 @@
 node_modules
 .next
-public
 patches
-lib
-tailwind.config.ts
+
+.eslintrc
+.prettierrc
+
+# This file as an eslint issue for now
+next.config.mjs
 postcss.config.js
-config-overrides.js
-
-README.md
-tsconfig.json
-
-next-env.d.ts

@@ -1,8 +1,8 @@
-import React from "react";
+import React from "react"
 
-import { FolderContacts } from "@/components/icons/folder-contacts";
-import { FolderCredentialsIcon } from "@/components/icons/folder-credentials-icon";
-import { FolderSocial } from "@/components/icons/folder-social";
+import { FolderContacts } from "@/components/icons/folder-contacts"
+import { FolderCredentialsIcon } from "@/components/icons/folder-credentials-icon"
+import { FolderSocial } from "@/components/icons/folder-social"
 
 // import DocumentsSvg from 'assets/icons/data/documents.svg'
 // import EmploymentSvg from 'assets/icons/data/employment.svg'
@@ -15,7 +15,8 @@ import { FolderSocial } from "@/components/icons/folder-social";
 // import SocialSvg from 'assets/icons/data/social.svg'
 // import SocialFollowingSvg from 'assets/icons/data/social/following.svg'
 // import SocialPostSvg from 'assets/icons/data/social/post.svg'
-import { DataFolderDefinition } from "..";
+import { DataFolderDefinition } from ".."
+
 // import SubscriptionsSvg from 'assets/icons/data/subscriptions.svg'
 // import TicketsSvg from 'assets/icons/data/tickets.svg'
 
@@ -294,4 +295,4 @@ export const dataFolders: DataFolderDefinition[] = [
       ],
     },
   },
-];
+]

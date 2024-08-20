@@ -1,27 +1,27 @@
-import { isEmpty } from "lodash";
+import { isEmpty } from "lodash"
 
 import {
   ModalSheetBody,
   ModalSheetFooter,
   ModalSheetHeader,
-} from "@/components/common/modal-sheet";
-import { Typography } from "@/components/typography";
-import { Button } from "@/components/ui/button";
-import { ButtonLink } from "@/components/ui/button-link";
-import { useInboxAction } from "@/features/inbox/hooks/useInboxAction";
-import { InboxType } from "@/features/inbox/types";
+} from "@/components/common/modal-sheet"
+import { Typography } from "@/components/typography"
+import { Button } from "@/components/ui/button"
+import { ButtonLink } from "@/components/ui/button-link"
+import { useInboxAction } from "@/features/inbox/hooks/useInboxAction"
+import { InboxType } from "@/features/inbox/types"
 
-import { InboxDetailsProps } from "../inbox-details";
-import { RequesterProfile } from "../requester-profile";
+import { InboxDetailsProps } from "../inbox-details"
+import { RequesterProfile } from "../requester-profile"
 
 export const InboxMessageDetails: React.FC<InboxDetailsProps> = ({
   message,
   onClose,
 }) => {
-  const { message: title, data } = message;
-  const itemData = !isEmpty(data.data) ? data.data[0] : null;
+  const { message: title, data } = message
+  const itemData = !isEmpty(data.data) ? data.data[0] : null
 
-  const { handleAccept, isLoading } = useInboxAction();
+  const { handleAccept, isLoading } = useInboxAction()
   return (
     <>
       <ModalSheetHeader title="Message" actions={<></>} onClose={onClose} />
@@ -57,5 +57,5 @@ export const InboxMessageDetails: React.FC<InboxDetailsProps> = ({
         )}
       </ModalSheetFooter>
     </>
-  );
-};
+  )
+}

@@ -1,4 +1,4 @@
-import { SVGProps } from "react";
+import { SVGProps } from "react"
 
 interface Props extends SVGProps<SVGSVGElement> {}
 
@@ -17,6 +17,6 @@ const Facebook = (props: Props) => (
       fill="white"
     />
   </svg>
-);
+)
 
-export { Facebook };
+export { Facebook }

@@ -1,25 +1,25 @@
-import { useQuery } from "@tanstack/react-query";
-import { useCallback } from "react";
+import { useQuery } from "@tanstack/react-query"
+import { useCallback } from "react"
 
-import { useVerida } from "@/features/verida";
+import { useVerida } from "@/features/verida"
 
 export const useData = (database: string) => {
-  const { webUserInstanceRef, isConnected } = useVerida();
+  const { webUserInstanceRef, isConnected } = useVerida()
 
   const fetchDataItems = useCallback(async () => {
     if (!isConnected) {
-      return [];
+      return []
     }
     try {
-      const db = await webUserInstanceRef.current?.openDatabase(database);
+      const db = await webUserInstanceRef.current?.openDatabase(database)
 
-      const fetchedItems: any[] = await db?.getMany(null, null);
-      return fetchedItems || [];
+      const fetchedItems: any[] = await db?.getMany(null, null)
+      return fetchedItems || []
     } catch (error) {
-      console.error(error);
-      return [];
+      console.error(error)
+      return []
     }
-  }, [database, webUserInstanceRef, isConnected]);
+  }, [database, webUserInstanceRef, isConnected])
 
   const {
     data: dataItems,
@@ -29,20 +29,20 @@ export const useData = (database: string) => {
     queryKey: ["data", "item", database],
     queryFn: fetchDataItems,
     enabled: isConnected,
-  });
+  })
 
   const fetchDataItemsCount = useCallback(async () => {
-    if (!isConnected) return 0;
+    if (!isConnected) return 0
     try {
-      const db = await webUserInstanceRef.current?.openDatabase(database);
+      const db = await webUserInstanceRef.current?.openDatabase(database)
 
-      const fetchedItems = await db?.getMany(null, null);
-      return fetchedItems?.length || 0;
+      const fetchedItems = await db?.getMany(null, null)
+      return fetchedItems?.length || 0
     } catch (error) {
-      console.error(error);
-      return [];
+      console.error(error)
+      return []
     }
-  }, [database, webUserInstanceRef, isConnected]);
+  }, [database, webUserInstanceRef, isConnected])
 
   const {
     data: dataItemsCount,
@@ -52,7 +52,7 @@ export const useData = (database: string) => {
     queryKey: ["data", "count", database],
     queryFn: fetchDataItemsCount,
     enabled: isConnected,
-  });
+  })
 
   return {
     dataItems,
@@ -61,5 +61,5 @@ export const useData = (database: string) => {
     dataItemsCount,
     isDataItemsCountPending,
     isDataItemsCountError,
-  };
-};
+  }
+}

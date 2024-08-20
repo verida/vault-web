@@ -1,4 +1,4 @@
-import { SVGProps } from "react";
+import { SVGProps } from "react"
 
 interface Props extends SVGProps<SVGSVGElement> {}
 
@@ -18,6 +18,6 @@ const Close = (props: Props) => (
       strokeLinecap="round"
     />
   </svg>
-);
+)
 
-export { Close };
+export { Close }

@@ -1,41 +1,41 @@
-"use client";
+"use client"
 
-import Image from "next/image";
-import { useEffect, useMemo, useState } from "react";
-import { CSSTransition, SwitchTransition } from "react-transition-group";
+import Image from "next/image"
+import { useEffect, useMemo, useState } from "react"
+import { CSSTransition, SwitchTransition } from "react-transition-group"
 
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils"
 
-import { Typography } from "../typography";
+import { Typography } from "../typography"
 
 interface SwiperProps {
   data: {
-    title: string;
-    icon: React.ReactNode;
-    description: string;
-    image: string;
-  }[];
+    title: string
+    icon: React.ReactNode
+    description: string
+    image: string
+  }[]
 }
 
-const INTERVAL = 15000;
+const INTERVAL = 15000
 
 export const Swiper: React.FunctionComponent<SwiperProps> = (props) => {
-  const { data } = props;
-  const [currentStep, setCurrentStep] = useState(0);
+  const { data } = props
+  const [currentStep, setCurrentStep] = useState(0)
 
   const slideLength = useMemo(() => {
-    return data.length;
-  }, [data]);
+    return data.length
+  }, [data])
 
   useEffect(() => {
     const timerId = setInterval(() => {
-      setCurrentStep((prev) => (prev + 1) % slideLength);
-    }, INTERVAL);
+      setCurrentStep((prev) => (prev + 1) % slideLength)
+    }, INTERVAL)
 
     return () => {
-      clearInterval(timerId);
-    };
-  }, [slideLength]);
+      clearInterval(timerId)
+    }
+  }, [slideLength])
 
   return (
     <>
@@ -101,5 +101,5 @@ export const Swiper: React.FunctionComponent<SwiperProps> = (props) => {
         </SwitchTransition>
       </div>
     </>
-  );
-};
+  )
+}

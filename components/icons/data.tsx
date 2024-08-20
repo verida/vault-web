@@ -1,4 +1,4 @@
-import { SVGProps } from "react";
+import { SVGProps } from "react"
 
 interface Props extends SVGProps<SVGSVGElement> {}
 
@@ -17,6 +17,6 @@ const Data = (props: Props) => (
       strokeWidth={2}
     />
   </svg>
-);
+)
 
-export { Data };
+export { Data }

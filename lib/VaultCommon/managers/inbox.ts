@@ -1,15 +1,14 @@
+import { Logger } from "@/features/logger"
 
+import { InboxEntry, InboxType } from "../interfaces/inbox/Inbox"
+import VaultCommon from "../vault"
+import { DataAction } from "./inbox/DataAction"
+import { DatastoreSync } from "./inbox/DatastoreSync"
+import { Message } from "./inbox/Message"
+import { Request } from "./inbox/Request"
+import { Send } from "./inbox/Send"
 
-import { Logger } from '@/features/logger'
-import { InboxEntry, InboxType } from '../interfaces/inbox/Inbox'
-import VaultCommon from '../vault'
-import { DataAction } from './inbox/DataAction'
-import { DatastoreSync } from './inbox/DatastoreSync'
-import { Message } from './inbox/Message'
-import { Request } from './inbox/Request'
-import { Send } from './inbox/Send'
-
-const logger = new Logger('InboxManager')
+const logger = new Logger("InboxManager")
 
 const DataHandler = {
   [InboxType.DATA_SEND]: Send,
@@ -39,22 +38,22 @@ export class InboxManager {
     action: keyof DataAction,
     payload: unknown
   ) {
-    logger.debug('Handling inbox item action', { inboxEntry, action, payload })
-    logger.debug('Initializing messaging')
+    logger.debug("Handling inbox item action", { inboxEntry, action, payload })
+    logger.debug("Initializing messaging")
     await this.init()
-    logger.debug('Messaging initialized')
+    logger.debug("Messaging initialized")
     const inbox = await this.messaging.getInbox()
 
-    logger.debug('Inbox entry status', { status: inboxEntry.data.status })
+    logger.debug("Inbox entry status", { status: inboxEntry.data.status })
     if (inboxEntry.data.status) {
-      throw new Error('Data has already been set to ' + inboxEntry.data.status)
+      throw new Error("Data has already been set to " + inboxEntry.data.status)
     }
 
     inboxEntry.data.status = action
 
     const Middleware = DataHandler[inboxEntry.type]
     if (!Middleware) {
-      throw new Error('Unknown inbox type!: ' + inboxEntry.type)
+      throw new Error("Unknown inbox type!: " + inboxEntry.type)
     }
 
     const MiddlewareInstance = new Middleware(
@@ -64,11 +63,11 @@ export class InboxManager {
       payload
     )
 
-    logger.debug('Executing action')
+    logger.debug("Executing action")
     await MiddlewareInstance[action]()
 
     inboxEntry.read = true
-    logger.debug('Saving inbox entry', { inboxEntry })
+    logger.debug("Saving inbox entry", { inboxEntry })
     await inbox.privateInbox.save(inboxEntry)
   }
 
@@ -77,7 +76,7 @@ export class InboxManager {
 
     return this.messaging.getMessages(filter, {
       ...options,
-      sort: [{ sentAt: 'desc' }],
+      sort: [{ sentAt: "desc" }],
     })
   }
 
@@ -91,23 +90,23 @@ export class InboxManager {
     let senderProfile
     try {
       const sender = await this.vaultCommon.client.openProfile(
-        'basicProfile',
+        "basicProfile",
         senderDid,
         senderApp
       )
-      senderProfile = await sender.getMany({ key: 'name' })
+      senderProfile = await sender.getMany({ key: "name" })
     } catch (error) {
       // user may not have a profile
     }
 
-    let senderName = ''
+    let senderName = ""
     if (senderProfile && senderProfile.length > 0) {
       senderName = senderProfile[0].value
     }
 
     const Middleware = DataHandler[inboxEntry.type]
     if (!Middleware) {
-      const error = new Error('Unknown inbox type: ' + inboxEntry.type)
+      const error = new Error("Unknown inbox type: " + inboxEntry.type)
       logger.error(error)
       return {
         success: false,

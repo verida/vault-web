@@ -1,14 +1,14 @@
-import React from "react";
+import React from "react"
 
-import { Search } from "../icons/search";
-import { Button } from "../ui/button";
+import { Search } from "../icons/search"
+import { Button } from "../ui/button"
 import {
   Drawer,
   DrawerContent,
   DrawerHeader,
   DrawerTrigger,
-} from "../ui/drawer";
-import { Input } from "../ui/input";
+} from "../ui/drawer"
+import { Input } from "../ui/input"
 
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {}
@@ -47,7 +47,7 @@ const SearchBox = (props: InputProps) => {
         </Drawer>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default SearchBox;
+export default SearchBox

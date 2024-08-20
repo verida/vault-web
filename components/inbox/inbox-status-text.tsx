@@ -1,19 +1,19 @@
-import { InboxType } from "@/features/inbox/types";
+import { InboxType } from "@/features/inbox/types"
 
-import { Failed } from "../icons/failed";
-import { Success } from "../icons/success";
-import { Typography } from "../typography";
+import { Failed } from "../icons/failed"
+import { Success } from "../icons/success"
+import { Typography } from "../typography"
 
 interface InboxStatusProps {
-  status?: "accept" | "decline";
-  inboxType?: InboxType;
+  status?: "accept" | "decline"
+  inboxType?: InboxType
 }
 
 export const InboxStatusText: React.FC<InboxStatusProps> = (props) => {
-  const { status, inboxType } = props;
+  const { status, inboxType } = props
 
   if (inboxType === InboxType.MESSAGE) {
-    return <></>;
+    return <></>
   }
 
   if (status === "accept") {
@@ -22,7 +22,7 @@ export const InboxStatusText: React.FC<InboxStatusProps> = (props) => {
         <Success />
         <Typography variant="base-semibold">Accepted</Typography>
       </div>
-    );
+    )
   }
 
   if (status === "decline")
@@ -31,7 +31,7 @@ export const InboxStatusText: React.FC<InboxStatusProps> = (props) => {
         <Failed />
         <Typography variant="base-semibold">Declined</Typography>
       </div>
-    );
+    )
 
-  return <></>;
-};
+  return <></>
+}

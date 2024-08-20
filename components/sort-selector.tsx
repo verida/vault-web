@@ -1,20 +1,20 @@
-import { Sort } from "./icons/sort";
-import { Typography } from "./typography";
+import { Sort } from "./icons/sort"
+import { Typography } from "./typography"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "./ui/select";
+} from "./ui/select"
 
 export type SortSelectorProps = Omit<
   React.ComponentPropsWithRef<typeof Select>,
   "variant" | "size"
-> & { applied?: boolean };
+> & { applied?: boolean }
 
 export const SortSelector: React.FC<SortSelectorProps> = (props) => {
-  const { applied = false } = props;
+  const { applied = false } = props
   return (
     <Select {...props} defaultValue="newest">
       <SelectTrigger
@@ -35,5 +35,5 @@ export const SortSelector: React.FC<SortSelectorProps> = (props) => {
         <SelectItem value="name-desc">Item Name: Z-A</SelectItem>
       </SelectContent>
     </Select>
-  );
-};
+  )
+}

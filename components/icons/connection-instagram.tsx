@@ -1,4 +1,4 @@
-import { SVGProps } from "react";
+import { SVGProps } from "react"
 
 interface Props extends SVGProps<SVGSVGElement> {}
 
@@ -42,6 +42,6 @@ const Instagram = (props: Props) => (
       </linearGradient>
     </defs>
   </svg>
-);
+)
 
-export { Instagram };
+export { Instagram }

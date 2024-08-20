@@ -1,7 +1,8 @@
-import _ from 'lodash'
+import _ from "lodash"
 
-import VaultCommon from '../../vault'
-import { DataField } from '@/features/data'
+import { DataField } from "@/features/data"
+
+import VaultCommon from "../../vault"
 
 export default class Folder {
   private vaultCommon: VaultCommon
@@ -56,7 +57,7 @@ export default class Folder {
       results = await this.db.getMany(filter, options)
     } catch (err: any) {
       // If the error is caused by a missing index, automatically create the index and try again
-      if (err.message?.indexOf('default index')) {
+      if (err.message?.indexOf("default index")) {
         const matches = err.message?.match(
           // eslint-disable-next-line no-useless-escape
           /Cannot sort on field\(s\) \"([0-9a-zA-Z\.-]+)\" when using the default index/
@@ -86,7 +87,7 @@ export default class Folder {
     await this.init()
 
     let row
-    if (typeof rowOrId === 'string') {
+    if (typeof rowOrId === "string") {
       row = await this.db.get(rowOrId)
     } else {
       row = rowOrId
@@ -144,8 +145,8 @@ export default class Folder {
    * @param row
    */
   public getCardDetail(row: any) {
-    let name = ''
-    let summary = ''
+    let name = ""
+    let summary = ""
 
     if (this.config.nameField) {
       // Use name field if specified
@@ -191,7 +192,7 @@ export default class Folder {
 
     return matches
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(' ')
+      .join(" ")
   }
 
   // TODO: Remove this.

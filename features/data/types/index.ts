@@ -1,83 +1,83 @@
-import { VeridaRecord } from "@/features/verida";
+import { VeridaRecord } from "@/features/verida"
 
 export type DataField = {
-  field: string;
-  value: unknown;
-};
+  field: string
+  value: unknown
+}
 
 export type DataItem = {
-  data: DataField[];
-  title: string;
-};
+  data: DataField[]
+  title: string
+}
 
-export type DataFolderDisplayType = "grid" | "folders" | "cards";
+export type DataFolderDisplayType = "grid" | "folders" | "cards"
 
 export type DataFolderDefinition = {
-  name: string;
-  title: string;
-  titlePlural?: string;
-  icon: React.ReactNode;
-  color?: string;
-  root: boolean;
-  database?: string;
+  name: string
+  title: string
+  titlePlural?: string
+  icon: React.ReactNode
+  color?: string
+  root: boolean
+  database?: string
 } & (
   | {
-      display: "folders";
-      folders: string[];
+      display: "folders"
+      folders: string[]
     }
   | {
-      display: "grid" | "cards";
-      database: string;
+      display: "grid" | "cards"
+      database: string
       layouts?: {
-        list?: string[];
-        view?: string[];
-      };
-      sort?: Record<string, unknown>[];
+        list?: string[]
+        view?: string[]
+      }
+      sort?: Record<string, unknown>[]
       fields?: {
         [key: string]: {
-          label: string;
-        };
-      };
+          label: string
+        }
+      }
       card?: {
-        name?: (record: VeridaRecord) => string;
-        summary?: (record: VeridaRecord) => string;
-      };
-      nameField?: string;
-      summaryField?: string;
+        name?: (record: VeridaRecord) => string
+        summary?: (record: VeridaRecord) => string
+      }
+      nameField?: string
+      summaryField?: string
     }
-);
+)
 
 export type DataSchema = {
-  $schema: string;
-  $id: string;
-  title: string;
-  titlePlural: string;
-  description: string;
-  type: string;
+  $schema: string
+  $id: string
+  title: string
+  titlePlural: string
+  description: string
+  type: string
   appearance: {
     style: {
-      color: string;
-      icon: string;
-    };
-  };
+      color: string
+      icon: string
+    }
+  }
   database: {
-    name: string;
+    name: string
     indexes: {
-      email: string[];
-      did: string[];
-      name: string[];
-    };
-  };
+      email: string[]
+      did: string[]
+      name: string[]
+    }
+  }
   layouts: {
-    create: string[];
-    view: string[];
-  };
+    create: string[]
+    view: string[]
+  }
   allOf: (
     | { $ref: string }
     | {
-        properties: Record<string, { title: string; type: string }>;
-        required: string[];
+        properties: Record<string, { title: string; type: string }>
+        required: string[]
       }
-  )[];
-  properties: Record<string, { title: string; type: string }>;
-};
+  )[]
+  properties: Record<string, { title: string; type: string }>
+}

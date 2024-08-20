@@ -1,12 +1,12 @@
-import { Discord } from "@/components/icons/connection-discord";
-import { Facebook } from "@/components/icons/connection-facebook";
-import { Github } from "@/components/icons/connection-github";
-import { Instagram } from "@/components/icons/connection-instagram";
-import { Telegram } from "@/components/icons/connection-telegram";
-import { Twitter } from "@/components/icons/connection-twitter";
-import { Youtube } from "@/components/icons/connection-youtube";
+import { Discord } from "@/components/icons/connection-discord"
+import { Facebook } from "@/components/icons/connection-facebook"
+import { Github } from "@/components/icons/connection-github"
+import { Instagram } from "@/components/icons/connection-instagram"
+import { Telegram } from "@/components/icons/connection-telegram"
+import { Twitter } from "@/components/icons/connection-twitter"
+import { Youtube } from "@/components/icons/connection-youtube"
 
-import { Connection } from "..";
+import { Connection } from ".."
 
 export const connections: Connection[] = [
   {
@@ -51,4 +51,4 @@ export const connections: Connection[] = [
     item: "video",
     description: "Connect your Youtube Account to share your video with us.",
   },
-];
+]

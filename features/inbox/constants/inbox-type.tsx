@@ -1,9 +1,9 @@
-import { InboxData } from "@/components/icons/inbox-data";
-import { InboxIncoming } from "@/components/icons/inbox-incoming";
-import { InboxMessage } from "@/components/icons/inbox-message";
-import { InboxProof } from "@/components/icons/inbox-proof";
+import { InboxData } from "@/components/icons/inbox-data"
+import { InboxIncoming } from "@/components/icons/inbox-incoming"
+import { InboxMessage } from "@/components/icons/inbox-message"
+import { InboxProof } from "@/components/icons/inbox-proof"
 
-import { InboxType } from "../types";
+import { InboxType } from "../types"
 
 export const inboxTypes = {
   [InboxType.MESSAGE]: {
@@ -22,4 +22,4 @@ export const inboxTypes = {
     icon: InboxIncoming,
     text: "Incoming Data",
   },
-};
+}

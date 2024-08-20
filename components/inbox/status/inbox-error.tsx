@@ -1,13 +1,13 @@
-import Image from "next/image";
+import Image from "next/image"
 
-import ErrorInboxImage from "@/assets/error-inbox.svg";
-import { Button } from "@/components/ui/button";
+import ErrorInboxImage from "@/assets/error-inbox.svg"
+import { Button } from "@/components/ui/button"
 
-import { Typography } from "../../typography";
+import { Typography } from "../../typography"
 
 interface InboxErrorProps {
-  description: string;
-  onClick?: () => void;
+  description: string
+  onClick?: () => void
 }
 
 export const InboxError: React.FC<InboxErrorProps> = ({
@@ -28,5 +28,5 @@ export const InboxError: React.FC<InboxErrorProps> = ({
         Reload
       </Button>
     </div>
-  );
-};
+  )
+}

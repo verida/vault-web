@@ -1,4 +1,4 @@
-import { SVGProps } from "react";
+import { SVGProps } from "react"
 
 interface Props extends SVGProps<SVGSVGElement> {}
 
@@ -20,6 +20,6 @@ const Youtube = (props: Props) => (
       fill="white"
     />
   </svg>
-);
+)
 
-export { Youtube };
+export { Youtube }

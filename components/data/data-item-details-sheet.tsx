@@ -1,37 +1,37 @@
-import Image from "next/image";
-import { usePathname, useRouter } from "next/navigation";
-import React from "react";
+import Image from "next/image"
+import { usePathname, useRouter } from "next/navigation"
+import React from "react"
 
-import { DataFolderDefinition, DataSchema } from "@/features/data";
+import { DataFolderDefinition, DataSchema } from "@/features/data"
 
 import {
   ModalSheet,
   ModalSheetBody,
   ModalSheetHeader,
-} from "../common/modal-sheet";
-import { Copy } from "../icons/copy";
-import { Delete } from "../icons/delete";
-import { Pin } from "../icons/pin";
-import { Typography } from "../typography";
-import { Button } from "../ui/button";
-import { Skeleton } from "../ui/skeleton";
-import { Switch } from "../ui/switch";
-import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
+} from "../common/modal-sheet"
+import { Copy } from "../icons/copy"
+import { Delete } from "../icons/delete"
+import { Pin } from "../icons/pin"
+import { Typography } from "../typography"
+import { Button } from "../ui/button"
+import { Skeleton } from "../ui/skeleton"
+import { Switch } from "../ui/switch"
+import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip"
 
 type Props = {
-  open: boolean;
-  data?: any;
-  schema?: DataSchema;
-  folder?: DataFolderDefinition;
-};
+  open: boolean
+  data?: any
+  schema?: DataSchema
+  folder?: DataFolderDefinition
+}
 
 const DataItemDetailsSheet = ({ open, data, folder, schema }: Props) => {
-  const router = useRouter();
-  const pathName = usePathname();
+  const router = useRouter()
+  const pathName = usePathname()
 
   const onClose = () => {
-    router.push(pathName);
-  };
+    router.push(pathName)
+  }
   return (
     <ModalSheet open={open} onClose={onClose}>
       <ModalSheetHeader
@@ -124,7 +124,7 @@ const DataItemDetailsSheet = ({ open, data, folder, schema }: Props) => {
         )}
       </ModalSheetBody>
     </ModalSheet>
-  );
-};
+  )
+}
 
-export default DataItemDetailsSheet;
+export default DataItemDetailsSheet

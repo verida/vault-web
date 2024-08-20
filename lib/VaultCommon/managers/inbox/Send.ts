@@ -1,4 +1,4 @@
-import { DataAction } from './DataAction'
+import { DataAction } from "./DataAction"
 
 type ActionError = {
   dataEntry: any

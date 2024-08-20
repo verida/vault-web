@@ -20,10 +20,10 @@ const nextConfig = {
           },
         },
       ],
-    });
+    })
     config.node = {
       __dirname: true,
-    };
+    }
 
     config.module.rules.push({
       test: /\.(woff|woff2|eot|ttf|otf)$/,
@@ -35,9 +35,9 @@ const nextConfig = {
           outputPath: `${isServer ? "../" : ""}static/fonts/`,
         },
       },
-    });
+    })
 
-    return config;
+    return config
   },
   images: {
     remotePatterns: [
@@ -48,6 +48,6 @@ const nextConfig = {
       },
     ],
   },
-};
+}
 
-export default nextConfig;
+export default nextConfig

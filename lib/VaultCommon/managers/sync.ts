@@ -1,12 +1,12 @@
-import { Logger } from '@/features/telemetry'
+import { Logger } from "@/features/telemetry"
 
 import {
   InboxDatabaseSyncRequest,
   InboxDatastoreSyncRequest,
-} from '../interfaces/inbox/Inbox'
-import VaultCommon from '../vault'
+} from "../interfaces/inbox/Inbox"
+import VaultCommon from "../vault"
 
-const logger = new Logger('VaultSyncManager')
+const logger = new Logger("VaultSyncManager")
 
 /**
  * Manage login requests and responses
@@ -30,8 +30,8 @@ export class SyncManager {
     // Connect to the destination database (external)
     const config = {
       permissions: {
-        read: 'users',
-        write: 'users',
+        read: "users",
+        write: "users",
       },
       encryptionKey: externalDsConfig.encryptionKey.key,
       databaseName: externalDsConfig.dbName ? externalDsConfig.dbName : null,
@@ -52,7 +52,7 @@ export class SyncManager {
     const filter = dsSync.filter ? dsSync.filter : {}
 
     switch (dsSync.direction) {
-      case 'pull':
+      case "pull":
         // pull data from external
         externalCouchDb
           .replicate(internalCouchDb, {
@@ -60,15 +60,15 @@ export class SyncManager {
             selector: filter,
             // Don't replicate design documents
             filter: function (doc: any) {
-              return doc._id.indexOf('_design') !== 0
+              return doc._id.indexOf("_design") !== 0
             },
             retry: true,
           })
-          .on('error', this.onError)
-          .on('denied', this.onDenied)
-          .on('complete', this.onComplete)
+          .on("error", this.onError)
+          .on("denied", this.onDenied)
+          .on("complete", this.onComplete)
         break
-      case 'push':
+      case "push":
         // push data to external
         externalCouchDb
           .replicate(internalCouchDb, {
@@ -76,15 +76,15 @@ export class SyncManager {
             selector: filter,
             // Don't replicate design documents
             filter: function (doc: any) {
-              return doc._id.indexOf('_design') !== 0
+              return doc._id.indexOf("_design") !== 0
             },
             retry: true,
           })
-          .on('error', this.onError)
-          .on('denied', this.onDenied)
-          .on('complete', this.onComplete)
+          .on("error", this.onError)
+          .on("denied", this.onDenied)
+          .on("complete", this.onComplete)
         break
-      case 'both':
+      case "both":
         // sync both ways
         await externalCouchDb
           .sync(internalCouchDb, {
@@ -92,13 +92,13 @@ export class SyncManager {
             selector: filter,
             // Don't sync design documents
             filter: function (doc: any) {
-              return doc._id.indexOf('_design') !== 0
+              return doc._id.indexOf("_design") !== 0
             },
             retry: true,
           })
-          .on('error', this.onError)
-          .on('denied', this.onDenied)
-          .on('complete', this.onComplete)
+          .on("error", this.onError)
+          .on("denied", this.onDenied)
+          .on("complete", this.onComplete)
         break
     }
   }
@@ -115,8 +115,8 @@ export class SyncManager {
     // Connect to the destination database (external)
     const config = {
       permissions: {
-        read: 'users',
-        write: 'users',
+        read: "users",
+        write: "users",
       },
       encryptionKey: externalDbConfig.encryptionKey.key,
     }
@@ -141,7 +141,7 @@ export class SyncManager {
     const internalCouchDb = await internalDb.getDb()
 
     switch (dbSync.direction) {
-      case 'pull':
+      case "pull":
         // pull data from external
         externalDb._db
           .replicate(internalCouchDb, {
@@ -149,11 +149,11 @@ export class SyncManager {
             filter: filter,
             retry: true,
           })
-          .on('error', this.onError)
-          .on('denied', this.onDenied)
-          .on('complete', this.onComplete)
+          .on("error", this.onError)
+          .on("denied", this.onDenied)
+          .on("complete", this.onComplete)
         break
-      case 'push':
+      case "push":
         // push data to external
         internalDb._db
           .replicate(externalCouchDb, {
@@ -161,11 +161,11 @@ export class SyncManager {
             filter: filter,
             retry: true,
           })
-          .on('error', this.onError)
-          .on('denied', this.onDenied)
-          .on('complete', this.onComplete)
+          .on("error", this.onError)
+          .on("denied", this.onDenied)
+          .on("complete", this.onComplete)
         break
-      case 'both':
+      case "both":
         // sync both ways
         externalDb._db
           .sync(internalCouchDb, {
@@ -173,22 +173,22 @@ export class SyncManager {
             filter: filter,
             retry: true,
           })
-          .on('error', this.onError)
-          .on('denied', this.onDenied)
-          .on('complete', this.onComplete)
+          .on("error", this.onError)
+          .on("denied", this.onDenied)
+          .on("complete", this.onComplete)
         break
     }
   }
 
   onError(error: unknown) {
-    logger.error(new Error('Sync error', { cause: error }))
+    logger.error(new Error("Sync error", { cause: error }))
   }
 
   onDenied(error: unknown) {
-    logger.error(new Error('Sync denied', { cause: error }))
+    logger.error(new Error("Sync denied", { cause: error }))
   }
 
   onComplete(info: unknown) {
-    logger.debug('sync complete', { info })
+    logger.debug("sync complete", { info })
   }
 }

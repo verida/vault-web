@@ -1,4 +1,4 @@
-import { SVGProps } from "react";
+import { SVGProps } from "react"
 
 interface Props extends SVGProps<SVGSVGElement> {}
 
@@ -33,6 +33,6 @@ const Pin = (props: Props) => (
       </clipPath>
     </defs>
   </svg>
-);
+)
 
-export { Pin };
+export { Pin }

@@ -1,4 +1,4 @@
-import { SVGProps } from "react";
+import { SVGProps } from "react"
 
 interface Props extends SVGProps<SVGSVGElement> {}
 
@@ -19,6 +19,6 @@ const Switch = (props: Props) => (
       stroke-linejoin="round"
     />
   </svg>
-);
+)
 
-export { Switch };
+export { Switch }

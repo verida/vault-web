@@ -1,36 +1,36 @@
-import React from "react";
+import React from "react"
 
-import Alert from "@/components/alert";
+import Alert from "@/components/alert"
 import {
   ModalSheetBody,
   ModalSheetFooter,
   ModalSheetHeader,
-} from "@/components/common/modal-sheet";
-import { Typography } from "@/components/typography";
-import { Button } from "@/components/ui/button";
-import { useInboxAction } from "@/features/inbox/hooks/useInboxAction";
-import { InboxType } from "@/features/inbox/types";
+} from "@/components/common/modal-sheet"
+import { Typography } from "@/components/typography"
+import { Button } from "@/components/ui/button"
+import { useInboxAction } from "@/features/inbox/hooks/useInboxAction"
+import { InboxType } from "@/features/inbox/types"
 
-import { InboxDetailsProps } from "../inbox-details";
-import { InboxStatusText } from "../inbox-status-text";
-import { IncomingDataItem } from "../incoming-data-item";
-import { RequesterProfile } from "../requester-profile";
+import { InboxDetailsProps } from "../inbox-details"
+import { InboxStatusText } from "../inbox-status-text"
+import { IncomingDataItem } from "../incoming-data-item"
+import { RequesterProfile } from "../requester-profile"
 
 const InboxIncomingData: React.FC<InboxDetailsProps> = ({
   message,
   onClose,
 }) => {
-  const { message: title, data, sentAt, sentBy, type } = message;
+  const { message: title, data, sentAt, sentBy, type } = message
 
-  const { handleAccept, handleReject, isLoading } = useInboxAction();
+  const { handleAccept, handleReject, isLoading } = useInboxAction()
 
   const onClickAccept = async () => {
-    await handleAccept(message, InboxType.DATA_SEND, {});
-  };
+    await handleAccept(message, InboxType.DATA_SEND, {})
+  }
 
   const onClickDecline = async () => {
-    await handleReject(message);
-  };
+    await handleReject(message)
+  }
 
   return (
     <>
@@ -94,7 +94,7 @@ const InboxIncomingData: React.FC<InboxDetailsProps> = ({
         )}
       </ModalSheetFooter>
     </>
-  );
-};
+  )
+}
 
-export default InboxIncomingData;
+export default InboxIncomingData

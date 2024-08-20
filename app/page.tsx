@@ -1,16 +1,16 @@
-"use client";
+"use client"
 
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useRouter } from "next/navigation"
+import { useEffect } from "react"
 
-import { Footer } from "@/components/auth/footer";
-import { Navbar } from "@/components/auth/navbar";
-import { Swiper } from "@/components/auth/swiper";
-import { Spinner } from "@/components/spinner";
-import { Typography } from "@/components/typography";
-import { Button } from "@/components/ui/button";
-import { useAuth } from "@/features/auth";
-import { useVerida } from "@/features/verida";
+import { Footer } from "@/components/auth/footer"
+import { Navbar } from "@/components/auth/navbar"
+import { Swiper } from "@/components/auth/swiper"
+import { Spinner } from "@/components/spinner"
+import { Typography } from "@/components/typography"
+import { Button } from "@/components/ui/button"
+import { useAuth } from "@/features/auth"
+import { useVerida } from "@/features/verida"
 
 const sidebarContent = [
   {
@@ -34,18 +34,18 @@ const sidebarContent = [
       "Take ownership of your web2 data, store encrypted in a secure data vault. Control access to your data and provide permission to web3 applications.",
     image: "/images/connection-page.png",
   },
-];
+]
 
 const Homepage = () => {
-  const router = useRouter();
-  const { connect, isConnected, isConnecting } = useVerida();
-  const { redirectPath } = useAuth();
+  const router = useRouter()
+  const { connect, isConnected, isConnecting } = useVerida()
+  const { redirectPath } = useAuth()
 
   useEffect(() => {
     if (isConnected) {
-      router.push(redirectPath !== "/" ? redirectPath : "/data");
+      router.push(redirectPath !== "/" ? redirectPath : "/data")
     }
-  }, [isConnected]);
+  }, [isConnected, redirectPath, router])
 
   if (!isConnected && !isConnecting) {
     return (
@@ -83,7 +83,7 @@ const Homepage = () => {
           <Swiper data={sidebarContent} />
         </section>
       </div>
-    );
+    )
   }
 
   return (
@@ -97,7 +97,7 @@ const Homepage = () => {
         few moments.
       </Typography>
     </div>
-  );
-};
+  )
+}
 
-export default Homepage;
+export default Homepage

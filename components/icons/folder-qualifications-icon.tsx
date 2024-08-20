@@ -1,4 +1,4 @@
-import { SVGProps } from "react";
+import { SVGProps } from "react"
 
 interface Props extends SVGProps<SVGSVGElement> {}
 
@@ -38,6 +38,6 @@ const FolderQualificationsIcon = (props: Props) => (
       </g>
     </g>
   </svg>
-);
+)
 
-export { FolderQualificationsIcon };
+export { FolderQualificationsIcon }

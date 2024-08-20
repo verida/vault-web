@@ -1,25 +1,18 @@
-import { useQuery } from "@tanstack/react-query";
-import { useCallback } from "react";
+import { useQuery } from "@tanstack/react-query"
+import { useCallback } from "react"
 
-import { DataSchema } from "../types";
+import { DataSchema } from "../types"
 
 export const useDataSchema = (schemaUrl?: string) => {
-  if (!schemaUrl) {
-    return {
-      dataSchema: undefined,
-      isDataSchemaPending: false,
-      isDataSchemaError: false,
-    };
-  }
   const fetchDataSchema = useCallback(async () => {
-    if (!schemaUrl) return;
+    if (!schemaUrl) return
     else {
-      const res = await fetch(schemaUrl, { method: "GET" });
-      const schema: DataSchema = await res.json();
-      schema.properties = (schema as any).allOf[1].properties;
-      return schema;
+      const res = await fetch(schemaUrl, { method: "GET" })
+      const schema: DataSchema = await res.json()
+      schema.properties = (schema as any).allOf[1].properties
+      return schema
     }
-  }, [schemaUrl]);
+  }, [schemaUrl])
 
   const {
     data: dataSchema,
@@ -28,11 +21,19 @@ export const useDataSchema = (schemaUrl?: string) => {
   } = useQuery({
     queryKey: ["data", "schema", schemaUrl],
     queryFn: fetchDataSchema,
-  });
+  })
+
+  if (!schemaUrl) {
+    return {
+      dataSchema: undefined,
+      isDataSchemaPending: false,
+      isDataSchemaError: false,
+    }
+  }
 
   return {
     dataSchema,
     isDataSchemaPending,
     isDataSchemaError,
-  };
-};
+  }
+}

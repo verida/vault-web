@@ -1,86 +1,86 @@
-"use client";
+"use client"
 
-import Link from "next/link";
-import { useSearchParams } from "next/navigation";
-import React, { useMemo } from "react";
+import Link from "next/link"
+import { useSearchParams } from "next/navigation"
+import React, { useMemo } from "react"
 
 import {
   FilterSheet,
   FilterSheetBody,
   FilterSheetFooter,
   FilterSheetHeader,
-} from "@/components/common/filter-sheet";
-import { CredentialItem } from "@/components/data/credential-item";
-import DataItem from "@/components/data/data-item";
-import DataItemDetailsSheet from "@/components/data/data-item-details-sheet";
-import SearchBox from "@/components/data/search-box";
-import { FilterButton } from "@/components/filter-button";
-import { ArrowLeft } from "@/components/icons/arrow-left";
-import { InboxError } from "@/components/inbox/status/inbox-error";
-import { SortSelector } from "@/components/sort-selector";
-import { Typography } from "@/components/typography";
-import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Skeleton } from "@/components/ui/skeleton";
-import { dataFolders } from "@/features/data";
-import { useData } from "@/features/data/hooks";
-import { useDataSchema } from "@/features/data/hooks/useDataSchema";
-import { getPublicProfile } from "@/features/profiles";
-import { useVerida } from "@/features/verida";
+} from "@/components/common/filter-sheet"
+import { CredentialItem } from "@/components/data/credential-item"
+import DataItem from "@/components/data/data-item"
+import DataItemDetailsSheet from "@/components/data/data-item-details-sheet"
+import SearchBox from "@/components/data/search-box"
+import { FilterButton } from "@/components/filter-button"
+import { ArrowLeft } from "@/components/icons/arrow-left"
+import { InboxError } from "@/components/inbox/status/inbox-error"
+import { SortSelector } from "@/components/sort-selector"
+import { Typography } from "@/components/typography"
+import { Button } from "@/components/ui/button"
+import { Checkbox } from "@/components/ui/checkbox"
+import { Skeleton } from "@/components/ui/skeleton"
+import { dataFolders } from "@/features/data"
+import { useData } from "@/features/data/hooks"
+import { useDataSchema } from "@/features/data/hooks/useDataSchema"
+import { getPublicProfile } from "@/features/profiles"
+import { useVerida } from "@/features/verida"
 
 const FolderPage = ({ params }: { params: { folder: string[] } }) => {
-  const { isConnected } = useVerida();
+  const { isConnected } = useVerida()
 
   const folder = useMemo(() => {
-    const folderName = params.folder.join("/");
-    return dataFolders.find((f) => f.name === folderName);
-  }, [params]);
+    const folderName = params.folder.join("/")
+    return dataFolders.find((f) => f.name === folderName)
+  }, [params])
 
   const {
     dataItems: items,
     isDataItemsPending: loading,
     isDataItemsError,
-  } = useData(folder?.database || "");
+  } = useData(folder?.database || "")
 
   const {
     dataSchema,
     isDataSchemaPending: schemaLoading,
     isDataSchemaError,
-  } = useDataSchema(items?.at(0)?.schema || "");
+  } = useDataSchema(items?.at(0)?.schema || "")
 
-  const searchParams = useSearchParams();
+  const searchParams = useSearchParams()
 
-  const itemId = searchParams.get("id");
-  const selectedItem = items?.find((it) => it._id === itemId);
+  const itemId = searchParams.get("id")
+  const selectedItem = items?.find((it) => it._id === itemId)
 
-  const [issuer, setIssuer] = React.useState<any>({});
-  const [isFilterOpen, setIsFilterOpen] = React.useState(false);
+  const [issuer, setIssuer] = React.useState<any>({})
+  const [isFilterOpen, setIsFilterOpen] = React.useState(false)
 
   React.useEffect(() => {
     function parseJwt(token: string) {
-      const base64Url = token.split(".")[1];
-      const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+      const base64Url = token.split(".")[1]
+      const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/")
       const jsonPayload = decodeURIComponent(
         window
           .atob(base64)
           .split("")
           .map(function (c) {
-            return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+            return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2)
           })
           .join("")
-      );
-      console.log("parseJwt", JSON.parse(jsonPayload));
-      return JSON.parse(jsonPayload);
+      )
+      console.log("parseJwt", JSON.parse(jsonPayload))
+      return JSON.parse(jsonPayload)
     }
 
     async function fetchIssuerProfile(did: string) {
-      const profile = await getPublicProfile(did);
-      setIssuer(profile);
+      const profile = await getPublicProfile(did)
+      setIssuer(profile)
     }
 
     selectedItem?.didJwtVc &&
-      fetchIssuerProfile(parseJwt(selectedItem.didJwtVc)?.iss);
-  }, [selectedItem]);
+      fetchIssuerProfile(parseJwt(selectedItem.didJwtVc)?.iss)
+  }, [selectedItem])
 
   return (
     <div className="flex-col py-5">
@@ -212,7 +212,7 @@ const FolderPage = ({ params }: { params: { folder: string[] } }) => {
         folder={folder}
       />
     </div>
-  );
-};
+  )
+}
 
-export default FolderPage;
+export default FolderPage

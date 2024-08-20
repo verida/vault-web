@@ -1,9 +1,9 @@
-import { Spinner } from "../../spinner";
-import { Typography } from "../../typography";
+import { Spinner } from "../../spinner"
+import { Typography } from "../../typography"
 
 interface InboxLoadingProps {
-  title: string;
-  description: string;
+  title: string
+  description: string
 }
 
 export const InboxLoading: React.FC<InboxLoadingProps> = ({
@@ -23,5 +23,5 @@ export const InboxLoading: React.FC<InboxLoadingProps> = ({
         </Typography>
       </div>
     </div>
-  );
-};
+  )
+}

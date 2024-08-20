@@ -1,9 +1,9 @@
-import { Discord } from "@/components/icons/discord";
-import { Linkedin } from "@/components/icons/linkedin";
-import { Medium } from "@/components/icons/medium";
-import { Telegram } from "@/components/icons/telegram";
-import { Twitter } from "@/components/icons/twitter";
-import { Youtube } from "@/components/icons/youtube";
+import { Discord } from "@/components/icons/discord"
+import { Linkedin } from "@/components/icons/linkedin"
+import { Medium } from "@/components/icons/medium"
+import { Telegram } from "@/components/icons/telegram"
+import { Twitter } from "@/components/icons/twitter"
+import { Youtube } from "@/components/icons/youtube"
 
 export const veridaLandingSocials = [
   {
@@ -30,4 +30,4 @@ export const veridaLandingSocials = [
     url: "https://www.linkedin.com/company/verida-technology",
     icon: <Linkedin className="h-5 w-5" />,
   },
-];
+]

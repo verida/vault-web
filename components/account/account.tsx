@@ -1,6 +1,6 @@
-"use client";
+"use client"
 
-import React from "react";
+import React from "react"
 
 import {
   DropdownMenu,
@@ -8,16 +8,16 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { useVerida } from "@/features/verida";
+} from "@/components/ui/dropdown-menu"
+import { useVerida } from "@/features/verida"
 
-import { Copy } from "../icons/copy";
-import { Logout } from "../icons/logout";
-import { SimpleDown } from "../icons/simple-down";
-import { Typography } from "../typography";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { Button } from "../ui/button";
-import { Skeleton } from "../ui/skeleton";
+import { Copy } from "../icons/copy"
+import { Logout } from "../icons/logout"
+import { SimpleDown } from "../icons/simple-down"
+import { Typography } from "../typography"
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar"
+import { Button } from "../ui/button"
+import { Skeleton } from "../ui/skeleton"
 
 const Account = () => {
   const {
@@ -28,7 +28,7 @@ const Account = () => {
     disconnect,
     profile,
     isCheckingConnection,
-  } = useVerida();
+  } = useVerida()
 
   if (!did && !profile && (isCheckingConnection || isConnecting)) {
     return (
@@ -38,7 +38,13 @@ const Account = () => {
           <Skeleton className="h-4 w-[100px]" />
         </div>
       </div>
-    );
+    )
+  }
+
+  const onCopyDid = () => {
+    if (did) {
+      window.navigator.clipboard.writeText(did)
+    }
   }
 
   return !isConnected ? (
@@ -50,43 +56,37 @@ const Account = () => {
   ) : (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <div className="flex h-[56px] cursor-pointer items-center gap-3 rounded-lg border-border md:border md:px-3">
-          <Avatar>
+        <Button variant={"secondary"} className="h-auto gap-2 rounded-lg px-3">
+          <Avatar className="h-8 w-8">
             <AvatarImage
               alt="Avatar"
               src={profile?.avatar?.uri ?? ""}
-              width={40}
-              height={40}
+              width={32}
+              height={32}
             />
-            <AvatarFallback>A</AvatarFallback>
+            <AvatarFallback>{profile?.name[0]?.toUpperCase()}</AvatarFallback>
           </Avatar>
-          <Typography
-            variant="heading-5"
-            className="hidden text-secondary-foreground md:block"
-          >
+          <p className="hidden text-[1rem] font-semibold text-secondary-foreground md:block">
             {profile?.name}
-          </Typography>
+          </p>
           <SimpleDown className="hidden text-secondary-foreground md:block" />
-        </div>
+        </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-72" align="end">
-        <DropdownMenuItem className="gap-3 px-4 py-3">
+      <DropdownMenuContent className="w-80 rounded-xl p-0" align="end">
+        <DropdownMenuItem className="gap-3 px-4 py-3" onClick={onCopyDid}>
           <Avatar>
             <AvatarImage
               alt="Avatar"
               src={profile?.avatar?.uri ?? ""}
-              width={40}
-              height={40}
+              width={48}
+              height={48}
             />
-            <AvatarFallback>A</AvatarFallback>
+            <AvatarFallback>{profile?.name[0]?.toUpperCase()}</AvatarFallback>
           </Avatar>
-          <div className="flex-grow overflow-hidden">
-            <Typography
-              variant="heading-5"
-              className="hidden text-secondary-foreground md:block"
-            >
+          <div className="flex-grow space-y-0.5 overflow-hidden">
+            <p className="text-[1rem] font-semibold text-secondary-foreground">
               {profile?.name}
-            </Typography>
+            </p>
             <Typography
               variant="base-s-regular"
               className="truncate text-secondary-foreground"
@@ -96,19 +96,19 @@ const Account = () => {
           </div>
           <Copy className="flex-shrink-0 cursor-pointer" />
         </DropdownMenuItem>
-        <DropdownMenuSeparator />
+        <DropdownMenuSeparator className="my-0" />
         <DropdownMenuItem
           onClick={() => disconnect()}
-          className="cursor-pointer gap-3 px-4 py-2 text-destructive hover:!text-destructive"
+          className="cursor-pointer gap-3 px-4 py-4 text-destructive hover:!text-destructive"
         >
           <Logout />
           <Typography variant="base-semibold">Sign Out</Typography>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
-  );
-};
+  )
+}
 
-Account.displayName = "Account";
+Account.displayName = "Account"
 
-export { Account };
+export { Account }

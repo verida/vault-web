@@ -1,12 +1,11 @@
-import type { Config } from "tailwindcss";
+import type { Config } from "tailwindcss"
 
 const config = {
   content: [
-    './pages/**/*.{ts,tsx}',
-    './components/**/*.{ts,tsx}',
-    './app/**/*.{ts,tsx}',
-    './src/**/*.{ts,tsx}',
-	],
+    "./components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/**/*.{js,ts,jsx,tsx,mdx}",
+  ],
   prefix: "",
   theme: {
     container: {
@@ -21,8 +20,10 @@ const config = {
     },
     extend: {
       backgroundImage: {
-        "gradient-conic": "conic-gradient(from -90deg at 50.62% 100%, #5354D1 0deg, #F7F8FA 233.99999141693115deg)",
-        "radial-gradient": "radial-gradient(61.06% 61.06% at 50% 50%, #7986F7 0%, #5354D1 100%)",
+        "gradient-conic":
+          "conic-gradient(from -90deg at 50.62% 100%, #5354D1 0deg, #F7F8FA 233.99999141693115deg)",
+        "radial-gradient":
+          "radial-gradient(61.06% 61.06% at 50% 50%, #7986F7 0%, #5354D1 100%)",
       },
       colors: {
         border: "hsl(var(--border))",
@@ -40,14 +41,14 @@ const config = {
           },
         },
         secondary: {
-          DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
-          button: {
+          "DEFAULT": "hsl(var(--secondary))",
+          "foreground": "hsl(var(--secondary-foreground))",
+          "button": {
             DEFAULT: "hsl(var(--secondary-button))",
             hover: "hsl(var(--secondary-button-hover))",
           },
-          'activity-sending': 'hsl(var(--secondary-activity-sending))',
-          'activity-receiving': 'hsl(var(--secondary-activity-receiving))',
+          "activity-sending": "hsl(var(--secondary-activity-sending))",
+          "activity-receiving": "hsl(var(--secondary-activity-receiving))",
         },
         destructive: {
           DEFAULT: "hsl(var(--destructive))",
@@ -99,116 +100,115 @@ const config = {
         sm: "calc(var(--radius) - 4px)",
       },
       boxShadow: {
-        'glow': '0px 0px 4px 0px rgba(83, 84, 209, 0.60)',
-        'card': '8px 16px 40px 0px rgba(180, 183, 205, 0.16)'
+        glow: "0px 0px 4px 0px rgba(83, 84, 209, 0.60)",
+        card: "8px 16px 40px 0px rgba(180, 183, 205, 0.16)",
       },
       fontSize: {
-        'heading-1': [
+        "heading-1": [
           "2rem",
           {
             lineHeight: "130%",
-            fontWeight: "700"
-          }
+            fontWeight: "700",
+          },
         ],
-        'heading-2': [
+        "heading-2": [
           "1.5rem",
           {
             lineHeight: "140%",
-            fontWeight: "600"
-          }
+            fontWeight: "600",
+          },
         ],
-        'heading-3': [
+        "heading-3": [
           "1.25rem",
           {
             lineHeight: "140%",
-            fontWeight: "600"
-          }
+            fontWeight: "600",
+          },
         ],
-        'heading-4': [
+        "heading-4": [
           "1.125rem",
           {
             lineHeight: "140%",
-            fontWeight: "600"
-          }
+            fontWeight: "600",
+          },
         ],
-        'heading-5': [
+        "heading-5": [
           "1rem",
           {
             lineHeight: "140%",
-            fontWeight: "600"
-          }
+            fontWeight: "600",
+          },
         ],
-        'base-l': [
+        "base-l": [
           "1rem",
           {
             lineHeight: "140%",
-            fontWeight: "400"
-          }
+            fontWeight: "400",
+          },
         ],
-        'base-s-regular': [
+        "base-s-regular": [
           "0.75rem",
           {
             lineHeight: "140%",
-            fontWeight: "400"
-          }
+            fontWeight: "400",
+          },
         ],
-        'base-s-semibold': [
+        "base-s-semibold": [
           "0.75rem",
           {
             lineHeight: "140%",
-            fontWeight: "600"
-          }
+            fontWeight: "600",
+          },
         ],
-        'base-regular': [
+        "base-regular": [
           "0.875rem",
           {
             lineHeight: "140%",
-            fontWeight: "400"
-          }
+            fontWeight: "400",
+          },
         ],
-        'base-semibold': [
+        "base-semibold": [
           "0.875rem",
           {
             lineHeight: "140%",
-            fontWeight: "600"
-          }
+            fontWeight: "600",
+          },
         ],
-        'desktop-heading-1': [
+        "desktop-heading-1": [
           "2.5rem",
           {
             lineHeight: "130%",
-            fontWeight: "700"
-          }
+            fontWeight: "700",
+          },
         ],
-        'desktop-heading-2': [
+        "desktop-heading-2": [
           "2rem",
           {
             lineHeight: "140%",
-            fontWeight: "600"
-          }
+            fontWeight: "600",
+          },
         ],
-        'desktop-heading-3': [
+        "desktop-heading-3": [
           "1.5rem",
           {
             lineHeight: "140%",
-            fontWeight: "600"
-          }
+            fontWeight: "600",
+          },
         ],
-        'desktop-heading-4': [
+        "desktop-heading-4": [
           "1.25rem",
           {
             lineHeight: "140%",
-            fontWeight: "600"
-          }
+            fontWeight: "600",
+          },
         ],
-        'desktop-heading-5': [
+        "desktop-heading-5": [
           "1rem",
           {
             lineHeight: "140%",
-            fontWeight: "600"
-          }
+            fontWeight: "600",
+          },
         ],
-        
       },
       keyframes: {
         "accordion-down": {
@@ -227,6 +227,6 @@ const config = {
     },
   },
   plugins: [require("tailwindcss-animate")],
-} satisfies Config;
+} satisfies Config
 
-export default config;
+export default config

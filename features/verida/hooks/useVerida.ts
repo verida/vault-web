@@ -1,11 +1,11 @@
-import { useContext } from "react";
+import { useContext } from "react"
 
-import { VeridaContext } from "../contexts";
+import { VeridaContext } from "../contexts"
 
 export const useVerida = () => {
-  const context = useContext(VeridaContext);
+  const context = useContext(VeridaContext)
   if (context === null) {
-    throw new Error("useVerida must be used within a VeridaProvider");
+    throw new Error("useVerida must be used within a VeridaProvider")
   }
-  return context;
-};
+  return context
+}
