@@ -8,6 +8,9 @@ export const useDataSchema = (schemaUrl?: string) => {
     if (!schemaUrl) return
     else {
       const res = await fetch(schemaUrl, { method: "GET" })
+      if (!res.ok) {
+        throw new Error("Failed to fetch schema")
+      }
       const schema: DataSchema = await res.json()
       schema.properties = (schema as any).allOf[1].properties
       return schema
