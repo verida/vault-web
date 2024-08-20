@@ -40,7 +40,7 @@ const FolderPage = ({ params }: { params: { folder: string[] } }) => {
     dataItems: items,
     isDataItemsPending: loading,
     isDataItemsError,
-  } = useData(folder?.database || "")
+  } = useData<any>(folder?.database || "") // TODO: Properly type
 
   const {
     dataSchema,

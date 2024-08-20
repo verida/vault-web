@@ -1,10 +1,10 @@
 import { useQuery } from "@tanstack/react-query"
 import { useCallback } from "react"
 
-import { useVerida } from "@/features/verida"
+import { VeridaRecord, useVerida } from "@/features/verida"
 
-export const useData = (database: string) => {
-  const { webUserInstanceRef, isConnected } = useVerida()
+export function useData<TData = VeridaRecord>(database: string) {
+  const { did, webUserInstanceRef, isConnected } = useVerida()
 
   const fetchDataItems = useCallback(async () => {
     if (!isConnected) {
@@ -13,10 +13,9 @@ export const useData = (database: string) => {
     try {
       const db = await webUserInstanceRef.current?.openDatabase(database)
 
-      const fetchedItems: any[] = await db?.getMany(null, null)
+      const fetchedItems: TData[] = (await db?.getMany(null, null)) as TData[]
       return fetchedItems || []
     } catch (error) {
-      console.error(error)
       return []
     }
   }, [database, webUserInstanceRef, isConnected])
@@ -26,21 +25,23 @@ export const useData = (database: string) => {
     isPending: isDataItemsPending,
     isError: isDataItemsError,
   } = useQuery({
-    queryKey: ["data", "item", database],
+    queryKey: [did, "data", database, "item"],
     queryFn: fetchDataItems,
-    enabled: isConnected,
+    enabled: isConnected && !!did,
   })
 
   const fetchDataItemsCount = useCallback(async () => {
-    if (!isConnected) return 0
+    if (!isConnected) {
+      return 0
+    }
+
     try {
       const db = await webUserInstanceRef.current?.openDatabase(database)
 
       const fetchedItems = await db?.getMany(null, null)
       return fetchedItems?.length || 0
     } catch (error) {
-      console.error(error)
-      return []
+      return 0
     }
   }, [database, webUserInstanceRef, isConnected])
 
@@ -49,9 +50,9 @@ export const useData = (database: string) => {
     isPending: isDataItemsCountPending,
     isError: isDataItemsCountError,
   } = useQuery({
-    queryKey: ["data", "count", database],
+    queryKey: [did, "data", database, "count"],
     queryFn: fetchDataItemsCount,
-    enabled: isConnected,
+    enabled: isConnected && !!did,
   })
 
   return {
