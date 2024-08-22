@@ -1,11 +1,12 @@
 import React from "react"
 
+import { AssistantChatMessage } from "@/app/(root)/assistant/[chatId]/_components/assistant-chat-message"
 import { ScrollArea } from "@/components/ui/scroll-area"
-import { AssistantChatMessage } from "@/features/assistant/types"
+import { AssistantChatMessage as AssistantChatMessageType } from "@/features/assistant/types"
 import { cn } from "@/lib/utils"
 
 export type AssistantChatMessagesListProps = {
-  messages: AssistantChatMessage[]
+  messages: AssistantChatMessageType[]
 } & Omit<React.ComponentProps<typeof ScrollArea>, "children">
 
 export function AssistantChatMessagesList(
@@ -15,12 +16,10 @@ export function AssistantChatMessagesList(
 
   return (
     <ScrollArea className={cn("w-full", className)} {...scrollAreaProps}>
-      <ol className="flex flex-col gap-3">
+      <ol className="flex flex-col gap-3 sm:gap-4">
         {messages.map((message, index) => (
           <li key={index}>
-            <div className="rounded-xl border bg-white p-4">
-              <p>{message.content}</p>
-            </div>
+            <AssistantChatMessage message={message} />
           </li>
         ))}
       </ol>
