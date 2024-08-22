@@ -43,7 +43,10 @@ export default function AssistantChatPage() {
 
   return (
     <div className="flex flex-1 flex-col justify-between gap-4">
-      <AssistantChatMessagesList messages={chat.messages} className="flex-1" />
+      <AssistantChatMessagesList
+        messages={chat.messages}
+        className="flex-grow"
+      />
       <AssistantChatInput onSendMessage={handleSendMessage} />
     </div>
   )
