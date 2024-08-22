@@ -5,8 +5,6 @@ import { usePathname } from "next/navigation"
 import { useState } from "react"
 
 import { Account } from "@/components/account/account"
-// import { Connection } from "@/components/icons/connection"
-import { Data } from "@/components/icons/data"
 import { Logo } from "@/components/logo"
 import {
   NavigationMenu,
@@ -14,29 +12,12 @@ import {
   NavigationMenuList,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu"
+import { NAV_ROUTES } from "@/features/routes/constants"
 import { cn } from "@/lib/utils"
 
 import { Close } from "./icons/close"
 import { Hamburger } from "./icons/hamburger"
-import { InboxWithBadge } from "./icons/inbox-with-badge"
 
-const headerNavs = [
-  {
-    icon: <InboxWithBadge />,
-    title: "Inbox",
-    href: "/inbox",
-  },
-  {
-    icon: <Data />,
-    title: "Data",
-    href: "/data",
-  },
-  // {
-  //   icon: <Connection />,
-  //   title: "Connections",
-  //   href: "/connections",
-  // },
-]
 export const Navbar = () => {
   const path = usePathname()
   const [isMenuOpened, setIsMenuOpened] = useState<boolean>(false)
@@ -48,8 +29,8 @@ export const Navbar = () => {
           <Logo />
           <NavigationMenu className="hidden md:flex">
             <NavigationMenuList className="space-x-2">
-              {headerNavs.map((nav) => (
-                <NavigationMenuItem key={`nav-menu-item-${nav.title}`}>
+              {NAV_ROUTES.map((nav) => (
+                <NavigationMenuItem key={nav.href}>
                   <Link
                     href={nav.href}
                     className={cn(
@@ -91,8 +72,8 @@ export const Navbar = () => {
         <div className="fixed bottom-0 left-0 right-0 top-[72px] bg-primary">
           <NavigationMenu orientation="vertical">
             <NavigationMenuList className="px-2" orientation="vertical">
-              {headerNavs.map((nav) => (
-                <NavigationMenuItem key={`nav-menu-item-${nav.title}`}>
+              {NAV_ROUTES.map((nav) => (
+                <NavigationMenuItem key={nav.href}>
                   <Link
                     href={nav.href}
                     className={cn(
