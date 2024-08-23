@@ -33,8 +33,10 @@ function AssistantChatAssistantMessage(
   return (
     <div className="text-start">
       <div className="flex flex-row gap-3 rounded-xl border bg-white p-4 sm:gap-4">
-        <Avatar className="size-6">
-          <AvatarFallback className="text-xs">AI</AvatarFallback>
+        <Avatar className="size-6 sm:size-8">
+          <AvatarFallback className="bg-ai-assistant-gradient text-xs text-white">
+            AI
+          </AvatarFallback>
         </Avatar>
         <Typography variant="base-regular">{message.content}</Typography>
       </div>
