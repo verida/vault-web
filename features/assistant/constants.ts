@@ -1,1 +1,6 @@
 export const NEW_CHAT_ID = `new`
+
+export const RECOMMENDED_PROMPTS_FOR_NEW_CHAT = [
+  "Extract action items from unread emails",
+  "Recommend products based on my purchase history",
+]
