@@ -1,5 +1,6 @@
+import { VeridaNetworkLogo } from "@/components/icons/verida-network-logo"
 import { Typography } from "@/components/typography"
-import { Avatar, AvatarFallback } from "@/components/ui/avatar"
+import { Avatar } from "@/components/ui/avatar"
 import { AssistantChatMessage as AssistantChatMessageType } from "@/features/assistant/types"
 import { cn } from "@/lib/utils"
 
@@ -33,10 +34,8 @@ function AssistantChatAssistantMessage(
   return (
     <div className="text-start">
       <div className="flex flex-row gap-3 rounded-xl border bg-white p-4 sm:gap-4">
-        <Avatar className="size-6 sm:size-8">
-          <AvatarFallback className="bg-ai-assistant-gradient text-xs text-white">
-            AI
-          </AvatarFallback>
+        <Avatar className="size-6 bg-ai-assistant-gradient p-1 text-white sm:size-8">
+          <VeridaNetworkLogo className="size-4 sm:size-6" />
         </Avatar>
         <Typography variant="base-regular">{message.content}</Typography>
       </div>
