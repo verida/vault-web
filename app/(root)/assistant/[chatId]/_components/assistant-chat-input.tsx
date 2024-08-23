@@ -30,6 +30,7 @@ export function AssistantChatInput(props: AssistantChatInputProps) {
     []
   )
 
+  // TODO: Handle Enter and Shift+Enter key press. Define which key combination does what: send the message or add a new line.
   const handleSendClick = useCallback(() => {
     onSendMessage?.(message)
     setMessage("")
