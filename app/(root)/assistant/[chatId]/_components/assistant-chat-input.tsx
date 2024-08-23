@@ -1,6 +1,12 @@
 "use client"
 
-import React, { ChangeEventHandler, useCallback, useState } from "react"
+import React, {
+  ChangeEventHandler,
+  useCallback,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react"
 
 import { SendIcon } from "@/components/icons/send-icon"
 import { Button } from "@/components/ui/button"
@@ -12,6 +18,8 @@ export type AssistantChatInputProps = {
 
 export function AssistantChatInput(props: AssistantChatInputProps) {
   const { onSendMessage, ...divProps } = props
+
+  const inputRef = useRef<HTMLInputElement>(null)
 
   const [message, setMessage] = useState("")
 
@@ -27,9 +35,14 @@ export function AssistantChatInput(props: AssistantChatInputProps) {
     setMessage("")
   }, [onSendMessage, message])
 
+  useLayoutEffect(() => {
+    inputRef.current?.focus()
+  }, [])
+
   return (
     <div {...divProps}>
       <Input
+        ref={inputRef}
         // TODO: Replace by a text area
         placeholder="Type your prompt here"
         value={message}
