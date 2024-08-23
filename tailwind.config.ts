@@ -5,6 +5,7 @@ const config = {
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/**/*.{js,ts,jsx,tsx,mdx}",
+    "./features/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   prefix: "",
   theme: {
@@ -24,6 +25,8 @@ const config = {
           "conic-gradient(from -90deg at 50.62% 100%, #5354D1 0deg, #F7F8FA 233.99999141693115deg)",
         "radial-gradient":
           "radial-gradient(61.06% 61.06% at 50% 50%, #7986F7 0%, #5354D1 100%)",
+        "ai-assistant-gradient":
+          "radial-gradient(156.1% 83.05% at 27.07% 13.07%, #D14DF1 0%, #7755F1 44.01%, #37E0C9 100%)",
       },
       colors: {
         border: "hsl(var(--border))",
