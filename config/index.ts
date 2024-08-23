@@ -33,6 +33,9 @@ const veridaEnvironment: EnvironmentType =
 const veridaRpcUrl =
   "https://polygon-mumbai.g.alchemy.com/v2/Q4NRuRlwTNyI90dDCgiX_KT_vS_2gpbN"
 
+/**
+ * @deprecated as we have to be careful between server and client side env vars
+ */
 export const config = {
   appVersion: version,
   devMode,
@@ -43,5 +46,14 @@ export const config = {
     contextName: veridaContextName,
     connectLogoUrl: veridaConnectLogoUrl,
     rpcUrl: veridaRpcUrl,
+  },
+}
+
+// Basic feature flags for now
+// But likely to stay as a separate global variable like this
+// TODO: To integrate with the env vars processing and validation
+export const featureFlags = {
+  assistant: {
+    enabled: process.env.NEXT_PUBLIC_FEATURE_FLAG_ASSISTANT === "true",
   },
 }

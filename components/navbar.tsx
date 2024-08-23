@@ -47,7 +47,7 @@ export const Navbar = () => {
                   >
                     <div className="flex items-center gap-2">
                       {nav.icon}
-                      {nav.title}
+                      {nav.label}
                     </div>
                   </Link>
                 </NavigationMenuItem>
@@ -90,7 +90,7 @@ export const Navbar = () => {
                   >
                     <div className="flex items-center gap-2">
                       {nav.icon}
-                      {nav.title}
+                      {nav.label}
                     </div>
                   </Link>
                 </NavigationMenuItem>
