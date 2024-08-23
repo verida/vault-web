@@ -54,6 +54,7 @@ export const config = {
 // TODO: To integrate with the env vars processing and validation
 export const featureFlags = {
   assistant: {
-    enabled: process.env.NEXT_PUBLIC_FEATURE_FLAG_ASSISTANT === "true",
+    enabled:
+      process.env.NEXT_PUBLIC_FEATURE_FLAG_AI_ASSISTANT_ENABLED === "true",
   },
 }
