@@ -12,7 +12,11 @@ import {
 export const NAV_ROUTES = [
   {
     icon: <AiAssistantIcon />,
-    title: "AI Assistant",
+    title: (
+      <span className="bg-ai-assistant-gradient bg-clip-text text-transparent">
+        AI Assistant
+      </span>
+    ),
     href: getAssistantPageRoute(),
   },
   {
