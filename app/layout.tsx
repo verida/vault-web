@@ -3,6 +3,7 @@ import { Sora } from "next/font/google"
 
 import { config } from "@/config"
 import { APP_DESCRIPTION, APP_NAME, APP_TITLE } from "@/constants/app"
+import { cn } from "@/lib/utils"
 
 import "./globals.css"
 import { Providers } from "./providers"
@@ -29,14 +30,16 @@ export const metadata: Metadata = {
   },
 }
 
-export default function RootLayout({
-  children,
-}: {
+type RootLayoutProps = {
   children: React.ReactNode
-}) {
+}
+
+export default function RootLayout(props: RootLayoutProps) {
+  const { children } = props
+
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={sora.className}>
+      <body className={cn("h-dvh", sora.className)}>
         <Providers>{children}</Providers>
       </body>
     </html>
