@@ -36,6 +36,7 @@ UI and Styling
 - Implement responsive design with Tailwind CSS; use a mobile-first approach.
 - This app has a custom design system, so the Shadcn UI components should be customised to fit the design system.
 - When refactoring code, be mindful of some of the classes that are already applied to the components, only add or remove classes necessary for the tasks, be careful of not loosing some of the styles (for example paddings, border radius, color, etc.).
+- With Tailwind, do not use the `dark:` prefix for the dark mode classes as we use CSS variables for the colors that are automatically overridden when the theme is changed.
 
 Performance Optimization
 
