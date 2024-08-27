@@ -4,7 +4,7 @@ import { type DatastoreOpenConfig, type IDatastore } from "@verida/types"
 import { WebUser } from "@verida/web-helpers"
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"
 
-import { clientEnvVars } from "@/config/client"
+import { clientConfig } from "@/config/client"
 import { getPublicProfile } from "@/features/profiles"
 import { PublicProfile } from "@/features/profiles/@types"
 import { Logger } from "@/features/telemetry"
@@ -17,12 +17,12 @@ import {
 const logger = Logger.create("Verida")
 
 const webUserInstance = new WebUser({
-  debug: clientEnvVars.NEXT_PUBLIC_VERIDA_DEBUG === "true",
+  debug: clientConfig.DEBUG_MODE,
   clientConfig: {
-    environment: clientEnvVars.NEXT_PUBLIC_VERIDA_NETWORK,
+    environment: clientConfig.VERIDA_NETWORK,
     didClientConfig: {
-      network: clientEnvVars.NEXT_PUBLIC_VERIDA_NETWORK,
-      rpcUrl: clientEnvVars.NEXT_PUBLIC_VERIDA_RPC_URL,
+      network: clientConfig.VERIDA_NETWORK,
+      rpcUrl: clientConfig.VERIDA_RPC_URL,
     },
   },
   contextConfig: {
@@ -30,9 +30,9 @@ const webUserInstance = new WebUser({
   },
   accountConfig: {
     request: {
-      logoUrl: `${clientEnvVars.NEXT_PUBLIC_VERIDA_URL}/images/verida_vault_logo_for_connect.png`,
+      logoUrl: `${clientConfig.BASE_URL}/images/verida_vault_logo_for_connect.png`,
     },
-    environment: clientEnvVars.NEXT_PUBLIC_VERIDA_NETWORK,
+    environment: clientConfig.VERIDA_NETWORK,
   },
 })
 

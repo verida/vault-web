@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 import { Sora } from "next/font/google"
 
-import { serverEnvVars } from "@/config/server"
+import { serverConfig } from "@/config/server"
 import { APP_DESCRIPTION, APP_NAME, APP_TITLE } from "@/constants/app"
 
 import "./globals.css"
@@ -9,7 +9,7 @@ import { Providers } from "./providers"
 
 const sora = Sora({ subsets: ["latin"] })
 
-const baseUrl = serverEnvVars.NEXT_PUBLIC_BASE_URL
+const baseUrl = serverConfig.BASE_URL
 
 export const metadata: Metadata = {
   title: APP_TITLE,

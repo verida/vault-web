@@ -1,10 +1,8 @@
 /* eslint-disable no-console */
-import { clientEnvVars } from "@/config/client"
+import { clientConfig } from "@/config/client"
 import { LogLevel } from "@/features/telemetry/types"
 
 const levelOrder: LogLevel[] = ["error", "warn", "info", "debug"]
-
-const isClient = typeof window !== "undefined"
 
 /**
  * Custom logger to use the console.
@@ -16,7 +14,7 @@ const isClient = typeof window !== "undefined"
 export class Logger {
   private static instances = new Map<string, Logger>()
   private static currentLevelIndex: number = levelOrder.indexOf(
-    clientEnvVars.NEXT_PUBLIC_LOG_LEVEL
+    clientConfig.LOG_LEVEL
   )
 
   private readonly category: string
@@ -51,7 +49,7 @@ export class Logger {
   private shouldSkipPrint(level: LogLevel) {
     return (
       levelOrder.indexOf(level) > Logger.currentLevelIndex ||
-      (isClient && !clientEnvVars.NEXT_PUBLIC_DEBUG_MODE)
+      (clientConfig.isClient && !clientConfig.DEBUG_MODE)
     )
   }
 
