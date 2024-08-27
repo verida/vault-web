@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button"
 import { ButtonLink } from "@/components/ui/button-link"
 import { useInboxAction } from "@/features/inbox/hooks/useInboxAction"
 import { InboxType } from "@/features/inbox/types"
+import { Logger } from "@/features/telemetry"
 
 import { DataRequestItem } from "../data-request-item"
 import { InboxDetailsProps } from "../inbox-details"
@@ -20,6 +21,8 @@ import { RequesterProfile } from "../requester-profile"
 import { InboxError } from "../status/inbox-error"
 import { InboxLoading } from "../status/inbox-loading"
 import { InboxSuccess } from "../status/inbox-success"
+
+const logger = Logger.create("Inbox")
 
 // TODO: Use custom logger and remove this eslint by-pass
 /* eslint-disable no-console */
@@ -45,8 +48,8 @@ export const DataRequestDetails: React.FC<InboxDetailsProps> = ({
       setShared(false)
       await handleAccept(message, InboxType.DATA_REQUEST, selectedItems)
       setShared(true)
-    } catch (err) {
-      console.log(err)
+    } catch (error) {
+      logger.error(error)
     }
   }
 
@@ -66,8 +69,8 @@ export const DataRequestDetails: React.FC<InboxDetailsProps> = ({
             description: res.description,
           })
         })
-    } catch (err) {
-      console.log("error", err)
+    } catch (error) {
+      logger.error(error)
     }
   }, [data])
 

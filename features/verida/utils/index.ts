@@ -1,6 +1,6 @@
 import { type WebUser } from "@verida/web-helpers"
 
-import { Logger } from "@/features/logger"
+import { Logger } from "@/features/telemetry"
 import {
   SendDataRequestData,
   type SendDataRequestOptions,
@@ -13,7 +13,7 @@ import {
   VeridaMessageType,
 } from "@/features/verida"
 
-const logger = new Logger("verida")
+const logger = Logger.create("Verida")
 
 export function truncateDid(
   did: string,

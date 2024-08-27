@@ -11,13 +11,13 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { Logger } from "@/features/logger"
 import { getPublicProfile } from "@/features/profiles"
 import { PublicProfile } from "@/features/profiles/@types"
-
+import { Logger } from "@/features/telemetry"
 import {
   CLEAR_SESSION_AFTER_MAINNET_UPGRADE_LOCAL_STORAGE_KEY,
   VERIDA_CONNECT_SESSION_LOCAL_STORAGE_KEY,
 } from "../constants"
 
-const logger = new Logger("verida")
+const logger = Logger.create("Verida")
 
 const webUserInstance = new WebUser({
   debug: true,

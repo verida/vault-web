@@ -3,6 +3,7 @@ import moment from "moment"
 import Image from "next/image"
 import { useCallback, useEffect, useState } from "react"
 
+import { Logger } from "@/features/telemetry"
 import { useVerida } from "@/features/verida"
 
 import Alert from "../alert"
@@ -18,6 +19,8 @@ import {
   DrawerHeader,
   DrawerTitle,
 } from "../ui/drawer"
+
+const logger = Logger.create("Inbox")
 
 interface RequestDataSelectorProps {
   schemaUrl: string
@@ -68,10 +71,8 @@ export const RequestDataSelector: React.FC<RequestDataSelectorProps> = (
         const result = await datastore?.getMany(query, undefined)
 
         return result
-      } catch (err) {
-        // TODO: Use custom logger and remove this eslint by-pass
-        // eslint-disable-next-line no-console
-        console.log("error", err)
+      } catch (error) {
+        logger.error(error)
       }
     },
     [filter, openDatastore, schemaUrl]
