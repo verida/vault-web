@@ -4,6 +4,8 @@ import { LogLevel } from "@/features/telemetry/types"
 
 const levelOrder: LogLevel[] = ["error", "warn", "info", "debug"]
 
+const isClient = typeof window !== "undefined"
+
 /**
  * Custom logger to use the console.
  *
@@ -47,7 +49,10 @@ export class Logger {
   }
 
   private shouldSkipPrint(level: LogLevel) {
-    return levelOrder.indexOf(level) > Logger.currentLevelIndex
+    return (
+      levelOrder.indexOf(level) > Logger.currentLevelIndex ||
+      (isClient && !clientEnvVars.NEXT_PUBLIC_DEBUG_MODE)
+    )
   }
 
   private formatMessage(message: string) {
@@ -63,10 +68,6 @@ export class Logger {
       return
     }
 
-    if (!clientEnvVars.NEXT_PUBLIC_DEBUG_MODE) {
-      return
-    }
-
     const formattedMessage = this.formatMessage(message)
 
     const formattedExtra: Record<string, unknown>[] = []
@@ -78,10 +79,14 @@ export class Logger {
   }
 
   public error(error: Error | unknown) {
+    if (this.shouldSkipPrint("error")) {
+      return
+    }
+
     // Log the error message with the formatting (timestamp, category)
     this.log("error", error instanceof Error ? error.message : "")
 
-    // Use the standard error logging
+    // Use the standard error logging for the rest of the Error object
     console.error(error)
   }
 
