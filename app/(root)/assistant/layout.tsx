@@ -14,7 +14,7 @@ export default function AssistantLayout(props: AssistantLayoutProps) {
   const { children } = props
 
   return (
-    <div className="flex flex-1 flex-col gap-6 pt-10">
+    <div className="flex h-full flex-col gap-6">
       <div className="flex flex-row items-center justify-between">
         <Typography variant="heading-3">AI Assistant</Typography>
         <div className="flex flex-row items-center gap-2 sm:gap-3">
