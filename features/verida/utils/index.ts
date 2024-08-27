@@ -8,8 +8,8 @@ import {
   type SendSimpleMessageOptions,
   type SentMessage,
   SimpleMessage,
-  VAULT_CONTEXT_NAME,
   VERIDA_DID_REGEXP,
+  VERIDA_VAULT_CONTEXT_NAME,
   VeridaMessageType,
 } from "@/features/verida"
 
@@ -72,7 +72,7 @@ export async function sendDataRequest(
     dataToSend,
     opts.messageSubject,
     {
-      recipientContextName: VAULT_CONTEXT_NAME,
+      recipientContextName: VERIDA_VAULT_CONTEXT_NAME,
       did,
     }
   )
@@ -107,7 +107,7 @@ export async function sendMessage(
   }
 
   const targetDid = options.targetDid || userDid
-  const targetContext = options.targetContext || VAULT_CONTEXT_NAME
+  const targetContext = options.targetContext || VERIDA_VAULT_CONTEXT_NAME
 
   logger.info("Sending message", {
     did: userDid,
