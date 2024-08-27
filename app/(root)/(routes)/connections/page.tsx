@@ -35,7 +35,7 @@ const MarketingPage = () => {
   )
 
   return (
-    <div className="flex flex-col py-10">
+    <div className="flex flex-col pb-10">
       <div className="flex flex-col items-center justify-between md:flex-row">
         <h1 className="text-2xl font-medium">Discover Connections</h1>
         <nav className="flex w-full space-x-3 md:w-auto">
