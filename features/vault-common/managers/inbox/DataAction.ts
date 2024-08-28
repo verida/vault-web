@@ -2,6 +2,9 @@ import { Messaging } from "../../interfaces/Verida"
 import { InboxEntry } from "../../interfaces/inbox/Inbox"
 import Vault from "../../vault"
 
+/**
+ * @deprecated
+ */
 export abstract class DataAction {
   protected readonly vaultCommon: Vault
   protected readonly inboxEntry: InboxEntry

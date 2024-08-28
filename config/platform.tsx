@@ -5,6 +5,7 @@ import { Telegram } from "@/components/icons/telegram"
 import { Twitter } from "@/components/icons/twitter"
 import { Youtube } from "@/components/icons/youtube"
 
+// TODO: Move to an appropriate feature folder
 export const veridaLandingSocials = [
   {
     url: "https://twitter.com/verida_io",

@@ -1,28 +1,56 @@
-// import type { CaptureContext } from '@sentry/types'
-// import { config } from 'config'
-// import { LogLevel, Sentry } from 'features/telemetry'
+/* eslint-disable no-console */
+import { clientConfig } from "@/config/client"
+import { LogLevel } from "@/features/telemetry/types"
+
+const levelOrder: LogLevel[] = ["error", "warn", "info", "debug"]
 
 /**
- * Custom logger to use the console and/or add a breadcrumb to Sentry.
+ * Custom logger to use the console.
  *
- * The log level can be configured globally with the environment variable `LOG_LEVEL`.
+ * The log level can be configured globally with the environment variable.
  *
- * The console will be used if in `__DEV__` mode
- *
- * A Sentry breadcrumb will be added for the 'info' and 'warn' level.
- *
- * For `logger.error`, the error will be captured with `Sentry.captureException`.
+ * The console will be used if in "dev" mode which is also defined by an environment variable.
  */
 export class Logger {
+  private static instances = new Map<string, Logger>()
+  private static currentLevelIndex: number = levelOrder.indexOf(
+    clientConfig.LOG_LEVEL
+  )
+
   private readonly category: string
+
+  private constructor(category: string) {
+    this.category = category
+  }
 
   /**
    * Creates a new instance of the logger.
    *
-   * @param category Used to prefix the message in the console. For instance, set "Polygon ID" for everything related to Polygon ID. Note, the category is also pass into the Sentry breadcrumb, so avoid filename and/or function names, stay high level, by feature.
+   * @param category Used to prefix the message in the console.
    */
-  constructor(category: string) {
-    this.category = category
+  static create(category: string) {
+    if (Logger.instances.has(category)) {
+      return Logger.instances.get(category)!
+    }
+    const logger = new Logger(category)
+    Logger.instances.set(category, logger)
+    return logger
+  }
+
+  /**
+   * Sets the log level for all instances at runtime.
+   *
+   * @param level The log level to set.
+   */
+  static setLogLevel(level: LogLevel) {
+    Logger.currentLevelIndex = levelOrder.indexOf(level)
+  }
+
+  private shouldSkipPrint(level: LogLevel) {
+    return (
+      levelOrder.indexOf(level) > Logger.currentLevelIndex ||
+      (clientConfig.isClient && !clientConfig.DEBUG_MODE)
+    )
   }
 
   private formatMessage(message: string) {
@@ -30,72 +58,34 @@ export class Logger {
   }
 
   private log(
-    level: string,
+    level: LogLevel,
     message: string,
-    data?: Record<string, unknown>,
-    error?: Error | unknown
+    extra?: Record<string, unknown>
   ) {
-    // if (levelOrder.indexOf(level) > currentLogLevelIndex) {
-    //   return
-    // }
-
-    // if (config.sentry.enabled && (level === 'warn' || level === 'info')) {
-    //   Sentry.addBreadcrumb({
-    //     category: this.category,
-    //     level: sentryLevelMapping[level],
-    //     message,
-    //     data,
-    //   })
-    // }
-
-    if (process.env.NODE_ENV === "production") {
-      // Skip `console` if not in dev mode
+    if (this.shouldSkipPrint(level)) {
       return
     }
 
     const formattedMessage = this.formatMessage(message)
 
-    const extra = []
-    if (data) extra.push(data)
-
-    // eslint-disable-next-line no-console
-    console.log(formattedMessage, ...extra)
-
-    if (error instanceof Error && error.stack) {
-      // eslint-disable-next-line no-console
-      console.log(error.stack)
+    const formattedExtra: Record<string, unknown>[] = []
+    if (extra) {
+      formattedExtra.push(extra)
     }
 
-    if (error instanceof Error && error.cause) {
-      this.log(
-        level,
-        `Caused by: ${error.cause instanceof Error ? error.cause.message : ""}`,
-        undefined,
-        error.cause
-      )
-    }
+    console[level](formattedMessage, ...formattedExtra)
   }
 
   public error(error: Error | unknown) {
-    // if (config.sentry.enabled) {
-    //   Sentry.captureException(error, {
-    //     ...sentryCaptureContext,
-    //     tags: {
-    //       // For some reason the `tags` property is not recognise while clearly defined. Not a big deal to ignore the warning given how we use this property here
-    //       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    //       // @ts-ignore
-    //       ...sentryCaptureContext?.tags,
-    //       feature: this.category,
-    //     },
-    //   })
-    // }
+    if (this.shouldSkipPrint("error")) {
+      return
+    }
 
-    this.log(
-      "error",
-      error instanceof Error ? error.message : "",
-      undefined,
-      error
-    )
+    // Log the error message with the formatting (timestamp, category)
+    this.log("error", error instanceof Error ? error.message : "")
+
+    // Use the standard error logging for the rest of the Error object
+    console.error(error)
   }
 
   public warn(message: string, data?: Record<string, unknown>) {
@@ -108,5 +98,36 @@ export class Logger {
 
   public debug(message: string, data?: Record<string, unknown>) {
     this.log("debug", message, data)
+  }
+
+  public startTimer(label: string) {
+    if (this.shouldSkipPrint("debug")) {
+      return () => this.endTimer(label)
+    }
+    this.debug(`Starting timer: ${label}`)
+    console.time(label)
+    return () => this.endTimer(label)
+  }
+
+  public logTimer(label: string, ...extra: string[]) {
+    if (this.shouldSkipPrint("debug")) {
+      return
+    }
+    console.timeLog(label, extra)
+  }
+
+  public endTimer(label: string) {
+    if (this.shouldSkipPrint("debug")) {
+      return
+    }
+    console.timeEnd(label)
+    this.debug(`Timer ended: ${label}`)
+  }
+
+  public table(data: unknown[], properties?: string[]) {
+    if (this.shouldSkipPrint("debug")) {
+      return
+    }
+    console.table(data, properties)
   }
 }

@@ -3,10 +3,13 @@ import { Logger } from "@/features/telemetry"
 import { InboxResponse, InboxType } from "../../interfaces/inbox/Inbox"
 import { DataAction } from "./DataAction"
 
-const logger = new Logger("InboxDataRequest")
+const logger = Logger.create("InboxDataRequest")
 
 const MSG = "Send you the requested data"
 
+/**
+ * @deprecated
+ */
 export class Request extends DataAction {
   async accept() {
     logger.debug("Accepting data request")
