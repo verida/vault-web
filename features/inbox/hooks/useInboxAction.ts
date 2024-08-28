@@ -1,10 +1,13 @@
 import { useQueryClient } from "@tanstack/react-query"
 import { useCallback, useState } from "react"
 
+import { Logger } from "@/features/telemetry"
 import { useVerida } from "@/features/verida"
 
 import { InboxEntry, InboxType } from "../types"
 import { useInboxContext } from "./useInboxContext"
+
+const logger = Logger.create("Inbox")
 
 export const useInboxAction = () => {
   const { openDatastore } = useVerida()
@@ -94,12 +97,10 @@ export const useInboxAction = () => {
         await inbox.privateInbox.save(inboxEntry)
         queryClient.invalidateQueries({ queryKey: ["inbox", "messages"] })
         setIsLoading(false)
-      } catch (err) {
+      } catch (error) {
         setIsLoading(false)
         setIsError(true)
-        // TODO: Use custom logger and remove this eslint by-pass
-        // eslint-disable-next-line no-console
-        console.log(err)
+        logger.error(error)
       }
     },
     [openDatastore, messagingEngine, queryClient]
@@ -123,9 +124,10 @@ export const useInboxAction = () => {
         await inbox.privateInbox.save(inboxEntry)
         queryClient.invalidateQueries({ queryKey: ["inbox", "messages"] })
         setIsLoading(false)
-      } catch (err) {
+      } catch (error) {
         setIsLoading(false)
         setIsError(true)
+        logger.error(error)
       }
     },
     [messagingEngine, queryClient]

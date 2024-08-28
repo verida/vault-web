@@ -51,12 +51,7 @@ function CredentialItem({
     }
 
     async function fetchIssuerProfile(did: string) {
-      // TODO: make the call to API work so we have a server cache for public profiles
-      // const res = await fetch('/api/profile/' + dat.iss)
-      // console.log('profile', await res.json())
-      // console.log("load profile", did)
       const profile = await getPublicProfile(did)
-      // console.log("Profile:", profile)
       setIssuer(profile)
     }
 

@@ -1,4 +1,4 @@
-import { Logger } from "@/features/logger"
+import { Logger } from "@/features/telemetry"
 
 import { InboxEntry, InboxType } from "../interfaces/inbox/Inbox"
 import VaultCommon from "../vault"
@@ -8,7 +8,7 @@ import { Message } from "./inbox/Message"
 import { Request } from "./inbox/Request"
 import { Send } from "./inbox/Send"
 
-const logger = new Logger("InboxManager")
+const logger = Logger.create("InboxManager")
 
 const DataHandler = {
   [InboxType.DATA_SEND]: Send,

@@ -1,40 +1,38 @@
 "use client"
 
-import {
-  type DatastoreOpenConfig,
-  EnvironmentType,
-  type IDatastore,
-} from "@verida/types"
+import { type DatastoreOpenConfig, type IDatastore } from "@verida/types"
 import { WebUser } from "@verida/web-helpers"
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"
 
-import { Logger } from "@/features/logger"
+import { clientConfig } from "@/config/client"
 import { getPublicProfile } from "@/features/profiles"
 import { PublicProfile } from "@/features/profiles/@types"
-
+import { Logger } from "@/features/telemetry"
 import {
   CLEAR_SESSION_AFTER_MAINNET_UPGRADE_LOCAL_STORAGE_KEY,
   VERIDA_CONNECT_SESSION_LOCAL_STORAGE_KEY,
-} from "../constants"
+  VERIDA_VAULT_CONTEXT_NAME,
+} from "@/features/verida/constants"
 
-const logger = new Logger("verida")
+const logger = Logger.create("Verida")
 
 const webUserInstance = new WebUser({
-  debug: true,
+  debug: clientConfig.DEBUG_MODE,
   clientConfig: {
-    environment: EnvironmentType.MAINNET,
+    environment: clientConfig.VERIDA_NETWORK,
     didClientConfig: {
-      network: EnvironmentType.MAINNET,
+      network: clientConfig.VERIDA_NETWORK,
+      rpcUrl: clientConfig.VERIDA_RPC_URL,
     },
   },
   contextConfig: {
-    name: "Verida: Vault",
+    name: VERIDA_VAULT_CONTEXT_NAME,
   },
   accountConfig: {
     request: {
-      logoUrl: "", // TODO
+      logoUrl: `${clientConfig.BASE_URL}/images/verida_vault_logo_for_connect.png`,
     },
-    environment: EnvironmentType.MAINNET,
+    environment: clientConfig.VERIDA_NETWORK,
   },
 })
 
@@ -108,9 +106,7 @@ export const VeridaProvider: React.FunctionComponent<VeridaProviderProps> = (
     //getPublicProfile
     try {
       const newProfile = await getPublicProfile(webUserInstance.getDid())
-      // TODO: Use custom logger and remove this eslint by-pass
-      // eslint-disable-next-line no-console
-      console.log("Context", newProfile)
+      logger.debug("Profile", newProfile)
       setProfile(newProfile)
     } catch (error: unknown) {
       if (
@@ -119,7 +115,7 @@ export const VeridaProvider: React.FunctionComponent<VeridaProviderProps> = (
       ) {
         setProfile(undefined)
       } else {
-        // Sentry.captureException(error);
+        logger.error(error)
       }
     }
   }, [])
