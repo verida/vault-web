@@ -55,7 +55,7 @@ const DataPage = () => {
   // }, [db])
 
   return (
-    <div className="flex-col pt-10">
+    <div className="flex-col">
       <Typography variant="heading-3" className="mb-4">
         Categories
       </Typography>

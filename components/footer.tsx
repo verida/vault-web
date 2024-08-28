@@ -2,6 +2,10 @@ import Link from "next/link"
 
 import { Typography } from "./typography"
 
+// TODO: Remove this component
+/**
+ * @deprecated
+ */
 export const Footer = () => {
   return (
     <div className="lg:mx[108px] w-full bg-background p-4">
