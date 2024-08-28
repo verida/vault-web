@@ -1,6 +1,6 @@
 import React from "react"
 
-import { AssistantChatMessage } from "@/app/(root)/assistant/[chatId]/_components/assistant-chat-message"
+import { AssistantChatMessage } from "@/app/(root)/assistant/_components/assistant-chat-message"
 import { AssistantChatMessage as AssistantChatMessageType } from "@/features/assistant/types"
 import { cn } from "@/lib/utils"
 

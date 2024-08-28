@@ -2,7 +2,6 @@
  * Very basic implementation for UI purpose for now
  */
 export type AssistantChat = {
-  id: string
   messages: AssistantChatMessage[]
 }
 

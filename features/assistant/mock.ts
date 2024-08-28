@@ -1,34 +1,21 @@
-import { AssistantChat } from "@/features/assistant/types"
+export const DUMMY_ANSWERS = [
+  "Schedule marketing meeting, review Q2 budget, respond to client about product launch.",
 
-export const mockChat: AssistantChat = {
-  id: "mock-chat-id",
-  messages: [
-    {
-      sender: "user",
-      content: "Where did I buy this green chair?",
-    },
-    {
-      sender: "assistant",
-      content:
-        "You bought the green chair on May 15, 2023. It was purchased from HomeGoods during their spring sale. You used your credit card ending in 1234, and the total cost was $125.99.",
-    },
-    {
-      sender: "user",
-      content: "How much tax will I pay this year?",
-    },
-    {
-      sender: "assistant",
-      content:
-        "Based on your financial records and income from last year, you are projected to pay approximately $15,000 in taxes this year. This estimation takes into account your income sources, deductions, and current tax rates.",
-    },
-  ],
-}
+  "Based on your purchase history, I recommend a **wireless ergonomic keyboard**, **noise-cancelling headphones**, and a **standing desk converter**. These items align with your previous office equipment purchases and could significantly enhance your work-from-home setup. The keyboard will help reduce wrist strain, the headphones can improve focus in noisy environments, and the standing desk converter promotes better posture and increased activity throughout your workday. Would you like more details on specific models or brands that might suit your needs?",
 
-export const lorem = [
-  "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-  "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-  "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-  "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-  "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-  "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+  "Your calendar is packed. Need help managing time, prioritizing tasks, or finding break slots?",
+
+  "I've analyzed your fitness data from the past month:\n\n| Metric | Result |\n|--------|--------|\n| Average daily step count | Increased by **15%** |\n| Weekly exercise goals | Consistently met |\n| Cardio sessions | Up by **20%** |\n| Strength training | Slightly decreased |\n\nGreat progress overall! To further improve, consider:\n\n1. Increasing strength training sessions\n2. Adding variety to your cardio routines\n3. Setting a new step count goal\n4. Incorporating flexibility exercises\n\nWould you like personalized workout suggestions based on these insights?",
+
+  "Your browsing history shows interest in Python programming. Here's a comprehensive guide to get you started:\n\n1. Online Courses:\n   - [Codecademy's Python course](https://www.codecademy.com/learn/learn-python-3): Interactive, hands-on coding practice.\n   - Coursera's 'Programming for Everybody': Beginner-friendly introduction by University of Michigan.\n   - edX's 'Introduction to Computer Science and Programming Using Python' by MIT: More challenging but very thorough.\n\n2. Books:\n   - '*Python Crash Course*' by Eric Matthes: Covers basics and includes practical projects.\n   - '*Automate the Boring Stuff with Python*' by Al Sweigart: Teaches Python through real-world applications.\n   - '*Think Python*' by Allen B. Downey: Available free online, great for beginners.\n\n3. Video Tutorials:\n   - FreeCodeCamp's Python tutorials on YouTube: Comprehensive, free video lessons.\n   - Corey Schafer's Python tutorials: In-depth explanations of Python concepts.\n\n4. Interactive Platforms:\n   - [Python.org's official tutorial](https://docs.python.org/3/tutorial/): Thorough introduction to Python's core features.\n   - Repl.it: Online coding environment to practice without installing anything.\n\n5. Projects and Practice:\n   - HackerRank: Coding challenges to test your skills.\n   - Project Euler: Mathematical/computational problems to solve using programming.\n   - GitHub: Find open-source projects to contribute to as you advance.\n\n6. Communities:\n   - Stack Overflow: Q&A platform for programming issues.\n   - Reddit's r/learnpython: Supportive community for Python learners.\n   - Python Discord servers: Real-time chat with other Python enthusiasts.\n\nRemember, consistency is key. Try to code a little each day, even if it's just for 15 minutes. Start with the basics, then gradually tackle more complex topics. Don't be afraid to experiment and make mistakes – that's how you learn!\n\nAs you progress, consider working on personal projects that interest you. This could be a simple game, a web scraper, or a data analysis tool. Applying your skills to real-world problems will solidify your understanding and keep you motivated.\n\nLet me know if you want more details on any of these resources or if you need help setting up your Python learning plan!",
+
+  "Travel suggestions:\n\n| Destination | Highlights |\n|-------------|------------|\n| Bali | Beaches, culture |\n| Croatia | History, coastline |\n| New Zealand | Landscapes, adventures |\n\nPreference?",
+
+  "Dining out costs up. Try meal planning, budget recipes, or grocery list apps to save.",
+
+  "Learning a new language? Great! Here are some strategies to boost your progress:\n\n| **Strategy** | **Description** |\n|----------|-------------|\n| Immersion | Change phone language, watch subtitled movies, listen to podcasts/music |\n| Regular Practice | Use apps like Duolingo or Babbel for daily exercises |\n| Conversation | Join language exchange platforms, attend local meetups |\n| Reading | Start with simple texts, gradually increase difficulty |\n| Writing | Keep a journal in the new language |\n| Vocabulary Building | Use spaced repetition apps like Anki or Quizlet |\n| Grammar Practice | Use workbooks or online exercises |\n| Set Goals | Define clear, achievable objectives |\n| Cultural Understanding | Learn about associated cultures |\n| Consistency | Make language learning a habit |\n\nWould you like more specific resources or a personalized learning plan based on your target language and goals?",
+
+  "Book recommendations: '*Midnight Library*' (life choices), '*Klara and the Sun*' (AI perspective), '*Project Hail Mary*' (sci-fi adventure). Synopses available.",
+
+  "Tech-heavy portfolio. Consider adding index funds, emerging markets, or ESG investments for diversification.",
 ]

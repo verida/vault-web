@@ -29,7 +29,7 @@ const typographyVariants = cva("", {
     },
   },
   defaultVariants: {
-    variant: "base-semibold",
+    variant: "base-regular",
     component: "p",
   },
 })
@@ -41,7 +41,10 @@ export type TypographyProps = {
 } & TypographyVariants &
   Omit<React.ComponentPropsWithRef<"div">, "children">
 
-const mapping = {
+const mapping: Record<
+  NonNullable<TypographyVariants["variant"]>,
+  NonNullable<TypographyVariants["component"]>
+> = {
   "heading-1": "h1",
   "heading-2": "h2",
   "heading-3": "h3",
@@ -57,60 +60,12 @@ const mapping = {
 export const Typography: React.FunctionComponent<TypographyProps> = (props) => {
   const { variant, component, children, className, ...otherProps } = props
 
-  const htmlTag = component || mapping[variant || "base-semibold"]
-
   const classes = cn(typographyVariants({ variant }), className)
 
-  // TODO: Optimise without the switch
-  switch (htmlTag) {
-    case "h1":
-      return (
-        <h1 className={classes} {...otherProps}>
-          {children}
-        </h1>
-      )
-    case "h2":
-      return (
-        <h2 className={classes} {...otherProps}>
-          {children}
-        </h2>
-      )
-    case "h3":
-      return (
-        <h3 className={classes} {...otherProps}>
-          {children}
-        </h3>
-      )
-    case "h4":
-      return (
-        <h4 className={classes} {...otherProps}>
-          {children}
-        </h4>
-      )
-    case "h5":
-      return (
-        <h5 className={classes} {...otherProps}>
-          {children}
-        </h5>
-      )
-    case "h6":
-      return (
-        <h6 className={classes} {...otherProps}>
-          {children}
-        </h6>
-      )
-    case "span":
-      return (
-        <span className={classes} {...otherProps}>
-          {children}
-        </span>
-      )
-    case "p":
-    default:
-      return (
-        <p className={classes} {...otherProps}>
-          {children}
-        </p>
-      )
-  }
+  const Tag = component || mapping[variant || "base-regular"]
+  return (
+    <Tag className={classes} {...otherProps}>
+      {children}
+    </Tag>
+  )
 }

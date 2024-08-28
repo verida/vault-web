@@ -6,14 +6,12 @@ import React from "react"
 import { Button } from "@/components/ui/button"
 import { getRootPageRoute } from "@/features/routes/utils"
 
-export type AssistantChatErrorPageProps = {
+export type AssistantErrorPageProps = {
   error: unknown
   reset: () => void
 }
 
-export default function AssistantChatErrorPage(
-  props: AssistantChatErrorPageProps
-) {
+export default function AssistantErrorPage(props: AssistantErrorPageProps) {
   const { reset } = props
 
   return (
