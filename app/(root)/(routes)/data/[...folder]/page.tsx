@@ -83,7 +83,7 @@ const FolderPage = ({ params }: { params: { folder: string[] } }) => {
   }, [selectedItem])
 
   return (
-    <div className="flex-col py-5">
+    <div className="flex-col pb-6">
       <div className="flex justify-start">
         <Link href={"/data"} className="my-5 flex items-center gap-5">
           <ArrowLeft />

@@ -95,18 +95,20 @@ export default function AssistantChatPage(props: AssistantChatPageProps) {
   )
 
   return (
-    <div className="flex flex-1 flex-col justify-between gap-4">
-      {!chat || chat.messages.length === 0 ? (
-        <AssistantChatEmptyContent
-          onRecommendedPromptClick={handleRecommendedPromptClick}
-          className="flex-1"
-        />
-      ) : (
-        <AssistantChatMessagesList
-          messages={chat.messages}
-          className="flex-grow"
-        />
-      )}
+    <div className="flex h-full flex-col justify-between">
+      <div className="flex-1 overflow-y-auto">
+        {!chat || chat.messages.length === 0 ? (
+          <AssistantChatEmptyContent
+            onRecommendedPromptClick={handleRecommendedPromptClick}
+            className="pb-4"
+          />
+        ) : (
+          <AssistantChatMessagesList
+            messages={chat.messages}
+            className="pb-4"
+          />
+        )}
+      </div>
       <AssistantChatInput onSendMessage={handleSendMessage} />
     </div>
   )

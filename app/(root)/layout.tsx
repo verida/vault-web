@@ -3,17 +3,17 @@
 import { usePathname, useRouter } from "next/navigation"
 import { useEffect } from "react"
 
-import { Footer } from "@/components/footer"
-import { Navbar } from "@/components/navbar"
+import { AppHeader } from "@/app/(root)/_components/app-header"
 import { useAuth } from "@/features/auth"
 import { useVerida } from "@/features/verida"
 
-const AppLayout = ({
-  children,
-}: {
+type AppLayoutProps = {
   children: React.ReactNode
-  sheet: React.ReactNode
-}) => {
+}
+
+export default function AppLayout(props: AppLayoutProps) {
+  const { children } = props
+
   const pathName = usePathname()
   const router = useRouter()
   const { isConnected } = useVerida()
@@ -28,17 +28,16 @@ const AppLayout = ({
     }
   }, [isConnected, router, setRedirectPath, pathName])
 
-  if (!isConnected) return null
+  if (!isConnected) {
+    return null
+  }
 
   return (
-    <div className="flex min-h-screen flex-col bg-background">
-      <Navbar />
-      <main className="container flex flex-grow flex-col pt-[72px]">
+    <div className="flex h-dvh flex-col bg-background">
+      <AppHeader />
+      <main className="flex-1 overflow-y-auto p-6 pb-0 md:pt-10">
         {children}
       </main>
-      <Footer />
     </div>
   )
 }
-
-export default AppLayout

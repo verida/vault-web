@@ -1,6 +1,9 @@
 import Image from "next/image"
 import Link from "next/link"
 
+/**
+ * @deprecated
+ */
 export const Logo = () => {
   return (
     <Link href="/">

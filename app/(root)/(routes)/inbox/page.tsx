@@ -70,7 +70,7 @@ const InboxPage = () => {
 
   return (
     <>
-      <div className="flex flex-grow flex-col space-y-6 pb-6 pt-10">
+      <div className="flex flex-grow flex-col space-y-6 pb-6">
         <div className="flex items-center justify-between">
           <Typography variant="heading-3">Inbox</Typography>
           <nav className="flex space-x-2 md:w-auto md:space-x-3">
