@@ -1,5 +1,8 @@
 // @todo: Move Verida interfaces into a separate package and import
 
+/**
+ * @deprecated
+ */
 export interface Client {
   openContext(
     contextName: string,
@@ -8,6 +11,9 @@ export interface Client {
   openPublicProfile(did: string, contextName: string): Promise<Profile>
 }
 
+/**
+ * @deprecated
+ */
 export interface Context {
   getMessaging(): Promise<Messaging>
   openProfile(profileName: string, did?: string): Promise<Profile | undefined>
@@ -21,6 +27,9 @@ export interface Context {
   ): Promise<Datastore>
 }
 
+/**
+ * @deprecated
+ */
 export interface Profile {
   get(key: string, options?: any, extended?: boolean): Promise<any | undefined>
   getMany(filter: any, options: any): Promise<any>
@@ -29,6 +38,9 @@ export interface Profile {
   listen(callback: any): Promise<any>
 }
 
+/**
+ * @deprecated
+ */
 export interface Messaging {
   send(
     did: string,
@@ -44,6 +56,9 @@ export interface Messaging {
   getInbox(): Promise<any>
 }
 
+/**
+ * @deprecated
+ */
 export interface DatabaseOpenConfig {
   permissions?: PermissionsConfig
   did?: string
@@ -55,6 +70,9 @@ export interface DatabaseOpenConfig {
   createContext?: boolean
 }
 
+/**
+ * @deprecated
+ */
 export interface DatastoreOpenConfig {
   permissions?: PermissionsConfig
   did?: string
@@ -65,14 +83,23 @@ export interface DatastoreOpenConfig {
   createContext?: boolean
 }
 
+/**
+ * @deprecated
+ */
 export interface MessagesConfig {
   maxItems?: number
 }
 
+/**
+ * @deprecated
+ */
 export interface StorageEngineTypes {
   [key: string]: any
 }
 
+/**
+ * @deprecated
+ */
 export interface PermissionsConfig {
   read: PermissionOptionsEnum
   write: PermissionOptionsEnum
@@ -80,17 +107,26 @@ export interface PermissionsConfig {
   writeList?: string[]
 }
 
+/**
+ * @deprecated
+ */
 export enum PermissionOptionsEnum {
   OWNER = "owner",
   PUBLIC = "public",
   USERS = "users",
 }
 
+/**
+ * @deprecated
+ */
 export interface MessageSendConfig {
   recipientContextName?: string
   expiry?: number
 }
 
+/**
+ * @deprecated
+ */
 export interface Datastore {
   save: (payload: any) => Document
   get: (key: string, options?: any) => Document
@@ -100,6 +136,9 @@ export interface Datastore {
   errors: []
 }
 
+/**
+ * @deprecated
+ */
 export interface Database {
   save: (payload: any) => Document
   get: (key: string, options?: any) => Document
@@ -109,6 +148,9 @@ export interface Database {
   errors: []
 }
 
+/**
+ * @deprecated
+ */
 export interface Document {
   _id: string
   _rev?: string

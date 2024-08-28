@@ -2,6 +2,9 @@ import { DataManager } from "./managers/data"
 import { InboxManager } from "./managers/inbox"
 import { SyncManager } from "./managers/sync"
 
+/**
+ * @deprecated
+ */
 export default class VaultCommon {
   // client-ts/Client
   public client: any

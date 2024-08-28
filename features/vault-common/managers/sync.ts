@@ -10,6 +10,8 @@ const logger = Logger.create("VaultSyncManager")
 
 /**
  * Manage login requests and responses
+ *
+ * @deprecated
  */
 export class SyncManager {
   private vaultCommon: VaultCommon
