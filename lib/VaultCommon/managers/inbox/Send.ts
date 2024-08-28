@@ -1,15 +1,24 @@
 import { DataAction } from "./DataAction"
 
+/**
+ * @deprecated
+ */
 type ActionError = {
   dataEntry: any
   errors: any[]
 }
 
+/**
+ * @deprecated
+ */
 type ActionResult = {
   success: boolean
   errors: ActionError[]
 }
 
+/**
+ * @deprecated
+ */
 export class Send extends DataAction {
   async accept() {
     const acceptResult: ActionResult = {

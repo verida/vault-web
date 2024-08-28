@@ -1,9 +1,12 @@
-import _ from "lodash"
+import { get, merge } from "lodash"
 
 import { DataField } from "@/features/data"
 
 import VaultCommon from "../../vault"
 
+/**
+ * @deprecated
+ */
 export default class Folder {
   private vaultCommon: VaultCommon
   private db: any
@@ -50,7 +53,7 @@ export default class Folder {
       defaults.sort = this.config.sort
     }
 
-    options = _.merge(defaults, options)
+    options = merge(defaults, options)
 
     let results = []
     try {
@@ -150,7 +153,7 @@ export default class Folder {
 
     if (this.config.nameField) {
       // Use name field if specified
-      name = _.get(row, this.config.nameField)
+      name = get(row, this.config.nameField)
     } else if (this.config.card && this.config.card.name) {
       // Use card config if specified
       name = this.config.card.name(row)
@@ -161,7 +164,7 @@ export default class Folder {
 
     if (this.config.summaryField) {
       // Use name field if specified
-      summary = _.get(row, this.config.summaryField)
+      summary = get(row, this.config.summaryField)
     } else if (this.config.card && this.config.card.summary) {
       // Use card config if specified
       summary = this.config.card.summary(row)
@@ -220,7 +223,7 @@ export default class Folder {
     const displayData: DataField[] = []
 
     layout.forEach((item: any) => {
-      const value = _.get(data, item)
+      const value = get(data, item)
 
       displayData.push({
         field: properties[item]?.title || this.getLabel(item),

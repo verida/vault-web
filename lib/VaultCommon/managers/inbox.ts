@@ -10,6 +10,9 @@ import { Send } from "./inbox/Send"
 
 const logger = Logger.create("InboxManager")
 
+/**
+ * @deprecated
+ */
 const DataHandler = {
   [InboxType.DATA_SEND]: Send,
   [InboxType.DATA_REQUEST]: Request,
@@ -17,6 +20,9 @@ const DataHandler = {
   [InboxType.MESSAGE]: Message,
 }
 
+/**
+ * @deprecated
+ */
 export class InboxManager {
   private vaultCommon: VaultCommon
   // client-ts/context/messaging

@@ -1,3 +1,6 @@
+/**
+ * @deprecated
+ */
 export enum InboxType {
   DATA_SEND = "inbox/type/dataSend",
   DATA_REQUEST = "inbox/type/dataRequest",
@@ -5,11 +8,17 @@ export enum InboxType {
   MESSAGE = "inbox/type/message",
 }
 
+/**
+ * @deprecated
+ */
 export interface Inbox {
   save: (data: InboxEntry) => void
   errors: any[]
 }
 
+/**
+ * @deprecated
+ */
 export interface InboxEntry {
   _id: string
   read: boolean
@@ -19,11 +28,17 @@ export interface InboxEntry {
   data: any
 }
 
+/**
+ * @deprecated
+ */
 export interface InboxSentBy {
   did: string
   context: string
 }
 
+/**
+ * @deprecated
+ */
 export class InboxResponse {
   public data: any | null
   public replyId: string
@@ -34,11 +49,17 @@ export class InboxResponse {
   }
 }
 
+/**
+ * @deprecated
+ */
 export interface EncryptionKey {
   key: string
   type: string
 }
 
+/**
+ * @deprecated
+ */
 export interface InboxDataSyncExternalDb {
   name: string
   did: string
@@ -46,10 +67,16 @@ export interface InboxDataSyncExternalDb {
   encryptionKey: EncryptionKey
 }
 
+/**
+ * @deprecated
+ */
 export interface InboxDataSyncInternalDb {
   name: string
 }
 
+/**
+ * @deprecated
+ */
 export interface InboxDatabaseSyncRequest {
   externalDb: InboxDataSyncExternalDb
   internalDb: InboxDataSyncInternalDb
@@ -59,6 +86,9 @@ export interface InboxDatabaseSyncRequest {
   status: string
 }
 
+/**
+ * @deprecated
+ */
 export interface InboxDataSyncExternalDs {
   did: string
   context: string
@@ -66,6 +96,9 @@ export interface InboxDataSyncExternalDs {
   dbName?: string
 }
 
+/**
+ * @deprecated
+ */
 export interface InboxDatastoreSyncRequest {
   externalDs: InboxDataSyncExternalDs
   schema: string

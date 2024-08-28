@@ -1,5 +1,8 @@
 import { DataAction } from "./DataAction"
 
+/**
+ * @deprecated
+ */
 export class Message extends DataAction {
   async accept() {
     return {
