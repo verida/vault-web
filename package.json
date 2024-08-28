@@ -67,5 +67,8 @@
     "prettier-plugin-tailwindcss": "^0.6.5",
     "tailwindcss": "^3.3.0",
     "typescript": "^5.5.4"
+  },
+  "resolutions": {
+    "qrcode-with-logos": "1.0.3"
   }
 }
