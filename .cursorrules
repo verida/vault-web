@@ -21,7 +21,7 @@ TypeScript Usage
 
 - Use TypeScript for all code; prefer types over interfaces.
 - Prefer to declare the types in a `types.ts` file, except for the React component props which should be declared in the component file.
-- Name the component props type with a `Props` suffix. Declare the type above the component function.
+- Name the component props type with a `Props` suffix. Declare the type above the component function. Do not destructure the `props` parameter in the function signature, destructure it as the first line in the function body.
 - Avoid enums; use maps instead.
 - Use functional components with TypeScript types.
 
