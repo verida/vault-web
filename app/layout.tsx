@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 import { Sora } from "next/font/google"
 
-import { AppProviders } from "@/app/_components/app-providers"
+import { RootProviders } from "@/app/_components/root-providers"
 import { serverConfig } from "@/config/server"
 import { APP_DESCRIPTION, APP_NAME, APP_TITLE } from "@/constants/app"
 import { cn } from "@/lib/utils"
@@ -46,7 +46,7 @@ export default function RootLayout(props: RootLayoutProps) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={cn("h-dvh", sora.className)}>
-        <AppProviders>{children}</AppProviders>
+        <RootProviders>{children}</RootProviders>
       </body>
     </html>
   )
