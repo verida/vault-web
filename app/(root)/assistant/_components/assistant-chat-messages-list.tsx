@@ -15,10 +15,7 @@ export function AssistantChatMessagesList(
   const { messages, isProcessing, className, ...ulProps } = props
 
   return (
-    <ul
-      className={cn("flex flex-col justify-end gap-3 sm:gap-4", className)}
-      {...ulProps}
-    >
+    <ul className={cn("flex flex-col gap-3 sm:gap-4", className)} {...ulProps}>
       {messages.map((message, index) => (
         <li key={index}>
           <AssistantChatMessage message={message} />
