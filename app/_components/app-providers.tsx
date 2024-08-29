@@ -9,7 +9,7 @@ import { AuthProvider } from "@/features/auth"
 import { InboxProvider } from "@/features/inbox/contexts/InboxContext"
 import { VeridaProvider } from "@/features/verida"
 
-export function Providers({ children }: { children: React.ReactNode }) {
+export function AppProviders({ children }: { children: React.ReactNode }) {
   return (
     <Suspense>
       <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
