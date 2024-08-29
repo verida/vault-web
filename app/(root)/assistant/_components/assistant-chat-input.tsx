@@ -2,6 +2,7 @@
 
 import React, {
   ChangeEventHandler,
+  KeyboardEventHandler,
   useCallback,
   useLayoutEffect,
   useRef,
@@ -31,11 +32,22 @@ export function AssistantChatInput(props: AssistantChatInputProps) {
     []
   )
 
-  // TODO: Handle Enter and Shift+Enter key press. Define which key combination does what: send the message or add a new line.
-  const handleSendClick = useCallback(() => {
-    onSendMessage?.(message)
-    setMessage("")
-  }, [onSendMessage, message])
+  const handleSendMessage = useCallback(() => {
+    if (message && !isProcessing) {
+      onSendMessage?.(message)
+      setMessage("")
+    }
+  }, [onSendMessage, message, isProcessing])
+
+  const handleKeyDown: KeyboardEventHandler<HTMLInputElement> = useCallback(
+    (event) => {
+      if (event.key === "Enter" && !event.shiftKey) {
+        event.preventDefault()
+        handleSendMessage()
+      }
+    },
+    [handleSendMessage]
+  )
 
   useLayoutEffect(() => {
     inputRef.current?.focus()
@@ -49,6 +61,7 @@ export function AssistantChatInput(props: AssistantChatInputProps) {
         placeholder="Type your prompt here"
         value={message}
         onChange={handleChangeMessage}
+        onKeyDown={handleKeyDown}
         className="h-auto rounded-xl py-[1.125rem] pl-5 pr-14 hover:border-border/30 focus-visible:ring-2"
         containerClassName="shadow-md rounded-xl"
         endAdornment={
@@ -56,7 +69,7 @@ export function AssistantChatInput(props: AssistantChatInputProps) {
             <Button
               variant="primary"
               size="icon"
-              onClick={handleSendClick}
+              onClick={handleSendMessage}
               disabled={!message || isProcessing}
               className="mr-2"
             >
