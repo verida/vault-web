@@ -1,34 +1,37 @@
-import { ClientConfigSchema } from "./schemas"
+import { CommonConfigSchema } from "@/config/schemas"
 
-const clientEnvVarsCheckResult = ClientConfigSchema.safeParse({
+const commonConfigCheckResult = CommonConfigSchema.safeParse({
   // Have to pass the variables one-by-one on the client because they are set
   // and replaced at build time only if they are explicitly used somewhere in
   // the code(like here). Also because the schema is not passthrough, for
   // strong typing, so can't pass process.env as there could have other env vars
   BASE_URL: process.env.NEXT_PUBLIC_BASE_URL,
-  VERIDA_NETWORK: process.env.NEXT_PUBLIC_VERIDA_NETWORK,
-  VERIDA_RPC_URL: process.env.NEXT_PUBLIC_VERIDA_RPC_URL,
   DEBUG_MODE: process.env.NEXT_PUBLIC_DEBUG_MODE,
   LOG_LEVEL: process.env.NEXT_PUBLIC_LOG_LEVEL,
+  VERIDA_NETWORK: process.env.NEXT_PUBLIC_VERIDA_NETWORK,
+  VERIDA_RPC_URL: process.env.NEXT_PUBLIC_VERIDA_RPC_URL,
+  PRIVATE_DATA_API_BASE_URL: process.env.NEXT_PUBLIC_PRIVATE_DATA_API_BASE_URL,
+  PRIVATE_DATA_API_PRIVATE_KEY:
+    process.env.NEXT_PUBLIC_PRIVATE_DATA_API_PRIVATE_KEY,
   FEATURE_FLAG_AI_ASSISTANT_ENABLED:
     process.env.NEXT_PUBLIC_FEATURE_FLAG_AI_ASSISTANT_ENABLED,
   isClient: !(typeof window === "undefined"),
 })
 
-if (!clientEnvVarsCheckResult.success) {
+if (!commonConfigCheckResult.success) {
   // eslint-disable-next-line no-console
-  console.warn("Client environment variables errors")
-  clientEnvVarsCheckResult.error.errors.forEach((error) => {
+  console.warn("Common config errors")
+  commonConfigCheckResult.error.errors.forEach((error) => {
     // eslint-disable-next-line no-console
     console.error(error)
   })
 
-  throw new Error("Client environment variables errors")
+  throw new Error("Common config errors")
 }
 
 /**
- * Environment variables for the client.
+ * Common config available on both the client and the server.
  *
- * Also available on the server. All component and piece of code expecting to run on the client should use this config.
+ * All component and piece of code expecting to run on the client should use this config.
  */
-export const clientConfig = clientEnvVarsCheckResult.data
+export const commonConfig = commonConfigCheckResult.data

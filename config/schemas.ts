@@ -1,8 +1,13 @@
 import { EnvironmentType } from "@verida/types"
 import { z } from "zod"
 
-export const ClientConfigSchema = z.object({
+export const CommonConfigSchema = z.object({
   BASE_URL: z.string().url(),
+  DEBUG_MODE: z
+    .string()
+    .optional()
+    .transform((value) => (value === "true" ? true : false)),
+  LOG_LEVEL: z.enum(["error", "warn", "info", "debug"]).default("info"),
   VERIDA_NETWORK: z
     .enum(["mainnet", "testnet", "devnet", "local"])
     .default("testnet")
@@ -16,18 +21,15 @@ export const ClientConfigSchema = z.object({
             : EnvironmentType.TESTNET
     }),
   VERIDA_RPC_URL: z.string().url().optional(),
-  DEBUG_MODE: z
-    .string()
-    .optional()
-    .transform((value) => (value === "true" ? true : false)),
-  LOG_LEVEL: z.enum(["error", "warn", "info", "debug"]).default("info"),
   FEATURE_FLAG_AI_ASSISTANT_ENABLED: z
     .string()
     .optional()
     .transform((value) => (value === "true" ? true : false)),
+  PRIVATE_DATA_API_BASE_URL: z.string().url().optional(), // Temporary solution until the endpoints are fetched from the DID Document
+  PRIVATE_DATA_API_PRIVATE_KEY: z.string().optional(), // Temporary solution until we have a proper auth solution on the backend
   isClient: z.boolean(),
 })
 
-export const ServerConfigSchema = ClientConfigSchema.extend({
-  // TODO: Add server specific env vars
+export const ServerConfigSchema = z.object({
+  // TODO: Add server specific configuration properties here
 })
