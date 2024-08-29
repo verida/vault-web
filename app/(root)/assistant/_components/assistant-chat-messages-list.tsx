@@ -6,12 +6,13 @@ import { cn } from "@/lib/utils"
 
 export type AssistantChatMessagesListProps = {
   messages: AssistantChatMessageType[]
+  isProcessing?: boolean
 } & Omit<React.ComponentProps<"ul">, "children">
 
 export function AssistantChatMessagesList(
   props: AssistantChatMessagesListProps
 ) {
-  const { messages, className, ...ulProps } = props
+  const { messages, isProcessing, className, ...ulProps } = props
 
   return (
     <ul
@@ -23,6 +24,17 @@ export function AssistantChatMessagesList(
           <AssistantChatMessage message={message} />
         </li>
       ))}
+      {isProcessing ? (
+        <li>
+          <AssistantChatMessage
+            message={{
+              sender: "assistant",
+              content: "Processing...",
+            }}
+            isProcessing={true}
+          />
+        </li>
+      ) : null}
     </ul>
   )
 }

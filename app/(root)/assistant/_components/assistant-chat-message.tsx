@@ -8,15 +8,19 @@ import { cn } from "@/lib/utils"
 
 export type AssistantChatMessageProps = {
   message: AssistantChatMessageType
+  isProcessing?: boolean
 } & React.ComponentProps<"div">
 
 export function AssistantChatMessage(props: AssistantChatMessageProps) {
-  const { message, className, ...divProps } = props
+  const { message, isProcessing, className, ...divProps } = props
 
   return (
     <div className={cn("w-full", className)} {...divProps}>
       {message.sender === "assistant" ? (
-        <AssistantChatAssistantMessage message={message} />
+        <AssistantChatAssistantMessage
+          message={message}
+          isProcessing={isProcessing}
+        />
       ) : (
         <AssistantChatUserMessage message={message} />
       )}
@@ -26,20 +30,30 @@ export function AssistantChatMessage(props: AssistantChatMessageProps) {
 
 type AssistantChatAssistantMessageProps = {
   message: AssistantChatMessageType
+  isProcessing?: boolean
 }
-
 function AssistantChatAssistantMessage(
   props: AssistantChatAssistantMessageProps
 ) {
-  const { message } = props
+  const { message, isProcessing } = props
 
   return (
     <div className="text-start">
       <div className="flex flex-row gap-3 rounded-xl border bg-white p-4 sm:gap-4">
-        <Avatar className="size-6 bg-ai-assistant-gradient p-1 text-white sm:size-8">
+        <Avatar
+          className={cn(
+            "size-6 bg-ai-assistant-gradient p-1 text-white sm:size-8",
+            isProcessing ? "animate-pulse" : ""
+          )}
+        >
           <VeridaNetworkLogo className="size-4 sm:size-6" />
         </Avatar>
-        <div className="prose prose-sm max-w-none">
+        <div
+          className={cn(
+            "prose prose-sm max-w-none pt-1",
+            isProcessing ? "animate-pulse" : ""
+          )}
+        >
           <ReactMarkdown
             remarkPlugins={[remarkGfm]}
             components={{

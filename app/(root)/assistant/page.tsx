@@ -33,7 +33,11 @@ export default function AssistantChatPage() {
             className="pb-4"
           />
         ) : (
-          <AssistantChatMessagesList messages={messages} className="pb-4" />
+          <AssistantChatMessagesList
+            messages={messages}
+            isProcessing={isProcessing}
+            className="pb-4"
+          />
         )}
       </div>
       {error && <p className="py-2 text-destructive-foreground">{error}</p>}
