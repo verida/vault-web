@@ -58,7 +58,7 @@ export function AssistantChatInput(props: AssistantChatInputProps) {
       <Input
         ref={inputRef}
         // TODO: Replace by a text area
-        placeholder="Type your prompt here"
+        placeholder="Type your question here"
         value={message}
         onChange={handleChangeMessage}
         onKeyDown={handleKeyDown}

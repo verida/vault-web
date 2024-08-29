@@ -24,9 +24,9 @@ export function AssistantChatEmptyContent(
           <VeridaNetworkColouredLogo className="size-10" />
         </div>
         <div className="flex flex-col items-center gap-2 text-center">
-          <Typography variant="heading-4">Talk data to me</Typography>
+          <Typography variant="heading-4">Talk about your data</Typography>
           <Typography variant="base-regular">
-            Start chatting with your assistant about your data
+            Start chatting with your assistant about your private data
           </Typography>
         </div>
         <div className="flex flex-col gap-4 text-center">
