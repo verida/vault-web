@@ -5,7 +5,6 @@ import { Suspense } from "react"
 
 import { ThemeProvider } from "@/components/theme-provider"
 import { TooltipProvider } from "@/components/ui/tooltip"
-import { AuthProvider } from "@/features/auth"
 import { VeridaProvider } from "@/features/verida"
 
 export type RootProvidersProps = {
@@ -22,9 +21,7 @@ export function RootProviders(props: RootProvidersProps) {
       <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
         <QueryClientProvider client={new QueryClient()}>
           <VeridaProvider>
-            <AuthProvider>
-              <TooltipProvider>{children}</TooltipProvider>
-            </AuthProvider>
+            <TooltipProvider>{children}</TooltipProvider>
           </VeridaProvider>
         </QueryClientProvider>
       </ThemeProvider>

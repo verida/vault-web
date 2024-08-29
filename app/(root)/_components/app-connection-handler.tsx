@@ -2,7 +2,6 @@
 
 import { redirect, usePathname } from "next/navigation"
 
-import { useAuth } from "@/features/auth"
 import { useVerida } from "@/features/verida"
 
 export type AppConnectionHandlerProps = {
@@ -14,11 +13,11 @@ export function AppConnectionHandler(props: AppConnectionHandlerProps) {
 
   const pathName = usePathname()
   const { isConnected } = useVerida()
-  const { setRedirectPath } = useAuth()
 
   if (!isConnected) {
-    setRedirectPath(pathName)
-    redirect("/")
+    const encodedRedirectPath = encodeURIComponent(pathName)
+    // Ensure to use the same `redirectPath` query parameter as in `RootConnectionHandler`.
+    redirect(`/?redirectPath=${encodedRedirectPath}`)
   }
 
   return <>{children}</>
