@@ -14,29 +14,24 @@ export type ConnectionButtonProps = Omit<
 export function ConnectionButton(props: ConnectionButtonProps) {
   const { variant = "primary", className, ...buttonProps } = props
 
-  const { connect, isConnecting, isCheckingConnection, isConnected } =
-    useVerida()
+  const { connect, isConnecting, isConnected } = useVerida()
 
   const handleButtonClick = useCallback(() => {
-    if (isConnecting || isConnected || isCheckingConnection) {
+    if (isConnecting || isConnected) {
       return
     }
     connect()
-  }, [connect, isConnecting, isConnected, isCheckingConnection])
+  }, [connect, isConnecting, isConnected])
 
   return (
     <Button
       variant={variant}
       className={cn(className)}
       onClick={handleButtonClick}
-      disabled={isConnecting || isCheckingConnection}
+      disabled={isConnecting}
       {...buttonProps}
     >
-      {isCheckingConnection
-        ? "Checking connection..."
-        : isConnecting
-          ? "Connecting..."
-          : "Try the Verida Vault App"}
+      {isConnecting ? "Connecting..." : "Try the Verida Vault App"}
     </Button>
   )
 }

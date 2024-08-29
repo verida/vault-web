@@ -20,10 +20,9 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { useVerida } from "@/features/verida"
 
 export function IdentityDropdownMenu() {
-  const { isConnecting, did, disconnect, profile, isCheckingConnection } =
-    useVerida()
+  const { isConnecting, did, disconnect, profile } = useVerida()
 
-  if (!did && !profile && (isCheckingConnection || isConnecting)) {
+  if (!did && !profile && isConnecting) {
     return (
       <div className="flex items-center space-x-4">
         <Skeleton className="h-10 w-10 rounded-full" />

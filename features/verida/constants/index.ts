@@ -5,7 +5,3 @@ export const VAULT_CREDENTIAL_SCHEMA_URL =
 
 export const VERIDA_DID_REGEXP =
   /did:vda:(devnet|mainnet|testnet):0x[0-9a-fA-F]{40}/
-
-export const VERIDA_CONNECT_SESSION_LOCAL_STORAGE_KEY = "_verida_auth_context"
-export const CLEAR_SESSION_AFTER_MAINNET_UPGRADE_LOCAL_STORAGE_KEY =
-  "_session_cleared_after_mainnet_upgrade"
