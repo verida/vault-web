@@ -42,7 +42,7 @@ function AssistantChatAssistantMessage(
       <div className="flex flex-row gap-3 rounded-xl border bg-white p-4 sm:gap-4">
         <Avatar
           className={cn(
-            "size-6 bg-ai-assistant-gradient p-1 text-white sm:size-8",
+            "size-6 shrink-0 bg-ai-assistant-gradient p-1 text-white sm:size-8",
             isProcessing ? "animate-pulse" : ""
           )}
         >
@@ -50,7 +50,7 @@ function AssistantChatAssistantMessage(
         </Avatar>
         <div
           className={cn(
-            "prose prose-sm max-w-none pt-1",
+            "prose prose-sm max-w-full overflow-x-auto pt-1",
             isProcessing ? "animate-pulse" : ""
           )}
         >
@@ -60,6 +60,14 @@ function AssistantChatAssistantMessage(
               // eslint-disable-next-line @typescript-eslint/no-unused-vars
               a: ({ node, ...props }) => (
                 <a target="_blank" rel="noopener noreferrer" {...props} />
+              ),
+              // eslint-disable-next-line @typescript-eslint/no-unused-vars
+              pre: ({ node, ...props }) => (
+                <pre className="overflow-x-auto" {...props} />
+              ),
+              // eslint-disable-next-line @typescript-eslint/no-unused-vars
+              code: ({ node, ...props }) => (
+                <code className="overflow-x-auto" {...props} />
               ),
             }}
           >
@@ -81,13 +89,21 @@ function AssistantChatUserMessage(props: AssistantChatUserMessageProps) {
   return (
     <div className="text-end">
       <div className="py-1.5">
-        <div className="prose prose-sm max-w-none">
+        <div className="prose prose-sm max-w-full overflow-x-auto">
           <ReactMarkdown
             remarkPlugins={[remarkGfm]}
             components={{
               // eslint-disable-next-line @typescript-eslint/no-unused-vars
               a: ({ node, ...props }) => (
                 <a target="_blank" rel="noopener noreferrer" {...props} />
+              ),
+              // eslint-disable-next-line @typescript-eslint/no-unused-vars
+              pre: ({ node, ...props }) => (
+                <pre className="overflow-x-auto" {...props} />
+              ),
+              // eslint-disable-next-line @typescript-eslint/no-unused-vars
+              code: ({ node, ...props }) => (
+                <code className={"overflow-x-auto"} {...props} />
               ),
             }}
           >
