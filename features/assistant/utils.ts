@@ -11,15 +11,15 @@ async function mockProcessUserPrompt(): Promise<string> {
   return answer
 }
 
-export async function processUserPrompt(prompt: string): Promise<string> {
+export async function processUserPrompt(
+  prompt: string,
+  key?: string
+): Promise<string> {
   if (!prompt) {
     throw new Error("Prompt is required")
   }
 
-  if (
-    !commonConfig.PRIVATE_DATA_API_BASE_URL ||
-    !commonConfig.PRIVATE_DATA_API_PRIVATE_KEY
-  ) {
+  if (!commonConfig.PRIVATE_DATA_API_BASE_URL || !key) {
     // TODO: Remove this when the API is deployed
     return mockProcessUserPrompt()
   }
@@ -30,7 +30,7 @@ export async function processUserPrompt(prompt: string): Promise<string> {
       {
         method: "POST",
         headers: {
-          "key": commonConfig.PRIVATE_DATA_API_PRIVATE_KEY,
+          "key": key,
           "Content-Type": "application/json",
         },
         body: JSON.stringify({

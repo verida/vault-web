@@ -2,6 +2,7 @@
 
 import React, { createContext, useCallback, useMemo, useState } from "react"
 
+import { commonConfig } from "@/config/client"
 import { AssistantChatMessage } from "@/features/assistant/types"
 import { processUserPrompt } from "@/features/assistant/utils"
 import { Logger } from "@/features/telemetry"
@@ -40,7 +41,10 @@ export function AssistantProvider(props: AssistantProviderProps) {
     setMessages((prevMessages) => [...prevMessages, newUserMessage])
 
     try {
-      const response = await processUserPrompt(message)
+      const response = await processUserPrompt(
+        message,
+        commonConfig.PRIVATE_DATA_API_PRIVATE_KEY
+      )
 
       const newAssistantMessage: AssistantChatMessage = {
         sender: "assistant",
