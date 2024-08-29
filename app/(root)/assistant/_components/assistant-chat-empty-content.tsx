@@ -2,7 +2,7 @@ import React from "react"
 
 import { VeridaNetworkColouredLogo } from "@/components/icons/verida-network-coloured-logo"
 import { Typography } from "@/components/typography"
-import { RECOMMENDED_PROMPTS_FOR_NEW_CHAT } from "@/features/assistant/constants"
+import { RECOMMENDED_PROMPTS_FOR_NEW_CHAT } from "@/features/assistant"
 import { cn } from "@/lib/utils"
 
 export type AssistantChatEmptyContentProps = {

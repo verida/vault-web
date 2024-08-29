@@ -1,8 +1,5 @@
 import { DUMMY_ANSWERS } from "@/features/assistant/mock"
-
-async function wait(ms = 2000) {
-  return new Promise((resolve) => setTimeout(resolve, ms))
-}
+import { wait } from "@/utils/misc"
 
 export async function processUserPrompt(prompt: string): Promise<string> {
   if (!prompt) {

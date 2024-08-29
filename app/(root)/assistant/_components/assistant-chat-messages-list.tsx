@@ -1,7 +1,7 @@
 import React from "react"
 
 import { AssistantChatMessage } from "@/app/(root)/assistant/_components/assistant-chat-message"
-import { AssistantChatMessage as AssistantChatMessageType } from "@/features/assistant/types"
+import { AssistantChatMessage as AssistantChatMessageType } from "@/features/assistant"
 import { cn } from "@/lib/utils"
 
 export type AssistantChatMessagesListProps = {

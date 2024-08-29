@@ -14,10 +14,11 @@ import { Input } from "@/components/ui/input"
 
 export type AssistantChatInputProps = {
   onSendMessage: (message: string) => void
+  isProcessing: boolean
 } & React.ComponentProps<"div">
 
 export function AssistantChatInput(props: AssistantChatInputProps) {
-  const { onSendMessage, ...divProps } = props
+  const { onSendMessage, isProcessing, ...divProps } = props
 
   const inputRef = useRef<HTMLInputElement>(null)
 
@@ -56,7 +57,7 @@ export function AssistantChatInput(props: AssistantChatInputProps) {
               variant="primary"
               size="icon"
               onClick={handleSendClick}
-              disabled={!message}
+              disabled={!message || isProcessing}
               className="mr-2"
             >
               <SendIcon />
