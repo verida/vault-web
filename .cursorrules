@@ -55,5 +55,6 @@ Key Conventions
   - Avoid for data fetching or state management.
 - Add some documentation to the code, not too much, just enough to understand the most important parts of the code.
 - Use Zod for validation. Favor declaring the schemas in a `schemas.ts` file in the feature folder.
+- Never use `console` to log anything. Use the custom logger that is exported from `@/features/telemetry`
 
 Follow Next.js docs for Data Fetching, Rendering, and Routing.

@@ -50,9 +50,7 @@ export function AssistantProvider(props: AssistantProviderProps) {
       setMessages((prevMessages) => [...prevMessages, newAssistantMessage])
     } catch (error) {
       logger.error(error)
-      setError(
-        error instanceof Error ? error.message : "An unknown error occurred"
-      )
+      setError("Something went wrong with the assistant")
     } finally {
       setIsProcessing(false)
     }
