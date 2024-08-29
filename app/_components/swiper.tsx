@@ -4,9 +4,8 @@ import Image from "next/image"
 import { useEffect, useMemo, useState } from "react"
 import { CSSTransition, SwitchTransition } from "react-transition-group"
 
+import { Typography } from "@/components/typography"
 import { cn } from "@/lib/utils"
-
-import { Typography } from "../typography"
 
 interface SwiperProps {
   data: {
