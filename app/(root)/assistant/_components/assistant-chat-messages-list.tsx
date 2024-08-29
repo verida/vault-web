@@ -26,7 +26,7 @@ export function AssistantChatMessagesList(
           <AssistantChatMessage
             message={{
               sender: "assistant",
-              content: "Processing...",
+              content: "",
             }}
             isProcessing={true}
           />

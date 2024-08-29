@@ -3,6 +3,7 @@ import remarkGfm from "remark-gfm"
 
 import { VeridaNetworkLogo } from "@/components/icons/verida-network-logo"
 import { Avatar } from "@/components/ui/avatar"
+import { Skeleton } from "@/components/ui/skeleton"
 import { AssistantChatMessage as AssistantChatMessageType } from "@/features/assistant"
 import { cn } from "@/lib/utils"
 
@@ -48,31 +49,34 @@ function AssistantChatAssistantMessage(
         >
           <VeridaNetworkLogo className="size-4 sm:size-6" />
         </Avatar>
-        <div
-          className={cn(
-            "prose prose-sm max-w-full overflow-x-auto pt-1",
-            isProcessing ? "animate-pulse" : ""
+        <div className="prose prose-sm max-w-full flex-1 overflow-x-auto pt-1">
+          {isProcessing ? (
+            <div className="flex w-full flex-col gap-2">
+              <Skeleton className="h-3.5 w-full rounded-full" />
+              <Skeleton className="h-3.5 w-11/12 rounded-full" />
+              <Skeleton className="h-3.5 w-1/5 rounded-full" />
+            </div>
+          ) : (
+            <ReactMarkdown
+              remarkPlugins={[remarkGfm]}
+              components={{
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                a: ({ node, ...props }) => (
+                  <a target="_blank" rel="noopener noreferrer" {...props} />
+                ),
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                pre: ({ node, ...props }) => (
+                  <pre className="overflow-x-auto" {...props} />
+                ),
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                code: ({ node, ...props }) => (
+                  <code className="overflow-x-auto" {...props} />
+                ),
+              }}
+            >
+              {message.content}
+            </ReactMarkdown>
           )}
-        >
-          <ReactMarkdown
-            remarkPlugins={[remarkGfm]}
-            components={{
-              // eslint-disable-next-line @typescript-eslint/no-unused-vars
-              a: ({ node, ...props }) => (
-                <a target="_blank" rel="noopener noreferrer" {...props} />
-              ),
-              // eslint-disable-next-line @typescript-eslint/no-unused-vars
-              pre: ({ node, ...props }) => (
-                <pre className="overflow-x-auto" {...props} />
-              ),
-              // eslint-disable-next-line @typescript-eslint/no-unused-vars
-              code: ({ node, ...props }) => (
-                <code className="overflow-x-auto" {...props} />
-              ),
-            }}
-          >
-            {message.content}
-          </ReactMarkdown>
         </div>
       </div>
     </div>
