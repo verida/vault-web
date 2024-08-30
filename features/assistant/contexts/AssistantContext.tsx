@@ -1,19 +1,31 @@
 "use client"
 
-import React, { createContext, useCallback, useMemo, useState } from "react"
+import React, {
+  createContext,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react"
 
 import { commonConfig } from "@/config/client"
 import { AssistantChatMessage } from "@/features/assistant/types"
-import { processUserPrompt } from "@/features/assistant/utils"
+import { hotloadAPI, processUserPrompt } from "@/features/assistant/utils"
 import { Logger } from "@/features/telemetry"
 
 const logger = Logger.create("Assistant")
+
+type HotloadStatus = "idle" | "loading" | "success" | "error"
 
 type AssistantContextType = {
   messages: AssistantChatMessage[]
   sendMessage: (message: string) => Promise<void>
   isProcessing: boolean
   error: string | null
+  hotload: {
+    status: HotloadStatus
+    progress: number
+  }
 }
 
 export const AssistantContext = createContext<AssistantContextType | null>(null)
@@ -28,6 +40,29 @@ export function AssistantProvider(props: AssistantProviderProps) {
   const [messages, setMessages] = useState<AssistantChatMessage[]>([])
   const [isProcessing, setIsProcessing] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [hotload, setHotload] = useState<AssistantContextType["hotload"]>({
+    status: "idle",
+    progress: 0,
+  })
+
+  useEffect(() => {
+    if (commonConfig.PRIVATE_DATA_API_PRIVATE_KEY) {
+      setHotload({ status: "loading", progress: 0 })
+      hotloadAPI(commonConfig.PRIVATE_DATA_API_PRIVATE_KEY, (progress) => {
+        setHotload({ status: "loading", progress })
+      })
+        .then(() => {
+          setHotload({ status: "success", progress: 1 })
+        })
+        .catch((error) => {
+          logger.error(error)
+          setHotload({ status: "error", progress: 0 })
+          setError(
+            "Failed to initialize the assistant. Please try again later."
+          )
+        })
+    }
+  }, [])
 
   const sendMessage = useCallback(async (message: string) => {
     setIsProcessing(true)
@@ -66,8 +101,9 @@ export function AssistantProvider(props: AssistantProviderProps) {
       sendMessage,
       isProcessing,
       error,
+      hotload,
     }),
-    [messages, sendMessage, isProcessing, error]
+    [messages, sendMessage, isProcessing, error, hotload]
   )
 
   return (
