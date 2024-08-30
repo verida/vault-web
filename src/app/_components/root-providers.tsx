@@ -1,10 +1,10 @@
 "use client"
 
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { Suspense } from "react"
 
-import { ThemeProvider } from "@/components/theme-provider"
 import { TooltipProvider } from "@/components/ui/tooltip"
+import { QueriesProvider } from "@/features/queries/queries-provider"
+import { ThemesProvider } from "@/features/themes/themes-provider"
 import { VeridaProvider } from "@/features/verida"
 
 export type RootProvidersProps = {
@@ -18,13 +18,13 @@ export function RootProviders(props: RootProvidersProps) {
   // For providers requiring the user to be connected, use the AppProviders component instead.
   return (
     <Suspense>
-      <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-        <QueryClientProvider client={new QueryClient()}>
-          <VeridaProvider>
-            <TooltipProvider>{children}</TooltipProvider>
-          </VeridaProvider>
-        </QueryClientProvider>
-      </ThemeProvider>
+      <ThemesProvider>
+        <TooltipProvider>
+          <QueriesProvider>
+            <VeridaProvider>{children}</VeridaProvider>
+          </QueriesProvider>
+        </TooltipProvider>
+      </ThemesProvider>
     </Suspense>
   )
 }
