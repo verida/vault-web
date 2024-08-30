@@ -1,3 +1,7 @@
+"use client"
+
+import { useRouter } from "next/navigation"
+
 import { Connection } from "@/features/connections"
 import { cn } from "@/lib/utils"
 
@@ -7,18 +11,38 @@ import { Card, CardContent, CardFooter, CardHeader } from "../ui/card"
 import { Switch } from "../ui/switch"
 
 type Props = {
-  onConnect: () => void
+  onConnect?: () => void
+  onDisconnect?: () => void
   isConnected?: boolean
 } & Connection
 
 function ConnectionCard(props: Props) {
-  const { id, description, onConnect, isConnected = false } = props
+  const {
+    id,
+    description,
+    onConnect,
+    onDisconnect,
+    isConnected = false,
+    userId,
+  } = props
+
+  const router = useRouter()
+
+  const handleClickConnection = () => {
+    if (isConnected) {
+      router.push(`/connections?id=${id}`)
+    }
+  }
 
   return (
-    <div className="flex h-full flex-col">
+    <div
+      className={`flex h-full flex-col ${isConnected ? "cursor-pointer" : ""}`}
+      onClick={handleClickConnection}
+    >
       {!isConnected && (
-        <div className="rounded-[16px_16px_0_0] bg-green-100 pb-6 pt-2 text-center text-xs font-semibold">
-          Earn 100 VDA by connecting to the platform
+        <div className="rounded-[16px_16px_0_0] bg-green-100 pb-6 pt-2 text-center text-xs">
+          <span className="font-semibold">Earn 100 VDA</span> by connecting to
+          the platform
         </div>
       )}
       <Card className={cn(!isConnected ? "-mt-4" : "", "flex-grow")}>
@@ -42,6 +66,7 @@ function ConnectionCard(props: Props) {
               size="lg"
               variant="secondary"
               className="!mt-0 px-4 text-destructive"
+              onClick={onDisconnect}
             >
               Disconnect
             </Button>
@@ -49,15 +74,13 @@ function ConnectionCard(props: Props) {
         </CardHeader>
         <CardContent className="p-6 pt-0">
           {id && (
-            <Typography variant="heading-4" className="mt-6">
+            <Typography variant="heading-4" className="mb-2 mt-6">
               {id}
             </Typography>
           )}
+          {userId && <Typography className="mb-4">{userId}</Typography>}
           {description && (
-            <Typography
-              variant="base-l"
-              className="mt-2 text-secondary-foreground"
-            >
+            <Typography variant="base-l" className="text-secondary-foreground">
               {description}
             </Typography>
           )}

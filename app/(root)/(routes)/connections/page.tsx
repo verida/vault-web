@@ -1,64 +1,45 @@
 "use client"
 
-import { useMemo, useState } from "react"
+import { useSearchParams } from "next/navigation"
 
-import { ConnectionCard } from "@/components/connection/connection-card"
-import { ConnectionModal } from "@/components/connection/connection-modal"
-import { FilterButton } from "@/components/filter-button"
-import { SearchInput } from "@/components/search-input"
-import { connections } from "@/features/connections"
+import ConnectionDetails from "@/components/connection/connection-details"
+import ConnectionLogs from "@/components/connection/connection-logs"
+import Connections from "@/components/connection/connections"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { myConnections } from "@/features/connections"
+
+enum ConnectionTabs {
+  Connections = "Connections",
+  ConnectionLogs = "Connection Logs",
+}
 
 const MarketingPage = () => {
-  const [isOpen, setIsOpen] = useState<boolean>(false)
-  const [connectionId, setConnectionId] = useState<string>("")
-  const [searchKey, setSearchKey] = useState<string>("")
+  const searchParams = useSearchParams()
+  const connectionId = searchParams.get("id")
+  const connection = myConnections.find((c) => c.id === connectionId)
 
-  const handleOpenConnectionModal = (id: string) => {
-    setIsOpen(true)
-    setConnectionId(id)
+  if (connectionId && connection) {
+    return <ConnectionDetails connection={connection} />
   }
-
-  const handleCloseConnectionModal = () => {
-    setIsOpen(false)
-  }
-
-  const handleSearchInputChange = (value: string) => {
-    setSearchKey(value)
-  }
-
-  const searchedConnections = useMemo(
-    () =>
-      connections.filter((c) =>
-        c.id.toLocaleLowerCase().includes(searchKey.toLowerCase())
-      ),
-    [searchKey]
-  )
 
   return (
     <div className="flex flex-col pb-10">
-      <div className="flex flex-col items-center justify-between md:flex-row">
-        <h1 className="text-2xl font-medium">Discover Connections</h1>
-        <nav className="flex w-full space-x-3 md:w-auto">
-          <SearchInput onValueChange={handleSearchInputChange} />
-          <FilterButton />
-        </nav>
-      </div>
-
-      <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {searchedConnections.map((connection) => (
-          <ConnectionCard
-            {...connection}
-            key={connection.id}
-            onConnect={() => handleOpenConnectionModal(connection.id)}
-          />
-        ))}
-      </div>
-
-      <ConnectionModal
-        isOpen={isOpen}
-        onClose={handleCloseConnectionModal}
-        connectionId={connectionId}
-      />
+      <Tabs defaultValue={ConnectionTabs.Connections}>
+        <TabsList>
+          <TabsTrigger value={ConnectionTabs.Connections}>
+            {ConnectionTabs.Connections}
+          </TabsTrigger>
+          <TabsTrigger value={ConnectionTabs.ConnectionLogs}>
+            {ConnectionTabs.ConnectionLogs}
+          </TabsTrigger>
+        </TabsList>
+        <TabsContent value={ConnectionTabs.Connections}>
+          <Connections />
+        </TabsContent>
+        <TabsContent value={ConnectionTabs.ConnectionLogs}>
+          <ConnectionLogs />
+        </TabsContent>
+      </Tabs>
     </div>
   )
 }

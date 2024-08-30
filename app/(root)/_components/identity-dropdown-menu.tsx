@@ -55,7 +55,7 @@ export function IdentityDropdownMenu() {
                 height={32}
               />
               <AvatarFallback>
-                {profile?.name?.[0].toUpperCase()}
+                {profile?.name?.[0]?.toUpperCase()}
               </AvatarFallback>
             </Avatar>
             <p className="hidden text-base font-semibold leading-5 text-secondary-foreground md:inline-block">
