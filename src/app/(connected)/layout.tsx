@@ -1,6 +1,6 @@
-import { AppConnectionHandler } from "@/app/(root)/_components/app-connection-handler"
-import { AppHeader } from "@/app/(root)/_components/app-header"
-import { AppProviders } from "@/app/(root)/_components/app-providers"
+import { AppConnectionHandler } from "@/app/(connected)/_components/app-connection-handler"
+import { AppHeader } from "@/app/(connected)/_components/app-header"
+import { AppProviders } from "@/app/(connected)/_components/app-providers"
 
 type AppLayoutProps = {
   children: React.ReactNode

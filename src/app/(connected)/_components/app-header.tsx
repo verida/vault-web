@@ -7,8 +7,8 @@ import { useState } from "react"
 import {
   AppHeaderNavBar,
   AppHeaderNavMenu,
-} from "@/app/(root)/_components/app-header-nav"
-import { IdentityDropdownMenu } from "@/app/(root)/_components/identity-dropdown-menu"
+} from "@/app/(connected)/_components/app-header-nav"
+import { IdentityDropdownMenu } from "@/app/(connected)/_components/identity-dropdown-menu"
 import { Close } from "@/components/icons/close"
 import { Hamburger } from "@/components/icons/hamburger"
 import { cn } from "@/styles/utils"
