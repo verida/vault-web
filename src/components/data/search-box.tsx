@@ -1,14 +1,14 @@
 import React from "react"
 
-import { Search } from "../icons/search"
-import { Button } from "../ui/button"
+import { Search } from "@/components/icons/search"
+import { Button } from "@/components/ui/button"
 import {
   Drawer,
   DrawerContent,
   DrawerHeader,
   DrawerTrigger,
-} from "../ui/drawer"
-import { Input } from "../ui/input"
+} from "@/components/ui/drawer"
+import { Input } from "@/components/ui/input"
 
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {}

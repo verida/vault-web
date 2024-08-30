@@ -1,9 +1,8 @@
 import React from "react"
 
+import ConnectionLogItem from "@/components/connection/connection-log-item"
+import { Typography } from "@/components/typography"
 import { connectionLogs } from "@/features/connections"
-
-import { Typography } from "../typography"
-import ConnectionLogItem from "./connection-log-item"
 
 const ConnectionLogs = () => {
   return (

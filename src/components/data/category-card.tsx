@@ -1,11 +1,10 @@
 import Link from "next/link"
 import { ReactNode } from "react"
 
+import { Typography } from "@/components/typography"
+import { Card, CardContent } from "@/components/ui/card"
+import { Skeleton } from "@/components/ui/skeleton"
 import { useData } from "@/features/data/hooks"
-
-import { Typography } from "../typography"
-import { Card, CardContent } from "../ui/card"
-import { Skeleton } from "../ui/skeleton"
 
 type CategoryCardProps = {
   icon?: ReactNode

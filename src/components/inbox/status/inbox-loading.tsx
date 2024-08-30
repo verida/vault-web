@@ -1,5 +1,5 @@
-import { Spinner } from "../../spinner"
-import { Typography } from "../../typography"
+import { Spinner } from "@/components/spinner"
+import { Typography } from "@/components/typography"
 
 interface InboxLoadingProps {
   title: string

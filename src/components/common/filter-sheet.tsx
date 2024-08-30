@@ -1,4 +1,4 @@
-import { CloseSideRight } from "../icons/close-side-right"
+import { CloseSideRight } from "@/components/icons/close-side-right"
 import {
   Drawer,
   DrawerBody,
@@ -7,7 +7,7 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-} from "../ui/drawer"
+} from "@/components/ui/drawer"
 
 interface FilterSheetProps extends React.PropsWithChildren {
   open: boolean

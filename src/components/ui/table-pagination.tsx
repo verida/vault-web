@@ -1,17 +1,16 @@
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { useEffect, useState } from "react"
 
-import { usePagination } from "@/hooks/usePagination"
-import { cn } from "@/styles/utils"
-
-import { Typography } from "../typography"
+import { Typography } from "@/components/typography"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "./select"
+} from "@/components/ui/select"
+import { usePagination } from "@/hooks/usePagination"
+import { cn } from "@/styles/utils"
 
 interface TablePaginationProps {
   totalItems: number

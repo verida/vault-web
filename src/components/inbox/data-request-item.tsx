@@ -1,13 +1,12 @@
 import { useMemo } from "react"
 
+import { Chip } from "@/components/common/chip"
+import { Check } from "@/components/icons/check"
+import { Plus } from "@/components/icons/plus"
+import { Typography } from "@/components/typography"
+import { Button } from "@/components/ui/button"
+import { Card } from "@/components/ui/card"
 import { cn } from "@/styles/utils"
-
-import { Chip } from "../common/chip"
-import { Check } from "../icons/check"
-import { Plus } from "../icons/plus"
-import { Typography } from "../typography"
-import { Button } from "../ui/button"
-import { Card } from "../ui/card"
 
 interface DataRequestItemProps {
   data: Record<string, any>

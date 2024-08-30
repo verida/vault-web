@@ -2,13 +2,12 @@
 
 import { useRouter } from "next/navigation"
 
+import { Typography } from "@/components/typography"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
+import { Switch } from "@/components/ui/switch"
 import { Connection } from "@/features/connections"
 import { cn } from "@/styles/utils"
-
-import { Typography } from "../typography"
-import { Button } from "../ui/button"
-import { Card, CardContent, CardFooter, CardHeader } from "../ui/card"
-import { Switch } from "../ui/switch"
 
 type Props = {
   onConnect?: () => void

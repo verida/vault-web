@@ -6,21 +6,20 @@ import {
   ModalSheetFooter,
   ModalSheetHeader,
 } from "@/components/common/modal-sheet"
+import { DataRequestItem } from "@/components/inbox/data-request-item"
+import { InboxDetailsProps } from "@/components/inbox/inbox-details"
+import { InboxStatusText } from "@/components/inbox/inbox-status-text"
+import { RequestDataSelector } from "@/components/inbox/request-data-selector"
+import { RequesterProfile } from "@/components/inbox/requester-profile"
+import { InboxError } from "@/components/inbox/status/inbox-error"
+import { InboxLoading } from "@/components/inbox/status/inbox-loading"
+import { InboxSuccess } from "@/components/inbox/status/inbox-success"
 import { Typography } from "@/components/typography"
 import { Button } from "@/components/ui/button"
 import { ButtonLink } from "@/components/ui/button-link"
 import { useInboxAction } from "@/features/inbox/hooks/useInboxAction"
 import { InboxType } from "@/features/inbox/types"
 import { Logger } from "@/features/telemetry"
-
-import { DataRequestItem } from "../data-request-item"
-import { InboxDetailsProps } from "../inbox-details"
-import { InboxStatusText } from "../inbox-status-text"
-import { RequestDataSelector } from "../request-data-selector"
-import { RequesterProfile } from "../requester-profile"
-import { InboxError } from "../status/inbox-error"
-import { InboxLoading } from "../status/inbox-loading"
-import { InboxSuccess } from "../status/inbox-success"
 
 const logger = Logger.create("Inbox")
 

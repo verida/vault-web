@@ -6,15 +6,14 @@ import {
   ModalSheetFooter,
   ModalSheetHeader,
 } from "@/components/common/modal-sheet"
+import { InboxDetailsProps } from "@/components/inbox/inbox-details"
+import { InboxStatusText } from "@/components/inbox/inbox-status-text"
+import { IncomingDataItem } from "@/components/inbox/incoming-data-item"
+import { RequesterProfile } from "@/components/inbox/requester-profile"
 import { Typography } from "@/components/typography"
 import { Button } from "@/components/ui/button"
 import { useInboxAction } from "@/features/inbox/hooks/useInboxAction"
 import { InboxType } from "@/features/inbox/types"
-
-import { InboxDetailsProps } from "../inbox-details"
-import { InboxStatusText } from "../inbox-status-text"
-import { IncomingDataItem } from "../incoming-data-item"
-import { RequesterProfile } from "../requester-profile"
 
 const InboxIncomingData: React.FC<InboxDetailsProps> = ({
   message,

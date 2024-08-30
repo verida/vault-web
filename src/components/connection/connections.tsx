@@ -5,12 +5,11 @@ import { useState } from "react"
 
 import { ConnectionCard } from "@/components/connection/connection-card"
 import { ConnectionModal } from "@/components/connection/connection-modal"
+import { DisconnectModal } from "@/components/connection/disconnect-modal"
+import { Typography } from "@/components/typography"
 // import { FilterButton } from "@/components/filter-button"
 // import { SearchInput } from "@/components/search-input"
 import { connections, myConnections } from "@/features/connections"
-
-import { Typography } from "../typography"
-import { DisconnectModal } from "./disconnect-modal"
 
 const Connections = () => {
   const [isConnectModalOpen, setIsConnectModalOpen] = useState<boolean>(false)

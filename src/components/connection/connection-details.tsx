@@ -1,16 +1,15 @@
 import Link from "next/link"
 import React from "react"
 
+import ConnectionLogs from "@/components/connection/connection-logs"
+import SupportedDataCard from "@/components/connection/supported-data-card"
+import { ArrowLeft } from "@/components/icons/arrow-left"
+import { Typography } from "@/components/typography"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Button } from "@/components/ui/button"
+import { Card } from "@/components/ui/card"
 import { Connection, supportedData } from "@/features/connections"
 import { useVerida } from "@/features/verida"
-
-import { ArrowLeft } from "../icons/arrow-left"
-import { Typography } from "../typography"
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar"
-import { Button } from "../ui/button"
-import { Card } from "../ui/card"
-import ConnectionLogs from "./connection-logs"
-import SupportedDataCard from "./supported-data-card"
 
 type Props = {
   connection: Connection

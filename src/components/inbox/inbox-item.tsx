@@ -1,15 +1,14 @@
 import Image from "next/image"
 import Link from "next/link"
 
+import { InboxStatusText } from "@/components/inbox/inbox-status-text"
+import { Typography } from "@/components/typography"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Card } from "@/components/ui/card"
 import { inboxTypes } from "@/features/inbox/constants"
 import { InboxEntry } from "@/features/inbox/types"
 import { cn } from "@/styles/utils"
 import { formatDate } from "@/utils/misc"
-
-import { Typography } from "../typography"
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar"
-import { Card } from "../ui/card"
-import { InboxStatusText } from "./inbox-status-text"
 
 interface InboxRowItemProps {
   message: InboxEntry

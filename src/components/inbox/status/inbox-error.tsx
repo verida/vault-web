@@ -1,9 +1,8 @@
 import Image from "next/image"
 
 import ErrorInboxImage from "@/assets/error-inbox.svg"
+import { Typography } from "@/components/typography"
 import { Button } from "@/components/ui/button"
-
-import { Typography } from "../../typography"
 
 interface InboxErrorProps {
   description: string

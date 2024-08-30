@@ -2,8 +2,8 @@ import moment from "moment"
 import Image from "next/image"
 import React from "react"
 
-import { Typography } from "../typography"
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar"
+import { Typography } from "@/components/typography"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
 interface RequesterProfileProps {
   sentBy: Record<string, any>

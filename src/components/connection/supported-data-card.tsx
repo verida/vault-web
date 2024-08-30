@@ -1,11 +1,10 @@
 import { ChevronDown, ChevronRight } from "lucide-react"
 import React from "react"
 
+import { Typography } from "@/components/typography"
+import { Card, CardContent, CardFooter } from "@/components/ui/card"
+import { Switch } from "@/components/ui/switch"
 import { SupportedData } from "@/features/connections"
-
-import { Typography } from "../typography"
-import { Card, CardContent, CardFooter } from "../ui/card"
-import { Switch } from "../ui/switch"
 
 type Props = {
   data: SupportedData

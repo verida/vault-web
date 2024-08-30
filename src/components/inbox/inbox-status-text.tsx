@@ -1,8 +1,7 @@
+import { Failed } from "@/components/icons/failed"
+import { Success } from "@/components/icons/success"
+import { Typography } from "@/components/typography"
 import { InboxType } from "@/features/inbox/types"
-
-import { Failed } from "../icons/failed"
-import { Success } from "../icons/success"
-import { Typography } from "../typography"
 
 interface InboxStatusProps {
   status?: "accept" | "decline"

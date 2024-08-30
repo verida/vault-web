@@ -2,10 +2,9 @@ import Image from "next/image"
 import Link from "next/link"
 import React from "react"
 
+import { Typography } from "@/components/typography"
+import { Card } from "@/components/ui/card"
 import { DataSchema } from "@/features/data"
-
-import { Typography } from "../typography"
-import { Card } from "../ui/card"
 
 type Props = {
   data: any

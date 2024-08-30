@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query"
 import { useCallback } from "react"
 
-import { DataSchema } from "../types"
+import { DataSchema } from "@/features/data/types"
 
 export const useDataSchema = (schemaUrl?: string) => {
   const fetchDataSchema = useCallback(async () => {

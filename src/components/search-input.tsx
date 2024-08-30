@@ -1,9 +1,8 @@
 import { debounce } from "lodash"
 import React, { useCallback } from "react"
 
+import { Search } from "@/components/icons/search"
 import { cn } from "@/styles/utils"
-
-import { Search } from "./icons/search"
 
 type SearchInputProps = {
   onValueChange?: React.Dispatch<string>

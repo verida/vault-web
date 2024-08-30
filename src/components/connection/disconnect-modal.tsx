@@ -1,6 +1,11 @@
-import { Typography } from "../typography"
-import { Button } from "../ui/button"
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog"
+import { Typography } from "@/components/typography"
+import { Button } from "@/components/ui/button"
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
 
 type Props = {
   isOpen: boolean

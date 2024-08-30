@@ -2,9 +2,8 @@
 
 import * as React from "react"
 
+import { Close } from "@/components/icons/close"
 import { cn } from "@/styles/utils"
-
-import { Close } from "../icons/close"
 
 const Modal = React.forwardRef<
   HTMLDivElement,

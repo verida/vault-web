@@ -1,12 +1,11 @@
 import { useMemo } from "react"
 
+import { VLogo } from "@/components/icons/logo"
+import { Switch } from "@/components/icons/switch"
+import { Typography } from "@/components/typography"
+import { Button } from "@/components/ui/button"
+import { Modal } from "@/components/ui/modal"
 import { connections } from "@/features/connections"
-
-import { VLogo } from "../icons/logo"
-import { Switch } from "../icons/switch"
-import { Typography } from "../typography"
-import { Button } from "../ui/button"
-import { Modal } from "../ui/modal"
 
 type Props = {
   isOpen: boolean

@@ -1,8 +1,7 @@
+import { Filter } from "@/components/icons/filter"
+import { Typography } from "@/components/typography"
+import { Button } from "@/components/ui/button"
 import { cn } from "@/styles/utils"
-
-import { Filter } from "./icons/filter"
-import { Typography } from "./typography"
-import { Button } from "./ui/button"
 
 export type FilterButtonProps = Omit<
   React.ComponentPropsWithRef<typeof Button>,

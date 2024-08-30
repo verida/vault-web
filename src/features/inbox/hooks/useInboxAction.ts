@@ -1,11 +1,10 @@
 import { useQueryClient } from "@tanstack/react-query"
 import { useCallback, useState } from "react"
 
+import { useInboxContext } from "@/features/inbox/hooks/useInboxContext"
+import { InboxEntry, InboxType } from "@/features/inbox/types"
 import { Logger } from "@/features/telemetry"
 import { useVerida } from "@/features/verida"
-
-import { InboxEntry, InboxType } from "../types"
-import { useInboxContext } from "./useInboxContext"
 
 const logger = Logger.create("Inbox")
 

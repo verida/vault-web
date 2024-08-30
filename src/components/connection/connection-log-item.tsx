@@ -1,9 +1,8 @@
 import React, { useState } from "react"
 
+import { Typography } from "@/components/typography"
+import { Card } from "@/components/ui/card"
 import { ConnectionLog } from "@/features/connections"
-
-import { Typography } from "../typography"
-import { Card } from "../ui/card"
 
 type Props = {
   log: ConnectionLog

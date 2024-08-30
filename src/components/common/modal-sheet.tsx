@@ -1,8 +1,6 @@
 import React from "react"
 
-import { cn } from "@/styles/utils"
-
-import { CloseSideRight } from "../icons/close-side-right"
+import { CloseSideRight } from "@/components/icons/close-side-right"
 import {
   Drawer,
   DrawerBody,
@@ -11,7 +9,8 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-} from "../ui/drawer"
+} from "@/components/ui/drawer"
+import { cn } from "@/styles/utils"
 
 interface ModalSheetProps extends React.PropsWithChildren {
   open: boolean

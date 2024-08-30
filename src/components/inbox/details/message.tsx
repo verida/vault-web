@@ -5,14 +5,13 @@ import {
   ModalSheetFooter,
   ModalSheetHeader,
 } from "@/components/common/modal-sheet"
+import { InboxDetailsProps } from "@/components/inbox/inbox-details"
+import { RequesterProfile } from "@/components/inbox/requester-profile"
 import { Typography } from "@/components/typography"
 import { Button } from "@/components/ui/button"
 import { ButtonLink } from "@/components/ui/button-link"
 import { useInboxAction } from "@/features/inbox/hooks/useInboxAction"
 import { InboxType } from "@/features/inbox/types"
-
-import { InboxDetailsProps } from "../inbox-details"
-import { RequesterProfile } from "../requester-profile"
 
 export const InboxMessageDetails: React.FC<InboxDetailsProps> = ({
   message,

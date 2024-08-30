@@ -2,21 +2,24 @@ import Image from "next/image"
 import { usePathname, useRouter } from "next/navigation"
 import React from "react"
 
-import { DataFolderDefinition, DataSchema } from "@/features/data"
-
 import {
   ModalSheet,
   ModalSheetBody,
   ModalSheetHeader,
-} from "../common/modal-sheet"
-import { Copy } from "../icons/copy"
-import { Delete } from "../icons/delete"
-import { Pin } from "../icons/pin"
-import { Typography } from "../typography"
-import { Button } from "../ui/button"
-import { Skeleton } from "../ui/skeleton"
-import { Switch } from "../ui/switch"
-import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip"
+} from "@/components/common/modal-sheet"
+import { Copy } from "@/components/icons/copy"
+import { Delete } from "@/components/icons/delete"
+import { Pin } from "@/components/icons/pin"
+import { Typography } from "@/components/typography"
+import { Button } from "@/components/ui/button"
+import { Skeleton } from "@/components/ui/skeleton"
+import { Switch } from "@/components/ui/switch"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
+import { DataFolderDefinition, DataSchema } from "@/features/data"
 
 type Props = {
   open: boolean

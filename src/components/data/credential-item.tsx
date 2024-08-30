@@ -2,13 +2,12 @@ import Image from "next/image"
 import Link from "next/link"
 import React from "react"
 
+import { Valid } from "@/components/icons/valid"
+import { Typography } from "@/components/typography"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Card } from "@/components/ui/card"
 // import { DataSchema } from "@/features/data"
 import { getPublicProfile } from "@/features/profiles"
-
-import { Valid } from "../icons/valid"
-import { Typography } from "../typography"
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar"
-import { Card } from "../ui/card"
 
 type CredentialItemProps = {
   logo?: string

@@ -1,6 +1,6 @@
 "use client"
 
-import { PublicProfile } from "./@types"
+import { PublicProfile } from "@/features/profiles/@types"
 
 const isServer = typeof window === "undefined"
 

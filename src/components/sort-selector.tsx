@@ -1,12 +1,12 @@
-import { Sort } from "./icons/sort"
-import { Typography } from "./typography"
+import { Sort } from "@/components/icons/sort"
+import { Typography } from "@/components/typography"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "./ui/select"
+} from "@/components/ui/select"
 
 export type SortSelectorProps = Omit<
   React.ComponentPropsWithRef<typeof Select>,

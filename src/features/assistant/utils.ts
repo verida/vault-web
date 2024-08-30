@@ -1,9 +1,8 @@
 import { commonConfig } from "@/config/common"
 import { DUMMY_ANSWERS } from "@/features/assistant/mock"
+import { PrivateDataApiV1LLMPersonalResponseSchema } from "@/features/assistant/schemas"
 import { Logger } from "@/features/telemetry"
 import { wait } from "@/utils/misc"
-
-import { PrivateDataApiV1LLMPersonalResponseSchema } from "./schemas"
 
 const logger = Logger.create("Assistant")
 

@@ -3,22 +3,21 @@ import moment from "moment"
 import Image from "next/image"
 import { useCallback, useEffect, useState } from "react"
 
-import { Logger } from "@/features/telemetry"
-import { useVerida } from "@/features/verida"
-
-import Alert from "../alert"
-import { ArrowLeft } from "../icons/arrow-left"
-import { SearchInput } from "../search-input"
-import { Typography } from "../typography"
-import { Button } from "../ui/button"
-import { Card } from "../ui/card"
-import { Checkbox } from "../ui/checkbox"
+import Alert from "@/components/alert"
+import { ArrowLeft } from "@/components/icons/arrow-left"
+import { SearchInput } from "@/components/search-input"
+import { Typography } from "@/components/typography"
+import { Button } from "@/components/ui/button"
+import { Card } from "@/components/ui/card"
+import { Checkbox } from "@/components/ui/checkbox"
 import {
   DrawerBody,
   DrawerFooter,
   DrawerHeader,
   DrawerTitle,
-} from "../ui/drawer"
+} from "@/components/ui/drawer"
+import { Logger } from "@/features/telemetry"
+import { useVerida } from "@/features/verida"
 
 const logger = Logger.create("Inbox")
 

@@ -1,10 +1,9 @@
 import { ReactElement, useMemo } from "react"
 
+import { DataRequestDetails } from "@/components/inbox/details/data-request"
+import InboxIncomingData from "@/components/inbox/details/incoming-data"
+import { InboxMessageDetails } from "@/components/inbox/details/message"
 import { InboxEntry, InboxType } from "@/features/inbox/types"
-
-import { DataRequestDetails } from "./details/data-request"
-import InboxIncomingData from "./details/incoming-data"
-import { InboxMessageDetails } from "./details/message"
 
 export interface InboxDetailsProps {
   message: InboxEntry

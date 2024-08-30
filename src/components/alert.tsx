@@ -1,9 +1,8 @@
 import { type VariantProps, cva } from "class-variance-authority"
 
+import { Warning } from "@/components/icons/warning"
+import { Typography } from "@/components/typography"
 import { cn } from "@/styles/utils"
-
-import { Warning } from "./icons/warning"
-import { Typography } from "./typography"
 
 // TODO: Rework the Alert component
 const alertVariants = cva(

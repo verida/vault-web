@@ -1,6 +1,5 @@
+import { Inbox } from "@/components/icons/inbox"
 import { useInbox } from "@/features/inbox/hooks"
-
-import { Inbox } from "./inbox"
 
 export const InboxWithBadge = () => {
   const { unreadMessageCount } = useInbox()

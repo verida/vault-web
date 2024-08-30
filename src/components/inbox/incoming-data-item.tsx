@@ -1,6 +1,6 @@
 import Image from "next/image"
 
-import { Typography } from "../typography"
+import { Typography } from "@/components/typography"
 
 interface IncomingDataItemProps {
   item: Record<string, any>

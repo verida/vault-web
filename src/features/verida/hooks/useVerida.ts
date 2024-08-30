@@ -1,6 +1,6 @@
 import { useContext } from "react"
 
-import { VeridaContext } from "../contexts"
+import { VeridaContext } from "@/features/verida/contexts/VeridaContext"
 
 export const useVerida = () => {
   const context = useContext(VeridaContext)
