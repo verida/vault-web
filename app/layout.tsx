@@ -2,7 +2,7 @@ import type { Metadata } from "next"
 import { Sora } from "next/font/google"
 
 import { RootProviders } from "@/app/_components/root-providers"
-import { commonConfig } from "@/config/client"
+import { commonConfig } from "@/config/common"
 import { APP_DESCRIPTION, APP_NAME, APP_TITLE } from "@/constants/app"
 import { cn } from "@/lib/utils"
 

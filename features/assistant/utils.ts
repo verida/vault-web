@@ -1,4 +1,4 @@
-import { commonConfig } from "@/config/client"
+import { commonConfig } from "@/config/common"
 import { DUMMY_ANSWERS } from "@/features/assistant/mock"
 import { Logger } from "@/features/telemetry"
 import { wait } from "@/utils/misc"

@@ -5,7 +5,7 @@ import { type DatastoreOpenConfig, type IDatastore } from "@verida/types"
 import { WebUser } from "@verida/web-helpers"
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"
 
-import { commonConfig } from "@/config/client"
+import { commonConfig } from "@/config/common"
 import { getPublicProfile } from "@/features/profiles"
 import { PublicProfile } from "@/features/profiles/@types"
 import { Logger } from "@/features/telemetry"

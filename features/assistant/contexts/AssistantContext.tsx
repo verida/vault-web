@@ -8,7 +8,7 @@ import React, {
   useState,
 } from "react"
 
-import { commonConfig } from "@/config/client"
+import { commonConfig } from "@/config/common"
 import { AssistantChatMessage } from "@/features/assistant/types"
 import { hotloadAPI, processUserPrompt } from "@/features/assistant/utils"
 import { Logger } from "@/features/telemetry"

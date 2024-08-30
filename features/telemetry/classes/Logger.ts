@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { commonConfig } from "@/config/client"
+import { commonConfig } from "@/config/common"
 import { LogLevel } from "@/features/telemetry/types"
 
 const levelOrder: LogLevel[] = ["error", "warn", "info", "debug"]
