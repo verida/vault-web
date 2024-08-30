@@ -1,22 +1,44 @@
+import { type VariantProps, cva } from "class-variance-authority"
+
+import { cn } from "@/lib/utils"
+
 import { Warning } from "./icons/warning"
 import { Typography } from "./typography"
 
-interface AlertProps {
+// TODO: Rework the Alert component
+const alertVariants = cva(
+  "rounded border-l-2 bg-primary p-2 text-secondary-foreground",
+  {
+    variants: {
+      variant: {
+        info: "border-accent",
+        warning: "border-yellow-500",
+        error: "border-destructive text-destructive",
+      },
+    },
+    defaultVariants: {
+      variant: "warning",
+    },
+  }
+)
+
+type AlertProps = {
   text: string
-}
+} & VariantProps<typeof alertVariants> &
+  React.ComponentProps<"div">
 
 const Alert: React.FC<AlertProps> = (props) => {
-  const { text } = props
+  const { text, variant, className, ...divProps } = props
+
   return (
-    <div className="rounded border-l-2 border-yellow-500 bg-[#F6F7F9] p-2">
+    <div
+      role="alert"
+      className={cn(alertVariants({ variant }), className)}
+      {...divProps}
+    >
       <div className="flex items-center gap-2">
-        <Warning />
-        <Typography
-          variant="base-s-semibold"
-          className="text-secondary-foreground"
-        >
-          {text}
-        </Typography>
+        {variant === "warning" ? <Warning /> : null}
+        <Typography variant="base-s-semibold">{text}</Typography>
       </div>
     </div>
   )

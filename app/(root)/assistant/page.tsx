@@ -5,6 +5,7 @@ import { useCallback, useEffect, useRef } from "react"
 import { AssistantChatEmptyContent } from "@/app/(root)/assistant/_components/assistant-chat-empty-content"
 import { AssistantChatInput } from "@/app/(root)/assistant/_components/assistant-chat-input"
 import { AssistantChatMessagesList } from "@/app/(root)/assistant/_components/assistant-chat-messages-list"
+import Alert from "@/components/alert"
 import { useAssistant } from "@/features/assistant"
 
 export default function AssistantChatPage() {
@@ -48,10 +49,7 @@ export default function AssistantChatPage() {
           </div>
         )}
       </div>
-      {error ? (
-        // TODO: Change for an alert component
-        <p className="py-2 text-destructive">{error}</p>
-      ) : null}
+      {error ? <Alert text={error} variant="error" className="mb-2" /> : null}
       <AssistantChatInput
         onSendMessage={handleSendMessage}
         isProcessing={isProcessing}
