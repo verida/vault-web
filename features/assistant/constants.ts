@@ -1,4 +1,4 @@
 export const RECOMMENDED_PROMPTS_FOR_NEW_CHAT = [
-  "Extract action items from unread emails",
+  "Extract actions from my emails",
   "Recommend products based on my purchase history",
 ]

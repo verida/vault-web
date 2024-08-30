@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { clientConfig } from "@/config/client"
+import { commonConfig } from "@/config/common"
 import { LogLevel } from "@/features/telemetry/types"
 
 const levelOrder: LogLevel[] = ["error", "warn", "info", "debug"]
@@ -14,7 +14,7 @@ const levelOrder: LogLevel[] = ["error", "warn", "info", "debug"]
 export class Logger {
   private static instances = new Map<string, Logger>()
   private static currentLevelIndex: number = levelOrder.indexOf(
-    clientConfig.LOG_LEVEL
+    commonConfig.LOG_LEVEL
   )
 
   private readonly category: string
@@ -49,7 +49,7 @@ export class Logger {
   private shouldSkipPrint(level: LogLevel) {
     return (
       levelOrder.indexOf(level) > Logger.currentLevelIndex ||
-      (clientConfig.isClient && !clientConfig.DEBUG_MODE)
+      (commonConfig.isClient && !commonConfig.DEBUG_MODE)
     )
   }
 
