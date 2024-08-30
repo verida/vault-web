@@ -34,6 +34,12 @@ export type AssistantProviderProps = {
   children: React.ReactNode
 }
 
+/**
+ * AssistantProvider component
+ *
+ * This component provides the context for the AI assistant functionality.
+ * It manages the state of messages, processing status, errors, and hotloading progress.
+ */
 export function AssistantProvider(props: AssistantProviderProps) {
   const { children } = props
 
@@ -46,25 +52,30 @@ export function AssistantProvider(props: AssistantProviderProps) {
   })
 
   useEffect(() => {
-    if (commonConfig.PRIVATE_DATA_API_PRIVATE_KEY) {
-      setHotload({ status: "loading", progress: 0 })
-      hotloadAPI(commonConfig.PRIVATE_DATA_API_PRIVATE_KEY, (progress) => {
-        setHotload({ status: "loading", progress })
-      })
-        .then(() => {
-          setHotload({ status: "success", progress: 1 })
-        })
-        .catch((error) => {
-          logger.error(error)
-          setHotload({ status: "error", progress: 0 })
-          setError(
-            "Failed to initialize the assistant. Please try again later."
-          )
-        })
+    logger.info("Initialising the assistant")
+    if (!commonConfig.PRIVATE_DATA_API_PRIVATE_KEY) {
+      logger.warn(
+        "PRIVATE_DATA_API_PRIVATE_KEY missing, unable to initializethe assistant"
+      )
+      return
     }
+
+    setHotload({ status: "loading", progress: 0 })
+    hotloadAPI(commonConfig.PRIVATE_DATA_API_PRIVATE_KEY, (progress) => {
+      setHotload({ status: "loading", progress })
+    })
+      .then(() => {
+        setHotload({ status: "success", progress: 1 })
+        logger.info("Assisant initialized")
+      })
+      .catch((error) => {
+        logger.error(error)
+        setHotload({ status: "error", progress: 0 })
+      })
   }, [])
 
   const sendMessage = useCallback(async (message: string) => {
+    logger.info("Sending message to assistant")
     setIsProcessing(true)
     setError(null)
 
@@ -87,6 +98,7 @@ export function AssistantProvider(props: AssistantProviderProps) {
       }
 
       setMessages((prevMessages) => [...prevMessages, newAssistantMessage])
+      logger.info("Received response from assistant")
     } catch (error) {
       logger.error(error)
       setError("Something went wrong with the assistant")
