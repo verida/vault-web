@@ -1,4 +1,4 @@
-interface SpinnerProps {
+type SpinnerProps = {
   width?: number
   height?: number
 }

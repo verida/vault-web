@@ -2,7 +2,7 @@ import Image from "next/image"
 
 import { Typography } from "@/components/typography"
 
-interface IncomingDataItemProps {
+type IncomingDataItemProps = {
   item: Record<string, any>
 }
 

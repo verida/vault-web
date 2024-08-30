@@ -5,7 +5,7 @@ import React from "react"
 import { Typography } from "@/components/typography"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
-interface RequesterProfileProps {
+type RequesterProfileProps = {
   sentBy: Record<string, any>
   sentAt: string | Date
 }

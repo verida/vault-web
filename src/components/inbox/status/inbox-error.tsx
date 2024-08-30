@@ -4,7 +4,7 @@ import ErrorInboxImage from "@/assets/error-inbox.svg"
 import { Typography } from "@/components/typography"
 import { Button } from "@/components/ui/button"
 
-interface InboxErrorProps {
+type InboxErrorProps = {
   description: string
   onClick?: () => void
 }

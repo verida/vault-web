@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { cn } from "@/styles/utils"
 
-interface DataRequestItemProps {
+type DataRequestItemProps = {
   data: Record<string, any>
   selectedItems: Record<string, any>[]
   onAdd: () => void

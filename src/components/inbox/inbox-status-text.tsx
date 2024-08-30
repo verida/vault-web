@@ -3,7 +3,7 @@ import { Success } from "@/components/icons/success"
 import { Typography } from "@/components/typography"
 import { InboxType } from "@/features/inbox/types"
 
-interface InboxStatusProps {
+type InboxStatusProps = {
   status?: "accept" | "decline"
   inboxType?: InboxType
 }

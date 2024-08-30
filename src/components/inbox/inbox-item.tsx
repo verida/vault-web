@@ -10,7 +10,7 @@ import { InboxEntry } from "@/features/inbox/types"
 import { cn } from "@/styles/utils"
 import { formatDate } from "@/utils/misc"
 
-interface InboxRowItemProps {
+type InboxRowItemProps = {
   message: InboxEntry
   href?: string
 }

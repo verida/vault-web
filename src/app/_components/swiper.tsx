@@ -7,7 +7,7 @@ import { CSSTransition, SwitchTransition } from "react-transition-group"
 import { Typography } from "@/components/typography"
 import { cn } from "@/styles/utils"
 
-interface SwiperProps {
+type SwiperProps = {
   data: {
     title: string
     icon: React.ReactNode

@@ -12,7 +12,7 @@ import {
 import { usePagination } from "@/hooks/usePagination"
 import { cn } from "@/styles/utils"
 
-interface TablePaginationProps {
+type TablePaginationProps = {
   totalItems: number
   onChange: (offset: number, limit: number) => void
 }

@@ -10,8 +10,8 @@ import {
 } from "@/components/ui/drawer"
 import { Input } from "@/components/ui/input"
 
-export interface InputProps
-  extends React.InputHTMLAttributes<HTMLInputElement> {}
+export type InputProps = React.InputHTMLAttributes<HTMLInputElement>
+
 const SearchBox = (props: InputProps) => {
   return (
     <>

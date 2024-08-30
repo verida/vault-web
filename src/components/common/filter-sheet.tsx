@@ -9,7 +9,7 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer"
 
-interface FilterSheetProps extends React.PropsWithChildren {
+type FilterSheetProps = React.PropsWithChildren & {
   open: boolean
   onClose: () => void
   className?: string
@@ -31,7 +31,7 @@ const FilterSheet: React.FC<FilterSheetProps> = (props) => {
   )
 }
 
-interface FilterSheetHeaderProps {
+type FilterSheetHeaderProps = {
   title: string
   onClose: () => void
 }
@@ -48,13 +48,13 @@ const FilterSheetHeader: React.FC<FilterSheetHeaderProps> = (props) => {
   )
 }
 
-interface FilterSheetBodyProps extends React.PropsWithChildren {}
+type FilterSheetBodyProps = React.PropsWithChildren
 
 const FilterSheetBody: React.FC<FilterSheetBodyProps> = (props) => {
   return <DrawerBody className="p-4">{props.children}</DrawerBody>
 }
 
-interface FilterSheetFooterProps extends React.PropsWithChildren {}
+type FilterSheetFooterProps = React.PropsWithChildren
 
 const FilterSheetFooter: React.FC<FilterSheetFooterProps> = (props) => {
   return <DrawerFooter className="p-4">{props.children}</DrawerFooter>

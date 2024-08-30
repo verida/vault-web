@@ -3,7 +3,7 @@ import Image from "next/image"
 import SuccessShareImage from "@/assets/success.svg"
 import { Typography } from "@/components/typography"
 
-interface InboxSuccessProps {
+type InboxSuccessProps = {
   title: string
   description: React.ReactNode
 }

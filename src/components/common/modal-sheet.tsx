@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/drawer"
 import { cn } from "@/styles/utils"
 
-interface ModalSheetProps extends React.PropsWithChildren {
+type ModalSheetProps = React.PropsWithChildren & {
   open: boolean
   onClose: () => void
 }
@@ -28,7 +28,7 @@ const ModalSheet: React.FC<ModalSheetProps> = (props) => {
   )
 }
 
-interface ModalSheetHeaderProps {
+type ModalSheetHeaderProps = {
   title: string | React.ReactNode
   actions: React.ReactNode
   onClose: () => void
@@ -50,7 +50,7 @@ const ModalSheetHeader: React.FC<ModalSheetHeaderProps> = (props) => {
   )
 }
 
-interface ModalSheetBodyProps extends React.PropsWithChildren {
+type ModalSheetBodyProps = React.PropsWithChildren & {
   className?: string
 }
 
@@ -65,7 +65,7 @@ const ModalSheetBody: React.FC<ModalSheetBodyProps> = ({
   )
 }
 
-interface ModalSheetFooterProps extends React.PropsWithChildren {}
+type ModalSheetFooterProps = React.PropsWithChildren
 
 const ModalSheetFooter: React.FC<ModalSheetFooterProps> = (props) => {
   return <DrawerFooter className="p-6">{props.children}</DrawerFooter>

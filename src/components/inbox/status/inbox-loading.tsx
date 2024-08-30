@@ -1,7 +1,7 @@
 import { Spinner } from "@/components/spinner"
 import { Typography } from "@/components/typography"
 
-interface InboxLoadingProps {
+type InboxLoadingProps = {
   title: string
   description: string
 }

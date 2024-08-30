@@ -3,7 +3,7 @@ import Image from "next/image"
 import { Close } from "@/components/icons/close"
 import { Typography } from "@/components/typography"
 
-interface ChipProps {
+type ChipProps = {
   id: string
   icon: string
   text: string

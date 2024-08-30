@@ -5,7 +5,7 @@ import InboxIncomingData from "@/components/inbox/details/incoming-data"
 import { InboxMessageDetails } from "@/components/inbox/details/message"
 import { InboxEntry, InboxType } from "@/features/inbox/types"
 
-export interface InboxDetailsProps {
+export type InboxDetailsProps = {
   message: InboxEntry
   onClose: () => void
 }

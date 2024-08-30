@@ -21,7 +21,7 @@ import { useVerida } from "@/features/verida"
 
 const logger = Logger.create("Inbox")
 
-interface RequestDataSelectorProps {
+type RequestDataSelectorProps = {
   schemaUrl: string
   filter: any
   defaultItems: any[]

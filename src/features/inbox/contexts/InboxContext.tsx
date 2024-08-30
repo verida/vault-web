@@ -11,7 +11,9 @@ type InboxContextType = {
 
 export const InboxContext = React.createContext<InboxContextType | null>(null)
 
-interface InboxProviderProps extends React.PropsWithChildren {}
+type InboxProviderProps = {
+  children: React.ReactNode
+}
 
 export const InboxProvider: React.FunctionComponent<InboxProviderProps> = ({
   children,
