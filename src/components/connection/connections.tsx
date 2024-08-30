@@ -5,8 +5,8 @@ import { useState } from "react"
 
 import { ConnectionCard } from "@/components/connection/connection-card"
 import { ConnectionModal } from "@/components/connection/connection-modal"
-import { FilterButton } from "@/components/filter-button"
-import { SearchInput } from "@/components/search-input"
+// import { FilterButton } from "@/components/filter-button"
+// import { SearchInput } from "@/components/search-input"
 import { connections, myConnections } from "@/features/connections"
 
 import { Typography } from "../typography"
@@ -18,7 +18,7 @@ const Connections = () => {
     useState<boolean>(false)
 
   const [connectionId, setConnectionId] = useState<string>("")
-  const [searchKey, setSearchKey] = useState<string>("")
+  // const [searchKey, setSearchKey] = useState<string>("")
 
   const handleOpenConnectionModal = (id: string) => {
     setIsConnectModalOpen(true)
@@ -33,9 +33,9 @@ const Connections = () => {
     setIsDisconnectModalOpen(false)
   }
 
-  const handleSearchInputChange = (value: string) => {
-    setSearchKey(value)
-  }
+  // const handleSearchInputChange = (value: string) => {
+  //   setSearchKey(value)
+  // }
 
   // const searchedConnections = useMemo(
   //   () =>
@@ -49,10 +49,10 @@ const Connections = () => {
     <div>
       <div className="flex flex-col items-center justify-between md:flex-row">
         <Typography variant={"heading-3"}>Connections</Typography>
-        <nav className="flex w-full space-x-3 md:w-auto">
+        {/* <nav className="flex w-full space-x-3 md:w-auto">
           <SearchInput onValueChange={handleSearchInputChange} />
           <FilterButton />
-        </nav>
+        </nav> */}
       </div>
 
       {myConnections.length > 0 && (

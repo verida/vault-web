@@ -8,7 +8,7 @@ type Props = {
   connectionId: string
 } & React.PropsWithChildren
 
-function DisconnectModal({ connectionId, isOpen, onClose }: Props) {
+function DisconnectModal({ isOpen, onClose }: Props) {
   return (
     <Dialog open={isOpen} onOpenChange={() => onClose()}>
       <DialogContent>
