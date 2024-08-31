@@ -14,9 +14,11 @@ export default function AppLayout(props: AppLayoutProps) {
       <AppProviders>
         <div className="flex h-dvh flex-col bg-background">
           <AppHeader />
-          <main className="flex-1 overflow-y-auto p-6 pb-0 md:pt-10">
-            {children}
-          </main>
+          <div className="flex flex-1 flex-col items-center justify-center">
+            <main className="w-full max-w-screen-2xl flex-1 overflow-y-auto px-4 pb-0 pt-6 md:px-6 md:pt-10 xl:px-8">
+              {children}
+            </main>
+          </div>
         </div>
       </AppProviders>
     </AppConnectionHandler>
