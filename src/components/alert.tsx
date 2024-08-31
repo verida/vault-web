@@ -5,7 +5,7 @@ import { Typography } from "@/components/typography"
 import { cn } from "@/styles/utils"
 
 const alertVariants = cva(
-  "rounded border-l-2 bg-muted px-3 py-2 text-foreground",
+  "rounded border-l-4 bg-muted px-3 py-2 text-foreground",
   {
     variants: {
       variant: {

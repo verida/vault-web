@@ -89,7 +89,7 @@ export function IdentityDropdownMenu() {
               </Typography>
             </div>
             <Button
-              variant="outline"
+              variant="ghost"
               size="icon"
               onClick={onCopyDid}
               className="shrink-0"

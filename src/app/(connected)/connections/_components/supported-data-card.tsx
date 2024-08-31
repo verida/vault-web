@@ -2,6 +2,7 @@ import { ChevronDown, ChevronRight } from "lucide-react"
 import React from "react"
 
 import { Typography } from "@/components/typography"
+import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { Switch } from "@/components/ui/switch"
 import { SupportedData } from "@/features/connections"
@@ -18,10 +19,12 @@ export function SupportedDataCard(props: SupportedDataCardProps) {
       <CardContent className="space-y-4 p-0">
         <div className="flex items-center justify-between">
           <Typography variant="heading-5">{data.title}</Typography>
-          <div className="flex cursor-pointer items-center gap-1 text-primary">
-            <Typography variant="base-semibold">View Data</Typography>
-            <ChevronRight className="size-5" />
-          </div>
+          <Button variant="ghost" size="sm" className="-mx-2 -my-2 h-auto p-2">
+            <div className="flex flex-row items-center gap-1 text-primary">
+              <Typography variant="base-semibold">View Data</Typography>
+              <ChevronRight className="size-5" />
+            </div>
+          </Button>
         </div>
 
         <div className="flex items-center justify-between">

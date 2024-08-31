@@ -3,6 +3,7 @@
 import React from "react"
 
 import { CloseSideRight } from "@/components/icons/close-side-right"
+import { Button } from "@/components/ui/button"
 import {
   Drawer,
   DrawerBody,
@@ -43,7 +44,14 @@ export function ModalSheetHeader(props: ModalSheetHeaderProps) {
     <DrawerHeader className="gap-4 px-6 py-4 text-left">
       <div className="flex w-full items-center justify-between">
         <div className="flex items-center space-x-3">
-          <CloseSideRight className="cursor-pointer" onClick={onClose} />
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={onClose}
+            className="-my-2 -ml-2"
+          >
+            <CloseSideRight />
+          </Button>
           <DrawerTitle className="hidden md:block">{title}</DrawerTitle>
         </div>
         {actions}
