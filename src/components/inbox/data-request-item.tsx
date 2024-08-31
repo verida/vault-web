@@ -1,6 +1,6 @@
 import { useMemo } from "react"
 
-import { Chip } from "@/components/common/chip"
+import { Chip } from "@/components/chip"
 import { Check } from "@/components/icons/check"
 import { Plus } from "@/components/icons/plus"
 import { Typography } from "@/components/typography"

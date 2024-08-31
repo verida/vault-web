@@ -7,15 +7,17 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog"
 
-type Props = {
+export type DisconnectModalProps = {
   isOpen: boolean
   onClose: () => void
   connectionId: string
-} & React.PropsWithChildren
+}
 
-function DisconnectModal({ isOpen, onClose }: Props) {
+export function DisconnectModal(props: DisconnectModalProps) {
+  const { isOpen, onClose } = props
+
   return (
-    <Dialog open={isOpen} onOpenChange={() => onClose()}>
+    <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>
@@ -37,5 +39,3 @@ function DisconnectModal({ isOpen, onClose }: Props) {
     </Dialog>
   )
 }
-
-export { DisconnectModal }

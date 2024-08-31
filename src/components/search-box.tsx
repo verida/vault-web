@@ -10,16 +10,18 @@ import {
 } from "@/components/ui/drawer"
 import { Input } from "@/components/ui/input"
 
-export type InputProps = React.InputHTMLAttributes<HTMLInputElement>
+export type SearchBoxProps = React.ComponentProps<typeof Input>
 
-const SearchBox = (props: InputProps) => {
+export function SearchBox(props: SearchBoxProps) {
+  const { ...inputProps } = props
+
   return (
     <>
       <div className="relative hidden min-w-[200px] md:block lg:min-w-[380px]">
         <Input
           placeholder="Search Data"
           className="h-12 w-full pl-12 text-base-regular"
-          {...props}
+          {...inputProps}
         />
 
         <Search className="absolute left-3 top-3 [&_*]:stroke-secondary-foreground" />
@@ -37,7 +39,7 @@ const SearchBox = (props: InputProps) => {
                 <Input
                   placeholder="Search Data"
                   className="h-12 w-full pl-12 text-base-regular"
-                  {...props}
+                  {...inputProps}
                 />
 
                 <Search className="absolute left-3 top-3 [&_*]:stroke-secondary-foreground" />
@@ -49,5 +51,3 @@ const SearchBox = (props: InputProps) => {
     </>
   )
 }
-
-export default SearchBox

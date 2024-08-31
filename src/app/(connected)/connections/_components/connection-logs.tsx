@@ -1,10 +1,10 @@
 import React from "react"
 
-import ConnectionLogItem from "@/components/connection/connection-log-item"
+import { ConnectionLogItem } from "@/app/(connected)/connections/_components/connection-log-item"
 import { Typography } from "@/components/typography"
 import { connectionLogs } from "@/features/connections"
 
-const ConnectionLogs = () => {
+export function ConnectionLogs() {
   return (
     <div className="space-y-6">
       <Typography variant={"heading-3"}>Connection Logs</Typography>
@@ -30,5 +30,3 @@ const ConnectionLogs = () => {
     </div>
   )
 }
-
-export default ConnectionLogs

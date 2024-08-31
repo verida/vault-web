@@ -1,6 +1,8 @@
+"use client"
+
 import Image from "next/image"
 import Link from "next/link"
-import React from "react"
+import React, { useState } from "react"
 
 import { Valid } from "@/components/icons/valid"
 import { Typography } from "@/components/typography"
@@ -9,7 +11,7 @@ import { Card } from "@/components/ui/card"
 // import { DataSchema } from "@/features/data"
 import { getPublicProfile } from "@/features/profiles"
 
-type CredentialItemProps = {
+export type CredentialItemProps = {
   logo?: string
   title?: string
   source?: string
@@ -20,17 +22,19 @@ type CredentialItemProps = {
   fallbackAvatar?: string
 }
 
-function CredentialItem({
-  // logo,
-  title,
-  fallbackAvatar,
-  credential,
-  source,
-  date,
-  status,
-  href,
-}: CredentialItemProps) {
-  const [issuer, setIssuer] = React.useState<any>({})
+export function CredentialItem(props: CredentialItemProps) {
+  const {
+    // logo,
+    title,
+    fallbackAvatar,
+    credential,
+    source,
+    date,
+    status,
+    href,
+  } = props
+
+  const [issuer, setIssuer] = useState<any>({})
 
   React.useEffect(() => {
     function parseJwt(token: string) {
@@ -157,5 +161,3 @@ function CredentialItem({
     </Link>
   )
 }
-
-export { CredentialItem }

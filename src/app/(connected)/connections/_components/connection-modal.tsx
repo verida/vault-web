@@ -1,3 +1,5 @@
+"use client"
+
 import { useMemo } from "react"
 
 import { VLogo } from "@/components/icons/logo"
@@ -7,19 +9,21 @@ import { Button } from "@/components/ui/button"
 import { Modal } from "@/components/ui/modal"
 import { connections } from "@/features/connections"
 
-type Props = {
+export type ConnectionModalProps = {
   isOpen: boolean
   onClose: () => void
   connectionId: string
-} & React.PropsWithChildren
+} & React.ComponentProps<typeof Modal>
 
-function ConnectionModal({ connectionId, ...props }: Props) {
+export function ConnectionModal(props: ConnectionModalProps) {
+  const { connectionId, ...modalProps } = props
+
   const connection = useMemo(() => {
     return connections.find((c) => c.id === connectionId)
   }, [connectionId])
 
   return (
-    <Modal {...props}>
+    <Modal {...modalProps}>
       {connection && (
         <div className="mx-auto flex items-center space-x-6">
           {connection.icon && <connection.icon className="h-20 w-20" />}
@@ -48,5 +52,3 @@ function ConnectionModal({ connectionId, ...props }: Props) {
     </Modal>
   )
 }
-
-export { ConnectionModal }

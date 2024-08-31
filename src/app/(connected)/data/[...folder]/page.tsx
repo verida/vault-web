@@ -4,16 +4,16 @@ import Link from "next/link"
 import { useSearchParams } from "next/navigation"
 import React, { useMemo } from "react"
 
+import { CredentialItem } from "@/app/(connected)/data/[...folder]/_components/credential-item"
+import { DataItem } from "@/app/(connected)/data/[...folder]/_components/data-item"
+import { DataItemDetailsSheet } from "@/app/(connected)/data/[...folder]/_components/data-item-details-sheet"
 // import {
 //   FilterSheet,
 //   FilterSheetBody,
 //   FilterSheetFooter,
 //   FilterSheetHeader,
-// } from "@/components/common/filter-sheet"
-import { CredentialItem } from "@/components/data/credential-item"
-import DataItem from "@/components/data/data-item"
-import DataItemDetailsSheet from "@/components/data/data-item-details-sheet"
-// import SearchBox from "@/components/data/search-box"
+// } from "@/components/filter-sheet"
+// import SearchBox from "@/components/search-box"
 // import { FilterButton } from "@/components/filter-button"
 import { ArrowLeft } from "@/components/icons/arrow-left"
 import { InboxError } from "@/components/inbox/status/inbox-error"
@@ -28,13 +28,18 @@ import { useDataSchema } from "@/features/data/hooks/useDataSchema"
 import { getPublicProfile } from "@/features/profiles"
 import { useVerida } from "@/features/verida"
 
-const FolderPage = ({ params }: { params: { folder: string[] } }) => {
-  const { isConnected } = useVerida()
+export type DataFolderPageProps = {
+  params: { folder: string[] }
+}
 
+export default function DataFolderPage(props: DataFolderPageProps) {
+  const { params } = props
   const folder = useMemo(() => {
     const folderName = params.folder.join("/")
     return dataFolders.find((f) => f.name === folderName)
   }, [params])
+
+  const { isConnected } = useVerida()
 
   const {
     dataItems: items,
@@ -214,5 +219,3 @@ const FolderPage = ({ params }: { params: { folder: string[] } }) => {
     </div>
   )
 }
-
-export default FolderPage

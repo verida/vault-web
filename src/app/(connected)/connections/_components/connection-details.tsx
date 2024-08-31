@@ -1,8 +1,10 @@
+"use client"
+
 import Link from "next/link"
 import React from "react"
 
-import ConnectionLogs from "@/components/connection/connection-logs"
-import SupportedDataCard from "@/components/connection/supported-data-card"
+import { ConnectionLogs } from "@/app/(connected)/connections/_components/connection-logs"
+import { SupportedDataCard } from "@/app/(connected)/connections/_components/supported-data-card"
 import { ArrowLeft } from "@/components/icons/arrow-left"
 import { Typography } from "@/components/typography"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
@@ -11,11 +13,13 @@ import { Card } from "@/components/ui/card"
 import { Connection, supportedData } from "@/features/connections"
 import { useVerida } from "@/features/verida"
 
-type Props = {
+export type ConnectionDetailsProps = {
   connection: Connection
 }
 
-const ConnectionDetails = ({ connection }: Props) => {
+export function ConnectionDetails(props: ConnectionDetailsProps) {
+  const { connection } = props
+
   const { profile } = useVerida()
 
   return (
@@ -111,5 +115,3 @@ const ConnectionDetails = ({ connection }: Props) => {
     </div>
   )
 }
-
-export default ConnectionDetails

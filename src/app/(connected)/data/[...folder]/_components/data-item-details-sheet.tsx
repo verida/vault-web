@@ -1,15 +1,17 @@
+"use client"
+
 import Image from "next/image"
 import { usePathname, useRouter } from "next/navigation"
 import React from "react"
 
+import { Copy } from "@/components/icons/copy"
+import { Delete } from "@/components/icons/delete"
+import { Pin } from "@/components/icons/pin"
 import {
   ModalSheet,
   ModalSheetBody,
   ModalSheetHeader,
-} from "@/components/common/modal-sheet"
-import { Copy } from "@/components/icons/copy"
-import { Delete } from "@/components/icons/delete"
-import { Pin } from "@/components/icons/pin"
+} from "@/components/modal-sheet"
 import { Typography } from "@/components/typography"
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
@@ -21,14 +23,16 @@ import {
 } from "@/components/ui/tooltip"
 import { DataFolderDefinition, DataSchema } from "@/features/data"
 
-type Props = {
+export type DataItemDetailsSheetProps = {
   open: boolean
   data?: any
   schema?: DataSchema
   folder?: DataFolderDefinition
 }
 
-const DataItemDetailsSheet = ({ open, data, folder, schema }: Props) => {
+export function DataItemDetailsSheet(props: DataItemDetailsSheetProps) {
+  const { open, data, folder, schema } = props
+
   const router = useRouter()
   const pathName = usePathname()
 
@@ -129,5 +133,3 @@ const DataItemDetailsSheet = ({ open, data, folder, schema }: Props) => {
     </ModalSheet>
   )
 }
-
-export default DataItemDetailsSheet

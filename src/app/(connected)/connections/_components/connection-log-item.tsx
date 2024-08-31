@@ -1,14 +1,18 @@
+"use client"
+
 import React, { useState } from "react"
 
 import { Typography } from "@/components/typography"
 import { Card } from "@/components/ui/card"
 import { ConnectionLog } from "@/features/connections"
 
-type Props = {
+export type ConnectionLogItemProps = {
   log: ConnectionLog
 }
 
-const ConnectionLogItem = ({ log }: Props) => {
+export function ConnectionLogItem(props: ConnectionLogItemProps) {
+  const { log } = props
+
   const [showFull, setShowFull] = useState(false)
 
   return (
@@ -75,5 +79,3 @@ const ConnectionLogItem = ({ log }: Props) => {
     </>
   )
 }
-
-export default ConnectionLogItem

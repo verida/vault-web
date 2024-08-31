@@ -1,3 +1,5 @@
+"use client"
+
 import Link from "next/link"
 import { ReactNode } from "react"
 
@@ -6,19 +8,16 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton"
 import { useData } from "@/features/data/hooks"
 
-type CategoryCardProps = {
+export type CategoryCardProps = {
   icon?: ReactNode
   title?: string
   href?: string
   database: string
 }
 
-export function CategoryCard({
-  icon,
-  title,
-  href,
-  database,
-}: CategoryCardProps) {
+export function CategoryCard(props: CategoryCardProps) {
+  const { icon, title, href, database } = props
+
   const { dataItemsCount, isDataItemsCountPending } = useData(database)
 
   return (

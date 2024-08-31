@@ -3,11 +3,11 @@
 // import { IDatabase } from "@verida/types"
 import React from "react"
 
-import { CategoryCard } from "@/components/data/category-card"
+import { CategoryCard } from "@/app/(connected)/data/_components/category-card"
 import { Typography } from "@/components/typography"
 import { dataFolders } from "@/features/data"
 
-const DataPage = () => {
+export default function DataPage() {
   // const { webUserInstanceRef, isConnected } = useVerida()
   // const [db, setDB] = React.useState<IDatabase | undefined>()
   // const [Loading, setLoading] = React.useState(true)
@@ -89,5 +89,3 @@ const DataPage = () => {
     </div>
   )
 }
-
-export default DataPage

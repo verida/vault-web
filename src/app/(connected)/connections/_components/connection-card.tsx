@@ -9,13 +9,13 @@ import { Switch } from "@/components/ui/switch"
 import { Connection } from "@/features/connections"
 import { cn } from "@/styles/utils"
 
-type Props = {
+export type ConnectionCardProps = {
   onConnect?: () => void
   onDisconnect?: () => void
   isConnected?: boolean
 } & Connection
 
-function ConnectionCard(props: Props) {
+export function ConnectionCard(props: ConnectionCardProps) {
   const {
     id,
     description,
@@ -98,5 +98,3 @@ function ConnectionCard(props: Props) {
     </div>
   )
 }
-
-export { ConnectionCard }

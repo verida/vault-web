@@ -6,11 +6,13 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { Switch } from "@/components/ui/switch"
 import { SupportedData } from "@/features/connections"
 
-type Props = {
+export type SupportedDataCardProps = {
   data: SupportedData
 }
 
-const SupportedDataCard = ({ data }: Props) => {
+export function SupportedDataCard(props: SupportedDataCardProps) {
+  const { data } = props
+
   return (
     <Card className="p-6">
       <CardContent className="space-y-4 p-0">
@@ -88,5 +90,3 @@ const SupportedDataCard = ({ data }: Props) => {
     </Card>
   )
 }
-
-export default SupportedDataCard

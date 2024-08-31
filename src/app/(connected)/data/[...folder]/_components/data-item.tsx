@@ -6,12 +6,14 @@ import { Typography } from "@/components/typography"
 import { Card } from "@/components/ui/card"
 import { DataSchema } from "@/features/data"
 
-type Props = {
+export type DataItemProps = {
   data: any
   schema: DataSchema
 }
 
-const DataItem = ({ data, schema }: Props) => {
+export function DataItem(props: DataItemProps) {
+  const { data, schema } = props
+
   return (
     <Link href={`?id=${data._id}`}>
       <Card className="flex w-full rounded-lg shadow-card">
@@ -52,5 +54,3 @@ const DataItem = ({ data, schema }: Props) => {
     </Link>
   )
 }
-
-export default DataItem

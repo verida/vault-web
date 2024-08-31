@@ -1,12 +1,12 @@
 import { isEmpty } from "lodash"
 
+import { InboxDetailsProps } from "@/components/inbox/inbox-details"
+import { RequesterProfile } from "@/components/inbox/requester-profile"
 import {
   ModalSheetBody,
   ModalSheetFooter,
   ModalSheetHeader,
-} from "@/components/common/modal-sheet"
-import { InboxDetailsProps } from "@/components/inbox/inbox-details"
-import { RequesterProfile } from "@/components/inbox/requester-profile"
+} from "@/components/modal-sheet"
 import { Typography } from "@/components/typography"
 import { Button } from "@/components/ui/button"
 import { ButtonLink } from "@/components/ui/button-link"

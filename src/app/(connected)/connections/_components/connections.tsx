@@ -3,21 +3,20 @@
 import React from "react"
 import { useState } from "react"
 
-import { ConnectionCard } from "@/components/connection/connection-card"
-import { ConnectionModal } from "@/components/connection/connection-modal"
-import { DisconnectModal } from "@/components/connection/disconnect-modal"
+import { ConnectionCard } from "@/app/(connected)/connections/_components/connection-card"
+import { ConnectionModal } from "@/app/(connected)/connections/_components/connection-modal"
+import { DisconnectModal } from "@/app/(connected)/connections/_components/disconnect-modal"
 import { Typography } from "@/components/typography"
 // import { FilterButton } from "@/components/filter-button"
 // import { SearchInput } from "@/components/search-input"
 import { connections, myConnections } from "@/features/connections"
 
-const Connections = () => {
-  const [isConnectModalOpen, setIsConnectModalOpen] = useState<boolean>(false)
-  const [isDisconnectModalOpen, setIsDisconnectModalOpen] =
-    useState<boolean>(false)
+export function Connections() {
+  const [isConnectModalOpen, setIsConnectModalOpen] = useState(false)
+  const [isDisconnectModalOpen, setIsDisconnectModalOpen] = useState(false)
 
-  const [connectionId, setConnectionId] = useState<string>("")
-  // const [searchKey, setSearchKey] = useState<string>("")
+  const [connectionId, setConnectionId] = useState("")
+  // const [searchKey, setSearchKey] = useState("")
 
   const handleOpenConnectionModal = (id: string) => {
     setIsConnectModalOpen(true)
@@ -102,5 +101,3 @@ const Connections = () => {
     </div>
   )
 }
-
-export default Connections

@@ -1,15 +1,15 @@
 import React from "react"
 
 import Alert from "@/components/alert"
-import {
-  ModalSheetBody,
-  ModalSheetFooter,
-  ModalSheetHeader,
-} from "@/components/common/modal-sheet"
 import { InboxDetailsProps } from "@/components/inbox/inbox-details"
 import { InboxStatusText } from "@/components/inbox/inbox-status-text"
 import { IncomingDataItem } from "@/components/inbox/incoming-data-item"
 import { RequesterProfile } from "@/components/inbox/requester-profile"
+import {
+  ModalSheetBody,
+  ModalSheetFooter,
+  ModalSheetHeader,
+} from "@/components/modal-sheet"
 import { Typography } from "@/components/typography"
 import { Button } from "@/components/ui/button"
 import { useInboxAction } from "@/features/inbox/hooks/useInboxAction"

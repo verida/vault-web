@@ -1,11 +1,6 @@
 import { useCallback, useEffect, useState } from "react"
 
 import Alert from "@/components/alert"
-import {
-  ModalSheetBody,
-  ModalSheetFooter,
-  ModalSheetHeader,
-} from "@/components/common/modal-sheet"
 import { DataRequestItem } from "@/components/inbox/data-request-item"
 import { InboxDetailsProps } from "@/components/inbox/inbox-details"
 import { InboxStatusText } from "@/components/inbox/inbox-status-text"
@@ -14,6 +9,11 @@ import { RequesterProfile } from "@/components/inbox/requester-profile"
 import { InboxError } from "@/components/inbox/status/inbox-error"
 import { InboxLoading } from "@/components/inbox/status/inbox-loading"
 import { InboxSuccess } from "@/components/inbox/status/inbox-success"
+import {
+  ModalSheetBody,
+  ModalSheetFooter,
+  ModalSheetHeader,
+} from "@/components/modal-sheet"
 import { Typography } from "@/components/typography"
 import { Button } from "@/components/ui/button"
 import { ButtonLink } from "@/components/ui/button-link"
