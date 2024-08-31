@@ -1,0 +1,50 @@
+import * as React from "react"
+
+import { cn } from "@/styles/utils"
+
+export type InputProps = {
+  startAdornment?: React.ReactNode
+  endAdornment?: React.ReactNode
+  containerClassName?: React.ComponentProps<"div">["className"]
+} & React.ComponentProps<"input">
+
+const Input = React.forwardRef<HTMLInputElement, InputProps>((props, ref) => {
+  const {
+    startAdornment,
+    endAdornment,
+    className,
+    type,
+    containerClassName,
+    ...inputProps
+  } = props
+
+  return (
+    <div
+      className={cn(
+        "relative flex w-full flex-row items-center",
+        containerClassName
+      )}
+    >
+      {startAdornment ? (
+        <div className="absolute left-0">{startAdornment}</div>
+      ) : null}
+      <input
+        type={type}
+        className={cn(
+          "flex h-10 w-full rounded-md border border-input bg-primary py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-offset-0 disabled:cursor-not-allowed disabled:opacity-50",
+          startAdornment ? "pl-10" : "pl-3",
+          endAdornment ? "pr-10" : "pr-3",
+          className
+        )}
+        ref={ref}
+        {...inputProps}
+      />
+      {endAdornment ? (
+        <div className="absolute right-0">{endAdornment}</div>
+      ) : null}
+    </div>
+  )
+})
+Input.displayName = "Input"
+
+export { Input }
