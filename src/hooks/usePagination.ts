@@ -1,5 +1,8 @@
 import { useCallback, useEffect, useMemo, useState } from "react"
 
+/**
+ * @deprecated
+ */
 export const usePagination = (
   initialPage = 0,
   initialLimit = 10,
