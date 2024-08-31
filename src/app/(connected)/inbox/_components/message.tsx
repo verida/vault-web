@@ -14,8 +14,8 @@ import { useInboxAction } from "@/features/inbox/hooks/useInboxAction"
 import { InboxType } from "@/features/inbox/types"
 
 export function InboxMessageDetails(props: InboxDetailsProps) {
-  const { message, onClose } = props
-  const { message: title, data } = message
+  const { message: inboxItem, onClose } = props
+  const { message, data } = inboxItem
   const itemData = !isEmpty(data.data) ? data.data[0] : null
 
   const { handleAccept, isLoading } = useInboxAction()
@@ -24,10 +24,10 @@ export function InboxMessageDetails(props: InboxDetailsProps) {
       <ModalSheetHeader title="Message" actions={<></>} onClose={onClose} />
 
       <ModalSheetBody>
-        <RequesterProfile sentAt={message.sentAt} sentBy={message.sentBy} />
+        <RequesterProfile sentAt={inboxItem.sentAt} sentBy={inboxItem.sentBy} />
 
-        <div className="mt-6 space-y-2 rounded-lg bg-[#f5f4ff] p-4">
-          <Typography>{title}</Typography>
+        <div className="mt-6 space-y-2 rounded-lg bg-primary/5 p-4">
+          <Typography>{message}</Typography>
           <Typography variant="base-s-regular">{itemData.message}</Typography>
         </div>
       </ModalSheetBody>
@@ -40,7 +40,7 @@ export function InboxMessageDetails(props: InboxDetailsProps) {
         ) : (
           <>
             {!!itemData.link && (
-              <Button asChild variant="secondary">
+              <Button asChild variant="outline" className="w-full">
                 <Link
                   href={itemData.link.url}
                   rel="noopener noreferrer"
@@ -51,8 +51,9 @@ export function InboxMessageDetails(props: InboxDetailsProps) {
               </Button>
             )}
             <Button
-              onClick={() => handleAccept(message, InboxType.MESSAGE, {})}
+              onClick={() => handleAccept(inboxItem, InboxType.MESSAGE, {})}
               disabled={isLoading}
+              className="w-full"
             >
               Mark as read
             </Button>

@@ -19,7 +19,7 @@ export function DataItem(props: DataItemProps) {
       <Card className="flex w-full rounded-lg shadow-card">
         <div className="flex w-full flex-row items-center px-4 py-3 [&>p]:w-0 [&>p]:grow">
           {(data["icon"] || data["name"]) && (
-            <div className="flex w-0 grow items-center gap-2 pr-3 text-secondary-foreground">
+            <div className="flex w-0 grow items-center gap-2 pr-3 text-muted-foreground">
               {data["icon"] ? (
                 <Image
                   src={data["icon"]}
@@ -28,12 +28,12 @@ export function DataItem(props: DataItemProps) {
                   alt="Issuer avatar"
                 />
               ) : (
-                <div className="h-10 w-10 rounded-full bg-gray-200"></div>
+                <div className="h-10 w-10 rounded-full bg-muted"></div>
               )}
               {data["name"] && (
                 <Typography
                   variant="base-semibold"
-                  className="truncate pr-3 text-secondary-foreground"
+                  className="truncate pr-3 text-muted-foreground"
                 >
                   {data["name"]}
                 </Typography>
@@ -44,7 +44,7 @@ export function DataItem(props: DataItemProps) {
             <Typography
               key={key}
               variant="base-semibold"
-              className="truncate pr-3 text-secondary-foreground"
+              className="truncate pr-3 text-muted-foreground"
             >
               {data[key]}
             </Typography>

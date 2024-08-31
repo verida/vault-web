@@ -13,11 +13,11 @@ export function FilterButton(props: FilterButtonProps) {
 
   return (
     <Button
-      variant="secondary"
+      variant="outline"
       size="lg"
       className={cn(
-        "h-10 w-10 p-0 text-secondary-foreground hover:border-secondary-foreground/40 hover:bg-primary md:h-12 md:w-auto md:p-[10px] md:px-4",
-        applied ? "border-primary text-primary" : "",
+        "hover:border-border-hover hover:bg-surface h-10 w-10 p-0 text-muted-foreground md:h-12 md:w-auto md:p-[10px] md:px-4",
+        applied ? "border-accent" : "",
         className
       )}
       {...props}

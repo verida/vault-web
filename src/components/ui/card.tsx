@@ -1,5 +1,6 @@
 import * as React from "react"
 
+import { Typography } from "@/components/typography"
 import { cn } from "@/styles/utils"
 
 const Card = React.forwardRef<
@@ -9,7 +10,7 @@ const Card = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "rounded-lg border bg-primary text-primary-foreground shadow-sm",
+      "bg-surface rounded-lg border text-foreground shadow-sm",
       className
     )}
     {...props}
@@ -33,12 +34,10 @@ const CardTitle = React.forwardRef<
   HTMLParagraphElement,
   React.HTMLAttributes<HTMLHeadingElement>
 >(({ className, ...props }, ref) => (
-  <h3
+  <Typography
     ref={ref}
-    className={cn(
-      "text-2xl font-semibold leading-none tracking-tight",
-      className
-    )}
+    variant="heading-3"
+    className={cn("leading-none tracking-tight", className)}
     {...props}
   />
 ))
@@ -48,9 +47,9 @@ const CardDescription = React.forwardRef<
   HTMLParagraphElement,
   React.HTMLAttributes<HTMLParagraphElement>
 >(({ className, ...props }, ref) => (
-  <p
+  <Typography
     ref={ref}
-    className={cn("text-sm text-secondary-foreground", className)}
+    className={cn("text-sm text-muted-foreground", className)}
     {...props}
   />
 ))

@@ -20,7 +20,7 @@ export function LandingPageHeader(props: LandingPageHeaderProps) {
           {veridaLandingSocials.map((social) => (
             <li key={`link-${social.url}`}>
               <Button
-                variant="secondary"
+                variant="outline"
                 size="icon"
                 asChild
                 className="size-7 rounded-full"

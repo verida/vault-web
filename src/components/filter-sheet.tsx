@@ -25,7 +25,7 @@ export function FilterSheet(props: FilterSheetProps) {
       <DrawerTrigger />
       <DrawerContent
         onClose={onClose}
-        className="w-[356px] border-l border-border shadow-sm md:bottom-0 md:right-0 md:h-[calc(100%-72px)] md:rounded-none"
+        className="w-[356px] border-l shadow-sm md:bottom-0 md:right-0 md:h-[calc(100%-72px)] md:rounded-none"
         overlayClassName="bg-transparent"
       >
         {children}

@@ -135,13 +135,13 @@ export function RequestDataSelector(props: RequestDataSelectorProps) {
                   <Typography variant="heading-5">{item.name}</Typography>
                   <Typography
                     variant="base-s-semibold"
-                    className="text-secondary-foreground"
+                    className="text-muted-foreground"
                   >
                     {item.summary}
                   </Typography>
                   <Typography
                     variant="base-s-semibold"
-                    className="text-secondary-foreground/60"
+                    className="text-muted-foreground/60"
                   >
                     {moment(new Date(item.insertedAt)).format("DD/MM/YY hh:mm")}
                   </Typography>
@@ -169,7 +169,7 @@ export function RequestDataSelector(props: RequestDataSelectorProps) {
       </DrawerBody>
 
       <DrawerFooter>
-        <Alert text="Carefully review your selection" />
+        <Alert text="Carefully review your selection" variant="warning" />
         <Button
           onClick={() => onConfirm(selectedItems)}
           disabled={selectedItems.length <= 0}

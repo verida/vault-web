@@ -34,10 +34,8 @@ export function DataRequestItem(props: DataRequestItemProps) {
   return (
     <Card
       className={cn(
-        "mt-4 flex flex-col gap-6 border border-border bg-secondary-activity-sending p-4",
-        isAdded
-          ? "border-secondary-activity-receiving bg-secondary-activity-receiving"
-          : ""
+        "mt-4 flex flex-col gap-6 border p-4",
+        isAdded ? "border-status-added bg-status-added" : "bg-muted"
       )}
     >
       <div>
@@ -62,15 +60,15 @@ export function DataRequestItem(props: DataRequestItemProps) {
         <></>
       ) : isAdded ? (
         <Button
-          variant="secondary"
-          className="w-full gap-2 text-approved"
+          variant="outline"
+          className="text-status-added w-full gap-2"
           onClick={onAdd}
         >
           <Check />
           Added
         </Button>
       ) : (
-        <Button variant="secondary" className="w-full gap-2" onClick={onAdd}>
+        <Button variant="outline" className="w-full gap-2" onClick={onAdd}>
           <Plus />
           Add
         </Button>

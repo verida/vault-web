@@ -34,9 +34,7 @@ export default function GlobalError(props: GlobalErrorProps) {
             >
               We apologize for the inconvenience
             </Typography>
-            <Button onClick={reset} className="w-fit">
-              Try again
-            </Button>
+            <Button onClick={reset}>Try again</Button>
           </div>
         </div>
       </body>

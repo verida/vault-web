@@ -25,7 +25,7 @@ export function DataError(props: DataErrorProps) {
         className="h-[105px] md:h-[140px]"
       />
       <Typography variant="heading-4">{description}</Typography>
-      <Button variant="secondary" onClick={onClick}>
+      <Button variant="outline" onClick={onClick}>
         Reload
       </Button>
     </div>

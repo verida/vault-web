@@ -40,7 +40,7 @@ export function LandingPageContent(props: LandingPageContentProps) {
 
   return (
     <div {...divProps}>
-      <div className="flex h-screen min-h-screen">
+      <div className="bg-surface flex h-screen min-h-screen">
         <section className="relative flex min-h-full w-full flex-col md:w-[42%]">
           <div className="mx-auto flex min-h-full flex-col px-6 md:max-w-[460px]">
             <LandingPageHeader />
@@ -53,7 +53,7 @@ export function LandingPageContent(props: LandingPageContentProps) {
                 credentials with the Verida Vault App.
               </Typography>
               <ConnectionButton className="mt-8" />
-              <div className="mt-12 flex h-full flex-1 flex-col rounded-[32px] rounded-b-none bg-radial-gradient text-secondary md:hidden">
+              <div className="mt-12 flex h-full flex-1 flex-col rounded-[32px] rounded-b-none bg-radial-gradient text-primary-foreground md:hidden">
                 <Swiper data={sidebarContent} />
               </div>
             </div>
@@ -61,7 +61,7 @@ export function LandingPageContent(props: LandingPageContentProps) {
           </div>
         </section>
 
-        <section className="hidden min-h-full flex-1 rounded-[32px] rounded-r-none bg-radial-gradient text-secondary md:flex md:flex-col">
+        <section className="hidden min-h-full flex-1 rounded-[32px] rounded-r-none bg-radial-gradient text-primary-foreground md:flex md:flex-col">
           <Swiper data={sidebarContent} />
         </section>
       </div>

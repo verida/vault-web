@@ -13,19 +13,21 @@ export function ConnectionLoading(props: ConnectionLoadingProps) {
   return (
     <div
       className={cn(
-        "container flex h-screen min-h-screen w-full flex-col items-center justify-center",
+        "flex h-full w-full flex-col items-center justify-center gap-8",
         className
       )}
       {...divProps}
     >
       <Spinner />
-      <Typography variant="heading-1" className="mt-8 text-center">
-        Connecting to Verida...
-      </Typography>
-      <Typography className="mt-4 text-center">
-        Please wait while we establish a secure connection. This might take a
-        few moments.
-      </Typography>
+      <div className="flex flex-col items-center justify-center gap-4 text-center">
+        <Typography variant="heading-1" className="text-center">
+          Connecting to Verida...
+        </Typography>
+        <Typography variant="base-l" className="text-center">
+          Please wait while we establish a secure connection. This might take a
+          moments.
+        </Typography>
+      </div>
     </div>
   )
 }

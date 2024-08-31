@@ -10,7 +10,7 @@ export function ConnectionLogs() {
       <Typography variant={"heading-3"}>Connection Logs</Typography>
 
       <div>
-        <div className="hidden text-secondary-foreground md:flex">
+        <div className="hidden text-muted-foreground md:flex">
           <Typography variant={"base-s-semibold"} className="w-72 p-4">
             Data source / Data type / Account ID
           </Typography>

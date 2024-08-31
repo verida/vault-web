@@ -28,10 +28,14 @@ export function InboxRowItem(props: InboxRowItemProps) {
           <div className="flex shrink items-center gap-3 px-4">
             <span
               className={cn(
-                "size-2 rounded-full bg-primary-button",
+                "size-2 rounded-full bg-accent",
                 read ? "opacity-0" : "opacity-100"
               )}
-            ></span>
+            >
+              <span className="sr-only">
+                {read ? "Read message" : "Unread message"}
+              </span>
+            </span>
             <div className="relative">
               <Avatar>
                 {sentBy.avatar?.uri && (
@@ -67,7 +71,7 @@ export function InboxRowItem(props: InboxRowItemProps) {
           <div className="flex items-center px-4">
             <Typography
               variant="base-regular"
-              className="px-4 text-secondary-foreground"
+              className="px-4 text-muted-foreground"
             >
               {formatDate(sentAt)}
             </Typography>
@@ -108,10 +112,14 @@ export function InboxRowItem(props: InboxRowItemProps) {
               </div>
               <span
                 className={cn(
-                  "size-2 rounded-full bg-primary-button",
+                  "size-2 rounded-full bg-accent",
                   read ? "opacity-0" : "opacity-100"
                 )}
-              ></span>
+              >
+                <span className="sr-only">
+                  {read ? "Read message" : "Unread message"}
+                </span>
+              </span>
             </div>
             <Typography variant="base-s-semibold" className="line-clamp-1">
               {title}

@@ -23,7 +23,7 @@ export function InboxSuccess(props: InboxSuccessProps) {
       <Typography variant="heading-4" className="mt-6">
         {title}
       </Typography>
-      <Typography className="mt-2 text-secondary-foreground">
+      <Typography className="mt-2 text-muted-foreground">
         {description}
       </Typography>
     </div>

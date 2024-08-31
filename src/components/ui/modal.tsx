@@ -21,7 +21,7 @@ const Modal = React.forwardRef<
         <div
           ref={ref}
           className={cn(
-            "pointer-events-auto w-full max-w-[432px] rounded-lg bg-primary p-6 text-foreground shadow-sm",
+            "bg-surface pointer-events-auto w-full max-w-[432px] rounded-lg p-6 text-foreground shadow-sm",
             className
           )}
         >

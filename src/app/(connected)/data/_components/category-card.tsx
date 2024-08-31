@@ -35,7 +35,7 @@ export function CategoryCard(props: CategoryCardProps) {
           ) : (
             <Typography
               variant="base-l"
-              className="mt-1 h-[23px] text-secondary-foreground"
+              className="mt-1 h-[23px] text-muted-foreground"
             >
               {dataItemsCount} items
             </Typography>

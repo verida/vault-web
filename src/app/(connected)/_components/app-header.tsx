@@ -21,7 +21,7 @@ export function AppHeader(props: AppHeaderProps) {
   const [isMenuOpened, setIsMenuOpened] = useState(false)
 
   return (
-    <header {...headerProps} className={cn("border-b bg-primary", className)}>
+    <header {...headerProps} className={cn("bg-surface border-b", className)}>
       <div className="flex flex-row items-stretch justify-between gap-4">
         <div className="flex flex-row items-stretch gap-4 pl-4">
           <div className="flex flex-row items-center">
@@ -32,7 +32,9 @@ export function AppHeader(props: AppHeaderProps) {
               {!isMenuOpened ? <Hamburger /> : <Close />}
             </div>
           </div>
-          {isMenuOpened && <AppHeaderNavMenu />}
+          {isMenuOpened && (
+            <AppHeaderNavMenu onNavItemClick={() => setIsMenuOpened(false)} />
+          )}
           <Link href="/" className="flex shrink-0 flex-row items-center">
             <Image
               src="/logo.svg"

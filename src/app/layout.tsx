@@ -7,7 +7,7 @@ import { APP_DESCRIPTION, APP_NAME, APP_TITLE } from "@/constants/app"
 import "@/styles/globals.css"
 import { cn } from "@/styles/utils"
 
-const sora = Sora({ subsets: ["latin"] })
+const sora = Sora({ subsets: ["latin"], variable: "--font-sora" })
 
 const baseUrl = commonConfig.BASE_URL
 
@@ -44,7 +44,7 @@ export default function RootLayout(props: RootLayoutProps) {
 
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={cn("h-dvh", sora.className)}>
+      <body className={cn("h-dvh", sora.variable)}>
         <RootProviders>{children}</RootProviders>
       </body>
     </html>

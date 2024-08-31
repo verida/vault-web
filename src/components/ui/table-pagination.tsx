@@ -70,7 +70,7 @@ export const TablePagination: React.FC<TablePaginationProps> = ({
             onClick={() => prevPage()}
           />
 
-          <div className="rounded-sm border border-border bg-primary px-3 py-[10px] text-sm">
+          <div className="bg-surface rounded-sm border px-3 py-[10px] text-sm">
             <input
               type="text"
               className="w-6 bg-transparent text-right outline-none"
@@ -78,7 +78,7 @@ export const TablePagination: React.FC<TablePaginationProps> = ({
               onChange={(e: any) => setCurrentPage(e.target.value)}
             />
             <span
-              className="pointer-events-none text-gray-500"
+              className="pointer-events-none text-muted-foreground"
               style={{
                 pointerEvents: "none",
                 color: "grey",

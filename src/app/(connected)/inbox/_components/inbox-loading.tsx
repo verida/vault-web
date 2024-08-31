@@ -14,10 +14,7 @@ export function InboxLoading(props: InboxLoadingProps) {
       <Spinner />
       <div className="space-y-2 text-center">
         <Typography variant="heading-4">{title}</Typography>
-        <Typography
-          variant="base-regular"
-          className="text-secondary-foreground"
-        >
+        <Typography variant="base-regular" className="text-muted-foreground">
           {description}
         </Typography>
       </div>

@@ -28,7 +28,7 @@ export function ConnectionModal(props: ConnectionModalProps) {
         <div className="mx-auto flex items-center space-x-6">
           {connection.icon && <connection.icon className="h-20 w-20" />}
           <Switch />
-          <VLogo className="rounded-full border border-border" />
+          <VLogo className="rounded-full border" />
         </div>
       )}
 
@@ -46,7 +46,7 @@ export function ConnectionModal(props: ConnectionModalProps) {
         </Typography>
       )}
 
-      <Button variant="secondary" className="mt-8 w-full">
+      <Button variant="outline" className="mt-8 w-full">
         Connect
       </Button>
     </Modal>

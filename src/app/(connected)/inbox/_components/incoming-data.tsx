@@ -18,17 +18,17 @@ import { useInboxAction } from "@/features/inbox/hooks/useInboxAction"
 import { InboxType } from "@/features/inbox/types"
 
 export function InboxIncomingData(props: InboxDetailsProps) {
-  const { message, onClose } = props
-  const { message: title, data, sentAt, sentBy, type } = message
+  const { message: inboxItem, onClose } = props
+  const { message, data, sentAt, sentBy, type } = inboxItem
 
   const { handleAccept, handleReject, isLoading } = useInboxAction()
 
   const onClickAccept = async () => {
-    await handleAccept(message, InboxType.DATA_SEND, {})
+    await handleAccept(inboxItem, InboxType.DATA_SEND, {})
   }
 
   const onClickDecline = async () => {
-    await handleReject(message)
+    await handleReject(inboxItem)
   }
 
   return (
@@ -42,13 +42,13 @@ export function InboxIncomingData(props: InboxDetailsProps) {
       <ModalSheetBody>
         <RequesterProfile sentAt={sentAt} sentBy={sentBy} />
 
-        <div className="mt-6 rounded-lg bg-purple-50 p-4">
-          <Typography>{title}</Typography>
+        <div className="mt-6 rounded-lg bg-primary/5 p-4">
+          <Typography>{message}</Typography>
         </div>
 
         <Typography
           variant="base-regular"
-          className="mt-8 text-secondary-foreground"
+          className="mt-8 text-muted-foreground"
         >
           Incoming data item
         </Typography>
@@ -71,10 +71,13 @@ export function InboxIncomingData(props: InboxDetailsProps) {
           </Button>
         ) : (
           <>
-            <Alert text="Ignore if you don’t recognize this request" />
+            <Alert
+              variant="warning"
+              text="Ignore if you don't recognize this request"
+            />
             <div className="flex gap-4">
               <Button
-                variant="secondary"
+                variant="outline"
                 className="w-full"
                 onClick={onClickDecline}
                 disabled={isLoading}

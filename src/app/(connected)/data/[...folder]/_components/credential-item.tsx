@@ -83,7 +83,7 @@ export function CredentialItem(props: CredentialItemProps) {
             {title && (
               <Typography
                 variant="base-semibold"
-                className="text-secondary-foreground"
+                className="text-muted-foreground"
               >
                 {title}
               </Typography>
@@ -92,7 +92,7 @@ export function CredentialItem(props: CredentialItemProps) {
           {source && (
             <Typography
               variant="base-semibold"
-              className="w-1/4 text-wrap text-secondary-foreground"
+              className="w-1/4 text-wrap text-muted-foreground"
             >
               {issuer?.name ?? ""}
             </Typography>
@@ -100,7 +100,7 @@ export function CredentialItem(props: CredentialItemProps) {
           {date && (
             <Typography
               variant="base-semibold"
-              className="w-1/4 text-secondary-foreground"
+              className="w-1/4 text-muted-foreground"
             >
               {new Date(date).toISOString()}
             </Typography>
@@ -142,7 +142,7 @@ export function CredentialItem(props: CredentialItemProps) {
             {source && (
               <Typography
                 variant="base-s-semibold"
-                className="text-secondary-foreground"
+                className="text-muted-foreground"
               >
                 {source}
               </Typography>
@@ -150,7 +150,7 @@ export function CredentialItem(props: CredentialItemProps) {
             {date && (
               <Typography
                 variant="base-s-semibold"
-                className="text-secondary-foreground"
+                className="text-muted-foreground"
               >
                 {new Date(date).toISOString()}
               </Typography>

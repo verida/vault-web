@@ -3,6 +3,7 @@
 import Link from "next/link"
 import React from "react"
 
+import { Typography } from "@/components/typography"
 import { Button } from "@/components/ui/button"
 import { getRootPageRoute } from "@/features/routes/utils"
 
@@ -17,11 +18,13 @@ export default function AssistantErrorPage(props: AssistantErrorPageProps) {
   return (
     <div className="flex h-full flex-row items-center justify-center">
       <div className="flex flex-col items-center gap-8">
-        <p>Oops! Something went wrong with the AI Assistant</p>
-        <Button variant="secondary" className="w-fit" onClick={reset}>
+        <Typography>
+          Oops! Something went wrong with the AI Assistant
+        </Typography>
+        <Button variant="outline" onClick={reset}>
           Retry
         </Button>
-        <Button asChild className="w-fit">
+        <Button asChild>
           <Link href={getRootPageRoute()}>Go to Home page</Link>
         </Button>
       </div>

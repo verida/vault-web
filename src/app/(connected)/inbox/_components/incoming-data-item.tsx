@@ -10,7 +10,7 @@ export function IncomingDataItem(props: IncomingDataItemProps) {
   const { item } = props
 
   return (
-    <div className="space-y-2 rounded-sm bg-secondary-activity-sending p-4">
+    <div className="space-y-2 rounded-sm bg-muted p-4">
       <div className="flex items-center gap-2">
         <Image
           src={item.icon || ""}

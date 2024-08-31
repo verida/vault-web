@@ -37,7 +37,7 @@ const typographyVariants = cva("", {
 export type TypographyVariants = VariantProps<typeof typographyVariants>
 
 export type TypographyProps = {
-  children: React.ReactNode
+  children?: React.ReactNode
 } & TypographyVariants &
   // FIXME: The actual component is not a div but can be a h1, h2, h3, h4, h5, h6, p, span depending on the variant and props
   Omit<React.ComponentPropsWithRef<"div">, "children">

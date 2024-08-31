@@ -15,10 +15,7 @@ export function NoInbox() {
       />
       <div className="mt-8 space-y-2 text-center">
         <Typography variant="heading-4">Nothing in Your Inbox Yet</Typography>
-        <Typography
-          variant="base-regular"
-          className="text-secondary-foreground"
-        >
+        <Typography variant="base-regular" className="text-muted-foreground">
           When new messages arrive, they&apos;ll show up here.
         </Typography>
       </div>

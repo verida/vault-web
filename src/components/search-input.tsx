@@ -10,6 +10,7 @@ export type SearchInputProps = {
   onValueChange?: React.Dispatch<string>
 } & React.InputHTMLAttributes<HTMLInputElement>
 
+// TODO: Rework the Input component with adornments
 export function SearchInput(props: SearchInputProps) {
   const { onValueChange, className, ...inputProps } = props
 
@@ -26,11 +27,11 @@ export function SearchInput(props: SearchInputProps) {
   return (
     <div
       className={cn(
-        "flex h-10 space-x-3 rounded-lg border border-border bg-primary p-[10px] transition-all focus-within:!border-primary-button focus-within:shadow-glow hover:border-secondary-foreground/40 md:h-12 md:p-3",
+        "hover:border-border-hover bg-surface flex h-10 space-x-3 rounded-lg border p-[10px] transition-all focus-within:!border-primary focus-within:shadow-glow md:h-12 md:p-3",
         className
       )}
     >
-      <Search className="box-content h-5 w-5 text-secondary-foreground md:h-6 md:w-6" />
+      <Search className="box-content h-5 w-5 text-muted-foreground md:h-6 md:w-6" />
       <input
         {...inputProps}
         className="hidden bg-transparent text-sm outline-none md:block"

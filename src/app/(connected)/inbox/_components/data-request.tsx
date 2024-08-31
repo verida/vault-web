@@ -128,10 +128,8 @@ export function DataRequestDetails(props: InboxDetailsProps) {
             description={
               <>
                 You successfully shared{" "}
-                <b className="text-primary-foreground">
-                  {requestSchemaData.title}
-                </b>{" "}
-                to <b className="text-primary-foreground">{sentBy.name}</b>
+                <b className="text-foreground">{requestSchemaData.title}</b> to{" "}
+                <b className="text-foreground">{sentBy.name}</b>
               </>
             }
           />
@@ -169,15 +167,12 @@ export function DataRequestDetails(props: InboxDetailsProps) {
       <ModalSheetBody>
         <RequesterProfile sentAt={message.sentAt} sentBy={message.sentBy} />
 
-        <div className="mt-6 rounded-lg bg-[#f5f4ff] p-4">
+        <div className="mt-6 rounded-lg bg-primary/5 p-4">
           <Typography variant="base-s-regular">{title}</Typography>
         </div>
 
         <div className="mt-8">
-          <Typography
-            variant="base-regular"
-            className="text-secondary-foreground"
-          >
+          <Typography variant="base-regular" className="text-muted-foreground">
             The following data is being requested
           </Typography>
 
@@ -194,11 +189,11 @@ export function DataRequestDetails(props: InboxDetailsProps) {
           <div>
             <Typography
               variant="base-regular"
-              className="text-secondary-foreground"
+              className="text-muted-foreground"
             >
               {`If you don't have the requested data`}
             </Typography>
-            <Button asChild variant="secondary">
+            <Button asChild variant="outline" className="w-full">
               <Link
                 href={fallbackAction.url}
                 target="_blank"
@@ -218,10 +213,13 @@ export function DataRequestDetails(props: InboxDetailsProps) {
           </Button>
         ) : (
           <>
-            <Alert text="Ignore if you don’t recognize this request" />
+            <Alert
+              variant="warning"
+              text="Ignore if you don't recognize this request"
+            />
             <div className="grid grid-cols-2 gap-4">
               <Button
-                variant="secondary"
+                variant="outline"
                 disabled={isLoading}
                 onClick={onClickDecline}
               >
@@ -229,7 +227,7 @@ export function DataRequestDetails(props: InboxDetailsProps) {
               </Button>
               <Button
                 disabled={isLoading || !selectedItems.length}
-                onClick={() => onClickShare()}
+                onClick={onClickShare}
               >
                 Share
               </Button>

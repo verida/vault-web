@@ -4,19 +4,18 @@ import { Warning } from "@/components/icons/warning"
 import { Typography } from "@/components/typography"
 import { cn } from "@/styles/utils"
 
-// TODO: Rework the Alert component
 const alertVariants = cva(
-  "rounded border-l-2 bg-primary p-2 text-secondary-foreground",
+  "rounded border-l-2 bg-muted px-3 py-2 text-foreground",
   {
     variants: {
       variant: {
-        info: "border-accent",
-        warning: "border-yellow-500",
-        error: "border-destructive text-destructive",
+        info: "border-status-info",
+        warning: "border-status-warning",
+        error: "border-status-error",
       },
     },
     defaultVariants: {
-      variant: "warning",
+      variant: "info",
     },
   }
 )
@@ -37,7 +36,9 @@ export function Alert(props: AlertProps) {
     >
       <div className="flex items-center gap-2">
         {variant === "warning" ? <Warning /> : null}
-        <Typography variant="base-s-semibold">{text}</Typography>
+        <Typography variant="base-s-regular" className="line-clamp-2 flex-1">
+          {text}
+        </Typography>
       </div>
     </div>
   )

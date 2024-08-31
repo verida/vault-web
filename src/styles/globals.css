@@ -6,35 +6,48 @@
   :root {
     --background: 220 23% 97%;
     --foreground: 0 0% 7%;
+    --surface: 0 0% 100%;
     --overlay: 0 0% 0%;
+    --ring: 240 58% 57%;
 
-    --primary: 0 0% 100%;
-    --primary-foreground: 0 0% 6.7%;
-    --primary-button: 240 57.8% 57.3%;
-    --primary-button-hover: 243 90% 27%;
-    --primary-button-foreground: 0 0% 100%;
+    --border: 214 32% 91%;
+    --border-hover: 220 13% 84%;
 
-    --secondary: 210 20% 98%;
-    --secondary-foreground: 220 9% 46%;
-    --secondary-button: 0 0% 100%;
-    --secondary-button-hover: 220 14% 96%;
-    --secondary-activity-sending: 220 14% 96%;
-    --secondary-activity-receiving: 141 84% 93%;
+    --muted: 220 14% 96%;
+    --muted-foreground: 220 9% 46%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 240 58% 57%;
+    --accent-foreground: 0 0% 100%;
+    --accent-hover: 243 90% 27%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 214 31.8% 91.4%;
+    --primary: 240 58% 57%;
+    --primary-foreground: 0 0% 100%;
+    --primary-hover: 243 90% 27%;
 
     --destructive: 353 98% 65%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 0 0% 100%;
+    --destructive-hover: 353 57% 52%;
 
-    --approved: 158 53% 59%;
+    --status-success: 158 53% 59%;
+    --status-success-foreground: 0 0% 100%;
 
-    --border: 214 31.8% 91.4%;
-    --input: 214 31.8% 91.4%;
-    --ring: 240 57.8% 57.3%;
+    --status-added: 158 53% 59%;
+    --status-added-foreground: 0 0% 100%;
+
+    --status-approved: 158 53% 59%;
+    --status-approved-foreground: 0 0% 100%;
+
+    --status-connected: 158 53% 59%;
+    --status-connected-foreground: 0 0% 100%;
+
+    --status-info: 213 100% 50%;
+    --status-info-foreground: 0 0% 100%;
+
+    --status-warning: 36 93% 59%;
+    --status-warning-foreground: 0 0% 100%;
+
+    --status-error: 353 98% 65%;
+    --status-error-foreground: 0 0% 100%;
 
     --radius: 0.5rem;
   }
@@ -50,7 +63,7 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background font-sans text-foreground antialiased;
   }
 }
 

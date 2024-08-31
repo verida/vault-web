@@ -46,7 +46,7 @@ export function DataItemDetailsSheet(props: DataItemDetailsSheetProps) {
           <div className="flex gap-3 pl-3">
             <Tooltip>
               <TooltipTrigger asChild>
-                <Button size={"icon"} variant={"secondary"}>
+                <Button size="icon" variant="outline">
                   <Copy />
                 </Button>
               </TooltipTrigger>
@@ -54,7 +54,7 @@ export function DataItemDetailsSheet(props: DataItemDetailsSheetProps) {
             </Tooltip>
             <Tooltip>
               <TooltipTrigger asChild>
-                <Button size={"icon"} variant={"secondary"}>
+                <Button size="icon" variant="outline">
                   <Pin />
                 </Button>
               </TooltipTrigger>
@@ -62,7 +62,7 @@ export function DataItemDetailsSheet(props: DataItemDetailsSheetProps) {
             </Tooltip>
             <Tooltip>
               <TooltipTrigger asChild>
-                <Button size={"icon"} variant={"secondary"}>
+                <Button size="icon" variant="outline">
                   <Delete className="[&_*]:stroke-destructive" />
                 </Button>
               </TooltipTrigger>
@@ -86,7 +86,7 @@ export function DataItemDetailsSheet(props: DataItemDetailsSheetProps) {
                 alt="data icon"
                 className="h-10 w-10"
               />
-              <Typography variant={"heading-4"} className="truncate">
+              <Typography variant="heading-4" className="truncate">
                 {data?.name}
               </Typography>
             </div>
@@ -102,28 +102,26 @@ export function DataItemDetailsSheet(props: DataItemDetailsSheetProps) {
           </div>
         ) : (
           <>
-            <div className="flex items-center justify-between border-b border-border pb-4">
+            <div className="flex items-center justify-between border-b pb-4">
               <Typography
-                variant={"base-regular"}
-                className="text-secondary-foreground"
+                variant="base-regular"
+                className="text-muted-foreground"
               >
                 Display on Verida One profile
               </Typography>
               <Switch />
             </div>
             <div className="mt-8 space-y-6">
-              <Typography variant={"heading-4"}>
-                {folder?.title} Data
-              </Typography>
+              <Typography variant="heading-4">{folder?.title} Data</Typography>
               {schema?.layouts.view.map((key) => (
                 <div key={key} className="flex items-center justify-between">
                   <Typography
-                    variant={"heading-5"}
-                    className="text-secondary-foreground"
+                    variant="heading-5"
+                    className="text-muted-foreground"
                   >
                     {schema.properties[key].title}
                   </Typography>
-                  <Typography variant={"heading-5"}>{data[key]}</Typography>
+                  <Typography variant="heading-5">{data[key]}</Typography>
                 </div>
               ))}
             </div>

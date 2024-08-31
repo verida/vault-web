@@ -5,16 +5,18 @@ import * as React from "react"
 import { cn } from "@/styles/utils"
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-semibold ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+  "ring-offset-surface inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
   {
     variants: {
       variant: {
-        primary:
-          "bg-primary-button text-primary-button-foreground hover:bg-primary-button-hover disabled:bg-primary-button/50",
-        secondary:
-          "border border-border bg-secondary-button text-primary-foreground hover:bg-secondary-button-hover disabled:text-secondary-foreground",
-        destructive:
-          "bg-destructive text-destructive-foreground hover:opacity-80",
+        "primary":
+          "hover:border-primary-hover hover:bg-primary-hover border border-primary bg-primary text-primary-foreground focus-visible:ring-ring",
+        "outline":
+          "hover:border-border-hover bg-surface border text-foreground hover:bg-muted focus-visible:ring-ring",
+        "destructive":
+          "hover:bg-destructive-hover hover:border-destructive-hover border border-destructive bg-destructive text-destructive-foreground focus-visible:ring-destructive",
+        "outline-destructive":
+          "hover:border-border-hover bg-surface border text-destructive hover:bg-muted focus-visible:ring-destructive",
       },
       size: {
         default: "h-12 px-4 py-2",

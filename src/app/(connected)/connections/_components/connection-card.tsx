@@ -35,16 +35,19 @@ export function ConnectionCard(props: ConnectionCardProps) {
 
   return (
     <div
-      className={`flex h-full flex-col ${isConnected ? "cursor-pointer" : ""}`}
+      className={cn(
+        "flex h-full flex-col",
+        isConnected ? "cursor-pointer" : ""
+      )}
       onClick={handleClickConnection}
     >
-      {!isConnected && (
-        <div className="rounded-[16px_16px_0_0] bg-green-100 pb-6 pt-2 text-center text-xs">
+      {/* {!isConnected && (
+        <div className="bg-status-success/70 rounded-t-2xl pb-6 pt-2 text-center text-xs">
           <span className="font-semibold">Earn 100 VDA</span> by connecting to
           the platform
         </div>
-      )}
-      <Card className={cn(!isConnected ? "-mt-4" : "", "flex-grow")}>
+      )} */}
+      <Card className={cn("flex-grow", !isConnected ? "-mt-4" : "")}>
         <CardHeader className="flex flex-row justify-between pb-0">
           {props.icon && (
             <>
@@ -54,7 +57,7 @@ export function ConnectionCard(props: ConnectionCardProps) {
           {!isConnected ? (
             <Button
               size="lg"
-              variant="secondary"
+              variant="outline"
               className="!mt-0 px-4"
               onClick={onConnect}
             >
@@ -63,7 +66,7 @@ export function ConnectionCard(props: ConnectionCardProps) {
           ) : (
             <Button
               size="lg"
-              variant="secondary"
+              variant="outline"
               className="!mt-0 px-4 text-destructive"
               onClick={onDisconnect}
             >
@@ -79,14 +82,14 @@ export function ConnectionCard(props: ConnectionCardProps) {
           )}
           {userId && <Typography className="mb-4">{userId}</Typography>}
           {description && (
-            <Typography variant="base-l" className="text-secondary-foreground">
+            <Typography variant="base-l" className="text-muted-foreground">
               {description}
             </Typography>
           )}
         </CardContent>
         {isConnected && (
           <CardFooter>
-            <div className="flex w-full items-end justify-between border-t border-border pt-4">
+            <div className="flex w-full items-end justify-between border-t pt-4">
               <Typography variant="base-regular">
                 Display on Verida One profile
               </Typography>

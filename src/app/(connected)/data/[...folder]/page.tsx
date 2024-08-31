@@ -131,7 +131,7 @@ export default function DataFolderPage(props: DataFolderPageProps) {
             {(items?.at(0)["name"] || items?.at(0)["icon"]) && (
               <Typography
                 variant="base-s-semibold"
-                className="text-secondary-foreground"
+                className="text-muted-foreground"
               >
                 {folder?.title} Name
               </Typography>
@@ -140,7 +140,7 @@ export default function DataFolderPage(props: DataFolderPageProps) {
               <Typography
                 key={key}
                 variant="base-s-semibold"
-                className="text-secondary-foreground"
+                className="text-muted-foreground"
               >
                 {dataSchema?.properties[key]?.title}
               </Typography>
@@ -168,7 +168,7 @@ export default function DataFolderPage(props: DataFolderPageProps) {
       {/* <FilterSheet
         open={isFilterOpen}
         onClose={() => setIsFilterOpen(false)}
-        className="border-l border-border shadow-sm"
+        className="border-l shadow-sm"
       >
         <FilterSheetHeader
           title="Filter"

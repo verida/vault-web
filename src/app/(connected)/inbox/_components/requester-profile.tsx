@@ -27,10 +27,7 @@ export function RequesterProfile(props: RequesterProfileProps) {
       </div>
       <div>
         <Typography variant="heading-5">{sentBy?.name}</Typography>
-        <Typography
-          variant="base-s-semibold"
-          className="text-secondary-foreground"
-        >
+        <Typography variant="base-s-semibold" className="text-muted-foreground">
           {moment(new Date(sentAt)).format("DD/MM/YY hh:mm")}
         </Typography>
       </div>

@@ -49,7 +49,7 @@ export default function AssistantChatPage() {
           </div>
         )}
       </div>
-      {error ? <Alert text={error} variant="error" className="mb-2" /> : null}
+      {error ? <Alert variant="error" text={error} className="mb-2" /> : null}
       <AssistantChatInput
         onSendMessage={handleSendMessage}
         isProcessing={isProcessing}

@@ -27,9 +27,7 @@ export default function RootError(props: RootErrorProps) {
         <Typography variant="base-regular" className="text-muted-foreground">
           We apologize for the inconvenience
         </Typography>
-        <Button onClick={reset} className="w-fit">
-          Try again
-        </Button>
+        <Button onClick={reset}>Try again</Button>
       </div>
     </div>
   )

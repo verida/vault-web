@@ -21,19 +21,19 @@ export function DisconnectModal(props: DisconnectModalProps) {
       <DialogContent>
         <DialogHeader>
           <DialogTitle>
-            <Typography variant={"heading-4"}>Disconnect</Typography>
+            <Typography variant="heading-4">Disconnect</Typography>
           </DialogTitle>
         </DialogHeader>
 
-        <Typography variant={"base-regular"} className="mt-4">
+        <Typography variant="base-regular" className="mt-4">
           Are you sure you want to disconnect?
         </Typography>
 
         <div className="mt-8 flex justify-end gap-3">
-          <Button variant={"secondary"} onClick={onClose}>
+          <Button variant="outline" onClick={onClose}>
             Cancel
           </Button>
-          <Button variant={"destructive"}>Disconnect</Button>
+          <Button variant="destructive">Disconnect</Button>
         </div>
       </DialogContent>
     </Dialog>

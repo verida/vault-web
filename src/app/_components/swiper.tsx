@@ -72,7 +72,7 @@ export function Swiper(props: SwiperProps) {
               <div
                 key={`progress-item-${ind}`}
                 className={cn(
-                  "h-2 cursor-pointer rounded-md bg-secondary",
+                  "h-2 cursor-pointer rounded-md bg-primary-foreground",
                   currentStep === ind ? "opacity-100" : "opacity-40"
                 )}
                 onClick={() => setCurrentStep(ind)}
