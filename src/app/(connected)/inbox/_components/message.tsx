@@ -1,4 +1,5 @@
 import { isEmpty } from "lodash"
+import Link from "next/link"
 
 import { InboxDetailsProps } from "@/app/(connected)/inbox/_components/inbox-details"
 import { RequesterProfile } from "@/app/(connected)/inbox/_components/requester-profile"
@@ -9,7 +10,6 @@ import {
 } from "@/components/modal-sheet"
 import { Typography } from "@/components/typography"
 import { Button } from "@/components/ui/button"
-import { ButtonLink } from "@/components/ui/button-link"
 import { useInboxAction } from "@/features/inbox/hooks/useInboxAction"
 import { InboxType } from "@/features/inbox/types"
 
@@ -40,9 +40,15 @@ export function InboxMessageDetails(props: InboxDetailsProps) {
         ) : (
           <>
             {!!itemData.link && (
-              <ButtonLink href={itemData.link.url}>
-                {itemData.link.text}
-              </ButtonLink>
+              <Button asChild variant="secondary">
+                <Link
+                  href={itemData.link.url}
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  {itemData.link.text}
+                </Link>
+              </Button>
             )}
             <Button
               onClick={() => handleAccept(message, InboxType.MESSAGE, {})}

@@ -1,5 +1,6 @@
 "use client"
 
+import Link from "next/link"
 import { useCallback, useEffect, useState } from "react"
 
 import { DataRequestItem } from "@/app/(connected)/inbox/_components/data-request-item"
@@ -18,7 +19,6 @@ import {
 } from "@/components/modal-sheet"
 import { Typography } from "@/components/typography"
 import { Button } from "@/components/ui/button"
-import { ButtonLink } from "@/components/ui/button-link"
 import { useInboxAction } from "@/features/inbox/hooks/useInboxAction"
 import { InboxType } from "@/features/inbox/types"
 import { Logger } from "@/features/telemetry"
@@ -198,10 +198,15 @@ export function DataRequestDetails(props: InboxDetailsProps) {
             >
               {`If you don't have the requested data`}
             </Typography>
-
-            <ButtonLink href={fallbackAction.url}>
-              {fallbackAction.label}
-            </ButtonLink>
+            <Button asChild variant="secondary">
+              <Link
+                href={fallbackAction.url}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {fallbackAction.label}
+              </Link>
+            </Button>
           </div>
         )}
       </ModalSheetBody>
