@@ -62,11 +62,11 @@
 
 @layer base {
   * {
-    @apply border-border;
+    @apply border-border focus-visible:outline-accent;
   }
 
   body {
-    @apply bg-background font-sans text-foreground antialiased;
+    @apply bg-background font-sans text-foreground antialiased caret-accent selection:bg-accent selection:text-accent-foreground;
   }
 }
 
