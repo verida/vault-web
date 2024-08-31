@@ -28,6 +28,9 @@
     --destructive-foreground: 0 0% 100%;
     --destructive-hover: 353 57% 52%;
 
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 7%;
+
     --status-success: 158 53% 59%;
     --status-success-foreground: 0 0% 100%;
 

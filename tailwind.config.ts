@@ -49,6 +49,10 @@ const config = {
           foreground: "hsl(var(--destructive-foreground))",
           hover: "hsl(var(--destructive-hover))",
         },
+        popover: {
+          DEFAULT: "hsl(var(--popover))",
+          foreground: "hsl(var(--popover-foreground))",
+        },
         status: {
           success: {
             DEFAULT: "hsl(var(--status-success))",
