@@ -31,7 +31,7 @@ export function ConnectionButton(props: ConnectionButtonProps) {
       disabled={isConnecting}
       {...buttonProps}
     >
-      {isConnecting ? "Connecting..." : "Try the Verida Vault App"}
+      {isConnecting ? "Connecting..." : "Connect to the Verida Vault App"}
     </Button>
   )
 }

@@ -5,6 +5,7 @@ import { LandingPageFooter } from "@/app/_components/landing-page-footer"
 import { LandingPageHeader } from "@/app/_components/landing-page-header"
 import { Swiper } from "@/app/_components/swiper"
 import { Typography } from "@/components/typography"
+import { cn } from "@/styles/utils"
 
 const sidebarContent = [
   {
@@ -36,34 +37,41 @@ export type LandingPageContentProps = Omit<
 >
 
 export function LandingPageContent(props: LandingPageContentProps) {
-  const { ...divProps } = props
+  const { className, ...divProps } = props
 
   return (
-    <div {...divProps}>
-      <div className="bg-surface flex h-screen min-h-screen">
-        <section className="relative flex min-h-full w-full flex-col md:w-[42%]">
-          <div className="mx-auto flex min-h-full flex-col px-6 md:max-w-[460px]">
-            <LandingPageHeader />
-            <div className="flex flex-1 flex-col items-start justify-center py-10">
+    <div
+      className={cn(
+        "bg-surface flex h-full flex-row justify-center",
+        className
+      )}
+      {...divProps}
+    >
+      <div className="flex h-full flex-row">
+        <div className="flex flex-col px-6 md:px-8 lg:w-1/2 lg:max-w-fit">
+          <LandingPageHeader />
+          <div className="flex flex-1 flex-col items-start justify-center gap-10 pb-5 pt-10">
+            <div className="flex flex-col gap-4">
               <Typography variant="heading-1">
                 Take control of your personal data
               </Typography>
-              <Typography variant="base-l" className="mt-4">
+              <Typography variant="base-l">
                 Securely manage your personal data and zero knowledge
                 credentials with the Verida Vault App.
               </Typography>
-              <ConnectionButton className="mt-8" />
-              <div className="mt-12 flex h-full flex-1 flex-col rounded-[32px] rounded-b-none bg-radial-gradient text-primary-foreground md:hidden">
-                <Swiper data={sidebarContent} />
-              </div>
             </div>
-            <LandingPageFooter />
+            <ConnectionButton />
+            <Swiper
+              data={sidebarContent}
+              className="h-full flex-1 rounded-t-[32px] lg:hidden"
+            />
           </div>
-        </section>
-
-        <section className="hidden min-h-full flex-1 rounded-[32px] rounded-r-none bg-radial-gradient text-primary-foreground md:flex md:flex-col">
-          <Swiper data={sidebarContent} />
-        </section>
+          <LandingPageFooter />
+        </div>
+        <Swiper
+          data={sidebarContent}
+          className="hidden max-w-screen-2xl flex-1 rounded-l-[32px] lg:flex 2xl:rounded-r-[32px]"
+        />
       </div>
     </div>
   )

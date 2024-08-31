@@ -14,7 +14,7 @@ export function LandingPageHeader(props: LandingPageHeaderProps) {
   const { className, ...headerProps } = props
   return (
     <header {...headerProps} className={cn("py-4 md:py-6", className)}>
-      <div className="flex flex-row items-center justify-between gap-4">
+      <div className="flex flex-row flex-wrap items-center justify-between gap-4">
         <Image src="/logo.svg" alt="Verida Vault Logo" height={32} width={95} />
         <ul className="flex flex-row items-center gap-2">
           {veridaLandingSocials.map((social) => (

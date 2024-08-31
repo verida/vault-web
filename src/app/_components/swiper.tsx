@@ -14,12 +14,12 @@ export type SwiperProps = {
     description: string
     image: string
   }[]
-}
+} & Omit<React.ComponentProps<"div">, "children">
 
 const INTERVAL = 15000
 
 export function Swiper(props: SwiperProps) {
-  const { data } = props
+  const { data, className, ...divProps } = props
   const [currentStep, setCurrentStep] = useState(0)
 
   const slideLength = useMemo(() => {
@@ -37,7 +37,13 @@ export function Swiper(props: SwiperProps) {
   }, [slideLength])
 
   return (
-    <>
+    <div
+      className={cn(
+        "flex flex-col bg-radial-gradient text-primary-foreground",
+        className
+      )}
+      {...divProps}
+    >
       <div className="px-6 pt-10 md:px-10 lg:px-16 lg:pt-16 xl:px-24 xl:pt-24 2xl:px-32 2xl:pt-32">
         <SwitchTransition mode="out-in">
           <CSSTransition
@@ -80,7 +86,6 @@ export function Swiper(props: SwiperProps) {
             ))}
         </div>
       </div>
-
       <div className="ml-10 mt-10 flex grow items-start justify-start overflow-hidden lg:ml-16 xl:ml-24 2xl:ml-32">
         <SwitchTransition mode="out-in">
           <CSSTransition
@@ -99,6 +104,6 @@ export function Swiper(props: SwiperProps) {
           </CSSTransition>
         </SwitchTransition>
       </div>
-    </>
+    </div>
   )
 }

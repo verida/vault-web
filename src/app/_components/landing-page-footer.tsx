@@ -12,7 +12,7 @@ export function LandingPageFooter(props: LandingPageFooterProps) {
   const currentDate = new Date()
 
   return (
-    <footer {...footerProps} className={cn("py-6", className)}>
+    <footer {...footerProps} className={cn("py-4 md:py-6", className)}>
       <div className="flex flex-row items-center justify-between gap-4 text-muted-foreground">
         <a
           href="https://verida.network"
