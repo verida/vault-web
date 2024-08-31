@@ -1,14 +1,18 @@
+"use client"
+
 import { debounce } from "lodash"
 import React, { useCallback } from "react"
 
 import { Search } from "@/components/icons/search"
 import { cn } from "@/styles/utils"
 
-type SearchInputProps = {
+export type SearchInputProps = {
   onValueChange?: React.Dispatch<string>
 } & React.InputHTMLAttributes<HTMLInputElement>
 
-function SearchInput({ onValueChange, className, ...props }: SearchInputProps) {
+export function SearchInput(props: SearchInputProps) {
+  const { onValueChange, className, ...inputProps } = props
+
   const debounceChangeHandler = useCallback(
     () =>
       debounce(
@@ -28,7 +32,7 @@ function SearchInput({ onValueChange, className, ...props }: SearchInputProps) {
     >
       <Search className="box-content h-5 w-5 text-secondary-foreground md:h-6 md:w-6" />
       <input
-        {...props}
+        {...inputProps}
         className="hidden bg-transparent text-sm outline-none md:block"
         placeholder="Search Data"
         onChange={debounceChangeHandler}
@@ -36,5 +40,3 @@ function SearchInput({ onValueChange, className, ...props }: SearchInputProps) {
     </div>
   )
 }
-
-export { SearchInput }

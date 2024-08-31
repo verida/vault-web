@@ -28,11 +28,10 @@ const buttonLinkVariants = cva(
   }
 )
 
-export interface ButtonLinkProps
-  extends React.LinkHTMLAttributes<HTMLAnchorElement>,
-    VariantProps<typeof buttonLinkVariants> {
-  asChild?: boolean
-}
+export type ButtonLinkProps = React.LinkHTMLAttributes<HTMLAnchorElement> &
+  VariantProps<typeof buttonLinkVariants> & {
+    asChild?: boolean
+  }
 
 const ButtonLink = React.forwardRef<HTMLAnchorElement, ButtonLinkProps>(
   ({ className, variant, size, asChild = false, ...props }, ref) => {

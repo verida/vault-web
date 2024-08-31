@@ -1,12 +1,11 @@
-type SpinnerProps = {
+export type SpinnerProps = {
   width?: number
   height?: number
 }
 
-export const Spinner: React.FC<SpinnerProps> = ({
-  width = 80,
-  height = 80,
-}) => {
+export function Spinner(props: SpinnerProps) {
+  const { width = 80, height = 80 } = props
+
   return (
     <>
       <div

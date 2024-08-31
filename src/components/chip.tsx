@@ -3,15 +3,16 @@ import Image from "next/image"
 import { Close } from "@/components/icons/close"
 import { Typography } from "@/components/typography"
 
-type ChipProps = {
+export type ChipProps = {
   id: string
   icon: string
   text: string
   onClose?: (id: string) => void
 }
 
-export const Chip: React.FC<ChipProps> = (props) => {
+export function Chip(props: ChipProps) {
   const { id, icon, text, onClose } = props
+
   return (
     <div className="flex items-center gap-2 rounded-full bg-primary-button p-1">
       <Image

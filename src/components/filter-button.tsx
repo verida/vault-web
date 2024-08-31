@@ -8,8 +8,9 @@ export type FilterButtonProps = Omit<
   "variant" | "size"
 > & { applied?: boolean }
 
-export const FilterButton: React.FC<FilterButtonProps> = (props) => {
+export function FilterButton(props: FilterButtonProps) {
   const { className, applied = false } = props
+
   return (
     <Button
       variant="secondary"
