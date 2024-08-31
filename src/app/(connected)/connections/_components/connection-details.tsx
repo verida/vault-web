@@ -1,11 +1,10 @@
 "use client"
 
-import Link from "next/link"
 import React from "react"
 
 import { ConnectionLogs } from "@/app/(connected)/connections/_components/connection-logs"
 import { SupportedDataCard } from "@/app/(connected)/connections/_components/supported-data-card"
-import { ArrowLeft } from "@/components/icons/arrow-left"
+import { SubPageWrapper } from "@/components/sub-page-wrapper"
 import { Typography } from "@/components/typography"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
@@ -23,13 +22,11 @@ export function ConnectionDetails(props: ConnectionDetailsProps) {
   const { profile } = useVerida()
 
   return (
-    <div>
-      <Link href="/connections" className="flex items-center gap-5">
-        <ArrowLeft />
-        <Typography variant="heading-5">Back to all Connections</Typography>
-      </Link>
-
-      <div className="mt-9 space-y-10">
+    <SubPageWrapper
+      backNavigationHref="/connections"
+      backNavigationLabel="Back to all Connections"
+    >
+      <div className="space-y-10">
         <div>
           <div className="flex items-center gap-2">
             <connection.icon className="size-10" />
@@ -108,6 +105,6 @@ export function ConnectionDetails(props: ConnectionDetailsProps) {
 
         <ConnectionLogs />
       </div>
-    </div>
+    </SubPageWrapper>
   )
 }
