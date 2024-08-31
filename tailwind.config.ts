@@ -26,6 +26,10 @@ const config = {
           "radial-gradient(156.1% 83.05% at 27.07% 13.07%, #D14DF1 0%, #7755F1 44.01%, #37E0C9 100%)",
       },
       colors: {
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
+        overlay: "hsl(var(--overlay) / 0.4)",
+
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
