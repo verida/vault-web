@@ -3,16 +3,16 @@ import { Success } from "@/components/icons/success"
 import { Typography } from "@/components/typography"
 import { InboxType } from "@/features/inbox/types"
 
-type InboxStatusProps = {
+export type InboxStatusProps = {
   status?: "accept" | "decline"
   inboxType?: InboxType
 }
 
-export const InboxStatusText: React.FC<InboxStatusProps> = (props) => {
+export function InboxStatusText(props: InboxStatusProps) {
   const { status, inboxType } = props
 
   if (inboxType === InboxType.MESSAGE) {
-    return <></>
+    return null
   }
 
   if (status === "accept") {
@@ -32,5 +32,5 @@ export const InboxStatusText: React.FC<InboxStatusProps> = (props) => {
       </div>
     )
 
-  return <></>
+  return null
 }

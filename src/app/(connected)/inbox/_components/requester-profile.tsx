@@ -5,13 +5,14 @@ import React from "react"
 import { Typography } from "@/components/typography"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
-type RequesterProfileProps = {
+export type RequesterProfileProps = {
   sentBy: Record<string, any>
   sentAt: string | Date
 }
 
-export const RequesterProfile: React.FC<RequesterProfileProps> = (props) => {
+export function RequesterProfile(props: RequesterProfileProps) {
   const { sentBy, sentAt } = props
+
   return (
     <div className="flex items-center space-x-2">
       <div className="relative">

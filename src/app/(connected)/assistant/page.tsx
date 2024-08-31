@@ -5,7 +5,7 @@ import { useCallback, useEffect, useRef } from "react"
 import { AssistantChatEmptyContent } from "@/app/(connected)/assistant/_components/assistant-chat-empty-content"
 import { AssistantChatInput } from "@/app/(connected)/assistant/_components/assistant-chat-input"
 import { AssistantChatMessagesList } from "@/app/(connected)/assistant/_components/assistant-chat-messages-list"
-import Alert from "@/components/alert"
+import { Alert } from "@/components/alert"
 import { useAssistant } from "@/features/assistant"
 
 export default function AssistantChatPage() {

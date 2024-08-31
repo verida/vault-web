@@ -1,8 +1,8 @@
 import { ReactElement, useMemo } from "react"
 
-import { DataRequestDetails } from "@/components/inbox/details/data-request"
-import InboxIncomingData from "@/components/inbox/details/incoming-data"
-import { InboxMessageDetails } from "@/components/inbox/details/message"
+import { DataRequestDetails } from "@/app/(connected)/inbox/_components/data-request"
+import { InboxIncomingData } from "@/app/(connected)/inbox/_components/incoming-data"
+import { InboxMessageDetails } from "@/app/(connected)/inbox/_components/message"
 import { InboxEntry, InboxType } from "@/features/inbox/types"
 
 export type InboxDetailsProps = {
@@ -10,10 +10,9 @@ export type InboxDetailsProps = {
   onClose: () => void
 }
 
-export const InboxDetails: React.FC<InboxDetailsProps> = ({
-  message,
-  onClose,
-}) => {
+export function InboxDetails(props: InboxDetailsProps) {
+  const { message, onClose } = props
+
   const DetailsComponent = useMemo((): ReactElement => {
     switch (message.type) {
       case InboxType.DATASTORE_SYNC:

@@ -1,9 +1,11 @@
+"use client"
+
 import { useQuery } from "@tanstack/react-query"
 import moment from "moment"
 import Image from "next/image"
 import { useCallback, useEffect, useState } from "react"
 
-import Alert from "@/components/alert"
+import { Alert } from "@/components/alert"
 import { ArrowLeft } from "@/components/icons/arrow-left"
 import { SearchInput } from "@/components/search-input"
 import { Typography } from "@/components/typography"
@@ -21,7 +23,7 @@ import { useVerida } from "@/features/verida"
 
 const logger = Logger.create("Inbox")
 
-type RequestDataSelectorProps = {
+export type RequestDataSelectorProps = {
   schemaUrl: string
   filter: any
   defaultItems: any[]
@@ -29,14 +31,12 @@ type RequestDataSelectorProps = {
   onConfirm: (items: any[]) => void
 }
 
-export const RequestDataSelector: React.FC<RequestDataSelectorProps> = (
-  props
-) => {
+export function RequestDataSelector(props: RequestDataSelectorProps) {
   const { schemaUrl, filter, onClose, onConfirm, defaultItems } = props
 
   const { openDatastore, did } = useVerida()
 
-  const [searchValue, setSearchValue] = useState<string>("")
+  const [searchValue, setSearchValue] = useState("")
   const [selectedItems, setSelectedItems] = useState<any[]>(defaultItems)
 
   const fetchData = useCallback(

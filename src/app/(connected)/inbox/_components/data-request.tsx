@@ -1,14 +1,16 @@
+"use client"
+
 import { useCallback, useEffect, useState } from "react"
 
-import Alert from "@/components/alert"
-import { DataRequestItem } from "@/components/inbox/data-request-item"
-import { InboxDetailsProps } from "@/components/inbox/inbox-details"
-import { InboxStatusText } from "@/components/inbox/inbox-status-text"
-import { RequestDataSelector } from "@/components/inbox/request-data-selector"
-import { RequesterProfile } from "@/components/inbox/requester-profile"
-import { InboxError } from "@/components/inbox/status/inbox-error"
-import { InboxLoading } from "@/components/inbox/status/inbox-loading"
-import { InboxSuccess } from "@/components/inbox/status/inbox-success"
+import { DataRequestItem } from "@/app/(connected)/inbox/_components/data-request-item"
+import { InboxDetailsProps } from "@/app/(connected)/inbox/_components/inbox-details"
+import { InboxError } from "@/app/(connected)/inbox/_components/inbox-error"
+import { InboxLoading } from "@/app/(connected)/inbox/_components/inbox-loading"
+import { InboxStatusText } from "@/app/(connected)/inbox/_components/inbox-status-text"
+import { InboxSuccess } from "@/app/(connected)/inbox/_components/inbox-success"
+import { RequestDataSelector } from "@/app/(connected)/inbox/_components/request-data-selector"
+import { RequesterProfile } from "@/app/(connected)/inbox/_components/requester-profile"
+import { Alert } from "@/components/alert"
 import {
   ModalSheetBody,
   ModalSheetFooter,
@@ -26,10 +28,8 @@ const logger = Logger.create("Inbox")
 // TODO: Use custom logger and remove this eslint by-pass
 /* eslint-disable no-console */
 
-export const DataRequestDetails: React.FC<InboxDetailsProps> = ({
-  message,
-  onClose,
-}) => {
+export function DataRequestDetails(props: InboxDetailsProps) {
+  const { message, onClose } = props
   const { message: title, data, type, sentBy } = message
   const { fallbackAction, requestSchema, filter } = data
 

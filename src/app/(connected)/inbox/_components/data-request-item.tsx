@@ -1,3 +1,5 @@
+"use client"
+
 import { useMemo } from "react"
 
 import { Chip } from "@/components/chip"
@@ -8,7 +10,7 @@ import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { cn } from "@/styles/utils"
 
-type DataRequestItemProps = {
+export type DataRequestItemProps = {
   data: Record<string, any>
   selectedItems: Record<string, any>[]
   onAdd: () => void
@@ -16,13 +18,15 @@ type DataRequestItemProps = {
   disabled?: boolean
 }
 
-export const DataRequestItem: React.FC<DataRequestItemProps> = ({
-  disabled = false,
-  data = {},
-  selectedItems,
-  onAdd,
-  onRemoveChip,
-}) => {
+export function DataRequestItem(props: DataRequestItemProps) {
+  const {
+    disabled = false,
+    data = {},
+    selectedItems,
+    onAdd,
+    onRemoveChip,
+  } = props
+
   const isAdded = useMemo(() => {
     return selectedItems.length > 0
   }, [selectedItems])

@@ -3,15 +3,14 @@ import Image from "next/image"
 import SuccessShareImage from "@/assets/success.svg"
 import { Typography } from "@/components/typography"
 
-type InboxSuccessProps = {
+export type InboxSuccessProps = {
   title: string
   description: React.ReactNode
 }
 
-export const InboxSuccess: React.FC<InboxSuccessProps> = ({
-  title,
-  description,
-}) => {
+export function InboxSuccess(props: InboxSuccessProps) {
+  const { title, description } = props
+
   return (
     <div className="flex flex-grow flex-col items-center justify-center text-center">
       <Image

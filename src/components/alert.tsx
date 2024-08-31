@@ -21,12 +21,12 @@ const alertVariants = cva(
   }
 )
 
-type AlertProps = {
+export type AlertProps = {
   text: string
 } & VariantProps<typeof alertVariants> &
   React.ComponentProps<"div">
 
-const Alert: React.FC<AlertProps> = (props) => {
+export function Alert(props: AlertProps) {
   const { text, variant, className, ...divProps } = props
 
   return (
@@ -42,5 +42,3 @@ const Alert: React.FC<AlertProps> = (props) => {
     </div>
   )
 }
-
-export default Alert

@@ -7,7 +7,7 @@ import { CSSTransition, SwitchTransition } from "react-transition-group"
 import { Typography } from "@/components/typography"
 import { cn } from "@/styles/utils"
 
-type SwiperProps = {
+export type SwiperProps = {
   data: {
     title: string
     icon: React.ReactNode
@@ -18,7 +18,7 @@ type SwiperProps = {
 
 const INTERVAL = 15000
 
-export const Swiper: React.FunctionComponent<SwiperProps> = (props) => {
+export function Swiper(props: SwiperProps) {
   const { data } = props
   const [currentStep, setCurrentStep] = useState(0)
 

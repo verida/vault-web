@@ -1,7 +1,7 @@
 import { isEmpty } from "lodash"
 
-import { InboxDetailsProps } from "@/components/inbox/inbox-details"
-import { RequesterProfile } from "@/components/inbox/requester-profile"
+import { InboxDetailsProps } from "@/app/(connected)/inbox/_components/inbox-details"
+import { RequesterProfile } from "@/app/(connected)/inbox/_components/requester-profile"
 import {
   ModalSheetBody,
   ModalSheetFooter,
@@ -13,10 +13,8 @@ import { ButtonLink } from "@/components/ui/button-link"
 import { useInboxAction } from "@/features/inbox/hooks/useInboxAction"
 import { InboxType } from "@/features/inbox/types"
 
-export const InboxMessageDetails: React.FC<InboxDetailsProps> = ({
-  message,
-  onClose,
-}) => {
+export function InboxMessageDetails(props: InboxDetailsProps) {
+  const { message, onClose } = props
   const { message: title, data } = message
   const itemData = !isEmpty(data.data) ? data.data[0] : null
 

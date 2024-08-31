@@ -4,15 +4,14 @@ import ErrorInboxImage from "@/assets/error-inbox.svg"
 import { Typography } from "@/components/typography"
 import { Button } from "@/components/ui/button"
 
-type InboxErrorProps = {
+export type InboxErrorProps = {
   description: string
   onClick?: () => void
 }
 
-export const InboxError: React.FC<InboxErrorProps> = ({
-  description,
-  onClick,
-}) => {
+export function InboxError(props: InboxErrorProps) {
+  const { description, onClick } = props
+
   return (
     <div className="flex flex-col items-center justify-center gap-6 text-center">
       <Image

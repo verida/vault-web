@@ -1,7 +1,7 @@
 import Image from "next/image"
 import Link from "next/link"
 
-import { InboxStatusText } from "@/components/inbox/inbox-status-text"
+import { InboxStatusText } from "@/app/(connected)/inbox/_components/inbox-status-text"
 import { Typography } from "@/components/typography"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Card } from "@/components/ui/card"
@@ -10,15 +10,13 @@ import { InboxEntry } from "@/features/inbox/types"
 import { cn } from "@/styles/utils"
 import { formatDate } from "@/utils/misc"
 
-type InboxRowItemProps = {
+export type InboxRowItemProps = {
   message: InboxEntry
   href?: string
 }
 
-export const InboxRowItem: React.FC<InboxRowItemProps> = ({
-  message,
-  href,
-}) => {
+export function InboxRowItem(props: InboxRowItemProps) {
+  const { message, href } = props
   const { message: title, read, sentAt, sentBy, type, data } = message
   const InboxTypeIcon = inboxTypes[type].icon
 

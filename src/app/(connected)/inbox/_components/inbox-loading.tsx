@@ -1,15 +1,14 @@
 import { Spinner } from "@/components/spinner"
 import { Typography } from "@/components/typography"
 
-type InboxLoadingProps = {
+export type InboxLoadingProps = {
   title: string
   description: string
 }
 
-export const InboxLoading: React.FC<InboxLoadingProps> = ({
-  title,
-  description,
-}) => {
+export function InboxLoading(props: InboxLoadingProps) {
+  const { title, description } = props
+
   return (
     <div className="flex flex-grow flex-col items-center justify-center gap-6">
       <Spinner />
