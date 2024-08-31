@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation"
 import React, { useMemo } from "react"
 
 import { CredentialItem } from "@/app/(connected)/data/[...folder]/_components/credential-item"
+import { DataError } from "@/app/(connected)/data/[...folder]/_components/data-error"
 import { DataItem } from "@/app/(connected)/data/[...folder]/_components/data-item"
 import { DataItemDetailsSheet } from "@/app/(connected)/data/[...folder]/_components/data-item-details-sheet"
 // import {
@@ -16,7 +17,6 @@ import { DataItemDetailsSheet } from "@/app/(connected)/data/[...folder]/_compon
 // import SearchBox from "@/components/search-box"
 // import { FilterButton } from "@/components/filter-button"
 import { ArrowLeft } from "@/components/icons/arrow-left"
-import { InboxError } from "@/components/inbox/status/inbox-error"
 // import { SortSelector } from "@/components/sort-selector"
 import { Typography } from "@/components/typography"
 // import { Button } from "@/components/ui/button"
@@ -119,7 +119,7 @@ export default function DataFolderPage(props: DataFolderPageProps) {
         </div>
       ) : isDataSchemaError || isDataItemsError ? (
         <div className="py-40">
-          <InboxError description="There's been an error when loading the data" />
+          <DataError description="There's been an error when loading the data" />
         </div>
       ) : items?.length === 0 || !dataSchema ? (
         <Typography variant={"heading-4"} className="py-40 text-center">
