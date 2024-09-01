@@ -1,35 +1,39 @@
 "use client"
 
-import React from "react"
+import React, { useCallback } from "react"
 import { useState } from "react"
 
+import { ConnectConnectionDialog } from "@/app/(connected)/connections/_components/connect-connection-dialog"
 import { ConnectionCard } from "@/app/(connected)/connections/_components/connection-card"
-import { ConnectionModal } from "@/app/(connected)/connections/_components/connection-modal"
-import { DisconnectModal } from "@/app/(connected)/connections/_components/disconnect-modal"
+import { DisconnectConnectionDialog } from "@/app/(connected)/connections/_components/disconnect-connection-dialog"
 import { Typography } from "@/components/typography"
 // import { FilterButton } from "@/components/filter-button"
 // import { SearchInput } from "@/components/search-input"
 import { connections, myConnections } from "@/features/connections"
 
 export function Connections() {
-  const [isConnectModalOpen, setIsConnectModalOpen] = useState(false)
-  const [isDisconnectModalOpen, setIsDisconnectModalOpen] = useState(false)
-
+  const [isConnectDialogOpen, setIsConnectDialogOpen] = useState(false)
+  const [isDisconnectDialogOpen, setIsDisconnectDialogOpen] = useState(false)
   const [connectionId, setConnectionId] = useState("")
   // const [searchKey, setSearchKey] = useState("")
 
-  const handleOpenConnectionModal = (id: string) => {
-    setIsConnectModalOpen(true)
+  const handleOpenConnectDialog = useCallback((id: string) => {
     setConnectionId(id)
-  }
+    setIsConnectDialogOpen(true)
+  }, [])
 
-  const handleCloseConnectionModal = () => {
-    setIsConnectModalOpen(false)
-  }
+  const handleCloseConnectDialog = useCallback(() => {
+    setIsConnectDialogOpen(false)
+  }, [])
 
-  const handleCloseDisconnectModal = () => {
-    setIsDisconnectModalOpen(false)
-  }
+  const handleOpenDisconnectDialog = useCallback((id: string) => {
+    setConnectionId(id)
+    setIsDisconnectDialogOpen(true)
+  }, [])
+
+  const handleCloseDisconnectDialog = useCallback(() => {
+    setIsDisconnectDialogOpen(false)
+  }, [])
 
   // const handleSearchInputChange = (value: string) => {
   //   setSearchKey(value)
@@ -64,7 +68,7 @@ export function Connections() {
                 {...connection}
                 key={connection.id}
                 isConnected
-                onDisconnect={() => setIsDisconnectModalOpen(true)}
+                onDisconnect={() => handleOpenDisconnectDialog(connection.id)}
               />
             ))}
           </div>
@@ -82,20 +86,20 @@ export function Connections() {
             <ConnectionCard
               {...connection}
               key={connection.id}
-              onConnect={() => handleOpenConnectionModal(connection.id)}
+              onConnect={() => handleOpenConnectDialog(connection.id)}
             />
           ))}
         </div>
       </div>
 
-      <ConnectionModal
-        isOpen={isConnectModalOpen}
-        onClose={handleCloseConnectionModal}
+      <ConnectConnectionDialog
+        isOpen={isConnectDialogOpen}
+        onClose={handleCloseConnectDialog}
         connectionId={connectionId}
       />
-      <DisconnectModal
-        isOpen={isDisconnectModalOpen}
-        onClose={handleCloseDisconnectModal}
+      <DisconnectConnectionDialog
+        isOpen={isDisconnectDialogOpen}
+        onClose={handleCloseDisconnectDialog}
         connectionId={connectionId}
       />
     </div>
