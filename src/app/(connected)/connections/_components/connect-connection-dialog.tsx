@@ -16,13 +16,13 @@ import {
 } from "@/components/ui/dialog"
 import { connections } from "@/features/connections"
 
-export type ConnectionModalProps = {
+export type ConnectConnectionDialogProps = {
   isOpen: boolean
   onClose: () => void
   connectionId: string
 }
 
-export function ConnectionModal(props: ConnectionModalProps) {
+export function ConnectConnectionDialog(props: ConnectConnectionDialogProps) {
   const { connectionId, isOpen, onClose } = props
 
   const connection = useMemo(() => {

@@ -1,3 +1,7 @@
+"use client"
+
+import { useMemo } from "react"
+
 import { Typography } from "@/components/typography"
 import {
   AlertDialog,
@@ -9,21 +13,32 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button"
+import { connections } from "@/features/connections"
 
-export type DisconnectModalProps = {
+export type DisconnectConnectionDialogProps = {
   isOpen: boolean
   onClose: () => void
   connectionId: string
 }
 
-export function DisconnectModal(props: DisconnectModalProps) {
-  const { isOpen, onClose } = props
+export function DisconnectConnectionDialog(
+  props: DisconnectConnectionDialogProps
+) {
+  const { isOpen, onClose, connectionId } = props
+
+  const connection = useMemo(() => {
+    return connections.find((c) => c.id === connectionId)
+  }, [connectionId])
+
+  if (!connection) {
+    return null
+  }
 
   return (
     <AlertDialog open={isOpen} onOpenChange={onClose}>
       <AlertDialogContainer>
         <AlertDialogHeader>
-          <AlertDialogTitle>Disconnect</AlertDialogTitle>
+          <AlertDialogTitle>Disconnect from {connection.id}</AlertDialogTitle>
         </AlertDialogHeader>
         <AlertDialogContent>
           <Typography variant="base-regular">

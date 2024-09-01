@@ -36,7 +36,7 @@ const AlertDialogContainer = React.forwardRef<
     <AlertDialogPrimitive.Content
       ref={ref}
       className={cn(
-        "fixed bottom-0 left-0 z-50 flex max-h-[90vh] w-full flex-col rounded-t-2xl border bg-surface px-6 py-4 shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-bottom data-[state=closed]:slide-out-to-left-1/2 data-[state=open]:slide-in-from-bottom data-[state=open]:slide-in-from-left-1/2 sm:bottom-1/2 sm:left-1/2 sm:max-w-lg sm:-translate-x-1/2 sm:translate-y-1/2 sm:rounded-2xl sm:py-6",
+        "fixed bottom-0 left-0 z-50 flex max-h-[90vh] w-full flex-col rounded-t-2xl border bg-surface px-6 py-4 shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-bottom data-[state=open]:slide-in-from-bottom sm:bottom-1/2 sm:left-1/2 sm:max-w-lg sm:-translate-x-1/2 sm:translate-y-1/2 sm:rounded-2xl sm:py-6 sm:data-[state=closed]:slide-out-to-left-1/2 sm:data-[state=open]:slide-in-from-left-1/2",
         className
       )}
       {...props}
