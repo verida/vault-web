@@ -34,8 +34,8 @@
     --status-success: 158 53% 59%;
     --status-success-foreground: 0 0% 100%;
 
-    --status-added: 158 53% 59%;
-    --status-added-foreground: 0 0% 100%;
+    --status-added: 141, 84%, 93%;
+    --status-added-foreground: 0 0% 7%;
 
     --status-approved: 158 53% 59%;
     --status-approved-foreground: 0 0% 100%;

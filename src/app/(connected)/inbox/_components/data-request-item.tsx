@@ -1,11 +1,12 @@
 "use client"
 
+import Image from "next/image"
 import { useMemo } from "react"
 
-import { Chip } from "@/components/chip"
-import { Check } from "@/components/icons/check"
+import { Close } from "@/components/icons/close"
 import { Plus } from "@/components/icons/plus"
 import { Typography } from "@/components/typography"
+import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { cn } from "@/styles/utils"
@@ -43,30 +44,37 @@ export function DataRequestItem(props: DataRequestItemProps) {
         <Typography variant="base-s-regular">{data.description}</Typography>
       </div>
 
-      {selectedItems.length > 0 && (
+      {selectedItems.length > 0 ? (
         <div className="flex flex-wrap gap-2">
           {selectedItems.map((item) => (
-            <Chip
-              key={`chip-${item._id}`}
-              id={item._id}
-              icon={item.icon}
-              text={item.name}
-              onClose={disabled ? undefined : onRemoveChip}
-            />
+            // TODO: Create dedicated data request item badge component
+            <Badge key={`badge-${item._id}`} className="gap-1">
+              {item.icon ? (
+                <Image
+                  src={item.icon}
+                  alt=""
+                  width="24"
+                  height="24"
+                  className="-ml-1 rounded-full bg-surface"
+                />
+              ) : null}
+              <Typography variant="base-s-regular">{item.name}</Typography>
+              {disabled ? null : (
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => onRemoveChip(item._id)}
+                  className="-mr-1 h-auto w-auto rounded-full text-inherit"
+                >
+                  <Close />
+                </Button>
+              )}
+            </Badge>
           ))}
         </div>
-      )}
+      ) : null}
       {disabled ? (
         <></>
-      ) : isAdded ? (
-        <Button
-          variant="outline"
-          className="w-full gap-2 text-status-added"
-          onClick={onAdd}
-        >
-          <Check />
-          Added
-        </Button>
       ) : (
         <Button variant="outline" className="w-full gap-2" onClick={onAdd}>
           <Plus />
