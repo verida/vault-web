@@ -13,11 +13,13 @@ export type SortSelectorProps = Omit<
   "variant" | "size"
 >
 
-export const SortSelector: React.FC<SortSelectorProps> = (props) => {
+export function SortSelector(props: SortSelectorProps) {
+  const { ...selectProps } = props
+
   return (
-    <Select {...props} defaultValue="newest">
+    <Select {...selectProps} defaultValue="newest">
       <SelectTrigger
-        className="h-10 w-10 justify-center gap-2 p-0 text-secondary-foreground md:h-12 md:w-auto md:justify-between md:px-3 md:py-2"
+        className="h-10 w-10 justify-center gap-2 p-0 text-muted-foreground md:h-12 md:w-auto md:justify-between md:px-3 md:py-2"
         selectIconClassName="hidden md:block"
       >
         <Sort className="block md:hidden" />

@@ -7,19 +7,19 @@ import { CSSTransition, SwitchTransition } from "react-transition-group"
 import { Typography } from "@/components/typography"
 import { cn } from "@/styles/utils"
 
-type SwiperProps = {
+export type SwiperProps = {
   data: {
     title: string
     icon: React.ReactNode
     description: string
     image: string
   }[]
-}
+} & Omit<React.ComponentProps<"div">, "children">
 
 const INTERVAL = 15000
 
-export const Swiper: React.FunctionComponent<SwiperProps> = (props) => {
-  const { data } = props
+export function Swiper(props: SwiperProps) {
+  const { data, className, ...divProps } = props
   const [currentStep, setCurrentStep] = useState(0)
 
   const slideLength = useMemo(() => {
@@ -37,7 +37,13 @@ export const Swiper: React.FunctionComponent<SwiperProps> = (props) => {
   }, [slideLength])
 
   return (
-    <>
+    <div
+      className={cn(
+        "flex flex-col bg-radial-gradient text-primary-foreground",
+        className
+      )}
+      {...divProps}
+    >
       <div className="px-6 pt-10 md:px-10 lg:px-16 lg:pt-16 xl:px-24 xl:pt-24 2xl:px-32 2xl:pt-32">
         <SwitchTransition mode="out-in">
           <CSSTransition
@@ -72,7 +78,7 @@ export const Swiper: React.FunctionComponent<SwiperProps> = (props) => {
               <div
                 key={`progress-item-${ind}`}
                 className={cn(
-                  "h-2 cursor-pointer rounded-md bg-secondary",
+                  "h-2 cursor-pointer rounded-md bg-primary-foreground",
                   currentStep === ind ? "opacity-100" : "opacity-40"
                 )}
                 onClick={() => setCurrentStep(ind)}
@@ -80,7 +86,6 @@ export const Swiper: React.FunctionComponent<SwiperProps> = (props) => {
             ))}
         </div>
       </div>
-
       <div className="ml-10 mt-10 flex grow items-start justify-start overflow-hidden lg:ml-16 xl:ml-24 2xl:ml-32">
         <SwitchTransition mode="out-in">
           <CSSTransition
@@ -99,6 +104,6 @@ export const Swiper: React.FunctionComponent<SwiperProps> = (props) => {
           </CSSTransition>
         </SwitchTransition>
       </div>
-    </>
+    </div>
   )
 }

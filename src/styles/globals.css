@@ -5,77 +5,68 @@
 @layer base {
   :root {
     --background: 220 23% 97%;
-    --foreground: 0 0% 6.7%;
+    --foreground: 0 0% 7%;
+    --surface: 0 0% 100%;
+    --overlay: 0 0% 0%;
+    --ring: 240 58% 57%;
 
-    --primary: 0 0% 100%;
-    --primary-foreground: 0 0% 6.7%;
-    --primary-button: 240 57.8% 57.3%;
-    --primary-button-hover: 243 90% 27%;
-    --primary-button-foreground: 0 0% 100%;
+    --border: 214 32% 91%;
+    --border-hover: 220 13% 84%;
 
-    --secondary: 210 20% 98%;
-    --secondary-foreground: 220 9% 46%;
-    --secondary-button: 0 0% 100%;
-    --secondary-button-hover: 220 14% 96%;
-    --secondary-activity-sending: 220 14% 96%;
-    --secondary-activity-receiving: 141 84% 93%;
+    --muted: 220 14% 96%;
+    --muted-foreground: 220 9% 46%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 240 58% 57%;
+    --accent-foreground: 0 0% 100%;
+    --accent-hover: 243 90% 27%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 214 31.8% 91.4%;
+    --primary: 240 58% 57%;
+    --primary-foreground: 0 0% 100%;
+    --primary-hover: 243 90% 27%;
 
     --destructive: 353 98% 65%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 0 0% 100%;
+    --destructive-hover: 353 57% 52%;
 
-    --approved: 158 53% 59%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 7%;
 
-    --border: 214 31.8% 91.4%;
-    --input: 214 31.8% 91.4%;
-    --ring: 240 57.8% 57.3%;
+    --status-success: 158 53% 59%;
+    --status-success-foreground: 0 0% 100%;
+
+    --status-added: 141, 84%, 93%;
+    --status-added-foreground: 0 0% 7%;
+
+    --status-approved: 158 53% 59%;
+    --status-approved-foreground: 0 0% 100%;
+
+    --status-connected: 158 53% 59%;
+    --status-connected-foreground: 0 0% 100%;
+
+    --status-info: 213 100% 50%;
+    --status-info-foreground: 0 0% 100%;
+
+    --status-warning: 36 93% 59%;
+    --status-warning-foreground: 0 0% 100%;
+
+    --status-error: 353 98% 65%;
+    --status-error-foreground: 0 0% 100%;
 
     --radius: 0.5rem;
   }
 
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-  }
+  /* .dark {
+    When supporting dark mode, set the same CSS variables as above here
+  } */
 }
 
 @layer base {
   * {
-    @apply border-border;
+    @apply border-border focus-visible:outline-accent;
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background font-sans text-foreground antialiased caret-accent selection:bg-accent selection:text-accent-foreground;
   }
 }
 

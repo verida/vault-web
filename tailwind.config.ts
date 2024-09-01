@@ -1,56 +1,34 @@
 import type { Config } from "tailwindcss"
+import { fontFamily } from "tailwindcss/defaultTheme"
 
 const config = {
+  darkMode: ["class"],
+  safelist: ["dark"],
   content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"],
   prefix: "",
   theme: {
-    container: {
-      center: true,
-      padding: "2rem",
-      screens: {
-        "2xl": "1400px",
-      },
-    },
     fontFamily: {
-      sans: "Sora, sans-serif",
+      sans: ["var(--font-sora)", ...fontFamily.sans],
     },
     extend: {
       backgroundImage: {
         "gradient-conic":
-          "conic-gradient(from -90deg at 50.62% 100%, #5354D1 0deg, #F7F8FA 233.99999141693115deg)",
+          "conic-gradient(from -90deg at 50% 100%, #5354D1 0deg, #F7F8FA 234deg)", // TODO: To rework
         "radial-gradient":
-          "radial-gradient(61.06% 61.06% at 50% 50%, #7986F7 0%, #5354D1 100%)",
+          "radial-gradient(61% 61% at 50% 50%, #7986F7 0%, #5354D1 100%)", // TODO: To rework
         "ai-assistant-gradient":
-          "radial-gradient(156.1% 83.05% at 27.07% 13.07%, #D14DF1 0%, #7755F1 44.01%, #37E0C9 100%)",
+          "radial-gradient(156% 83% at 27% 13%, #D14DF1 0%, #7755F1 44.01%, #37E0C9 100%)",
       },
       colors: {
-        border: "hsl(var(--border))",
-        input: "hsl(var(--input))",
-        ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
-        primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
-          button: {
-            DEFAULT: "hsl(var(--primary-button))",
-            hover: "hsl(var(--primary-button-hover))",
-            foreground: "hsl(var(--primary-button-foreground))",
-          },
-        },
-        secondary: {
-          "DEFAULT": "hsl(var(--secondary))",
-          "foreground": "hsl(var(--secondary-foreground))",
-          "button": {
-            DEFAULT: "hsl(var(--secondary-button))",
-            hover: "hsl(var(--secondary-button-hover))",
-          },
-          "activity-sending": "hsl(var(--secondary-activity-sending))",
-          "activity-receiving": "hsl(var(--secondary-activity-receiving))",
-        },
-        destructive: {
-          DEFAULT: "hsl(var(--destructive))",
-          foreground: "hsl(var(--destructive-foreground))",
+        surface: "hsl(var(--surface))",
+        overlay: "hsl(var(--overlay) / 0.4)",
+        ring: "hsl(var(--ring))",
+        input: "hsl(var(--input))",
+        border: {
+          DEFAULT: "hsl(var(--border))",
+          hover: "hsl(var(--border-hover))",
         },
         muted: {
           DEFAULT: "hsl(var(--muted))",
@@ -59,37 +37,51 @@ const config = {
         accent: {
           DEFAULT: "hsl(var(--accent))",
           foreground: "hsl(var(--accent-foreground))",
+          hover: "hsl(var(--accent-hover))",
         },
-        approved: {
-          DEFAULT: "hsl(var(--approved))",
+        primary: {
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
+          hover: "hsl(var(--primary-hover))",
         },
-        gray: {
-          50: "#F9FAFB",
-          100: "#F3F4F6",
-          200: "#E2E8F0",
-          300: "#D1D5DB",
-          500: "#6B7280",
-          800: "#1F2937",
+        destructive: {
+          DEFAULT: "hsl(var(--destructive))",
+          foreground: "hsl(var(--destructive-foreground))",
+          hover: "hsl(var(--destructive-hover))",
         },
-        purple: {
-          50: "#F5F4FF",
-          100: "#ECEBFA",
-          200: "#D9D8F5",
-          400: "#7986F7",
-          500: "#5354D1",
-          700: "#0D0782",
+        popover: {
+          DEFAULT: "hsl(var(--popover))",
+          foreground: "hsl(var(--popover-foreground))",
         },
-        green: {
-          100: "#DCFCE7",
-          800: "#166534",
-        },
-        cyan: {
-          100: "#CFFAFE",
-          800: "#155E75",
-        },
-        yellow: {
-          100: "#FEF9C3",
-          800: "#854D0E",
+        status: {
+          success: {
+            DEFAULT: "hsl(var(--status-success))",
+            foreground: "hsl(var(--status-success-foreground))",
+          },
+          added: {
+            DEFAULT: "hsl(var(--status-added))",
+            foreground: "hsl(var(--status-added-foreground))",
+          },
+          approved: {
+            DEFAULT: "hsl(var(--status-approved))",
+            foreground: "hsl(var(--status-approved-foreground))",
+          },
+          connected: {
+            DEFAULT: "hsl(var(--status-connected))",
+            foreground: "hsl(var(--status-connected-foreground))",
+          },
+          info: {
+            DEFAULT: "hsl(var(--status-info))",
+            foreground: "hsl(var(--status-info-foreground))",
+          },
+          warning: {
+            DEFAULT: "hsl(var(--status-warning))",
+            foreground: "hsl(var(--status-warning-foreground))",
+          },
+          error: {
+            DEFAULT: "hsl(var(--status-error))",
+            foreground: "hsl(var(--status-error-foreground))",
+          },
         },
       },
       borderRadius: {
@@ -98,8 +90,8 @@ const config = {
         sm: "calc(var(--radius) - 4px)",
       },
       boxShadow: {
-        glow: "0px 0px 4px 0px rgba(83, 84, 209, 0.60)",
-        card: "8px 16px 40px 0px rgba(180, 183, 205, 0.16)",
+        glow: "0px 0px 4px 0px rgba(83, 84, 209, 0.60)", // TODO: To rework
+        card: "8px 16px 40px 0px rgba(180, 183, 205, 0.16)", // TODO: To rework
       },
       fontSize: {
         "heading-1": [

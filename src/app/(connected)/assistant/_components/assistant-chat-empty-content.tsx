@@ -2,6 +2,7 @@ import React from "react"
 
 import { VeridaNetworkColouredLogo } from "@/components/icons/verida-network-coloured-logo"
 import { Typography } from "@/components/typography"
+import { Button } from "@/components/ui/button"
 import { RECOMMENDED_PROMPTS_FOR_NEW_CHAT } from "@/features/assistant"
 import { cn } from "@/styles/utils"
 
@@ -33,10 +34,10 @@ export function AssistantChatEmptyContent(
           <Typography variant="base-regular">Ask about:</Typography>
           <div className="flex flex-col items-center gap-2">
             {RECOMMENDED_PROMPTS_FOR_NEW_CHAT.map((prompt, index) => (
-              <div
+              <Button
                 key={index}
-                // TODO: Use a proper button conmponent
-                className="w-fit rounded-full border bg-white px-4 py-2.5 hover:cursor-pointer"
+                variant="outline"
+                className="h-auto rounded-full px-4 py-2.5"
                 onClick={() => {
                   onRecommendedPromptClick?.(prompt)
                 }}
@@ -44,7 +45,7 @@ export function AssistantChatEmptyContent(
                 <Typography key={index} variant="base-s-regular">
                   {prompt}
                 </Typography>
-              </div>
+              </Button>
             ))}
           </div>
         </div>

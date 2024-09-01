@@ -3,13 +3,13 @@
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { useMemo, useState } from "react"
 
-import { ModalSheet } from "@/components/common/modal-sheet"
+import { InboxDetails } from "@/app/(connected)/inbox/_components/inbox-details"
+import { InboxError } from "@/app/(connected)/inbox/_components/inbox-error"
+import { InboxRowItem } from "@/app/(connected)/inbox/_components/inbox-item"
+import { InboxLoading } from "@/app/(connected)/inbox/_components/inbox-loading"
+import { NoInbox } from "@/app/(connected)/inbox/_components/no-inbox"
 // import { FilterButton } from "@/components/filter-button"
-import { InboxDetails } from "@/components/inbox/inbox-details"
-import { InboxRowItem } from "@/components/inbox/inbox-item"
-import { InboxError } from "@/components/inbox/status/inbox-error"
-import { InboxLoading } from "@/components/inbox/status/inbox-loading"
-import { NoInbox } from "@/components/inbox/status/no-inbox"
+import { ModalSheet } from "@/components/modal-sheet"
 // import { SearchInput } from "@/components/search-input"
 import { Typography } from "@/components/typography"
 import { TablePagination } from "@/components/ui/table-pagination"
@@ -18,7 +18,7 @@ import { useInboxContext } from "@/features/inbox/hooks/useInboxContext"
 import { useMessages } from "@/features/inbox/hooks/useMessages"
 import { InboxEntry } from "@/features/inbox/types"
 
-const InboxPage = () => {
+export default function InboxPage() {
   const router = useRouter()
   const pathName = usePathname()
   const searchParams = useSearchParams()
@@ -127,5 +127,3 @@ const InboxPage = () => {
     </>
   )
 }
-
-export default InboxPage

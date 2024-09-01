@@ -2,9 +2,9 @@
 
 import { useSearchParams } from "next/navigation"
 
-import ConnectionDetails from "@/components/connection/connection-details"
-import ConnectionLogs from "@/components/connection/connection-logs"
-import Connections from "@/components/connection/connections"
+import { ConnectionDetails } from "@/app/(connected)/connections/_components/connection-details"
+import { ConnectionLogs } from "@/app/(connected)/connections/_components/connection-logs"
+import { Connections } from "@/app/(connected)/connections/_components/connections"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { myConnections } from "@/features/connections"
 
@@ -13,7 +13,7 @@ enum ConnectionTabs {
   ConnectionLogs = "Connection Logs",
 }
 
-const MarketingPage = () => {
+export default function ConnectionsPage() {
   const searchParams = useSearchParams()
   const connectionId = searchParams.get("id")
   const connection = myConnections.find((c) => c.id === connectionId)
@@ -43,5 +43,3 @@ const MarketingPage = () => {
     </div>
   )
 }
-
-export default MarketingPage

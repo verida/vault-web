@@ -62,7 +62,7 @@ export function AssistantChatInput(props: AssistantChatInputProps) {
         value={message}
         onChange={handleChangeMessage}
         onKeyDown={handleKeyDown}
-        className="h-auto rounded-xl py-[1.125rem] pl-5 pr-14 hover:border-border/30 focus-visible:ring-2"
+        className="h-auto rounded-xl py-[1.125rem] pl-5 pr-14"
         containerClassName="shadow-md rounded-xl"
         endAdornment={
           <>

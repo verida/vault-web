@@ -43,7 +43,7 @@ export function IdentityDropdownMenu() {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button
-          variant="secondary"
+          variant="outline"
           className="h-auto rounded-full border-0 p-0 md:rounded-lg md:border md:p-2 md:pl-3"
         >
           <div className="flex flex-row items-center gap-2">
@@ -58,10 +58,10 @@ export function IdentityDropdownMenu() {
                 {profile?.name?.[0]?.toUpperCase()}
               </AvatarFallback>
             </Avatar>
-            <p className="hidden text-base font-semibold leading-5 text-secondary-foreground md:inline-block">
+            <p className="hidden text-base font-semibold leading-5 text-muted-foreground md:inline-block">
               {profile?.name}
             </p>
-            <SimpleDown className="hidden text-secondary-foreground md:block" />
+            <SimpleDown className="hidden text-muted-foreground md:block" />
           </div>
         </Button>
       </DropdownMenuTrigger>
@@ -78,18 +78,18 @@ export function IdentityDropdownMenu() {
               <AvatarFallback>{profile?.name[0]?.toUpperCase()}</AvatarFallback>
             </Avatar>
             <div className="flex-grow space-y-0.5 overflow-hidden">
-              <p className="text-[1rem] font-semibold text-secondary-foreground">
+              <p className="text-[1rem] font-semibold text-muted-foreground">
                 {profile?.name}
               </p>
               <Typography
                 variant="base-s-regular"
-                className="truncate text-secondary-foreground"
+                className="truncate text-muted-foreground"
               >
                 {did}
               </Typography>
             </div>
             <Button
-              variant="secondary"
+              variant="ghost"
               size="icon"
               onClick={onCopyDid}
               className="shrink-0"

@@ -8,15 +8,16 @@ export type FilterButtonProps = Omit<
   "variant" | "size"
 > & { applied?: boolean }
 
-export const FilterButton: React.FC<FilterButtonProps> = (props) => {
+export function FilterButton(props: FilterButtonProps) {
   const { className, applied = false } = props
+
   return (
     <Button
-      variant="secondary"
+      variant="outline"
       size="lg"
       className={cn(
-        "h-10 w-10 p-0 text-secondary-foreground hover:border-secondary-foreground/40 hover:bg-primary md:h-12 md:w-auto md:p-[10px] md:px-4",
-        applied ? "border-primary text-primary" : "",
+        "h-10 w-10 p-0 text-muted-foreground hover:border-border-hover hover:bg-surface md:h-12 md:w-auto md:p-[10px] md:px-4",
+        applied ? "border-accent" : "",
         className
       )}
       {...props}
