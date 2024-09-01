@@ -11,13 +11,13 @@ import { InboxStatusText } from "@/app/(connected)/inbox/_components/inbox-statu
 import { InboxSuccess } from "@/app/(connected)/inbox/_components/inbox-success"
 import { RequestDataSelector } from "@/app/(connected)/inbox/_components/request-data-selector"
 import { RequesterProfile } from "@/app/(connected)/inbox/_components/requester-profile"
-import { Alert } from "@/components/alert"
 import {
   ModalSheetBody,
   ModalSheetFooter,
   ModalSheetHeader,
 } from "@/components/modal-sheet"
 import { Typography } from "@/components/typography"
+import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
 import { useInboxAction } from "@/features/inbox/hooks/useInboxAction"
 import { InboxType } from "@/features/inbox/types"
@@ -213,10 +213,11 @@ export function DataRequestDetails(props: InboxDetailsProps) {
           </Button>
         ) : (
           <>
-            <Alert
-              variant="warning"
-              text="Ignore if you don't recognize this request"
-            />
+            <Alert variant="warning">
+              <AlertDescription>
+                {`Decline if you don't recognize this request`}
+              </AlertDescription>
+            </Alert>
             <div className="grid grid-cols-2 gap-4">
               <Button
                 variant="outline"

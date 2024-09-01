@@ -5,10 +5,10 @@ import moment from "moment"
 import Image from "next/image"
 import { useCallback, useEffect, useState } from "react"
 
-import { Alert } from "@/components/alert"
 import { ArrowLeft } from "@/components/icons/arrow-left"
 import { SearchInput } from "@/components/search-input"
 import { Typography } from "@/components/typography"
+import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Checkbox } from "@/components/ui/checkbox"
@@ -169,7 +169,11 @@ export function RequestDataSelector(props: RequestDataSelectorProps) {
       </DrawerBody>
 
       <DrawerFooter>
-        <Alert text="Carefully review your selection" variant="warning" />
+        <Alert variant="warning">
+          <AlertDescription>
+            {`Carefully review your selection`}
+          </AlertDescription>
+        </Alert>
         <Button
           onClick={() => onConfirm(selectedItems)}
           disabled={selectedItems.length <= 0}

@@ -6,13 +6,13 @@ import { InboxDetailsProps } from "@/app/(connected)/inbox/_components/inbox-det
 import { InboxStatusText } from "@/app/(connected)/inbox/_components/inbox-status-text"
 import { IncomingDataItem } from "@/app/(connected)/inbox/_components/incoming-data-item"
 import { RequesterProfile } from "@/app/(connected)/inbox/_components/requester-profile"
-import { Alert } from "@/components/alert"
 import {
   ModalSheetBody,
   ModalSheetFooter,
   ModalSheetHeader,
 } from "@/components/modal-sheet"
 import { Typography } from "@/components/typography"
+import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
 import { useInboxAction } from "@/features/inbox/hooks/useInboxAction"
 import { InboxType } from "@/features/inbox/types"
@@ -71,10 +71,11 @@ export function InboxIncomingData(props: InboxDetailsProps) {
           </Button>
         ) : (
           <>
-            <Alert
-              variant="warning"
-              text="Ignore if you don't recognize this request"
-            />
+            <Alert variant="warning">
+              <AlertDescription>
+                {`Decline if you don't recognize this request`}
+              </AlertDescription>
+            </Alert>
             <div className="flex gap-4">
               <Button
                 variant="outline"
