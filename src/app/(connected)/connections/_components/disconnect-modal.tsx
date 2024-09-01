@@ -1,13 +1,14 @@
 import { Typography } from "@/components/typography"
-import { Button } from "@/components/ui/button"
 import {
-  Dialog,
-  DialogContainer,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog"
+  AlertDialog,
+  AlertDialogCancel,
+  AlertDialogContainer,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog"
+import { Button } from "@/components/ui/button"
 
 export type DisconnectModalProps = {
   isOpen: boolean
@@ -19,27 +20,21 @@ export function DisconnectModal(props: DisconnectModalProps) {
   const { isOpen, onClose } = props
 
   return (
-    <Dialog
-      // TODO: Use an AlertDialog instead?
-      open={isOpen}
-      onOpenChange={onClose}
-    >
-      <DialogContainer>
-        <DialogHeader>
-          <DialogTitle>Disconnect</DialogTitle>
-        </DialogHeader>
-        <DialogContent>
+    <AlertDialog open={isOpen} onOpenChange={onClose}>
+      <AlertDialogContainer>
+        <AlertDialogHeader>
+          <AlertDialogTitle>Disconnect</AlertDialogTitle>
+        </AlertDialogHeader>
+        <AlertDialogContent>
           <Typography variant="base-regular">
             Are you sure you want to disconnect?
           </Typography>
-        </DialogContent>
-        <DialogFooter>
-          <Button variant="outline" onClick={onClose}>
-            Cancel
-          </Button>
+        </AlertDialogContent>
+        <AlertDialogFooter>
+          <AlertDialogCancel>Cancel</AlertDialogCancel>
           <Button variant="destructive">Disconnect</Button>
-        </DialogFooter>
-      </DialogContainer>
-    </Dialog>
+        </AlertDialogFooter>
+      </AlertDialogContainer>
+    </AlertDialog>
   )
 }
