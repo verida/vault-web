@@ -21,7 +21,7 @@ export function AppHeader(props: AppHeaderProps) {
   const [isMenuOpened, setIsMenuOpened] = useState(false)
 
   return (
-    <header {...headerProps} className={cn("bg-surface border-b", className)}>
+    <header {...headerProps} className={cn("border-b bg-surface", className)}>
       <div className="flex flex-col items-center">
         <div className="flex w-full max-w-screen-2xl flex-1 flex-row items-stretch justify-between gap-4">
           <div className="flex flex-row items-stretch gap-4 pl-4 md:pl-6 xl:pl-8">

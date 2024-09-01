@@ -21,7 +21,7 @@ export function Chip(props: ChipProps) {
         alt=""
         width="24"
         height="24"
-        className="bg-surface rounded-full"
+        className="rounded-full bg-surface"
       />
       <Typography variant="base-s-regular" className="text-primary-foreground">
         {text}

@@ -33,7 +33,7 @@ export function SupportedDataCard(props: SupportedDataCardProps) {
           </div>
 
           <Typography
-            className="bg-status-connected text-status-connected-foreground rounded-md px-3 py-1"
+            className="rounded-md bg-status-connected px-3 py-1 text-status-connected-foreground"
             variant="base-semibold"
           >
             Connected

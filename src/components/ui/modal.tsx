@@ -16,12 +16,12 @@ const Modal = React.forwardRef<
 
   return (
     <div className="z-[100]">
-      <div className="bg-overlay fixed inset-0" onClick={onClose}></div>
+      <div className="fixed inset-0 bg-overlay" onClick={onClose}></div>
       <div className="pointer-events-none fixed inset-0 flex items-center justify-center px-4">
         <div
           ref={ref}
           className={cn(
-            "bg-surface pointer-events-auto w-full max-w-[432px] rounded-lg p-6 text-foreground shadow-sm",
+            "pointer-events-auto w-full max-w-[432px] rounded-lg bg-surface p-6 text-foreground shadow-sm",
             className
           )}
         >

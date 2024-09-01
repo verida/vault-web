@@ -64,7 +64,7 @@ export function AppHeaderNavMenu(props: AppHeaderNavMenuProps) {
   )
 
   return (
-    <div className="bg-surface fixed bottom-0 left-0 right-0 top-[calc(4rem_+_1px)] md:top-[calc(5rem_+_3px)]">
+    <div className="fixed bottom-0 left-0 right-0 top-[calc(4rem_+_1px)] bg-surface md:top-[calc(5rem_+_3px)]">
       <NavigationMenu orientation="vertical">
         <NavigationMenuList className="px-2" orientation="vertical">
           {NAV_ROUTES.map((nav) => (

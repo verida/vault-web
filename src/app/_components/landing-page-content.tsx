@@ -42,7 +42,7 @@ export function LandingPageContent(props: LandingPageContentProps) {
   return (
     <div
       className={cn(
-        "bg-surface flex h-full flex-row justify-center",
+        "flex h-full flex-row justify-center bg-surface",
         className
       )}
       {...divProps}

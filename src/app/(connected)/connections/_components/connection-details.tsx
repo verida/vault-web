@@ -82,7 +82,7 @@ export function ConnectionDetails(props: ConnectionDetailsProps) {
                 <div className="flex flex-col items-start gap-1 md:flex-row md:items-center md:gap-4">
                   <Typography variant="base-regular">Status</Typography>
                   <Typography
-                    className="bg-status-connected text-status-connected-foreground rounded-md px-3 py-1"
+                    className="rounded-md bg-status-connected px-3 py-1 text-status-connected-foreground"
                     variant="base-semibold"
                   >
                     Connected

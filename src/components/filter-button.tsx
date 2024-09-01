@@ -16,7 +16,7 @@ export function FilterButton(props: FilterButtonProps) {
       variant="outline"
       size="lg"
       className={cn(
-        "hover:border-border-hover hover:bg-surface h-10 w-10 p-0 text-muted-foreground md:h-12 md:w-auto md:p-[10px] md:px-4",
+        "h-10 w-10 p-0 text-muted-foreground hover:border-border-hover hover:bg-surface md:h-12 md:w-auto md:p-[10px] md:px-4",
         applied ? "border-accent" : "",
         className
       )}

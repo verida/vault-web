@@ -70,7 +70,7 @@ export const TablePagination: React.FC<TablePaginationProps> = ({
             onClick={() => prevPage()}
           />
 
-          <div className="bg-surface rounded-sm border px-3 py-[10px] text-sm">
+          <div className="rounded-sm border bg-surface px-3 py-[10px] text-sm">
             <input
               type="text"
               className="w-6 bg-transparent text-right outline-none"

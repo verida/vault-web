@@ -61,7 +61,7 @@ export function DataRequestItem(props: DataRequestItemProps) {
       ) : isAdded ? (
         <Button
           variant="outline"
-          className="text-status-added w-full gap-2"
+          className="w-full gap-2 text-status-added"
           onClick={onAdd}
         >
           <Check />
