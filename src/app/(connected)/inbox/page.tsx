@@ -101,7 +101,8 @@ export default function InboxPage() {
               <InboxRowItem
                 key={`inbox-row-${message._id}`}
                 message={message}
-                href={`?id=${message._id}`}
+                // href={`?id=${message._id}`}
+                href={`?itemId=${message._id}`}
               />
             ))}
           </div>

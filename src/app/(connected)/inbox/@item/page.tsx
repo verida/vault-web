@@ -1,7 +1,7 @@
 "use client"
 
 import { useRouter } from "next/navigation"
-import { Suspense, useCallback, useMemo } from "react"
+import { useCallback, useMemo } from "react"
 
 import { DataRequestItemPageContent } from "@/app/(connected)/inbox/@item/_components/data-request-item-page-content"
 import { IncomingDataItemPageContent } from "@/app/(connected)/inbox/@item/_components/incoming-data-item-page-content"
@@ -35,6 +35,8 @@ export default function InboxItemPage(props: InboxItemPageProps) {
   // TODO: Need to create a hook useInboxEntry to get the item data
   // TODO: Need to rework the useMessages as useInboxEntries and populate the individual useInboxEntry cache with the data
 
+  // TODO: Handle loading and error states
+
   const itemPage = useMemo(() => {
     if (!itemId) {
       return null
@@ -54,7 +56,7 @@ export default function InboxItemPage(props: InboxItemPageProps) {
   }, [handleClose, itemId])
 
   if (itemPage) {
-    return <Suspense fallback={null}>{itemPage}</Suspense>
+    return <>{itemPage}</>
   }
 
   return null

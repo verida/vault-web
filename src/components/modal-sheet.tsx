@@ -58,11 +58,15 @@ export function ModalSheetHeader(props: ModalSheetHeaderProps) {
           >
             <CloseSideRight />
           </Button>
-          <DrawerTitle className="hidden md:block">{title}</DrawerTitle>
+          <DrawerTitle className="hidden text-lg font-semibold leading-none tracking-tight md:block">
+            {title}
+          </DrawerTitle>
         </div>
         {actions}
       </div>
-      <DrawerTitle className="block md:hidden">{title}</DrawerTitle>
+      <DrawerTitle className="block text-lg font-semibold leading-none tracking-tight md:hidden">
+        {title}
+      </DrawerTitle>
     </DrawerHeader>
   )
 }

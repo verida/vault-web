@@ -92,7 +92,9 @@ export function RequestDataSelector(props: RequestDataSelectorProps) {
       <DrawerHeader className="flex flex-col gap-1.5 space-y-3 border-b px-6 py-4 text-center sm:text-left">
         <div className="flex items-center space-x-3">
           <ArrowLeft onClick={() => onClose()} className="cursor-pointer" />
-          <DrawerTitle>Select an Item</DrawerTitle>
+          <DrawerTitle className="text-lg font-semibold leading-none tracking-tight">
+            Select an Item
+          </DrawerTitle>
         </div>
         <div className="flex items-center space-x-3">
           <SearchInput

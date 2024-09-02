@@ -22,7 +22,9 @@ export function IncomingDataItemPageContent(
   return (
     <ItemSheet open={open} onClose={onClose}>
       <ItemSheetHeader onClose={onClose}>
-        <ItemSheetTitle>Incoming Data</ItemSheetTitle>
+        <ItemSheetTitle description="Incoming data inbox message">
+          Incoming Data
+        </ItemSheetTitle>
       </ItemSheetHeader>
       <ItemSheetBody>TODO: Incoming data content</ItemSheetBody>
       <ItemSheetFooter className="flex flex-col gap-3">

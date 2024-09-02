@@ -1,7 +1,7 @@
 "use client"
 
 import { useRouter } from "next/navigation"
-import { Suspense, useCallback, useMemo } from "react"
+import { useCallback, useMemo } from "react"
 
 import { GenericDataItemPageContent } from "@/app/(connected)/data/[datastoreId]/@item/_components/generic-data-item-page-content"
 
@@ -24,6 +24,8 @@ export default function DataItemPage(props: DataItemPageProps) {
 
   // TODO: fetch item
 
+  // TODO: Handle loading and error states
+
   const itemPage = useMemo(() => {
     if (!itemId) {
       return null
@@ -34,7 +36,7 @@ export default function DataItemPage(props: DataItemPageProps) {
   }, [itemId, handleClose])
 
   if (itemPage) {
-    return <Suspense fallback={null}>{itemPage}</Suspense>
+    return <>{itemPage}</>
   }
 
   return null

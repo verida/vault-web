@@ -21,7 +21,9 @@ export function UnsupportedItemPageContent(
   return (
     <ItemSheet open={open} onClose={onClose}>
       <ItemSheetHeader onClose={onClose}>
-        <ItemSheetTitle>Inbox entry</ItemSheetTitle>
+        <ItemSheetTitle description="Unsupported inbox entry">
+          Inbox entry
+        </ItemSheetTitle>
       </ItemSheetHeader>
       <ItemSheetBody>TODO: Unsupported inbox entry content</ItemSheetBody>
       <ItemSheetFooter className="flex flex-col gap-3">

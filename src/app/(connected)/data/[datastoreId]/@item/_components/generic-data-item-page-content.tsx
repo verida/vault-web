@@ -21,7 +21,9 @@ export function GenericDataItemPageContent(
   return (
     <ItemSheet open={open} onClose={onClose}>
       <ItemSheetHeader onClose={onClose}>
-        <ItemSheetTitle>TODO: Data item title</ItemSheetTitle>
+        <ItemSheetTitle description="Data item">
+          TODO: Data item title
+        </ItemSheetTitle>
       </ItemSheetHeader>
       <ItemSheetBody>TODO: Generi data content</ItemSheetBody>
       <ItemSheetFooter className="flex flex-col gap-3">

@@ -22,7 +22,9 @@ export function DataRequestItemPageContent(
   return (
     <ItemSheet open={open} onClose={onClose}>
       <ItemSheetHeader onClose={onClose}>
-        <ItemSheetTitle>Data Request</ItemSheetTitle>
+        <ItemSheetTitle description="Data request inbox message">
+          Data Request
+        </ItemSheetTitle>
       </ItemSheetHeader>
       <ItemSheetBody>TODO: Data request content</ItemSheetBody>
       <ItemSheetFooter className="flex flex-col gap-3">

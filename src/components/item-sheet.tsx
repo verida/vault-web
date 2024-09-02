@@ -5,8 +5,10 @@ import {
   Drawer,
   DrawerBody,
   DrawerContent,
+  DrawerDescription,
   DrawerFooter,
   DrawerHeader,
+  DrawerTitle,
 } from "@/components/ui/drawer"
 import { cn } from "@/styles/utils"
 
@@ -57,6 +59,7 @@ export function ItemSheetHeader(props: ItemSheetHeaderProps) {
               className="-ml-2 shrink-0"
             >
               <CloseSideRight />
+              <span className="sr-only">Close</span>
             </Button>
           )}
           <div className="hidden truncate sm:block">{children}</div>
@@ -71,20 +74,26 @@ export function ItemSheetHeader(props: ItemSheetHeaderProps) {
 }
 ItemSheetHeader.displayName = "ItemSheetHeader"
 
-export type ItemSheetTitleProps = Omit<
-  React.ComponentProps<typeof Typography>,
-  "variant"
->
+export type ItemSheetTitleProps = {
+  /** Used for accessibility reason, not displayed in the UI */
+  description?: string
+} & Omit<React.ComponentProps<typeof Typography>, "variant">
 
 export function ItemSheetTitle(props: ItemSheetTitleProps) {
-  const { className, ...typographyProps } = props
+  const { className, description = "item sheet", ...typographyProps } = props
 
   return (
-    <Typography
-      variant="heading-4"
-      className={cn("truncate", className)}
-      {...typographyProps}
-    />
+    <>
+      <DrawerTitle className="truncate">
+        <Typography
+          variant="heading-4"
+          component="span"
+          className={cn("truncate", className)}
+          {...typographyProps}
+        />
+      </DrawerTitle>
+      <DrawerDescription className="sr-only">{description}</DrawerDescription>
+    </>
   )
 }
 ItemSheetTitle.displayName = "ItemSheetTitle"

@@ -19,7 +19,7 @@ export function MessageItemPageContent(props: MessageItemPageContentProps) {
   return (
     <ItemSheet open={open} onClose={onClose}>
       <ItemSheetHeader onClose={onClose}>
-        <ItemSheetTitle>Message</ItemSheetTitle>
+        <ItemSheetTitle description="Inbox message">Message</ItemSheetTitle>
       </ItemSheetHeader>
       <ItemSheetBody>TODO: Message content</ItemSheetBody>
       <ItemSheetFooter className="flex flex-col gap-3">
