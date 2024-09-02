@@ -1,9 +1,9 @@
 "use client"
 
-import { useRouter } from "next/router"
+import { useRouter } from "next/navigation"
 import { Suspense, useCallback, useMemo } from "react"
 
-import { GenericDataItemPageContent } from "@/app/(connected)/data/[...folder]/@item/_components/generic-data-item-page-content"
+import { GenericDataItemPageContent } from "@/app/(connected)/data/[datastoreId]/@item/_components/generic-data-item-page-content"
 
 type DataItemPageProps = {
   searchParams: { itemId: string }

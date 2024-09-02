@@ -34,3 +34,4 @@ export function SubPageWrapper(props: SubPageWrapperProps) {
     </div>
   )
 }
+SubPageWrapper.displayName = "SubPageWrapper"
