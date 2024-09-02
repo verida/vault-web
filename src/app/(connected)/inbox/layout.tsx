@@ -13,3 +13,4 @@ export default function InboxLayout(props: InboxLayoutProps) {
     </>
   )
 }
+InboxLayout.displayName = "InboxLayout"

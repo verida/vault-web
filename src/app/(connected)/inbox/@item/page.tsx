@@ -3,10 +3,10 @@
 import { useRouter } from "next/navigation"
 import { Suspense, useCallback, useMemo } from "react"
 
-import { DataRequestItemPage } from "@/app/(connected)/inbox/@item/_components/data-request-item-page"
-import { IncomingDataItemPage } from "@/app/(connected)/inbox/@item/_components/incoming-data-item-page"
-import { MessageItemPage } from "@/app/(connected)/inbox/@item/_components/message-item-page"
-import { UnsupportedItemPage } from "@/app/(connected)/inbox/@item/_components/unsupported-item-page"
+import { DataRequestItemPageContent } from "@/app/(connected)/inbox/@item/_components/data-request-item-page-content"
+import { IncomingDataItemPageContent } from "@/app/(connected)/inbox/@item/_components/incoming-data-item-page-content"
+import { MessageItemPageContent } from "@/app/(connected)/inbox/@item/_components/message-item-page-content"
+import { UnsupportedItemPageContent } from "@/app/(connected)/inbox/@item/_components/unsupported-item-page-content"
 import { InboxType } from "@/features/inbox/types"
 
 type InboxItemPageProps = {
@@ -31,7 +31,7 @@ export default function InboxItemPage(props: InboxItemPageProps) {
     router.push(url.toString())
   }, [router])
 
-  // TODO: fetch item data
+  // TODO: fetch item
   // TODO: Need to create a hook useInboxEntry to get the item data
   // TODO: Need to rework the useMessages as useInboxEntries and populate the individual useInboxEntry cache with the data
 
@@ -43,13 +43,13 @@ export default function InboxItemPage(props: InboxItemPageProps) {
     // TODO: Get the type from the inbox entry
     switch (testType) {
       case InboxType.DATA_REQUEST:
-        return <DataRequestItemPage open onClose={handleClose} />
+        return <DataRequestItemPageContent open onClose={handleClose} />
       case InboxType.DATA_SEND:
-        return <IncomingDataItemPage open onClose={handleClose} />
+        return <IncomingDataItemPageContent open onClose={handleClose} />
       case InboxType.MESSAGE:
-        return <MessageItemPage open onClose={handleClose} />
+        return <MessageItemPageContent open onClose={handleClose} />
       default:
-        return <UnsupportedItemPage open onClose={handleClose} />
+        return <UnsupportedItemPageContent open onClose={handleClose} />
     }
   }, [handleClose, itemId])
 

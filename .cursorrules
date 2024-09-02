@@ -7,7 +7,7 @@ Code Style and Structure
 - Prefer iteration and modularization over code duplication.
 - Use descriptive variable names with auxiliary verbs (e.g., isLoading, hasError).
 - Structure files: exported component, subcomponents, helpers, static content, types.
-- For components used in a single route, favor a `_components` folder in the corresponding route folder.
+- For components used in a single route, favor a `_components` folder in the corresponding route folder in the `/app` folder.
 - Use a `features` folder to group components, hooks, utils, etc. by feature. But keep the UI components either in the `/app` folder of in the `/components` folder.
 - We have a `<Typography>` component that should be favored for text rendering.
 
@@ -16,12 +16,14 @@ Naming Conventions
 - Use lowercase with dashes for directories and files (e.g., components/auth-wizard).
 - Favor named exports for components but default export for what Next.js expect as default export.
 - For conventional Next.js files, name the component inside with a prefix for the route, for example for the `/app/dashboard/layout.tsx` file, the component should be named `DashboardLayout`.
+- For all components, always set the display name to the component name, after the function.
 
 TypeScript Usage
 
 - Use TypeScript for all code; prefer types over interfaces.
 - Prefer to declare the types in a `types.ts` file, except for the React component props which should be declared in the component file.
-- Name the component props type with a `Props` suffix. Declare the type above the component function. Do not destructure the `props` parameter in the function signature, destructure it as the first line in the function body.
+- Name the component props type with a `Props` suffix. Declare the type above the component function.
+- Do not destructure the `props` parameter in the function signature, destructure it as the first line in the function body.
 - Avoid enums; use maps instead.
 - Use functional components with TypeScript types.
 
@@ -40,7 +42,7 @@ UI and Styling
 
 Performance Optimization
 
-- Minimize 'use client', 'useEffect', and 'setState'.
+- Minimize 'useEffect', and 'setState'.
 - Until we use React 19, use `useMemo` and `useCallback` for performance optimization as well as `React.forwardRef` for reusable components.
 - Wrap client components in Suspense with fallback.
 - Use dynamic loading for non-critical components.
@@ -49,12 +51,12 @@ Performance Optimization
 Key Conventions
 
 - Optimize Web Vitals (LCP, CLS, FID).
-- Limit 'use client':
+- Limit client components ('use client'):
   - Favor server components and Next.js SSR.
   - Use only for Web API access in small components.
   - Avoid for data fetching or state management.
 - Add some documentation to the code, not too much, just enough to understand the most important parts of the code.
 - Use Zod for validation. Favor declaring the schemas in a `schemas.ts` file in the feature folder.
-- Never use `console` to log anything. Use the custom logger that is exported from `@/features/telemetry`
+- Never use `console` to log anything. Use the custom logger that is exported from `src/features/telemetry`, check its signature in the exported Logger class.
 
 Follow Next.js docs for Data Fetching, Rendering, and Routing.

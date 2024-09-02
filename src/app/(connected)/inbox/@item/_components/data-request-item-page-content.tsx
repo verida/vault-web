@@ -8,13 +8,15 @@ import {
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
 
-export type DataRequestItemPageProps = {
+export type DataRequestItemPageContentProps = {
   open: boolean
   onClose: () => void
   // TODO: Add inbox entry
 }
 
-export function DataRequestItemPage(props: DataRequestItemPageProps) {
+export function DataRequestItemPageContent(
+  props: DataRequestItemPageContentProps
+) {
   const { open, onClose } = props
 
   return (
@@ -41,4 +43,4 @@ export function DataRequestItemPage(props: DataRequestItemPageProps) {
     </ItemSheet>
   )
 }
-DataRequestItemPage.displayName = "DataRequestItemPage"
+DataRequestItemPageContent.displayName = "DataRequestItemPageContent"

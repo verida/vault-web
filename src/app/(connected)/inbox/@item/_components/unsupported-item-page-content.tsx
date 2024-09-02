@@ -7,13 +7,15 @@ import {
 } from "@/components/item-sheet"
 import { Button } from "@/components/ui/button"
 
-export type UnsupportedItemPageProps = {
+export type UnsupportedItemPageContentProps = {
   open: boolean
   onClose: () => void
   // TODO: Add inbox entry
 }
 
-export function UnsupportedItemPage(props: UnsupportedItemPageProps) {
+export function UnsupportedItemPageContent(
+  props: UnsupportedItemPageContentProps
+) {
   const { open, onClose } = props
 
   return (
@@ -32,4 +34,4 @@ export function UnsupportedItemPage(props: UnsupportedItemPageProps) {
     </ItemSheet>
   )
 }
-UnsupportedItemPage.displayName = "UnsupportedItemPage"
+UnsupportedItemPageContent.displayName = "UnsupportedItemPageContent"
