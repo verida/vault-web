@@ -33,7 +33,10 @@ export function SearchBox(props: SearchBoxProps) {
               <Search className="[&_*]:stroke-muted-foreground" />
             </Button>
           </DrawerTrigger>
-          <DrawerContent>
+          <DrawerContent
+            // TODO: Rework the style and layout if needed
+            className=""
+          >
             <DrawerHeader>
               <div className="relative w-full">
                 <Input

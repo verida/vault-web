@@ -30,6 +30,9 @@ export type DataItemDetailsSheetProps = {
   folder?: DataFolderDefinition
 }
 
+/**
+ * @deprecated
+ */
 export function DataItemDetailsSheet(props: DataItemDetailsSheetProps) {
   const { open, data, folder, schema } = props
 

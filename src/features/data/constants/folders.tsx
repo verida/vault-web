@@ -255,7 +255,7 @@ export const dataFolders: DataFolderDefinition[] = [
   //   folders: ["social/following", "social/posts"],
   // },
   {
-    name: "social/following",
+    name: "social-following",
     title: "Following",
     titlePlural: "Social Followings",
     color: "#7A78E5",
@@ -275,7 +275,7 @@ export const dataFolders: DataFolderDefinition[] = [
     },
   },
   {
-    name: "social/posts",
+    name: "social-posts",
     title: "Post",
     titlePlural: "Social Posts",
     color: "#EE7D91",

@@ -20,13 +20,21 @@ export type ModalSheetProps = React.PropsWithChildren & {
   onClose: () => void
 }
 
+/**
+ * @deprecated use ItemSheet instead
+ */
 export function ModalSheet(props: ModalSheetProps) {
   const { open, onClose, children } = props
 
   return (
     <Drawer direction="right" open={open} onClose={onClose}>
       <DrawerTrigger />
-      <DrawerContent onClose={onClose}>{children}</DrawerContent>
+      <DrawerContent
+        onClose={onClose}
+        className="flex w-screen flex-col sm:bottom-2 sm:right-2 sm:top-2 sm:w-[480px] sm:rounded-md sm:shadow-lg"
+      >
+        {children}
+      </DrawerContent>
     </Drawer>
   )
 }
@@ -37,11 +45,14 @@ export type ModalSheetHeaderProps = {
   onClose: () => void
 }
 
+/**
+ * @deprecated use ItemSheet instead
+ */
 export function ModalSheetHeader(props: ModalSheetHeaderProps) {
   const { title, actions, onClose } = props
 
   return (
-    <DrawerHeader className="gap-4 px-6 py-4 text-left">
+    <DrawerHeader className="grid gap-4 border-b px-6 py-4 text-left">
       <div className="flex w-full items-center justify-between">
         <div className="flex items-center space-x-3">
           <Button
@@ -52,11 +63,15 @@ export function ModalSheetHeader(props: ModalSheetHeaderProps) {
           >
             <CloseSideRight />
           </Button>
-          <DrawerTitle className="hidden md:block">{title}</DrawerTitle>
+          <DrawerTitle className="hidden text-lg font-semibold leading-none tracking-tight sm:block">
+            {title}
+          </DrawerTitle>
         </div>
         {actions}
       </div>
-      <DrawerTitle className="block md:hidden">{title}</DrawerTitle>
+      <DrawerTitle className="block text-lg font-semibold leading-none tracking-tight sm:hidden">
+        {title}
+      </DrawerTitle>
     </DrawerHeader>
   )
 }
@@ -65,11 +80,19 @@ export type ModalSheetBodyProps = React.PropsWithChildren & {
   className?: string
 }
 
+/**
+ * @deprecated use ItemSheet instead
+ */
 export function ModalSheetBody(props: ModalSheetBodyProps) {
   const { className, children } = props
 
   return (
-    <DrawerBody className={cn("flex-grow p-6", className)}>
+    <DrawerBody
+      className={cn(
+        "mt-auto flex flex-grow flex-col gap-3 border-t p-6",
+        className
+      )}
+    >
       {children}
     </DrawerBody>
   )
@@ -77,6 +100,9 @@ export function ModalSheetBody(props: ModalSheetBodyProps) {
 
 export type ModalSheetFooterProps = React.PropsWithChildren
 
+/**
+ * @deprecated use ItemSheet instead
+ */
 export function ModalSheetFooter(props: ModalSheetFooterProps) {
   return <DrawerFooter className="p-6">{props.children}</DrawerFooter>
 }
