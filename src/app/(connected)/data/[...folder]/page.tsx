@@ -27,11 +27,11 @@ import { useDataSchema } from "@/features/data/hooks/useDataSchema"
 import { getPublicProfile } from "@/features/profiles"
 import { useVerida } from "@/features/verida"
 
-export type DataFolderPageProps = {
+export type DatastorePageProps = {
   params: { folder: string[] }
 }
 
-export default function DataFolderPage(props: DataFolderPageProps) {
+export default function DatastorePage(props: DatastorePageProps) {
   const { params } = props
   const folder = useMemo(() => {
     const folderName = params.folder.join("/")
