@@ -20,6 +20,9 @@ export type ModalSheetProps = React.PropsWithChildren & {
   onClose: () => void
 }
 
+/**
+ * @deprecated use ItemSheet instead
+ */
 export function ModalSheet(props: ModalSheetProps) {
   const { open, onClose, children } = props
 
@@ -37,11 +40,14 @@ export type ModalSheetHeaderProps = {
   onClose: () => void
 }
 
+/**
+ * @deprecated use ItemSheet instead
+ */
 export function ModalSheetHeader(props: ModalSheetHeaderProps) {
   const { title, actions, onClose } = props
 
   return (
-    <DrawerHeader className="gap-4 px-6 py-4 text-left">
+    <DrawerHeader className="grid gap-4 border-b px-6 py-4 text-left">
       <div className="flex w-full items-center justify-between">
         <div className="flex items-center space-x-3">
           <Button
@@ -65,11 +71,19 @@ export type ModalSheetBodyProps = React.PropsWithChildren & {
   className?: string
 }
 
+/**
+ * @deprecated use ItemSheet instead
+ */
 export function ModalSheetBody(props: ModalSheetBodyProps) {
   const { className, children } = props
 
   return (
-    <DrawerBody className={cn("flex-grow p-6", className)}>
+    <DrawerBody
+      className={cn(
+        "mt-auto flex flex-grow flex-col gap-3 border-t p-6",
+        className
+      )}
+    >
       {children}
     </DrawerBody>
   )
@@ -77,6 +91,9 @@ export function ModalSheetBody(props: ModalSheetBodyProps) {
 
 export type ModalSheetFooterProps = React.PropsWithChildren
 
+/**
+ * @deprecated use ItemSheet instead
+ */
 export function ModalSheetFooter(props: ModalSheetFooterProps) {
   return <DrawerFooter className="p-6">{props.children}</DrawerFooter>
 }
