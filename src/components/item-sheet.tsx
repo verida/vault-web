@@ -25,7 +25,7 @@ export function ItemSheet(props: ItemSheetProps) {
     <Drawer direction="right" open={open} onClose={onClose}>
       <DrawerContent
         onClose={onClose}
-        className="flex-flex-col bottom-0 right-0 top-0 m-0 h-auto w-screen rounded-none shadow-none sm:bottom-2 sm:right-2 sm:top-2 sm:w-[480px] sm:max-w-full sm:rounded-md sm:shadow-lg"
+        className="flex w-screen flex-col sm:bottom-2 sm:right-2 sm:top-2 sm:w-[480px] sm:rounded-md sm:shadow-lg"
       >
         {children}
       </DrawerContent>

@@ -29,7 +29,12 @@ export function ModalSheet(props: ModalSheetProps) {
   return (
     <Drawer direction="right" open={open} onClose={onClose}>
       <DrawerTrigger />
-      <DrawerContent onClose={onClose}>{children}</DrawerContent>
+      <DrawerContent
+        onClose={onClose}
+        className="flex w-screen flex-col sm:bottom-2 sm:right-2 sm:top-2 sm:w-[480px] sm:rounded-md sm:shadow-lg"
+      >
+        {children}
+      </DrawerContent>
     </Drawer>
   )
 }
@@ -58,13 +63,13 @@ export function ModalSheetHeader(props: ModalSheetHeaderProps) {
           >
             <CloseSideRight />
           </Button>
-          <DrawerTitle className="hidden text-lg font-semibold leading-none tracking-tight md:block">
+          <DrawerTitle className="hidden text-lg font-semibold leading-none tracking-tight sm:block">
             {title}
           </DrawerTitle>
         </div>
         {actions}
       </div>
-      <DrawerTitle className="block text-lg font-semibold leading-none tracking-tight md:hidden">
+      <DrawerTitle className="block text-lg font-semibold leading-none tracking-tight sm:hidden">
         {title}
       </DrawerTitle>
     </DrawerHeader>
