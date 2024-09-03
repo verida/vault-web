@@ -1,7 +1,7 @@
 import { z } from "zod"
 
 // TODO: Finalise the schema
-export const ProviderHandlerSchema = z.object({
+export const DataProviderHandlerSchema = z.object({
   name: z.string(),
   label: z.string(),
   // type: z.enum(["enumMulti", "enum"]),
@@ -9,17 +9,17 @@ export const ProviderHandlerSchema = z.object({
 })
 
 // TODO: Finalise the schema
-export const ProviderSchema = z.object({
+export const DataProviderSchema = z.object({
   name: z.string(),
   label: z.string(),
   icon: z.string().url(),
   description: z.string().optional(),
   handlers: z
-    .record(z.string(), ProviderHandlerSchema.passthrough())
+    .record(z.string(), DataProviderHandlerSchema.passthrough())
     .optional(),
 })
 
-export const ProvidersResponseSchema = z.record(
+export const DataProvidersResponseSchema = z.record(
   z.string(),
-  ProviderSchema.passthrough()
+  DataProviderSchema.passthrough()
 )

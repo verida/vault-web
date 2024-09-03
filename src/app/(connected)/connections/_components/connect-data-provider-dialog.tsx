@@ -15,18 +15,20 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import { MOCK_PROVIDERS } from "@/features/connections"
+import { MOCK_DATA_PROVIDERS } from "@/features/connections"
 
-export type ConnectProviderDialogProps = {
+export type ConnectDataProviderDialogProps = {
   children: React.ReactNode
   providerName: string
 }
 
-export function ConnectProviderDialog(props: ConnectProviderDialogProps) {
+export function ConnectDataProviderDialog(
+  props: ConnectDataProviderDialogProps
+) {
   const { children, providerName } = props
 
   const provider = useMemo(() => {
-    return MOCK_PROVIDERS.find((c) => c.name === providerName)
+    return MOCK_DATA_PROVIDERS.find((c) => c.name === providerName)
   }, [providerName])
 
   if (!provider) {
@@ -79,6 +81,6 @@ export function ConnectProviderDialog(props: ConnectProviderDialogProps) {
     </Dialog>
   )
 }
-ConnectProviderDialog.displayName = "ConnectProviderDialog"
+ConnectDataProviderDialog.displayName = "ConnectDataProviderDialog"
 
-export const ConnectProviderDialogTrigger = DialogTrigger
+export const ConnectDataProviderDialogTrigger = DialogTrigger

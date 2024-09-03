@@ -8,11 +8,11 @@
 import {
   Connection,
   ConnectionLog,
-  Provider,
+  DataProvider,
   SupportedData,
 } from "@/features/connections/types"
 
-export const MOCK_PROVIDERS: Provider[] = [
+export const MOCK_DATA_PROVIDERS: DataProvider[] = [
   {
     name: "facebook",
     label: "Facebook",

@@ -1,17 +1,17 @@
 import {
-  ConnectProviderDialog,
-  ConnectProviderDialogTrigger,
-} from "@/app/(connected)/connections/_components/connect-provider-dialog"
+  ConnectDataProviderDialog,
+  ConnectDataProviderDialogTrigger,
+} from "@/app/(connected)/connections/_components/connect-data-provider-dialog"
 import { Typography } from "@/components/typography"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
-import { Provider } from "@/features/connections"
+import { DataProvider } from "@/features/connections"
 
-export type ProviderCardProps = {
-  provider: Provider
+export type DataProviderCardProps = {
+  provider: DataProvider
 }
 
-export function ProviderCard(props: ProviderCardProps) {
+export function DataProviderCard(props: DataProviderCardProps) {
   const { provider } = props
 
   return (
@@ -35,13 +35,13 @@ export function ProviderCard(props: ProviderCardProps) {
               className="size-12 rounded-full border"
             />
           ) : null}
-          <ConnectProviderDialog providerName={provider.name}>
-            <ConnectProviderDialogTrigger asChild>
+          <ConnectDataProviderDialog providerName={provider.name}>
+            <ConnectDataProviderDialogTrigger asChild>
               <Button size="lg" variant="outline" className="!mt-0 px-4">
                 Connect
               </Button>
-            </ConnectProviderDialogTrigger>
-          </ConnectProviderDialog>
+            </ConnectDataProviderDialogTrigger>
+          </ConnectDataProviderDialog>
         </CardHeader>
         <CardContent className="p-6 pt-0">
           <Typography variant="heading-4" className="mb-2 mt-6">
@@ -57,4 +57,4 @@ export function ProviderCard(props: ProviderCardProps) {
     </div>
   )
 }
-ProviderCard.displayName = "ProviderCard"
+DataProviderCard.displayName = "DataProviderCard"

@@ -1,14 +1,14 @@
 import { z } from "zod"
 
 import {
-  ProviderHandlerSchema,
-  ProviderSchema,
+  DataProviderHandlerSchema,
+  DataProviderSchema,
 } from "@/features/connections/schemas"
 
-export type Provider = z.infer<typeof ProviderSchema>
-export type ProviderHandler = z.infer<typeof ProviderHandlerSchema>
+export type DataProvider = z.infer<typeof DataProviderSchema>
+export type DataProviderHandler = z.infer<typeof DataProviderHandlerSchema>
 
-export type Connection = Provider & {
+export type Connection = DataProvider & {
   userId?: string
 }
 

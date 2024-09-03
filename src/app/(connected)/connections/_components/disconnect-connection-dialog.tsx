@@ -13,7 +13,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button"
-import { MOCK_PROVIDERS } from "@/features/connections"
+import { MOCK_DATA_PROVIDERS } from "@/features/connections"
 
 export type DisconnectConnectionDialogProps = {
   isOpen: boolean
@@ -27,7 +27,7 @@ export function DisconnectConnectionDialog(
   const { isOpen, onClose, connectionId } = props
 
   const connection = useMemo(() => {
-    return MOCK_PROVIDERS.find((c) => c.name === connectionId)
+    return MOCK_DATA_PROVIDERS.find((c) => c.name === connectionId)
   }, [connectionId])
 
   if (!connection) {
