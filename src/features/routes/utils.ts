@@ -33,3 +33,11 @@ export function getConnectionPageRoute({
 }) {
   return `/connections/${connectionId}`
 }
+
+export function getConnectionsSummaryPageRoute() {
+  return `/connections/summary`
+}
+
+export function getConnectionsSummaryLogsPageRoute() {
+  return `/connections/summary/logs`
+}

@@ -3,7 +3,7 @@
 import {
   DataProviderCard,
   DataProviderSkeletonCard,
-} from "@/app/(connected)/connections/_components/data-provider-card"
+} from "@/app/(connected)/connections/summary/_components/data-provider-card"
 import { Typography } from "@/components/typography"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { useDataProviders } from "@/features/data-connections"

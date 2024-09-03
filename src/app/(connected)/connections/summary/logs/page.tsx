@@ -1,0 +1,7 @@
+import { DataConnectionsLogsTable } from "@/components/data-connections/logs-table/data-connections-logs-table"
+import { MOCK_DATA_CONNECTION_LOGS } from "@/features/data-connections"
+
+export default function ConnectionsLogsPage() {
+  return <DataConnectionsLogsTable logs={MOCK_DATA_CONNECTION_LOGS} />
+}
+ConnectionsLogsPage.displayName = "ConnectionsLogsPage"

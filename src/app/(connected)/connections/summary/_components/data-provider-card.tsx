@@ -1,7 +1,7 @@
 import {
   ConnectDataProviderDialog,
   ConnectDataProviderDialogTrigger,
-} from "@/app/(connected)/connections/_components/connect-data-provider-dialog"
+} from "@/app/(connected)/connections/summary/_components/connect-data-provider-dialog"
 import { Typography } from "@/components/typography"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"

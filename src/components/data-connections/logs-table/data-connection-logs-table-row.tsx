@@ -6,11 +6,13 @@ import { Typography } from "@/components/typography"
 import { Card } from "@/components/ui/card"
 import { DataConnectionLog } from "@/features/data-connections"
 
-export type DataConnectionLogItemProps = {
+export type DataConnectionLogsTableRowProps = {
   log: DataConnectionLog
 }
 
-export function DataConnectionLogItem(props: DataConnectionLogItemProps) {
+export function DataConnectionLogsTableRow(
+  props: DataConnectionLogsTableRowProps
+) {
   const { log } = props
 
   const [showFull, setShowFull] = useState(false)
@@ -79,4 +81,4 @@ export function DataConnectionLogItem(props: DataConnectionLogItemProps) {
     </>
   )
 }
-DataConnectionLogItem.displayName = "DataConnectionLogItem"
+DataConnectionLogsTableRow.displayName = "DataConnectionLogsTableRow"

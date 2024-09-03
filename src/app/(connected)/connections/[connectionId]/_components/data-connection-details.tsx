@@ -7,7 +7,7 @@ import {
   DisconnectDataConnectionDialogTrigger,
 } from "@/app/(connected)/connections/[connectionId]/_components/disconnect-data-connection-dialog"
 import { SupportedDataCard } from "@/app/(connected)/connections/[connectionId]/_components/supported-data-card"
-import { DataConnectionLogs } from "@/app/(connected)/connections/_components/data-connection-logs"
+import { DataConnectionsLogsTable } from "@/components/data-connections/logs-table/data-connections-logs-table"
 import { SubPageWrapper } from "@/components/sub-page-wrapper"
 import { Typography } from "@/components/typography"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
@@ -15,9 +15,10 @@ import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import {
   DataConnection,
+  MOCK_DATA_CONNECTION_LOGS,
   MOCK_SUPPORTED_DATA,
 } from "@/features/data-connections"
-import { getConnectionsPageRoute } from "@/features/routes/utils"
+import { getConnectionsSummaryPageRoute } from "@/features/routes/utils"
 import { useVerida } from "@/features/verida"
 
 export type DataConnectionDetailsProps = {
@@ -31,7 +32,7 @@ export function DataConnectionDetails(props: DataConnectionDetailsProps) {
 
   return (
     <SubPageWrapper
-      backNavigationHref={getConnectionsPageRoute()}
+      backNavigationHref={getConnectionsSummaryPageRoute()}
       backNavigationLabel="Back to all Connections"
     >
       <div className="space-y-10">
@@ -138,18 +139,18 @@ export function DataConnectionDetails(props: DataConnectionDetailsProps) {
             </div>
           </div>
         </div>
-
         <div className="space-y-6">
           <Typography variant="heading-3">Supported Data Types</Typography>
-
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
             {MOCK_SUPPORTED_DATA.map((data, index) => (
               <SupportedDataCard data={data} key={index} />
             ))}
           </div>
         </div>
-
-        <DataConnectionLogs />
+        <div className="flex flex-col gap-6">
+          <Typography variant="heading-3">Connection Logs</Typography>
+          <DataConnectionsLogsTable logs={MOCK_DATA_CONNECTION_LOGS} />
+        </div>
       </div>
     </SubPageWrapper>
   )

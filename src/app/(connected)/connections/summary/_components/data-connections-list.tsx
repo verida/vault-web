@@ -1,4 +1,4 @@
-import { DataConnectionCard } from "@/app/(connected)/connections/_components/data-connection-card"
+import { DataConnectionCard } from "@/app/(connected)/connections/summary/_components/data-connection-card"
 import { MOCK_USER_DATA_CONNECTIONS } from "@/features/data-connections"
 import { cn } from "@/styles/utils"
 
