@@ -1,7 +1,9 @@
 import { type VariantProps, cva } from "class-variance-authority"
 import * as React from "react"
 
-import { Warning } from "@/components/icons/warning"
+import { AlertErrorIcon } from "@/components/icons/alert-error-icon"
+import { AlertInfoIcon } from "@/components/icons/alert-info-icon"
+import { AlertWarningIcon } from "@/components/icons/alert-warning-icon"
 import { cn } from "@/styles/utils"
 
 const alertVariants = cva(
@@ -27,16 +29,13 @@ const Alert = React.forwardRef<
   <div
     ref={ref}
     role="alert"
-    className={cn(
-      alertVariants({ variant }),
-      variant === "warning" ? "pl-9" : "", // TODO: To remove when other icons are added
-      className
-    )}
+    className={cn(alertVariants({ variant }), "pl-10", className)}
     {...props}
   >
-    <div className="absolute left-3 top-2.5">
-      {variant === "warning" ? <Warning /> : null}
-      {/* TODO: Add other variant icons */}
+    <div className="absolute left-3 top-2">
+      {variant === "error" ? <AlertErrorIcon className="size-5" /> : null}
+      {variant === "warning" ? <AlertWarningIcon className="size-5" /> : null}
+      {variant === "info" ? <AlertInfoIcon className="size-5" /> : null}
     </div>
     {children}
   </div>

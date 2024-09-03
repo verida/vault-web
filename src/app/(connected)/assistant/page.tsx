@@ -5,7 +5,7 @@ import { useCallback, useEffect, useRef } from "react"
 import { AssistantChatEmptyContent } from "@/app/(connected)/assistant/_components/assistant-chat-empty-content"
 import { AssistantChatInput } from "@/app/(connected)/assistant/_components/assistant-chat-input"
 import { AssistantChatMessagesList } from "@/app/(connected)/assistant/_components/assistant-chat-messages-list"
-import { Alert, AlertDescription } from "@/components/ui/alert"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { useAssistant } from "@/features/assistant"
 
 export default function AssistantChatPage() {
@@ -51,6 +51,7 @@ export default function AssistantChatPage() {
       </div>
       {error ? (
         <Alert variant="error" className="mb-2">
+          <AlertTitle>Assistant error</AlertTitle>
           <AlertDescription>{error}</AlertDescription>
         </Alert>
       ) : null}
