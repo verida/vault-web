@@ -23,8 +23,8 @@ export function DataConnections() {
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
             {MOCK_USER_DATA_CONNECTIONS.map((connection) => (
               <DataConnectionCard
-                connection={connection}
                 key={connection.name}
+                connection={connection}
               />
             ))}
           </div>
@@ -39,7 +39,7 @@ export function DataConnections() {
         )}
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {MOCK_DATA_PROVIDERS.map((provider) => (
-            <DataProviderCard provider={provider} key={provider.name} />
+            <DataProviderCard key={provider.name} provider={provider} />
           ))}
         </div>
       </div>

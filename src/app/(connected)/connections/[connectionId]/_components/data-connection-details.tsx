@@ -2,6 +2,10 @@
 
 import React from "react"
 
+import {
+  DisconnectDataConnectionDialog,
+  DisconnectDataConnectionDialogTrigger,
+} from "@/app/(connected)/connections/[connectionId]/_components/disconnect-data-connection-dialog"
 import { DataConnectionLogs } from "@/app/(connected)/connections/_components/data-connection-logs"
 import { SupportedDataCard } from "@/app/(connected)/connections/_components/supported-data-card"
 import { SubPageWrapper } from "@/components/sub-page-wrapper"
@@ -96,7 +100,13 @@ export function DataConnectionDetails(props: DataConnectionDetailsProps) {
                 </div>
 
                 <div className="flex flex-col gap-3 md:flex-row">
-                  <Button variant="outline-destructive">Disconnect</Button>
+                  <DisconnectDataConnectionDialog
+                    connectionId={connection.name}
+                  >
+                    <DisconnectDataConnectionDialogTrigger asChild>
+                      <Button variant="outline-destructive">Disconnect</Button>
+                    </DisconnectDataConnectionDialogTrigger>
+                  </DisconnectDataConnectionDialog>
                   <Button variant="outline">Disable</Button>
                   <Button variant="outline">Sync All Data</Button>
                 </div>

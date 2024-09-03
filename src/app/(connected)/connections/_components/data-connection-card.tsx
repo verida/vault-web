@@ -1,11 +1,5 @@
-"use client"
+import Link from "next/link"
 
-import { useRouter } from "next/navigation"
-
-import {
-  DisconnectDataConnectionDialog,
-  DisconnectDataConnectionDialogTrigger,
-} from "@/app/(connected)/connections/_components/disconnect-data-connection-dialog"
 import { Typography } from "@/components/typography"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
@@ -19,21 +13,8 @@ export type DataConnectionCardProps = {
 export function DataConnectionCard(props: DataConnectionCardProps) {
   const { connection } = props
 
-  const router = useRouter()
-
-  const handleClickConnection = () => {
-    router.push(
-      getConnectionPageRoute({
-        connectionId: connection.name,
-      })
-    )
-  }
-
   return (
-    <div
-      className="flex h-full cursor-pointer flex-col"
-      onClick={handleClickConnection}
-    >
+    <div className="flex h-full cursor-pointer flex-col">
       <Card className="flex-grow">
         <CardHeader className="flex flex-row justify-between pb-0">
           {connection.icon ? (
@@ -53,17 +34,16 @@ export function DataConnectionCard(props: DataConnectionCardProps) {
               className="size-12 rounded-full border"
             />
           ) : null}
-          <DisconnectDataConnectionDialog connectionId={connection.name}>
-            <DisconnectDataConnectionDialogTrigger asChild>
-              <Button
-                size="lg"
-                variant="outline"
-                className="!mt-0 px-4 text-destructive"
-              >
-                Disconnect
-              </Button>
-            </DisconnectDataConnectionDialogTrigger>
-          </DisconnectDataConnectionDialog>
+
+          <Button size="lg" variant="outline" className="!mt-0 px-4" asChild>
+            <Link
+              href={getConnectionPageRoute({
+                connectionId: connection.name,
+              })}
+            >
+              Details
+            </Link>
+          </Button>
         </CardHeader>
         <CardContent className="p-6 pt-0">
           <Typography variant="heading-4" className="mb-2 mt-6">
