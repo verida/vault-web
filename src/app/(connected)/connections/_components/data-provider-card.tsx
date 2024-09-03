@@ -4,20 +4,21 @@ import {
 } from "@/app/(connected)/connections/_components/connect-data-provider-dialog"
 import { Typography } from "@/components/typography"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader } from "@/components/ui/card"
+import { Card } from "@/components/ui/card"
 import { DataProvider } from "@/features/data-connections"
+import { cn } from "@/styles/utils"
 
 export type DataProviderCardProps = {
   provider: DataProvider
-}
+} & React.ComponentProps<typeof Card>
 
 export function DataProviderCard(props: DataProviderCardProps) {
-  const { provider } = props
+  const { provider, className, ...cardProps } = props
 
   return (
-    <div className="flex h-full flex-col">
-      <Card className="-mt-4 flex-grow">
-        <CardHeader className="flex flex-row justify-between pb-0">
+    <Card className={cn(className)} {...cardProps}>
+      <div className="flex flex-col gap-6 p-6">
+        <div className="flex flex-row items-start justify-between gap-4">
           {provider.icon ? (
             // <Image
             //   src={iconUrl}
@@ -37,24 +38,24 @@ export function DataProviderCard(props: DataProviderCardProps) {
           ) : null}
           <ConnectDataProviderDialog providerName={provider.name}>
             <ConnectDataProviderDialogTrigger asChild>
-              <Button size="lg" variant="outline" className="!mt-0 px-4">
+              <Button size="lg" variant="outline">
                 Connect
               </Button>
             </ConnectDataProviderDialogTrigger>
           </ConnectDataProviderDialog>
-        </CardHeader>
-        <CardContent className="p-6 pt-0">
-          <Typography variant="heading-4" className="mb-2 mt-6">
-            {provider.label}
+        </div>
+        <div className="flex flex-col gap-2">
+          <Typography variant="heading-4">{provider.label}</Typography>
+          <Typography
+            variant="base-regular"
+            className="line-clamp-3 text-muted-foreground"
+          >
+            {provider.description ||
+              `Connect your ${provider.label} account to extract your data and store it into your Vault.`}
           </Typography>
-          {provider.description && (
-            <Typography variant="base-l" className="text-muted-foreground">
-              {provider.description}
-            </Typography>
-          )}
-        </CardContent>
-      </Card>
-    </div>
+        </div>
+      </div>
+    </Card>
   )
 }
 DataProviderCard.displayName = "DataProviderCard"

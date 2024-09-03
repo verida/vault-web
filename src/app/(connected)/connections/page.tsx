@@ -9,7 +9,7 @@ enum ConnectionTabs {
 
 export default function ConnectionsPage() {
   return (
-    <div className="flex flex-col pb-10">
+    <div className="flex flex-col pb-4 md:pb-6 xl:pb-8">
       <Tabs defaultValue={ConnectionTabs.Connections}>
         <TabsList>
           <TabsTrigger value={ConnectionTabs.Connections}>

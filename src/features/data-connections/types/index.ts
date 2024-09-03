@@ -9,7 +9,7 @@ export type DataProvider = z.infer<typeof DataProviderSchema>
 export type DataProviderHandler = z.infer<typeof DataProviderHandlerSchema>
 
 export type DataConnection = DataProvider & {
-  userId?: string
+  userId: string
 }
 
 /**

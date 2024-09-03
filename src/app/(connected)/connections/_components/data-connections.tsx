@@ -1,47 +1,24 @@
 import React from "react"
 
-import { DataConnectionCard } from "@/app/(connected)/connections/_components/data-connection-card"
-import { DataProviderCard } from "@/app/(connected)/connections/_components/data-provider-card"
+import { DataConnectionsList } from "@/app/(connected)/connections/_components/data-connections-list"
+import { DataProvidersList } from "@/app/(connected)/connections/_components/data-providers-list"
 import { Typography } from "@/components/typography"
-import {
-  MOCK_DATA_PROVIDERS,
-  MOCK_USER_DATA_CONNECTIONS,
-} from "@/features/data-connections"
+import { Button } from "@/components/ui/button"
 
 export function DataConnections() {
   return (
-    <div>
-      <div className="flex flex-col items-center justify-between md:flex-row">
+    <div className="flex flex-col gap-8 sm:gap-10">
+      <div className="flex flex-row items-center justify-between">
         <Typography variant="heading-3">Connections</Typography>
+        <Button>Add Connection</Button>
       </div>
-
-      {MOCK_USER_DATA_CONNECTIONS.length > 0 && (
-        <div className="mt-6">
-          <Typography variant="heading-4" className="mb-6">
-            My Connections
-          </Typography>
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {MOCK_USER_DATA_CONNECTIONS.map((connection) => (
-              <DataConnectionCard
-                key={connection.name}
-                connection={connection}
-              />
-            ))}
-          </div>
-        </div>
-      )}
-
-      <div className="mt-10">
-        {MOCK_USER_DATA_CONNECTIONS.length > 0 && (
-          <Typography variant="heading-4" className="mb-6">
-            Popular Connections
-          </Typography>
-        )}
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {MOCK_DATA_PROVIDERS.map((provider) => (
-            <DataProviderCard key={provider.name} provider={provider} />
-          ))}
-        </div>
+      <div className="flex flex-col gap-4 sm:gap-6">
+        <Typography variant="heading-4">My Connections</Typography>
+        <DataConnectionsList />
+      </div>
+      <div className="flex flex-col gap-4 sm:gap-6">
+        <Typography variant="heading-4">Available Connections</Typography>
+        <DataProvidersList />
       </div>
     </div>
   )

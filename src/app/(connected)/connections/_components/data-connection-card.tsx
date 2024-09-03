@@ -2,21 +2,22 @@ import Link from "next/link"
 
 import { Typography } from "@/components/typography"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader } from "@/components/ui/card"
+import { Card } from "@/components/ui/card"
 import { DataConnection } from "@/features/data-connections"
 import { getConnectionPageRoute } from "@/features/routes/utils"
+import { cn } from "@/styles/utils"
 
 export type DataConnectionCardProps = {
   connection: DataConnection
-}
+} & React.ComponentProps<typeof Card>
 
 export function DataConnectionCard(props: DataConnectionCardProps) {
-  const { connection } = props
+  const { connection, className, ...cardProps } = props
 
   return (
-    <div className="flex h-full cursor-pointer flex-col">
-      <Card className="flex-grow">
-        <CardHeader className="flex flex-row justify-between pb-0">
+    <Card className={cn(className)} {...cardProps}>
+      <div className="flex flex-col gap-6 p-6">
+        <div className="flex flex-row items-start justify-between gap-4">
           {connection.icon ? (
             // <Image
             //   src={iconUrl}
@@ -35,7 +36,7 @@ export function DataConnectionCard(props: DataConnectionCardProps) {
             />
           ) : null}
 
-          <Button size="lg" variant="outline" className="!mt-0 px-4" asChild>
+          <Button size="lg" variant="outline" asChild>
             <Link
               href={getConnectionPageRoute({
                 connectionId: connection.name,
@@ -44,22 +45,13 @@ export function DataConnectionCard(props: DataConnectionCardProps) {
               Details
             </Link>
           </Button>
-        </CardHeader>
-        <CardContent className="p-6 pt-0">
-          <Typography variant="heading-4" className="mb-2 mt-6">
-            {connection.label}
-          </Typography>
-          {connection.userId && (
-            <Typography className="mb-4">{connection.userId}</Typography>
-          )}
-          {connection.description && (
-            <Typography variant="base-l" className="text-muted-foreground">
-              {connection.description}
-            </Typography>
-          )}
-        </CardContent>
-      </Card>
-    </div>
+        </div>
+        <div className="flex flex-col gap-2">
+          <Typography variant="heading-4">{connection.label}</Typography>
+          <Typography variant="base-regular">{connection.userId}</Typography>
+        </div>
+      </div>
+    </Card>
   )
 }
 DataConnectionCard.displayName = "DataConnectionCard"

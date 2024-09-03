@@ -6,8 +6,8 @@ import {
   DisconnectDataConnectionDialog,
   DisconnectDataConnectionDialogTrigger,
 } from "@/app/(connected)/connections/[connectionId]/_components/disconnect-data-connection-dialog"
+import { SupportedDataCard } from "@/app/(connected)/connections/[connectionId]/_components/supported-data-card"
 import { DataConnectionLogs } from "@/app/(connected)/connections/_components/data-connection-logs"
-import { SupportedDataCard } from "@/app/(connected)/connections/_components/supported-data-card"
 import { SubPageWrapper } from "@/components/sub-page-wrapper"
 import { Typography } from "@/components/typography"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
