@@ -1,3 +1,4 @@
+import { DEFAULT_DATA_PROVIDER_DESCRIPTION } from "@/features/data-connections/constants"
 import { MOCK_DATA_PROVIDERS } from "@/features/data-connections/mock"
 import { DataProvider } from "@/features/data-connections/types"
 import { wait } from "@/utils/misc"
@@ -7,5 +8,12 @@ export async function getDataProviders(): Promise<DataProvider[]> {
 
   await wait(5000)
 
-  return Promise.resolve(MOCK_DATA_PROVIDERS)
+  const providers = MOCK_DATA_PROVIDERS.map((provider) => {
+    return {
+      ...provider,
+      description: provider.description || DEFAULT_DATA_PROVIDER_DESCRIPTION,
+    }
+  })
+
+  return Promise.resolve(providers)
 }

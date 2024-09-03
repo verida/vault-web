@@ -5,6 +5,7 @@ import {
 import { Typography } from "@/components/typography"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
+import { Skeleton } from "@/components/ui/skeleton"
 import { DataProvider } from "@/features/data-connections"
 import { cn } from "@/styles/utils"
 
@@ -46,16 +47,42 @@ export function DataProviderCard(props: DataProviderCardProps) {
         </div>
         <div className="flex flex-col gap-2">
           <Typography variant="heading-4">{provider.label}</Typography>
-          <Typography
-            variant="base-regular"
-            className="line-clamp-3 text-muted-foreground"
-          >
-            {provider.description ||
-              `Connect your ${provider.label} account to extract your data and store it into your Vault.`}
-          </Typography>
+          <p className="text-muted-foreground">
+            <Typography
+              variant="base-l"
+              component="span"
+              className="line-clamp-3"
+            >
+              {provider.description}
+            </Typography>
+          </p>
         </div>
       </div>
     </Card>
   )
 }
 DataProviderCard.displayName = "DataProviderCard"
+
+export type DataProviderSkeletonCardProps = React.ComponentProps<typeof Card>
+
+export function DataProviderSkeletonCard(props: DataProviderSkeletonCardProps) {
+  const { className, ...cardProps } = props
+
+  return (
+    <Card className={cn(className)} {...cardProps}>
+      <div className="flex flex-col gap-6 p-6">
+        <div className="flex flex-row items-start justify-between gap-4">
+          <Skeleton className="size-12 rounded-full" />
+        </div>
+        <div className="flex flex-col gap-2">
+          <Skeleton className="my-1 h-4 w-1/3 sm:h-5" />
+          <div className="flex flex-col gap-0">
+            <Skeleton className="my-1.5 h-4 w-full" />
+            <Skeleton className="my-1.5 h-4 w-3/4" />
+          </div>
+        </div>
+      </div>
+    </Card>
+  )
+}
+DataProviderSkeletonCard.displayName = "DataProviderSkeletonCard"
