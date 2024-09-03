@@ -3,11 +3,9 @@
 import React, { useCallback } from "react"
 import { useState } from "react"
 
-import {
-  ActiveConnectionCard,
-  AvailableProviderCard,
-} from "@/app/(connected)/connections/_components/connection-card"
+import { ConnectionCard } from "@/app/(connected)/connections/_components/connection-card"
 import { DisconnectConnectionDialog } from "@/app/(connected)/connections/_components/disconnect-connection-dialog"
+import { ProviderCard } from "@/app/(connected)/connections/_components/provider-card"
 import { Typography } from "@/components/typography"
 import { MOCK_PROVIDERS, MOCK_USER_CONNECTIONS } from "@/features/connections"
 
@@ -37,7 +35,7 @@ export function Connections() {
           </Typography>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
             {MOCK_USER_CONNECTIONS.map((connection) => (
-              <ActiveConnectionCard
+              <ConnectionCard
                 connection={connection}
                 key={connection.name}
                 onDisconnect={() => handleOpenDisconnectDialog(connection.name)}
@@ -55,7 +53,7 @@ export function Connections() {
         )}
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {MOCK_PROVIDERS.map((provider) => (
-            <AvailableProviderCard provider={provider} key={provider.name} />
+            <ProviderCard provider={provider} key={provider.name} />
           ))}
         </div>
       </div>

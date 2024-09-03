@@ -2,27 +2,28 @@
 
 import { useRouter } from "next/navigation"
 
-import {
-  ConnectProviderDialog,
-  ConnectProviderDialogTrigger,
-} from "@/app/(connected)/connections/_components/connect-provider-dialog"
 import { Typography } from "@/components/typography"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
-import { Connection, Provider } from "@/features/connections"
+import { Connection } from "@/features/connections"
+import { getConnectionPageRoute } from "@/features/routes/utils"
 
-export type ActiveConnectionCardProps = {
+export type ConnectionCardProps = {
   onDisconnect?: () => void
   connection: Connection
 }
 
-export function ActiveConnectionCard(props: ActiveConnectionCardProps) {
+export function ConnectionCard(props: ConnectionCardProps) {
   const { connection, onDisconnect } = props
 
   const router = useRouter()
 
   const handleClickConnection = () => {
-    router.push(`/connections/${connection.name}`)
+    router.push(
+      getConnectionPageRoute({
+        connectionId: connection.name,
+      })
+    )
   }
 
   return (
@@ -78,54 +79,4 @@ export function ActiveConnectionCard(props: ActiveConnectionCardProps) {
     </div>
   )
 }
-
-export type AvailableProviderCardProps = {
-  provider: Provider
-}
-
-export function AvailableProviderCard(props: AvailableProviderCardProps) {
-  const { provider } = props
-
-  return (
-    <div className="flex h-full flex-col">
-      <Card className="-mt-4 flex-grow">
-        <CardHeader className="flex flex-row justify-between pb-0">
-          {provider.icon ? (
-            // <Image
-            //   src={iconUrl}
-            //   alt={label}
-            //   width={48}
-            //   height={48}
-            //   className="size-12 rounded-full border"
-            // />
-            /* eslint-disable @next/next/no-img-element */
-            <img
-              src={provider.icon}
-              alt={provider.label}
-              width={48}
-              height={48}
-              className="size-12 rounded-full border"
-            />
-          ) : null}
-          <ConnectProviderDialog providerName={provider.name}>
-            <ConnectProviderDialogTrigger asChild>
-              <Button size="lg" variant="outline" className="!mt-0 px-4">
-                Connect
-              </Button>
-            </ConnectProviderDialogTrigger>
-          </ConnectProviderDialog>
-        </CardHeader>
-        <CardContent className="p-6 pt-0">
-          <Typography variant="heading-4" className="mb-2 mt-6">
-            {provider.label}
-          </Typography>
-          {provider.description && (
-            <Typography variant="base-l" className="text-muted-foreground">
-              {provider.description}
-            </Typography>
-          )}
-        </CardContent>
-      </Card>
-    </div>
-  )
-}
+ConnectionCard.displayName = "ConnectionCard"

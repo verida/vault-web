@@ -79,5 +79,6 @@ export function ConnectProviderDialog(props: ConnectProviderDialogProps) {
     </Dialog>
   )
 }
+ConnectProviderDialog.displayName = "ConnectProviderDialog"
 
 export const ConnectProviderDialogTrigger = DialogTrigger

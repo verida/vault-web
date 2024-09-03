@@ -41,6 +41,7 @@ export function DisconnectConnectionDialog(
           <AlertDialogTitle>
             Disconnect from {connection.label}
           </AlertDialogTitle>
+          {/* TODO: Add description for accessibility */}
         </AlertDialogHeader>
         <AlertDialogBody>
           <Typography variant="base-regular">

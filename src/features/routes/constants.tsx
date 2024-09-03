@@ -6,7 +6,7 @@ import { featureFlags } from "@/config/features"
 import { RouteDefinition } from "@/features/routes/types"
 import {
   getAssistantPageRoute,
-  getConectionsPageRoute,
+  getConnectionsPageRoute,
   getDataPageRoute,
   getInboxPageRoute,
 } from "@/features/routes/utils"
@@ -40,6 +40,6 @@ export const NAV_ROUTES: RouteDefinition[] = [
   {
     icon: <Connection />,
     label: "Connections",
-    href: getConectionsPageRoute(),
+    href: getConnectionsPageRoute(),
   },
 ]

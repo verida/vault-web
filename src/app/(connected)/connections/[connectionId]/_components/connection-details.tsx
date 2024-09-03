@@ -10,6 +10,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Connection, MOCK_SUPPORTED_DATA } from "@/features/connections"
+import { getConnectionsPageRoute } from "@/features/routes/utils"
 import { useVerida } from "@/features/verida"
 
 export type ConnectionDetailsProps = {
@@ -23,7 +24,7 @@ export function ConnectionDetails(props: ConnectionDetailsProps) {
 
   return (
     <SubPageWrapper
-      backNavigationHref="/connections"
+      backNavigationHref={getConnectionsPageRoute()}
       backNavigationLabel="Back to all Connections"
     >
       <div className="space-y-10">
