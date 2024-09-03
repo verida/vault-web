@@ -1,5 +1,9 @@
 import React from "react"
 
+import {
+  ConnectDataProviderDialog,
+  ConnectDataProviderDialogTrigger,
+} from "@/app/(connected)/connections/_components/connect-data-provider-dialog"
 import { DataConnectionsList } from "@/app/(connected)/connections/_components/data-connections-list"
 import { DataProvidersList } from "@/app/(connected)/connections/_components/data-providers-list"
 import { Typography } from "@/components/typography"
@@ -10,7 +14,11 @@ export function DataConnections() {
     <div className="flex flex-col gap-8 sm:gap-10">
       <div className="flex flex-row items-center justify-between">
         <Typography variant="heading-3">Connections</Typography>
-        <Button>Add Connection</Button>
+        <ConnectDataProviderDialog>
+          <ConnectDataProviderDialogTrigger asChild>
+            <Button variant="primary">Add Connection</Button>
+          </ConnectDataProviderDialogTrigger>
+        </ConnectDataProviderDialog>
       </div>
       <div className="flex flex-col gap-4 sm:gap-6">
         <Typography variant="heading-4">My Connections</Typography>
