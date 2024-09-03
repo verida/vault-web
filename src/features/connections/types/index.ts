@@ -1,11 +1,15 @@
-import { SVGProps } from "react"
+import { z } from "zod"
 
-export type Connection = {
-  id: string
-  item: string
-  description: string
+import {
+  ProviderHandlerSchema,
+  ProviderSchema,
+} from "@/features/connections/schemas"
+
+export type Provider = z.infer<typeof ProviderSchema>
+export type ProviderHandler = z.infer<typeof ProviderHandlerSchema>
+
+export type Connection = Provider & {
   userId?: string
-  icon: (props: SVGProps<SVGSVGElement>) => JSX.Element
 }
 
 export type SupportedData = {

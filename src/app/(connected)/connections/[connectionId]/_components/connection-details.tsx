@@ -9,7 +9,7 @@ import { Typography } from "@/components/typography"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
-import { Connection, supportedData } from "@/features/connections"
+import { Connection, MOCK_SUPPORTED_DATA } from "@/features/connections"
 import { useVerida } from "@/features/verida"
 
 export type ConnectionDetailsProps = {
@@ -29,8 +29,24 @@ export function ConnectionDetails(props: ConnectionDetailsProps) {
       <div className="space-y-10">
         <div>
           <div className="flex items-center gap-2">
-            <connection.icon className="size-10" />
-            <Typography variant="heading-4">{connection.id}</Typography>
+            {connection.icon ? (
+              // <Image
+              //   src={connection.icon}
+              //   alt={connection.label}
+              //   width={40}
+              //   height={40}
+              //   className="size-10 rounded-full border"
+              // />
+              /* eslint-disable @next/next/no-img-element */
+              <img
+                src={connection.icon}
+                alt={connection.label}
+                width={40}
+                height={40}
+                className="size-10 rounded-full border"
+              />
+            ) : null}
+            <Typography variant="heading-4">{connection.label}</Typography>
           </div>
 
           <div className="mt-6">
@@ -49,7 +65,23 @@ export function ConnectionDetails(props: ConnectionDetailsProps) {
                         {profile?.name?.[0]?.toUpperCase()}
                       </AvatarFallback>
                     </Avatar>
-                    <connection.icon className="absolute bottom-0 right-0 size-5 rounded-full border border-white" />
+                    {connection.icon ? (
+                      // <Image
+                      //   src={connection.icon}
+                      //   alt={connection.label}
+                      //   width={48}
+                      //   height={48}
+                      //   className="absolute bottom-0 right-0 size-5 rounded-full border border-white"
+                      // />
+                      /* eslint-disable @next/next/no-img-element */
+                      <img
+                        src={connection.icon}
+                        alt={connection.label}
+                        width={48}
+                        height={48}
+                        className="absolute bottom-0 right-0 size-5 rounded-full border border-white"
+                      />
+                    ) : null}
                   </div>
                   <div>
                     <Typography variant="heading-5">{profile?.name}</Typography>
@@ -97,7 +129,7 @@ export function ConnectionDetails(props: ConnectionDetailsProps) {
           <Typography variant="heading-3">Supported Data Types</Typography>
 
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
-            {supportedData.map((data, index) => (
+            {MOCK_SUPPORTED_DATA.map((data, index) => (
               <SupportedDataCard data={data} key={index} />
             ))}
           </div>

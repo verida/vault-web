@@ -5,33 +5,20 @@ import { useRouter } from "next/navigation"
 import { Typography } from "@/components/typography"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
-import { Connection } from "@/features/connections"
+import { Connection, Provider } from "@/features/connections"
 
-export type ConnectionCardProps = {
-  onConnect?: () => void
+export type ActiveConnectionCardProps = {
   onDisconnect?: () => void
-  isConnected?: boolean
-} & Connection
-
-export function ConnectionCard(props: ConnectionCardProps) {
-  const { isConnected = false, ...rest } = props
-
-  return isConnected ? (
-    <ActiveConnectionCard {...rest} onDisconnect={props.onDisconnect} />
-  ) : (
-    <InactiveConnectionCard {...rest} onConnect={props.onConnect} />
-  )
+  connection: Connection
 }
 
-function ActiveConnectionCard(
-  props: Omit<ConnectionCardProps, "isConnected" | "onConnect">
-) {
-  const { id, description, icon: Icon, userId, onDisconnect } = props
+export function ActiveConnectionCard(props: ActiveConnectionCardProps) {
+  const { connection, onDisconnect } = props
 
   const router = useRouter()
 
   const handleClickConnection = () => {
-    router.push(`/connections?id=${id}`)
+    router.push(`/connections/${connection.name}`)
   }
 
   return (
@@ -41,7 +28,23 @@ function ActiveConnectionCard(
     >
       <Card className="flex-grow">
         <CardHeader className="flex flex-row justify-between pb-0">
-          {Icon && <Icon />}
+          {connection.icon ? (
+            // <Image
+            //   src={iconUrl}
+            //   alt={label}
+            //   width={48}
+            //   height={48}
+            //   className="size-12 rounded-full border"
+            // />
+            /* eslint-disable @next/next/no-img-element */
+            <img
+              src={connection.icon}
+              alt={connection.label}
+              width={48}
+              height={48}
+              className="size-12 rounded-full border"
+            />
+          ) : null}
           <Button
             size="lg"
             variant="outline"
@@ -55,15 +58,15 @@ function ActiveConnectionCard(
           </Button>
         </CardHeader>
         <CardContent className="p-6 pt-0">
-          {id && (
-            <Typography variant="heading-4" className="mb-2 mt-6">
-              {id}
-            </Typography>
+          <Typography variant="heading-4" className="mb-2 mt-6">
+            {connection.label}
+          </Typography>
+          {connection.userId && (
+            <Typography className="mb-4">{connection.userId}</Typography>
           )}
-          {userId && <Typography className="mb-4">{userId}</Typography>}
-          {description && (
+          {connection.description && (
             <Typography variant="base-l" className="text-muted-foreground">
-              {description}
+              {connection.description}
             </Typography>
           )}
         </CardContent>
@@ -72,16 +75,35 @@ function ActiveConnectionCard(
   )
 }
 
-function InactiveConnectionCard(
-  props: Omit<ConnectionCardProps, "isConnected" | "onDisconnect" | "userId">
-) {
-  const { id, description, icon: Icon, onConnect } = props
+export type AvailableProviderCardProps = {
+  onConnect?: () => void
+  provider: Provider
+}
+
+export function AvailableProviderCard(props: AvailableProviderCardProps) {
+  const { provider, onConnect } = props
 
   return (
     <div className="flex h-full flex-col">
       <Card className="-mt-4 flex-grow">
         <CardHeader className="flex flex-row justify-between pb-0">
-          {Icon && <Icon />}
+          {provider.icon ? (
+            // <Image
+            //   src={iconUrl}
+            //   alt={label}
+            //   width={48}
+            //   height={48}
+            //   className="size-12 rounded-full border"
+            // />
+            /* eslint-disable @next/next/no-img-element */
+            <img
+              src={provider.icon}
+              alt={provider.label}
+              width={48}
+              height={48}
+              className="size-12 rounded-full border"
+            />
+          ) : null}
           <Button
             size="lg"
             variant="outline"
@@ -92,14 +114,12 @@ function InactiveConnectionCard(
           </Button>
         </CardHeader>
         <CardContent className="p-6 pt-0">
-          {id && (
-            <Typography variant="heading-4" className="mb-2 mt-6">
-              {id}
-            </Typography>
-          )}
-          {description && (
+          <Typography variant="heading-4" className="mb-2 mt-6">
+            {provider.label}
+          </Typography>
+          {provider.description && (
             <Typography variant="base-l" className="text-muted-foreground">
-              {description}
+              {provider.description}
             </Typography>
           )}
         </CardContent>

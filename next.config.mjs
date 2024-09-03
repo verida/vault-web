@@ -46,6 +46,11 @@ const nextConfig = {
         hostname: "*",
         port: "",
       },
+      {
+        protocol: "https",
+        hostname: "127.0.0.1",
+        port: "5021",
+      },
     ],
   },
 }

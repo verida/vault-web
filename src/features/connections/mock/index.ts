@@ -1,69 +1,61 @@
-import { Discord } from "@/components/icons/connection-discord"
-import { Facebook } from "@/components/icons/connection-facebook"
-import { Github } from "@/components/icons/connection-github"
-import { Instagram } from "@/components/icons/connection-instagram"
-import { Telegram } from "@/components/icons/connection-telegram"
-import { Twitter } from "@/components/icons/connection-twitter"
-import { Youtube } from "@/components/icons/connection-youtube"
+// import { Discord } from "@/components/icons/connection-discord"
+// import { Facebook } from "@/components/icons/connection-facebook"
+// import { Github } from "@/components/icons/connection-github"
+// import { Instagram } from "@/components/icons/connection-instagram"
+// import { Telegram } from "@/components/icons/connection-telegram"
+// import { Twitter } from "@/components/icons/connection-twitter"
+// import { Youtube } from "@/components/icons/connection-youtube"
+import {
+  Connection,
+  ConnectionLog,
+  Provider,
+  SupportedData,
+} from "@/features/connections/types"
 
-import { Connection, ConnectionLog, SupportedData } from ".."
-
-export const connections: Connection[] = [
+export const MOCK_PROVIDERS: Provider[] = [
   {
-    id: "X",
-    icon: Twitter,
-    item: "tweets",
-    description: "Connect your X Account to share your tweets with us.",
-  },
-  {
-    id: "Instagram",
-    icon: Instagram,
-    item: "port",
-    description: "Connect your Instagram Account to share your port with us.",
-  },
-  {
-    id: "Discord",
-    icon: Discord,
-    item: "post",
-    description: "Connect your Discord Account to share your post with us.",
-  },
-  {
-    id: "Telegram",
-    icon: Telegram,
-    item: "post",
-    description: "Connect your Telegram Account to share your post with us.",
-  },
-  {
-    id: "GitHub",
-    icon: Github,
-    item: "post",
-    description: "Connect your Github Account to share your post with us.",
-  },
-  {
-    id: "Facebook",
-    icon: Facebook,
-    item: "post",
+    name: "facebook",
+    label: "Facebook",
+    icon: "https://127.0.0.1:5021/assets/facebook/icon.png",
     description: "Connect your Facebook Account to share your post with us.",
   },
   {
-    id: "Youtube",
-    icon: Youtube,
-    item: "video",
-    description: "Connect your Youtube Account to share your video with us.",
+    name: "twitter",
+    label: "Twitter",
+    icon: "https://127.0.0.1:5021/assets/twitter/icon.png",
+    description: "Connect your X Account to share your tweets with us.",
+  },
+  {
+    name: "discord",
+    label: "Discord",
+    icon: "https://127.0.0.1:5021/assets/discord/icon.png",
+    description: "Connect your Discord Account to share your post with us.",
+  },
+  {
+    name: "google",
+    label: "Google",
+    icon: "https://127.0.0.1:5021/assets/google/icon.png",
+    description: "",
+  },
+  {
+    name: "telegram",
+    label: "Telegram",
+    icon: "https://127.0.0.1:5021/assets/telegram/icon.png",
+    description: "Connect your Telegram Account to share your post with us.",
   },
 ]
 
-export const myConnections: Connection[] = [
+export const MOCK_USER_CONNECTIONS: Connection[] = [
   {
-    id: "X",
-    icon: Twitter,
-    item: "tweets",
+    name: "twitter",
+    label: "Twitter",
+    icon: "https://127.0.0.1:5021/assets/twitter/icon.png",
     description: "Connect your X Account to share your tweets with us.",
     userId: "@tahpot",
   },
 ]
 
-export const supportedData: SupportedData[] = [
+export const MOCK_SUPPORTED_DATA: SupportedData[] = [
   {
     title: "Emails",
     lastSynced: "13 May 2024, 10:00am",
@@ -101,9 +93,9 @@ export const supportedData: SupportedData[] = [
   },
 ]
 
-export const connectionLogs: ConnectionLog[] = [
+export const MOCK_CONNECTION_LOGS: ConnectionLog[] = [
   {
-    source: "X",
+    source: "twitter",
     type: "Social Posts",
     id: 12345667789,
     message:
@@ -111,7 +103,7 @@ export const connectionLogs: ConnectionLog[] = [
     timestamp: "2 Jan 2024, 12:16 pm",
   },
   {
-    source: "X",
+    source: "twitter",
     type: "Social Posts",
     id: 12345667789,
     message:
@@ -119,7 +111,7 @@ export const connectionLogs: ConnectionLog[] = [
     timestamp: "2 Jan 2024, 12:16 pm",
   },
   {
-    source: "X",
+    source: "twitter",
     type: "Social Posts",
     id: 12345667789,
     message:

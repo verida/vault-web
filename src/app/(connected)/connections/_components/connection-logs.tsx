@@ -2,7 +2,7 @@ import React from "react"
 
 import { ConnectionLogItem } from "@/app/(connected)/connections/_components/connection-log-item"
 import { Typography } from "@/components/typography"
-import { connectionLogs } from "@/features/connections"
+import { MOCK_CONNECTION_LOGS } from "@/features/connections"
 
 export function ConnectionLogs() {
   return (
@@ -22,7 +22,7 @@ export function ConnectionLogs() {
           </Typography>
         </div>
         <div className="space-y-3">
-          {connectionLogs.map((log) => (
+          {MOCK_CONNECTION_LOGS.map((log) => (
             <ConnectionLogItem log={log} key={log.id} />
           ))}
         </div>
