@@ -15,7 +15,7 @@ export const DataProviderSchema = z.object({
   icon: z.string().url(),
   description: z.string().optional(),
   handlers: z
-    .record(z.string(), DataProviderHandlerSchema.passthrough())
+    .record(z.string(), z.array(DataProviderHandlerSchema.passthrough()))
     .optional(),
 })
 
