@@ -11,20 +11,20 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
+  AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button"
 import { MOCK_DATA_PROVIDERS } from "@/features/data-connections"
 
 export type DisconnectDataConnectionDialogProps = {
-  isOpen: boolean
-  onClose: () => void
+  children: React.ReactNode
   connectionId: string
 }
 
 export function DisconnectDataConnectionDialog(
   props: DisconnectDataConnectionDialogProps
 ) {
-  const { isOpen, onClose, connectionId } = props
+  const { children, connectionId } = props
 
   const connection = useMemo(() => {
     return MOCK_DATA_PROVIDERS.find((c) => c.name === connectionId)
@@ -35,7 +35,8 @@ export function DisconnectDataConnectionDialog(
   }
 
   return (
-    <AlertDialog open={isOpen} onOpenChange={onClose}>
+    <AlertDialog>
+      {children}
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>
@@ -57,3 +58,5 @@ export function DisconnectDataConnectionDialog(
   )
 }
 DisconnectDataConnectionDialog.displayName = "DisconnectDataConnectionDialog"
+
+export const DisconnectDataConnectionDialogTrigger = AlertDialogTrigger

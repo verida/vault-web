@@ -1,11 +1,7 @@
-"use client"
-
-import React, { useCallback } from "react"
-import { useState } from "react"
+import React from "react"
 
 import { DataConnectionCard } from "@/app/(connected)/connections/_components/data-connection-card"
 import { DataProviderCard } from "@/app/(connected)/connections/_components/data-provider-card"
-import { DisconnectDataConnectionDialog } from "@/app/(connected)/connections/_components/disconnect-data-connection-dialog"
 import { Typography } from "@/components/typography"
 import {
   MOCK_DATA_PROVIDERS,
@@ -13,18 +9,6 @@ import {
 } from "@/features/data-connections"
 
 export function DataConnections() {
-  const [isDisconnectDialogOpen, setIsDisconnectDialogOpen] = useState(false)
-  const [connectionId, setConnectionId] = useState("")
-
-  const handleOpenDisconnectDialog = useCallback((id: string) => {
-    setConnectionId(id)
-    setIsDisconnectDialogOpen(true)
-  }, [])
-
-  const handleCloseDisconnectDialog = useCallback(() => {
-    setIsDisconnectDialogOpen(false)
-  }, [])
-
   return (
     <div>
       <div className="flex flex-col items-center justify-between md:flex-row">
@@ -41,7 +25,6 @@ export function DataConnections() {
               <DataConnectionCard
                 connection={connection}
                 key={connection.name}
-                onDisconnect={() => handleOpenDisconnectDialog(connection.name)}
               />
             ))}
           </div>
@@ -60,12 +43,6 @@ export function DataConnections() {
           ))}
         </div>
       </div>
-
-      <DisconnectDataConnectionDialog
-        isOpen={isDisconnectDialogOpen}
-        onClose={handleCloseDisconnectDialog}
-        connectionId={connectionId}
-      />
     </div>
   )
 }
