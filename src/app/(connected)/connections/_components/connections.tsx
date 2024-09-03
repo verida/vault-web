@@ -3,7 +3,6 @@
 import React, { useCallback } from "react"
 import { useState } from "react"
 
-import { ConnectProviderDialog } from "@/app/(connected)/connections/_components/connect-provider-dialog"
 import {
   ActiveConnectionCard,
   AvailableProviderCard,
@@ -13,18 +12,8 @@ import { Typography } from "@/components/typography"
 import { MOCK_PROVIDERS, MOCK_USER_CONNECTIONS } from "@/features/connections"
 
 export function Connections() {
-  const [isConnectDialogOpen, setIsConnectDialogOpen] = useState(false)
   const [isDisconnectDialogOpen, setIsDisconnectDialogOpen] = useState(false)
   const [connectionId, setConnectionId] = useState("")
-
-  const handleOpenConnectDialog = useCallback((id: string) => {
-    setConnectionId(id)
-    setIsConnectDialogOpen(true)
-  }, [])
-
-  const handleCloseConnectDialog = useCallback(() => {
-    setIsConnectDialogOpen(false)
-  }, [])
 
   const handleOpenDisconnectDialog = useCallback((id: string) => {
     setConnectionId(id)
@@ -66,20 +55,11 @@ export function Connections() {
         )}
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {MOCK_PROVIDERS.map((provider) => (
-            <AvailableProviderCard
-              provider={provider}
-              key={provider.name}
-              onConnect={() => handleOpenConnectDialog(provider.name)}
-            />
+            <AvailableProviderCard provider={provider} key={provider.name} />
           ))}
         </div>
       </div>
 
-      <ConnectProviderDialog
-        isOpen={isConnectDialogOpen}
-        onClose={handleCloseConnectDialog}
-        providerName={connectionId}
-      />
       <DisconnectConnectionDialog
         isOpen={isDisconnectDialogOpen}
         onClose={handleCloseDisconnectDialog}

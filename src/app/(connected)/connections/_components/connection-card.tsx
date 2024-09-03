@@ -2,6 +2,10 @@
 
 import { useRouter } from "next/navigation"
 
+import {
+  ConnectProviderDialog,
+  ConnectProviderDialogTrigger,
+} from "@/app/(connected)/connections/_components/connect-provider-dialog"
 import { Typography } from "@/components/typography"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
@@ -76,12 +80,11 @@ export function ActiveConnectionCard(props: ActiveConnectionCardProps) {
 }
 
 export type AvailableProviderCardProps = {
-  onConnect?: () => void
   provider: Provider
 }
 
 export function AvailableProviderCard(props: AvailableProviderCardProps) {
-  const { provider, onConnect } = props
+  const { provider } = props
 
   return (
     <div className="flex h-full flex-col">
@@ -104,14 +107,13 @@ export function AvailableProviderCard(props: AvailableProviderCardProps) {
               className="size-12 rounded-full border"
             />
           ) : null}
-          <Button
-            size="lg"
-            variant="outline"
-            className="!mt-0 px-4"
-            onClick={onConnect}
-          >
-            Connect
-          </Button>
+          <ConnectProviderDialog providerName={provider.name}>
+            <ConnectProviderDialogTrigger asChild>
+              <Button size="lg" variant="outline" className="!mt-0 px-4">
+                Connect
+              </Button>
+            </ConnectProviderDialogTrigger>
+          </ConnectProviderDialog>
         </CardHeader>
         <CardContent className="p-6 pt-0">
           <Typography variant="heading-4" className="mb-2 mt-6">

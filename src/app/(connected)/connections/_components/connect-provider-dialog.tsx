@@ -18,32 +18,33 @@ import {
 import { MOCK_PROVIDERS } from "@/features/connections"
 
 export type ConnectProviderDialogProps = {
-  isOpen: boolean
-  onClose: () => void
+  children: React.ReactNode
   providerName: string
 }
 
 export function ConnectProviderDialog(props: ConnectProviderDialogProps) {
-  const { providerName, isOpen, onClose } = props
+  const { children, providerName } = props
 
-  const connection = useMemo(() => {
+  const provider = useMemo(() => {
     return MOCK_PROVIDERS.find((c) => c.name === providerName)
   }, [providerName])
 
-  if (!connection) {
+  if (!provider) {
     return null
   }
 
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
+    <Dialog>
+      {/* Expect the trigger to be passed as a child */}
+      {children}
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Connect with {connection.label}</DialogTitle>
+          <DialogTitle>Connect with {provider.label}</DialogTitle>
           {/* TODO: Add description for accessibility */}
         </DialogHeader>
         <DialogBody className="flex flex-col gap-8">
           <div className="flex flex-row items-center justify-center gap-6">
-            {connection.icon ? (
+            {provider.icon ? (
               // <Image
               //   src={connection.icon}
               //   alt={connection.label}
@@ -53,8 +54,8 @@ export function ConnectProviderDialog(props: ConnectProviderDialogProps) {
               // />
               /* eslint-disable @next/next/no-img-element */
               <img
-                src={connection.icon}
-                alt={connection.label}
+                src={provider.icon}
+                alt={provider.label}
                 width={80}
                 height={80}
                 className="size-20 rounded-full border"
@@ -67,7 +68,7 @@ export function ConnectProviderDialog(props: ConnectProviderDialogProps) {
             <Typography variant="heading-4">What it will do</Typography>
             <Typography variant="base-regular">
               {/* TODO: Rework the description */}
-              {connection.description}
+              {provider.description}
             </Typography>
           </div>
         </DialogBody>
