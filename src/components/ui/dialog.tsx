@@ -30,7 +30,7 @@ const DialogOverlay = React.forwardRef<
 ))
 DialogOverlay.displayName = DialogPrimitive.Overlay.displayName
 
-const DialogContainer = React.forwardRef<
+const DialogContent = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>
 >(({ className, children, ...props }, ref) => (
@@ -48,7 +48,7 @@ const DialogContainer = React.forwardRef<
     </DialogPrimitive.Content>
   </DialogPortal>
 ))
-DialogContainer.displayName = "DialogContainer"
+DialogContent.displayName = "DialogContent"
 
 const DialogHeader = ({
   className,
@@ -74,13 +74,13 @@ const DialogHeader = ({
 )
 DialogHeader.displayName = "DialogHeader"
 
-const DialogContent = ({
+const DialogBody = ({
   className,
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) => (
   <div className={cn("flex-1 overflow-y-auto py-4", className)} {...props} />
 )
-DialogContent.displayName = "DialogContent"
+DialogBody.displayName = "DialogBody"
 
 const DialogFooter = ({
   className,
@@ -131,9 +131,9 @@ export {
   DialogOverlay,
   DialogClose,
   DialogTrigger,
-  DialogContainer,
-  DialogHeader,
   DialogContent,
+  DialogHeader,
+  DialogBody,
   DialogFooter,
   DialogTitle,
   DialogDescription,

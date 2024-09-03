@@ -3,7 +3,7 @@
 import React, { useCallback } from "react"
 import { useState } from "react"
 
-import { ConnectConnectionDialog } from "@/app/(connected)/connections/_components/connect-connection-dialog"
+import { ConnectProviderDialog } from "@/app/(connected)/connections/_components/connect-provider-dialog"
 import {
   ActiveConnectionCard,
   AvailableProviderCard,
@@ -75,10 +75,10 @@ export function Connections() {
         </div>
       </div>
 
-      <ConnectConnectionDialog
+      <ConnectProviderDialog
         isOpen={isConnectDialogOpen}
         onClose={handleCloseConnectDialog}
-        connectionId={connectionId}
+        providerName={connectionId}
       />
       <DisconnectConnectionDialog
         isOpen={isDisconnectDialogOpen}

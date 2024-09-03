@@ -27,7 +27,7 @@ const AlertDialogOverlay = React.forwardRef<
 ))
 AlertDialogOverlay.displayName = AlertDialogPrimitive.Overlay.displayName
 
-const AlertDialogContainer = React.forwardRef<
+const AlertDialogContent = React.forwardRef<
   React.ElementRef<typeof AlertDialogPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Content>
 >(({ className, ...props }, ref) => (
@@ -43,7 +43,7 @@ const AlertDialogContainer = React.forwardRef<
     />
   </AlertDialogPortal>
 ))
-AlertDialogContainer.displayName = "AlertDialogContainer"
+AlertDialogContent.displayName = "AlertDialogContent"
 
 const AlertDialogHeader = ({
   className,
@@ -56,13 +56,13 @@ const AlertDialogHeader = ({
 )
 AlertDialogHeader.displayName = "AlertDialogHeader"
 
-const AlertDialogContent = ({
+const AlertDialogBody = ({
   className,
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) => (
   <div className={cn("flex-1 overflow-y-auto py-4", className)} {...props} />
 )
-AlertDialogContent.displayName = "AlertDialogContent"
+AlertDialogBody.displayName = "AlertDialogBody"
 
 const AlertDialogFooter = ({
   className,
@@ -136,9 +136,9 @@ export {
   AlertDialogPortal,
   AlertDialogOverlay,
   AlertDialogTrigger,
-  AlertDialogContainer,
-  AlertDialogHeader,
   AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogBody,
   AlertDialogFooter,
   AlertDialogTitle,
   AlertDialogDescription,

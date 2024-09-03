@@ -8,26 +8,27 @@ import { Typography } from "@/components/typography"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
-  DialogContainer,
+  DialogBody,
   DialogContent,
   DialogFooter,
   DialogHeader,
   DialogTitle,
+  DialogTrigger,
 } from "@/components/ui/dialog"
 import { MOCK_PROVIDERS } from "@/features/connections"
 
-export type ConnectConnectionDialogProps = {
+export type ConnectProviderDialogProps = {
   isOpen: boolean
   onClose: () => void
-  connectionId: string
+  providerName: string
 }
 
-export function ConnectConnectionDialog(props: ConnectConnectionDialogProps) {
-  const { connectionId, isOpen, onClose } = props
+export function ConnectProviderDialog(props: ConnectProviderDialogProps) {
+  const { providerName, isOpen, onClose } = props
 
   const connection = useMemo(() => {
-    return MOCK_PROVIDERS.find((c) => c.name === connectionId)
-  }, [connectionId])
+    return MOCK_PROVIDERS.find((c) => c.name === providerName)
+  }, [providerName])
 
   if (!connection) {
     return null
@@ -35,11 +36,12 @@ export function ConnectConnectionDialog(props: ConnectConnectionDialogProps) {
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContainer>
+      <DialogContent>
         <DialogHeader>
           <DialogTitle>Connect with {connection.label}</DialogTitle>
+          {/* TODO: Add description for accessibility */}
         </DialogHeader>
-        <DialogContent className="flex flex-col gap-8">
+        <DialogBody className="flex flex-col gap-8">
           <div className="flex flex-row items-center justify-center gap-6">
             {connection.icon ? (
               // <Image
@@ -68,11 +70,13 @@ export function ConnectConnectionDialog(props: ConnectConnectionDialogProps) {
               {connection.description}
             </Typography>
           </div>
-        </DialogContent>
+        </DialogBody>
         <DialogFooter>
           <Button variant="primary">Connect</Button>
         </DialogFooter>
-      </DialogContainer>
+      </DialogContent>
     </Dialog>
   )
 }
+
+export const ConnectProviderDialogTrigger = DialogTrigger

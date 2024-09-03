@@ -5,8 +5,8 @@ import { useMemo } from "react"
 import { Typography } from "@/components/typography"
 import {
   AlertDialog,
+  AlertDialogBody,
   AlertDialogCancel,
-  AlertDialogContainer,
   AlertDialogContent,
   AlertDialogFooter,
   AlertDialogHeader,
@@ -36,22 +36,22 @@ export function DisconnectConnectionDialog(
 
   return (
     <AlertDialog open={isOpen} onOpenChange={onClose}>
-      <AlertDialogContainer>
+      <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>
             Disconnect from {connection.label}
           </AlertDialogTitle>
         </AlertDialogHeader>
-        <AlertDialogContent>
+        <AlertDialogBody>
           <Typography variant="base-regular">
             Are you sure you want to disconnect?
           </Typography>
-        </AlertDialogContent>
+        </AlertDialogBody>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
           <Button variant="destructive">Disconnect</Button>
         </AlertDialogFooter>
-      </AlertDialogContainer>
+      </AlertDialogContent>
     </AlertDialog>
   )
 }
