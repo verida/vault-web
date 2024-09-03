@@ -15,7 +15,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import { MOCK_DATA_PROVIDERS } from "@/features/connections"
+import { MOCK_DATA_PROVIDERS } from "@/features/data-connections"
 
 export type ConnectDataProviderDialogProps = {
   children: React.ReactNode

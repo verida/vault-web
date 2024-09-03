@@ -5,12 +5,15 @@ import { Typography } from "@/components/typography"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { Switch } from "@/components/ui/switch"
-import { SupportedData } from "@/features/connections"
+import { SupportedData } from "@/features/data-connections"
 
 export type SupportedDataCardProps = {
   data: SupportedData
 }
 
+/**
+ * @deprecated
+ */
 export function SupportedDataCard(props: SupportedDataCardProps) {
   const { data } = props
 

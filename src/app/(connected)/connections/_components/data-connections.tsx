@@ -3,16 +3,16 @@
 import React, { useCallback } from "react"
 import { useState } from "react"
 
-import { ConnectionCard } from "@/app/(connected)/connections/_components/connection-card"
+import { DataConnectionCard } from "@/app/(connected)/connections/_components/data-connection-card"
 import { DataProviderCard } from "@/app/(connected)/connections/_components/data-provider-card"
-import { DisconnectConnectionDialog } from "@/app/(connected)/connections/_components/disconnect-connection-dialog"
+import { DisconnectDataConnectionDialog } from "@/app/(connected)/connections/_components/disconnect-data-connection-dialog"
 import { Typography } from "@/components/typography"
 import {
   MOCK_DATA_PROVIDERS,
-  MOCK_USER_CONNECTIONS,
-} from "@/features/connections"
+  MOCK_USER_DATA_CONNECTIONS,
+} from "@/features/data-connections"
 
-export function Connections() {
+export function DataConnections() {
   const [isDisconnectDialogOpen, setIsDisconnectDialogOpen] = useState(false)
   const [connectionId, setConnectionId] = useState("")
 
@@ -31,14 +31,14 @@ export function Connections() {
         <Typography variant="heading-3">Connections</Typography>
       </div>
 
-      {MOCK_USER_CONNECTIONS.length > 0 && (
+      {MOCK_USER_DATA_CONNECTIONS.length > 0 && (
         <div className="mt-6">
-          <Typography variant={"heading-4"} className="mb-6">
+          <Typography variant="heading-4" className="mb-6">
             My Connections
           </Typography>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {MOCK_USER_CONNECTIONS.map((connection) => (
-              <ConnectionCard
+            {MOCK_USER_DATA_CONNECTIONS.map((connection) => (
+              <DataConnectionCard
                 connection={connection}
                 key={connection.name}
                 onDisconnect={() => handleOpenDisconnectDialog(connection.name)}
@@ -49,8 +49,8 @@ export function Connections() {
       )}
 
       <div className="mt-10">
-        {MOCK_USER_CONNECTIONS.length > 0 && (
-          <Typography variant={"heading-4"} className="mb-6">
+        {MOCK_USER_DATA_CONNECTIONS.length > 0 && (
+          <Typography variant="heading-4" className="mb-6">
             Popular Connections
           </Typography>
         )}
@@ -61,7 +61,7 @@ export function Connections() {
         </div>
       </div>
 
-      <DisconnectConnectionDialog
+      <DisconnectDataConnectionDialog
         isOpen={isDisconnectDialogOpen}
         onClose={handleCloseDisconnectDialog}
         connectionId={connectionId}
@@ -69,3 +69,4 @@ export function Connections() {
     </div>
   )
 }
+DataConnections.displayName = "DataConnections"

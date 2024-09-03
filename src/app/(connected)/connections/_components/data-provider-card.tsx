@@ -5,7 +5,7 @@ import {
 import { Typography } from "@/components/typography"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
-import { DataProvider } from "@/features/connections"
+import { DataProvider } from "@/features/data-connections"
 
 export type DataProviderCardProps = {
   provider: DataProvider

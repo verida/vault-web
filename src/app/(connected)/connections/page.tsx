@@ -1,5 +1,5 @@
-import { ConnectionLogs } from "@/app/(connected)/connections/_components/connection-logs"
-import { Connections } from "@/app/(connected)/connections/_components/connections"
+import { DataConnectionLogs } from "@/app/(connected)/connections/_components/data-connection-logs"
+import { DataConnections } from "@/app/(connected)/connections/_components/data-connections"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 enum ConnectionTabs {
@@ -20,12 +20,13 @@ export default function ConnectionsPage() {
           </TabsTrigger>
         </TabsList>
         <TabsContent value={ConnectionTabs.Connections}>
-          <Connections />
+          <DataConnections />
         </TabsContent>
         <TabsContent value={ConnectionTabs.ConnectionLogs}>
-          <ConnectionLogs />
+          <DataConnectionLogs />
         </TabsContent>
       </Tabs>
     </div>
   )
 }
+ConnectionsPage.displayName = "ConnectionsPage"

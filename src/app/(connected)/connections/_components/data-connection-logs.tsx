@@ -1,10 +1,10 @@
 import React from "react"
 
-import { ConnectionLogItem } from "@/app/(connected)/connections/_components/connection-log-item"
+import { DataConnectionLogItem } from "@/app/(connected)/connections/_components/data-connection-log-item"
 import { Typography } from "@/components/typography"
-import { MOCK_CONNECTION_LOGS } from "@/features/connections"
+import { MOCK_DATA_CONNECTION_LOGS } from "@/features/data-connections"
 
-export function ConnectionLogs() {
+export function DataConnectionLogs() {
   return (
     <div className="space-y-6">
       <Typography variant={"heading-3"}>Connection Logs</Typography>
@@ -22,11 +22,12 @@ export function ConnectionLogs() {
           </Typography>
         </div>
         <div className="space-y-3">
-          {MOCK_CONNECTION_LOGS.map((log) => (
-            <ConnectionLogItem log={log} key={log.id} />
+          {MOCK_DATA_CONNECTION_LOGS.map((log) => (
+            <DataConnectionLogItem log={log} key={log.id} />
           ))}
         </div>
       </div>
     </div>
   )
 }
+DataConnectionLogs.displayName = "DataConnectionLogs"

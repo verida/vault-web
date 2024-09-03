@@ -13,16 +13,16 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button"
-import { MOCK_DATA_PROVIDERS } from "@/features/connections"
+import { MOCK_DATA_PROVIDERS } from "@/features/data-connections"
 
-export type DisconnectConnectionDialogProps = {
+export type DisconnectDataConnectionDialogProps = {
   isOpen: boolean
   onClose: () => void
   connectionId: string
 }
 
-export function DisconnectConnectionDialog(
-  props: DisconnectConnectionDialogProps
+export function DisconnectDataConnectionDialog(
+  props: DisconnectDataConnectionDialogProps
 ) {
   const { isOpen, onClose, connectionId } = props
 
@@ -56,3 +56,4 @@ export function DisconnectConnectionDialog(
     </AlertDialog>
   )
 }
+DisconnectDataConnectionDialog.displayName = "DisconnectDataConnectionDialog"

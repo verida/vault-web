@@ -2,22 +2,25 @@
 
 import React from "react"
 
-import { ConnectionLogs } from "@/app/(connected)/connections/_components/connection-logs"
+import { DataConnectionLogs } from "@/app/(connected)/connections/_components/data-connection-logs"
 import { SupportedDataCard } from "@/app/(connected)/connections/_components/supported-data-card"
 import { SubPageWrapper } from "@/components/sub-page-wrapper"
 import { Typography } from "@/components/typography"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
-import { Connection, MOCK_SUPPORTED_DATA } from "@/features/connections"
+import {
+  DataConnection,
+  MOCK_SUPPORTED_DATA,
+} from "@/features/data-connections"
 import { getConnectionsPageRoute } from "@/features/routes/utils"
 import { useVerida } from "@/features/verida"
 
-export type ConnectionDetailsProps = {
-  connection: Connection
+export type DataConnectionDetailsProps = {
+  connection: DataConnection
 }
 
-export function ConnectionDetails(props: ConnectionDetailsProps) {
+export function DataConnectionDetails(props: DataConnectionDetailsProps) {
   const { connection } = props
 
   const { profile } = useVerida()
@@ -136,8 +139,9 @@ export function ConnectionDetails(props: ConnectionDetailsProps) {
           </div>
         </div>
 
-        <ConnectionLogs />
+        <DataConnectionLogs />
       </div>
     </SubPageWrapper>
   )
 }
+DataConnectionDetails.displayName = "DataConnectionDetails"

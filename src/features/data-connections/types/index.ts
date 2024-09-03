@@ -3,15 +3,18 @@ import { z } from "zod"
 import {
   DataProviderHandlerSchema,
   DataProviderSchema,
-} from "@/features/connections/schemas"
+} from "@/features/data-connections/schemas"
 
 export type DataProvider = z.infer<typeof DataProviderSchema>
 export type DataProviderHandler = z.infer<typeof DataProviderHandlerSchema>
 
-export type Connection = DataProvider & {
+export type DataConnection = DataProvider & {
   userId?: string
 }
 
+/**
+ * @deprecated
+ */
 export type SupportedData = {
   title: string
   lastSynced: string
@@ -20,7 +23,7 @@ export type SupportedData = {
   backdate: string
 }
 
-export type ConnectionLog = {
+export type DataConnectionLog = {
   source: string
   type: string
   id: number

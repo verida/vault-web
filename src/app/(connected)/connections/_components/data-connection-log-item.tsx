@@ -4,13 +4,13 @@ import React, { useState } from "react"
 
 import { Typography } from "@/components/typography"
 import { Card } from "@/components/ui/card"
-import { ConnectionLog } from "@/features/connections"
+import { DataConnectionLog } from "@/features/data-connections"
 
-export type ConnectionLogItemProps = {
-  log: ConnectionLog
+export type DataConnectionLogItemProps = {
+  log: DataConnectionLog
 }
 
-export function ConnectionLogItem(props: ConnectionLogItemProps) {
+export function DataConnectionLogItem(props: DataConnectionLogItemProps) {
   const { log } = props
 
   const [showFull, setShowFull] = useState(false)
@@ -79,3 +79,4 @@ export function ConnectionLogItem(props: ConnectionLogItemProps) {
     </>
   )
 }
+DataConnectionLogItem.displayName = "DataConnectionLogItem"

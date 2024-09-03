@@ -6,11 +6,11 @@
 // import { Twitter } from "@/components/icons/connection-twitter"
 // import { Youtube } from "@/components/icons/connection-youtube"
 import {
-  Connection,
-  ConnectionLog,
+  DataConnection,
+  DataConnectionLog,
   DataProvider,
   SupportedData,
-} from "@/features/connections/types"
+} from "@/features/data-connections/types"
 
 export const MOCK_DATA_PROVIDERS: DataProvider[] = [
   {
@@ -45,7 +45,7 @@ export const MOCK_DATA_PROVIDERS: DataProvider[] = [
   },
 ]
 
-export const MOCK_USER_CONNECTIONS: Connection[] = [
+export const MOCK_USER_DATA_CONNECTIONS: DataConnection[] = [
   {
     name: "twitter",
     label: "Twitter",
@@ -55,6 +55,9 @@ export const MOCK_USER_CONNECTIONS: Connection[] = [
   },
 ]
 
+/**
+ * @deprecated
+ */
 export const MOCK_SUPPORTED_DATA: SupportedData[] = [
   {
     title: "Emails",
@@ -93,7 +96,7 @@ export const MOCK_SUPPORTED_DATA: SupportedData[] = [
   },
 ]
 
-export const MOCK_CONNECTION_LOGS: ConnectionLog[] = [
+export const MOCK_DATA_CONNECTION_LOGS: DataConnectionLog[] = [
   {
     source: "twitter",
     type: "Social Posts",

@@ -5,15 +5,15 @@ import { useRouter } from "next/navigation"
 import { Typography } from "@/components/typography"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
-import { Connection } from "@/features/connections"
+import { DataConnection } from "@/features/data-connections"
 import { getConnectionPageRoute } from "@/features/routes/utils"
 
-export type ConnectionCardProps = {
+export type DataConnectionCardProps = {
   onDisconnect?: () => void
-  connection: Connection
+  connection: DataConnection
 }
 
-export function ConnectionCard(props: ConnectionCardProps) {
+export function DataConnectionCard(props: DataConnectionCardProps) {
   const { connection, onDisconnect } = props
 
   const router = useRouter()
@@ -79,4 +79,4 @@ export function ConnectionCard(props: ConnectionCardProps) {
     </div>
   )
 }
-ConnectionCard.displayName = "ConnectionCard"
+DataConnectionCard.displayName = "DataConnectionCard"
