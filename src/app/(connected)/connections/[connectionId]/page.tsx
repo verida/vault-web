@@ -2,7 +2,7 @@
 
 import { notFound } from "next/navigation"
 
-import { DataConnectionDetails } from "@/app/(connected)/connections/[connectionId]/_components/data-connection-details"
+import { DataConnectionPageContent } from "@/app/(connected)/connections/[connectionId]/_components/data-connection-page-content"
 import { useDataConnection } from "@/features/data-connections"
 
 type ConnectionPageProps = {
@@ -17,7 +17,7 @@ export default function ConnectionPage(props: ConnectionPageProps) {
   const { connection, isLoading, isError } = useDataConnection(connectionId)
 
   if (connection) {
-    return <DataConnectionDetails connection={connection} />
+    return <DataConnectionPageContent connection={connection} />
   }
 
   if (isLoading) {

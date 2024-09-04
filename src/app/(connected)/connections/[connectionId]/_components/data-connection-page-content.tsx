@@ -20,11 +20,13 @@ import {
   useDataProvider,
 } from "@/features/data-connections"
 
-export type DataConnectionDetailsProps = {
+export type DataConnectionPageContentProps = {
   connection: DataConnection
 }
 
-export function DataConnectionDetails(props: DataConnectionDetailsProps) {
+export function DataConnectionPageContent(
+  props: DataConnectionPageContentProps
+) {
   const { connection } = props
 
   const { provider } = useDataProvider(connection.provider)
@@ -138,4 +140,4 @@ export function DataConnectionDetails(props: DataConnectionDetailsProps) {
     </div>
   )
 }
-DataConnectionDetails.displayName = "DataConnectionDetails"
+DataConnectionPageContent.displayName = "DataConnectionPageContent"
