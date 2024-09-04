@@ -1,14 +1,8 @@
-// import { Discord } from "@/components/icons/connection-discord"
-// import { Facebook } from "@/components/icons/connection-facebook"
-// import { Github } from "@/components/icons/connection-github"
-// import { Instagram } from "@/components/icons/connection-instagram"
-// import { Telegram } from "@/components/icons/connection-telegram"
-// import { Twitter } from "@/components/icons/connection-twitter"
-// import { Youtube } from "@/components/icons/connection-youtube"
 import {
   DataConnection,
   DataConnectionLog,
   DataProvider,
+  LegacyDataConnection,
   SupportedData,
 } from "@/features/data-connections/types"
 
@@ -45,13 +39,56 @@ export const MOCK_DATA_PROVIDERS: DataProvider[] = [
   },
 ]
 
-export const MOCK_USER_DATA_CONNECTIONS: DataConnection[] = [
+/**
+ * @deprecated
+ */
+export const MOCK_USER_DATA_CONNECTIONS_OLD: LegacyDataConnection[] = [
   {
     name: "twitter",
     label: "Twitter",
     icon: "https://127.0.0.1:5021/assets/twitter/icon.png",
     description: "Connect your X Account to share your tweets with us.",
     userId: "@tahpot",
+  },
+]
+export const MOCK_USER_DATA_CONNECTIONS: DataConnection[] = [
+  {
+    name: "twitter:123",
+    provider: "twitter",
+    providerId: "123",
+    profile: {
+      id: "123",
+      name: "John Doe",
+      avatar: {
+        uri: "https://example.com/avatar.jpg",
+      },
+      givenName: "John",
+      familyName: "Doe",
+      email: "john.doe@example.com",
+    },
+    syncStatus: "connected",
+    syncFrequency: "hour",
+    syncStart: "2023-05-01T10:00:00Z",
+    syncEnd: "2023-05-01T10:05:00Z",
+  },
+  {
+    name: "google:456",
+    provider: "google",
+    providerId: "456",
+    profile: {
+      id: "456",
+      name: "Jane Smith",
+      avatar: {
+        uri: "https://example.com/jane-avatar.jpg",
+      },
+      givenName: "Jane",
+      familyName: "Smith",
+      email: "jane.smith@example.com",
+    },
+    syncStatus: "connected",
+    syncFrequency: "hour",
+    syncStart: "2023-05-02T09:00:00Z",
+    syncEnd: "2023-05-02T09:10:00Z",
   },
 ]
 

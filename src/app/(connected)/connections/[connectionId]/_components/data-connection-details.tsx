@@ -14,7 +14,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import {
-  DataConnection,
+  LegacyDataConnection,
   MOCK_DATA_CONNECTION_LOGS,
   MOCK_SUPPORTED_DATA,
 } from "@/features/data-connections"
@@ -22,7 +22,7 @@ import { getConnectionsSummaryPageRoute } from "@/features/routes/utils"
 import { useVerida } from "@/features/verida"
 
 export type DataConnectionDetailsProps = {
-  connection: DataConnection
+  connection: LegacyDataConnection
 }
 
 export function DataConnectionDetails(props: DataConnectionDetailsProps) {

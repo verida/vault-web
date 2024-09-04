@@ -14,7 +14,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button"
-import { MOCK_USER_DATA_CONNECTIONS } from "@/features/data-connections"
+import { MOCK_USER_DATA_CONNECTIONS_OLD } from "@/features/data-connections"
 
 export type DisconnectDataConnectionDialogProps = {
   children: React.ReactNode
@@ -27,7 +27,7 @@ export function DisconnectDataConnectionDialog(
   const { children, connectionId } = props
 
   const connection = useMemo(() => {
-    return MOCK_USER_DATA_CONNECTIONS.find((c) => c.name === connectionId)
+    return MOCK_USER_DATA_CONNECTIONS_OLD.find((c) => c.name === connectionId)
   }, [connectionId])
 
   if (!connection) {

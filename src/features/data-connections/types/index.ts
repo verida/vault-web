@@ -1,6 +1,8 @@
 import { z } from "zod"
 
 import {
+  DataConnectionBaseSchema,
+  DataConnectionSyncStatusApiResultItemSchema,
   DataProviderHandlerSchema,
   DataProviderSchema,
 } from "@/features/data-connections/schemas"
@@ -8,7 +10,16 @@ import {
 export type DataProvider = z.infer<typeof DataProviderSchema>
 export type DataProviderHandler = z.infer<typeof DataProviderHandlerSchema>
 
-export type DataConnection = DataProvider & {
+export type DataConnection = z.infer<typeof DataConnectionBaseSchema>
+
+export type DataConnectionSyncStatus = z.infer<
+  typeof DataConnectionSyncStatusApiResultItemSchema
+>
+
+/**
+ * @deprecated
+ */
+export type LegacyDataConnection = DataProvider & {
   userId: string
 }
 
@@ -23,6 +34,9 @@ export type SupportedData = {
   backdate: string
 }
 
+/**
+ * @deprecated
+ */
 export type DataConnectionLog = {
   source: string
   type: string
