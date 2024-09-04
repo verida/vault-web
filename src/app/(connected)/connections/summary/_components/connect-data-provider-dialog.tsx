@@ -7,6 +7,7 @@ import { VLogo } from "@/components/icons/logo"
 import { Switch } from "@/components/icons/switch"
 import { Typography } from "@/components/typography"
 import { Alert, AlertDescription } from "@/components/ui/alert"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import {
@@ -62,23 +63,12 @@ export function ConnectDataProviderDialog(
         {provider ? (
           <DialogBody className="flex flex-col gap-8">
             <div className="flex flex-row items-center justify-center gap-6">
-              {provider.icon ? (
-                // <Image
-                //   src={connection.icon}
-                //   alt={connection.label}
-                //   width={80}
-                //   height={80}
-                //   className="size-20 rounded-full border"
-                // />
-                /* eslint-disable @next/next/no-img-element */
-                <img
-                  src={provider.icon}
-                  alt={provider.label}
-                  width={80}
-                  height={80}
-                  className="size-20 rounded-full border"
-                />
-              ) : null}
+              <Avatar className="size-20">
+                <AvatarImage src={provider.icon} alt={provider.label} />
+                <AvatarFallback>
+                  {provider.label?.[0]?.toUpperCase()}
+                </AvatarFallback>
+              </Avatar>
               <Switch />
               <VLogo className="rounded-full border" />
             </div>
@@ -147,23 +137,10 @@ function ProviderSelectionItem(props: ProviderSelectionItemProps) {
   return (
     <button className={cn("rounded-lg", className)} {...buttonProps}>
       <Card className="flex w-full flex-row items-center gap-3 p-4 pr-3">
-        {provider.icon ? (
-          // <Image
-          //   src={iconUrl}
-          //   alt={label}
-          //   width={48}
-          //   height={48}
-          //   className="size-12 rounded-full border"
-          // />
-          /* eslint-disable @next/next/no-img-element */
-          <img
-            src={provider.icon}
-            alt={provider.label}
-            width={48}
-            height={48}
-            className="size-12 rounded-full border"
-          />
-        ) : null}
+        <Avatar className="size-12">
+          <AvatarImage src={provider.icon} alt={provider.label} />
+          <AvatarFallback>{provider.label?.[0]?.toUpperCase()}</AvatarFallback>
+        </Avatar>
         <div className="flex flex-1 flex-col items-start text-start">
           <Typography variant="heading-4">{provider.label}</Typography>
           <span
