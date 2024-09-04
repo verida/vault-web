@@ -51,12 +51,14 @@ export async function getDataProviders(): Promise<DataProvider[]> {
     // Validate the API response against the expected schema
     const validatedData = DataProvidersResponseSchema.parse(data)
     logger.info("Successfully fetched data providers")
-
     // Map the validated data to DataProvider objects, ensuring each has a description
     const providers: DataProvider[] = validatedData.map((provider) => ({
       ...provider,
       description: provider.description || DEFAULT_DATA_PROVIDER_DESCRIPTION,
     }))
+
+    // Sort the providers by label
+    providers.sort((a, b) => a.label.localeCompare(b.label))
 
     return providers
   } catch (error) {
