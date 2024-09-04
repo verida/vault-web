@@ -76,7 +76,8 @@ export const DataConnectionHandlerRecordSchema = VeridaBaseRecordSchema.extend(
 // TODO: Finalise the schema
 export const DataConnectionSyncStatusApiResultItemSchema = z.object({
   connection: DataConnectionRecordSchema,
-  handlers: z.array(DataConnectionHandlerRecordSchema),
+  // TODO: Add the handlers when needed
+  // handlers: z.array(DataConnectionHandlerRecordSchema),
 })
 
 // TODO: Finalise the schema

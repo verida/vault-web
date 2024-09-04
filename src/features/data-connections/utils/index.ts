@@ -1,8 +1,14 @@
 import { commonConfig } from "@/config/common"
 import { DEFAULT_DATA_PROVIDER_DESCRIPTION } from "@/features/data-connections/constants"
-import { MOCK_DATA_PROVIDERS } from "@/features/data-connections/mock"
-import { DataProvidersResponseSchema } from "@/features/data-connections/schemas"
-import { DataProvider } from "@/features/data-connections/types"
+import {
+  MOCK_DATA_PROVIDERS,
+  MOCK_USER_DATA_CONNECTIONS,
+} from "@/features/data-connections/mock"
+import {
+  DataConnectionSyncStatusApiResponseSchema,
+  DataProvidersResponseSchema,
+} from "@/features/data-connections/schemas"
+import { DataConnection, DataProvider } from "@/features/data-connections/types"
 import { Logger } from "@/features/telemetry"
 import { wait } from "@/utils/misc"
 
@@ -74,4 +80,70 @@ async function mockGetDataProviders(): Promise<DataProvider[]> {
       description: provider.description || DEFAULT_DATA_PROVIDER_DESCRIPTION,
     }))
   )
+}
+/**
+ * Fetches data connections from the API or returns mock data if the API is not configured.
+ *
+ * @param key - The API key for authentication
+ * @returns A promise that resolves to an array of DataConnection
+ * @throws Error if there's an issue fetching the data connections
+ */
+export async function getDataConnections(
+  key?: string
+): Promise<DataConnection[]> {
+  logger.info("Fetching data connections")
+
+  // Use mock response if API configuration is missing or key is not provided
+  if (!commonConfig.PRIVATE_DATA_API_BASE_URL || !key) {
+    logger.warn("Using mock response due to missing API configuration or key")
+    return mockGetDataConnections()
+  }
+
+  try {
+    logger.debug("Sending request to sync status API")
+    const response = await fetch(
+      `${commonConfig.PRIVATE_DATA_API_BASE_URL}/api/v1/sync/status`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "key": key,
+        },
+      }
+    )
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`)
+    }
+
+    const data = await response.json()
+    logger.debug("Received response from sync status API")
+
+    // Validate the API response against the expected schema
+    const validatedData = DataConnectionSyncStatusApiResponseSchema.parse(data)
+
+    if (!validatedData.success) {
+      throw new Error("API returned unsuccessful response")
+    }
+
+    logger.info("Successfully fetched data connections")
+    const dataConnections = Object.values(validatedData.result).map(
+      (item) => item.connection
+    )
+    return dataConnections
+  } catch (error) {
+    throw new Error("Error fetching data connections", { cause: error })
+  }
+}
+
+/**
+ * Simulates fetching data connections for testing purposes.
+ *
+ * @returns A promise that resolves to an array of mock DataConnection objects
+ */
+async function mockGetDataConnections(): Promise<DataConnection[]> {
+  // Simulate API delay
+  await wait(5000)
+
+  return Promise.resolve(MOCK_USER_DATA_CONNECTIONS)
 }
