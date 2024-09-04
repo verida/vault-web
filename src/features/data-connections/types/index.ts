@@ -19,13 +19,6 @@ export type DataConnectionSyncStatus = z.infer<
 /**
  * @deprecated
  */
-export type LegacyDataConnection = DataProvider & {
-  userId: string
-}
-
-/**
- * @deprecated
- */
 export type SupportedData = {
   title: string
   lastSynced: string

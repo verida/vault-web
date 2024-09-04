@@ -1,7 +1,5 @@
 "use client"
 
-import { useMemo } from "react"
-
 import { Typography } from "@/components/typography"
 import {
   AlertDialog,
@@ -14,25 +12,19 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button"
-import { MOCK_USER_DATA_CONNECTIONS_OLD } from "@/features/data-connections"
+import { DataConnection, useDataProvider } from "@/features/data-connections"
 
 export type DisconnectDataConnectionDialogProps = {
   children: React.ReactNode
-  connectionId: string
+  connection: DataConnection
 }
 
 export function DisconnectDataConnectionDialog(
   props: DisconnectDataConnectionDialogProps
 ) {
-  const { children, connectionId } = props
+  const { children, connection } = props
 
-  const connection = useMemo(() => {
-    return MOCK_USER_DATA_CONNECTIONS_OLD.find((c) => c.name === connectionId)
-  }, [connectionId])
-
-  if (!connection) {
-    return null
-  }
+  const { provider } = useDataProvider(connection.provider)
 
   return (
     <AlertDialog>
@@ -40,7 +32,9 @@ export function DisconnectDataConnectionDialog(
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>
-            Disconnect from {connection.label}
+            {provider?.label
+              ? `Disconnect from ${provider.label}`
+              : "Disconnect"}
           </AlertDialogTitle>
           {/* TODO: Add description for accessibility */}
         </AlertDialogHeader>

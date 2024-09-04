@@ -2,7 +2,6 @@ import {
   DataConnection,
   DataConnectionLog,
   DataProvider,
-  LegacyDataConnection,
   SupportedData,
 } from "@/features/data-connections/types"
 
@@ -39,18 +38,6 @@ export const MOCK_DATA_PROVIDERS: DataProvider[] = [
   },
 ]
 
-/**
- * @deprecated
- */
-export const MOCK_USER_DATA_CONNECTIONS_OLD: LegacyDataConnection[] = [
-  {
-    name: "twitter",
-    label: "Twitter",
-    icon: "https://127.0.0.1:5021/assets/twitter/icon.png",
-    description: "Connect your X Account to share your tweets with us.",
-    userId: "@tahpot",
-  },
-]
 export const MOCK_USER_DATA_CONNECTIONS: DataConnection[] = [
   {
     name: "twitter:123",

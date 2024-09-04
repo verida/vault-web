@@ -89,7 +89,7 @@ export function DataConnectionDetails(props: DataConnectionDetailsProps) {
               </div>
 
               <div className="flex flex-col gap-3 md:flex-row">
-                <DisconnectDataConnectionDialog connectionId={connection.name}>
+                <DisconnectDataConnectionDialog connection={connection}>
                   <DisconnectDataConnectionDialogTrigger asChild>
                     <Button variant="outline-destructive">Disconnect</Button>
                   </DisconnectDataConnectionDialogTrigger>
