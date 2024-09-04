@@ -47,7 +47,7 @@ export async function getDataProviders(): Promise<DataProvider[]> {
     logger.info("Successfully fetched data providers")
 
     // Map the validated data to DataProvider objects, ensuring each has a description
-    const providers = Object.values(validatedData).map((provider) => ({
+    const providers: DataProvider[] = validatedData.map((provider) => ({
       ...provider,
       description: provider.description || DEFAULT_DATA_PROVIDER_DESCRIPTION,
     }))
