@@ -20,9 +20,11 @@ export function DataProvidersList(props: DataProvidersListProps) {
     if (providers.length === 0) {
       return (
         // TODO: Improve the design of the empty state
-        <Typography variant="base-regular">
-          There are no available connections at the moment.
-        </Typography>
+        <div className={className} {...divProps}>
+          <Typography variant="base-regular">
+            There are no available connections at the moment.
+          </Typography>
+        </div>
       )
     }
 
@@ -60,12 +62,14 @@ export function DataProvidersList(props: DataProvidersListProps) {
   if (isError) {
     return (
       // TODO: Improve the design of the error state
-      <Alert variant="error">
-        <AlertDescription>
-          There has been an error getting the available connections. Please try
-          again later.
-        </AlertDescription>
-      </Alert>
+      <div className={className} {...divProps}>
+        <Alert variant="error">
+          <AlertDescription>
+            There has been an error getting the available connections. Please
+            try again later.
+          </AlertDescription>
+        </Alert>
+      </div>
     )
   }
 }
