@@ -111,3 +111,10 @@ export const DataConnectionSyncStatusApiResponseSchema = z.object({
   ),
   success: z.boolean(),
 })
+
+export const DataConnectionSyncApiResponseSchema = z
+  .object({
+    // TODO: Define the returned data connection when needed
+    success: z.boolean(),
+  })
+  .passthrough()

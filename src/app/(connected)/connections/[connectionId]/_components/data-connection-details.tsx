@@ -1,5 +1,7 @@
 "use client"
 
+import { useCallback, useState } from "react"
+
 import {
   DisconnectDataConnectionDialog,
   DisconnectDataConnectionDialogTrigger,
@@ -10,8 +12,15 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton"
-import { DataConnection, useDataProvider } from "@/features/data-connections"
+import {
+  DataConnection,
+  useDataProvider,
+  useSyncDataConnection,
+} from "@/features/data-connections"
+import { Logger } from "@/features/telemetry"
 import { cn } from "@/styles/utils"
+
+const logger = Logger.create("DataConnectionDetails")
 
 const dateFormatter = new Intl.DateTimeFormat(undefined, {
   month: "short",
@@ -29,7 +38,26 @@ export type DataConnectionDetailsProps = {
 export function DataConnectionDetails(props: DataConnectionDetailsProps) {
   const { connection, className, ...divProps } = props
 
+  const [isSyncing, setIsSyncing] = useState(false)
+
   const { provider } = useDataProvider(connection.provider)
+  const { syncDataConnection } = useSyncDataConnection()
+
+  const handleSyncClick = useCallback(async () => {
+    setIsSyncing(true)
+
+    try {
+      await syncDataConnection({
+        providerId: connection.provider,
+        accountId: connection.providerId,
+      })
+    } catch (error) {
+      logger.warn("Error syncing data connection")
+      logger.error(error)
+    } finally {
+      setIsSyncing(false)
+    }
+  }, [connection.provider, connection.providerId, syncDataConnection])
 
   return (
     <div className={cn(className)} {...divProps}>
@@ -82,7 +110,13 @@ export function DataConnectionDetails(props: DataConnectionDetailsProps) {
                 <Button variant="outline-destructive">Disconnect</Button>
               </DisconnectDataConnectionDialogTrigger>
             </DisconnectDataConnectionDialog>
-            <Button variant="outline">Sync All</Button>
+            <Button
+              variant="outline"
+              onClick={handleSyncClick}
+              disabled={isSyncing}
+            >
+              {isSyncing ? "Syncing..." : "Sync All"}
+            </Button>
           </div>
         </Card>
         <div className="flex flex-col justify-between gap-6 px-4 py-4 md:flex-row md:items-center md:px-6">

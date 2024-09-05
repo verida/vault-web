@@ -1,6 +1,6 @@
 import { useMemo } from "react"
 
-import { useDataProviders } from "@/features/data-connections/hooks/useDataProviders"
+import { useDataProviders } from "@/features/data-connections/hooks/use-data-providers"
 
 export function useDataProvider(providerId: string) {
   const { providers, ...query } = useDataProviders()

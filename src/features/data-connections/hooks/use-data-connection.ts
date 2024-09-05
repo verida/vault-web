@@ -1,6 +1,6 @@
 import { useMemo } from "react"
 
-import { useDataConnections } from "@/features/data-connections/hooks/useDataConnections"
+import { useDataConnections } from "@/features/data-connections/hooks/use-data-connections"
 
 export function useDataConnection(connectionName: string) {
   const { connections, ...query } = useDataConnections()

@@ -5,10 +5,15 @@ import {
   MOCK_USER_DATA_CONNECTIONS,
 } from "@/features/data-connections/mock"
 import {
+  DataConnectionSyncApiResponseSchema,
   DataConnectionSyncStatusApiResponseSchema,
   DataProvidersResponseSchema,
 } from "@/features/data-connections/schemas"
-import { DataConnection, DataProvider } from "@/features/data-connections/types"
+import {
+  DataConnection,
+  DataConnectionSyncApiResponse,
+  DataProvider,
+} from "@/features/data-connections/types"
 import { Logger } from "@/features/telemetry"
 import { wait } from "@/utils/misc"
 
@@ -166,4 +171,58 @@ async function mockGetDataConnections(): Promise<DataConnection[]> {
   await wait(5000)
 
   return Promise.resolve(MOCK_USER_DATA_CONNECTIONS)
+}
+
+/**
+ * Syncs a data connection with the specified providerId and accountId.
+ *
+ * @param providerId - The provider name
+ * @param accountId - The account ID
+ * @param key - The API key for authentication
+ * @throws Error if there's an issue syncing the data connection
+ */
+export async function syncDataConnection(
+  providerId: string,
+  accountId: string,
+  key?: string
+): Promise<DataConnectionSyncApiResponse> {
+  logger.info("Syncing data connection", { provider: providerId, accountId })
+
+  if (!commonConfig.PRIVATE_DATA_API_BASE_URL || !key) {
+    logger.warn("Cannot sync data connection: missing API configuration or key")
+    throw new Error("Missing API configuration")
+  }
+
+  const url = new URL(`${commonConfig.PRIVATE_DATA_API_BASE_URL}/api/v1/sync`)
+  url.searchParams.append("provider", providerId)
+  url.searchParams.append("providerId", accountId)
+
+  try {
+    logger.debug("Sending request to sync API")
+    const response = await fetch(url.toString(), {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "key": key,
+      },
+    })
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`)
+    }
+
+    // Assuming the API doesn't return any meaningful data on success
+    const data = await response.json()
+
+    const validatedData = DataConnectionSyncApiResponseSchema.parse(data)
+
+    logger.info("Successfully synced data connection", {
+      provider: providerId,
+      providerId: accountId,
+    })
+
+    return validatedData
+  } catch (error) {
+    throw new Error("Error syncing data connection", { cause: error })
+  }
 }

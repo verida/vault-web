@@ -6,6 +6,7 @@ import {
   DataConnectionHandlerConfigSchema,
   DataConnectionHandlerStatusSchema,
   DataConnectionStatusSchema,
+  DataConnectionSyncApiResponseSchema,
   DataConnectionSyncStatusApiResultItemSchema,
   DataConnectionsOptionDefinitionSchema,
   DataProviderHandlerDefinitionSchema,
@@ -47,6 +48,10 @@ export type DataConnectionHandlerStatus = z.infer<
 
 export type DataConnectionSyncStatus = z.infer<
   typeof DataConnectionSyncStatusApiResultItemSchema
+>
+
+export type DataConnectionSyncApiResponse = z.infer<
+  typeof DataConnectionSyncApiResponseSchema
 >
 
 /**
