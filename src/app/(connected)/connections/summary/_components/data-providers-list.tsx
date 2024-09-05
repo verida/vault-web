@@ -37,7 +37,9 @@ export function DataProvidersList(props: DataProvidersListProps) {
         {...divProps}
       >
         {providers.map((provider) => (
-          <DataProviderCard key={provider.name} provider={provider} />
+          <article key={provider.name}>
+            <DataProviderCard provider={provider} />
+          </article>
         ))}
       </div>
     )

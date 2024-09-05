@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button"
 export default function ConnectionsSummaryPage() {
   return (
     <div className="flex flex-col gap-8 sm:gap-10">
-      <div className="flex flex-row items-start justify-between">
+      <div className="flex flex-row items-center justify-between">
         <Typography variant="heading-3">Connections</Typography>
         <div className="flex flex-row items-center gap-2">
           <ConnectDataProviderDialog>
@@ -21,11 +21,11 @@ export default function ConnectionsSummaryPage() {
         </div>
       </div>
       <div className="flex flex-col gap-4 sm:gap-6">
-        <Typography variant="heading-4">My Connections</Typography>
+        <Typography variant="heading-4">Connections</Typography>
         <DataConnectionsList />
       </div>
       <div className="flex flex-col gap-4 sm:gap-6">
-        <Typography variant="heading-4">Available Connections</Typography>
+        <Typography variant="heading-4">Available Platforms</Typography>
         <DataProvidersList />
       </div>
     </div>

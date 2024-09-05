@@ -56,7 +56,7 @@ export function ConnectDataProviderDialog(
       <DialogContent>
         <DialogHeader>
           <DialogTitle>
-            {provider ? `Connect with ${provider.label}` : "Add new connection"}
+            {provider ? `Connect with ${provider.label}` : "Add Connection"}
           </DialogTitle>
           {/* TODO: Add description for accessibility */}
         </DialogHeader>

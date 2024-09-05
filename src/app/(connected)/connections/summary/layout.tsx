@@ -1,5 +1,3 @@
-import { ConnectionsSummaryNavTabs } from "@/app/(connected)/connections/summary/_components/connections-summary-nav-tabs"
-
 type ConnectionsSummaryLayoutProps = {
   children: React.ReactNode
 }
@@ -11,7 +9,7 @@ export default function ConnectionsSummaryLayout(
 
   return (
     <div className="flex flex-col gap-4 pb-4 sm:gap-6 md:pb-6 xl:pb-8">
-      <ConnectionsSummaryNavTabs />
+      {/* <ConnectionsSummaryNavTabs /> */}
       {children}
     </div>
   )
