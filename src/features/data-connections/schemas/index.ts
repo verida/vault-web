@@ -47,11 +47,13 @@ export const DataConnectionProfileSchema = z.object({
   email: z.string().email(),
 })
 
+// TODO: Finalise schema
 export const DataConnectionStatusSchema = z.enum([
   "connected",
   "error",
   "paused",
-  "sync-active",
+  // "sync-active",
+  "active",
 ])
 
 export const DataConnectionBaseSchema = z.object({

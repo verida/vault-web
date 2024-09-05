@@ -27,15 +27,26 @@ export function useSyncDataConnection() {
       )
       logger.debug("Successfully synced data connection")
 
-      logger.debug("Invalidating data connections queries")
-      await queryClient.invalidateQueries({
-        queryKey: ["data-connections", "connections"],
-      })
-      logger.debug("Successfully invalidated queries")
-
       return {
         success: result.success,
       }
+    },
+    onSuccess: () => {
+      logger.debug("Invalidating data connections queries")
+      queryClient
+        .invalidateQueries({
+          queryKey: ["data-connections", "connections"],
+        })
+        .then(() => {
+          logger.debug("Successfully invalidated queries")
+        })
+    },
+    onError: (error) => {
+      logger.error(
+        new Error("Error invalidating data connections queries", {
+          cause: error,
+        })
+      )
     },
     meta: {
       logCategory: "DataConnections",

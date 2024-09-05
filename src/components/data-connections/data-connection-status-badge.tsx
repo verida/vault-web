@@ -39,8 +39,9 @@ export function DataConnectionStatusBadge(
 
   const variant: BadgeVariants["variant"] = useMemo(() => {
     switch (status) {
+      // case "sync-active":
       case "connected":
-      case "sync-active":
+      case "active":
       case "enabled":
       case "syncing":
         return "success"
@@ -62,7 +63,8 @@ export function DataConnectionStatusBadge(
         return "Error"
       case "paused":
         return "Paused"
-      case "sync-active":
+      // case "sync-active":
+      case "active":
       case "syncing":
         return "Syncing..."
       case "enabled":
@@ -75,7 +77,7 @@ export function DataConnectionStatusBadge(
   }, [status])
 
   const animate = useMemo(() => {
-    return status === "syncing"
+    return status === "syncing" || status === "active"
   }, [status])
 
   return (
