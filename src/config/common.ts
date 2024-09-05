@@ -6,7 +6,7 @@ const commonConfigCheckResult = CommonConfigSchema.safeParse({
   // the code(like here). Also because the schema is not passthrough, for
   // strong typing, so can't pass process.env as there could have other env vars
   BASE_URL: process.env.NEXT_PUBLIC_BASE_URL,
-  DEBUG_MODE: process.env.NEXT_PUBLIC_DEBUG_MODE,
+  DEV_MODE: process.env.NEXT_PUBLIC_DEV_MODE,
   LOG_LEVEL: process.env.NEXT_PUBLIC_LOG_LEVEL,
   VERIDA_NETWORK: process.env.NEXT_PUBLIC_VERIDA_NETWORK,
   VERIDA_RPC_URL: process.env.NEXT_PUBLIC_VERIDA_RPC_URL,
@@ -15,6 +15,10 @@ const commonConfigCheckResult = CommonConfigSchema.safeParse({
     process.env.NEXT_PUBLIC_PRIVATE_DATA_API_PRIVATE_KEY,
   FEATURE_FLAG_AI_ASSISTANT_ENABLED:
     process.env.NEXT_PUBLIC_FEATURE_FLAG_AI_ASSISTANT_ENABLED,
+  FEATURE_FLAG_DATA_CONNECTIONS_ENABLED:
+    process.env.NEXT_PUBLIC_FEATURE_FLAG_DATA_CONNECTIONS_ENABLED,
+  FEATURE_FLAG_DATA_CONNECTIONS_LOGS_ENABLED:
+    process.env.NEXT_PUBLIC_FEATURE_FLAG_DATA_CONNECTIONS_LOGS_ENABLED,
   isClient: !(typeof window === "undefined"),
 })
 

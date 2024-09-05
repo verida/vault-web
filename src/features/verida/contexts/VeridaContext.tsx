@@ -14,7 +14,7 @@ import { VERIDA_VAULT_CONTEXT_NAME } from "@/features/verida/constants"
 const logger = Logger.create("Verida")
 
 const webUserInstance = new WebUser({
-  debug: commonConfig.DEBUG_MODE,
+  debug: commonConfig.DEV_MODE,
   clientConfig: {
     environment: commonConfig.VERIDA_NETWORK,
     didClientConfig: {
