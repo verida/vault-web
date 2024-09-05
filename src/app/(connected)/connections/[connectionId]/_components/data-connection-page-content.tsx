@@ -48,7 +48,11 @@ export function DataConnectionPageContent(
       </div>
       <div className="flex flex-col gap-4 md:gap-6">
         <Typography variant="heading-3">Services and Data</Typography>
-        <DataConnectionsHandlersList />
+        <DataConnectionsHandlersList
+          handlers={connection.handlers}
+          providerId={connection.provider}
+          lastSynced={connection.syncEnd}
+        />
       </div>
       {/* TODO: Add the logs section */}
     </div>

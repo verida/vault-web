@@ -1,6 +1,11 @@
 import { type VariantProps, cva } from "class-variance-authority"
+import { useMemo } from "react"
 
 import { Typography } from "@/components/typography"
+import {
+  DataConnectionHandlerStatus,
+  DataConnectionStatus,
+} from "@/features/data-connections"
 import { cn } from "@/styles/utils"
 
 export const badgeVariants = cva(
@@ -8,12 +13,15 @@ export const badgeVariants = cva(
   {
     variants: {
       variant: {
-        connected: "bg-status-connected text-status-connected-foreground",
-        unknown: "bg-muted text-foreground",
+        default: "bg-muted text-muted-foreground",
+        info: "bg-status-info text-status-info-foreground",
+        success: "bg-status-success text-status-success-foreground",
+        warning: "bg-status-warning text-status-warning-foreground",
+        error: "bg-status-error text-status-error-foreground",
       },
     },
     defaultVariants: {
-      variant: "unknown",
+      variant: "default",
     },
   }
 )
@@ -21,7 +29,7 @@ export const badgeVariants = cva(
 type BadgeVariants = VariantProps<typeof badgeVariants>
 
 export type DataConnectionStatusBadgeProps = {
-  status: string // TODO: Define enum for status
+  status: DataConnectionStatus | DataConnectionHandlerStatus
 } & Omit<React.ComponentProps<"div">, "children">
 
 export function DataConnectionStatusBadge(
@@ -29,13 +37,55 @@ export function DataConnectionStatusBadge(
 ) {
   const { status, className, ...divProps } = props
 
-  const variant: BadgeVariants["variant"] =
-    status === "connected" ? "connected" : "unknown"
+  const variant: BadgeVariants["variant"] = useMemo(() => {
+    switch (status) {
+      case "connected":
+      case "sync-active":
+      case "enabled":
+      case "syncing":
+        return "success"
+      case "error":
+        return "error"
+      case "paused":
+        return "warning"
+      case "disabled":
+      default:
+        return "default"
+    }
+  }, [status])
+
+  const label = useMemo(() => {
+    switch (status) {
+      case "connected":
+        return "Connected"
+      case "error":
+        return "Error"
+      case "paused":
+        return "Paused"
+      case "sync-active":
+      case "syncing":
+        return "Syncing..."
+      case "enabled":
+        return "Enabled"
+      case "disabled":
+        return "Disabled"
+      default:
+        return "Unknown"
+    }
+  }, [status])
+
+  const animate = useMemo(() => {
+    return status === "syncing"
+  }, [status])
 
   return (
     <div className={cn(badgeVariants({ variant }), className)} {...divProps}>
-      <Typography variant="base-semibold" component="p" className="capitalize">
-        {variant}
+      <Typography
+        variant="base-semibold"
+        component="p"
+        className={cn("capitalize", animate ? "animate-pulse" : "")}
+      >
+        {label}
       </Typography>
     </div>
   )

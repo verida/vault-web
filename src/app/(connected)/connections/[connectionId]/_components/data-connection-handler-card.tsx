@@ -1,28 +1,40 @@
-import { ChevronDown } from "lucide-react"
 import React from "react"
 
 import { DataConnectionStatusBadge } from "@/components/data-connections/data-connection-status-badge"
 import { Typography } from "@/components/typography"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Skeleton } from "@/components/ui/skeleton"
 import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
-import { Separator } from "@/components/ui/separator"
-import { Switch } from "@/components/ui/switch"
-import { SupportedData } from "@/features/data-connections"
+  DataConnectionHandler,
+  DataProviderHandlerDefinition,
+} from "@/features/data-connections"
 import { cn } from "@/styles/utils"
 
+const dateFormatter = new Intl.DateTimeFormat(undefined, {
+  month: "short",
+  day: "numeric",
+  year: "numeric",
+  hour: "numeric",
+  minute: "numeric",
+  hour12: true,
+})
+
 export type DataConnectionHandlerCardProps = {
-  data: SupportedData
+  handlerDefinition?: DataProviderHandlerDefinition
+  handlerConfig?: DataConnectionHandler
+  lastSynced?: string
 } & React.ComponentProps<typeof Card>
 
 export function DataConnectionHandlerCard(
   props: DataConnectionHandlerCardProps
 ) {
-  const { data, className, ...cardProps } = props
+  const {
+    handlerDefinition,
+    handlerConfig,
+    lastSynced,
+    className,
+    ...cardProps
+  } = props
 
   return (
     <Card
@@ -34,56 +46,100 @@ export function DataConnectionHandlerCard(
     >
       <CardHeader className="p-0 pb-4">
         <div className="flex items-center justify-between">
-          <CardTitle variant="heading-5">{data.title}</CardTitle>
+          <CardTitle variant="heading-5">{handlerDefinition?.label}</CardTitle>
         </div>
       </CardHeader>
       <CardContent className="flex flex-1 flex-col gap-4 p-0 pb-3">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-wrap items-center justify-between gap-4">
           <div className="text-muted-foreground">
             <Typography variant="base-regular">Status</Typography>
           </div>
-          <DataConnectionStatusBadge status="connected" />
+          <DataConnectionStatusBadge
+            status={handlerConfig?.status || "disabled"}
+          />
         </div>
-        <div className="flex items-center justify-between">
-          <div className="text-muted-foreground">
+        <div className="flex flex-wrap items-center justify-between gap-4">
+          <div className="shrink-0 text-muted-foreground">
             <Typography variant="base-regular">Last synced</Typography>
           </div>
-          <Typography variant="base-regular">{data.lastSynced}</Typography>
+          <Typography variant="base-regular" className="flex-1 text-end">
+            {lastSynced && handlerConfig?.enabled
+              ? dateFormatter.format(new Date(lastSynced))
+              : "-"}
+          </Typography>
         </div>
-        <div className="flex items-start justify-between">
-          <div className="text-muted-foreground">
+        <div className="flex flex-wrap items-start justify-between gap-4">
+          <div className="shrink-0 text-muted-foreground">
             <Typography variant="base-regular">Sync summary</Typography>
           </div>
-          <Typography className="max-w-40" variant="base-regular">
-            {data.summary}
+          <Typography
+            className="line-clamp-4 flex-1 text-end"
+            variant="base-regular"
+          >
+            {handlerConfig?.syncMessage || "-"}
           </Typography>
         </div>
-        <div className="flex items-center justify-between">
-          <div className="text-muted-foreground">
-            <Typography variant="base-regular">Synced data items</Typography>
-          </div>
-          <Typography className="max-w-40" variant="base-regular">
-            {data.itemCount}
-          </Typography>
-        </div>
-        <div className="flex items-center justify-between">
-          <div className="text-muted-foreground">
-            <Typography variant="base-regular">Backdate</Typography>
-          </div>
-          <div className="flex items-center gap-1 rounded-md bg-muted px-3 py-1">
-            <Typography className="max-w-40" variant="base-semibold">
-              {data.backdate}
+        {handlerDefinition?.options?.map((option) => (
+          <div
+            key={option.id}
+            className="flex flex-wrap items-center justify-between gap-4"
+          >
+            <div className="shrink-0 text-muted-foreground">
+              <Typography variant="base-regular">{option.label}</Typography>
+            </div>
+            <Typography className="flex-1 text-end" variant="base-semibold">
+              {handlerConfig?.config?.[option.id] || option.defaultValue}
             </Typography>
-            <ChevronDown className="size-5 text-muted-foreground" />
           </div>
-        </div>
+        ))}
       </CardContent>
-      <Separator />
+      {/* <Separator />
       <CardFooter className="flex items-center justify-between p-0 pt-3">
-        <Typography variant="base-semibold">Sync this data</Typography>
+        <Typography variant="base-semibold">Sync enabled</Typography>
         <Switch />
-      </CardFooter>
+      </CardFooter> */}
     </Card>
   )
 }
 DataConnectionHandlerCard.displayName = "DataConnectionHandlerCard"
+
+export type DataConnectionHandlerCardSkeletonProps = React.ComponentProps<
+  typeof Card
+>
+
+export function DataConnectionHandlerCardSkeleton(
+  props: DataConnectionHandlerCardSkeletonProps
+) {
+  const { className, ...cardProps } = props
+
+  return (
+    <Card
+      className={cn(
+        "flex flex-col gap-0 rounded-2xl px-4 py-6 md:px-6",
+        className
+      )}
+      {...cardProps}
+    >
+      <CardHeader className="p-0 pb-4">
+        <div className="flex items-center justify-between">
+          <Skeleton className="h-6 w-40" />
+        </div>
+      </CardHeader>
+      <CardContent className="flex flex-1 flex-col gap-4 p-0 pb-3">
+        {[...Array(3)].map((_, index) => (
+          <div key={index} className="flex items-center justify-between">
+            <Skeleton className="h-4 w-24" />
+            <Skeleton className="h-4 w-20" />
+          </div>
+        ))}
+      </CardContent>
+      {/* <Separator />
+      <CardFooter className="flex items-center justify-between p-0 pt-3">
+        <Skeleton className="h-4 w-32" />
+        <Skeleton className="h-6 w-10" />
+      </CardFooter> */}
+    </Card>
+  )
+}
+DataConnectionHandlerCardSkeleton.displayName =
+  "DataConnectionHandlerCardSkeleton"

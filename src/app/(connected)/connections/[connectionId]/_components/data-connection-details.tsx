@@ -82,8 +82,7 @@ export function DataConnectionDetails(props: DataConnectionDetailsProps) {
                 <Button variant="outline-destructive">Disconnect</Button>
               </DisconnectDataConnectionDialogTrigger>
             </DisconnectDataConnectionDialog>
-            <Button variant="outline">Disable</Button>
-            <Button variant="outline">Sync All Data</Button>
+            <Button variant="outline">Sync All</Button>
           </div>
         </Card>
         <div className="flex flex-col justify-between gap-6 px-4 py-4 md:flex-row md:items-center md:px-6">

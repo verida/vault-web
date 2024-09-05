@@ -6,8 +6,8 @@ export const VeridaBaseRecordSchema = z
     _rev: z.string(),
     name: z.string().optional(),
     schema: z.string(),
-    insertedAt: z.string().datetime().optional(),
-    modifiedAt: z.string().datetime().optional(),
+    insertedAt: z.string().datetime(),
+    modifiedAt: z.string().datetime(),
   })
   .passthrough()
 

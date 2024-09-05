@@ -2,7 +2,6 @@ import {
   DataConnection,
   DataConnectionLog,
   DataProvider,
-  SupportedData,
 } from "@/features/data-connections/types"
 
 export const MOCK_DATA_PROVIDERS: DataProvider[] = [
@@ -57,6 +56,7 @@ export const MOCK_USER_DATA_CONNECTIONS: DataConnection[] = [
     syncFrequency: "hour",
     syncStart: "2023-05-01T10:00:00Z",
     syncEnd: "2023-05-01T10:05:00Z",
+    handlers: [],
   },
   {
     name: "google:456",
@@ -76,50 +76,23 @@ export const MOCK_USER_DATA_CONNECTIONS: DataConnection[] = [
     syncFrequency: "hour",
     syncStart: "2023-05-02T09:00:00Z",
     syncEnd: "2023-05-02T09:10:00Z",
+    handlers: [
+      {
+        name: "gmail",
+        enabled: true,
+        status: "enabled",
+        syncMessage: "Batch complete (200). More results pending.",
+        config: {
+          backdate: "3-months",
+        },
+      },
+    ],
   },
 ]
 
 /**
  * @deprecated
  */
-export const MOCK_SUPPORTED_DATA: SupportedData[] = [
-  {
-    title: "Emails",
-    lastSynced: "13 May 2024, 10:00am",
-    summary: "Data synchronization was completed without major issues",
-    itemCount: 3235,
-    backdate: "3 months",
-  },
-  {
-    title: "Tweets",
-    lastSynced: "13 May 2024, 10:00am",
-    summary: "Data synchronization was completed without major issues",
-    itemCount: 3235,
-    backdate: "1 month",
-  },
-  {
-    title: "Followers",
-    lastSynced: "13 May 2024, 10:00am",
-    summary: "Data synchronization was completed without major issues",
-    itemCount: 3235,
-    backdate: "3 months",
-  },
-  {
-    title: "Following",
-    lastSynced: "13 May 2024, 10:00am",
-    summary: "Data synchronization was completed without major issues",
-    itemCount: 3235,
-    backdate: "3 months",
-  },
-  {
-    title: "Likes",
-    lastSynced: "13 May 2024, 10:00am",
-    summary: "Data synchronization was completed without major issues",
-    itemCount: 3235,
-    backdate: "3 months",
-  },
-]
-
 export const MOCK_DATA_CONNECTION_LOGS: DataConnectionLog[] = [
   {
     source: "twitter",

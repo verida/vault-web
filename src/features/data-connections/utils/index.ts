@@ -129,9 +129,27 @@ export async function getDataConnections(
     }
 
     logger.info("Successfully fetched data connections")
-    const dataConnections = Object.values(validatedData.result).map(
-      (item) => item.connection
-    )
+    const dataConnections: DataConnection[] = Object.values(
+      validatedData.result
+    ).map((connectionItem) => ({
+      ...connectionItem.connection,
+      handlers: connectionItem.handlers.reduce(
+        (formattedHandlers, handler) => {
+          const connectionHandler = connectionItem.connection.handlers.find(
+            (h) => h.name === handler.handlerName
+          )
+          if (connectionHandler) {
+            formattedHandlers.push({
+              ...connectionHandler,
+              status: handler.status,
+              syncMessage: handler.syncMessage,
+            })
+          }
+          return formattedHandlers
+        },
+        [] as DataConnection["handlers"]
+      ),
+    }))
     return dataConnections
   } catch (error) {
     throw new Error("Error fetching data connections", { cause: error })
