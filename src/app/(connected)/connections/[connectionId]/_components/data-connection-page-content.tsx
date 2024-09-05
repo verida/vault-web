@@ -3,15 +3,11 @@
 import React from "react"
 
 import { DataConnectionDetails } from "@/app/(connected)/connections/[connectionId]/_components/data-connection-details"
-import { SupportedDataCard } from "@/app/(connected)/connections/[connectionId]/_components/supported-data-card"
+import { DataConnectionsHandlersList } from "@/app/(connected)/connections/[connectionId]/_components/data-connections-handlers-list"
 import { Typography } from "@/components/typography"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Skeleton } from "@/components/ui/skeleton"
-import {
-  DataConnection,
-  MOCK_SUPPORTED_DATA,
-  useDataProvider,
-} from "@/features/data-connections"
+import { DataConnection, useDataProvider } from "@/features/data-connections"
 import { cn } from "@/styles/utils"
 
 export type DataConnectionPageContentProps = {
@@ -51,12 +47,8 @@ export function DataConnectionPageContent(
         <DataConnectionDetails connection={connection} />
       </div>
       <div className="flex flex-col gap-4 md:gap-6">
-        <Typography variant="heading-3">Supported Data Types</Typography>
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
-          {MOCK_SUPPORTED_DATA.map((data, index) => (
-            <SupportedDataCard data={data} key={index} />
-          ))}
-        </div>
+        <Typography variant="heading-3">Services and Data</Typography>
+        <DataConnectionsHandlersList />
       </div>
       {/* TODO: Add the logs section */}
     </div>

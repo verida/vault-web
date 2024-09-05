@@ -1,55 +1,55 @@
-import { ChevronDown, ChevronRight } from "lucide-react"
+import { ChevronDown } from "lucide-react"
 import React from "react"
 
+import { DataConnectionStatusBadge } from "@/components/data-connections/data-connection-status-badge"
 import { Typography } from "@/components/typography"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardFooter } from "@/components/ui/card"
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+import { Separator } from "@/components/ui/separator"
 import { Switch } from "@/components/ui/switch"
 import { SupportedData } from "@/features/data-connections"
+import { cn } from "@/styles/utils"
 
-export type SupportedDataCardProps = {
+export type DataConnectionHandlerCardProps = {
   data: SupportedData
-}
+} & React.ComponentProps<typeof Card>
 
-/**
- * @deprecated
- */
-export function SupportedDataCard(props: SupportedDataCardProps) {
-  const { data } = props
+export function DataConnectionHandlerCard(
+  props: DataConnectionHandlerCardProps
+) {
+  const { data, className, ...cardProps } = props
 
   return (
-    <Card className="p-6">
-      <CardContent className="space-y-4 p-0">
+    <Card
+      className={cn(
+        "flex flex-col gap-0 rounded-2xl px-4 py-6 md:px-6",
+        className
+      )}
+      {...cardProps}
+    >
+      <CardHeader className="p-0 pb-4">
         <div className="flex items-center justify-between">
-          <Typography variant="heading-5">{data.title}</Typography>
-          <Button variant="ghost" size="sm" className="-mx-2 -my-2 h-auto p-2">
-            <div className="flex flex-row items-center gap-1 text-primary">
-              <Typography variant="base-semibold">View Data</Typography>
-              <ChevronRight className="size-5" />
-            </div>
-          </Button>
+          <CardTitle variant="heading-5">{data.title}</CardTitle>
         </div>
-
+      </CardHeader>
+      <CardContent className="flex flex-1 flex-col gap-4 p-0 pb-3">
         <div className="flex items-center justify-between">
           <div className="text-muted-foreground">
             <Typography variant="base-regular">Status</Typography>
           </div>
-
-          <Typography
-            className="rounded-md bg-status-connected px-3 py-1 text-status-connected-foreground"
-            variant="base-semibold"
-          >
-            Connected
-          </Typography>
+          <DataConnectionStatusBadge status="connected" />
         </div>
-
         <div className="flex items-center justify-between">
           <div className="text-muted-foreground">
             <Typography variant="base-regular">Last synced</Typography>
           </div>
           <Typography variant="base-regular">{data.lastSynced}</Typography>
         </div>
-
         <div className="flex items-start justify-between">
           <div className="text-muted-foreground">
             <Typography variant="base-regular">Sync summary</Typography>
@@ -58,7 +58,6 @@ export function SupportedDataCard(props: SupportedDataCardProps) {
             {data.summary}
           </Typography>
         </div>
-
         <div className="flex items-center justify-between">
           <div className="text-muted-foreground">
             <Typography variant="base-regular">Synced data items</Typography>
@@ -67,7 +66,6 @@ export function SupportedDataCard(props: SupportedDataCardProps) {
             {data.itemCount}
           </Typography>
         </div>
-
         <div className="flex items-center justify-between">
           <div className="text-muted-foreground">
             <Typography variant="base-regular">Backdate</Typography>
@@ -79,20 +77,13 @@ export function SupportedDataCard(props: SupportedDataCardProps) {
             <ChevronDown className="size-5 text-muted-foreground" />
           </div>
         </div>
-
-        <div className="flex items-center justify-between">
-          <div className="text-muted-foreground">
-            <Typography variant="base-regular">
-              Only include emails from contacts
-            </Typography>
-          </div>
-          <Switch />
-        </div>
       </CardContent>
-      <CardFooter className="mt-3 flex items-center justify-between border-t p-0 pt-3">
+      <Separator />
+      <CardFooter className="flex items-center justify-between p-0 pt-3">
         <Typography variant="base-semibold">Sync this data</Typography>
         <Switch />
       </CardFooter>
     </Card>
   )
 }
+DataConnectionHandlerCard.displayName = "DataConnectionHandlerCard"
