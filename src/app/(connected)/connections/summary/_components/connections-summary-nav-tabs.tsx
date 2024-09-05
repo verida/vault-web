@@ -4,6 +4,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { featureFlags } from "@/config/features"
 import {
   getConnectionsSummaryLogsPageRoute,
   getConnectionsSummaryPageRoute,
@@ -11,6 +12,11 @@ import {
 
 export function ConnectionsSummaryNavTabs() {
   const pathname = usePathname()
+
+  if (!featureFlags.dataConnections.logs.enabled) {
+    // If the logs are not enabled, no point in showing the tabs
+    return null
+  }
 
   return (
     <Tabs>

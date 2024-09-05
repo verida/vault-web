@@ -1,7 +1,6 @@
 "use client"
 
 import Image from "next/image"
-import Link from "next/link"
 import { useState } from "react"
 
 import {
@@ -36,14 +35,14 @@ export function AppHeader(props: AppHeaderProps) {
             {isMenuOpened && (
               <AppHeaderNavMenu onNavItemClick={() => setIsMenuOpened(false)} />
             )}
-            <Link href="/" className="flex shrink-0 flex-row items-center">
+            <div className="flex shrink-0 flex-row items-center">
               <Image
                 src="/logo.svg"
                 alt="Verida Vault Logo"
                 height={32}
                 width={95}
               />
-            </Link>
+            </div>
             <AppHeaderNavBar className="hidden lg:flex" />
           </div>
           <div className="flex flex-row items-center gap-4 py-4 pr-4 md:pr-6 xl:pr-8">

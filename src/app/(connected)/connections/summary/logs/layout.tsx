@@ -1,4 +1,7 @@
+import { notFound } from "next/navigation"
+
 import { Typography } from "@/components/typography"
+import { featureFlags } from "@/config/features"
 
 type ConnectionsLogsLayoutProps = {
   children: React.ReactNode
@@ -8,6 +11,10 @@ export default function ConnectionsLogsLayout(
   props: ConnectionsLogsLayoutProps
 ) {
   const { children } = props
+
+  if (!featureFlags.dataConnections.logs.enabled) {
+    notFound()
+  }
 
   return (
     <div className="flex flex-col gap-6">
