@@ -63,8 +63,8 @@ export const DataConnectionBaseSchema = z.object({
   profile: DataConnectionProfileSchema.passthrough(),
   syncStatus: DataConnectionStatusSchema,
   syncFrequency: z.string(),
-  syncStart: z.string().datetime(),
-  syncEnd: z.string().datetime(),
+  syncStart: z.string().datetime().optional(),
+  syncEnd: z.string().datetime().optional(),
 })
 
 export const DataConnectionHandlerConfigSchema = z.object({

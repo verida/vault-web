@@ -53,7 +53,6 @@ export function DataConnectionDetails(props: DataConnectionDetailsProps) {
       })
     } catch (error) {
       logger.warn("Error syncing data connection")
-      logger.error(error)
     } finally {
       setIsSyncing(false)
     }
@@ -125,7 +124,9 @@ export function DataConnectionDetails(props: DataConnectionDetailsProps) {
               <Typography variant="base-regular">Last synced</Typography>
             </div>
             <Typography variant="heading-5" component="p">
-              {dateFormatter.format(new Date(connection.syncEnd))}
+              {connection.syncEnd
+                ? dateFormatter.format(new Date(connection.syncEnd))
+                : "-"}
             </Typography>
           </div>
           <div className="flex flex-col items-start gap-1 md:flex-row md:items-center md:gap-4">
