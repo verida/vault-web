@@ -14,9 +14,12 @@ export function useDataConnections() {
       getDataConnections(commonConfig.PRIVATE_DATA_API_PRIVATE_KEY),
     staleTime: 1000 * 60 * 2, // 2 minutes
     // TODO: Can increase the stale time once the status is fetched separately
+    // as the connections definition won't change much unless mutated which can
+    // invalidate the cache
     gcTime: 1000 * 60 * 30, // 30 minutes
     meta: {
       logCategory: "DataConnections",
+      errorMessage: "Error fetching data connections",
     },
   })
 

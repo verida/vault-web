@@ -43,14 +43,11 @@ export function useSyncDataConnection() {
         invalidateDataConnectionsQueries()
       })
     },
-    onSettled: () => {
-      // Invalidate the data connections to fetch the updated status just after
-      // the sync has finished (successfully or not)
-      invalidateDataConnectionsQueries()
-    },
     meta: {
       logCategory: "DataConnections",
       errorMessage: "Error syncing data connection",
+      onSettledInvalidationQueryKeys:
+        DataConnectionsQueryKeys.invalidateDataConnections(),
     },
   })
 

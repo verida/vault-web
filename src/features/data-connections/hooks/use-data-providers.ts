@@ -11,6 +11,7 @@ export function useDataProviders() {
     gcTime: 1000 * 60 * 60 * 24, // 24 hours
     meta: {
       logCategory: "DataConnections",
+      errorMessage: "Error fetching data providers",
     },
   })
 

@@ -8,7 +8,11 @@ import {
 } from "@tanstack/react-query"
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
 
-import { Logger } from "@/features/telemetry"
+import {
+  getLogger,
+  invalidateQueries,
+  logError,
+} from "@/features/queries/utils"
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -18,36 +22,36 @@ const queryClient = new QueryClient({
   },
   queryCache: new QueryCache({
     onError: (cause, query) => {
-      const logCategory =
-        query.meta?.logCategory === "string"
-          ? query.meta?.logCategory
-          : "Queries"
-
-      const logger = Logger.create(logCategory)
-
-      const error =
-        typeof query.meta?.errorMessage === "string"
-          ? new Error(query.meta.errorMessage, { cause })
-          : cause
-
-      logger.error(error)
+      const logger = getLogger(query.meta?.logCategory)
+      logError(cause, logger, query.meta?.errorMessage)
     },
   }),
   mutationCache: new MutationCache({
+    onSettled: (_data, _error, _variables, _context, mutation) => {
+      const logger = getLogger(mutation.meta?.logCategory)
+
+      const keys = mutation.meta?.onSettledInvalidationQueryKeys
+      if (keys) {
+        invalidateQueries(queryClient, keys, logger)
+      }
+    },
+    onSuccess: (_data, _variables, _context, mutation) => {
+      const logger = getLogger(mutation.meta?.logCategory)
+
+      const keys = mutation.meta?.onSuccessInvalidationQueryKeys
+      if (keys) {
+        invalidateQueries(queryClient, keys, logger)
+      }
+    },
     onError: (cause, _variables, _context, mutation) => {
-      const logCategory =
-        mutation.meta?.logCategory === "string"
-          ? mutation.meta?.logCategory
-          : "Queries"
+      const logger = getLogger(mutation.meta?.logCategory)
 
-      const logger = Logger.create(logCategory)
+      const keys = mutation.meta?.onErrorInvalidationQueryKeys
+      if (keys) {
+        invalidateQueries(queryClient, keys, logger)
+      }
 
-      const error =
-        typeof mutation.meta?.errorMessage === "string"
-          ? new Error(mutation.meta.errorMessage, { cause })
-          : cause
-
-      logger.error(error)
+      logError(cause, logger, mutation.meta?.errorMessage)
     },
   }),
 })
