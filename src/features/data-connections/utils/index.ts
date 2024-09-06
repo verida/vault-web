@@ -293,8 +293,11 @@ export async function disconnectDataConnection(
  * @returns The URL string for connecting to the provider
  * @throws Error if the API configuration is missing
  */
-export function buildConnectProviderUrl(providerId: string): string {
-  if (!commonConfig.PRIVATE_DATA_API_BASE_URL) {
+export function buildConnectProviderUrl(
+  providerId: string,
+  key?: string
+): string {
+  if (!commonConfig.PRIVATE_DATA_API_BASE_URL || !key) {
     throw new Error("Missing API configuration")
   }
 
@@ -305,6 +308,7 @@ export function buildConnectProviderUrl(providerId: string): string {
   const connectUrl = new URL(
     `${commonConfig.PRIVATE_DATA_API_BASE_URL}/api/v1/provider/connect/${providerId}`
   )
+  connectUrl.searchParams.append("key", key)
 
   const redirectUrl = new URL(
     `${commonConfig.BASE_URL}/${getNewDataConnectionCallbackPageRoute()}`

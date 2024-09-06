@@ -21,6 +21,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 import { Skeleton } from "@/components/ui/skeleton"
+import { commonConfig } from "@/config/common"
 import {
   DataConnectionsChannelEvent,
   DataProvider,
@@ -74,7 +75,10 @@ export function ConnectDataProviderDialog(
 
     setStatus("connecting")
     try {
-      const url = buildConnectProviderUrl(provider.name)
+      const url = buildConnectProviderUrl(
+        provider.name,
+        commonConfig.PRIVATE_DATA_API_PRIVATE_KEY
+      )
       window.open(url, "_blank")
     } catch (error) {
       setStatus("idle")
