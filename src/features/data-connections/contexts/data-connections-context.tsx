@@ -4,6 +4,7 @@ import { useQueryClient } from "@tanstack/react-query"
 import { createContext, useCallback, useEffect, useMemo, useRef } from "react"
 
 import { DATA_CONNECTIONS_CHANNEL } from "@/features/data-connections/constants"
+import { DataConnectionsQueryKeys } from "@/features/data-connections/queries"
 import { DataConnectionsChannelEvent } from "@/features/data-connections/types"
 import { Logger } from "@/features/telemetry"
 import { StrictBroadcastChannel } from "@/types/strict-broadcast-channel"
@@ -58,7 +59,7 @@ export function DataConnectionsProvider(props: DataConnectionsProviderProps) {
 
       logger.debug("Invalidating data connections queries")
       queryClient.invalidateQueries({
-        queryKey: ["data-connections", "connections"],
+        queryKey: DataConnectionsQueryKeys.invalidateDataConnections(),
       })
     },
     [queryClient]

@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 
 import { commonConfig } from "@/config/common"
+import { DataConnectionsQueryKeys } from "@/features/data-connections/queries"
 import { disconnectDataConnection } from "@/features/data-connections/utils"
 import { Logger } from "@/features/telemetry"
 
@@ -33,7 +34,7 @@ export function useDisconnectDataConnection() {
       logger.debug("Invalidating data connections queries")
       queryClient
         .invalidateQueries({
-          queryKey: ["data-connections", "connections"],
+          queryKey: DataConnectionsQueryKeys.invalidateDataConnections(),
         })
         .then(() => {
           logger.debug("Successfully invalidated data conenctions queries")
