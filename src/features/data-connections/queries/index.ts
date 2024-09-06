@@ -1,8 +1,8 @@
 export const DataConnectionsQueryKeys = {
   dataConnections: ({ did }: { did: string | null }) => [
-    did,
     "data-connections",
     "connections",
+    did,
   ],
   invalidateDataConnections: () => ["data-connections", "connections"],
   dataProviders: () => ["data-connections", "providers"],
