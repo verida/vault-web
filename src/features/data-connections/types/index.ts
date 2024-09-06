@@ -2,6 +2,7 @@ import { z } from "zod"
 
 import {
   DataConnectionBaseSchema,
+  DataConnectionDisconnectApiResponseSchema,
   DataConnectionHandlerBaseSchema,
   DataConnectionHandlerConfigSchema,
   DataConnectionHandlerStatusSchema,
@@ -52,6 +53,10 @@ export type DataConnectionSyncStatus = z.infer<
 
 export type DataConnectionSyncApiResponse = z.infer<
   typeof DataConnectionSyncApiResponseSchema
+>
+
+export type DataConnectionDisconnectApiResponse = z.infer<
+  typeof DataConnectionDisconnectApiResponseSchema
 >
 
 /**

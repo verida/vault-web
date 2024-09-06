@@ -21,9 +21,6 @@ import {
   useDisconnectDataConnection,
 } from "@/features/data-connections"
 import { getConnectionsSummaryPageRoute } from "@/features/routes/utils"
-import { Logger } from "@/features/telemetry"
-
-const logger = Logger.create("DisconnectDataConnectionDialog")
 
 export type DisconnectDataConnectionDialogProps = {
   children: React.ReactNode
@@ -42,22 +39,25 @@ export function DisconnectDataConnectionDialog(
   const { provider } = useDataProvider(connection.provider)
   const { disconnectDataConnection } = useDisconnectDataConnection()
 
-  const handleDisconnectClick = useCallback(async () => {
+  const handleDisconnectClick = useCallback(() => {
     setIsDisconnecting(true)
-    try {
-      await disconnectDataConnection({
+    disconnectDataConnection(
+      {
         providerId: connection.provider,
         accountId: connection.providerId,
-      })
-
-      router.replace(getConnectionsSummaryPageRoute())
-    } catch (error) {
-      // TODO: Error handling in the UI
-
-      logger.warn("Error disconnecting data connection")
-    } finally {
-      setIsDisconnecting(false)
-    }
+      },
+      {
+        onSettled: () => {
+          setIsDisconnecting(false)
+        },
+        onSuccess: () => {
+          router.replace(getConnectionsSummaryPageRoute())
+        },
+        onError: () => {
+          // TODO: Error handling in the UI
+        },
+      }
+    )
   }, [
     connection.provider,
     connection.providerId,

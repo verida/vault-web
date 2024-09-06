@@ -17,10 +17,7 @@ import {
   useDataProvider,
   useSyncDataConnection,
 } from "@/features/data-connections"
-import { Logger } from "@/features/telemetry"
 import { cn } from "@/styles/utils"
-
-const logger = Logger.create("DataConnectionDetails")
 
 const dateFormatter = new Intl.DateTimeFormat(undefined, {
   month: "short",
@@ -45,17 +42,17 @@ export function DataConnectionDetails(props: DataConnectionDetailsProps) {
 
   const handleSyncClick = useCallback(async () => {
     setIsSyncing(true)
-
-    try {
-      await syncDataConnection({
+    syncDataConnection(
+      {
         providerId: connection.provider,
         accountId: connection.providerId,
-      })
-    } catch (error) {
-      logger.warn("Error syncing data connection")
-    } finally {
-      setIsSyncing(false)
-    }
+      },
+      {
+        onSettled: () => {
+          setIsSyncing(false)
+        },
+      }
+    )
   }, [connection.provider, connection.providerId, syncDataConnection])
 
   return (
@@ -112,9 +109,11 @@ export function DataConnectionDetails(props: DataConnectionDetailsProps) {
             <Button
               variant="outline"
               onClick={handleSyncClick}
-              disabled={isSyncing}
+              disabled={isSyncing || connection.syncStatus === "active"}
             >
-              {isSyncing ? "Syncing..." : "Sync All"}
+              {isSyncing || connection.syncStatus === "active"
+                ? "Syncing..."
+                : "Sync All"}
             </Button>
           </div>
         </Card>

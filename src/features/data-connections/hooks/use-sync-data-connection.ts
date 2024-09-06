@@ -1,9 +1,11 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { useCallback } from "react"
 
 import { commonConfig } from "@/config/common"
 import { DataConnectionsQueryKeys } from "@/features/data-connections/queries"
 import { syncDataConnection } from "@/features/data-connections/utils"
 import { Logger } from "@/features/telemetry"
+import { wait } from "@/utils/misc"
 
 const logger = Logger.create("DataConnections")
 
@@ -15,30 +17,36 @@ type SyncDataConnectionVariables = {
 export function useSyncDataConnection() {
   const queryClient = useQueryClient()
 
-  const { mutateAsync, ...mutation } = useMutation({
-    mutationFn: async ({
-      providerId,
-      accountId,
-    }: SyncDataConnectionVariables) => {
-      const result = await syncDataConnection(
+  const invalidateDataConnectionsQueries = useCallback(() => {
+    logger.debug("Invalidating data connections queries")
+    queryClient
+      .invalidateQueries({
+        queryKey: DataConnectionsQueryKeys.invalidateDataConnections(),
+      })
+      .then(() => {
+        logger.debug("Successfully invalidated data connections queries")
+      })
+  }, [queryClient])
+
+  const { mutate, mutateAsync, ...mutation } = useMutation({
+    mutationFn: ({ providerId, accountId }: SyncDataConnectionVariables) =>
+      syncDataConnection(
         providerId,
         accountId,
         commonConfig.PRIVATE_DATA_API_PRIVATE_KEY
-      )
-
-      return {
-        success: result.success,
-      }
+      ),
+    onMutate: () => {
+      // Give time for the data connection to be updated on the server
+      wait(1000 * 2).then(() => {
+        // Invalidate the data connections to fetch the updated status just
+        // after starting the sync
+        invalidateDataConnectionsQueries()
+      })
     },
-    onSuccess: async () => {
-      const keys = DataConnectionsQueryKeys.invalidateDataConnections()
-      logger.debug("Invalidating data connections queries", { keys })
-      await queryClient.invalidateQueries({
-        queryKey: keys,
-      })
-      logger.debug("Successfully invalidated data connections queries", {
-        keys,
-      })
+    onSettled: () => {
+      // Invalidate the data connections to fetch the updated status just after
+      // the sync has finished (successfully or not)
+      invalidateDataConnectionsQueries()
     },
     meta: {
       logCategory: "DataConnections",
@@ -47,7 +55,8 @@ export function useSyncDataConnection() {
   })
 
   return {
-    syncDataConnection: mutateAsync,
+    syncDataConnection: mutate,
+    syncDataConnectionAsync: mutateAsync,
     ...mutation,
   }
 }

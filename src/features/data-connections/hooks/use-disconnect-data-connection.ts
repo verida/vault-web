@@ -15,28 +15,25 @@ type DisconnectDataConnectionVariables = {
 export function useDisconnectDataConnection() {
   const queryClient = useQueryClient()
 
-  const { mutateAsync, ...mutation } = useMutation({
-    mutationFn: async ({
+  const { mutate, mutateAsync, ...mutation } = useMutation({
+    mutationFn: ({
       providerId,
       accountId,
-    }: DisconnectDataConnectionVariables) => {
-      const success = await disconnectDataConnection(
+    }: DisconnectDataConnectionVariables) =>
+      disconnectDataConnection(
         providerId,
         accountId,
         commonConfig.PRIVATE_DATA_API_PRIVATE_KEY
-      )
-
-      return { success }
-    },
-    onSuccess: async () => {
-      const keys = DataConnectionsQueryKeys.invalidateDataConnections()
-      logger.debug("Invalidating data connections queries", { keys })
-      await queryClient.invalidateQueries({
-        queryKey: keys,
-      })
-      logger.debug("Successfully invalidated data conenctions queries", {
-        keys,
-      })
+      ),
+    onSettled: () => {
+      logger.debug("Invalidating data connections queries")
+      queryClient
+        .invalidateQueries({
+          queryKey: DataConnectionsQueryKeys.invalidateDataConnections(),
+        })
+        .then(() => {
+          logger.debug("Successfully invalidated data connections queries")
+        })
     },
     meta: {
       logCategory: "DataConnections",
@@ -45,7 +42,8 @@ export function useDisconnectDataConnection() {
   })
 
   return {
-    disconnectDataConnection: mutateAsync,
+    disconnectDataConnection: mutate,
+    disconnectDataConnectionAsync: mutateAsync,
     ...mutation,
   }
 }

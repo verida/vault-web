@@ -12,6 +12,7 @@ import {
 } from "@/features/data-connections/schemas"
 import {
   DataConnection,
+  DataConnectionDisconnectApiResponse,
   DataConnectionSyncApiResponse,
   DataProvider,
 } from "@/features/data-connections/types"
@@ -244,14 +245,14 @@ export async function syncDataConnection(
  * @param providerId - The provider ID
  * @param accountId - The account ID
  * @param key - The API key for authentication
- * @returns A promise that resolves to void indicating success
+ * @returns A promise that resolves to a DataConnectionDisconnectApiResponse indicating success
  * @throws Error if there's an issue disconnecting the data connection
  */
 export async function disconnectDataConnection(
   providerId: string,
   accountId: string,
   key?: string
-): Promise<void> {
+): Promise<DataConnectionDisconnectApiResponse> {
   logger.info("Disconnecting data connection", {
     providerId,
   })
@@ -292,6 +293,8 @@ export async function disconnectDataConnection(
     logger.info("Successfully disconnected data connection", {
       providerId,
     })
+
+    return validatedData
   } catch (error) {
     throw new Error("Error disconnecting data connection", { cause: error })
   }
