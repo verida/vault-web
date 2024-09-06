@@ -5,13 +5,17 @@ import { useEffect } from "react"
 import { useDataConnectionsContext } from "@/features/data-connections"
 import { Logger } from "@/features/telemetry"
 
-const logger = Logger.create("NewDataConnectionsCallbackPage")
+const logger = Logger.create("NewDataConnectionCallbackPage")
 
-export default function NewDataConnectionsCallbackPage() {
+export default function NewDataConnectionCallbackPage() {
   const { triggerNewDataConnectionEvent } = useDataConnectionsContext()
 
   useEffect(() => {
-    triggerNewDataConnectionEvent()
+    // TODO: Get connectionId from search params
+
+    triggerNewDataConnectionEvent({
+      connectionId: undefined, // TODO: Add connectionId when available
+    })
 
     logger.debug("Attempting to close the window")
     window.close()

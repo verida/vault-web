@@ -3,15 +3,20 @@
 import { useQueryClient } from "@tanstack/react-query"
 import { createContext, useCallback, useEffect, useMemo, useRef } from "react"
 
+import { DATA_CONNECTIONS_CHANNEL } from "@/features/data-connections/constants"
+import { DataConnectionsChannelEvent } from "@/features/data-connections/types"
 import { Logger } from "@/features/telemetry"
+import { StrictBroadcastChannel } from "@/types/strict-broadcast-channel"
 
 const logger = Logger.create("DataConnectionsContext")
 
-export const NEW_CONNECTION_EVENT = "new-data-connection"
-
 export type DataConnectionsContextValue = {
-  triggerNewDataConnectionEvent: () => void
-  broadcastChannel: BroadcastChannel
+  triggerNewDataConnectionEvent: ({
+    connectionId,
+  }: {
+    connectionId?: string // TODO: Make connectionId required when available
+  }) => void
+  broadcastChannel: StrictBroadcastChannel<DataConnectionsChannelEvent>
 }
 
 export const DataConnectionsContext =
@@ -24,28 +29,40 @@ export type DataConnectionsProviderProps = {
 export function DataConnectionsProvider(props: DataConnectionsProviderProps) {
   const { children } = props
   const queryClient = useQueryClient()
-  const broadcastChannelRef = useRef(new BroadcastChannel(NEW_CONNECTION_EVENT))
+  const broadcastChannelRef = useRef<
+    StrictBroadcastChannel<DataConnectionsChannelEvent>
+  >(new BroadcastChannel(DATA_CONNECTIONS_CHANNEL))
 
-  const triggerNewDataConnectionEvent = useCallback(() => {
-    logger.info("Triggering new data connection event")
+  const triggerNewDataConnectionEvent = useCallback(
+    ({ connectionId }: { connectionId?: string }) => {
+      logger.info("Triggering new data connection event")
 
-    const event = {
-      // TODO: Type the event once consumed
-      message: "new data connection",
-      // Pass the connectionId in the event if available from where it's triggered
-    }
+      broadcastChannelRef.current.postMessage({
+        type: "new-data-connection",
+        payload: {
+          connectionId,
+        },
+      })
+    },
+    []
+  )
 
-    broadcastChannelRef.current.postMessage(event)
-  }, [])
+  const handleNewDataConnection = useCallback(
+    (event: MessageEvent<DataConnectionsChannelEvent>) => {
+      const { type } = event.data
+      if (type !== "new-data-connection") {
+        return
+      }
 
-  const handleNewDataConnection = useCallback(() => {
-    logger.info("New data connection event received")
+      logger.info("New data connection event received")
 
-    logger.debug("Invalidating data connections queries")
-    queryClient.invalidateQueries({
-      queryKey: ["data-connections", "connections"],
-    })
-  }, [queryClient])
+      logger.debug("Invalidating data connections queries")
+      queryClient.invalidateQueries({
+        queryKey: ["data-connections", "connections"],
+      })
+    },
+    [queryClient]
+  )
 
   useEffect(() => {
     const broadcastChannel = broadcastChannelRef.current

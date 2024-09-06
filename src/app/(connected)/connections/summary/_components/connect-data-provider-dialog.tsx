@@ -1,6 +1,7 @@
 "use client"
 
 import { ChevronRight } from "lucide-react"
+import { useRouter } from "next/navigation"
 import { useCallback, useEffect, useState } from "react"
 
 import { VLogo } from "@/components/icons/logo"
@@ -21,11 +22,13 @@ import {
 } from "@/components/ui/dialog"
 import { Skeleton } from "@/components/ui/skeleton"
 import {
+  DataConnectionsChannelEvent,
   DataProvider,
   buildConnectProviderUrl,
   useDataConnectionsContext,
   useDataProviders,
 } from "@/features/data-connections"
+import { getConnectionPageRoute } from "@/features/routes/utils"
 import { Logger } from "@/features/telemetry"
 import { cn } from "@/styles/utils"
 
@@ -40,6 +43,8 @@ export function ConnectDataProviderDialog(
   props: ConnectDataProviderDialogProps
 ) {
   const { children, providerName } = props
+
+  const router = useRouter()
 
   const { providers, isLoading: isLoadingProviders } = useDataProviders()
   const [provider, setProvider] = useState<DataProvider | null>(null)
@@ -56,7 +61,8 @@ export function ConnectDataProviderDialog(
     }
   }, [providerName])
 
-  const { broadcastChannel } = useDataConnectionsContext()
+  const { broadcastChannel: dataConnectionsChannel } =
+    useDataConnectionsContext()
   const [status, setStatus] = useState<"idle" | "connecting" | "connected">(
     "idle"
   )
@@ -80,20 +86,36 @@ export function ConnectDataProviderDialog(
     }
   }, [provider])
 
-  const handleNewDataConnection = useCallback(() => {
-    logger.debug("New data connection event received")
+  const handleNewDataConnection = useCallback(
+    (event: MessageEvent<DataConnectionsChannelEvent>) => {
+      const { type, payload } = event.data
+      if (type !== "new-data-connection") {
+        return
+      }
 
-    // TODO: Ideally, navigate to the connection details page of the new connection, set the status to connected and adapt the UI to it instead.
+      logger.debug("New data connection event received")
 
-    setStatus("connected")
-  }, [])
+      const { connectionId } = payload
+
+      if (connectionId) {
+        router.push(getConnectionPageRoute({ connectionId }))
+      } else {
+        // For the moment the connectionId is not available, so we handle that other case to set conencted status and adapt the UI
+        setStatus("connected")
+      }
+    },
+    [router]
+  )
 
   useEffect(() => {
-    broadcastChannel.addEventListener("message", handleNewDataConnection)
+    dataConnectionsChannel.addEventListener("message", handleNewDataConnection)
     return () => {
-      broadcastChannel.removeEventListener("message", handleNewDataConnection)
+      dataConnectionsChannel.removeEventListener(
+        "message",
+        handleNewDataConnection
+      )
     }
-  }, [broadcastChannel, handleNewDataConnection])
+  }, [dataConnectionsChannel, handleNewDataConnection])
 
   return (
     <Dialog onOpenChange={handleOpenChange}>

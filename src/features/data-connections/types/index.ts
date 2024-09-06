@@ -64,3 +64,12 @@ export type DataConnectionLog = {
   message: string
   timestamp: string
 }
+
+// BroadcastChannel types
+
+type NewDataConnectionEvent = {
+  type: "new-data-connection"
+  payload: { connectionId?: string } // TODO: Make connectionId required when available
+}
+
+export type DataConnectionsChannelEvent = NewDataConnectionEvent
