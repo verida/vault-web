@@ -41,3 +41,7 @@ export function getConnectionsSummaryPageRoute() {
 export function getConnectionsSummaryLogsPageRoute() {
   return `/connections/summary/logs`
 }
+
+export function getNewDataConnectionCallbackPageRoute() {
+  return `/callback/new-data-connection`
+}

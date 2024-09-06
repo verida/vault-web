@@ -20,8 +20,15 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 import { Skeleton } from "@/components/ui/skeleton"
-import { DataProvider, useDataProviders } from "@/features/data-connections"
+import {
+  DataProvider,
+  buildConnectProviderUrl,
+  useDataProviders,
+} from "@/features/data-connections"
+import { Logger } from "@/features/telemetry"
 import { cn } from "@/styles/utils"
+
+const logger = Logger.create("ConnectDataProviderDialog")
 
 export type ConnectDataProviderDialogProps = {
   children: React.ReactNode
@@ -32,6 +39,8 @@ export function ConnectDataProviderDialog(
   props: ConnectDataProviderDialogProps
 ) {
   const { children, providerName } = props
+
+  const [isConnecting, setIsConnecting] = useState(false)
 
   const { providers, isLoading: isLoadingProviders } = useDataProviders()
 
@@ -48,6 +57,29 @@ export function ConnectDataProviderDialog(
       setProvider(null)
     }
   }, [providerName])
+
+  const handleConnectClick = useCallback(() => {
+    if (provider) {
+      setIsConnecting(true)
+      try {
+        const url = buildConnectProviderUrl(provider.name)
+        window.open(url, "_blank")
+      } catch (error) {
+        setIsConnecting(false)
+        logger.error(
+          new Error("Error building connect provider URL", {
+            cause: error,
+          })
+        )
+      }
+    }
+  }, [provider])
+
+  useEffect(() => {
+    // TODO: Add a listener for the new data connection event
+    // manage dialog state(display a success message or close the dialog,
+    // or redirect to the connection details page)
+  }, [])
 
   return (
     <Dialog onOpenChange={handleOpenChange}>
@@ -116,7 +148,13 @@ export function ConnectDataProviderDialog(
         )}
         {provider ? (
           <DialogFooter>
-            <Button variant="primary">Connect</Button>
+            <Button
+              variant="primary"
+              onClick={handleConnectClick}
+              disabled={isConnecting}
+            >
+              {isConnecting ? "Connecting..." : "Connect"}
+            </Button>
           </DialogFooter>
         ) : null}
       </DialogContent>

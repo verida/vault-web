@@ -15,6 +15,7 @@ import {
   DataConnectionSyncApiResponse,
   DataProvider,
 } from "@/features/data-connections/types"
+import { getNewDataConnectionCallbackPageRoute } from "@/features/routes/utils"
 import { Logger } from "@/features/telemetry"
 import { wait } from "@/utils/misc"
 
@@ -283,4 +284,34 @@ export async function disconnectDataConnection(
   } catch (error) {
     throw new Error("Error disconnecting data connection", { cause: error })
   }
+}
+
+/**
+ * Builds the URL to connect to a given provider.
+ *
+ * @param providerId - The provider ID
+ * @returns The URL string for connecting to the provider
+ * @throws Error if the API configuration is missing
+ */
+export function buildConnectProviderUrl(providerId: string): string {
+  if (!commonConfig.PRIVATE_DATA_API_BASE_URL) {
+    throw new Error("Missing API configuration")
+  }
+
+  // The connection will actually be driven by the Private Data server.
+  // The Vault web app will open a new tab with the URL returned by this
+  // function. Once the connection is established, the Private Data server will
+  // redirect back to the Vault app as set in the `redirect` search param.
+  const connectUrl = new URL(
+    `${commonConfig.PRIVATE_DATA_API_BASE_URL}/api/v1/provider/connect/${providerId}`
+  )
+
+  const redirectUrl = new URL(
+    `${commonConfig.BASE_URL}/${getNewDataConnectionCallbackPageRoute()}`
+  )
+
+  // Redirecting to the connections summary page
+  connectUrl.searchParams.append("redirect", redirectUrl.toString())
+
+  return connectUrl.toString()
 }
