@@ -23,6 +23,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 import {
   DataProvider,
   buildConnectProviderUrl,
+  useDataConnectionsContext,
   useDataProviders,
 } from "@/features/data-connections"
 import { Logger } from "@/features/telemetry"
@@ -40,10 +41,7 @@ export function ConnectDataProviderDialog(
 ) {
   const { children, providerName } = props
 
-  const [isConnecting, setIsConnecting] = useState(false)
-
   const { providers, isLoading: isLoadingProviders } = useDataProviders()
-
   const [provider, setProvider] = useState<DataProvider | null>(null)
 
   useEffect(() => {
@@ -58,28 +56,44 @@ export function ConnectDataProviderDialog(
     }
   }, [providerName])
 
+  const { broadcastChannel } = useDataConnectionsContext()
+  const [status, setStatus] = useState<"idle" | "connecting" | "connected">(
+    "idle"
+  )
+
   const handleConnectClick = useCallback(() => {
-    if (provider) {
-      setIsConnecting(true)
-      try {
-        const url = buildConnectProviderUrl(provider.name)
-        window.open(url, "_blank")
-      } catch (error) {
-        setIsConnecting(false)
-        logger.error(
-          new Error("Error building connect provider URL", {
-            cause: error,
-          })
-        )
-      }
+    if (!provider) {
+      return
+    }
+
+    setStatus("connecting")
+    try {
+      const url = buildConnectProviderUrl(provider.name)
+      window.open(url, "_blank")
+    } catch (error) {
+      setStatus("idle")
+      logger.error(
+        new Error("Error building connect provider URL", {
+          cause: error,
+        })
+      )
     }
   }, [provider])
 
-  useEffect(() => {
-    // TODO: Add a listener for the new data connection event
-    // manage dialog state(display a success message or close the dialog,
-    // or redirect to the connection details page)
+  const handleNewDataConnection = useCallback(() => {
+    logger.debug("New data connection event received")
+
+    // TODO: Ideally, navigate to the connection details page of the new connection, set the status to connected and adapt the UI to it instead.
+
+    setStatus("connected")
   }, [])
+
+  useEffect(() => {
+    broadcastChannel.addEventListener("message", handleNewDataConnection)
+    return () => {
+      broadcastChannel.removeEventListener("message", handleNewDataConnection)
+    }
+  }, [broadcastChannel, handleNewDataConnection])
 
   return (
     <Dialog onOpenChange={handleOpenChange}>
@@ -148,13 +162,19 @@ export function ConnectDataProviderDialog(
         )}
         {provider ? (
           <DialogFooter>
-            <Button
-              variant="primary"
-              onClick={handleConnectClick}
-              disabled={isConnecting}
-            >
-              {isConnecting ? "Connecting..." : "Connect"}
-            </Button>
+            {status !== "connected" ? (
+              <Button
+                variant="primary"
+                onClick={handleConnectClick}
+                disabled={status === "connecting"}
+              >
+                {status === "connecting" ? "Connecting..." : "Connect"}
+              </Button>
+            ) : (
+              <Alert variant="info">
+                <AlertDescription>Connection successful.</AlertDescription>
+              </Alert>
+            )}
           </DialogFooter>
         ) : null}
       </DialogContent>

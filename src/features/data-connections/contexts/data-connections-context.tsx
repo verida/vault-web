@@ -1,17 +1,17 @@
 "use client"
 
 import { useQueryClient } from "@tanstack/react-query"
-import { createContext, useCallback, useEffect, useMemo } from "react"
+import { createContext, useCallback, useEffect, useMemo, useRef } from "react"
 
 import { Logger } from "@/features/telemetry"
 
 const logger = Logger.create("DataConnectionsContext")
 
 export const NEW_CONNECTION_EVENT = "new-data-connection"
-const broadcastChannel = new BroadcastChannel(NEW_CONNECTION_EVENT)
 
 export type DataConnectionsContextValue = {
   triggerNewDataConnectionEvent: () => void
+  broadcastChannel: BroadcastChannel
 }
 
 export const DataConnectionsContext =
@@ -24,6 +24,7 @@ export type DataConnectionsProviderProps = {
 export function DataConnectionsProvider(props: DataConnectionsProviderProps) {
   const { children } = props
   const queryClient = useQueryClient()
+  const broadcastChannelRef = useRef(new BroadcastChannel(NEW_CONNECTION_EVENT))
 
   const triggerNewDataConnectionEvent = useCallback(() => {
     logger.info("Triggering new data connection event")
@@ -31,9 +32,10 @@ export function DataConnectionsProvider(props: DataConnectionsProviderProps) {
     const event = {
       // TODO: Type the event once consumed
       message: "new data connection",
+      // Pass the connectionId in the event if available from where it's triggered
     }
 
-    broadcastChannel.postMessage(event)
+    broadcastChannelRef.current.postMessage(event)
   }, [])
 
   const handleNewDataConnection = useCallback(() => {
@@ -46,6 +48,7 @@ export function DataConnectionsProvider(props: DataConnectionsProviderProps) {
   }, [queryClient])
 
   useEffect(() => {
+    const broadcastChannel = broadcastChannelRef.current
     broadcastChannel.addEventListener("message", handleNewDataConnection)
     return () => {
       broadcastChannel.removeEventListener("message", handleNewDataConnection)
@@ -55,6 +58,7 @@ export function DataConnectionsProvider(props: DataConnectionsProviderProps) {
   const contextValue = useMemo(
     () => ({
       triggerNewDataConnectionEvent,
+      broadcastChannel: broadcastChannelRef.current,
     }),
     [triggerNewDataConnectionEvent]
   )
