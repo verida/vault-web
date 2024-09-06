@@ -32,12 +32,14 @@ export async function getDataProviders(): Promise<DataProvider[]> {
 
   // Use mock response if API configuration is missing
   if (!commonConfig.PRIVATE_DATA_API_BASE_URL) {
-    logger.warn("Using mock response due to missing API configuration")
+    logger.warn(
+      "Using mock response due to incorrect Private Data API configuration"
+    )
     return mockGetDataProviders()
   }
 
   try {
-    logger.debug("Sending request to providers API")
+    logger.debug("Sending API request to fetch data providers")
     const response = await fetch(
       `${commonConfig.PRIVATE_DATA_API_BASE_URL}/api/v1/providers`,
       {
@@ -49,7 +51,7 @@ export async function getDataProviders(): Promise<DataProvider[]> {
     )
 
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`)
+      throw new Error(`HTTP error ${response.status}`)
     }
 
     const data = await response.json()
@@ -104,12 +106,14 @@ export async function getDataConnections(
 
   // Use mock response if API configuration is missing or key is not provided
   if (!commonConfig.PRIVATE_DATA_API_BASE_URL || !key) {
-    logger.warn("Using mock response due to missing API configuration or key")
+    logger.warn(
+      "Using mock response due to incorrect Private Data API configuration"
+    )
     return mockGetDataConnections()
   }
 
   try {
-    logger.debug("Sending request to sync status API")
+    logger.debug("Sending API request to fetch data connections")
     const response = await fetch(
       `${commonConfig.PRIVATE_DATA_API_BASE_URL}/api/v1/sync/status`,
       {
@@ -122,17 +126,17 @@ export async function getDataConnections(
     )
 
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`)
+      throw new Error(`HTTP error ${response.status}`)
     }
 
     const data = await response.json()
-    logger.debug("Received response from sync status API")
+    logger.debug("Received response from data connections API")
 
     // Validate the API response against the expected schema
     const validatedData = DataConnectionSyncStatusApiResponseSchema.parse(data)
 
     if (!validatedData.success) {
-      throw new Error("API returned unsuccessful response")
+      throw new Error("API returned unsuccessful operation")
     }
 
     logger.info("Successfully fetched data connections")
@@ -191,8 +195,10 @@ export async function syncDataConnection(
   logger.info("Syncing data connection", { providerId })
 
   if (!commonConfig.PRIVATE_DATA_API_BASE_URL || !key) {
-    logger.warn("Cannot sync data connection: missing API configuration or key")
-    throw new Error("Missing API configuration")
+    logger.warn(
+      "Cannot sync data connection due to incorrect API configuration"
+    )
+    throw new Error("Incorrect Private Data API configuration")
   }
 
   const url = new URL(`${commonConfig.PRIVATE_DATA_API_BASE_URL}/api/v1/sync`)
@@ -200,7 +206,7 @@ export async function syncDataConnection(
   url.searchParams.append("providerId", accountId)
 
   try {
-    logger.debug("Sending request to sync API")
+    logger.debug("Sending API request to sync data connection")
     const response = await fetch(url.toString(), {
       method: "GET",
       headers: {
@@ -210,13 +216,17 @@ export async function syncDataConnection(
     })
 
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`)
+      throw new Error(`HTTP error ${response.status}`)
     }
 
     // Assuming the API doesn't return any meaningful data on success
     const data = await response.json()
 
     const validatedData = DataConnectionSyncApiResponseSchema.parse(data)
+
+    if (!validatedData.success) {
+      throw new Error("API returned unsuccessful operation")
+    }
 
     logger.info("Successfully synced data connection", {
       providerId,
@@ -234,23 +244,23 @@ export async function syncDataConnection(
  * @param providerId - The provider ID
  * @param accountId - The account ID
  * @param key - The API key for authentication
- * @returns A promise that resolves to a boolean indicating success
+ * @returns A promise that resolves to void indicating success
  * @throws Error if there's an issue disconnecting the data connection
  */
 export async function disconnectDataConnection(
   providerId: string,
   accountId: string,
   key?: string
-): Promise<boolean> {
+): Promise<void> {
   logger.info("Disconnecting data connection", {
-    provider: providerId,
+    providerId,
   })
 
   if (!commonConfig.PRIVATE_DATA_API_BASE_URL || !key) {
     logger.warn(
-      "Cannot disconnect data connection: missing API configuration or key"
+      "Cannot disconnect data connection due to incorrect Private Data API configuration"
     )
-    throw new Error("Missing API configuration")
+    throw new Error("Incorrect Private Data API configuration")
   }
 
   const url = new URL(
@@ -259,7 +269,7 @@ export async function disconnectDataConnection(
   url.searchParams.append("providerId", accountId)
 
   try {
-    logger.debug("Sending request to disconnect API")
+    logger.debug("Sending API request to disconnect data connection")
     const response = await fetch(url.toString(), {
       method: "GET",
       headers: {
@@ -269,18 +279,19 @@ export async function disconnectDataConnection(
     })
 
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`)
+      throw new Error(`HTTP error ${response.status}`)
     }
 
     const data = await response.json()
     const validatedData = DataConnectionDisconnectApiResponseSchema.parse(data)
 
-    logger.info("Successfully disconnected data connection", {
-      provider: providerId,
-      providerId: accountId,
-    })
+    if (!validatedData.success) {
+      throw new Error("API returned unsuccessful operation")
+    }
 
-    return validatedData.success
+    logger.info("Successfully disconnected data connection", {
+      providerId,
+    })
   } catch (error) {
     throw new Error("Error disconnecting data connection", { cause: error })
   }
@@ -298,7 +309,7 @@ export function buildConnectProviderUrl(
   key?: string
 ): string {
   if (!commonConfig.PRIVATE_DATA_API_BASE_URL || !key) {
-    throw new Error("Missing API configuration")
+    throw new Error("Incorrect Private Data API configuration")
   }
 
   // The connection will actually be driven by the Private Data server.

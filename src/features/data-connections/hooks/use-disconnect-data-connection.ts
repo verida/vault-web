@@ -20,35 +20,27 @@ export function useDisconnectDataConnection() {
       providerId,
       accountId,
     }: DisconnectDataConnectionVariables) => {
-      logger.debug("Disconnecting data connection", { providerId })
       const success = await disconnectDataConnection(
         providerId,
         accountId,
         commonConfig.PRIVATE_DATA_API_PRIVATE_KEY
       )
-      logger.debug("Successfully disconnected data connection", { providerId })
 
       return { success }
     },
-    onSuccess: () => {
-      logger.debug("Invalidating data connections queries")
-      queryClient
-        .invalidateQueries({
-          queryKey: DataConnectionsQueryKeys.invalidateDataConnections(),
-        })
-        .then(() => {
-          logger.debug("Successfully invalidated data conenctions queries")
-        })
-    },
-    onError: (error) => {
-      logger.error(
-        new Error("Error disconnecting data connection", {
-          cause: error,
-        })
-      )
+    onSuccess: async () => {
+      const keys = DataConnectionsQueryKeys.invalidateDataConnections()
+      logger.debug("Invalidating data connections queries", { keys })
+      await queryClient.invalidateQueries({
+        queryKey: keys,
+      })
+      logger.debug("Successfully invalidated data conenctions queries", {
+        keys,
+      })
     },
     meta: {
       logCategory: "DataConnections",
+      errorMessage: "Error disconnecting data connection",
     },
   })
 

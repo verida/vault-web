@@ -20,37 +20,29 @@ export function useSyncDataConnection() {
       providerId,
       accountId,
     }: SyncDataConnectionVariables) => {
-      logger.debug("Syncing data connection", { providerId })
       const result = await syncDataConnection(
         providerId,
         accountId,
         commonConfig.PRIVATE_DATA_API_PRIVATE_KEY
       )
-      logger.debug("Successfully synced data connection", { providerId })
 
       return {
         success: result.success,
       }
     },
-    onSuccess: () => {
-      logger.debug("Invalidating data connections queries")
-      queryClient
-        .invalidateQueries({
-          queryKey: DataConnectionsQueryKeys.invalidateDataConnections(),
-        })
-        .then(() => {
-          logger.debug("Successfully invalidated data connections queries")
-        })
-    },
-    onError: (error) => {
-      logger.error(
-        new Error("Error syncing data connection", {
-          cause: error,
-        })
-      )
+    onSuccess: async () => {
+      const keys = DataConnectionsQueryKeys.invalidateDataConnections()
+      logger.debug("Invalidating data connections queries", { keys })
+      await queryClient.invalidateQueries({
+        queryKey: keys,
+      })
+      logger.debug("Successfully invalidated data connections queries", {
+        keys,
+      })
     },
     meta: {
       logCategory: "DataConnections",
+      errorMessage: "Error syncing data connection",
     },
   })
 

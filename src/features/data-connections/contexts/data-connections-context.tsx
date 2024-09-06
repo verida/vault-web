@@ -58,9 +58,13 @@ export function DataConnectionsProvider(props: DataConnectionsProviderProps) {
       logger.info("New data connection event received")
 
       logger.debug("Invalidating data connections queries")
-      queryClient.invalidateQueries({
-        queryKey: DataConnectionsQueryKeys.invalidateDataConnections(),
-      })
+      queryClient
+        .invalidateQueries({
+          queryKey: DataConnectionsQueryKeys.invalidateDataConnections(),
+        })
+        .then(() => {
+          logger.info("Successfully invalidated data connections queries")
+        })
     },
     [queryClient]
   )

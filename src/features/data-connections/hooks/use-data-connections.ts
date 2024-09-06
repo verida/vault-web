@@ -12,8 +12,7 @@ export function useDataConnections() {
     queryKey: DataConnectionsQueryKeys.dataConnections({ did }),
     queryFn: () =>
       getDataConnections(commonConfig.PRIVATE_DATA_API_PRIVATE_KEY),
-    enabled: !!did,
-    staleTime: 1000 * 60 * 5, // 5 minutes
+    staleTime: 1000 * 60 * 2, // 2 minutes
     gcTime: 1000 * 60 * 30, // 30 minutes
     meta: {
       logCategory: "DataConnections",
