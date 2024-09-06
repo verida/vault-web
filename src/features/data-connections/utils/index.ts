@@ -5,6 +5,7 @@ import {
   MOCK_USER_DATA_CONNECTIONS,
 } from "@/features/data-connections/mock"
 import {
+  DataConnectionDisconnectApiResponseSchema,
   DataConnectionSyncApiResponseSchema,
   DataConnectionSyncStatusApiResponseSchema,
   DataProvidersResponseSchema,
@@ -186,7 +187,7 @@ export async function syncDataConnection(
   accountId: string,
   key?: string
 ): Promise<DataConnectionSyncApiResponse> {
-  logger.info("Syncing data connection", { provider: providerId, accountId })
+  logger.info("Syncing data connection", { providerId })
 
   if (!commonConfig.PRIVATE_DATA_API_BASE_URL || !key) {
     logger.warn("Cannot sync data connection: missing API configuration or key")
@@ -217,12 +218,69 @@ export async function syncDataConnection(
     const validatedData = DataConnectionSyncApiResponseSchema.parse(data)
 
     logger.info("Successfully synced data connection", {
-      provider: providerId,
-      providerId: accountId,
+      providerId,
     })
 
     return validatedData
   } catch (error) {
     throw new Error("Error syncing data connection", { cause: error })
+  }
+}
+
+/**
+ * Disconnects a data connection for the specified providerId and accountId.
+ *
+ * @param providerId - The provider ID
+ * @param accountId - The account ID
+ * @param key - The API key for authentication
+ * @returns A promise that resolves to a boolean indicating success
+ * @throws Error if there's an issue disconnecting the data connection
+ */
+export async function disconnectDataConnection(
+  providerId: string,
+  accountId: string,
+  key?: string
+): Promise<boolean> {
+  logger.info("Disconnecting data connection", {
+    provider: providerId,
+  })
+
+  if (!commonConfig.PRIVATE_DATA_API_BASE_URL || !key) {
+    logger.warn(
+      "Cannot disconnect data connection: missing API configuration or key"
+    )
+    throw new Error("Missing API configuration")
+  }
+
+  const url = new URL(
+    `${commonConfig.PRIVATE_DATA_API_BASE_URL}/api/v1/provider/disconnect/${providerId}`
+  )
+  url.searchParams.append("providerId", accountId)
+
+  try {
+    logger.debug("Sending request to disconnect API")
+    const response = await fetch(url.toString(), {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "key": key,
+      },
+    })
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`)
+    }
+
+    const data = await response.json()
+    const validatedData = DataConnectionDisconnectApiResponseSchema.parse(data)
+
+    logger.info("Successfully disconnected data connection", {
+      provider: providerId,
+      providerId: accountId,
+    })
+
+    return validatedData.success
+  } catch (error) {
+    throw new Error("Error disconnecting data connection", { cause: error })
   }
 }

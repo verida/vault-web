@@ -120,3 +120,7 @@ export const DataConnectionSyncApiResponseSchema = z
     success: z.boolean(),
   })
   .passthrough()
+
+export const DataConnectionDisconnectApiResponseSchema = z.object({
+  success: z.boolean(),
+})

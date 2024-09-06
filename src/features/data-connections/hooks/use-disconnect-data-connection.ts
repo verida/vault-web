@@ -1,35 +1,33 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 
 import { commonConfig } from "@/config/common"
-import { syncDataConnection } from "@/features/data-connections/utils"
+import { disconnectDataConnection } from "@/features/data-connections/utils"
 import { Logger } from "@/features/telemetry"
 
 const logger = Logger.create("DataConnections")
 
-type SyncDataConnectionVariables = {
+type DisconnectDataConnectionVariables = {
   providerId: string
   accountId: string
 }
 
-export function useSyncDataConnection() {
+export function useDisconnectDataConnection() {
   const queryClient = useQueryClient()
 
   const { mutateAsync, ...mutation } = useMutation({
     mutationFn: async ({
       providerId,
       accountId,
-    }: SyncDataConnectionVariables) => {
-      logger.debug("Syncing data connection", { providerId })
-      const result = await syncDataConnection(
+    }: DisconnectDataConnectionVariables) => {
+      logger.debug("Disconnecting data connection", { providerId })
+      const success = await disconnectDataConnection(
         providerId,
         accountId,
         commonConfig.PRIVATE_DATA_API_PRIVATE_KEY
       )
-      logger.debug("Successfully synced data connection", { providerId })
+      logger.debug("Successfully disconnected data connection", { providerId })
 
-      return {
-        success: result.success,
-      }
+      return { success }
     },
     onSuccess: () => {
       logger.debug("Invalidating data connections queries")
@@ -38,12 +36,12 @@ export function useSyncDataConnection() {
           queryKey: ["data-connections", "connections"],
         })
         .then(() => {
-          logger.debug("Successfully invalidated data connections queries")
+          logger.debug("Successfully invalidated data conenctions queries")
         })
     },
     onError: (error) => {
       logger.error(
-        new Error("Error syncing data connection", {
+        new Error("Error disconnecting data connection", {
           cause: error,
         })
       )
@@ -54,7 +52,7 @@ export function useSyncDataConnection() {
   })
 
   return {
-    syncDataConnection: mutateAsync,
+    disconnectDataConnection: mutateAsync,
     ...mutation,
   }
 }
