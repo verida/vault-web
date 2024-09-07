@@ -68,9 +68,9 @@ export async function getDataProviders(): Promise<DataProvider[]> {
     }))
 
     // Sort the providers by label
-    providers.sort((a, b) => a.label.localeCompare(b.label))
-
     return providers
+      .filter((provider) => provider.name !== "mock")
+      .sort((a, b) => a.label.localeCompare(b.label))
   } catch (error) {
     throw new Error("Error fetching data providers", { cause: error })
   }
