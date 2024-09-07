@@ -9,6 +9,7 @@ import {
   AlertDialogBody,
   AlertDialogCancel,
   AlertDialogContent,
+  AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
@@ -37,6 +38,7 @@ export function DisconnectDataConnectionDialog(
   const [isDisconnecting, setIsDisconnecting] = useState(false)
 
   const { provider } = useDataProvider(connection.provider)
+
   const { disconnectDataConnection } = useDisconnectDataConnection()
 
   const handleDisconnectClick = useCallback(() => {
@@ -75,7 +77,12 @@ export function DisconnectDataConnectionDialog(
               ? `Disconnect from ${provider.label}`
               : "Disconnect"}
           </AlertDialogTitle>
-          {/* TODO: Add description for accessibility */}
+          <AlertDialogDescription
+            // Description added for accessibility purposes
+            className="hidden"
+          >
+            Disconnect your account
+          </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogBody>
           <Typography variant="base-regular">

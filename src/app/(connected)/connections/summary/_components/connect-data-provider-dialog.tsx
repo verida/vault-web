@@ -15,6 +15,7 @@ import {
   Dialog,
   DialogBody,
   DialogContent,
+  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -130,7 +131,13 @@ export function ConnectDataProviderDialog(
           <DialogTitle>
             {provider ? `Connect with ${provider.label}` : "Add Connection"}
           </DialogTitle>
-          {/* TODO: Add description for accessibility */}
+          <DialogDescription
+            // Description added for accessibility purposes
+            className="hidden"
+          >
+            Connect your account to extract your data and store it into your
+            Vault.
+          </DialogDescription>
         </DialogHeader>
         {provider ? (
           <DialogBody className="flex flex-col gap-8">
