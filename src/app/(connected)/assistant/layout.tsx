@@ -1,6 +1,8 @@
+import { notFound } from "next/navigation"
 import React from "react"
 
 import { Typography } from "@/components/typography"
+import { featureFlags } from "@/config/features"
 
 type AssistantLayoutProps = {
   children: React.ReactNode
@@ -8,6 +10,10 @@ type AssistantLayoutProps = {
 
 export default function AssistantLayout(props: AssistantLayoutProps) {
   const { children } = props
+
+  if (!featureFlags.assistant.enabled) {
+    notFound()
+  }
 
   return (
     <div className="flex h-full flex-col gap-6">

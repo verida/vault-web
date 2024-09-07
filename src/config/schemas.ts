@@ -3,7 +3,7 @@ import { z } from "zod"
 
 export const CommonConfigSchema = z.object({
   BASE_URL: z.string().url(),
-  DEBUG_MODE: z
+  DEV_MODE: z
     .string()
     .optional()
     .transform((value) => (value === "true" ? true : false)),
@@ -22,6 +22,14 @@ export const CommonConfigSchema = z.object({
     }),
   VERIDA_RPC_URL: z.string().url().optional(),
   FEATURE_FLAG_AI_ASSISTANT_ENABLED: z
+    .string()
+    .optional()
+    .transform((value) => (value === "true" ? true : false)),
+  FEATURE_FLAG_DATA_CONNECTIONS_ENABLED: z
+    .string()
+    .optional()
+    .transform((value) => (value === "true" ? true : false)),
+  FEATURE_FLAG_DATA_CONNECTIONS_LOGS_ENABLED: z
     .string()
     .optional()
     .transform((value) => (value === "true" ? true : false)),

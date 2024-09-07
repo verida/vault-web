@@ -3,6 +3,7 @@
 import { Suspense } from "react"
 
 import { TooltipProvider } from "@/components/ui/tooltip"
+import { DataConnectionsProvider } from "@/features/data-connections"
 import { QueriesProvider } from "@/features/queries/queries-provider"
 import { ThemesProvider } from "@/features/themes/themes-provider"
 import { VeridaProvider } from "@/features/verida"
@@ -21,7 +22,9 @@ export function RootProviders(props: RootProvidersProps) {
       <ThemesProvider>
         <TooltipProvider>
           <QueriesProvider>
-            <VeridaProvider>{children}</VeridaProvider>
+            <VeridaProvider>
+              <DataConnectionsProvider>{children}</DataConnectionsProvider>
+            </VeridaProvider>
           </QueriesProvider>
         </TooltipProvider>
       </ThemesProvider>

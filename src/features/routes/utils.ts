@@ -22,6 +22,26 @@ export function getDatabasePageRoute({ databaseId }: { databaseId: string }) {
   return `/data/${databaseId}`
 }
 
-export function getConectionsPageRoute() {
+export function getConnectionsPageRoute() {
   return `/connections`
+}
+
+export function getConnectionPageRoute({
+  connectionId,
+}: {
+  connectionId: string
+}) {
+  return `/connections/${connectionId}`
+}
+
+export function getConnectionsSummaryPageRoute() {
+  return `/connections/summary`
+}
+
+export function getConnectionsSummaryLogsPageRoute() {
+  return `/connections/summary/logs`
+}
+
+export function getNewDataConnectionCallbackPageRoute() {
+  return `/callback/new-data-connection`
 }

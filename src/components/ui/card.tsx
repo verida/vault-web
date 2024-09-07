@@ -9,10 +9,7 @@ const Card = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn(
-      "rounded-lg border bg-surface text-foreground shadow-sm",
-      className
-    )}
+    className={cn("rounded-lg border bg-surface shadow-sm", className)}
     {...props}
   />
 ))
@@ -20,11 +17,11 @@ Card.displayName = "Card"
 
 const CardHeader = React.forwardRef<
   HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
+  React.ComponentProps<"header">
 >(({ className, ...props }, ref) => (
-  <div
+  <header
     ref={ref}
-    className={cn("flex flex-col space-y-1.5 p-6", className)}
+    className={cn("flex flex-col gap-1.5 p-6", className)}
     {...props}
   />
 ))
@@ -32,12 +29,12 @@ CardHeader.displayName = "CardHeader"
 
 const CardTitle = React.forwardRef<
   HTMLParagraphElement,
-  React.HTMLAttributes<HTMLHeadingElement>
+  React.ComponentProps<typeof Typography>
 >(({ className, ...props }, ref) => (
   <Typography
     ref={ref}
     variant="heading-3"
-    className={cn("leading-none tracking-tight", className)}
+    className={cn(className)}
     {...props}
   />
 ))
@@ -45,11 +42,12 @@ CardTitle.displayName = "CardTitle"
 
 const CardDescription = React.forwardRef<
   HTMLParagraphElement,
-  React.HTMLAttributes<HTMLParagraphElement>
+  React.ComponentProps<typeof Typography>
 >(({ className, ...props }, ref) => (
   <Typography
     ref={ref}
-    className={cn("text-sm text-muted-foreground", className)}
+    variant="base-s-regular"
+    className={cn("text-muted-foreground", className)}
     {...props}
   />
 ))
@@ -65,9 +63,9 @@ CardContent.displayName = "CardContent"
 
 const CardFooter = React.forwardRef<
   HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
+  React.ComponentProps<"footer">
 >(({ className, ...props }, ref) => (
-  <div
+  <footer
     ref={ref}
     className={cn("flex items-center p-6 pt-0", className)}
     {...props}

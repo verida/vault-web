@@ -93,9 +93,11 @@ export function hotloadAPI(
     logger.info("Starting API hotload")
 
     // Create an EventSource to receive progress updates
-    const eventSource = new EventSource(
-      `${commonConfig.PRIVATE_DATA_API_BASE_URL}/api/v1/llm/hotload?key=${key}`
+    const url = new URL(
+      `${commonConfig.PRIVATE_DATA_API_BASE_URL}/api/v1/llm/hotload`
     )
+    url.searchParams.append("key", key)
+    const eventSource = new EventSource(url.toString())
 
     eventSource.onmessage = (event) => {
       const data = JSON.parse(event.data)

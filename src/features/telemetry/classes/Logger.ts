@@ -49,7 +49,7 @@ export class Logger {
   private shouldSkipPrint(level: LogLevel) {
     return (
       levelOrder.indexOf(level) > Logger.currentLevelIndex ||
-      (commonConfig.isClient && !commonConfig.DEBUG_MODE)
+      (commonConfig.isClient && !commonConfig.DEV_MODE)
     )
   }
 
