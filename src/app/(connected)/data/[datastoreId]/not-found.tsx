@@ -8,9 +8,9 @@ import {
   NotFoundImage,
   NotFoundTitle,
 } from "@/components/ui/not-found"
-import { getConnectionsSummaryPageRoute } from "@/features/routes/utils"
+import { getDataPageRoute } from "@/features/routes/utils"
 
-export default function ConnectionNotFoundPage() {
+export default function DatastoreNotFoundPage() {
   return (
     <div className="flex h-full flex-1 flex-col items-center justify-center p-4">
       <NotFound>
@@ -20,12 +20,10 @@ export default function ConnectionNotFoundPage() {
           The connection you are looking for does not exist.
         </NotFoundDescription>
         <Button asChild variant="outline">
-          <Link href={getConnectionsSummaryPageRoute()}>
-            Go back to Connections page
-          </Link>
+          <Link href={getDataPageRoute()}>Go back to Data page</Link>
         </Button>
       </NotFound>
     </div>
   )
 }
-ConnectionNotFoundPage.displayName = "ConnectionNotFoundPage"
+DatastoreNotFoundPage.displayName = "DatastoreNotFoundPage"

@@ -39,6 +39,8 @@ export default function DatastorePage(props: DatastorePageProps) {
     return dataFolders.find((f) => f.name === datastoreId)
   }, [datastoreId])
 
+  // TODO: Handle folder not found
+
   const { isConnected } = useVerida()
 
   const {

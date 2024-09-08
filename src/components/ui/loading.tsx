@@ -22,6 +22,7 @@ export function LoadingSpinner() {
   return <Spinner />
 }
 LoadingSpinner.displayName = "LoadingSpinner"
+
 export type LoadingTitleProps = React.ComponentProps<typeof Typography>
 
 export function LoadingTitle(props: LoadingTitleProps) {

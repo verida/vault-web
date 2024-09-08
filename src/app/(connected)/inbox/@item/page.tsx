@@ -39,6 +39,7 @@ export default function InboxItemPage(props: InboxItemPageProps) {
 
   const itemPage = useMemo(() => {
     if (!itemId) {
+      // TODO: Display a not found message in the modal
       return null
     }
 
