@@ -90,6 +90,7 @@ export default function InboxPage() {
         )}
 
         {hasError && (
+          // TODO: Leverage the Error Boundary instead?
           <InboxError description="There was an error getting your inbox messages, please try again later" />
         )}
 

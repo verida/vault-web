@@ -112,6 +112,7 @@ export default function DatastorePage(props: DatastorePageProps) {
         </div>
       ) : isDataSchemaError || isDataItemsError ? (
         <div className="py-40">
+          {/* TODO: Leverage the Error Boundary instead? */}
           <DataError description="There's been an error when loading the data" />
         </div>
       ) : items?.length === 0 || !dataSchema ? (
