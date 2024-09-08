@@ -1,4 +1,5 @@
 import { SubPageWrapper } from "@/components/sub-page-wrapper"
+import { getDataPageRoute } from "@/features/routes/utils"
 
 type DatastoreLayoutProps = {
   children: React.ReactNode
@@ -10,7 +11,7 @@ export default function DatastoreLayout(props: DatastoreLayoutProps) {
 
   return (
     <SubPageWrapper
-      backNavigationHref="/data"
+      backNavigationHref={getDataPageRoute()}
       backNavigationLabel="Back to all Data"
     >
       {children}

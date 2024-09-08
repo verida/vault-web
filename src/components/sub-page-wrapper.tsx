@@ -14,7 +14,7 @@ export function SubPageWrapper(props: SubPageWrapperProps) {
   const { backNavigationHref, backNavigationLabel, children } = props
 
   return (
-    <div className="flex flex-col gap-9">
+    <div className="flex min-h-full flex-col gap-9">
       <div className="flex items-center gap-3">
         <Button
           asChild
@@ -30,7 +30,7 @@ export function SubPageWrapper(props: SubPageWrapperProps) {
           {backNavigationLabel}
         </Typography>
       </div>
-      <div className="flex-1">{children}</div>
+      <div className="flex flex-1 flex-col">{children}</div>
     </div>
   )
 }
