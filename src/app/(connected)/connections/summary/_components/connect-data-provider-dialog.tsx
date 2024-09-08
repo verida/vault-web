@@ -20,6 +20,12 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
+import {
+  SuccessBlock,
+  SuccessBlockDescription,
+  SuccessBlockImage,
+  SuccessBlockTitle,
+} from "@/components/ui/success"
 import { commonConfig } from "@/config/common"
 import {
   DataConnectionsChannelEvent,
@@ -138,16 +144,6 @@ export function ConnectDataProviderDialog(
         </DialogHeader>
         {provider ? (
           <DialogBody className="flex flex-col gap-8">
-            <div className="flex flex-row items-center justify-center gap-6">
-              <Avatar className="size-20">
-                <AvatarImage src={provider.icon} alt={provider.label} />
-                <AvatarFallback>
-                  {provider.label?.[0]?.toUpperCase()}
-                </AvatarFallback>
-              </Avatar>
-              <Switch />
-              <VLogo className="rounded-full border" />
-            </div>
             {status === "error" ? (
               <Alert variant="error">
                 <AlertDescription>
@@ -156,19 +152,33 @@ export function ConnectDataProviderDialog(
                 </AlertDescription>
               </Alert>
             ) : status === "connected" ? (
-              <Alert variant="info">
-                <AlertDescription>
-                  Your account has been connected successfully.
-                </AlertDescription>
-              </Alert>
+              <SuccessBlock>
+                <SuccessBlockImage />
+                <SuccessBlockTitle>Connection Successful</SuccessBlockTitle>
+                <SuccessBlockDescription>
+                  Your {provider.label} account has been connected successfully.
+                </SuccessBlockDescription>
+              </SuccessBlock>
             ) : (
-              <div className="flex flex-col gap-4">
-                <Typography variant="heading-4">What it will do</Typography>
-                <Typography variant="base-regular">
-                  {/* TODO: Rework the description */}
-                  {provider.description}
-                </Typography>
-              </div>
+              <>
+                <div className="flex flex-row items-center justify-center gap-6">
+                  <Avatar className="size-20">
+                    <AvatarImage src={provider.icon} alt={provider.label} />
+                    <AvatarFallback>
+                      {provider.label?.[0]?.toUpperCase()}
+                    </AvatarFallback>
+                  </Avatar>
+                  <Switch />
+                  <VLogo className="rounded-full border" />
+                </div>
+                <div className="flex flex-col gap-4">
+                  <Typography variant="heading-4">What it will do</Typography>
+                  <Typography variant="base-regular">
+                    {/* TODO: Rework the description */}
+                    {provider.description}
+                  </Typography>
+                </div>
+              </>
             )}
           </DialogBody>
         ) : (
