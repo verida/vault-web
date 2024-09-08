@@ -4,13 +4,17 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { useMemo, useState } from "react"
 
 import { InboxDetails } from "@/app/(connected)/inbox/_components/inbox-details"
-import { InboxError } from "@/app/(connected)/inbox/_components/inbox-error"
 import { InboxRowItem } from "@/app/(connected)/inbox/_components/inbox-item"
 import { NoInbox } from "@/app/(connected)/inbox/_components/no-inbox"
 // import { FilterButton } from "@/components/filter-button"
 import { ModalSheet } from "@/components/modal-sheet"
 // import { SearchInput } from "@/components/search-input"
 import { Typography } from "@/components/typography"
+import {
+  ErrorBlock,
+  ErrorBlockDescription,
+  ErrorBlockImage,
+} from "@/components/ui/error"
 import {
   LoadingBlock,
   LoadingBlockDescription,
@@ -99,7 +103,14 @@ export default function InboxPage() {
 
         {hasError && (
           // TODO: Leverage the Error Boundary instead?
-          <InboxError description="There was an error getting your inbox messages, please try again later" />
+
+          <ErrorBlock>
+            <ErrorBlockImage />
+            <ErrorBlockDescription>
+              There was an error getting your inbox messages, please try again
+              later
+            </ErrorBlockDescription>
+          </ErrorBlock>
         )}
 
         {!isLoading && totalMessageCount === 0 && <NoInbox />}

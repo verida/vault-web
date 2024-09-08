@@ -7,7 +7,6 @@ import { ConnectDataProviderDialogProviderSelection } from "@/app/(connected)/co
 import { VLogo } from "@/components/icons/logo"
 import { Switch } from "@/components/icons/switch"
 import { Typography } from "@/components/typography"
-import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import {
@@ -20,6 +19,12 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
+import {
+  ErrorBlock,
+  ErrorBlockDescription,
+  ErrorBlockImage,
+  ErrorBlockTitle,
+} from "@/components/ui/error"
 import {
   SuccessBlock,
   SuccessBlockDescription,
@@ -145,12 +150,14 @@ export function ConnectDataProviderDialog(
         {provider ? (
           <DialogBody className="flex flex-col gap-8">
             {status === "error" ? (
-              <Alert variant="error">
-                <AlertDescription>
+              <ErrorBlock>
+                <ErrorBlockImage />
+                <ErrorBlockTitle>Connection Error</ErrorBlockTitle>
+                <ErrorBlockDescription>
                   There was an error connecting to the platform. Please try
                   again later.
-                </AlertDescription>
-              </Alert>
+                </ErrorBlockDescription>
+              </ErrorBlock>
             ) : status === "connected" ? (
               <SuccessBlock>
                 <SuccessBlockImage />

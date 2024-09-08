@@ -5,7 +5,6 @@ import { useCallback, useEffect, useState } from "react"
 
 import { DataRequestItem } from "@/app/(connected)/inbox/_components/data-request-item"
 import { InboxDetailsProps } from "@/app/(connected)/inbox/_components/inbox-details"
-import { InboxError } from "@/app/(connected)/inbox/_components/inbox-error"
 import { InboxStatusText } from "@/app/(connected)/inbox/_components/inbox-status-text"
 import { RequestDataSelector } from "@/app/(connected)/inbox/_components/request-data-selector"
 import { RequesterProfile } from "@/app/(connected)/inbox/_components/requester-profile"
@@ -17,6 +16,11 @@ import {
 import { Typography } from "@/components/typography"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
+import {
+  ErrorBlock,
+  ErrorBlockDescription,
+  ErrorBlockImage,
+} from "@/components/ui/error"
 import {
   LoadingBlock,
   LoadingBlockDescription,
@@ -121,10 +125,15 @@ export function DataRequestDetails(props: InboxDetailsProps) {
           onClose={onClose}
         />
         <ModalSheetBody>
-          <InboxError
-            description="There's been an error when sharing the data"
-            onClick={onClickShare}
-          />
+          <ErrorBlock>
+            <ErrorBlockImage />
+            <ErrorBlockDescription>
+              There was an error when sharing the data
+            </ErrorBlockDescription>
+            <Button variant="outline" onClick={onClickShare}>
+              Try Again
+            </Button>
+          </ErrorBlock>
         </ModalSheetBody>
       </>
     )

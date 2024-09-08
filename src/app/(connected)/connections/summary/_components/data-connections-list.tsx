@@ -5,7 +5,11 @@ import {
   DataConnectionSkeletonCard,
 } from "@/app/(connected)/connections/summary/_components/data-connection-card"
 import { Typography } from "@/components/typography"
-import { Alert, AlertDescription } from "@/components/ui/alert"
+import {
+  ErrorBlock,
+  ErrorBlockDescription,
+  ErrorBlockImage,
+} from "@/components/ui/error"
 import { useDataConnections } from "@/features/data-connections"
 import { cn } from "@/styles/utils"
 
@@ -61,14 +65,14 @@ export function DataConnectionsList(props: DataConnectionsListProps) {
 
   if (isError) {
     return (
-      // TODO: Improve the design of the error state
       <div className={className} {...divProps}>
-        <Alert variant="error">
-          <AlertDescription>
-            There has been an error fetching your data connections. Please try
-            again later.
-          </AlertDescription>
-        </Alert>
+        <ErrorBlock>
+          <ErrorBlockImage />
+          <ErrorBlockDescription>
+            There was an error fetching your data connections. Please try again
+            later.
+          </ErrorBlockDescription>
+        </ErrorBlock>
       </div>
     )
   }

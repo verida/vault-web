@@ -1,13 +1,16 @@
 "use client"
 
-import Image from "next/image"
 import Link from "next/link"
 import { useEffect, useMemo } from "react"
 
-import ErrorIllustration from "@/assets/error-illustration.svg"
-import { Typography } from "@/components/typography"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
+import {
+  ErrorBlock,
+  ErrorBlockDescription,
+  ErrorBlockImage,
+  ErrorBlockTitle,
+} from "@/components/ui/error"
 import { getRootPageRoute } from "@/features/routes/utils"
 import { Logger } from "@/features/telemetry"
 import { cn } from "@/styles/utils"
@@ -72,26 +75,10 @@ export function ErrorPageContent(props: ErrorPageContentProps) {
       )}
       {...divProps}
     >
-      <div className="flex flex-col items-center gap-8 text-center">
-        {!hideIllustration ? (
-          <Image
-            src={ErrorIllustration}
-            width={121}
-            height={140}
-            alt="error"
-            className="h-[105px] md:h-[140px]"
-          />
-        ) : null}
-        {main ? (
-          <Typography variant="heading-5" component="p">
-            {main}
-          </Typography>
-        ) : null}
-        {sub ? (
-          <p className="text-muted-foreground">
-            <Typography variant="base-regular">{sub}</Typography>
-          </p>
-        ) : null}
+      <ErrorBlock className="gap-8">
+        {!hideIllustration ? <ErrorBlockImage /> : null}
+        {main ? <ErrorBlockTitle>{main}</ErrorBlockTitle> : null}
+        {sub ? <ErrorBlockDescription>{sub}</ErrorBlockDescription> : null}
         {showError ? (
           <Alert variant="error">
             <AlertDescription>{error.message}</AlertDescription>
@@ -109,7 +96,7 @@ export function ErrorPageContent(props: ErrorPageContentProps) {
             </Button>
           ) : null}
         </div>
-      </div>
+      </ErrorBlock>
     </div>
   )
 }

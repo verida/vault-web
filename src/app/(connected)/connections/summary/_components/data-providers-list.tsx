@@ -5,7 +5,11 @@ import {
   DataProviderSkeletonCard,
 } from "@/app/(connected)/connections/summary/_components/data-provider-card"
 import { Typography } from "@/components/typography"
-import { Alert, AlertDescription } from "@/components/ui/alert"
+import {
+  ErrorBlock,
+  ErrorBlockDescription,
+  ErrorBlockImage,
+} from "@/components/ui/error"
 import { useDataProviders } from "@/features/data-connections"
 import { cn } from "@/styles/utils"
 
@@ -63,14 +67,14 @@ export function DataProvidersList(props: DataProvidersListProps) {
 
   if (isError) {
     return (
-      // TODO: Improve the design of the error state
       <div className={className} {...divProps}>
-        <Alert variant="error">
-          <AlertDescription>
-            There has been an error getting the available connections. Please
-            try again later.
-          </AlertDescription>
-        </Alert>
+        <ErrorBlock>
+          <ErrorBlockImage />
+          <ErrorBlockDescription>
+            There was an error getting the available connections. Please try
+            again later.
+          </ErrorBlockDescription>
+        </ErrorBlock>
       </div>
     )
   }
