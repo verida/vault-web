@@ -1,8 +1,8 @@
 import {
-  Loading,
-  LoadingDescription,
-  LoadingSpinner,
-  LoadingTitle,
+  LoadingBlock,
+  LoadingBlockDescription,
+  LoadingBlockSpinner,
+  LoadingBlockTitle,
 } from "@/components/ui/loading"
 import { cn } from "@/styles/utils"
 
@@ -22,14 +22,16 @@ export function ConnectionLoading(props: ConnectionLoadingProps) {
       )}
       {...divProps}
     >
-      <Loading>
-        <LoadingSpinner />
-        <LoadingTitle variant="heading-1">Connecting to Verida...</LoadingTitle>
-        <LoadingDescription variant="base-l">
+      <LoadingBlock>
+        <LoadingBlockSpinner />
+        <LoadingBlockTitle variant="heading-1">
+          Connecting to Verida...
+        </LoadingBlockTitle>
+        <LoadingBlockDescription variant="base-l">
           Please wait while we establish a secure connection. This might take a
           moments.
-        </LoadingDescription>
-      </Loading>
+        </LoadingBlockDescription>
+      </LoadingBlock>
     </div>
   )
 }

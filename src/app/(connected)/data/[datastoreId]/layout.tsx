@@ -2,10 +2,10 @@ import { Suspense } from "react"
 
 import { SubPageWrapper } from "@/components/sub-page-wrapper"
 import {
-  Loading,
-  LoadingDescription,
-  LoadingSpinner,
-  LoadingTitle,
+  LoadingBlock,
+  LoadingBlockDescription,
+  LoadingBlockSpinner,
+  LoadingBlockTitle,
 } from "@/components/ui/loading"
 import { getDataPageRoute } from "@/features/routes/utils"
 
@@ -34,13 +34,13 @@ DatastoreLayout.displayName = "DatastoreLayout"
 function DatastoreLoadingPage() {
   return (
     <div className="flex h-full flex-1 flex-row items-center justify-center p-4">
-      <Loading>
-        <LoadingSpinner />
-        <LoadingTitle>Loading data...</LoadingTitle>
-        <LoadingDescription>
+      <LoadingBlock>
+        <LoadingBlockSpinner />
+        <LoadingBlockTitle>Loading data...</LoadingBlockTitle>
+        <LoadingBlockDescription>
           Please wait while we are getting your data
-        </LoadingDescription>
-      </Loading>
+        </LoadingBlockDescription>
+      </LoadingBlock>
     </div>
   )
 }

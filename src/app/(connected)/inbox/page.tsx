@@ -12,10 +12,10 @@ import { ModalSheet } from "@/components/modal-sheet"
 // import { SearchInput } from "@/components/search-input"
 import { Typography } from "@/components/typography"
 import {
-  Loading,
-  LoadingDescription,
-  LoadingSpinner,
-  LoadingTitle,
+  LoadingBlock,
+  LoadingBlockDescription,
+  LoadingBlockSpinner,
+  LoadingBlockTitle,
 } from "@/components/ui/loading"
 import { TablePagination } from "@/components/ui/table-pagination"
 import { useInbox } from "@/features/inbox/hooks"
@@ -88,13 +88,13 @@ export default function InboxPage() {
         </div>
 
         {isLoading && (
-          <Loading className="flex-grow">
-            <LoadingSpinner />
-            <LoadingTitle>Please wait...</LoadingTitle>
-            <LoadingDescription>
+          <LoadingBlock className="flex-grow">
+            <LoadingBlockSpinner />
+            <LoadingBlockTitle>Please wait...</LoadingBlockTitle>
+            <LoadingBlockDescription>
               We are fetching your latest messages
-            </LoadingDescription>
-          </Loading>
+            </LoadingBlockDescription>
+          </LoadingBlock>
         )}
 
         {hasError && (

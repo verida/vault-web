@@ -4,9 +4,9 @@ import { Spinner } from "@/components/spinner"
 import { Typography } from "@/components/typography"
 import { cn } from "@/styles/utils"
 
-export type LoadingProps = React.ComponentProps<"div">
+export type LoadingBlockProps = React.ComponentProps<"div">
 
-export function Loading(props: LoadingProps) {
+export function LoadingBlock(props: LoadingBlockProps) {
   const { className, ...divProps } = props
 
   return (
@@ -16,25 +16,27 @@ export function Loading(props: LoadingProps) {
     />
   )
 }
-Loading.displayName = "Loading"
+LoadingBlock.displayName = "LoadingBlock"
 
-export function LoadingSpinner() {
+export function LoadingBlockSpinner() {
   return <Spinner />
 }
-LoadingSpinner.displayName = "LoadingSpinner"
+LoadingBlockSpinner.displayName = "LoadingBlockSpinner"
 
-export type LoadingTitleProps = React.ComponentProps<typeof Typography>
+export type LoadingBlockTitleProps = React.ComponentProps<typeof Typography>
 
-export function LoadingTitle(props: LoadingTitleProps) {
+export function LoadingBlockTitle(props: LoadingBlockTitleProps) {
   const { variant = "heading-4", ...typographyProps } = props
 
   return <Typography variant={variant} component="p" {...typographyProps} />
 }
-LoadingTitle.displayName = "LoadingTitle"
+LoadingBlockTitle.displayName = "LoadingBlockTitle"
 
-export type LoadingDescriptionProps = React.ComponentProps<typeof Typography>
+export type LoadingBlockDescriptionProps = React.ComponentProps<
+  typeof Typography
+>
 
-export function LoadingDescription(props: LoadingDescriptionProps) {
+export function LoadingBlockDescription(props: LoadingBlockDescriptionProps) {
   const { variant = "base-regular", ...typographyProps } = props
 
   return (
@@ -43,4 +45,4 @@ export function LoadingDescription(props: LoadingDescriptionProps) {
     </p>
   )
 }
-LoadingDescription.displayName = "LoadingDescription"
+LoadingBlockDescription.displayName = "LoadingBlockDescription"

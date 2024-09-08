@@ -5,9 +5,9 @@ import ErrorIllustration from "@/assets/error-illustration.svg"
 import { Typography } from "@/components/typography"
 import { cn } from "@/styles/utils"
 
-export type NotFoundProps = React.ComponentProps<"div">
+export type NotFoundBlockProps = React.ComponentProps<"div">
 
-export function NotFound(props: NotFoundProps) {
+export function NotFoundBlock(props: NotFoundBlockProps) {
   const { className, ...divProps } = props
 
   return (
@@ -17,33 +17,35 @@ export function NotFound(props: NotFoundProps) {
     />
   )
 }
-NotFound.displayName = "NotFound"
+NotFoundBlock.displayName = "NotFoundBlock"
 
-export function NotFoundImage() {
+export function NotFoundBlockImage() {
   return (
     <Image
       src={ErrorIllustration}
       width={121}
       height={140}
-      alt="error"
+      alt=""
       className="h-[105px] md:h-[140px]"
     />
   )
 }
-NotFoundImage.displayName = "NotFoundImage"
+NotFoundBlockImage.displayName = "NotFoundBlockImage"
 
-export type NotFoundTitleProps = React.ComponentProps<typeof Typography>
+export type NotFoundBlockTitleProps = React.ComponentProps<typeof Typography>
 
-export function NotFoundTitle(props: NotFoundTitleProps) {
+export function NotFoundBlockTitle(props: NotFoundBlockTitleProps) {
   const { variant = "heading-4", ...typographyProps } = props
 
   return <Typography variant={variant} component="p" {...typographyProps} />
 }
-NotFoundTitle.displayName = "NotFoundTitle"
+NotFoundBlockTitle.displayName = "NotFoundBlockTitle"
 
-export type NotFoundDescriptionProps = React.ComponentProps<typeof Typography>
+export type NotFoundBlockDescriptionProps = React.ComponentProps<
+  typeof Typography
+>
 
-export function NotFoundDescription(props: NotFoundDescriptionProps) {
+export function NotFoundBlockDescription(props: NotFoundBlockDescriptionProps) {
   const { variant = "base-regular", ...typographyProps } = props
 
   return (
@@ -52,4 +54,4 @@ export function NotFoundDescription(props: NotFoundDescriptionProps) {
     </p>
   )
 }
-NotFoundDescription.displayName = "NotFoundDescription"
+NotFoundBlockDescription.displayName = "NotFoundBlockDescription"

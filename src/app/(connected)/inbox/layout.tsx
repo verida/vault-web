@@ -1,10 +1,10 @@
 import { Suspense } from "react"
 
 import {
-  Loading,
-  LoadingDescription,
-  LoadingSpinner,
-  LoadingTitle,
+  LoadingBlock,
+  LoadingBlockDescription,
+  LoadingBlockSpinner,
+  LoadingBlockTitle,
 } from "@/components/ui/loading"
 
 type InboxLayoutProps = {
@@ -29,13 +29,13 @@ InboxLayout.displayName = "InboxLayout"
 export function InboxLoadingPage() {
   return (
     <div className="flex h-full flex-1 flex-row items-center justify-center p-4">
-      <Loading>
-        <LoadingSpinner />
-        <LoadingTitle>Loading inbox...</LoadingTitle>
-        <LoadingDescription>
+      <LoadingBlock>
+        <LoadingBlockSpinner />
+        <LoadingBlockTitle>Loading inbox...</LoadingBlockTitle>
+        <LoadingBlockDescription>
           Please wait while we are getting your inbox
-        </LoadingDescription>
-      </Loading>
+        </LoadingBlockDescription>
+      </LoadingBlock>
     </div>
   )
 }

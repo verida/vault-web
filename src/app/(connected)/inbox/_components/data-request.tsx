@@ -19,10 +19,10 @@ import { Typography } from "@/components/typography"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
 import {
-  Loading,
-  LoadingDescription,
-  LoadingSpinner,
-  LoadingTitle,
+  LoadingBlock,
+  LoadingBlockDescription,
+  LoadingBlockSpinner,
+  LoadingBlockTitle,
 } from "@/components/ui/loading"
 import { useInboxAction } from "@/features/inbox/hooks/useInboxAction"
 import { InboxType } from "@/features/inbox/types"
@@ -95,11 +95,13 @@ export function DataRequestDetails(props: InboxDetailsProps) {
           onClose={onClose}
         />
         <ModalSheetBody>
-          <Loading className="flex-grow">
-            <LoadingSpinner />
-            <LoadingTitle>Sharing...</LoadingTitle>
-            <LoadingDescription>Please wait a moment</LoadingDescription>
-          </Loading>
+          <LoadingBlock className="flex-grow">
+            <LoadingBlockSpinner />
+            <LoadingBlockTitle>Sharing...</LoadingBlockTitle>
+            <LoadingBlockDescription>
+              Please wait a moment
+            </LoadingBlockDescription>
+          </LoadingBlock>
         </ModalSheetBody>
       </>
     )

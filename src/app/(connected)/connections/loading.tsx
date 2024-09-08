@@ -1,20 +1,20 @@
 import {
-  Loading,
-  LoadingDescription,
-  LoadingSpinner,
-  LoadingTitle,
+  LoadingBlock,
+  LoadingBlockDescription,
+  LoadingBlockSpinner,
+  LoadingBlockTitle,
 } from "@/components/ui/loading"
 
 export default function ConnectionsLoadingPage() {
   return (
     <div className="flex h-full flex-1 flex-row items-center justify-center p-4">
-      <Loading>
-        <LoadingSpinner />
-        <LoadingTitle>Loading connections...</LoadingTitle>
-        <LoadingDescription>
+      <LoadingBlock>
+        <LoadingBlockSpinner />
+        <LoadingBlockTitle>Loading connections...</LoadingBlockTitle>
+        <LoadingBlockDescription>
           Please wait while we are getting your data connections
-        </LoadingDescription>
-      </Loading>
+        </LoadingBlockDescription>
+      </LoadingBlock>
     </div>
   )
 }
