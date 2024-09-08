@@ -1,16 +1,15 @@
 "use client"
 
-import { ChevronRight } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useCallback, useEffect, useState } from "react"
 
+import { ConnectDataProviderDialogProviderSelection } from "@/app/(connected)/connections/summary/_components/connect-data-provider-dialog-provider-selection"
 import { VLogo } from "@/components/icons/logo"
 import { Switch } from "@/components/icons/switch"
 import { Typography } from "@/components/typography"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
-import { Card } from "@/components/ui/card"
 import {
   Dialog,
   DialogBody,
@@ -21,7 +20,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import { Skeleton } from "@/components/ui/skeleton"
 import { commonConfig } from "@/config/common"
 import {
   DataConnectionsChannelEvent,
@@ -32,7 +30,6 @@ import {
 } from "@/features/data-connections"
 import { getConnectionPageRoute } from "@/features/routes/utils"
 import { Logger } from "@/features/telemetry"
-import { cn } from "@/styles/utils"
 
 const logger = Logger.create("ConnectDataProviderDialog")
 
@@ -48,7 +45,7 @@ export function ConnectDataProviderDialog(
 
   const router = useRouter()
 
-  const { providers, isLoading: isLoadingProviders } = useDataProviders()
+  const { providers } = useDataProviders()
   const [provider, setProvider] = useState<DataProvider | null>(null)
 
   useEffect(() => {
@@ -65,9 +62,9 @@ export function ConnectDataProviderDialog(
 
   const { broadcastChannel: dataConnectionsChannel } =
     useDataConnectionsContext()
-  const [status, setStatus] = useState<"idle" | "connecting" | "connected">(
-    "idle"
-  )
+  const [status, setStatus] = useState<
+    "idle" | "connecting" | "connected" | "error"
+  >("idle")
 
   const handleConnectClick = useCallback(() => {
     if (!provider) {
@@ -82,7 +79,7 @@ export function ConnectDataProviderDialog(
       )
       window.open(url, "_blank")
     } catch (error) {
-      setStatus("idle")
+      setStatus("error")
       logger.error(
         new Error("Error building connect provider URL", {
           cause: error,
@@ -151,63 +148,43 @@ export function ConnectDataProviderDialog(
               <Switch />
               <VLogo className="rounded-full border" />
             </div>
-            <div className="flex flex-col gap-4">
-              <Typography variant="heading-4">What it will do</Typography>
-              <Typography variant="base-regular">
-                {/* TODO: Rework the description */}
-                {provider.description}
-              </Typography>
-            </div>
+            {status === "error" ? (
+              <Alert variant="error">
+                <AlertDescription>
+                  There was an error connecting to the platform. Please try
+                  again later.
+                </AlertDescription>
+              </Alert>
+            ) : status === "connected" ? (
+              <Alert variant="info">
+                <AlertDescription>
+                  Your account has been connected successfully.
+                </AlertDescription>
+              </Alert>
+            ) : (
+              <div className="flex flex-col gap-4">
+                <Typography variant="heading-4">What it will do</Typography>
+                <Typography variant="base-regular">
+                  {/* TODO: Rework the description */}
+                  {provider.description}
+                </Typography>
+              </div>
+            )}
           </DialogBody>
         ) : (
-          <DialogBody>
-            <div className="flex flex-col gap-3 px-1">
-              {providers && providers.length === 0 ? (
-                <Typography variant="base-regular">
-                  There are no available connections at the moment.
-                </Typography>
-              ) : providers && providers.length !== 0 ? (
-                <>
-                  {providers.map((provider) => (
-                    <ProviderSelectionItem
-                      key={provider.name}
-                      provider={provider}
-                      onClick={() => setProvider(provider)}
-                    />
-                  ))}
-                </>
-              ) : isLoadingProviders ? (
-                <>
-                  {[1, 2, 3].map((index) => (
-                    <ProviderSelectionItemSkeleton key={index} />
-                  ))}
-                </>
-              ) : (
-                <Alert variant="error">
-                  <AlertDescription>
-                    There has been an error getting the available connections.
-                    Please try again later.
-                  </AlertDescription>
-                </Alert>
-              )}
-            </div>
-          </DialogBody>
+          <ConnectDataProviderDialogProviderSelection
+            onSelectItem={setProvider}
+          />
         )}
-        {provider ? (
+        {provider && (status === "idle" || status === "connecting") ? (
           <DialogFooter>
-            {status !== "connected" ? (
-              <Button
-                variant="primary"
-                onClick={handleConnectClick}
-                disabled={status === "connecting"}
-              >
-                {status === "connecting" ? "Connecting..." : "Connect"}
-              </Button>
-            ) : (
-              <Alert variant="info">
-                <AlertDescription>Connection successful.</AlertDescription>
-              </Alert>
-            )}
+            <Button
+              variant="primary"
+              onClick={handleConnectClick}
+              disabled={status === "connecting"}
+            >
+              {status === "connecting" ? "Connecting..." : "Connect"}
+            </Button>
           </DialogFooter>
         ) : null}
       </DialogContent>
@@ -217,58 +194,3 @@ export function ConnectDataProviderDialog(
 ConnectDataProviderDialog.displayName = "ConnectDataProviderDialog"
 
 export const ConnectDataProviderDialogTrigger = DialogTrigger
-
-type ProviderSelectionItemProps = {
-  provider: DataProvider
-} & React.ComponentProps<"button">
-
-function ProviderSelectionItem(props: ProviderSelectionItemProps) {
-  const { provider, className, ...buttonProps } = props
-
-  return (
-    <button className={cn("rounded-lg", className)} {...buttonProps}>
-      <Card className="flex w-full flex-row items-center gap-3 p-4 pr-3">
-        <Avatar className="size-12">
-          <AvatarImage src={provider.icon} alt={provider.label} />
-          <AvatarFallback>{provider.label?.[0]?.toUpperCase()}</AvatarFallback>
-        </Avatar>
-        <div className="flex flex-1 flex-col items-start text-start">
-          <Typography variant="heading-4">{provider.label}</Typography>
-          <span
-            className="text-muted-foreground" // FIXME: Fix class conflicts in the Typography with text-muted-foreground removing the class text-base-s-regular
-          >
-            <Typography variant="base-s-regular" className="line-clamp-2">
-              {provider.description}
-            </Typography>
-          </span>
-        </div>
-        <ChevronRight className="text-muted-foreground" />
-      </Card>
-    </button>
-  )
-}
-ProviderSelectionItem.displayName = "ProviderSelectionItem"
-
-type ProviderSelectionItemSkeletonProps = React.ComponentProps<"div">
-
-function ProviderSelectionItemSkeleton(
-  props: ProviderSelectionItemSkeletonProps
-) {
-  const { className, ...divProps } = props
-
-  return (
-    <div className={cn("rounded-lg", className)} {...divProps}>
-      <Card className="flex w-full flex-row items-center gap-3 p-4 pr-3">
-        <Skeleton className="size-12 rounded-full" />
-        <div className="flex flex-1 flex-col items-start text-start">
-          <Skeleton className="my-1 h-4 w-1/3 sm:h-5" />
-          <div className="flex flex-col gap-0">
-            <Skeleton className="my-1.5 h-4 w-full" />
-            <Skeleton className="my-1.5 h-4 w-3/4" />
-          </div>
-        </div>
-      </Card>
-    </div>
-  )
-}
-ProviderSelectionItemSkeleton.displayName = "ProviderSelectionItemSkeleton"
