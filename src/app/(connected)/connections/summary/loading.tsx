@@ -1,4 +1,21 @@
+import {
+  Loading,
+  LoadingDescription,
+  LoadingSpinner,
+  LoadingTitle,
+} from "@/components/ui/loading"
+
 export default function ConnectionsSummaryLoadingPage() {
-  return <div>Loading...</div>
+  return (
+    <div className="flex h-full flex-1 flex-row items-center justify-center p-4">
+      <Loading>
+        <LoadingSpinner />
+        <LoadingTitle>Loading connections...</LoadingTitle>
+        <LoadingDescription>
+          Please wait while we are getting your data connections
+        </LoadingDescription>
+      </Loading>
+    </div>
+  )
 }
 ConnectionsSummaryLoadingPage.displayName = "ConnectionsSummaryLoadingPage"

@@ -1,5 +1,9 @@
-import { Spinner } from "@/components/spinner"
-import { Typography } from "@/components/typography"
+import {
+  Loading,
+  LoadingDescription,
+  LoadingSpinner,
+  LoadingTitle,
+} from "@/components/ui/loading"
 import { cn } from "@/styles/utils"
 
 type ConnectionLoadingProps = Omit<
@@ -18,16 +22,14 @@ export function ConnectionLoading(props: ConnectionLoadingProps) {
       )}
       {...divProps}
     >
-      <Spinner />
-      <div className="flex flex-col items-center justify-center gap-4 text-center">
-        <Typography variant="heading-1" className="text-center">
-          Connecting to Verida...
-        </Typography>
-        <Typography variant="base-l" className="text-center">
+      <Loading>
+        <LoadingSpinner />
+        <LoadingTitle variant="heading-1">Connecting to Verida...</LoadingTitle>
+        <LoadingDescription variant="base-l">
           Please wait while we establish a secure connection. This might take a
           moments.
-        </Typography>
-      </div>
+        </LoadingDescription>
+      </Loading>
     </div>
   )
 }

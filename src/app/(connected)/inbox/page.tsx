@@ -6,12 +6,17 @@ import { useMemo, useState } from "react"
 import { InboxDetails } from "@/app/(connected)/inbox/_components/inbox-details"
 import { InboxError } from "@/app/(connected)/inbox/_components/inbox-error"
 import { InboxRowItem } from "@/app/(connected)/inbox/_components/inbox-item"
-import { InboxLoading } from "@/app/(connected)/inbox/_components/inbox-loading"
 import { NoInbox } from "@/app/(connected)/inbox/_components/no-inbox"
 // import { FilterButton } from "@/components/filter-button"
 import { ModalSheet } from "@/components/modal-sheet"
 // import { SearchInput } from "@/components/search-input"
 import { Typography } from "@/components/typography"
+import {
+  Loading,
+  LoadingDescription,
+  LoadingSpinner,
+  LoadingTitle,
+} from "@/components/ui/loading"
 import { TablePagination } from "@/components/ui/table-pagination"
 import { useInbox } from "@/features/inbox/hooks"
 import { useInboxContext } from "@/features/inbox/hooks/useInboxContext"
@@ -83,10 +88,13 @@ export default function InboxPage() {
         </div>
 
         {isLoading && (
-          <InboxLoading
-            title="Please wait..."
-            description="We are fetching your latest messages"
-          />
+          <Loading className="flex-grow">
+            <LoadingSpinner />
+            <LoadingTitle>Please wait...</LoadingTitle>
+            <LoadingDescription>
+              We are fetching your latest messages
+            </LoadingDescription>
+          </Loading>
         )}
 
         {hasError && (
