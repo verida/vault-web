@@ -28,3 +28,4 @@ export default function AssistantLayout(props: AssistantLayoutProps) {
     </div>
   )
 }
+AssistantLayout.displayName = "AssistantLayout"

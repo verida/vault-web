@@ -8,3 +8,4 @@ export default function RootPage() {
     </RootConnectionHandler>
   )
 }
+RootPage.displayName = "RootPage"

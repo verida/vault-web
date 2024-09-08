@@ -11,3 +11,4 @@ export default function AssistantLoadingPage() {
     </div>
   )
 }
+AssistantLoadingPage.displayName = "AssistantLoadingPage"

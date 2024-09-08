@@ -31,3 +31,4 @@ export default function NewDataConnectionCallbackPage() {
 
   return null
 }
+NewDataConnectionCallbackPage.displayName = "NewDataConnectionCallbackPage"

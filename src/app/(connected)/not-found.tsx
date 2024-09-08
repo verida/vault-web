@@ -6,7 +6,7 @@ import { Typography } from "@/components/typography"
 import { Button } from "@/components/ui/button"
 import { getRootPageRoute } from "@/features/routes/utils"
 
-export default function AppNotFound() {
+export default function AppNotFoundPage() {
   // TODO: Extract this component as a generic error component taking a title and description
   return (
     <div className="flex h-full flex-col items-center justify-center">
@@ -28,4 +28,4 @@ export default function AppNotFound() {
     </div>
   )
 }
-AppNotFound.displayName = "AppNotFound"
+AppNotFoundPage.displayName = "AppNotFoundPage"

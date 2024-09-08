@@ -17,3 +17,4 @@ export default function ConnectionLayout(props: ConnectionLayoutProps) {
     </SubPageWrapper>
   )
 }
+ConnectionLayout.displayName = "ConnectionLayout"

@@ -89,3 +89,4 @@ export default function DataPage() {
     </div>
   )
 }
+DataPage.displayName = "DataPage"
