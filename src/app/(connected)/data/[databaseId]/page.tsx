@@ -1,7 +1,7 @@
 "use client"
 
 import { useSearchParams } from "next/navigation"
-import React, { useMemo } from "react"
+import React, { useEffect, useMemo, useState } from "react"
 
 import { CredentialItem } from "@/app/(connected)/data/[databaseId]/_components/credential-item"
 import { DataError } from "@/app/(connected)/data/[databaseId]/_components/data-error"
@@ -9,7 +9,7 @@ import { DataItem } from "@/app/(connected)/data/[databaseId]/_components/data-i
 import { DataItemDetailsSheet } from "@/app/(connected)/data/[databaseId]/_components/data-item-details-sheet"
 import { Typography } from "@/components/typography"
 import { Skeleton } from "@/components/ui/skeleton"
-import { databaseDefinitions } from "@/features/data"
+import { DATABASE_DEFS } from "@/features/data"
 import { useData } from "@/features/data/hooks"
 import { useDataSchema } from "@/features/data/hooks/useDataSchema"
 import { getPublicProfile } from "@/features/profiles"
@@ -24,8 +24,8 @@ export default function DatabasePage(props: DatabasePageProps) {
   const { databaseId: encodedDatabaseId } = params
   const databaseId = decodeURIComponent(encodedDatabaseId)
 
-  const folder = useMemo(() => {
-    return databaseDefinitions.find((f) => f.name === databaseId)
+  const databaseDefinition = useMemo(() => {
+    return DATABASE_DEFS.find((databaseDef) => databaseDef.id === databaseId)
   }, [databaseId])
 
   // TODO: Handle folder not found
@@ -36,7 +36,7 @@ export default function DatabasePage(props: DatabasePageProps) {
     dataItems: items,
     isDataItemsPending: loading,
     isDataItemsError,
-  } = useData<any>(folder?.database || "") // TODO: Type properly
+  } = useData<any>(databaseDefinition?.databaseVaultName || "") // TODO: Type properly
 
   const {
     dataSchema,
@@ -49,9 +49,9 @@ export default function DatabasePage(props: DatabasePageProps) {
   const itemId = searchParams.get("id")
   const selectedItem = items?.find((it) => it._id === itemId)
 
-  const [, setIssuer] = React.useState<any>({})
+  const [, setIssuer] = useState<any>({})
 
-  React.useEffect(() => {
+  useEffect(() => {
     function parseJwt(token: string) {
       const base64Url = token.split(".")[1]
       const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/")
@@ -80,7 +80,9 @@ export default function DatabasePage(props: DatabasePageProps) {
   return (
     <div className="flex-col pb-6">
       <div className="mb-4 flex items-center justify-between gap-4">
-        <Typography variant="heading-3">{folder?.titlePlural}</Typography>
+        <Typography variant="heading-3">
+          {databaseDefinition?.titlePlural}
+        </Typography>
       </div>
 
       {!isConnected || loading || schemaLoading ? (
@@ -99,7 +101,7 @@ export default function DatabasePage(props: DatabasePageProps) {
         </div>
       ) : items?.length === 0 || !dataSchema ? (
         <Typography variant={"heading-4"} className="py-40 text-center">
-          No {folder?.titlePlural}
+          No {databaseDefinition?.titlePlural}
         </Typography>
       ) : (
         <div className="flex flex-col gap-2">
@@ -109,7 +111,7 @@ export default function DatabasePage(props: DatabasePageProps) {
                 variant="base-s-semibold"
                 className="text-muted-foreground"
               >
-                {folder?.title} Name
+                {databaseDefinition?.title} Name
               </Typography>
             )}
             {dataSchema?.layouts.view.map((key) => (
@@ -122,7 +124,7 @@ export default function DatabasePage(props: DatabasePageProps) {
               </Typography>
             ))}
           </div>
-          {folder?.name === "credentials"
+          {databaseDefinition?.id === "credentials"
             ? items?.map((item, index) => (
                 <CredentialItem
                   key={index}
@@ -145,7 +147,7 @@ export default function DatabasePage(props: DatabasePageProps) {
         open={Boolean(itemId)}
         data={selectedItem}
         schema={dataSchema}
-        folder={folder}
+        folder={databaseDefinition}
       />
     </div>
   )

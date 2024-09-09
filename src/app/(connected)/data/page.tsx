@@ -1,8 +1,10 @@
+import Link from "next/link"
 import React from "react"
 
-import { CategoryCard } from "@/app/(connected)/data/_components/category-card"
+import { DatabaseCard } from "@/app/(connected)/data/_components/database-card"
 import { Typography } from "@/components/typography"
-import { databaseDefinitions } from "@/features/data"
+import { DATABASE_DEFS } from "@/features/data"
+import { getDatabasePageRoute } from "@/features/routes/utils"
 
 export default function DataPage() {
   return (
@@ -11,15 +13,17 @@ export default function DataPage() {
         Categories
       </Typography>
       <div className="grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-4">
-        {databaseDefinitions.map((database) => {
+        {DATABASE_DEFS.map((databaseDefinition) => {
           return (
-            <article key={database.name}>
-              <CategoryCard
-                icon={database.icon}
-                database={database.database || ""}
-                href={`/data/${database.name}`}
-                title={database.titlePlural}
-              />
+            <article key={databaseDefinition.id}>
+              <Link
+                href={getDatabasePageRoute({
+                  databaseId: databaseDefinition.id,
+                })}
+                className="rounded-2xl"
+              >
+                <DatabaseCard databaseDefinition={databaseDefinition} />
+              </Link>
             </article>
           )
         })}
