@@ -37,15 +37,11 @@ export function DataProviderCard(props: DataProviderCardProps) {
         </div>
         <div className="flex flex-col gap-2">
           <Typography variant="heading-4">{provider.label}</Typography>
-          <p className="text-muted-foreground">
-            <Typography
-              variant="base-l"
-              component="span"
-              className="line-clamp-3"
-            >
+          <div className="text-muted-foreground">
+            <Typography variant="base-l" className="line-clamp-3">
               {provider.description}
             </Typography>
-          </p>
+          </div>
         </div>
       </div>
     </Card>

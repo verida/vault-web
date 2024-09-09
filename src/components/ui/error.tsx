@@ -47,9 +47,9 @@ export function ErrorBlockDescription(props: ErrorBlockDescriptionProps) {
   const { variant = "base-regular", ...typographyProps } = props
 
   return (
-    <p className="text-muted-foreground">
+    <div className="text-muted-foreground">
       <Typography variant={variant} {...typographyProps} />
-    </p>
+    </div>
   )
 }
 ErrorBlockDescription.displayName = "ErrorBlockDescription"

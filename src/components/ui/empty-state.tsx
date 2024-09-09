@@ -47,9 +47,9 @@ export function EmptyStateDescription(props: EmptyStateDescriptionProps) {
   const { variant = "base-regular", ...typographyProps } = props
 
   return (
-    <p className="text-muted-foreground">
+    <div className="text-muted-foreground">
       <Typography variant={variant} {...typographyProps} />
-    </p>
+    </div>
   )
 }
 EmptyStateDescription.displayName = "EmptyStateDescription"

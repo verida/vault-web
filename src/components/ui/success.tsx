@@ -49,9 +49,9 @@ export function SuccessBlockDescription(props: SuccessBlockDescriptionProps) {
   const { variant = "base-regular", ...typographyProps } = props
 
   return (
-    <p className="text-muted-foreground">
+    <div className="text-muted-foreground">
       <Typography variant={variant} {...typographyProps} />
-    </p>
+    </div>
   )
 }
 SuccessBlockDescription.displayName = "SuccessBlockDescription"

@@ -1,34 +1,27 @@
-"use client"
-
-import { useEffect } from "react"
-
-import { useDataConnectionsContext } from "@/features/data-connections"
-import { Logger } from "@/features/telemetry"
-
-const logger = Logger.create("NewDataConnectionCallbackPage")
+import { NewDataConnectionCallbackHandler } from "@/app/callback/new-data-connection/_components/new-data-connection-callback-handler"
+import {
+  SuccessBlock,
+  SuccessBlockDescription,
+  SuccessBlockImage,
+  SuccessBlockTitle,
+} from "@/components/ui/success"
 
 export default function NewDataConnectionCallbackPage() {
-  const { triggerNewDataConnectionEvent } = useDataConnectionsContext()
-
-  useEffect(() => {
-    // TODO: Get connectionId from search params
-
-    triggerNewDataConnectionEvent({
-      connectionId: undefined, // TODO: Add connectionId when available
-    })
-
-    logger.debug("Attempting to close the window")
-    window.close()
-
-    // If window.close() doesn't work, we can try an alternative approach
-    if (!window.closed) {
-      logger.warn("window.close() failed, trying alternative method")
-      window.opener = null
-      window.open("", "_self")
-      window.close()
-    }
-  }, [triggerNewDataConnectionEvent])
-
-  return null
+  return (
+    <NewDataConnectionCallbackHandler>
+      <div className="flex h-dvh flex-col items-center justify-center">
+        <SuccessBlock>
+          <SuccessBlockImage />
+          <SuccessBlockTitle>
+            You successfully connected your account!
+          </SuccessBlockTitle>
+          <SuccessBlockDescription>
+            This window should close automatically, if not, you can close it
+            now.
+          </SuccessBlockDescription>
+        </SuccessBlock>
+      </div>
+    </NewDataConnectionCallbackHandler>
+  )
 }
 NewDataConnectionCallbackPage.displayName = "NewDataConnectionCallbackPage"

@@ -49,9 +49,9 @@ export function NotFoundBlockDescription(props: NotFoundBlockDescriptionProps) {
   const { variant = "base-regular", ...typographyProps } = props
 
   return (
-    <p className="text-muted-foreground">
+    <div className="text-muted-foreground">
       <Typography variant={variant} {...typographyProps} />
-    </p>
+    </div>
   )
 }
 NotFoundBlockDescription.displayName = "NotFoundBlockDescription"
