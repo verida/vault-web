@@ -1,90 +1,28 @@
-"use client"
-
-// import { IDatabase } from "@verida/types"
 import React from "react"
 
 import { CategoryCard } from "@/app/(connected)/data/_components/category-card"
 import { Typography } from "@/components/typography"
-import { dataFolders } from "@/features/data"
+import { databaseDefinitions } from "@/features/data"
 
 export default function DataPage() {
-  // const { webUserInstanceRef, isConnected } = useVerida()
-  // const [db, setDB] = React.useState<IDatabase | undefined>()
-  // const [Loading, setLoading] = React.useState(true)
-
-  // React.useEffect(() => {
-  //   const fetchFolder = async () => {
-  //     const db = await webUserInstanceRef.current?.openDatabase("credential")
-
-  //     setDB(db)
-  //   }
-  // }, [webUserInstanceRef, isConnected])
-
-  // React.useEffect(() => {
-  //   const init = async () => {
-  //     try {
-  //       setLoading(true)
-  //       // TODO: Add stronger typing
-  //       const fetchedItems = await db?.getMany(null, null)
-
-  //       console.log("fetchedItems", JSON.stringify(fetchedItems, null, 2))
-  //     } catch (err: any) {
-  //       console.log(err)
-  //       // If the error is caused by a missing index, automatically create the index and try again
-  //       if (err.message?.indexOf("default index")) {
-  //         const matches = err.message?.match(
-  //           // eslint-disable-next-line no-useless-escape
-  //           /Cannot sort on field\(s\) \"([0-9a-zA-Z\.-]+)\" when using the default index/
-  //         )
-  //         const missingIndexName = matches[1]
-  //         const couchDb = await db!.getDb()
-  //         await couchDb.createIndex({
-  //           name: missingIndexName,
-  //           fields: [missingIndexName],
-  //         })
-
-  //         // try to fetch restuls again with index
-  //         await init()
-  //       }
-  //     } finally {
-  //       setLoading(false)
-  //     }
-  //   }
-
-  //   // db && init()
-  // }, [db])
-
   return (
     <div className="flex-col">
       <Typography variant="heading-3" className="mb-4">
         Categories
       </Typography>
       <div className="grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-4">
-        {dataFolders
-          // .filter((folder) => folder.root)
-          .map((folder) => {
-            return (
+        {databaseDefinitions.map((database) => {
+          return (
+            <article key={database.name}>
               <CategoryCard
-                key={folder.name}
-                icon={folder.icon}
-                database={folder.database || ""}
-                href={`/data/${folder.name}`}
-                title={folder.titlePlural}
+                icon={database.icon}
+                database={database.database || ""}
+                href={`/data/${database.name}`}
+                title={database.titlePlural}
               />
-            )
-          })}
-
-        {/* <Category icon={<FolderCredentials />} href="/data/credentials" title="Credentials" description="0 items" /> */}
-        {/* <Category icon={<FolderTickets />} href="/data/tickets" title="Tickets" description="0 items" />
-        <Category icon={<FolderQualifications />} href="/data/qualifications" title="Qualifications" description="0 items" />
-        <Category icon={<FolderNft />} href="/data/nfts" title="NFTs" description="0 items" />
-
-        <Category icon={<FolderLoyalty />} href="/data/loyalty" title="Loyalty" description="0 items" />
-        <Category icon={<FolderContacts />} href="/data/contacts" title="Contacts" description="0 items" />
-        <Category icon={<FolderHealth />} href="/data/health" title="Health" description="0 items" />
-        <Category icon={<FolderIdentity />} href="/data/identity" title="Identity" description="0 items" />
-
-        <Category icon={<FolderSocial />} href="/data/social" title="Social" description="0 items" /> */}
+            </article>
+          )
+        })}
       </div>
     </div>
   )

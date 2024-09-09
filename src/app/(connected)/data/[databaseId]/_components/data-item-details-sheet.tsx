@@ -21,13 +21,13 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
-import { DataFolderDefinition, DataSchema } from "@/features/data"
+import { DataSchema, DatabaseDefinition } from "@/features/data"
 
 export type DataItemDetailsSheetProps = {
   open: boolean
   data?: any
   schema?: DataSchema
-  folder?: DataFolderDefinition
+  folder?: DatabaseDefinition
 }
 
 /**

@@ -1,4 +1,4 @@
-import { dataFolders } from "@/features/data"
+import { databaseDefinitions } from "@/features/data"
 
 import VaultCommon from "../vault"
 import Folder from "./data/folder"
@@ -15,7 +15,7 @@ export class DataManager {
   }
 
   public async selectFolder(folderName: string) {
-    const folderDefinition = dataFolders.find(
+    const folderDefinition = databaseDefinitions.find(
       (folder) => folder.name === folderName
     )
 

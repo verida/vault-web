@@ -1,4 +1,4 @@
-import { VeridaRecord } from "@/features/verida"
+// import { VeridaRecord } from "@/features/verida"
 
 export type DataField = {
   field: string
@@ -10,42 +10,30 @@ export type DataItem = {
   title: string
 }
 
-export type DataFolderDisplayType = "grid" | "folders" | "cards"
-
-export type DataFolderDefinition = {
+export type DatabaseDefinition = {
   name: string
   title: string
   titlePlural?: string
   icon: React.ReactNode
   color?: string
-  root: boolean
-  database?: string
-} & (
-  | {
-      display: "folders"
-      folders: string[]
-    }
-  | {
-      display: "grid" | "cards"
-      database: string
-      layouts?: {
-        list?: string[]
-        view?: string[]
-      }
-      sort?: Record<string, unknown>[]
-      fields?: {
-        [key: string]: {
-          label: string
-        }
-      }
-      card?: {
-        name?: (record: VeridaRecord) => string
-        summary?: (record: VeridaRecord) => string
-      }
-      nameField?: string
-      summaryField?: string
-    }
-)
+  database: string
+  // layouts?: {
+  //   list?: string[]
+  //   view?: string[]
+  // }
+  // sort?: Record<string, unknown>[]
+  // fields?: {
+  //   [key: string]: {
+  //     label: string
+  //   }
+  // }
+  // card?: {
+  //   name?: (record: VeridaRecord) => string
+  //   summary?: (record: VeridaRecord) => string
+  // }
+  // nameField?: string
+  // summaryField?: string
+}
 
 export type DataSchema = {
   $schema: string

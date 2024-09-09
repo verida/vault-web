@@ -9,7 +9,7 @@ import { DataItem } from "@/app/(connected)/data/[databaseId]/_components/data-i
 import { DataItemDetailsSheet } from "@/app/(connected)/data/[databaseId]/_components/data-item-details-sheet"
 import { Typography } from "@/components/typography"
 import { Skeleton } from "@/components/ui/skeleton"
-import { dataFolders } from "@/features/data"
+import { databaseDefinitions } from "@/features/data"
 import { useData } from "@/features/data/hooks"
 import { useDataSchema } from "@/features/data/hooks/useDataSchema"
 import { getPublicProfile } from "@/features/profiles"
@@ -25,7 +25,7 @@ export default function DatabasePage(props: DatabasePageProps) {
   const databaseId = decodeURIComponent(encodedDatabaseId)
 
   const folder = useMemo(() => {
-    return dataFolders.find((f) => f.name === databaseId)
+    return databaseDefinitions.find((f) => f.name === databaseId)
   }, [databaseId])
 
   // TODO: Handle folder not found
