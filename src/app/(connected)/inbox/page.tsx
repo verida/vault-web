@@ -113,9 +113,9 @@ export default function InboxPage() {
           </ErrorBlock>
         )}
 
-        {!isLoading && totalMessageCount === 0 && <NoInbox />}
+        {!isLoading && totalMessageCount === 0 ? <NoInbox /> : null}
 
-        {!isLoading && messages && (
+        {!isLoading && messages ? (
           <div className="flex flex-grow flex-col items-center gap-3">
             {messages.map((message: any) => (
               <InboxRowItem
@@ -125,7 +125,7 @@ export default function InboxPage() {
               />
             ))}
           </div>
-        )}
+        ) : null}
 
         <TablePagination
           totalItems={totalMessageCount}

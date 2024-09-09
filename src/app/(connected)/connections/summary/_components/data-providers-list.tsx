@@ -4,7 +4,7 @@ import {
   DataProviderCard,
   DataProviderSkeletonCard,
 } from "@/app/(connected)/connections/summary/_components/data-provider-card"
-import { Typography } from "@/components/typography"
+import { EmptyState, EmptyStateDescription } from "@/components/ui/empty-state"
 import {
   ErrorBlock,
   ErrorBlockDescription,
@@ -23,11 +23,12 @@ export function DataProvidersList(props: DataProvidersListProps) {
   if (providers) {
     if (providers.length === 0) {
       return (
-        // TODO: Improve the design of the empty state
         <div className={className} {...divProps}>
-          <Typography variant="base-regular">
-            There are no available connections at the moment.
-          </Typography>
+          <EmptyState>
+            <EmptyStateDescription>
+              There are no available platform at the moment. Come back later.
+            </EmptyStateDescription>
+          </EmptyState>
         </div>
       )
     }
@@ -58,7 +59,7 @@ export function DataProvidersList(props: DataProvidersListProps) {
         )}
         {...divProps}
       >
-        {[1, 2, 3].map((index) => (
+        {[...Array(3)].map((_, index) => (
           <DataProviderSkeletonCard key={index} />
         ))}
       </div>

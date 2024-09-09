@@ -41,7 +41,7 @@ export function ConnectDataProviderDialogProviderSelection(
           </>
         ) : isLoadingProviders ? (
           <>
-            {[1, 2, 3].map((index) => (
+            {[...Array(3)].map((_, index) => (
               <ProviderSelectionItemSkeleton key={index} />
             ))}
           </>

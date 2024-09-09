@@ -4,7 +4,11 @@ import {
   DataConnectionCard,
   DataConnectionSkeletonCard,
 } from "@/app/(connected)/connections/summary/_components/data-connection-card"
-import { Typography } from "@/components/typography"
+import {
+  EmptyState,
+  EmptyStateDescription,
+  EmptyStateTitle,
+} from "@/components/ui/empty-state"
 import {
   ErrorBlock,
   ErrorBlockDescription,
@@ -23,11 +27,20 @@ export function DataConnectionsList(props: DataConnectionsListProps) {
   if (connections) {
     if (connections.length === 0) {
       return (
-        // TODO: Improve the design of the empty state
         <div className={className} {...divProps}>
-          <Typography variant="base-regular">
-            You have no active data connections at the moment.
-          </Typography>
+          <EmptyState className="mb-8">
+            <EmptyStateTitle variant="heading-5">
+              No connections yet
+            </EmptyStateTitle>
+            <div className="flex flex-col items-center gap-2">
+              <EmptyStateDescription>
+                You have no active data connections at the moment.
+              </EmptyStateDescription>
+              <EmptyStateDescription>
+                Connect a platform to start extracting your personal data.
+              </EmptyStateDescription>
+            </div>
+          </EmptyState>
         </div>
       )
     }
