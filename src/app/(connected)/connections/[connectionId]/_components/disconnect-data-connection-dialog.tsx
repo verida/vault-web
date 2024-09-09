@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation"
 import { useCallback, useState } from "react"
 
 import { Typography } from "@/components/typography"
+import { Alert, AlertDescription } from "@/components/ui/alert"
 import {
   AlertDialog,
   AlertDialogBody,
@@ -35,28 +36,27 @@ export function DisconnectDataConnectionDialog(
 
   const router = useRouter()
 
-  const [isDisconnecting, setIsDisconnecting] = useState(false)
+  const [status, setStatus] = useState<"idle" | "disconnecting" | "error">(
+    "idle"
+  )
 
   const { provider } = useDataProvider(connection.provider)
 
   const { disconnectDataConnection } = useDisconnectDataConnection()
 
   const handleDisconnectClick = useCallback(() => {
-    setIsDisconnecting(true)
+    setStatus("disconnecting")
     disconnectDataConnection(
       {
         providerId: connection.provider,
         accountId: connection.providerId,
       },
       {
-        onSettled: () => {
-          setIsDisconnecting(false)
-        },
         onSuccess: () => {
           router.replace(getConnectionsSummaryPageRoute())
         },
         onError: () => {
-          // TODO: Error handling in the UI
+          setStatus("error")
         },
       }
     )
@@ -84,19 +84,27 @@ export function DisconnectDataConnectionDialog(
             Disconnect your account
           </AlertDialogDescription>
         </AlertDialogHeader>
-        <AlertDialogBody>
+        <AlertDialogBody className="flex flex-col gap-4">
           <Typography variant="base-regular">
             Are you sure you want to disconnect?
           </Typography>
+          {status === "error" ? (
+            <Alert variant="error">
+              <AlertDescription>
+                There was an error disconnecting your account. Please try again
+                later.
+              </AlertDescription>
+            </Alert>
+          ) : null}
         </AlertDialogBody>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
           <Button
             variant="destructive"
             onClick={handleDisconnectClick}
-            disabled={isDisconnecting}
+            disabled={status === "disconnecting"}
           >
-            {isDisconnecting ? "Disconnecting..." : "Disconnect"}
+            {status === "disconnecting" ? "Disconnecting..." : "Disconnect"}
           </Button>
         </AlertDialogFooter>
       </AlertDialogContent>

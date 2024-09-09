@@ -17,7 +17,7 @@ export default function ConnectionsLogsLayout(
   }
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-1 flex-col gap-6">
       <div
         // Fixing the height to 3rem to keep this title aligned with the
         // Connections page title which is influenced by a button with this

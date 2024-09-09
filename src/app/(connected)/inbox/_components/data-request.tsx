@@ -5,10 +5,7 @@ import { useCallback, useEffect, useState } from "react"
 
 import { DataRequestItem } from "@/app/(connected)/inbox/_components/data-request-item"
 import { InboxDetailsProps } from "@/app/(connected)/inbox/_components/inbox-details"
-import { InboxError } from "@/app/(connected)/inbox/_components/inbox-error"
-import { InboxLoading } from "@/app/(connected)/inbox/_components/inbox-loading"
 import { InboxStatusText } from "@/app/(connected)/inbox/_components/inbox-status-text"
-import { InboxSuccess } from "@/app/(connected)/inbox/_components/inbox-success"
 import { RequestDataSelector } from "@/app/(connected)/inbox/_components/request-data-selector"
 import { RequesterProfile } from "@/app/(connected)/inbox/_components/requester-profile"
 import {
@@ -19,6 +16,23 @@ import {
 import { Typography } from "@/components/typography"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
+import {
+  ErrorBlock,
+  ErrorBlockDescription,
+  ErrorBlockImage,
+} from "@/components/ui/error"
+import {
+  LoadingBlock,
+  LoadingBlockDescription,
+  LoadingBlockSpinner,
+  LoadingBlockTitle,
+} from "@/components/ui/loading"
+import {
+  SuccessBlock,
+  SuccessBlockDescription,
+  SuccessBlockImage,
+  SuccessBlockTitle,
+} from "@/components/ui/success"
 import { useInboxAction } from "@/features/inbox/hooks/useInboxAction"
 import { InboxType } from "@/features/inbox/types"
 import { Logger } from "@/features/telemetry"
@@ -90,7 +104,13 @@ export function DataRequestDetails(props: InboxDetailsProps) {
           onClose={onClose}
         />
         <ModalSheetBody>
-          <InboxLoading title="Sharing..." description="Please wait a moment" />
+          <LoadingBlock className="flex-grow">
+            <LoadingBlockSpinner />
+            <LoadingBlockTitle>Sharing...</LoadingBlockTitle>
+            <LoadingBlockDescription>
+              Please wait a moment
+            </LoadingBlockDescription>
+          </LoadingBlock>
         </ModalSheetBody>
       </>
     )
@@ -105,10 +125,15 @@ export function DataRequestDetails(props: InboxDetailsProps) {
           onClose={onClose}
         />
         <ModalSheetBody>
-          <InboxError
-            description="There's been an error when sharing the data"
-            onClick={onClickShare}
-          />
+          <ErrorBlock>
+            <ErrorBlockImage />
+            <ErrorBlockDescription>
+              There was an error when sharing the data
+            </ErrorBlockDescription>
+            <Button variant="outline" onClick={onClickShare}>
+              Try Again
+            </Button>
+          </ErrorBlock>
         </ModalSheetBody>
       </>
     )
@@ -123,16 +148,20 @@ export function DataRequestDetails(props: InboxDetailsProps) {
           onClose={onClose}
         />
         <ModalSheetBody>
-          <InboxSuccess
-            title="Success!"
-            description={
-              <>
-                You successfully shared{" "}
-                <b className="text-foreground">{requestSchemaData.title}</b> to{" "}
-                <b className="text-foreground">{sentBy.name}</b>
-              </>
-            }
-          />
+          <SuccessBlock>
+            <SuccessBlockImage />
+            <SuccessBlockTitle>Success!</SuccessBlockTitle>
+            <SuccessBlockDescription>
+              You successfully shared{" "}
+              <span className="font-semibold text-foreground">
+                {requestSchemaData.title}
+              </span>{" "}
+              to{" "}
+              <span className="font-semibold text-foreground">
+                {sentBy.name}
+              </span>
+            </SuccessBlockDescription>
+          </SuccessBlock>
         </ModalSheetBody>
         <ModalSheetFooter>
           <Button onClick={() => setShared(false)}>Done</Button>

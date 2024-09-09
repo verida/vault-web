@@ -1,13 +1,23 @@
 import React from "react"
 
-import { Typography } from "@/components/typography"
+import {
+  LoadingBlock,
+  LoadingBlockDescription,
+  LoadingBlockSpinner,
+  LoadingBlockTitle,
+} from "@/components/ui/loading"
 
 export default function AssistantLoadingPage() {
   return (
-    <div className="flex h-full flex-row items-center justify-center">
-      <div className="flex flex-col items-center gap-8">
-        <Typography>Loading assistant...</Typography>
-      </div>
+    <div className="flex h-full flex-1 flex-row items-center justify-center p-4">
+      <LoadingBlock>
+        <LoadingBlockSpinner />
+        <LoadingBlockTitle>Loading assistant...</LoadingBlockTitle>
+        <LoadingBlockDescription>
+          Please wait while we connect to your assistant
+        </LoadingBlockDescription>
+      </LoadingBlock>
     </div>
   )
 }
+AssistantLoadingPage.displayName = "AssistantLoadingPage"

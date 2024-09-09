@@ -1,13 +1,11 @@
 import type { Metadata } from "next"
-import { Sora } from "next/font/google"
 
 import { RootProviders } from "@/app/_components/root-providers"
 import { commonConfig } from "@/config/common"
 import { APP_DESCRIPTION, APP_NAME, APP_TITLE } from "@/constants/app"
+import { sora } from "@/styles/font"
 import "@/styles/globals.css"
 import { cn } from "@/styles/utils"
-
-const sora = Sora({ subsets: ["latin"], variable: "--font-sora" })
 
 const baseUrl = commonConfig.BASE_URL
 
@@ -50,3 +48,4 @@ export default function RootLayout(props: RootLayoutProps) {
     </html>
   )
 }
+RootLayout.displayName = "RootLayout"

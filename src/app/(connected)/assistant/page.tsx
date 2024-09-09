@@ -62,3 +62,4 @@ export default function AssistantChatPage() {
     </div>
   )
 }
+AssistantChatPage.displayName = "AssistantChatPage"

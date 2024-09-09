@@ -24,3 +24,4 @@ export default function AppLayout(props: AppLayoutProps) {
     </AppConnectionHandler>
   )
 }
+AppLayout.displayName = "AppLayout"

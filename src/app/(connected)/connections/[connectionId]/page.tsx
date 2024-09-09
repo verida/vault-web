@@ -3,6 +3,7 @@
 import { notFound } from "next/navigation"
 
 import { DataConnectionPageContent } from "@/app/(connected)/connections/[connectionId]/_components/data-connection-page-content"
+import ConnectionLoadingPage from "@/app/(connected)/connections/[connectionId]/loading"
 import { useDataConnection } from "@/features/data-connections"
 
 type ConnectionPageProps = {
@@ -14,7 +15,8 @@ export default function ConnectionPage(props: ConnectionPageProps) {
   const { connectionId: encodedConnectionId } = params
   const connectionId = decodeURIComponent(encodedConnectionId)
 
-  const { connection, isLoading, isError } = useDataConnection(connectionId)
+  const { connection, isLoading, isError, error } =
+    useDataConnection(connectionId)
 
   if (connection) {
     return (
@@ -27,12 +29,11 @@ export default function ConnectionPage(props: ConnectionPageProps) {
 
   if (isLoading) {
     // TODO: Show a loading state
-    return <div>Loading...</div>
+    return <ConnectionLoadingPage />
   }
 
   if (isError) {
-    // TODO: Throw an error and handle it in the error page
-    return <div>Error</div>
+    throw error
   }
 
   notFound()

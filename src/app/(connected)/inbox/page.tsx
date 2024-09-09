@@ -4,14 +4,23 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { useMemo, useState } from "react"
 
 import { InboxDetails } from "@/app/(connected)/inbox/_components/inbox-details"
-import { InboxError } from "@/app/(connected)/inbox/_components/inbox-error"
 import { InboxRowItem } from "@/app/(connected)/inbox/_components/inbox-item"
-import { InboxLoading } from "@/app/(connected)/inbox/_components/inbox-loading"
 import { NoInbox } from "@/app/(connected)/inbox/_components/no-inbox"
 // import { FilterButton } from "@/components/filter-button"
 import { ModalSheet } from "@/components/modal-sheet"
 // import { SearchInput } from "@/components/search-input"
 import { Typography } from "@/components/typography"
+import {
+  ErrorBlock,
+  ErrorBlockDescription,
+  ErrorBlockImage,
+} from "@/components/ui/error"
+import {
+  LoadingBlock,
+  LoadingBlockDescription,
+  LoadingBlockSpinner,
+  LoadingBlockTitle,
+} from "@/components/ui/loading"
 import { TablePagination } from "@/components/ui/table-pagination"
 import { useInbox } from "@/features/inbox/hooks"
 import { useInboxContext } from "@/features/inbox/hooks/useInboxContext"
@@ -83,19 +92,30 @@ export default function InboxPage() {
         </div>
 
         {isLoading && (
-          <InboxLoading
-            title="Please wait..."
-            description="We are fetching your latest messages"
-          />
+          <LoadingBlock className="flex-grow">
+            <LoadingBlockSpinner />
+            <LoadingBlockTitle>Please wait...</LoadingBlockTitle>
+            <LoadingBlockDescription>
+              We are fetching your latest messages
+            </LoadingBlockDescription>
+          </LoadingBlock>
         )}
 
         {hasError && (
-          <InboxError description="There was an error getting your inbox messages, please try again later" />
+          // TODO: Leverage the Error Boundary instead?
+
+          <ErrorBlock>
+            <ErrorBlockImage />
+            <ErrorBlockDescription>
+              There was an error getting your inbox messages, please try again
+              later
+            </ErrorBlockDescription>
+          </ErrorBlock>
         )}
 
-        {!isLoading && totalMessageCount === 0 && <NoInbox />}
+        {!isLoading && totalMessageCount === 0 ? <NoInbox /> : null}
 
-        {!isLoading && messages && (
+        {!isLoading && messages ? (
           <div className="flex flex-grow flex-col items-center gap-3">
             {messages.map((message: any) => (
               <InboxRowItem
@@ -105,7 +125,7 @@ export default function InboxPage() {
               />
             ))}
           </div>
-        )}
+        ) : null}
 
         <TablePagination
           totalItems={totalMessageCount}
@@ -127,3 +147,4 @@ export default function InboxPage() {
     </>
   )
 }
+InboxPage.displayName = "InboxPage"

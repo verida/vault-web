@@ -1,5 +1,9 @@
-import { Spinner } from "@/components/spinner"
-import { Typography } from "@/components/typography"
+import {
+  LoadingBlock,
+  LoadingBlockDescription,
+  LoadingBlockSpinner,
+  LoadingBlockTitle,
+} from "@/components/ui/loading"
 import { cn } from "@/styles/utils"
 
 type ConnectionLoadingProps = Omit<
@@ -18,16 +22,16 @@ export function ConnectionLoading(props: ConnectionLoadingProps) {
       )}
       {...divProps}
     >
-      <Spinner />
-      <div className="flex flex-col items-center justify-center gap-4 text-center">
-        <Typography variant="heading-1" className="text-center">
+      <LoadingBlock>
+        <LoadingBlockSpinner />
+        <LoadingBlockTitle variant="heading-1">
           Connecting to Verida...
-        </Typography>
-        <Typography variant="base-l" className="text-center">
+        </LoadingBlockTitle>
+        <LoadingBlockDescription variant="base-l">
           Please wait while we establish a secure connection. This might take a
           moments.
-        </Typography>
-      </div>
+        </LoadingBlockDescription>
+      </LoadingBlock>
     </div>
   )
 }

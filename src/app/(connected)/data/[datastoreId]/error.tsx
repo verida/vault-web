@@ -5,15 +5,15 @@ import {
   ErrorPageProps,
 } from "@/components/error-page-content"
 
-export default function ConnectionErrorPage(props: ErrorPageProps) {
+export default function DatastoreErrorPage(props: ErrorPageProps) {
   const { error, reset } = props
 
   return (
     <ErrorPageContent
-      mainMessage="There was an error getting this data connection"
+      mainMessage="There was an error getting your data"
       error={error}
       reset={reset}
     />
   )
 }
-ConnectionErrorPage.displayName = "ConnectionErrorPage"
+DatastoreErrorPage.displayName = "DatastoreErrorPage"
