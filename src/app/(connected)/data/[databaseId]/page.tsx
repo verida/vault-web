@@ -3,22 +3,11 @@
 import { useSearchParams } from "next/navigation"
 import React, { useMemo } from "react"
 
-import { CredentialItem } from "@/app/(connected)/data/[datastoreId]/_components/credential-item"
-import { DataError } from "@/app/(connected)/data/[datastoreId]/_components/data-error"
-import { DataItem } from "@/app/(connected)/data/[datastoreId]/_components/data-item"
-import { DataItemDetailsSheet } from "@/app/(connected)/data/[datastoreId]/_components/data-item-details-sheet"
-// import {
-//   FilterSheet,
-//   FilterSheetBody,
-//   FilterSheetFooter,
-//   FilterSheetHeader,
-// } from "@/components/filter-sheet"
-// import SearchBox from "@/components/search-box"
-// import { FilterButton } from "@/components/filter-button"
-// import { SortSelector } from "@/components/sort-selector"
+import { CredentialItem } from "@/app/(connected)/data/[databaseId]/_components/credential-item"
+import { DataError } from "@/app/(connected)/data/[databaseId]/_components/data-error"
+import { DataItem } from "@/app/(connected)/data/[databaseId]/_components/data-item"
+import { DataItemDetailsSheet } from "@/app/(connected)/data/[databaseId]/_components/data-item-details-sheet"
 import { Typography } from "@/components/typography"
-// import { Button } from "@/components/ui/button"
-// import { Checkbox } from "@/components/ui/checkbox"
 import { Skeleton } from "@/components/ui/skeleton"
 import { dataFolders } from "@/features/data"
 import { useData } from "@/features/data/hooks"
@@ -26,18 +15,18 @@ import { useDataSchema } from "@/features/data/hooks/useDataSchema"
 import { getPublicProfile } from "@/features/profiles"
 import { useVerida } from "@/features/verida"
 
-export type DatastorePageProps = {
-  params: { datastoreId: string }
+export type DatabasePageProps = {
+  params: { databaseId: string }
 }
 
-export default function DatastorePage(props: DatastorePageProps) {
+export default function DatabasePage(props: DatabasePageProps) {
   const { params } = props
-  const { datastoreId: encodedDatastoreId } = params
-  const datastoreId = decodeURIComponent(encodedDatastoreId)
+  const { databaseId: encodedDatabaseId } = params
+  const databaseId = decodeURIComponent(encodedDatabaseId)
 
   const folder = useMemo(() => {
-    return dataFolders.find((f) => f.name === datastoreId)
-  }, [datastoreId])
+    return dataFolders.find((f) => f.name === databaseId)
+  }, [databaseId])
 
   // TODO: Handle folder not found
 
@@ -61,7 +50,6 @@ export default function DatastorePage(props: DatastorePageProps) {
   const selectedItem = items?.find((it) => it._id === itemId)
 
   const [, setIssuer] = React.useState<any>({})
-  // const [isFilterOpen, setIsFilterOpen] = React.useState(false)
 
   React.useEffect(() => {
     function parseJwt(token: string) {
@@ -76,7 +64,7 @@ export default function DatastorePage(props: DatastorePageProps) {
           })
           .join("")
       )
-      // console.log("parseJwt", JSON.parse(jsonPayload))
+
       return JSON.parse(jsonPayload)
     }
 
@@ -93,14 +81,6 @@ export default function DatastorePage(props: DatastorePageProps) {
     <div className="flex-col pb-6">
       <div className="mb-4 flex items-center justify-between gap-4">
         <Typography variant="heading-3">{folder?.titlePlural}</Typography>
-        <nav className="flex space-x-2 md:w-auto md:space-x-3">
-          {/* <SearchBox /> */}
-          {/* <SortSelector /> */}
-          {/* <FilterButton onClick={() => setIsFilterOpen(true)} /> */}
-          {/* <Button size={"lg"} className="hidden h-12 md:flex">
-            Add New
-          </Button> */}
-        </nav>
       </div>
 
       {!isConnected || loading || schemaLoading ? (
@@ -161,51 +141,6 @@ export default function DatastorePage(props: DatastorePageProps) {
         </div>
       )}
 
-      {/* <FilterSheet
-        open={isFilterOpen}
-        onClose={() => setIsFilterOpen(false)}
-        className="border-l shadow-sm"
-      >
-        <FilterSheetHeader
-          title="Filter"
-          onClose={() => setIsFilterOpen(false)}
-        />
-        <FilterSheetBody>
-          <Typography variant="heading-5">Source</Typography>
-          {[
-            "Facebook",
-            "Twitter",
-            "Ticketeck",
-            "Government of Western Australia",
-            "Government of New South Wales",
-            "Royal Melbourne Hospital",
-            "Metamask",
-            "Discord",
-          ].map((source) => (
-            <div key={source} className="flex items-center gap-3 p-2">
-              <Checkbox />
-              <Typography>{source}</Typography>
-            </div>
-          ))}
-
-          <Typography variant="heading-5" className="mt-4">
-            Credential Status
-          </Typography>
-          {["All", "Valid", "Expired"].map((status) => (
-            <div key={status} className="flex items-center gap-3 p-2">
-              <Checkbox />
-              <Typography>{status}</Typography>
-            </div>
-          ))}
-        </FilterSheetBody>
-        <FilterSheetFooter>
-          <div className="grid grid-cols-2 gap-4">
-            <Button variant="secondary">Reset All</Button>
-            <Button variant="primary">Apply</Button>
-          </div>
-        </FilterSheetFooter>
-      </FilterSheet> */}
-
       <DataItemDetailsSheet
         open={Boolean(itemId)}
         data={selectedItem}
@@ -215,4 +150,4 @@ export default function DatastorePage(props: DatastorePageProps) {
     </div>
   )
 }
-DatastorePage.displayName = "DatastorePage"
+DatabasePage.displayName = "DatabasePage"

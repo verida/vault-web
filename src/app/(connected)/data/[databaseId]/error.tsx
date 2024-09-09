@@ -5,7 +5,7 @@ import {
   ErrorPageProps,
 } from "@/components/error-page-content"
 
-export default function DatastoreErrorPage(props: ErrorPageProps) {
+export default function DatabaseErrorPage(props: ErrorPageProps) {
   const { error, reset } = props
 
   return (
@@ -16,4 +16,4 @@ export default function DatastoreErrorPage(props: ErrorPageProps) {
     />
   )
 }
-DatastoreErrorPage.displayName = "DatastoreErrorPage"
+DatabaseErrorPage.displayName = "DatabaseErrorPage"

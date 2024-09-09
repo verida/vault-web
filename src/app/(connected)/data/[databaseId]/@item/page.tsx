@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation"
 import { useCallback, useMemo } from "react"
 
-import { GenericDataItemPageContent } from "@/app/(connected)/data/[datastoreId]/@item/_components/generic-data-item-page-content"
+import { GenericDataItemPageContent } from "@/app/(connected)/data/[databaseId]/@item/_components/generic-data-item-page-content"
 
 type DataItemPageProps = {
   searchParams: { itemId: string }

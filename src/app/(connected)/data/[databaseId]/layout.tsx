@@ -9,12 +9,12 @@ import {
 } from "@/components/ui/loading"
 import { getDataPageRoute } from "@/features/routes/utils"
 
-type DatastoreLayoutProps = {
+type DatabaseLayoutProps = {
   children: React.ReactNode
   item: React.ReactNode
 }
 
-export default function DatastoreLayout(props: DatastoreLayoutProps) {
+export default function DatabaseLayout(props: DatabaseLayoutProps) {
   const { children, item } = props
 
   // Have to use a custom loading page because the item page is a modal for
@@ -24,14 +24,14 @@ export default function DatastoreLayout(props: DatastoreLayoutProps) {
       backNavigationHref={getDataPageRoute()}
       backNavigationLabel="Back to all Data"
     >
-      <Suspense fallback={<DatastoreLoadingPage />}>{children}</Suspense>
+      <Suspense fallback={<DatabaseLoadingPage />}>{children}</Suspense>
       {item}
     </SubPageWrapper>
   )
 }
-DatastoreLayout.displayName = "DatastoreLayout"
+DatabaseLayout.displayName = "DatabaseLayout"
 
-function DatastoreLoadingPage() {
+function DatabaseLoadingPage() {
   return (
     <div className="flex h-full flex-1 flex-row items-center justify-center p-4">
       <LoadingBlock>
@@ -44,4 +44,4 @@ function DatastoreLoadingPage() {
     </div>
   )
 }
-DatastoreLoadingPage.displayName = "DatastoreLoadingPage"
+DatabaseLoadingPage.displayName = "DatabaseLoadingPage"
