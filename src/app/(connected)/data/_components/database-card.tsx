@@ -1,11 +1,8 @@
-"use client"
-
+import { DatabaseCardItemCount } from "@/app/(connected)/data/_components/database-card-item-count"
 import { DatabaseIcon } from "@/components/icons/database-icon"
 import { Typography } from "@/components/typography"
 import { Card, CardContent } from "@/components/ui/card"
-import { Skeleton } from "@/components/ui/skeleton"
 import { DatabaseDefinition } from "@/features/data"
-import { useData } from "@/features/data/hooks"
 import { cn } from "@/styles/utils"
 
 export type DatabaseCardProps = {
@@ -15,27 +12,18 @@ export type DatabaseCardProps = {
 export function DatabaseCard(props: DatabaseCardProps) {
   const { databaseDefinition, className, ...cardProps } = props
 
-  const { dataItemsCount, isDataItemsCountPending } = useData(
-    databaseDefinition.databaseVaultName
-  )
-
   return (
-    <Card className={cn("rounded-2xl shadow-card", className)} {...cardProps}>
-      <CardContent className="p-6">
+    <Card className={cn("rounded-2xl", className)} {...cardProps}>
+      <CardContent className="flex flex-col gap-4 px-4 py-6 md:gap-6 md:px-6">
         <DatabaseIcon fill={databaseDefinition.color} />
-        <Typography variant="heading-4" className="mt-6">
-          {databaseDefinition.titlePlural}
-        </Typography>
-        {isDataItemsCountPending ? (
-          <Skeleton className="h-[23px] w-20" />
-        ) : (
-          <Typography
-            variant="base-l"
-            className="mt-1 h-[23px] text-muted-foreground"
-          >
-            {dataItemsCount} items
+        <div className="flex flex-col gap-1">
+          <Typography variant="heading-4">
+            {databaseDefinition.titlePlural}
           </Typography>
-        )}
+          <DatabaseCardItemCount
+            databaseVaultName={databaseDefinition.databaseVaultName}
+          />
+        </div>
       </CardContent>
     </Card>
   )
