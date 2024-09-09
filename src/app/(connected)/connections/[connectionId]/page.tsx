@@ -19,16 +19,10 @@ export default function ConnectionPage(props: ConnectionPageProps) {
     useDataConnection(connectionId)
 
   if (connection) {
-    return (
-      <DataConnectionPageContent
-        connection={connection}
-        className="pb-4 md:pb-6 xl:pb-8"
-      />
-    )
+    return <DataConnectionPageContent connection={connection} />
   }
 
   if (isLoading) {
-    // TODO: Show a loading state
     return <ConnectionLoadingPage />
   }
 

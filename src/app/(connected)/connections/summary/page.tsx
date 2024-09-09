@@ -4,14 +4,15 @@ import {
 } from "@/app/(connected)/connections/summary/_components/connect-data-provider-dialog"
 import { DataConnectionsList } from "@/app/(connected)/connections/summary/_components/data-connections-list"
 import { DataProvidersList } from "@/app/(connected)/connections/summary/_components/data-providers-list"
+import { PageWrapper } from "@/components/page-wrapper"
 import { Typography } from "@/components/typography"
 import { Button } from "@/components/ui/button"
 
 export default function ConnectionsSummaryPage() {
   return (
-    <div className="flex flex-col gap-8 sm:gap-10">
-      <div className="flex flex-row items-center justify-between">
-        <Typography variant="heading-3">Connections</Typography>
+    <PageWrapper
+      pageTitle="Connections"
+      leftContent={
         <div className="flex flex-row items-center gap-2">
           <ConnectDataProviderDialog>
             <ConnectDataProviderDialogTrigger asChild>
@@ -19,16 +20,19 @@ export default function ConnectionsSummaryPage() {
             </ConnectDataProviderDialogTrigger>
           </ConnectDataProviderDialog>
         </div>
+      }
+    >
+      <div className="flex flex-col gap-8 sm:gap-10">
+        <div className="flex flex-col gap-4 sm:gap-6">
+          <Typography variant="heading-4">Connected Accounts</Typography>
+          <DataConnectionsList />
+        </div>
+        <div className="flex flex-col gap-4 sm:gap-6">
+          <Typography variant="heading-4">Available Platforms</Typography>
+          <DataProvidersList />
+        </div>
       </div>
-      <div className="flex flex-col gap-4 sm:gap-6">
-        <Typography variant="heading-4">Connections</Typography>
-        <DataConnectionsList />
-      </div>
-      <div className="flex flex-col gap-4 sm:gap-6">
-        <Typography variant="heading-4">Available Platforms</Typography>
-        <DataProvidersList />
-      </div>
-    </div>
+    </PageWrapper>
   )
 }
 ConnectionsSummaryPage.displayName = "ConnectionsSummaryPage"

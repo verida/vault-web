@@ -4,29 +4,27 @@ import React from "react"
 
 import { DataConnectionDetails } from "@/app/(connected)/connections/[connectionId]/_components/data-connection-details"
 import { DataConnectionsHandlersList } from "@/app/(connected)/connections/[connectionId]/_components/data-connections-handlers-list"
+import { PageTitle, PageWrapper } from "@/components/page-wrapper"
 import { Typography } from "@/components/typography"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Skeleton } from "@/components/ui/skeleton"
 import { DataConnection, useDataProvider } from "@/features/data-connections"
-import { cn } from "@/styles/utils"
+import { getConnectionsSummaryPageRoute } from "@/features/routes/utils"
 
 export type DataConnectionPageContentProps = {
   connection: DataConnection
-} & React.ComponentProps<"div">
+}
 
 export function DataConnectionPageContent(
   props: DataConnectionPageContentProps
 ) {
-  const { connection, className, ...divProps } = props
+  const { connection } = props
 
   const { provider } = useDataProvider(connection.provider)
 
   return (
-    <div
-      className={cn("flex flex-col gap-8 md:gap-10", className)}
-      {...divProps}
-    >
-      <div className="flex flex-col gap-6">
+    <PageWrapper
+      pageTitle={
         <div className="flex items-center gap-2">
           {provider ? (
             <Avatar className="size-10">
@@ -39,13 +37,17 @@ export function DataConnectionPageContent(
             <Skeleton className="size-12 rounded-full" />
           )}
           {provider ? (
-            <Typography variant="heading-4">{provider?.label}</Typography>
+            <PageTitle>{provider.label}</PageTitle>
           ) : (
             <Skeleton className="h-6 w-32" />
           )}
         </div>
-        <DataConnectionDetails connection={connection} />
-      </div>
+      }
+      backNavigationHref={getConnectionsSummaryPageRoute()}
+      backNavigationLabel="Back to all Connections"
+      contentClassName="gap-8 md:gap-10"
+    >
+      <DataConnectionDetails connection={connection} />
       <div className="flex flex-col gap-4 md:gap-6">
         <Typography variant="heading-3">Services and Data</Typography>
         <DataConnectionsHandlersList
@@ -55,7 +57,7 @@ export function DataConnectionPageContent(
         />
       </div>
       {/* TODO: Add the logs section */}
-    </div>
+    </PageWrapper>
   )
 }
 DataConnectionPageContent.displayName = "DataConnectionPageContent"

@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation"
 import React from "react"
 
-import { Typography } from "@/components/typography"
+import { PageWrapper } from "@/components/page-wrapper"
 import { featureFlags } from "@/config/features"
 
 type AssistantLayoutProps = {
@@ -16,16 +16,15 @@ export default function AssistantLayout(props: AssistantLayoutProps) {
   }
 
   return (
-    <div className="flex h-full flex-col gap-6">
-      <div className="flex flex-row items-center justify-between">
-        <Typography variant="heading-3">AI Assistant</Typography>
+    <PageWrapper
+      pageTitle="AI Assistant"
+      className="h-full"
+      contentClassName="h-full min-h-0 items-center"
+    >
+      <div className="flex h-full w-full max-w-screen-md flex-col">
+        {children}
       </div>
-      <div className="flex h-full min-h-0 flex-col items-center">
-        <div className="flex h-full w-full max-w-screen-md flex-col pb-4">
-          {children}
-        </div>
-      </div>
-    </div>
+    </PageWrapper>
   )
 }
 AssistantLayout.displayName = "AssistantLayout"

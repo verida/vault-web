@@ -10,7 +10,7 @@ export default function ConnectionsSummaryLayout(
   const { children } = props
 
   return (
-    <div className="flex min-h-full flex-col gap-4 pb-4 sm:gap-6 md:pb-6 xl:pb-8">
+    <div className="flex min-h-full flex-col gap-4 sm:gap-6">
       <ConnectionsSummaryNavTabs />
       {children}
     </div>

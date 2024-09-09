@@ -7,12 +7,14 @@ import { CredentialItem } from "@/app/(connected)/data/[databaseId]/_components/
 import { DataError } from "@/app/(connected)/data/[databaseId]/_components/data-error"
 import { DataItem } from "@/app/(connected)/data/[databaseId]/_components/data-item"
 import { DataItemDetailsSheet } from "@/app/(connected)/data/[databaseId]/_components/data-item-details-sheet"
+import { PageWrapper } from "@/components/page-wrapper"
 import { Typography } from "@/components/typography"
 import { Skeleton } from "@/components/ui/skeleton"
 import { DATABASE_DEFS } from "@/features/data"
 import { useData } from "@/features/data/hooks"
 import { useDataSchema } from "@/features/data/hooks/useDataSchema"
 import { getPublicProfile } from "@/features/profiles"
+import { getDataPageRoute } from "@/features/routes/utils"
 import { useVerida } from "@/features/verida"
 
 export type DatabasePageProps = {
@@ -78,13 +80,11 @@ export default function DatabasePage(props: DatabasePageProps) {
   }, [selectedItem])
 
   return (
-    <div className="flex-col pb-6">
-      <div className="mb-4 flex items-center justify-between gap-4">
-        <Typography variant="heading-3">
-          {databaseDefinition?.titlePlural}
-        </Typography>
-      </div>
-
+    <PageWrapper
+      pageTitle={databaseDefinition?.titlePlural}
+      backNavigationHref={getDataPageRoute()}
+      backNavigationLabel="Back to all Data"
+    >
       {!isConnected || loading || schemaLoading ? (
         <div className="flex w-full flex-col gap-4">
           <Skeleton className="h-10 w-full" />
@@ -149,7 +149,7 @@ export default function DatabasePage(props: DatabasePageProps) {
         schema={dataSchema}
         folder={databaseDefinition}
       />
-    </div>
+    </PageWrapper>
   )
 }
 DatabasePage.displayName = "DatabasePage"

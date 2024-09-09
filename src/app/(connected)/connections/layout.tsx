@@ -13,6 +13,6 @@ export default function ConnectionsLayout(props: ConnectionsLayoutProps) {
     notFound()
   }
 
-  return <>{children}</>
+  return children
 }
 ConnectionsLayout.displayName = "ConnectionsLayout"
