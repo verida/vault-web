@@ -63,7 +63,7 @@ export function CredentialItem(props: CredentialItemProps) {
 
   return (
     <Link href={href || "#"}>
-      <Card className="flex w-full rounded-lg shadow-card">
+      <Card className="flex w-full rounded-lg">
         {/* desktop */}
         <div className="hidden w-full flex-row items-center px-4 py-3 md:flex">
           <div className="flex w-1/4 items-center gap-3">
