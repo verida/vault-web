@@ -89,10 +89,6 @@ const config = {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
-      boxShadow: {
-        glow: "0px 0px 4px 0px rgba(83, 84, 209, 0.60)", // TODO: To rework
-        card: "8px 16px 40px 0px rgba(180, 183, 205, 0.16)", // TODO: To rework
-      },
       fontSize: {
         "heading-1": [
           "2rem",

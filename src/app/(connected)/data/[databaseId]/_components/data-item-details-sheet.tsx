@@ -21,13 +21,13 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
-import { DataFolderDefinition, DataSchema } from "@/features/data"
+import { DataSchema, DatabaseDefinition } from "@/features/data"
 
 export type DataItemDetailsSheetProps = {
   open: boolean
   data?: any
   schema?: DataSchema
-  folder?: DataFolderDefinition
+  folder?: DatabaseDefinition
 }
 
 /**
@@ -116,7 +116,7 @@ export function DataItemDetailsSheet(props: DataItemDetailsSheetProps) {
             </div>
             <div className="mt-8 space-y-6">
               <Typography variant="heading-4">{folder?.title} Data</Typography>
-              {schema?.layouts.view.map((key) => (
+              {schema?.layouts?.view.map((key) => (
                 <div key={key} className="flex items-center justify-between">
                   <Typography
                     variant="heading-5"

@@ -6,10 +6,8 @@ import { useMemo, useState } from "react"
 import { InboxDetails } from "@/app/(connected)/inbox/_components/inbox-details"
 import { InboxRowItem } from "@/app/(connected)/inbox/_components/inbox-item"
 import { NoInbox } from "@/app/(connected)/inbox/_components/no-inbox"
-// import { FilterButton } from "@/components/filter-button"
 import { ModalSheet } from "@/components/modal-sheet"
-// import { SearchInput } from "@/components/search-input"
-import { Typography } from "@/components/typography"
+import { PageWrapper } from "@/components/page-wrapper"
 import {
   ErrorBlock,
   ErrorBlockDescription,
@@ -79,26 +77,17 @@ export default function InboxPage() {
 
   return (
     <>
-      <div className="flex flex-grow flex-col space-y-6 pb-6">
-        <div className="flex items-center justify-between">
-          <Typography variant="heading-3">Inbox</Typography>
-          <nav className="flex space-x-2 md:w-auto md:space-x-3">
-            {/* <SearchInput
-              onValueChange={handleSearchInputChange}
-              className="md:flex-grow"
-            />
-            <FilterButton /> */}
-          </nav>
-        </div>
-
+      <PageWrapper pageTitle="Inbox">
         {isLoading && (
-          <LoadingBlock className="flex-grow">
-            <LoadingBlockSpinner />
-            <LoadingBlockTitle>Please wait...</LoadingBlockTitle>
-            <LoadingBlockDescription>
-              We are fetching your latest messages
-            </LoadingBlockDescription>
-          </LoadingBlock>
+          <div className="flex flex-1 flex-col items-center justify-center">
+            <LoadingBlock>
+              <LoadingBlockSpinner />
+              <LoadingBlockTitle>Please wait...</LoadingBlockTitle>
+              <LoadingBlockDescription>
+                We are fetching your latest messages
+              </LoadingBlockDescription>
+            </LoadingBlock>
+          </div>
         )}
 
         {hasError && (
@@ -131,7 +120,7 @@ export default function InboxPage() {
           totalItems={totalMessageCount}
           onChange={handlePageChange}
         />
-      </div>
+      </PageWrapper>
 
       <ModalSheet
         open={Boolean(messageId)}

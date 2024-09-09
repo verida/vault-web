@@ -1,51 +1,26 @@
-import { VeridaRecord } from "@/features/verida"
-
+/**
+ * @deprecated
+ */
 export type DataField = {
   field: string
   value: unknown
 }
 
+/**
+ * @deprecated
+ */
 export type DataItem = {
   data: DataField[]
   title: string
 }
 
-export type DataFolderDisplayType = "grid" | "folders" | "cards"
-
-export type DataFolderDefinition = {
-  name: string
+export type DatabaseDefinition = {
+  id: string
   title: string
-  titlePlural?: string
-  icon: React.ReactNode
-  color?: string
-  root: boolean
-  database?: string
-} & (
-  | {
-      display: "folders"
-      folders: string[]
-    }
-  | {
-      display: "grid" | "cards"
-      database: string
-      layouts?: {
-        list?: string[]
-        view?: string[]
-      }
-      sort?: Record<string, unknown>[]
-      fields?: {
-        [key: string]: {
-          label: string
-        }
-      }
-      card?: {
-        name?: (record: VeridaRecord) => string
-        summary?: (record: VeridaRecord) => string
-      }
-      nameField?: string
-      summaryField?: string
-    }
-)
+  titlePlural: string
+  color: string
+  databaseVaultName: string
+}
 
 export type DataSchema = {
   $schema: string

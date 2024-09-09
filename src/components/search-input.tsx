@@ -27,7 +27,7 @@ export function SearchInput(props: SearchInputProps) {
   return (
     <div
       className={cn(
-        "flex h-10 space-x-3 rounded-lg border bg-surface p-[10px] transition-all focus-within:!border-primary focus-within:shadow-glow hover:border-border-hover md:h-12 md:p-3",
+        "flex h-10 space-x-3 rounded-lg border bg-surface p-[10px] transition-all focus-within:!border-primary hover:border-border-hover md:h-12 md:p-3",
         className
       )}
     >

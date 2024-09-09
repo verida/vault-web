@@ -29,7 +29,7 @@ export function ConnectionLoading(props: ConnectionLoadingProps) {
         </LoadingBlockTitle>
         <LoadingBlockDescription variant="base-l">
           Please wait while we establish a secure connection. This might take a
-          moments.
+          moment.
         </LoadingBlockDescription>
       </LoadingBlock>
     </div>
