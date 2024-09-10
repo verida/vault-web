@@ -1,6 +1,5 @@
-import Image from "next/image"
-
 import { Typography } from "@/components/typography"
+import { Avatar, AvatarImage } from "@/components/ui/avatar"
 
 export type IncomingDataItemProps = {
   item: Record<string, any>
@@ -10,14 +9,13 @@ export function IncomingDataItem(props: IncomingDataItemProps) {
   const { item } = props
 
   return (
-    <div className="space-y-2 rounded-sm bg-muted p-4">
+    <div className="bg-surface-active space-y-2 rounded-sm p-4">
       <div className="flex items-center gap-2">
-        <Image
-          src={item.icon || ""}
-          width="32"
-          height="32"
-          alt="incoming-item-icon"
-        />
+        {item.icon ? (
+          <Avatar className="size-8">
+            <AvatarImage src={item.icon} alt="incoming-item-icon" />
+          </Avatar>
+        ) : null}
         <Typography variant="heading-5">{item.name}</Typography>
       </div>
       <Typography variant="base-s-regular">{item.summary}</Typography>

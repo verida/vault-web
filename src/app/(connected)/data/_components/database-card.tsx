@@ -13,7 +13,13 @@ export function DatabaseCard(props: DatabaseCardProps) {
   const { databaseDefinition, className, ...cardProps } = props
 
   return (
-    <Card className={cn("rounded-2xl", className)} {...cardProps}>
+    <Card
+      className={cn(
+        "hover:bg-surface-hover rounded-2xl hover:border-border-hover",
+        className
+      )}
+      {...cardProps}
+    >
       <CardContent className="flex flex-col gap-4 px-4 py-6 md:gap-6 md:px-6">
         <DatabaseIcon fill={databaseDefinition.color} />
         <div className="flex flex-col gap-1">
