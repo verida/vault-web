@@ -1,3 +1,4 @@
+import { notFound } from "next/navigation"
 import { Suspense } from "react"
 
 import {
@@ -6,6 +7,7 @@ import {
   LoadingBlockSpinner,
   LoadingBlockTitle,
 } from "@/components/ui/loading"
+import { featureFlags } from "@/config/features"
 
 type InboxLayoutProps = {
   children: React.ReactNode
@@ -14,6 +16,10 @@ type InboxLayoutProps = {
 
 export default function InboxLayout(props: InboxLayoutProps) {
   const { children, item } = props
+
+  if (!featureFlags.inbox.enabled) {
+    notFound()
+  }
 
   // Have to use a custom loading page because the item page is a modal for
   // which we don't want the conventional loading file to be displayed

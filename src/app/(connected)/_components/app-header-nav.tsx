@@ -67,40 +67,46 @@ export function AppHeaderNavBar(props: AppHeaderNavBarProps) {
             </Link>
           </NavigationMenuItem>
         ) : null}
-        <NavigationMenuItem>
-          <Link
-            href={getInboxPageRoute()}
-            data-active={
-              path.startsWith(getInboxPageRoute()) ? true : undefined
-            }
-            className={cn(
-              navigationMenuTriggerStyle({
-                className: "h-full rounded-none border-b-2 font-semibold",
-              })
-            )}
-          >
-            <div className="flex items-center gap-2">
-              <InboxWithBadge />
-              <span>Inbox</span>
-            </div>
-          </Link>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <Link
-            href={getDataPageRoute()}
-            data-active={path.startsWith(getDataPageRoute()) ? true : undefined}
-            className={cn(
-              navigationMenuTriggerStyle({
-                className: "h-full rounded-none border-b-2 font-semibold",
-              })
-            )}
-          >
-            <div className="flex items-center gap-2">
-              <Data />
-              <span>Data</span>
-            </div>
-          </Link>
-        </NavigationMenuItem>
+        {featureFlags.inbox.enabled ? (
+          <NavigationMenuItem>
+            <Link
+              href={getInboxPageRoute()}
+              data-active={
+                path.startsWith(getInboxPageRoute()) ? true : undefined
+              }
+              className={cn(
+                navigationMenuTriggerStyle({
+                  className: "h-full rounded-none border-b-2 font-semibold",
+                })
+              )}
+            >
+              <div className="flex items-center gap-2">
+                <InboxWithBadge />
+                <span>Inbox</span>
+              </div>
+            </Link>
+          </NavigationMenuItem>
+        ) : null}
+        {featureFlags.data.enabled ? (
+          <NavigationMenuItem>
+            <Link
+              href={getDataPageRoute()}
+              data-active={
+                path.startsWith(getDataPageRoute()) ? true : undefined
+              }
+              className={cn(
+                navigationMenuTriggerStyle({
+                  className: "h-full rounded-none border-b-2 font-semibold",
+                })
+              )}
+            >
+              <div className="flex items-center gap-2">
+                <Data />
+                <span>Data</span>
+              </div>
+            </Link>
+          </NavigationMenuItem>
+        ) : null}
         {featureFlags.dataConnections.enabled ? (
           <NavigationMenuItem>
             <Link
@@ -187,46 +193,50 @@ export function AppHeaderNavMenu() {
                 </Link>
               </NavigationMenuItem>
             ) : null}
-            <NavigationMenuItem>
-              <Link
-                href={getInboxPageRoute()}
-                onClick={handleClickItem}
-                data-active={
-                  path.startsWith(getInboxPageRoute()) ? true : undefined
-                }
-                className={cn(
-                  navigationMenuTriggerStyle({
-                    className:
-                      "h-auto w-full justify-start py-4 font-semibold data-[active]:bg-muted/50 data-[active]:hover:bg-muted data-[active]:focus:bg-muted",
-                  })
-                )}
-              >
-                <div className="flex items-center gap-2">
-                  <InboxWithBadge />
-                  <span>Inbox</span>
-                </div>
-              </Link>
-            </NavigationMenuItem>
-            <NavigationMenuItem>
-              <Link
-                href={getDataPageRoute()}
-                onClick={handleClickItem}
-                data-active={
-                  path.startsWith(getDataPageRoute()) ? true : undefined
-                }
-                className={cn(
-                  navigationMenuTriggerStyle({
-                    className:
-                      "h-auto w-full justify-start py-4 font-semibold data-[active]:bg-muted/50 data-[active]:hover:bg-muted data-[active]:focus:bg-muted",
-                  })
-                )}
-              >
-                <div className="flex items-center gap-2">
-                  <Data />
-                  <span>Data</span>
-                </div>
-              </Link>
-            </NavigationMenuItem>
+            {featureFlags.inbox.enabled ? (
+              <NavigationMenuItem>
+                <Link
+                  href={getInboxPageRoute()}
+                  onClick={handleClickItem}
+                  data-active={
+                    path.startsWith(getInboxPageRoute()) ? true : undefined
+                  }
+                  className={cn(
+                    navigationMenuTriggerStyle({
+                      className:
+                        "h-auto w-full justify-start py-4 font-semibold data-[active]:bg-muted/50 data-[active]:hover:bg-muted data-[active]:focus:bg-muted",
+                    })
+                  )}
+                >
+                  <div className="flex items-center gap-2">
+                    <InboxWithBadge />
+                    <span>Inbox</span>
+                  </div>
+                </Link>
+              </NavigationMenuItem>
+            ) : null}
+            {featureFlags.data.enabled ? (
+              <NavigationMenuItem>
+                <Link
+                  href={getDataPageRoute()}
+                  onClick={handleClickItem}
+                  data-active={
+                    path.startsWith(getDataPageRoute()) ? true : undefined
+                  }
+                  className={cn(
+                    navigationMenuTriggerStyle({
+                      className:
+                        "h-auto w-full justify-start py-4 font-semibold data-[active]:bg-muted/50 data-[active]:hover:bg-muted data-[active]:focus:bg-muted",
+                    })
+                  )}
+                >
+                  <div className="flex items-center gap-2">
+                    <Data />
+                    <span>Data</span>
+                  </div>
+                </Link>
+              </NavigationMenuItem>
+            ) : null}
             {featureFlags.dataConnections.enabled ? (
               <NavigationMenuItem>
                 <Link
