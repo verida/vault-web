@@ -76,34 +76,31 @@ export default function InboxPage() {
   }
 
   return (
-    <>
-      <PageWrapper pageTitle="Inbox">
-        {isLoading && (
-          <div className="flex flex-1 flex-col items-center justify-center">
-            <LoadingBlock>
-              <LoadingBlockSpinner />
-              <LoadingBlockTitle>Please wait...</LoadingBlockTitle>
-              <LoadingBlockDescription>
-                We are fetching your latest messages
-              </LoadingBlockDescription>
-            </LoadingBlock>
-          </div>
-        )}
+    <PageWrapper pageTitle="Inbox">
+      {isLoading && (
+        <div className="flex flex-1 flex-col items-center justify-center">
+          <LoadingBlock>
+            <LoadingBlockSpinner />
+            <LoadingBlockTitle>Please wait...</LoadingBlockTitle>
+            <LoadingBlockDescription>
+              We are fetching your latest messages
+            </LoadingBlockDescription>
+          </LoadingBlock>
+        </div>
+      )}
+      {hasError && (
+        // TODO: Leverage the Error Boundary instead?
 
-        {hasError && (
-          // TODO: Leverage the Error Boundary instead?
-
-          <ErrorBlock>
-            <ErrorBlockImage />
-            <ErrorBlockDescription>
-              There was an error getting your inbox messages, please try again
-              later
-            </ErrorBlockDescription>
-          </ErrorBlock>
-        )}
-
+        <ErrorBlock>
+          <ErrorBlockImage />
+          <ErrorBlockDescription>
+            There was an error getting your inbox messages, please try again
+            later
+          </ErrorBlockDescription>
+        </ErrorBlock>
+      )}
+      <div className="flex flex-col gap-6">
         {!isLoading && totalMessageCount === 0 ? <NoInbox /> : null}
-
         {!isLoading && messages ? (
           <div className="flex flex-grow flex-col items-center gap-3">
             {messages.map((message: any) => (
@@ -115,13 +112,11 @@ export default function InboxPage() {
             ))}
           </div>
         ) : null}
-
         <TablePagination
           totalItems={totalMessageCount}
           onChange={handlePageChange}
         />
-      </PageWrapper>
-
+      </div>
       <ModalSheet
         open={Boolean(messageId)}
         onClose={() => router.push(pathName)}
@@ -133,7 +128,7 @@ export default function InboxPage() {
           />
         )}
       </ModalSheet>
-    </>
+    </PageWrapper>
   )
 }
 InboxPage.displayName = "InboxPage"
