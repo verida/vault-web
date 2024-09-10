@@ -180,7 +180,7 @@ export function AppHeaderNavMenu() {
                   className={cn(
                     navigationMenuTriggerStyle({
                       className:
-                        "h-auto w-full justify-start py-4 font-semibold data-[active]:bg-muted/50 data-[active]:text-violet-600 data-[active]:hover:bg-muted data-[active]:focus:bg-muted",
+                        "data-[active]:bg-surface-active data-[active]:hover:bg-surface-hover data-[active]:focus:bg-surface-hover h-auto w-full justify-start py-4 font-semibold data-[active]:text-violet-600",
                     })
                   )}
                 >
@@ -204,7 +204,7 @@ export function AppHeaderNavMenu() {
                   className={cn(
                     navigationMenuTriggerStyle({
                       className:
-                        "h-auto w-full justify-start py-4 font-semibold data-[active]:bg-muted/50 data-[active]:hover:bg-muted data-[active]:focus:bg-muted",
+                        "data-[active]:bg-surface-active data-[active]:hover:bg-surface-hover data-[active]:focus:bg-surface-hover h-auto w-full justify-start py-4 font-semibold",
                     })
                   )}
                 >
@@ -226,7 +226,7 @@ export function AppHeaderNavMenu() {
                   className={cn(
                     navigationMenuTriggerStyle({
                       className:
-                        "h-auto w-full justify-start py-4 font-semibold data-[active]:bg-muted/50 data-[active]:hover:bg-muted data-[active]:focus:bg-muted",
+                        "data-[active]:bg-surface-active data-[active]:hover:bg-surface-hover data-[active]:focus:bg-surface-hover h-auto w-full justify-start py-4 font-semibold",
                     })
                   )}
                 >
@@ -250,7 +250,7 @@ export function AppHeaderNavMenu() {
                   className={cn(
                     navigationMenuTriggerStyle({
                       className:
-                        "h-auto w-full justify-start py-4 font-semibold data-[active]:bg-muted/50 data-[active]:hover:bg-muted data-[active]:focus:bg-muted",
+                        "data-[active]:bg-surface-active data-[active]:hover:bg-surface-hover data-[active]:focus:bg-surface-hover h-auto w-full justify-start py-4 font-semibold",
                     })
                   )}
                 >
