@@ -22,7 +22,11 @@ const config = {
       colors: {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
-        surface: "hsl(var(--surface))",
+        surface: {
+          DEFAULT: "hsl(var(--surface))",
+          hover: "hsl(var(--surface-hover))",
+          active: "hsl(var(--surface-active))",
+        },
         overlay: "hsl(var(--overlay) / 0.4)",
         ring: "hsl(var(--ring))",
         input: "hsl(var(--input))",

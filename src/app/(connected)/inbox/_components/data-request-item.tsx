@@ -36,7 +36,7 @@ export function DataRequestItem(props: DataRequestItemProps) {
     <Card
       className={cn(
         "mt-4 flex flex-col gap-6 border p-4",
-        isAdded ? "border-status-added bg-status-added" : "bg-muted"
+        isAdded ? "border-status-added bg-status-added" : "bg-surface-active"
       )}
     >
       <div>

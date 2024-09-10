@@ -25,6 +25,14 @@ export const CommonConfigSchema = z.object({
     .string()
     .optional()
     .transform((value) => (value === "true" ? true : false)),
+  FEATURE_FLAG_INBOX_ENABLED: z
+    .string()
+    .optional()
+    .transform((value) => (value === "true" ? true : false)),
+  FEATURE_FLAG_DATA_ENABLED: z
+    .string()
+    .optional()
+    .transform((value) => (value === "true" ? true : false)),
   FEATURE_FLAG_DATA_CONNECTIONS_ENABLED: z
     .string()
     .optional()

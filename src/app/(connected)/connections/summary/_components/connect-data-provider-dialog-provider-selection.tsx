@@ -5,6 +5,7 @@ import { ChevronRight } from "lucide-react"
 import { Typography } from "@/components/typography"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { DialogBody } from "@/components/ui/dialog"
 import { Skeleton } from "@/components/ui/skeleton"
@@ -62,31 +63,38 @@ ConnectDataProviderDialogProviderSelection.displayName =
 
 type ProviderSelectionItemProps = {
   provider: DataProvider
-} & React.ComponentProps<"button">
+} & React.ComponentProps<typeof Button>
 
 function ProviderSelectionItem(props: ProviderSelectionItemProps) {
   const { provider, className, ...buttonProps } = props
 
   return (
-    <button className={cn("rounded-lg", className)} {...buttonProps}>
-      <Card className="flex w-full flex-row items-center gap-3 p-4 pr-3">
+    <Button
+      variant="outline"
+      className={cn(
+        "h-auto w-full whitespace-normal rounded-lg p-4 pr-3",
+        className
+      )}
+      {...buttonProps}
+    >
+      <div className="flex w-full flex-row items-center gap-3">
         <Avatar className="size-12">
           <AvatarImage src={provider.icon} alt={provider.label} />
           <AvatarFallback>{provider.label?.[0]?.toUpperCase()}</AvatarFallback>
         </Avatar>
         <div className="flex flex-1 flex-col items-start text-start">
           <Typography variant="heading-4">{provider.label}</Typography>
-          <span
+          <div
             className="text-muted-foreground" // FIXME: Fix class conflicts in the Typography with text-muted-foreground removing the class text-base-s-regular
           >
             <Typography variant="base-s-regular" className="line-clamp-2">
               {provider.description}
             </Typography>
-          </span>
+          </div>
         </div>
-        <ChevronRight className="text-muted-foreground" />
-      </Card>
-    </button>
+        <ChevronRight className="shrink-0 text-muted-foreground" />
+      </div>
+    </Button>
   )
 }
 ProviderSelectionItem.displayName = "ProviderSelectionItem"

@@ -3,7 +3,7 @@ export function getRootPageRoute() {
 }
 
 export function getDefaultRedirectPathAfterConnection() {
-  return getDataPageRoute()
+  return getAssistantPageRoute()
 }
 
 export function getAssistantPageRoute() {
