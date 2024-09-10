@@ -15,7 +15,7 @@ export function DatabaseCard(props: DatabaseCardProps) {
   return (
     <Card
       className={cn(
-        "hover:bg-surface-hover rounded-2xl hover:border-border-hover",
+        "rounded-2xl hover:border-border-hover hover:bg-surface-hover",
         className
       )}
       {...cardProps}

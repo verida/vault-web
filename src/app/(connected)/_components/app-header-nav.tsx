@@ -180,7 +180,7 @@ export function AppHeaderNavMenu() {
                   className={cn(
                     navigationMenuTriggerStyle({
                       className:
-                        "data-[active]:bg-surface-active data-[active]:hover:bg-surface-hover data-[active]:focus:bg-surface-hover h-auto w-full justify-start py-4 font-semibold data-[active]:text-violet-600",
+                        "h-auto w-full justify-start py-4 font-semibold data-[active]:bg-surface-active data-[active]:text-violet-600 data-[active]:hover:bg-surface-hover data-[active]:focus:bg-surface-hover",
                     })
                   )}
                 >
@@ -204,7 +204,7 @@ export function AppHeaderNavMenu() {
                   className={cn(
                     navigationMenuTriggerStyle({
                       className:
-                        "data-[active]:bg-surface-active data-[active]:hover:bg-surface-hover data-[active]:focus:bg-surface-hover h-auto w-full justify-start py-4 font-semibold",
+                        "h-auto w-full justify-start py-4 font-semibold data-[active]:bg-surface-active data-[active]:hover:bg-surface-hover data-[active]:focus:bg-surface-hover",
                     })
                   )}
                 >
@@ -226,7 +226,7 @@ export function AppHeaderNavMenu() {
                   className={cn(
                     navigationMenuTriggerStyle({
                       className:
-                        "data-[active]:bg-surface-active data-[active]:hover:bg-surface-hover data-[active]:focus:bg-surface-hover h-auto w-full justify-start py-4 font-semibold",
+                        "h-auto w-full justify-start py-4 font-semibold data-[active]:bg-surface-active data-[active]:hover:bg-surface-hover data-[active]:focus:bg-surface-hover",
                     })
                   )}
                 >
@@ -250,7 +250,7 @@ export function AppHeaderNavMenu() {
                   className={cn(
                     navigationMenuTriggerStyle({
                       className:
-                        "data-[active]:bg-surface-active data-[active]:hover:bg-surface-hover data-[active]:focus:bg-surface-hover h-auto w-full justify-start py-4 font-semibold",
+                        "h-auto w-full justify-start py-4 font-semibold data-[active]:bg-surface-active data-[active]:hover:bg-surface-hover data-[active]:focus:bg-surface-hover",
                     })
                   )}
                 >

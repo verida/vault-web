@@ -9,7 +9,7 @@ export function IncomingDataItem(props: IncomingDataItemProps) {
   const { item } = props
 
   return (
-    <div className="bg-surface-active space-y-2 rounded-sm p-4">
+    <div className="space-y-2 rounded-sm bg-surface-active p-4">
       <div className="flex items-center gap-2">
         {item.icon ? (
           <Avatar className="size-8">

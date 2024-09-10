@@ -22,7 +22,7 @@ export function InboxRowItem(props: InboxRowItemProps) {
 
   return (
     <Link href={href || "#"} className="w-full rounded-lg">
-      <Card className="hover:bg-surface-hover flex w-full cursor-pointer rounded-lg hover:border-border-hover">
+      <Card className="flex w-full cursor-pointer rounded-lg hover:border-border-hover hover:bg-surface-hover">
         {/* desktop card */}
         <div className="hidden min-h-[72px] w-full grid-cols-[1fr_1fr_1fr_160px] text-sm md:grid">
           <div className="flex shrink items-center gap-3 px-4">

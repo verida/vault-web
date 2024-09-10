@@ -7,7 +7,7 @@ import { AlertWarningIcon } from "@/components/icons/alert-warning-icon"
 import { cn } from "@/styles/utils"
 
 const alertVariants = cva(
-  "bg-surface-active relative w-full rounded border border-l-4 px-3 py-2",
+  "relative w-full rounded border border-l-4 bg-surface-active px-3 py-2",
   {
     variants: {
       variant: {

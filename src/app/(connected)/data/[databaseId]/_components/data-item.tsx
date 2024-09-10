@@ -16,7 +16,7 @@ export function DataItem(props: DataItemProps) {
 
   return (
     <Link href={`?id=${data._id}`} className="rounded-lg">
-      <Card className="hover:bg-surface-hover flex w-full rounded-lg hover:border-border-hover">
+      <Card className="flex w-full rounded-lg hover:border-border-hover hover:bg-surface-hover">
         <div className="flex w-full flex-row items-center px-4 py-3 [&>p]:w-0 [&>p]:grow">
           {(data["icon"] || data["name"]) && (
             <div className="flex w-0 grow items-center gap-2 pr-3 text-muted-foreground">
