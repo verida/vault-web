@@ -1,27 +1,8 @@
-import { z } from "zod"
-
-import { VeridaBaseRecordSchema } from "@/features/verida"
-
-export type VeridaBaseRecord = z.infer<typeof VeridaBaseRecordSchema>
+// TODO: Move types to inbox feature
 
 export enum VeridaMessageType {
   SIMPLE_MESSAGE = "inbox/type/message",
   DATA_REQUEST = "inbox/type/dataRequest",
-}
-
-export type VerifiableCredential<T = unknown> = {
-  id: string
-  issuanceDate: string
-  expirationDate: string
-  credentialSchema: { id: string; type: string }
-  issuer: string
-  credentialSubject: T
-  type: string[]
-}
-
-export type VeridaVerifiableCredentialRecord<T = unknown> = VeridaBaseRecord & {
-  credentialData: VerifiableCredential<T>
-  credentialSchema: string
 }
 
 export type SimpleMessage = {
@@ -76,5 +57,3 @@ export type ReceivedMessage<D> = {
     replyId?: string
   }
 }
-
-export type VeridaRecord<T = Record<string, unknown>> = VeridaBaseRecord & T

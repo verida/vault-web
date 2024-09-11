@@ -1,6 +1,6 @@
 import { z } from "zod"
 
-import { VeridaBaseRecordSchema } from "@/features/verida"
+import { VeridaBaseRecordSchema } from "@/features/verida-database/schemas"
 
 // TODO: Finalise the schema
 export const DataConnectionsOptionDefinitionSchema = z.object({

@@ -1,7 +1,8 @@
 import { useQuery } from "@tanstack/react-query"
 import { useCallback } from "react"
 
-import { VeridaRecord, useVerida } from "@/features/verida"
+import { useVerida } from "@/features/verida"
+import { VeridaRecord } from "@/features/verida-database/types"
 
 export function useData<TData = VeridaRecord>(database: string) {
   const { did, webUserInstanceRef, isConnected } = useVerida()
