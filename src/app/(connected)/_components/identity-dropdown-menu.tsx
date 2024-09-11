@@ -12,7 +12,6 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
@@ -79,7 +78,7 @@ export function IdentityDropdownMenu(props: IdentityDropdownMenuProps) {
         className="w-screen max-w-80 rounded-xl p-0"
         align="end"
       >
-        <DropdownMenuLabel className="px-4 py-3 font-normal">
+        <DropdownMenuItem className="block px-4 py-3" onClick={handleCopyDid}>
           <div className="flex flex-row items-center gap-3">
             {profile ? (
               <Avatar className="size-12">
@@ -118,17 +117,13 @@ export function IdentityDropdownMenu(props: IdentityDropdownMenuProps) {
               )}
             </div>
             {did ? (
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={handleCopyDid}
-                className="-mx-1 shrink-0"
-              >
+              <div className="-mx-2 flex cursor-pointer flex-row items-center justify-center rounded-md p-2">
                 <Copy width="100%" height="100%" className="size-5" />
-              </Button>
+                <span className="sr-only">Click to copy DID</span>
+              </div>
             ) : null}
           </div>
-        </DropdownMenuLabel>
+        </DropdownMenuItem>
         <DropdownMenuSeparator className="my-0" />
         <DropdownMenuItem
           onClick={disconnect}
