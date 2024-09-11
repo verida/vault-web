@@ -1,6 +1,6 @@
 "use client"
 
-import React from "react"
+import React, { useCallback } from "react"
 
 import { Copy } from "@/components/icons/copy"
 import { Logout } from "@/components/icons/logout"
@@ -17,96 +17,129 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Skeleton } from "@/components/ui/skeleton"
+import { EMPTY_PROFILE_NAME_FALLBACK } from "@/features/profiles/constants"
 import { useVerida } from "@/features/verida"
+import { cn } from "@/styles/utils"
 
-export function IdentityDropdownMenu() {
-  const { isConnecting, did, disconnect, profile } = useVerida()
+export type IdentityDropdownMenuProps = Pick<
+  React.ComponentProps<typeof Button>,
+  "className"
+>
 
-  if (!did && !profile && isConnecting) {
-    return (
-      <div className="flex items-center space-x-4">
-        <Skeleton className="h-10 w-10 rounded-full" />
-        <div className="space-y-2">
-          <Skeleton className="h-4 w-[100px]" />
-        </div>
-      </div>
-    )
-  }
+export function IdentityDropdownMenu(props: IdentityDropdownMenuProps) {
+  const { className } = props
 
-  const onCopyDid = () => {
+  const { isConnected, did, profile, disconnect } = useVerida()
+
+  const handleCopyDid = useCallback(async () => {
     if (did) {
-      window.navigator.clipboard.writeText(did)
+      await window.navigator.clipboard.writeText(did)
     }
-  }
+  }, [did])
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button
           variant="outline"
-          className="h-auto rounded-full border-0 p-0 md:rounded-lg md:border md:p-2 md:pl-3"
+          className={cn(
+            "h-auto max-w-56 rounded-full border-0 p-0 md:rounded-lg md:border md:py-2 md:pl-3 md:pr-2",
+            className
+          )}
         >
-          <div className="flex flex-row items-center gap-2">
-            <Avatar className="size-8">
-              <AvatarImage
-                alt="Avatar"
-                src={profile?.avatar?.uri ?? ""}
-                width={32}
-                height={32}
-              />
-              <AvatarFallback>
-                {profile?.name?.[0]?.toUpperCase()}
-              </AvatarFallback>
-            </Avatar>
-            <p className="hidden text-base font-semibold leading-5 text-muted-foreground md:inline-block">
-              {profile?.name}
-            </p>
-            <SimpleDown className="hidden text-muted-foreground md:block" />
+          <div className="flex w-full flex-row items-center gap-2">
+            {profile ? (
+              <>
+                <Avatar className="size-8">
+                  <AvatarImage alt="User Avatar" src={profile.avatar?.uri} />
+                  <AvatarFallback>
+                    {profile.name?.at(0)?.toUpperCase()}
+                  </AvatarFallback>
+                </Avatar>
+                <p
+                  className={cn(
+                    "hidden flex-1 truncate text-base font-semibold leading-5 text-muted-foreground md:block",
+                    profile.name ? "" : "italic"
+                  )}
+                >
+                  {profile.name || EMPTY_PROFILE_NAME_FALLBACK}
+                </p>
+              </>
+            ) : (
+              <>
+                <Skeleton className="size-8 shrink-0 rounded-full border" />
+                <Skeleton className="my-0.5 hidden h-4 w-24 md:block" />
+              </>
+            )}
+            <SimpleDown className="hidden shrink-0 text-muted-foreground md:block" />
           </div>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-80 rounded-xl p-0" align="end">
+      <DropdownMenuContent
+        className="w-screen max-w-80 rounded-xl p-0"
+        align="end"
+      >
         <DropdownMenuLabel className="px-4 py-3 font-normal">
           <div className="flex flex-row items-center gap-3">
-            <Avatar className="size-12">
-              <AvatarImage
-                alt="Avatar"
-                src={profile?.avatar?.uri ?? ""}
-                width={48}
-                height={48}
-              />
-              <AvatarFallback>{profile?.name[0]?.toUpperCase()}</AvatarFallback>
-            </Avatar>
-            <div className="flex-grow space-y-0.5 overflow-hidden">
-              <p className="text-[1rem] font-semibold text-muted-foreground">
-                {profile?.name}
-              </p>
-              <Typography
-                variant="base-s-regular"
-                className="truncate text-muted-foreground"
-              >
-                {did}
-              </Typography>
+            {profile ? (
+              <Avatar className="size-12">
+                <AvatarImage alt="User Avatar" src={profile.avatar?.uri} />
+                <AvatarFallback>
+                  {profile.name.at(0)?.toUpperCase()}
+                </AvatarFallback>
+              </Avatar>
+            ) : (
+              <Skeleton className="size-12 shrink-0 rounded-full border" />
+            )}
+            <div className="flex min-w-0 flex-1 flex-col gap-0.5">
+              {profile ? (
+                <p
+                  className={cn(
+                    "truncate text-base font-semibold leading-snug text-muted-foreground",
+                    profile.name ? "" : "italic"
+                  )}
+                >
+                  {profile.name || EMPTY_PROFILE_NAME_FALLBACK}
+                </p>
+              ) : (
+                <Skeleton className="h-4 w-full" />
+              )}
+              {did ? (
+                <div className="text-muted-foreground">
+                  <Typography
+                    variant="base-s-regular"
+                    className="truncate leading-normal"
+                  >
+                    {did}
+                  </Typography>
+                </div>
+              ) : (
+                <Skeleton className="my-0.5 h-3 w-12" />
+              )}
             </div>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={onCopyDid}
-              className="shrink-0"
-            >
-              <Copy width="100%" height="100%" className="size-5" />
-            </Button>
+            {did ? (
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={handleCopyDid}
+                className="-mx-1 shrink-0"
+              >
+                <Copy width="100%" height="100%" className="size-5" />
+              </Button>
+            ) : null}
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator className="my-0" />
         <DropdownMenuItem
           onClick={disconnect}
-          className="cursor-pointer gap-3 px-4 py-4 text-destructive hover:!text-destructive"
+          disabled={!isConnected}
+          className="cursor-pointer gap-3 px-4 py-4 text-destructive"
         >
           <Logout />
-          <Typography variant="base-semibold">Sign Out</Typography>
+          <Typography variant="base-semibold">Disconnect</Typography>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   )
 }
+IdentityDropdownMenu.displayName = "IdentityDropdownMenu"
