@@ -23,6 +23,7 @@ import {
   useDisconnectDataConnection,
 } from "@/features/data-connections"
 import { getConnectionsSummaryPageRoute } from "@/features/routes/utils"
+import { useToast } from "@/features/toasts"
 
 export type DisconnectDataConnectionDialogProps = {
   children: React.ReactNode
@@ -35,6 +36,8 @@ export function DisconnectDataConnectionDialog(
   const { children, connection } = props
 
   const router = useRouter()
+
+  const { toast } = useToast()
 
   const [status, setStatus] = useState<"idle" | "disconnecting" | "error">(
     "idle"
@@ -53,6 +56,10 @@ export function DisconnectDataConnectionDialog(
       },
       {
         onSuccess: () => {
+          toast({
+            variant: "success",
+            description: `Your ${provider?.label ? `${provider.label} account` : "account"} has been disconnected`,
+          })
           router.replace(getConnectionsSummaryPageRoute())
         },
         onError: () => {
@@ -65,6 +72,8 @@ export function DisconnectDataConnectionDialog(
     connection.providerId,
     disconnectDataConnection,
     router,
+    toast,
+    provider?.label,
   ])
 
   return (
