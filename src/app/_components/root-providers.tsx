@@ -2,6 +2,7 @@
 
 import { Suspense } from "react"
 
+import { Toaster } from "@/components/ui/toaster"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import { DataConnectionsProvider } from "@/features/data-connections"
 import { QueriesProvider } from "@/features/queries/queries-provider"
@@ -26,6 +27,7 @@ export function RootProviders(props: RootProvidersProps) {
               <DataConnectionsProvider>{children}</DataConnectionsProvider>
             </VeridaProvider>
           </QueriesProvider>
+          <Toaster />
         </TooltipProvider>
       </ThemesProvider>
     </Suspense>
