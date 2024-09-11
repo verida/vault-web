@@ -3,6 +3,7 @@ import * as React from "react"
 
 import { AlertErrorIcon } from "@/components/icons/alert-error-icon"
 import { AlertInfoIcon } from "@/components/icons/alert-info-icon"
+import { AlertSuccessIcon } from "@/components/icons/alert-success-icon"
 import { AlertWarningIcon } from "@/components/icons/alert-warning-icon"
 import { cn } from "@/styles/utils"
 
@@ -12,6 +13,7 @@ const alertVariants = cva(
     variants: {
       variant: {
         info: "border-l-status-info",
+        success: "border-l-status-success",
         warning: "border-l-status-warning",
         error: "border-l-status-error",
       },
@@ -33,9 +35,10 @@ const Alert = React.forwardRef<
     {...props}
   >
     <div className="absolute left-3 top-2">
-      {variant === "error" ? <AlertErrorIcon className="size-5" /> : null}
-      {variant === "warning" ? <AlertWarningIcon className="size-5" /> : null}
       {variant === "info" ? <AlertInfoIcon className="size-5" /> : null}
+      {variant === "success" ? <AlertSuccessIcon className="size-5" /> : null}
+      {variant === "warning" ? <AlertWarningIcon className="size-5" /> : null}
+      {variant === "error" ? <AlertErrorIcon className="size-5" /> : null}
     </div>
     {children}
   </div>

@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Skeleton } from "@/components/ui/skeleton"
 import { EMPTY_PROFILE_NAME_FALLBACK } from "@/features/profiles/constants"
+import { useToast } from "@/features/toasts"
 import { useVerida } from "@/features/verida"
 import { cn } from "@/styles/utils"
 
@@ -30,11 +31,17 @@ export function IdentityDropdownMenu(props: IdentityDropdownMenuProps) {
 
   const { isConnected, did, profile, disconnect } = useVerida()
 
+  const { toast } = useToast()
+
   const handleCopyDid = useCallback(async () => {
     if (did) {
       await window.navigator.clipboard.writeText(did)
+      toast({
+        variant: "success",
+        description: "DID copied to clipboard",
+      })
     }
-  }, [did])
+  }, [did, toast])
 
   return (
     <DropdownMenu>

@@ -140,9 +140,9 @@ export const VeridaNetworkColouredLogo = (props: Props) => (
         gradientUnits="userSpaceOnUse"
         gradientTransform="translate(44.5207 22.8372) rotate(60.6274) scale(107.998 193.71)"
       >
-        <stop stop-color="#D14DF1" />
-        <stop offset="0.440138" stop-color="#7755F1" />
-        <stop offset="1" stop-color="#37E0C9" />
+        <stop stopColor="#D14DF1" />
+        <stop offset="0.440138" stopColor="#7755F1" />
+        <stop offset="1" stopColor="#37E0C9" />
       </radialGradient>
       <radialGradient
         id="paint1_radial_60_2117"
@@ -152,9 +152,9 @@ export const VeridaNetworkColouredLogo = (props: Props) => (
         gradientUnits="userSpaceOnUse"
         gradientTransform="translate(44.5207 22.8372) rotate(60.6274) scale(107.998 193.71)"
       >
-        <stop stop-color="#D14DF1" />
-        <stop offset="0.440138" stop-color="#7755F1" />
-        <stop offset="1" stop-color="#37E0C9" />
+        <stop stopColor="#D14DF1" />
+        <stop offset="0.440138" stopColor="#7755F1" />
+        <stop offset="1" stopColor="#37E0C9" />
       </radialGradient>
       <radialGradient
         id="paint2_radial_60_2117"
@@ -164,9 +164,9 @@ export const VeridaNetworkColouredLogo = (props: Props) => (
         gradientUnits="userSpaceOnUse"
         gradientTransform="translate(44.5207 22.8372) rotate(60.6274) scale(107.998 193.71)"
       >
-        <stop stop-color="#D14DF1" />
-        <stop offset="0.440138" stop-color="#7755F1" />
-        <stop offset="1" stop-color="#37E0C9" />
+        <stop stopColor="#D14DF1" />
+        <stop offset="0.440138" stopColor="#7755F1" />
+        <stop offset="1" stopColor="#37E0C9" />
       </radialGradient>
       <radialGradient
         id="paint3_radial_60_2117"
@@ -176,9 +176,9 @@ export const VeridaNetworkColouredLogo = (props: Props) => (
         gradientUnits="userSpaceOnUse"
         gradientTransform="translate(44.5207 22.8372) rotate(60.6274) scale(107.998 193.71)"
       >
-        <stop stop-color="#D14DF1" />
-        <stop offset="0.440138" stop-color="#7755F1" />
-        <stop offset="1" stop-color="#37E0C9" />
+        <stop stopColor="#D14DF1" />
+        <stop offset="0.440138" stopColor="#7755F1" />
+        <stop offset="1" stopColor="#37E0C9" />
       </radialGradient>
       <radialGradient
         id="paint4_radial_60_2117"
@@ -188,9 +188,9 @@ export const VeridaNetworkColouredLogo = (props: Props) => (
         gradientUnits="userSpaceOnUse"
         gradientTransform="translate(44.5207 22.8372) rotate(60.6274) scale(107.998 193.71)"
       >
-        <stop stop-color="#D14DF1" />
-        <stop offset="0.440138" stop-color="#7755F1" />
-        <stop offset="1" stop-color="#37E0C9" />
+        <stop stopColor="#D14DF1" />
+        <stop offset="0.440138" stopColor="#7755F1" />
+        <stop offset="1" stopColor="#37E0C9" />
       </radialGradient>
       <radialGradient
         id="paint5_radial_60_2117"
@@ -200,9 +200,9 @@ export const VeridaNetworkColouredLogo = (props: Props) => (
         gradientUnits="userSpaceOnUse"
         gradientTransform="translate(44.5207 22.8372) rotate(60.6274) scale(107.998 193.71)"
       >
-        <stop stop-color="#D14DF1" />
-        <stop offset="0.440138" stop-color="#7755F1" />
-        <stop offset="1" stop-color="#37E0C9" />
+        <stop stopColor="#D14DF1" />
+        <stop offset="0.440138" stopColor="#7755F1" />
+        <stop offset="1" stopColor="#37E0C9" />
       </radialGradient>
       <radialGradient
         id="paint6_radial_60_2117"
@@ -212,9 +212,9 @@ export const VeridaNetworkColouredLogo = (props: Props) => (
         gradientUnits="userSpaceOnUse"
         gradientTransform="translate(44.5207 22.8372) rotate(60.6274) scale(107.998 193.71)"
       >
-        <stop stop-color="#D14DF1" />
-        <stop offset="0.440138" stop-color="#7755F1" />
-        <stop offset="1" stop-color="#37E0C9" />
+        <stop stopColor="#D14DF1" />
+        <stop offset="0.440138" stopColor="#7755F1" />
+        <stop offset="1" stopColor="#37E0C9" />
       </radialGradient>
       <radialGradient
         id="paint7_radial_60_2117"
@@ -224,9 +224,9 @@ export const VeridaNetworkColouredLogo = (props: Props) => (
         gradientUnits="userSpaceOnUse"
         gradientTransform="translate(44.5207 22.8372) rotate(60.6274) scale(107.998 193.71)"
       >
-        <stop stop-color="#D14DF1" />
-        <stop offset="0.440138" stop-color="#7755F1" />
-        <stop offset="1" stop-color="#37E0C9" />
+        <stop stopColor="#D14DF1" />
+        <stop offset="0.440138" stopColor="#7755F1" />
+        <stop offset="1" stopColor="#37E0C9" />
       </radialGradient>
       <radialGradient
         id="paint8_radial_60_2117"
@@ -236,9 +236,9 @@ export const VeridaNetworkColouredLogo = (props: Props) => (
         gradientUnits="userSpaceOnUse"
         gradientTransform="translate(44.5207 22.8372) rotate(60.6274) scale(107.998 193.71)"
       >
-        <stop stop-color="#D14DF1" />
-        <stop offset="0.440138" stop-color="#7755F1" />
-        <stop offset="1" stop-color="#37E0C9" />
+        <stop stopColor="#D14DF1" />
+        <stop offset="0.440138" stopColor="#7755F1" />
+        <stop offset="1" stopColor="#37E0C9" />
       </radialGradient>
       <radialGradient
         id="paint9_radial_60_2117"
@@ -248,9 +248,9 @@ export const VeridaNetworkColouredLogo = (props: Props) => (
         gradientUnits="userSpaceOnUse"
         gradientTransform="translate(44.5207 22.8372) rotate(60.6274) scale(107.998 193.71)"
       >
-        <stop stop-color="#D14DF1" />
-        <stop offset="0.440138" stop-color="#7755F1" />
-        <stop offset="1" stop-color="#37E0C9" />
+        <stop stopColor="#D14DF1" />
+        <stop offset="0.440138" stopColor="#7755F1" />
+        <stop offset="1" stopColor="#37E0C9" />
       </radialGradient>
       <radialGradient
         id="paint10_radial_60_2117"
@@ -260,9 +260,9 @@ export const VeridaNetworkColouredLogo = (props: Props) => (
         gradientUnits="userSpaceOnUse"
         gradientTransform="translate(44.5207 22.8372) rotate(60.6274) scale(107.998 193.71)"
       >
-        <stop stop-color="#D14DF1" />
-        <stop offset="0.440138" stop-color="#7755F1" />
-        <stop offset="1" stop-color="#37E0C9" />
+        <stop stopColor="#D14DF1" />
+        <stop offset="0.440138" stopColor="#7755F1" />
+        <stop offset="1" stopColor="#37E0C9" />
       </radialGradient>
       <radialGradient
         id="paint11_radial_60_2117"
@@ -272,9 +272,9 @@ export const VeridaNetworkColouredLogo = (props: Props) => (
         gradientUnits="userSpaceOnUse"
         gradientTransform="translate(44.5207 22.8372) rotate(60.6274) scale(107.998 193.71)"
       >
-        <stop stop-color="#D14DF1" />
-        <stop offset="0.440138" stop-color="#7755F1" />
-        <stop offset="1" stop-color="#37E0C9" />
+        <stop stopColor="#D14DF1" />
+        <stop offset="0.440138" stopColor="#7755F1" />
+        <stop offset="1" stopColor="#37E0C9" />
       </radialGradient>
       <radialGradient
         id="paint12_radial_60_2117"
@@ -284,9 +284,9 @@ export const VeridaNetworkColouredLogo = (props: Props) => (
         gradientUnits="userSpaceOnUse"
         gradientTransform="translate(44.5207 22.8372) rotate(60.6274) scale(107.998 193.71)"
       >
-        <stop stop-color="#D14DF1" />
-        <stop offset="0.440138" stop-color="#7755F1" />
-        <stop offset="1" stop-color="#37E0C9" />
+        <stop stopColor="#D14DF1" />
+        <stop offset="0.440138" stopColor="#7755F1" />
+        <stop offset="1" stopColor="#37E0C9" />
       </radialGradient>
       <radialGradient
         id="paint13_radial_60_2117"
@@ -296,9 +296,9 @@ export const VeridaNetworkColouredLogo = (props: Props) => (
         gradientUnits="userSpaceOnUse"
         gradientTransform="translate(44.5207 22.8372) rotate(60.6274) scale(107.998 193.71)"
       >
-        <stop stop-color="#D14DF1" />
-        <stop offset="0.440138" stop-color="#7755F1" />
-        <stop offset="1" stop-color="#37E0C9" />
+        <stop stopColor="#D14DF1" />
+        <stop offset="0.440138" stopColor="#7755F1" />
+        <stop offset="1" stopColor="#37E0C9" />
       </radialGradient>
       <radialGradient
         id="paint14_radial_60_2117"
@@ -308,9 +308,9 @@ export const VeridaNetworkColouredLogo = (props: Props) => (
         gradientUnits="userSpaceOnUse"
         gradientTransform="translate(44.5207 22.8372) rotate(60.6274) scale(107.998 193.71)"
       >
-        <stop stop-color="#D14DF1" />
-        <stop offset="0.440138" stop-color="#7755F1" />
-        <stop offset="1" stop-color="#37E0C9" />
+        <stop stopColor="#D14DF1" />
+        <stop offset="0.440138" stopColor="#7755F1" />
+        <stop offset="1" stopColor="#37E0C9" />
       </radialGradient>
       <radialGradient
         id="paint15_radial_60_2117"
@@ -320,9 +320,9 @@ export const VeridaNetworkColouredLogo = (props: Props) => (
         gradientUnits="userSpaceOnUse"
         gradientTransform="translate(44.5207 22.8372) rotate(60.6274) scale(107.998 193.71)"
       >
-        <stop stop-color="#D14DF1" />
-        <stop offset="0.440138" stop-color="#7755F1" />
-        <stop offset="1" stop-color="#37E0C9" />
+        <stop stopColor="#D14DF1" />
+        <stop offset="0.440138" stopColor="#7755F1" />
+        <stop offset="1" stopColor="#37E0C9" />
       </radialGradient>
       <radialGradient
         id="paint16_radial_60_2117"
@@ -332,9 +332,9 @@ export const VeridaNetworkColouredLogo = (props: Props) => (
         gradientUnits="userSpaceOnUse"
         gradientTransform="translate(44.5207 22.8372) rotate(60.6274) scale(107.998 193.71)"
       >
-        <stop stop-color="#D14DF1" />
-        <stop offset="0.440138" stop-color="#7755F1" />
-        <stop offset="1" stop-color="#37E0C9" />
+        <stop stopColor="#D14DF1" />
+        <stop offset="0.440138" stopColor="#7755F1" />
+        <stop offset="1" stopColor="#37E0C9" />
       </radialGradient>
       <radialGradient
         id="paint17_radial_60_2117"
@@ -344,9 +344,9 @@ export const VeridaNetworkColouredLogo = (props: Props) => (
         gradientUnits="userSpaceOnUse"
         gradientTransform="translate(44.5207 22.8372) rotate(60.6274) scale(107.998 193.71)"
       >
-        <stop stop-color="#D14DF1" />
-        <stop offset="0.440138" stop-color="#7755F1" />
-        <stop offset="1" stop-color="#37E0C9" />
+        <stop stopColor="#D14DF1" />
+        <stop offset="0.440138" stopColor="#7755F1" />
+        <stop offset="1" stopColor="#37E0C9" />
       </radialGradient>
       <radialGradient
         id="paint18_radial_60_2117"
@@ -356,9 +356,9 @@ export const VeridaNetworkColouredLogo = (props: Props) => (
         gradientUnits="userSpaceOnUse"
         gradientTransform="translate(44.5207 22.8372) rotate(60.6274) scale(107.998 193.71)"
       >
-        <stop stop-color="#D14DF1" />
-        <stop offset="0.440138" stop-color="#7755F1" />
-        <stop offset="1" stop-color="#37E0C9" />
+        <stop stopColor="#D14DF1" />
+        <stop offset="0.440138" stopColor="#7755F1" />
+        <stop offset="1" stopColor="#37E0C9" />
       </radialGradient>
       <radialGradient
         id="paint19_radial_60_2117"
@@ -368,9 +368,9 @@ export const VeridaNetworkColouredLogo = (props: Props) => (
         gradientUnits="userSpaceOnUse"
         gradientTransform="translate(44.5207 22.8372) rotate(60.6274) scale(107.998 193.71)"
       >
-        <stop stop-color="#D14DF1" />
-        <stop offset="0.440138" stop-color="#7755F1" />
-        <stop offset="1" stop-color="#37E0C9" />
+        <stop stopColor="#D14DF1" />
+        <stop offset="0.440138" stopColor="#7755F1" />
+        <stop offset="1" stopColor="#37E0C9" />
       </radialGradient>
       <radialGradient
         id="paint20_radial_60_2117"
@@ -380,9 +380,9 @@ export const VeridaNetworkColouredLogo = (props: Props) => (
         gradientUnits="userSpaceOnUse"
         gradientTransform="translate(44.5207 22.8372) rotate(60.6274) scale(107.998 193.71)"
       >
-        <stop stop-color="#D14DF1" />
-        <stop offset="0.440138" stop-color="#7755F1" />
-        <stop offset="1" stop-color="#37E0C9" />
+        <stop stopColor="#D14DF1" />
+        <stop offset="0.440138" stopColor="#7755F1" />
+        <stop offset="1" stopColor="#37E0C9" />
       </radialGradient>
       <radialGradient
         id="paint21_radial_60_2117"
@@ -392,9 +392,9 @@ export const VeridaNetworkColouredLogo = (props: Props) => (
         gradientUnits="userSpaceOnUse"
         gradientTransform="translate(44.5207 22.8372) rotate(60.6274) scale(107.998 193.71)"
       >
-        <stop stop-color="#D14DF1" />
-        <stop offset="0.440138" stop-color="#7755F1" />
-        <stop offset="1" stop-color="#37E0C9" />
+        <stop stopColor="#D14DF1" />
+        <stop offset="0.440138" stopColor="#7755F1" />
+        <stop offset="1" stopColor="#37E0C9" />
       </radialGradient>
       <radialGradient
         id="paint22_radial_60_2117"
@@ -404,9 +404,9 @@ export const VeridaNetworkColouredLogo = (props: Props) => (
         gradientUnits="userSpaceOnUse"
         gradientTransform="translate(44.5207 22.8372) rotate(60.6274) scale(107.998 193.71)"
       >
-        <stop stop-color="#D14DF1" />
-        <stop offset="0.440138" stop-color="#7755F1" />
-        <stop offset="1" stop-color="#37E0C9" />
+        <stop stopColor="#D14DF1" />
+        <stop offset="0.440138" stopColor="#7755F1" />
+        <stop offset="1" stopColor="#37E0C9" />
       </radialGradient>
       <radialGradient
         id="paint23_radial_60_2117"
@@ -416,9 +416,9 @@ export const VeridaNetworkColouredLogo = (props: Props) => (
         gradientUnits="userSpaceOnUse"
         gradientTransform="translate(44.5207 22.8372) rotate(60.6274) scale(107.998 193.71)"
       >
-        <stop stop-color="#D14DF1" />
-        <stop offset="0.440138" stop-color="#7755F1" />
-        <stop offset="1" stop-color="#37E0C9" />
+        <stop stopColor="#D14DF1" />
+        <stop offset="0.440138" stopColor="#7755F1" />
+        <stop offset="1" stopColor="#37E0C9" />
       </radialGradient>
       <radialGradient
         id="paint24_radial_60_2117"
@@ -428,9 +428,9 @@ export const VeridaNetworkColouredLogo = (props: Props) => (
         gradientUnits="userSpaceOnUse"
         gradientTransform="translate(44.5207 22.8372) rotate(60.6274) scale(107.998 193.71)"
       >
-        <stop stop-color="#D14DF1" />
-        <stop offset="0.440138" stop-color="#7755F1" />
-        <stop offset="1" stop-color="#37E0C9" />
+        <stop stopColor="#D14DF1" />
+        <stop offset="0.440138" stopColor="#7755F1" />
+        <stop offset="1" stopColor="#37E0C9" />
       </radialGradient>
       <radialGradient
         id="paint25_radial_60_2117"
@@ -440,9 +440,9 @@ export const VeridaNetworkColouredLogo = (props: Props) => (
         gradientUnits="userSpaceOnUse"
         gradientTransform="translate(44.5207 22.8372) rotate(60.6274) scale(107.998 193.71)"
       >
-        <stop stop-color="#D14DF1" />
-        <stop offset="0.440138" stop-color="#7755F1" />
-        <stop offset="1" stop-color="#37E0C9" />
+        <stop stopColor="#D14DF1" />
+        <stop offset="0.440138" stopColor="#7755F1" />
+        <stop offset="1" stopColor="#37E0C9" />
       </radialGradient>
       <radialGradient
         id="paint26_radial_60_2117"
@@ -452,9 +452,9 @@ export const VeridaNetworkColouredLogo = (props: Props) => (
         gradientUnits="userSpaceOnUse"
         gradientTransform="translate(44.5207 22.8372) rotate(60.6274) scale(107.998 193.71)"
       >
-        <stop stop-color="#D14DF1" />
-        <stop offset="0.440138" stop-color="#7755F1" />
-        <stop offset="1" stop-color="#37E0C9" />
+        <stop stopColor="#D14DF1" />
+        <stop offset="0.440138" stopColor="#7755F1" />
+        <stop offset="1" stopColor="#37E0C9" />
       </radialGradient>
       <radialGradient
         id="paint27_radial_60_2117"
@@ -464,9 +464,9 @@ export const VeridaNetworkColouredLogo = (props: Props) => (
         gradientUnits="userSpaceOnUse"
         gradientTransform="translate(44.5207 22.8372) rotate(60.6274) scale(107.998 193.71)"
       >
-        <stop stop-color="#D14DF1" />
-        <stop offset="0.440138" stop-color="#7755F1" />
-        <stop offset="1" stop-color="#37E0C9" />
+        <stop stopColor="#D14DF1" />
+        <stop offset="0.440138" stopColor="#7755F1" />
+        <stop offset="1" stopColor="#37E0C9" />
       </radialGradient>
       <radialGradient
         id="paint28_radial_60_2117"
@@ -476,9 +476,9 @@ export const VeridaNetworkColouredLogo = (props: Props) => (
         gradientUnits="userSpaceOnUse"
         gradientTransform="translate(44.5207 22.8372) rotate(60.6274) scale(107.998 193.71)"
       >
-        <stop stop-color="#D14DF1" />
-        <stop offset="0.440138" stop-color="#7755F1" />
-        <stop offset="1" stop-color="#37E0C9" />
+        <stop stopColor="#D14DF1" />
+        <stop offset="0.440138" stopColor="#7755F1" />
+        <stop offset="1" stopColor="#37E0C9" />
       </radialGradient>
       <radialGradient
         id="paint29_radial_60_2117"
@@ -488,9 +488,9 @@ export const VeridaNetworkColouredLogo = (props: Props) => (
         gradientUnits="userSpaceOnUse"
         gradientTransform="translate(44.5207 22.8372) rotate(60.6274) scale(107.998 193.71)"
       >
-        <stop stop-color="#D14DF1" />
-        <stop offset="0.440138" stop-color="#7755F1" />
-        <stop offset="1" stop-color="#37E0C9" />
+        <stop stopColor="#D14DF1" />
+        <stop offset="0.440138" stopColor="#7755F1" />
+        <stop offset="1" stopColor="#37E0C9" />
       </radialGradient>
     </defs>
   </svg>
