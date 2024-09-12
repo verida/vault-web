@@ -28,7 +28,7 @@ export type VeridaDatabaseQueryFilter<T = Record<string, unknown>> = {
 }
 
 export type VeridaDatabaseQueryOptions<T = Record<string, unknown>> = {
-  sort?: Record<keyof T, "asc" | "desc">[] // TODO: Make it work on nested objects as well
+  sort?: Partial<Record<keyof T, "asc" | "desc">>[] // TODO: Make it work on nested objects as well
   limit?: number
   skip?: number
 }
