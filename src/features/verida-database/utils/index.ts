@@ -1,6 +1,9 @@
 import { commonConfig } from "@/config/common"
 import { Logger } from "@/features/telemetry"
-import { VeridaDatabaseQueryApiResponseSchema } from "@/features/verida-database/schemas"
+import {
+  VeridaDatabaseGetRecordApiResponseSchema,
+  VeridaDatabaseQueryApiResponseSchema,
+} from "@/features/verida-database/schemas"
 import {
   VeridaDatabaseQueryFilter,
   VeridaDatabaseQueryOptions,
@@ -79,7 +82,7 @@ export async function fetchVeridaDataRecords<T = Record<string, unknown>>({
     // FIXME: This is a temporary fix to ensure the data is returned as an array of VeridaRecord<T>
     // We need to find a better way to type the data coming from the database.
     // Idea would be to pass a schema to the function and then use that schema
-    // to validate the data.And concerning typescript, infer the returned type
+    // to validate the data. And concerning typescript, infer the returned type
     // from the schema.
     const records = validatedData.items as VeridaRecord<T>[]
 
@@ -91,6 +94,80 @@ export async function fetchVeridaDataRecords<T = Record<string, unknown>>({
   } catch (error) {
     logger.error(
       new Error("Error fetching Verida data records", { cause: error })
+    )
+    throw error
+  }
+}
+
+type FetchVeridaDataRecordArgs = {
+  key?: string
+  databaseName: string
+  recordId: string
+}
+
+/**
+ * Fetches a single Verida data record from the specified database.
+ *
+ * @param key - API key for authentication
+ * @param databaseName - The name of the database to query
+ * @param recordId - The ID of the record to fetch
+ * @returns Promise resolving to a single VeridaRecord object
+ */
+export async function fetchVeridaDataRecord<T = Record<string, unknown>>({
+  key,
+  databaseName,
+  recordId,
+}: FetchVeridaDataRecordArgs): Promise<VeridaRecord<T>> {
+  try {
+    logger.debug("Fetching single Verida data record", {
+      databaseName,
+      recordId,
+    })
+
+    if (!commonConfig.PRIVATE_DATA_API_BASE_URL || !key) {
+      logger.warn(
+        "Cannot fetch Verida data record due to incorrect API configuration"
+      )
+      throw new Error("Incorrect Private Data API configuration")
+    }
+
+    // Make API request to fetch data
+    const response = await fetch(
+      `${commonConfig.PRIVATE_DATA_API_BASE_URL}/api/v1/db/get/${databaseName}/${recordId}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "key": key,
+        },
+      }
+    )
+
+    if (!response.ok) {
+      throw new Error(`HTTP error ${response.status}`)
+    }
+
+    const data = await response.json()
+
+    // Validate the response data against the VeridaDatabaseGetRecordApiResponseSchema
+    const validatedData = VeridaDatabaseGetRecordApiResponseSchema.parse(data)
+
+    // FIXME: This is a temporary fix to ensure the data is returned as VeridaRecord<T>
+    // We need to find a better way to type the data coming from the database.
+    // Idea would be to pass a schema to the function and then use that schema
+    // to validate the data. And concerning typescript, infer the returned type
+    // from the schema.
+    const record = validatedData.item as VeridaRecord<T>
+
+    logger.info("Successfully fetched single Verida data record", {
+      databaseName,
+      recordId,
+    })
+
+    return record
+  } catch (error) {
+    logger.error(
+      new Error("Error fetching single Verida data record", { cause: error })
     )
     throw error
   }

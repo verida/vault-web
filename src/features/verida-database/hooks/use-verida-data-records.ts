@@ -16,7 +16,7 @@ type UseVeridaDataRecordsArgs<T = Record<string, unknown>> = {
 }
 
 /**
- * Custom hook to fetch and manage Verida data records.
+ * Custom hook to fetch Verida data records.
  *
  * @param databaseName - The name of the database to query
  * @param filter - Optional query filter to apply to the records
@@ -30,7 +30,7 @@ export function useVeridaDataRecords<T = Record<string, unknown>>({
 }: UseVeridaDataRecordsArgs<T>) {
   const { did } = useVerida()
 
-  const { ...query } = useQuery({
+  const { data, ...query } = useQuery({
     queryKey: VeridaDatabaseQueryKeys.dataRecords({
       databaseName,
       did,
@@ -47,6 +47,7 @@ export function useVeridaDataRecords<T = Record<string, unknown>>({
         options,
       })
     },
+    // TODO: Set staleTime?
     gcTime: 1000 * 60 * 30, // 30 minutes
     meta: {
       logCategory: "VeridaDatabase",
@@ -54,5 +55,5 @@ export function useVeridaDataRecords<T = Record<string, unknown>>({
     },
   })
 
-  return { ...query }
+  return { records: data, ...query }
 }

@@ -5,13 +5,13 @@ import {
 
 export const VeridaDatabaseQueryKeys = {
   dataRecords: <T = Record<string, unknown>>({
-    databaseName,
     did,
+    databaseName,
     filter,
     options,
   }: {
-    databaseName: string
     did: string | null
+    databaseName: string
     filter?: VeridaDatabaseQueryFilter<T>
     options?: VeridaDatabaseQueryOptions<T>
   }) => ["data", "records", databaseName, did, filter, options],
@@ -21,4 +21,13 @@ export const VeridaDatabaseQueryKeys = {
     "records",
     databaseName,
   ],
+  dataRecord: ({
+    did,
+    databaseName,
+    recordId,
+  }: {
+    did: string | null
+    databaseName: string
+    recordId: string
+  }) => ["data", "records", databaseName, did, recordId],
 }
