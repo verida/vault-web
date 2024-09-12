@@ -1,84 +1,101 @@
 "use client"
 
-import React, { useState } from "react"
+import Link from "next/link"
+import React, { useMemo } from "react"
 
+import { DataConnectionAvatar } from "@/components/data-connections/data-connection-avatar"
+import { DataConnectionLogLevelBadge } from "@/components/data-connections/data-connection-log-level-badge"
 import { Typography } from "@/components/typography"
 import { Card } from "@/components/ui/card"
-import { DataConnectionLog } from "@/features/data-connections"
+import { Skeleton } from "@/components/ui/skeleton"
+import {
+  DataConnectionSyncLog,
+  buildConnectionId,
+  useDataConnection,
+  useDataProvider,
+} from "@/features/data-connections"
+import { getConnectionPageRoute } from "@/features/routes/utils"
+import { cn } from "@/styles/utils"
+
+// TODO: Factorise the date formatter
+const dateFormatter = new Intl.DateTimeFormat(undefined, {
+  month: "short",
+  day: "numeric",
+  year: "numeric",
+  hour: "numeric",
+  minute: "numeric",
+  hour12: true,
+})
 
 export type DataConnectionLogsTableRowProps = {
-  log: DataConnectionLog
-}
+  log: DataConnectionSyncLog
+  hideConnectionColumn?: boolean
+} & React.ComponentProps<typeof Card>
 
 export function DataConnectionLogsTableRow(
   props: DataConnectionLogsTableRowProps
 ) {
-  const { log } = props
+  const { log, hideConnectionColumn = false, className, ...cardProps } = props
 
-  const [showFull, setShowFull] = useState(false)
+  const { provider } = useDataProvider(log.providerName)
+
+  const { connection } = useDataConnection(
+    buildConnectionId({
+      providerId: log.providerName,
+      accountId: log.providerId,
+    })
+  )
+
+  const handlerDefinition = useMemo(() => {
+    return provider?.handlers?.find((handler) => handler.id === log.handlerName)
+  }, [provider?.handlers, log.handlerName])
 
   return (
-    <>
-      <Card className="hidden py-6 md:flex">
-        <div className="w-72 space-y-2 px-4">
-          <Typography variant="base-semibold">{log.source}</Typography>
-          <Typography variant="base-semibold">{log.type}</Typography>
-          <Typography variant="base-semibold">{log.id}</Typography>
-        </div>
-        <div className="w-0 grow px-4">
-          <Typography variant="base-semibold">{log.message}</Typography>
-        </div>
-        <div className="w-52 px-4">
-          <Typography variant="base-semibold">{log.timestamp}</Typography>
-        </div>
-      </Card>
-
-      <Card className="block space-y-2 p-4 md:hidden">
-        <Typography variant="base-semibold">{log.source}</Typography>
-
-        <div className="flex items-start justify-between">
-          <div className="text-muted-foreground">
-            <Typography variant="base-s-semibold">Data Type</Typography>
-          </div>
-          <Typography variant="base-s-semibold" className="max-w-40">
-            {log.type}
-          </Typography>
-        </div>
-
-        <div className="flex items-start justify-between">
-          <div className="text-muted-foreground">
-            <Typography variant="base-s-semibold">Account ID</Typography>
-          </div>
-          <Typography variant="base-s-semibold" className="max-w-40">
-            {log.id}
-          </Typography>
-        </div>
-
-        <div className="flex items-start justify-between">
-          <div className="text-muted-foreground">
-            <Typography variant="base-s-semibold">Message</Typography>
-          </div>
-          <Typography variant="base-s-semibold" className="max-w-40">
-            {log.message.slice(0, showFull ? log.message.length : 60)}{" "}
-            <span
-              className="cursor-pointer text-primary"
-              onClick={() => setShowFull(!showFull)}
+    <Card
+      className={cn(
+        "flex flex-col items-start gap-6 px-4 py-4 md:flex-row md:gap-8 md:px-8 md:py-6",
+        className
+      )}
+      {...cardProps}
+    >
+      {!hideConnectionColumn ? (
+        <div className="flex w-full flex-col gap-3 md:w-52">
+          <DataConnectionAvatar connection={connection} provider={provider} />
+          {connection ? (
+            <Link
+              href={getConnectionPageRoute({ connectionId: connection.name })}
+              className="text-muted-foreground hover:underline"
             >
-              {showFull ? "View less" : "View more"}
-            </span>
-          </Typography>
+              <Typography variant="base-semibold" className="truncate">
+                {connection.profile.email}
+              </Typography>
+            </Link>
+          ) : (
+            <Skeleton className="my-0.5 h-3.5 w-40" />
+          )}
         </div>
-
-        <div className="flex items-start justify-between">
-          <div className="text-muted-foreground">
-            <Typography variant="base-s-semibold">Timestamp</Typography>
-          </div>
-          <Typography variant="base-s-semibold" className="max-w-40">
-            {log.timestamp}
-          </Typography>
+      ) : null}
+      <div className="flex flex-1 flex-col gap-2">
+        <div className="flex flex-row items-center gap-2">
+          <DataConnectionLogLevelBadge level={log.level} />
+          {provider ? (
+            <Typography variant="base-semibold">
+              {log.handlerName ? handlerDefinition?.label : provider.label}
+            </Typography>
+          ) : (
+            <Skeleton className="my-0.5 h-3.5 w-24" />
+          )}
         </div>
-      </Card>
-    </>
+        <Typography variant="base-regular" className="line-clamp-6">
+          {log.message}
+        </Typography>
+      </div>
+      <div className="w-full text-left text-muted-foreground md:w-44 md:text-right">
+        <Typography variant="base-regular">
+          {dateFormatter.format(new Date(log.insertedAt))}
+        </Typography>
+      </div>
+    </Card>
   )
 }
 DataConnectionLogsTableRow.displayName = "DataConnectionLogsTableRow"
