@@ -59,15 +59,17 @@ export type DataConnectionDisconnectApiResponse = z.infer<
   typeof DataConnectionDisconnectApiResponseSchema
 >
 
-/**
- * @deprecated
- */
-export type DataConnectionLog = {
-  source: string
-  type: string
-  id: number
+// TODO: Infer from a zod schema
+export type DataConnectionSyncLogLevel = "debug" | "info" | "error" | "warning"
+
+// TODO: Infer from a zod schema
+export type DataConnectionSyncLog = {
+  providerName: string
+  providerId: string
+  handlerName?: string
+  level: DataConnectionSyncLogLevel
   message: string
-  timestamp: string
+  insertedAt: string
 }
 
 // BroadcastChannel types

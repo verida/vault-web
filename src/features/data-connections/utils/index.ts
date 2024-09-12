@@ -23,6 +23,45 @@ import { wait } from "@/utils/misc"
 const logger = Logger.create("DataConnections")
 
 /**
+ * Builds a unique connection ID by combining the provider ID and account ID.
+ *
+ * @param {Object} params - The parameters for building the connection ID.
+ * @param {string} params.providerId - The ID of the data provider.
+ * @param {string} params.accountId - The ID of the user account.
+ * @returns {string} A unique connection ID in the format "providerId:accountId".
+ */
+export function buildConnectionId({
+  providerId,
+  accountId,
+}: {
+  providerId: string
+  accountId: string
+}): string {
+  return `${providerId}:${accountId}`
+}
+
+/**
+ * Builds a unique connection handler ID by combining the provider ID, account ID, and handler ID.
+ *
+ * @param {Object} params - The parameters for building the connection handler ID.
+ * @param {string} params.providerId - The ID of the data provider.
+ * @param {string} params.accountId - The ID of the user account.
+ * @param {string} params.handlerId - The ID of the data provider handler.
+ * @returns {string} A unique connection handler ID in the format "providerId:accountId:handlerId".
+ */
+export function buildConnectionHandlerId({
+  providerId,
+  accountId,
+  handlerId,
+}: {
+  providerId: string
+  accountId: string
+  handlerId: string
+}): string {
+  return `${buildConnectionId({ providerId, accountId })}:${handlerId}`
+}
+
+/**
  * Fetches data providers from the API or returns mock data if the API is not configured.
  *
  * @returns A promise that resolves to an array of DataProvider objects
@@ -93,6 +132,7 @@ async function mockGetDataProviders(): Promise<DataProvider[]> {
     }))
   )
 }
+
 /**
  * Fetches data connections from the API or returns mock data if the API is not configured.
  *
