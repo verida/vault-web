@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query"
+import { useQuery, useQueryClient } from "@tanstack/react-query"
 
 import { commonConfig } from "@/config/common"
 import { VeridaDatabaseQueryKeys } from "@/features/verida-database/queries"
@@ -30,6 +30,8 @@ export function useVeridaDataRecords<T = Record<string, unknown>>({
 }: UseVeridaDataRecordsArgs<T>) {
   const { did } = useVerida()
 
+  const queryClient = useQueryClient()
+
   const { data, ...query } = useQuery({
     queryKey: VeridaDatabaseQueryKeys.dataRecords({
       databaseName,
@@ -37,15 +39,26 @@ export function useVeridaDataRecords<T = Record<string, unknown>>({
       filter,
       options,
     }),
-    queryFn: () => {
-      // TODO: Populate the data record cache with the result
-
-      return fetchVeridaDataRecords<T>({
+    queryFn: async () => {
+      const records = await fetchVeridaDataRecords<T>({
         key: commonConfig.PRIVATE_DATA_API_PRIVATE_KEY,
         databaseName,
         filter,
         options,
       })
+
+      records.forEach((record) => {
+        queryClient.setQueryData(
+          VeridaDatabaseQueryKeys.dataRecord({
+            databaseName,
+            did,
+            recordId: record._id,
+          }),
+          record
+        )
+      })
+
+      return records
     },
     // TODO: Set staleTime?
     gcTime: 1000 * 60 * 30, // 30 minutes
