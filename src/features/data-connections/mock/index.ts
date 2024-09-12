@@ -1,8 +1,4 @@
-import {
-  DataConnection,
-  DataConnectionLog,
-  DataProvider,
-} from "@/features/data-connections/types"
+import { DataConnection, DataProvider } from "@/features/data-connections/types"
 
 export const MOCK_DATA_PROVIDERS: DataProvider[] = [
   {
@@ -87,35 +83,5 @@ export const MOCK_USER_DATA_CONNECTIONS: DataConnection[] = [
         },
       },
     ],
-  },
-]
-
-/**
- * @deprecated
- */
-export const MOCK_DATA_CONNECTION_LOGS: DataConnectionLog[] = [
-  {
-    source: "twitter",
-    type: "Social Posts",
-    id: 12345667789,
-    message:
-      "Message ID (1287112938) is not supported it might be incorrect, corrupted, or not recognized by the syste or the message format associated with the ID might be incompatible with the current system or application.",
-    timestamp: "2 Jan 2024, 12:16 pm",
-  },
-  {
-    source: "twitter",
-    type: "Social Posts",
-    id: 12345667789,
-    message:
-      "Message ID (1287112938) is not supported it might be incorrect, corrupted, or not recognized by the syste or the message format associated with the ID might be incompatible with the current system or application.",
-    timestamp: "2 Jan 2024, 12:16 pm",
-  },
-  {
-    source: "twitter",
-    type: "Social Posts",
-    id: 12345667789,
-    message:
-      "Message ID (1287112938) is not supported it might be incorrect, corrupted, or not recognized by the syste or the message format associated with the ID might be incompatible with the current system or application.",
-    timestamp: "2 Jan 2024, 12:16 pm",
   },
 ]

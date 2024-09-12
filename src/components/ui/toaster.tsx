@@ -1,9 +1,9 @@
 "use client"
 
-import { AlertErrorIcon } from "@/components/icons/alert-error-icon"
-import { AlertInfoIcon } from "@/components/icons/alert-info-icon"
-import { AlertSuccessIcon } from "@/components/icons/alert-success-icon"
-import { AlertWarningIcon } from "@/components/icons/alert-warning-icon"
+import { StatusErrorIcon } from "@/components/icons/status-error-icon"
+import { StatusInfoIcon } from "@/components/icons/status-info-icon"
+import { StatusSuccessIcon } from "@/components/icons/status-success-icon"
+import { StatusWarningIcon } from "@/components/icons/status-warning-icon"
 import {
   Toast,
   ToastClose,
@@ -31,16 +31,16 @@ export function Toaster() {
           <Toast key={id} {...props}>
             <div className="flex flex-row items-center gap-3">
               {variant === "info" ? (
-                <AlertInfoIcon className="size-6 shrink-0" />
+                <StatusInfoIcon className="size-6 shrink-0" />
               ) : null}
               {variant === "success" ? (
-                <AlertSuccessIcon className="size-6 shrink-0" />
+                <StatusSuccessIcon className="size-6 shrink-0" />
               ) : null}
               {variant === "warning" ? (
-                <AlertWarningIcon className="size-6 shrink-0" />
+                <StatusWarningIcon className="size-6 shrink-0" />
               ) : null}
               {variant === "error" ? (
-                <AlertErrorIcon className="size-6 shrink-0" />
+                <StatusErrorIcon className="size-6 shrink-0" />
               ) : null}
               <div className="flex flex-1 flex-col gap-1">
                 {title ? <ToastTitle>{title}</ToastTitle> : null}

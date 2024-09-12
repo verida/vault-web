@@ -1,8 +1,8 @@
-import { SVGProps } from "react"
+import React, { SVGProps } from "react"
 
-type AlertSuccessIconProps = SVGProps<SVGSVGElement>
+type StatusSuccessIconProps = SVGProps<SVGSVGElement>
 
-export const AlertSuccessIcon = (props: AlertSuccessIconProps) => (
+export const StatusSuccessIcon = (props: StatusSuccessIconProps) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="24"

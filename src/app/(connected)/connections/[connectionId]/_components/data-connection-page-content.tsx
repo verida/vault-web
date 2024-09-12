@@ -3,6 +3,7 @@
 import React from "react"
 
 import { DataConnectionDetails } from "@/app/(connected)/connections/[connectionId]/_components/data-connection-details"
+import { DataConnectionLogs } from "@/app/(connected)/connections/[connectionId]/_components/data-connection-logs"
 import { DataConnectionsHandlersList } from "@/app/(connected)/connections/[connectionId]/_components/data-connections-handlers-list"
 import { PageTitle, PageWrapper } from "@/components/page-wrapper"
 import { Typography } from "@/components/typography"
@@ -48,15 +49,18 @@ export function DataConnectionPageContent(
       contentClassName="gap-8 md:gap-10"
     >
       <DataConnectionDetails connection={connection} />
-      <div className="flex flex-col gap-4 md:gap-6">
+      <section className="flex flex-col gap-4 md:gap-6">
         <Typography variant="heading-3">Services and Data</Typography>
         <DataConnectionsHandlersList
           handlers={connection.handlers}
           providerId={connection.provider}
           lastSynced={connection.syncEnd}
         />
-      </div>
-      {/* TODO: Add the logs section */}
+      </section>
+      <section className="flex flex-col gap-4 md:gap-0">
+        <Typography variant="heading-3">Logs</Typography>
+        <DataConnectionLogs connection={connection} />
+      </section>
     </PageWrapper>
   )
 }

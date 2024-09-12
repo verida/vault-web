@@ -1,8 +1,8 @@
-import { SVGProps } from "react"
+import React, { SVGProps } from "react"
 
-type AlertInfoIconProps = SVGProps<SVGSVGElement>
+type StatusInfoIconProps = SVGProps<SVGSVGElement>
 
-export const AlertInfoIcon = (props: AlertInfoIconProps) => (
+export const StatusInfoIcon = (props: StatusInfoIconProps) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="21"

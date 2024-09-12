@@ -15,7 +15,7 @@ export function AppHeader(props: AppHeaderProps) {
   return (
     <header
       {...headerProps}
-      className={cn("h-[73px] border-b bg-surface", className)}
+      className={cn("z-10 h-[73px] border-b bg-surface shadow-sm", className)}
     >
       <div className="flex h-full flex-row justify-center">
         <div className="flex w-full max-w-screen-2xl flex-1 flex-row items-stretch justify-between gap-4">
