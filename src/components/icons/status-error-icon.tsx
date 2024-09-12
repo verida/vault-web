@@ -1,8 +1,8 @@
-import { SVGProps } from "react"
+import React, { SVGProps } from "react"
 
-type AlertErrorIconProps = SVGProps<SVGSVGElement>
+type StatusErrorIconProps = SVGProps<SVGSVGElement>
 
-export const AlertErrorIcon = (props: AlertErrorIconProps) => (
+export const StatusErrorIcon = (props: StatusErrorIconProps) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="21"

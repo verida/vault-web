@@ -1,10 +1,10 @@
 import { type VariantProps, cva } from "class-variance-authority"
 import * as React from "react"
 
-import { AlertErrorIcon } from "@/components/icons/alert-error-icon"
-import { AlertInfoIcon } from "@/components/icons/alert-info-icon"
-import { AlertSuccessIcon } from "@/components/icons/alert-success-icon"
-import { AlertWarningIcon } from "@/components/icons/alert-warning-icon"
+import { StatusErrorIcon } from "@/components/icons/status-error-icon"
+import { StatusInfoIcon } from "@/components/icons/status-info-icon"
+import { StatusSuccessIcon } from "@/components/icons/status-success-icon"
+import { StatusWarningIcon } from "@/components/icons/status-warning-icon"
 import { cn } from "@/styles/utils"
 
 const alertVariants = cva(
@@ -35,10 +35,10 @@ const Alert = React.forwardRef<
     {...props}
   >
     <div className="absolute left-3 top-2">
-      {variant === "info" ? <AlertInfoIcon className="size-5" /> : null}
-      {variant === "success" ? <AlertSuccessIcon className="size-5" /> : null}
-      {variant === "warning" ? <AlertWarningIcon className="size-5" /> : null}
-      {variant === "error" ? <AlertErrorIcon className="size-5" /> : null}
+      {variant === "info" ? <StatusInfoIcon className="size-5" /> : null}
+      {variant === "success" ? <StatusSuccessIcon className="size-5" /> : null}
+      {variant === "warning" ? <StatusWarningIcon className="size-5" /> : null}
+      {variant === "error" ? <StatusErrorIcon className="size-5" /> : null}
     </div>
     {children}
   </div>

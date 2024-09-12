@@ -1,9 +1,9 @@
 import { SVGProps } from "react"
 
-import { AlertErrorIcon } from "@/components/icons/alert-error-icon"
-import { AlertInfoIcon } from "@/components/icons/alert-info-icon"
-import { AlertWarningIcon } from "@/components/icons/alert-warning-icon"
 import { StatusDebugIcon } from "@/components/icons/status-debug-icon"
+import { StatusErrorIcon } from "@/components/icons/status-error-icon"
+import { StatusInfoIcon } from "@/components/icons/status-info-icon"
+import { StatusWarningIcon } from "@/components/icons/status-warning-icon"
 import {
   Tooltip,
   TooltipContent,
@@ -29,9 +29,9 @@ export function DataConnectionLogLevelBadge(
   }[level]
 
   const Icon = {
-    error: AlertErrorIcon,
-    warning: AlertWarningIcon,
-    info: AlertInfoIcon,
+    error: StatusErrorIcon,
+    warning: StatusWarningIcon,
+    info: StatusInfoIcon,
     debug: StatusDebugIcon,
   }[level]
 
