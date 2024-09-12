@@ -1,8 +1,6 @@
-import { z } from "zod"
-
 import { commonConfig } from "@/config/common"
 import { Logger } from "@/features/telemetry"
-import { VeridaBaseRecordSchema } from "@/features/verida-database/schemas"
+import { VeridaDatabaseQueryApiResponseSchema } from "@/features/verida-database/schemas"
 import {
   VeridaDatabaseQueryFilter,
   VeridaDatabaseQueryOptions,
@@ -76,18 +74,20 @@ export async function fetchVeridaDataRecords<T = Record<string, unknown>>({
     const data = await response.json()
 
     // Validate the response data against the VeridaBaseRecordSchema
-    const validatedData = z.array(VeridaBaseRecordSchema).parse(data)
-
-    logger.info("Successfully fetched Verida data records", {
-      databaseName,
-    })
+    const validatedData = VeridaDatabaseQueryApiResponseSchema.parse(data)
 
     // FIXME: This is a temporary fix to ensure the data is returned as an array of VeridaRecord<T>
     // We need to find a better way to type the data coming from the database.
     // Idea would be to pass a schema to the function and then use that schema
     // to validate the data.And concerning typescript, infer the returned type
     // from the schema.
-    return validatedData as VeridaRecord<T>[]
+    const records = validatedData.items as VeridaRecord<T>[]
+
+    logger.info("Successfully fetched Verida data records", {
+      databaseName,
+    })
+
+    return records
   } catch (error) {
     logger.error(
       new Error("Error fetching Verida data records", { cause: error })

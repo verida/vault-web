@@ -10,3 +10,8 @@ export const VeridaBaseRecordSchema = z
     modifiedAt: z.string().datetime().optional(),
   })
   .passthrough()
+
+// TODO: Instead, create a function taking a schema as argument and then build the API response schema with it
+export const VeridaDatabaseQueryApiResponseSchema = z.object({
+  items: z.array(VeridaBaseRecordSchema),
+})
