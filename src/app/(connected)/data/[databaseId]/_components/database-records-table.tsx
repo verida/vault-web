@@ -10,7 +10,7 @@ import {
   EmptyStateTitle,
 } from "@/components/ui/empty-state"
 import { DataSchema, DatabaseDefinition } from "@/features/data"
-import { VeridaRecord } from "@/features/verida"
+import { VeridaRecord } from "@/features/verida-database/types"
 
 export type DatabaseRecordsTableProps = {
   records: VeridaRecord[]
@@ -64,7 +64,11 @@ export function DatabaseRecordsTable(props: DatabaseRecordsTableProps) {
               fallbackAvatar=""
               href={`?id=${record._id}`}
               title={record.name}
-              date={new Date(record.insertedAt).getTime()}
+              date={
+                record.insertedAt
+                  ? new Date(record.insertedAt).getTime()
+                  : undefined
+              }
               source="Government of New South Wales"
               status="valid"
             />
