@@ -34,7 +34,7 @@ export function ConnectDataProviderDialogProviderSelection(
           <>
             {providers.map((provider) => (
               <ProviderSelectionItem
-                key={provider.name}
+                key={provider.id}
                 provider={provider}
                 onClick={() => onSelectItem(provider)}
               />

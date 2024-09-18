@@ -14,6 +14,8 @@ import {
   DataProviderSchema,
 } from "@/features/data-connections/schemas"
 
+// Data Connections and Providers definitions
+
 export type DataProvider = z.infer<typeof DataProviderSchema>
 
 export type DataProviderHandlerDefinition = z.infer<
@@ -23,6 +25,8 @@ export type DataProviderHandlerDefinition = z.infer<
 export type DataConnectionsOptionDefinition = z.infer<
   typeof DataConnectionsOptionDefinitionSchema
 >
+
+// Data Connections instances
 
 export type DataConnectionBase = z.infer<typeof DataConnectionBaseSchema>
 

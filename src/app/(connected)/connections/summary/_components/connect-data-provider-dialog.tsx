@@ -46,13 +46,13 @@ const logger = Logger.create("ConnectDataProviderDialog")
 
 export type ConnectDataProviderDialogProps = {
   children: React.ReactNode
-  providerName?: string
+  providerId?: string
 }
 
 export function ConnectDataProviderDialog(
   props: ConnectDataProviderDialogProps
 ) {
-  const { children, providerName } = props
+  const { children, providerId } = props
 
   const router = useRouter()
 
@@ -60,16 +60,16 @@ export function ConnectDataProviderDialog(
   const [provider, setProvider] = useState<DataProvider | null>(null)
 
   useEffect(() => {
-    const foundProvider = providers?.find((c) => c.name === providerName)
+    const foundProvider = providers?.find((p) => p.id === providerId)
     setProvider(foundProvider || null)
-  }, [providerName, providers])
+  }, [providerId, providers])
 
   const handleOpenChange = useCallback(() => {
-    if (!providerName) {
+    if (!providerId) {
       // If the component is mounted without a provider name, we reset the selected provider
       setProvider(null)
     }
-  }, [providerName])
+  }, [providerId])
 
   const { broadcastChannel: dataConnectionsChannel } =
     useDataConnectionsContext()
@@ -85,7 +85,7 @@ export function ConnectDataProviderDialog(
     setStatus("connecting")
     try {
       const url = buildConnectProviderUrl(
-        provider.name,
+        provider.id,
         commonConfig.PRIVATE_DATA_API_PRIVATE_KEY
       )
       window.open(url, "_blank")

@@ -6,7 +6,7 @@ export function useDataProvider(providerId: string) {
   const { providers, ...query } = useDataProviders()
 
   const provider = useMemo(
-    () => providers?.find((provider) => provider.name === providerId),
+    () => providers?.find((provider) => provider.id === providerId),
     [providers, providerId]
   )
 

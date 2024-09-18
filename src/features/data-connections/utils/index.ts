@@ -8,7 +8,7 @@ import {
   DataConnectionDisconnectApiResponseSchema,
   DataConnectionSyncApiResponseSchema,
   DataConnectionSyncStatusApiResponseSchema,
-  DataProvidersResponseSchema,
+  DataConnectionsApiV1GetProvidersResponseSchema,
 } from "@/features/data-connections/schemas"
 import {
   DataConnection,
@@ -81,7 +81,7 @@ export async function getDataProviders(): Promise<DataProvider[]> {
   try {
     logger.debug("Sending API request to fetch data providers")
     const response = await fetch(
-      `${commonConfig.PRIVATE_DATA_API_BASE_URL}/api/v1/providers`,
+      `${commonConfig.PRIVATE_DATA_API_BASE_URL}/api/rest/v1/providers`,
       {
         method: "GET",
         headers: {
@@ -98,17 +98,24 @@ export async function getDataProviders(): Promise<DataProvider[]> {
     logger.debug("Received response from providers API")
 
     // Validate the API response against the expected schema
-    const validatedData = DataProvidersResponseSchema.parse(data)
+    const validatedData =
+      DataConnectionsApiV1GetProvidersResponseSchema.parse(data)
+
+    if (!validatedData.success) {
+      throw new Error("API returned unsuccessful operation")
+    }
+
     logger.info("Successfully fetched data providers")
+
     // Map the validated data to DataProvider objects, ensuring each has a description
-    const providers: DataProvider[] = validatedData.map((provider) => ({
+    const providers: DataProvider[] = validatedData.items.map((provider) => ({
       ...provider,
       description: provider.description || DEFAULT_DATA_PROVIDER_DESCRIPTION,
     }))
 
     // Sort the providers by label
     return providers
-      .filter((provider) => provider.name !== "mock")
+      .filter((provider) => provider.id !== "mock")
       .sort((a, b) => a.label.localeCompare(b.label))
   } catch (error) {
     throw new Error("Error fetching data providers", { cause: error })

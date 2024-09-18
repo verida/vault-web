@@ -2,31 +2,31 @@ import { DataConnection, DataProvider } from "@/features/data-connections/types"
 
 export const MOCK_DATA_PROVIDERS: DataProvider[] = [
   {
-    name: "facebook",
+    id: "facebook",
     label: "Facebook",
     icon: "https://127.0.0.1:5021/assets/facebook/icon.png",
     description: "Connect your Facebook Account to share your post with us.",
   },
   {
-    name: "twitter",
+    id: "twitter",
     label: "Twitter",
     icon: "https://127.0.0.1:5021/assets/twitter/icon.png",
     description: "Connect your X Account to share your tweets with us.",
   },
   {
-    name: "discord",
+    id: "discord",
     label: "Discord",
     icon: "https://127.0.0.1:5021/assets/discord/icon.png",
     description: "Connect your Discord Account to share your post with us.",
   },
   {
-    name: "google",
+    id: "google",
     label: "Google",
     icon: "https://127.0.0.1:5021/assets/google/icon.png",
     description: "",
   },
   {
-    name: "telegram",
+    id: "telegram",
     label: "Telegram",
     icon: "https://127.0.0.1:5021/assets/telegram/icon.png",
     description: "Connect your Telegram Account to share your post with us.",

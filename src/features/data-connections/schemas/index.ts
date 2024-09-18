@@ -3,38 +3,35 @@ import { z } from "zod"
 import { VeridaBaseRecordSchema } from "@/features/verida-database/schemas"
 
 // TODO: Finalise the schema
-export const DataConnectionsOptionDefinitionSchema = z.object({
-  id: z.string(),
-  label: z.string(),
-  type: z.string(), // TODO: Set up enum of types
-  // TODO: Add options for different types
-  defaultValue: z.string().optional(),
-})
+export const DataConnectionsOptionDefinitionSchema = z
+  .object({
+    id: z.string(),
+    label: z.string(),
+    type: z.string(), // TODO: Set up enum of types
+    // TODO: Add options for different types
+    defaultValue: z.string().optional(),
+  })
+  .passthrough()
 
 export const DataProviderHandlerDefinitionSchema = z.object({
   id: z.string(),
   label: z.string(),
-  options: z
-    .array(DataConnectionsOptionDefinitionSchema.passthrough())
-    .optional(),
+  options: z.array(DataConnectionsOptionDefinitionSchema).optional(),
 })
 
 export const DataProviderSchema = z.object({
-  name: z.string(),
+  id: z.string(),
   label: z.string(),
   icon: z.string().url(),
   description: z.string().optional(),
-  options: z
-    .array(DataConnectionsOptionDefinitionSchema.passthrough())
-    .optional(),
-  handlers: z
-    .array(DataProviderHandlerDefinitionSchema.passthrough())
-    .optional(),
+  options: z.array(DataConnectionsOptionDefinitionSchema).optional(),
+  handlers: z.array(DataProviderHandlerDefinitionSchema).optional(),
 })
 
-export const DataProvidersResponseSchema = z.array(
-  DataProviderSchema.passthrough()
-)
+export const DataConnectionsApiV1GetProvidersResponseSchema = z.object({
+  success: z.boolean(),
+  items: z.array(DataProviderSchema),
+})
 
 export const DataConnectionProfileSchema = z.object({
   id: z.string(),
@@ -47,12 +44,10 @@ export const DataConnectionProfileSchema = z.object({
   email: z.string().email(),
 })
 
-// TODO: Finalise schema
 export const DataConnectionStatusSchema = z.enum([
   "connected",
   "error",
   "paused",
-  // "sync-active",
   "active",
 ])
 

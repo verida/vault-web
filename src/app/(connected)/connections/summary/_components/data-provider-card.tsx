@@ -27,7 +27,7 @@ export function DataProviderCard(props: DataProviderCardProps) {
               {provider.label?.[0]?.toUpperCase()}
             </AvatarFallback>
           </Avatar>
-          <ConnectDataProviderDialog providerName={provider.name}>
+          <ConnectDataProviderDialog providerId={provider.id}>
             <ConnectDataProviderDialogTrigger asChild>
               <Button size="lg" variant="outline">
                 Connect
