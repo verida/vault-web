@@ -6,21 +6,16 @@ import { disconnectDataConnection } from "@/features/data-connections/utils"
 import { wait } from "@/utils/misc"
 
 type DisconnectDataConnectionVariables = {
-  providerId: string
-  accountId: string
+  connectionId: string
 }
 
 export function useDisconnectDataConnection() {
   const queryClient = useQueryClient()
 
   const { mutate, mutateAsync, ...mutation } = useMutation({
-    mutationFn: ({
-      providerId,
-      accountId,
-    }: DisconnectDataConnectionVariables) =>
+    mutationFn: ({ connectionId }: DisconnectDataConnectionVariables) =>
       disconnectDataConnection(
-        providerId,
-        accountId,
+        connectionId,
         commonConfig.PRIVATE_DATA_API_PRIVATE_KEY
       ),
     onSuccess: () => {

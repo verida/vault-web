@@ -5,7 +5,7 @@ import {
   MOCK_USER_DATA_CONNECTIONS,
 } from "@/features/data-connections/mock"
 import {
-  DataConnectionDisconnectApiResponseSchema,
+  DataConnectionApiV1DisconnectResponseSchema,
   DataConnectionSyncApiResponseSchema,
   DataConnectionSyncStatusApiResponseSchema,
   DataConnectionsApiV1GetProvidersResponseSchema,
@@ -287,21 +287,19 @@ export async function syncDataConnection(
 }
 
 /**
- * Disconnects a data connection for the specified providerId and accountId.
+ * Disconnect a give data connection
  *
- * @param providerId - The provider ID
- * @param accountId - The account ID
+ * @param connectionId - The connection ID
  * @param key - The API key for authentication
  * @returns A promise that resolves to a DataConnectionDisconnectApiResponse indicating success
  * @throws Error if there's an issue disconnecting the data connection
  */
 export async function disconnectDataConnection(
-  providerId: string,
-  accountId: string,
+  connectionId: string,
   key?: string
 ): Promise<DataConnectionDisconnectApiResponse> {
   logger.info("Disconnecting data connection", {
-    providerId,
+    connectionId,
   })
 
   if (!commonConfig.PRIVATE_DATA_API_BASE_URL || !key) {
@@ -312,14 +310,13 @@ export async function disconnectDataConnection(
   }
 
   const url = new URL(
-    `${commonConfig.PRIVATE_DATA_API_BASE_URL}/api/v1/provider/disconnect/${providerId}`
+    `${commonConfig.PRIVATE_DATA_API_BASE_URL}/api/rest/v1/connections/${connectionId}`
   )
-  url.searchParams.append("providerId", accountId)
 
   try {
     logger.debug("Sending API request to disconnect data connection")
     const response = await fetch(url.toString(), {
-      method: "GET",
+      method: "DELETE",
       headers: {
         "Content-Type": "application/json",
         "key": key,
@@ -331,14 +328,15 @@ export async function disconnectDataConnection(
     }
 
     const data = await response.json()
-    const validatedData = DataConnectionDisconnectApiResponseSchema.parse(data)
+    const validatedData =
+      DataConnectionApiV1DisconnectResponseSchema.parse(data)
 
     if (!validatedData.success) {
       throw new Error("API returned unsuccessful operation")
     }
 
     logger.info("Successfully disconnected data connection", {
-      providerId,
+      connectionId,
     })
 
     return validatedData

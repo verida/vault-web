@@ -116,6 +116,6 @@ export const DataConnectionSyncApiResponseSchema = z
   })
   .passthrough()
 
-export const DataConnectionDisconnectApiResponseSchema = z.object({
+export const DataConnectionApiV1DisconnectResponseSchema = z.object({
   success: z.boolean(),
 })
