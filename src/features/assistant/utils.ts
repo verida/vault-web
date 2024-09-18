@@ -1,6 +1,9 @@
 import { commonConfig } from "@/config/common"
 import { DUMMY_ANSWERS } from "@/features/assistant/mock"
-import { PrivateDataApiV1LLMPersonalResponseSchema } from "@/features/assistant/schemas"
+import {
+  PrivateDataApiV1LLMPersonalResponseSchema,
+  PrivateDataApiV1LlmHotloadResponseSchema,
+} from "@/features/assistant/schemas"
 import { Logger } from "@/features/telemetry"
 import { wait } from "@/utils/misc"
 
@@ -46,7 +49,7 @@ export async function processUserPrompt(
   try {
     logger.debug("Sending request to LLM API")
     const response = await fetch(
-      `${commonConfig.PRIVATE_DATA_API_BASE_URL}/api/v1/llm/personal`,
+      `${commonConfig.PRIVATE_DATA_API_BASE_URL}/api/rest/v1/llm/personal`,
       {
         method: "POST",
         headers: {
@@ -94,13 +97,24 @@ export function hotloadAPI(
 
     // Create an EventSource to receive progress updates
     const url = new URL(
-      `${commonConfig.PRIVATE_DATA_API_BASE_URL}/api/v1/llm/hotload`
+      `${commonConfig.PRIVATE_DATA_API_BASE_URL}/api/rest/v1/llm/hotload`
     )
     url.searchParams.append("key", key)
     const eventSource = new EventSource(url.toString())
 
     eventSource.onmessage = (event) => {
-      const data = JSON.parse(event.data)
+      const parsedData = JSON.parse(event.data)
+      const validatedData =
+        PrivateDataApiV1LlmHotloadResponseSchema.safeParse(parsedData)
+
+      if (!validatedData.success) {
+        // Unsure if the API only returns the progress response or something
+        // else, like the retry count. In doubt, just disregard.
+        return
+      }
+
+      const { data } = validatedData
+
       logger.debug(`API hotload progress: ${data.totalProgress * 100}%`)
       if (progressCallback) {
         progressCallback(data.totalProgress)
