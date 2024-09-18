@@ -228,19 +228,17 @@ async function mockGetDataConnections(): Promise<DataConnection[]> {
 }
 
 /**
- * Syncs a data connection with the specified providerId and accountId.
+ * Sync\ a given data connection
  *
- * @param providerId - The provider name
- * @param accountId - The account ID
+ * @param connectionId - The connection ID
  * @param key - The API key for authentication
  * @throws Error if there's an issue syncing the data connection
  */
 export async function syncDataConnection(
-  providerId: string,
-  accountId: string,
+  connectionId: string,
   key?: string
 ): Promise<DataConnectionSyncApiResponse> {
-  logger.info("Syncing data connection", { providerId })
+  logger.info("Syncing data connection", { connectionId })
 
   if (!commonConfig.PRIVATE_DATA_API_BASE_URL || !key) {
     logger.warn(
@@ -249,14 +247,14 @@ export async function syncDataConnection(
     throw new Error("Incorrect Private Data API configuration")
   }
 
-  const url = new URL(`${commonConfig.PRIVATE_DATA_API_BASE_URL}/api/v1/sync`)
-  url.searchParams.append("provider", providerId)
-  url.searchParams.append("providerId", accountId)
+  const url = new URL(
+    `${commonConfig.PRIVATE_DATA_API_BASE_URL}/api/rest/v1/connections/sync/${connectionId}`
+  )
 
   try {
     logger.debug("Sending API request to sync data connection")
     const response = await fetch(url.toString(), {
-      method: "GET",
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
         "key": key,
@@ -277,7 +275,7 @@ export async function syncDataConnection(
     }
 
     logger.info("Successfully synced data connection", {
-      providerId,
+      connectionId,
     })
 
     return validatedData

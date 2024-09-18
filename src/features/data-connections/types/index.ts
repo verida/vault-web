@@ -1,8 +1,8 @@
 import { z } from "zod"
 
 import {
+  DataConnectionApiV1DisconnectResponseSchema,
   DataConnectionBaseSchema,
-  DataConnectionDisconnectApiResponseSchema,
   DataConnectionHandlerBaseSchema,
   DataConnectionHandlerConfigSchema,
   DataConnectionHandlerStatusSchema,
@@ -60,7 +60,7 @@ export type DataConnectionSyncApiResponse = z.infer<
 >
 
 export type DataConnectionDisconnectApiResponse = z.infer<
-  typeof DataConnectionDisconnectApiResponseSchema
+  typeof DataConnectionApiV1DisconnectResponseSchema
 >
 
 // TODO: Infer from a zod schema

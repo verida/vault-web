@@ -10,8 +10,7 @@ import { wait } from "@/utils/misc"
 const logger = Logger.create("DataConnections")
 
 type SyncDataConnectionVariables = {
-  providerId: string
-  accountId: string
+  connectionId: string
 }
 
 export function useSyncDataConnection() {
@@ -29,10 +28,9 @@ export function useSyncDataConnection() {
   }, [queryClient])
 
   const { mutate, mutateAsync, ...mutation } = useMutation({
-    mutationFn: ({ providerId, accountId }: SyncDataConnectionVariables) =>
+    mutationFn: ({ connectionId }: SyncDataConnectionVariables) =>
       syncDataConnection(
-        providerId,
-        accountId,
+        connectionId,
         commonConfig.PRIVATE_DATA_API_PRIVATE_KEY
       ),
     onMutate: () => {
