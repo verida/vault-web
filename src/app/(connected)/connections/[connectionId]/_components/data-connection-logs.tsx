@@ -54,6 +54,7 @@ export function DataConnectionLogs(props: DataConnectionLogsProps) {
               </EmptyState>
             </div>
           ) : (
+            // TODO: Pass pagination info to table
             <DataConnectionsLogsTable logs={logs} hideConnectionColumn />
           )}
         </>

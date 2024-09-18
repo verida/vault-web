@@ -10,22 +10,23 @@ export function useDataConnectionLogs({
   accountId: string
 }) {
   // TODO: Use a proper schema of the logs once supported by useVeridaDataRecords
-  const { records, ...query } = useVeridaDataRecords<DataConnectionSyncLog>({
-    databaseName: DATA_CONNECTIONS_SYNC_LOGS_DATABASE_NAME,
-    filter: {
-      providerName: providerId,
-      providerId: accountId,
-    },
-    options: {
-      // TODO: Handle pagination
-      limit: 4,
-      sort: [
-        {
-          insertedAt: "desc",
-        },
-      ],
-    },
-  })
+  const { records, pagination, ...query } =
+    useVeridaDataRecords<DataConnectionSyncLog>({
+      databaseName: DATA_CONNECTIONS_SYNC_LOGS_DATABASE_NAME,
+      filter: {
+        providerName: providerId,
+        providerId: accountId,
+      },
+      options: {
+        // TODO: Handle pagination
+        limit: 4,
+        sort: [
+          {
+            insertedAt: "desc",
+          },
+        ],
+      },
+    })
 
-  return { logs: records, ...query }
+  return { logs: records, pagination, ...query }
 }

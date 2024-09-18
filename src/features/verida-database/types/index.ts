@@ -32,3 +32,19 @@ export type VeridaDatabaseQueryOptions<T = Record<string, unknown>> = {
   limit?: number
   skip?: number
 }
+
+export type FetchVeridaDataRecordsArgs<T = Record<string, unknown>> = {
+  key?: string
+  databaseName: string
+  filter?: VeridaDatabaseQueryFilter<T>
+  options?: VeridaDatabaseQueryOptions<T>
+}
+
+export type FetchVeridaDataRecordsResult<T = Record<string, unknown>> = {
+  records: VeridaRecord<T>[]
+  pagination: {
+    limit: number | null
+    skipped: number | null
+    unfilteredTotalRecordsCount: number | null
+  }
+}

@@ -30,6 +30,7 @@ export default function ConnectionsLogsPage() {
             </EmptyState>
           </div>
         ) : (
+          // TODO: Pass pagination info to table
           <DataConnectionsLogsTable logs={logs} />
         )}
       </PageWrapper>
