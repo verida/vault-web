@@ -1,5 +1,6 @@
 "use client"
 
+import { useSearchParams } from "next/navigation"
 import { useEffect } from "react"
 
 import { useDataConnectionsContext } from "@/features/data-connections"
@@ -17,12 +18,13 @@ export function NewDataConnectionCallbackHandler(
   const { children } = props
 
   const { triggerNewDataConnectionEvent } = useDataConnectionsContext()
+  const searchParams = useSearchParams()
 
   useEffect(() => {
-    // TODO: Get connectionId from search params
+    const connectionId = searchParams.get("connectionId")
 
     triggerNewDataConnectionEvent({
-      connectionId: undefined, // TODO: Add connectionId when available
+      connectionId: connectionId ?? undefined,
     })
 
     logger.debug("Attempting to close the window")
@@ -35,7 +37,7 @@ export function NewDataConnectionCallbackHandler(
       window.open("", "_self")
       window.close()
     }
-  }, [triggerNewDataConnectionEvent])
+  }, [triggerNewDataConnectionEvent, searchParams])
 
   return <>{children}</>
 }

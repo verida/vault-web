@@ -367,7 +367,7 @@ export function buildConnectProviderUrl(
   // function. Once the connection is established, the Private Data server will
   // redirect back to the Vault app as set in the `redirect` search param.
   const connectUrl = new URL(
-    `${commonConfig.PRIVATE_DATA_API_BASE_URL}/api/v1/provider/connect/${providerId}`
+    `${commonConfig.PRIVATE_DATA_API_BASE_URL}/providers/connect/${providerId}`
   )
   connectUrl.searchParams.append("key", key)
 
