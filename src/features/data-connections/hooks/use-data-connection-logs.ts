@@ -20,11 +20,11 @@ export function useDataConnectionLogs({
       options: {
         // TODO: Handle pagination
         limit: 4,
-        sort: [
-          {
-            insertedAt: "desc",
-          },
-        ],
+        // sort: [
+        //   {
+        //     insertedAt: "desc",
+        //   },
+        // ],
       },
     })
 

@@ -33,7 +33,10 @@ export function DataConnectionsLogsTable(props: DataConnectionsLogsTableProps) {
         <ul className="flex flex-col gap-4">
           {logs.map((log, index) => (
             <li key={index}>
-              <DataConnectionLogsTableRow log={log} hideConnectionColumn />
+              <DataConnectionLogsTableRow
+                log={log}
+                hideConnectionColumn={hideConnectionColumn}
+              />
             </li>
           ))}
         </ul>

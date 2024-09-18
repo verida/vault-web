@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton"
 import {
   DataConnectionHandler,
-  DataProviderHandlerDefinition,
+  DataProviderHandler,
 } from "@/features/data-connections"
 import { cn } from "@/styles/utils"
 
@@ -20,8 +20,8 @@ const dateFormatter = new Intl.DateTimeFormat(undefined, {
 })
 
 export type DataConnectionHandlerCardProps = {
-  handlerDefinition?: DataProviderHandlerDefinition
-  handlerConfig?: DataConnectionHandler
+  handlerDefinition?: DataProviderHandler
+  connectionHandler?: DataConnectionHandler
   lastSynced?: string
 } & React.ComponentProps<typeof Card>
 
@@ -30,7 +30,7 @@ export function DataConnectionHandlerCard(
 ) {
   const {
     handlerDefinition,
-    handlerConfig,
+    connectionHandler,
     lastSynced,
     className,
     ...cardProps
@@ -55,7 +55,7 @@ export function DataConnectionHandlerCard(
             <Typography variant="base-regular">Status</Typography>
           </div>
           <DataConnectionStatusBadge
-            status={handlerConfig?.status || "disabled"}
+            status={connectionHandler?.status || "disabled"}
           />
         </div>
         <div className="flex flex-wrap items-center justify-between gap-4">
@@ -63,7 +63,7 @@ export function DataConnectionHandlerCard(
             <Typography variant="base-regular">Last synced</Typography>
           </div>
           <Typography variant="base-regular" className="flex-1 text-end">
-            {lastSynced && handlerConfig?.enabled
+            {lastSynced && connectionHandler?.enabled
               ? dateFormatter.format(new Date(lastSynced))
               : "-"}
           </Typography>
@@ -76,7 +76,7 @@ export function DataConnectionHandlerCard(
             className="line-clamp-4 flex-1 text-end"
             variant="base-regular"
           >
-            {handlerConfig?.syncMessage || "-"}
+            {connectionHandler?.syncMessage || "-"}
           </Typography>
         </div>
         {handlerDefinition?.options?.map((option) => (
@@ -88,7 +88,7 @@ export function DataConnectionHandlerCard(
               <Typography variant="base-regular">{option.label}</Typography>
             </div>
             <Typography className="flex-1 text-end" variant="base-semibold">
-              {handlerConfig?.config?.[option.id] || option.defaultValue}
+              {connectionHandler?.config?.[option.id] || option.defaultValue}
             </Typography>
           </div>
         ))}

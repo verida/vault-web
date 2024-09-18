@@ -9,11 +9,11 @@ export function useDataConnectionsLogs() {
       databaseName: DATA_CONNECTIONS_SYNC_LOGS_DATABASE_NAME,
       options: {
         // TODO: Handle pagination
-        sort: [
-          {
-            insertedAt: "desc",
-          },
-        ],
+        // sort: [
+        //   {
+        //     insertedAt: "desc",
+        //   },
+        // ],
       },
     })
 

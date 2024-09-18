@@ -36,10 +36,11 @@ export const MOCK_DATA_PROVIDERS: DataProvider[] = [
 export const MOCK_USER_DATA_CONNECTIONS: DataConnection[] = [
   {
     name: "twitter:123",
-    provider: "twitter",
-    providerId: "123",
+    providerId: "twitter",
+    accountId: "123",
     profile: {
       id: "123",
+      readableId: "john.doe@example.com",
       name: "John Doe",
       avatar: {
         uri: "https://example.com/avatar.jpg",
@@ -53,13 +54,15 @@ export const MOCK_USER_DATA_CONNECTIONS: DataConnection[] = [
     syncStart: "2023-05-01T10:00:00Z",
     syncEnd: "2023-05-01T10:05:00Z",
     handlers: [],
+    config: {},
   },
   {
     name: "google:456",
-    provider: "google",
-    providerId: "456",
+    providerId: "google",
+    accountId: "456",
     profile: {
       id: "456",
+      readableId: "jane.smith@example.com",
       name: "Jane Smith",
       avatar: {
         uri: "https://example.com/jane-avatar.jpg",
@@ -74,7 +77,10 @@ export const MOCK_USER_DATA_CONNECTIONS: DataConnection[] = [
     syncEnd: "2023-05-02T09:10:00Z",
     handlers: [
       {
-        name: "gmail",
+        id: "google:456:gmail",
+        providerId: "google",
+        accountId: "456",
+        handlerId: "gmail",
         enabled: true,
         status: "enabled",
         syncMessage: "Batch complete (200). More results pending.",
@@ -83,5 +89,6 @@ export const MOCK_USER_DATA_CONNECTIONS: DataConnection[] = [
         },
       },
     ],
+    config: {},
   },
 ]

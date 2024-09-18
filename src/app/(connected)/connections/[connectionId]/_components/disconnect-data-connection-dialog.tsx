@@ -43,7 +43,7 @@ export function DisconnectDataConnectionDialog(
     "idle"
   )
 
-  const { provider } = useDataProvider(connection.provider)
+  const { provider } = useDataProvider(connection.providerId)
 
   const { disconnectDataConnection } = useDisconnectDataConnection()
 

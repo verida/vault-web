@@ -35,8 +35,8 @@ export function DataConnectionLogs(props: DataConnectionLogsProps) {
   // TODO: Move most of the logic (empty state, loading state, error state) in the logs table component
 
   const { logs, isLoading } = useDataConnectionLogs({
-    providerId: connection.provider,
-    accountId: connection.providerId,
+    providerId: connection.providerId,
+    accountId: connection.accountId,
   })
 
   return (

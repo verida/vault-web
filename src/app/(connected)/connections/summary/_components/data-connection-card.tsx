@@ -18,7 +18,7 @@ export type DataConnectionCardProps = {
 export function DataConnectionCard(props: DataConnectionCardProps) {
   const { connection, className, ...cardProps } = props
 
-  const { provider } = useDataProvider(connection.provider)
+  const { provider } = useDataProvider(connection.providerId)
 
   return (
     <Card className={cn(className)} {...cardProps}>
@@ -42,7 +42,7 @@ export function DataConnectionCard(props: DataConnectionCardProps) {
             <Skeleton className="h-6 w-32" />
           )}
           <Typography variant="base-regular">
-            {connection.profile.email}
+            {connection.profile.readableId}
           </Typography>
         </div>
       </div>

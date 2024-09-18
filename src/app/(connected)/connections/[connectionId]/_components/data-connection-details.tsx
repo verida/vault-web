@@ -36,7 +36,7 @@ export function DataConnectionDetails(props: DataConnectionDetailsProps) {
 
   const [isSyncing, setIsSyncing] = useState(false)
 
-  const { provider } = useDataProvider(connection.provider)
+  const { provider } = useDataProvider(connection.providerId)
   const { syncDataConnection } = useSyncDataConnection()
 
   const handleSyncClick = useCallback(async () => {
@@ -69,7 +69,7 @@ export function DataConnectionDetails(props: DataConnectionDetailsProps) {
               </Typography>
               <div className="text-muted-foreground">
                 <Typography variant="base-s-semibold" className="truncate">
-                  {connection.profile.email}
+                  {connection.profile.readableId}
                 </Typography>
               </div>
             </div>

@@ -5,15 +5,15 @@ import {
   MOCK_USER_DATA_CONNECTIONS,
 } from "@/features/data-connections/mock"
 import {
-  DataConnectionApiV1DisconnectResponseSchema,
-  DataConnectionSyncApiResponseSchema,
-  DataConnectionSyncStatusApiResponseSchema,
+  DataConnectionsApiV1DisconnectConnectionResponseSchema,
+  DataConnectionsApiV1GetConnectionsResponseSchema,
   DataConnectionsApiV1GetProvidersResponseSchema,
+  DataConnectionsApiV1SyncConnectionResponseSchema,
 } from "@/features/data-connections/schemas"
 import {
   DataConnection,
-  DataConnectionDisconnectApiResponse,
-  DataConnectionSyncApiResponse,
+  DataConnectionsApiV1DisconnectConnectionResponse,
+  DataConnectionsApiV1SyncConnectionResponse,
   DataProvider,
 } from "@/features/data-connections/types"
 import { getNewDataConnectionCallbackPageRoute } from "@/features/routes/utils"
@@ -163,7 +163,7 @@ export async function getDataConnections(
   try {
     logger.debug("Sending API request to fetch data connections")
     const response = await fetch(
-      `${commonConfig.PRIVATE_DATA_API_BASE_URL}/api/v1/sync/status`,
+      `${commonConfig.PRIVATE_DATA_API_BASE_URL}/api/rest/v1/connections`,
       {
         method: "GET",
         headers: {
@@ -181,35 +181,16 @@ export async function getDataConnections(
     logger.debug("Received response from data connections API")
 
     // Validate the API response against the expected schema
-    const validatedData = DataConnectionSyncStatusApiResponseSchema.parse(data)
+    const validatedData =
+      DataConnectionsApiV1GetConnectionsResponseSchema.parse(data)
 
     if (!validatedData.success) {
       throw new Error("API returned unsuccessful operation")
     }
 
     logger.info("Successfully fetched data connections")
-    const dataConnections: DataConnection[] = Object.values(
-      validatedData.result
-    ).map((connectionItem) => ({
-      ...connectionItem.connection,
-      handlers: connectionItem.handlers.reduce(
-        (formattedHandlers, handler) => {
-          const connectionHandler = connectionItem.connection.handlers.find(
-            (h) => h.name === handler.handlerName
-          )
-          if (connectionHandler) {
-            formattedHandlers.push({
-              ...connectionHandler,
-              status: handler.status,
-              syncMessage: handler.syncMessage,
-            })
-          }
-          return formattedHandlers
-        },
-        [] as DataConnection["handlers"]
-      ),
-    }))
-    return dataConnections
+
+    return Object.values(validatedData.items)
   } catch (error) {
     throw new Error("Error fetching data connections", { cause: error })
   }
@@ -237,7 +218,7 @@ async function mockGetDataConnections(): Promise<DataConnection[]> {
 export async function syncDataConnection(
   connectionId: string,
   key?: string
-): Promise<DataConnectionSyncApiResponse> {
+): Promise<DataConnectionsApiV1SyncConnectionResponse> {
   logger.info("Syncing data connection", { connectionId })
 
   if (!commonConfig.PRIVATE_DATA_API_BASE_URL || !key) {
@@ -268,7 +249,8 @@ export async function syncDataConnection(
     // Assuming the API doesn't return any meaningful data on success
     const data = await response.json()
 
-    const validatedData = DataConnectionSyncApiResponseSchema.parse(data)
+    const validatedData =
+      DataConnectionsApiV1SyncConnectionResponseSchema.parse(data)
 
     if (!validatedData.success) {
       throw new Error("API returned unsuccessful operation")
@@ -295,7 +277,7 @@ export async function syncDataConnection(
 export async function disconnectDataConnection(
   connectionId: string,
   key?: string
-): Promise<DataConnectionDisconnectApiResponse> {
+): Promise<DataConnectionsApiV1DisconnectConnectionResponse> {
   logger.info("Disconnecting data connection", {
     connectionId,
   })
@@ -327,7 +309,7 @@ export async function disconnectDataConnection(
 
     const data = await response.json()
     const validatedData =
-      DataConnectionApiV1DisconnectResponseSchema.parse(data)
+      DataConnectionsApiV1DisconnectConnectionResponseSchema.parse(data)
 
     if (!validatedData.success) {
       throw new Error("API returned unsuccessful operation")

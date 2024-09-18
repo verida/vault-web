@@ -21,7 +21,7 @@ export function DataConnectionPageContent(
 ) {
   const { connection } = props
 
-  const { provider } = useDataProvider(connection.provider)
+  const { provider } = useDataProvider(connection.providerId)
 
   return (
     <PageWrapper
@@ -52,8 +52,8 @@ export function DataConnectionPageContent(
       <section className="flex flex-col gap-4 md:gap-6">
         <Typography variant="heading-3">Services and Data</Typography>
         <DataConnectionsHandlersList
-          handlers={connection.handlers}
-          providerId={connection.provider}
+          connectionHandlers={connection.handlers}
+          providerId={connection.providerId}
           lastSynced={connection.syncEnd}
         />
       </section>

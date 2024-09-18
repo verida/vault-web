@@ -67,7 +67,7 @@ export function DataConnectionLogsTableRow(
               className="text-muted-foreground hover:underline"
             >
               <Typography variant="base-semibold" className="truncate">
-                {connection.profile.email}
+                {connection.profile.readableId}
               </Typography>
             </Link>
           ) : (
