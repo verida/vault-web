@@ -93,7 +93,7 @@ export function LandingPageFeatureSlider(props: LandingPageFeatureSliderProps) {
               alt="layout"
               width={1406}
               height={1128}
-              className="shadow-[12px_24px_140px_0px_rgba(16, 17, 139, 0.80),-1.478px_0px_1.478px_0px_#000] h-full w-full object-cover object-left-top"
+              className="h-full object-cover object-left-top"
             />
           </CSSTransition>
         </SwitchTransition>
