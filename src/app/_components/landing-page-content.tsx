@@ -1,35 +1,11 @@
 import React from "react"
 
 import { ConnectionButton } from "@/app/_components/connection-button"
+import { LandingPageFeatureSlider } from "@/app/_components/landing-page-feature-slider"
 import { LandingPageFooter } from "@/app/_components/landing-page-footer"
 import { LandingPageHeader } from "@/app/_components/landing-page-header"
-import { Swiper } from "@/app/_components/swiper"
 import { Typography } from "@/components/typography"
 import { cn } from "@/styles/utils"
-
-const sidebarContent = [
-  {
-    icon: <></>,
-    title: "Inbox",
-    description:
-      "Encrypted messaging between decentralized identities. Approve data requests, accept incoming data and receive notifications from your favorite web3 applications.",
-    image: "/images/inbox-page.png",
-  },
-  {
-    icon: <></>,
-    title: "Data",
-    description:
-      "Take ownership of your web2 data, store encrypted in a secure data vault. Control access to your data and provide permission to web3 applications.",
-    image: "/images/data-page.png",
-  },
-  {
-    icon: <></>,
-    title: "Connections",
-    description:
-      "Take ownership of your web2 data, store encrypted in a secure data vault. Control access to your data and provide permission to web3 applications.",
-    image: "/images/connection-page.png",
-  },
-]
 
 export type LandingPageContentProps = Omit<
   React.ComponentProps<"div">,
@@ -47,7 +23,7 @@ export function LandingPageContent(props: LandingPageContentProps) {
       )}
       {...divProps}
     >
-      <div className="flex h-full flex-row">
+      <div className="flex h-full max-w-[2360px] flex-row">
         <div className="flex flex-col px-6 md:px-8 lg:w-1/2 lg:max-w-fit">
           <LandingPageHeader />
           <div className="flex flex-1 flex-col items-start justify-center gap-10 pb-5 pt-10">
@@ -61,17 +37,11 @@ export function LandingPageContent(props: LandingPageContentProps) {
               </Typography>
             </div>
             <ConnectionButton />
-            <Swiper
-              data={sidebarContent}
-              className="h-full flex-1 rounded-t-[32px] lg:hidden"
-            />
+            <LandingPageFeatureSlider className="h-full flex-1 rounded-[32px] lg:hidden" />
           </div>
           <LandingPageFooter />
         </div>
-        <Swiper
-          data={sidebarContent}
-          className="hidden max-w-screen-2xl flex-1 rounded-l-[32px] lg:flex 2xl:rounded-r-[32px]"
-        />
+        <LandingPageFeatureSlider className="hidden flex-1 rounded-l-[32px] lg:flex" />
       </div>
     </div>
   )
