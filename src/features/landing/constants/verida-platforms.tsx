@@ -5,7 +5,13 @@ import { Telegram } from "@/components/icons/telegram"
 import { Twitter } from "@/components/icons/twitter"
 import { Youtube } from "@/components/icons/youtube"
 
-export const VERIDA_PLATFORMS = [
+type VeridaPlatform = {
+  label: string
+  url: string
+  icon: React.ComponentType<React.ComponentProps<"svg">>
+}
+
+export const VERIDA_PLATFORMS: VeridaPlatform[] = [
   {
     label: "Verida on X",
     url: "https://twitter.com/verida_io",

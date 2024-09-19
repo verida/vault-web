@@ -1,40 +1,35 @@
 "use client"
 
 import Image from "next/image"
-import { useEffect, useMemo, useState } from "react"
+import { useEffect, useState } from "react"
 import { CSSTransition, SwitchTransition } from "react-transition-group"
 
 import { Typography } from "@/components/typography"
+import { LANDING_PAGE_SLIDES } from "@/features/landing"
 import { cn } from "@/styles/utils"
 
-export type SwiperProps = {
-  data: {
-    title: string
-    icon: React.ReactNode
-    description: string
-    image: string
-  }[]
-} & Omit<React.ComponentProps<"div">, "children">
+const nbSlides = LANDING_PAGE_SLIDES.length
 
 const INTERVAL = 15000
 
-export function Swiper(props: SwiperProps) {
-  const { data, className, ...divProps } = props
-  const [currentStep, setCurrentStep] = useState(0)
+export type LandingPageFeatureSliderProps = Omit<
+  React.ComponentProps<"div">,
+  "children"
+>
 
-  const slideLength = useMemo(() => {
-    return data.length
-  }, [data])
+export function LandingPageFeatureSlider(props: LandingPageFeatureSliderProps) {
+  const { className, ...divProps } = props
+  const [currentStep, setCurrentStep] = useState(0)
 
   useEffect(() => {
     const timerId = setInterval(() => {
-      setCurrentStep((prev) => (prev + 1) % slideLength)
+      setCurrentStep((prev) => (prev + 1) % nbSlides)
     }, INTERVAL)
 
     return () => {
       clearInterval(timerId)
     }
-  }, [slideLength])
+  }, [])
 
   return (
     <div
@@ -54,13 +49,12 @@ export function Swiper(props: SwiperProps) {
           >
             <div>
               <div className="flex space-x-3">
-                {data[currentStep].icon}
                 <Typography variant="heading-2">
-                  {data[currentStep].title}
+                  {LANDING_PAGE_SLIDES[currentStep].title}
                 </Typography>
               </div>
               <Typography variant="heading-4" className="mt-4">
-                {data[currentStep].description}
+                {LANDING_PAGE_SLIDES[currentStep].description}
               </Typography>
             </div>
           </CSSTransition>
@@ -69,10 +63,10 @@ export function Swiper(props: SwiperProps) {
         <div
           className="mt-8 hidden gap-2 md:grid"
           style={{
-            gridTemplateColumns: `repeat(${slideLength}, minmax(0, 1fr))`,
+            gridTemplateColumns: `repeat(${nbSlides}, minmax(0, 1fr))`,
           }}
         >
-          {Array(slideLength)
+          {Array(nbSlides)
             .fill(0)
             .map((_, ind) => (
               <div
@@ -95,7 +89,7 @@ export function Swiper(props: SwiperProps) {
             unmountOnExit
           >
             <Image
-              src={data[currentStep].image}
+              src={LANDING_PAGE_SLIDES[currentStep].image}
               alt="layout"
               width={1406}
               height={1128}
@@ -107,3 +101,4 @@ export function Swiper(props: SwiperProps) {
     </div>
   )
 }
+LandingPageFeatureSlider.displayName = "LandingPageFeatureSlider"
