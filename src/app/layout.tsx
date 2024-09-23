@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 
 import { RootProviders } from "@/app/_components/root-providers"
+import { BreakpointIndicator } from "@/components/breakpoint-indicator"
 import { commonConfig } from "@/config/common"
 import { APP_DESCRIPTION, APP_NAME, APP_TITLE } from "@/constants/app"
 import { sora } from "@/styles/font"
@@ -44,6 +45,7 @@ export default function RootLayout(props: RootLayoutProps) {
     <html lang="en" suppressHydrationWarning>
       <body className={cn("h-dvh", sora.variable)}>
         <RootProviders>{children}</RootProviders>
+        <BreakpointIndicator />
       </body>
     </html>
   )
