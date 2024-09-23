@@ -1,10 +1,14 @@
 {
-  "name": "web-vault",
+  "name": "vault-web",
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "version": "npx genversion --es6 --double ./src/config/version.ts",
+    "postinstall": "yarn run version",
     "dev": "next dev",
+    "prebuild": "yarn run version",
     "build": "next build",
+    "prestart": "yarn run version",
     "start": "next start",
     "check:ts": "npx tsc --noEmit",
     "check:format": "npx prettier . --check",
@@ -70,6 +74,7 @@
     "eslint-config-prettier": "9.1.0",
     "eslint-plugin-prettier": "^5.1.3",
     "file-loader": "^6.2.0",
+    "genversion": "^3.2.0",
     "postcss": "^8.4.41",
     "prettier": "^3.3.2",
     "prettier-plugin-tailwindcss": "^0.6.5",
