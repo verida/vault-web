@@ -5,15 +5,15 @@ import {
   MOCK_USER_DATA_CONNECTIONS,
 } from "@/features/data-connections/mock"
 import {
-  DataConnectionDisconnectApiResponseSchema,
-  DataConnectionSyncApiResponseSchema,
-  DataConnectionSyncStatusApiResponseSchema,
-  DataProvidersResponseSchema,
+  DataConnectionsApiV1DisconnectConnectionResponseSchema,
+  DataConnectionsApiV1GetConnectionsResponseSchema,
+  DataConnectionsApiV1GetProvidersResponseSchema,
+  DataConnectionsApiV1SyncConnectionResponseSchema,
 } from "@/features/data-connections/schemas"
 import {
   DataConnection,
-  DataConnectionDisconnectApiResponse,
-  DataConnectionSyncApiResponse,
+  DataConnectionsApiV1DisconnectConnectionResponse,
+  DataConnectionsApiV1SyncConnectionResponse,
   DataProvider,
 } from "@/features/data-connections/types"
 import { getNewDataConnectionCallbackPageRoute } from "@/features/routes/utils"
@@ -81,7 +81,7 @@ export async function getDataProviders(): Promise<DataProvider[]> {
   try {
     logger.debug("Sending API request to fetch data providers")
     const response = await fetch(
-      `${commonConfig.PRIVATE_DATA_API_BASE_URL}/api/v1/providers`,
+      `${commonConfig.PRIVATE_DATA_API_BASE_URL}/api/rest/v1/providers`,
       {
         method: "GET",
         headers: {
@@ -98,17 +98,24 @@ export async function getDataProviders(): Promise<DataProvider[]> {
     logger.debug("Received response from providers API")
 
     // Validate the API response against the expected schema
-    const validatedData = DataProvidersResponseSchema.parse(data)
+    const validatedData =
+      DataConnectionsApiV1GetProvidersResponseSchema.parse(data)
+
+    if (!validatedData.success) {
+      throw new Error("API returned unsuccessful operation")
+    }
+
     logger.info("Successfully fetched data providers")
+
     // Map the validated data to DataProvider objects, ensuring each has a description
-    const providers: DataProvider[] = validatedData.map((provider) => ({
+    const providers: DataProvider[] = validatedData.items.map((provider) => ({
       ...provider,
       description: provider.description || DEFAULT_DATA_PROVIDER_DESCRIPTION,
     }))
 
     // Sort the providers by label
     return providers
-      .filter((provider) => provider.name !== "mock")
+      .filter((provider) => provider.id !== "mock")
       .sort((a, b) => a.label.localeCompare(b.label))
   } catch (error) {
     throw new Error("Error fetching data providers", { cause: error })
@@ -156,7 +163,7 @@ export async function getDataConnections(
   try {
     logger.debug("Sending API request to fetch data connections")
     const response = await fetch(
-      `${commonConfig.PRIVATE_DATA_API_BASE_URL}/api/v1/sync/status`,
+      `${commonConfig.PRIVATE_DATA_API_BASE_URL}/api/rest/v1/connections`,
       {
         method: "GET",
         headers: {
@@ -174,35 +181,16 @@ export async function getDataConnections(
     logger.debug("Received response from data connections API")
 
     // Validate the API response against the expected schema
-    const validatedData = DataConnectionSyncStatusApiResponseSchema.parse(data)
+    const validatedData =
+      DataConnectionsApiV1GetConnectionsResponseSchema.parse(data)
 
     if (!validatedData.success) {
       throw new Error("API returned unsuccessful operation")
     }
 
     logger.info("Successfully fetched data connections")
-    const dataConnections: DataConnection[] = Object.values(
-      validatedData.result
-    ).map((connectionItem) => ({
-      ...connectionItem.connection,
-      handlers: connectionItem.handlers.reduce(
-        (formattedHandlers, handler) => {
-          const connectionHandler = connectionItem.connection.handlers.find(
-            (h) => h.name === handler.handlerName
-          )
-          if (connectionHandler) {
-            formattedHandlers.push({
-              ...connectionHandler,
-              status: handler.status,
-              syncMessage: handler.syncMessage,
-            })
-          }
-          return formattedHandlers
-        },
-        [] as DataConnection["handlers"]
-      ),
-    }))
-    return dataConnections
+
+    return Object.values(validatedData.items)
   } catch (error) {
     throw new Error("Error fetching data connections", { cause: error })
   }
@@ -221,19 +209,17 @@ async function mockGetDataConnections(): Promise<DataConnection[]> {
 }
 
 /**
- * Syncs a data connection with the specified providerId and accountId.
+ * Sync\ a given data connection
  *
- * @param providerId - The provider name
- * @param accountId - The account ID
+ * @param connectionId - The connection ID
  * @param key - The API key for authentication
  * @throws Error if there's an issue syncing the data connection
  */
 export async function syncDataConnection(
-  providerId: string,
-  accountId: string,
+  connectionId: string,
   key?: string
-): Promise<DataConnectionSyncApiResponse> {
-  logger.info("Syncing data connection", { providerId })
+): Promise<DataConnectionsApiV1SyncConnectionResponse> {
+  logger.info("Syncing data connection", { connectionId })
 
   if (!commonConfig.PRIVATE_DATA_API_BASE_URL || !key) {
     logger.warn(
@@ -242,18 +228,21 @@ export async function syncDataConnection(
     throw new Error("Incorrect Private Data API configuration")
   }
 
-  const url = new URL(`${commonConfig.PRIVATE_DATA_API_BASE_URL}/api/v1/sync`)
-  url.searchParams.append("provider", providerId)
-  url.searchParams.append("providerId", accountId)
+  const url = new URL(
+    `${commonConfig.PRIVATE_DATA_API_BASE_URL}/api/rest/v1/connections/${connectionId}/sync`
+  )
 
   try {
     logger.debug("Sending API request to sync data connection")
     const response = await fetch(url.toString(), {
-      method: "GET",
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
         "key": key,
       },
+      body: JSON.stringify({
+        instantComplete: true,
+      }),
     })
 
     if (!response.ok) {
@@ -263,14 +252,15 @@ export async function syncDataConnection(
     // Assuming the API doesn't return any meaningful data on success
     const data = await response.json()
 
-    const validatedData = DataConnectionSyncApiResponseSchema.parse(data)
+    const validatedData =
+      DataConnectionsApiV1SyncConnectionResponseSchema.parse(data)
 
     if (!validatedData.success) {
       throw new Error("API returned unsuccessful operation")
     }
 
     logger.info("Successfully synced data connection", {
-      providerId,
+      connectionId,
     })
 
     return validatedData
@@ -280,21 +270,19 @@ export async function syncDataConnection(
 }
 
 /**
- * Disconnects a data connection for the specified providerId and accountId.
+ * Disconnect a give data connection
  *
- * @param providerId - The provider ID
- * @param accountId - The account ID
+ * @param connectionId - The connection ID
  * @param key - The API key for authentication
  * @returns A promise that resolves to a DataConnectionDisconnectApiResponse indicating success
  * @throws Error if there's an issue disconnecting the data connection
  */
 export async function disconnectDataConnection(
-  providerId: string,
-  accountId: string,
+  connectionId: string,
   key?: string
-): Promise<DataConnectionDisconnectApiResponse> {
+): Promise<DataConnectionsApiV1DisconnectConnectionResponse> {
   logger.info("Disconnecting data connection", {
-    providerId,
+    connectionId,
   })
 
   if (!commonConfig.PRIVATE_DATA_API_BASE_URL || !key) {
@@ -305,14 +293,13 @@ export async function disconnectDataConnection(
   }
 
   const url = new URL(
-    `${commonConfig.PRIVATE_DATA_API_BASE_URL}/api/v1/provider/disconnect/${providerId}`
+    `${commonConfig.PRIVATE_DATA_API_BASE_URL}/api/rest/v1/connections/${connectionId}`
   )
-  url.searchParams.append("providerId", accountId)
 
   try {
     logger.debug("Sending API request to disconnect data connection")
     const response = await fetch(url.toString(), {
-      method: "GET",
+      method: "DELETE",
       headers: {
         "Content-Type": "application/json",
         "key": key,
@@ -324,14 +311,15 @@ export async function disconnectDataConnection(
     }
 
     const data = await response.json()
-    const validatedData = DataConnectionDisconnectApiResponseSchema.parse(data)
+    const validatedData =
+      DataConnectionsApiV1DisconnectConnectionResponseSchema.parse(data)
 
     if (!validatedData.success) {
       throw new Error("API returned unsuccessful operation")
     }
 
     logger.info("Successfully disconnected data connection", {
-      providerId,
+      connectionId,
     })
 
     return validatedData
@@ -360,7 +348,7 @@ export function buildConnectProviderUrl(
   // function. Once the connection is established, the Private Data server will
   // redirect back to the Vault app as set in the `redirect` search param.
   const connectUrl = new URL(
-    `${commonConfig.PRIVATE_DATA_API_BASE_URL}/api/v1/provider/connect/${providerId}`
+    `${commonConfig.PRIVATE_DATA_API_BASE_URL}/providers/${providerId}/connect`
   )
   connectUrl.searchParams.append("key", key)
 

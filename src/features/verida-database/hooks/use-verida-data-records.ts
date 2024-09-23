@@ -40,14 +40,14 @@ export function useVeridaDataRecords<T = Record<string, unknown>>({
       options,
     }),
     queryFn: async () => {
-      const records = await fetchVeridaDataRecords<T>({
+      const result = await fetchVeridaDataRecords<T>({
         key: commonConfig.PRIVATE_DATA_API_PRIVATE_KEY,
         databaseName,
         filter,
         options,
       })
 
-      records.forEach((record) => {
+      result.records.forEach((record) => {
         queryClient.setQueryData(
           VeridaDatabaseQueryKeys.dataRecord({
             databaseName,
@@ -58,7 +58,7 @@ export function useVeridaDataRecords<T = Record<string, unknown>>({
         )
       })
 
-      return records
+      return result
     },
     // TODO: Set staleTime?
     gcTime: 1000 * 60 * 30, // 30 minutes
@@ -68,5 +68,9 @@ export function useVeridaDataRecords<T = Record<string, unknown>>({
     },
   })
 
-  return { records: data, ...query }
+  return {
+    records: data?.records,
+    pagination: data?.pagination,
+    ...query,
+  }
 }

@@ -43,7 +43,7 @@ export function DisconnectDataConnectionDialog(
     "idle"
   )
 
-  const { provider } = useDataProvider(connection.provider)
+  const { provider } = useDataProvider(connection.providerId)
 
   const { disconnectDataConnection } = useDisconnectDataConnection()
 
@@ -51,8 +51,7 @@ export function DisconnectDataConnectionDialog(
     setStatus("disconnecting")
     disconnectDataConnection(
       {
-        providerId: connection.provider,
-        accountId: connection.providerId,
+        connectionId: connection._id,
       },
       {
         onSuccess: () => {
@@ -67,14 +66,7 @@ export function DisconnectDataConnectionDialog(
         },
       }
     )
-  }, [
-    connection.provider,
-    connection.providerId,
-    disconnectDataConnection,
-    router,
-    toast,
-    provider?.label,
-  ])
+  }, [connection, disconnectDataConnection, router, toast, provider?.label])
 
   return (
     <AlertDialog>

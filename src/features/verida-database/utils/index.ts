@@ -5,19 +5,13 @@ import {
   VeridaDatabaseQueryApiResponseSchema,
 } from "@/features/verida-database/schemas"
 import {
-  VeridaDatabaseQueryFilter,
+  FetchVeridaDataRecordsArgs,
+  FetchVeridaDataRecordsResult,
   VeridaDatabaseQueryOptions,
   VeridaRecord,
 } from "@/features/verida-database/types"
 
 const logger = Logger.create("VeridaDatabase")
-
-type FetchVeridaDataRecordsArgs<T = Record<string, unknown>> = {
-  key?: string
-  databaseName: string
-  filter?: VeridaDatabaseQueryFilter<T>
-  options?: VeridaDatabaseQueryOptions<T>
-}
 
 const defaultVeridaDataRecordsQueryOptions: VeridaDatabaseQueryOptions = {
   skip: 0,
@@ -37,7 +31,7 @@ export async function fetchVeridaDataRecords<T = Record<string, unknown>>({
   databaseName,
   filter,
   options,
-}: FetchVeridaDataRecordsArgs<T>): Promise<VeridaRecord<T>[]> {
+}: FetchVeridaDataRecordsArgs<T>): Promise<FetchVeridaDataRecordsResult<T>> {
   try {
     const resolvedOptions = {
       // A simple merge is enough as the default options are not in nested objects
@@ -59,7 +53,7 @@ export async function fetchVeridaDataRecords<T = Record<string, unknown>>({
 
     // Make API request to fetch data
     const response = await fetch(
-      `${commonConfig.PRIVATE_DATA_API_BASE_URL}/api/v1/db/query/${databaseName}`,
+      `${commonConfig.PRIVATE_DATA_API_BASE_URL}/api/rest/v1/db/query/${databaseName}`,
       {
         method: "POST",
         headers: {
@@ -79,18 +73,23 @@ export async function fetchVeridaDataRecords<T = Record<string, unknown>>({
     // Validate the response data against the VeridaBaseRecordSchema
     const validatedData = VeridaDatabaseQueryApiResponseSchema.parse(data)
 
-    // FIXME: This is a temporary fix to ensure the data is returned as an array of VeridaRecord<T>
-    // We need to find a better way to type the data coming from the database.
-    // Idea would be to pass a schema to the function and then use that schema
-    // to validate the data. And concerning typescript, infer the returned type
-    // from the schema.
-    const records = validatedData.items as VeridaRecord<T>[]
-
     logger.info("Successfully fetched Verida data records", {
       databaseName,
     })
 
-    return records
+    return {
+      // FIXME: This is a temporary fix to ensure the data is returned as an
+      // array of VeridaRecord<T>. We need to find a better way to type the
+      // data coming from the database. Idea would be to pass a schema to the
+      // function and then use that schema to validate the data. And concerning
+      // typescript, infer the returned type from the schema.
+      records: validatedData.items as VeridaRecord<T>[],
+      pagination: {
+        limit: validatedData.limit ?? null,
+        skipped: validatedData.skip ?? null,
+        unfilteredTotalRecordsCount: validatedData.dbRows ?? null,
+      },
+    }
   } catch (error) {
     logger.error(
       new Error("Error fetching Verida data records", { cause: error })
@@ -133,7 +132,7 @@ export async function fetchVeridaDataRecord<T = Record<string, unknown>>({
 
     // Make API request to fetch data
     const response = await fetch(
-      `${commonConfig.PRIVATE_DATA_API_BASE_URL}/api/v1/db/get/${databaseName}/${recordId}`,
+      `${commonConfig.PRIVATE_DATA_API_BASE_URL}/api/rest/v1/db/get/${databaseName}/${recordId}`,
       {
         method: "GET",
         headers: {

@@ -14,6 +14,9 @@ export const VeridaBaseRecordSchema = z
 // TODO: Instead, create a function taking a schema as argument and then build the API response schema with it
 export const VeridaDatabaseQueryApiResponseSchema = z.object({
   items: z.array(VeridaBaseRecordSchema),
+  limit: z.number().optional(),
+  skip: z.number().optional(),
+  dbRows: z.number().optional(),
 })
 
 // TODO: Instead, create a function taking a schema as argument and then build the API response schema with it

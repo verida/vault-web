@@ -63,11 +63,11 @@ export function DataConnectionLogsTableRow(
           <DataConnectionAvatar connection={connection} provider={provider} />
           {connection ? (
             <Link
-              href={getConnectionPageRoute({ connectionId: connection.name })}
+              href={getConnectionPageRoute({ connectionId: connection._id })}
               className="text-muted-foreground hover:underline"
             >
               <Typography variant="base-semibold" className="truncate">
-                {connection.profile.email}
+                {connection.profile.readableId}
               </Typography>
             </Link>
           ) : (

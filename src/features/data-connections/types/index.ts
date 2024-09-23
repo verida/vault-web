@@ -1,62 +1,45 @@
 import { z } from "zod"
 
 import {
-  DataConnectionBaseSchema,
-  DataConnectionDisconnectApiResponseSchema,
-  DataConnectionHandlerBaseSchema,
-  DataConnectionHandlerConfigSchema,
+  DataConnectionConfigOptionSchema,
+  DataConnectionHandlerSchema,
   DataConnectionHandlerStatusSchema,
+  DataConnectionSchema,
   DataConnectionStatusSchema,
-  DataConnectionSyncApiResponseSchema,
-  DataConnectionSyncStatusApiResultItemSchema,
-  DataConnectionsOptionDefinitionSchema,
-  DataProviderHandlerDefinitionSchema,
+  DataConnectionsApiV1DisconnectConnectionResponseSchema,
+  DataConnectionsApiV1SyncConnectionResponseSchema,
+  DataProviderHandlerSchema,
   DataProviderSchema,
 } from "@/features/data-connections/schemas"
 
+// Data Connections and Providers definitions
+
 export type DataProvider = z.infer<typeof DataProviderSchema>
 
-export type DataProviderHandlerDefinition = z.infer<
-  typeof DataProviderHandlerDefinitionSchema
+export type DataProviderHandler = z.infer<typeof DataProviderHandlerSchema>
+
+export type DataConnectionConfigOption = z.infer<
+  typeof DataConnectionConfigOptionSchema
 >
 
-export type DataConnectionsOptionDefinition = z.infer<
-  typeof DataConnectionsOptionDefinitionSchema
->
+// Data Connections instances
 
-export type DataConnectionBase = z.infer<typeof DataConnectionBaseSchema>
-
-export type DataConnection = DataConnectionBase & {
-  handlers: DataConnectionHandler[]
-}
+export type DataConnection = z.infer<typeof DataConnectionSchema>
 
 export type DataConnectionStatus = z.infer<typeof DataConnectionStatusSchema>
 
-export type DataConnectionHandlerConfig = z.infer<
-  typeof DataConnectionHandlerConfigSchema
->
-
-export type DataConnectionHandlerBase = z.infer<
-  typeof DataConnectionHandlerBaseSchema
->
-
-export type DataConnectionHandler = DataConnectionHandlerConfig &
-  Omit<DataConnectionHandlerBase, "providerName" | "providerId" | "handlerName">
+export type DataConnectionHandler = z.infer<typeof DataConnectionHandlerSchema>
 
 export type DataConnectionHandlerStatus = z.infer<
   typeof DataConnectionHandlerStatusSchema
 >
 
-export type DataConnectionSyncStatus = z.infer<
-  typeof DataConnectionSyncStatusApiResultItemSchema
+export type DataConnectionsApiV1SyncConnectionResponse = z.infer<
+  typeof DataConnectionsApiV1SyncConnectionResponseSchema
 >
 
-export type DataConnectionSyncApiResponse = z.infer<
-  typeof DataConnectionSyncApiResponseSchema
->
-
-export type DataConnectionDisconnectApiResponse = z.infer<
-  typeof DataConnectionDisconnectApiResponseSchema
+export type DataConnectionsApiV1DisconnectConnectionResponse = z.infer<
+  typeof DataConnectionsApiV1DisconnectConnectionResponseSchema
 >
 
 // TODO: Infer from a zod schema
