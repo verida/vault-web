@@ -8,7 +8,7 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { commonConfig } from "@/config/common"
 import { getPublicProfile } from "@/features/profiles"
 import { PublicProfile } from "@/features/profiles/types"
-import { Logger } from "@/features/telemetry"
+import { Logger, Sentry } from "@/features/telemetry"
 import { VERIDA_VAULT_CONTEXT_NAME } from "@/features/verida/constants"
 
 const logger = Logger.create("Verida")
@@ -76,17 +76,17 @@ export const VeridaProvider: React.FunctionComponent<VeridaProviderProps> = (
       // If not connected, no need to continue, just clear everything
       setDid(null)
       setProfile(null)
-      // Sentry.setUser(null);
+      Sentry.setUser(null)
       return
     }
 
     try {
       const newDid = webUserInstance.getDid()
       setDid(newDid)
-      // Sentry.setUser({ id: newDid });
+      Sentry.setUser({ id: newDid })
     } catch (_error) {
       // Only error is if user not connected which is prevented by above check
-      // Sentry.setUser(null);
+      Sentry.setUser(null)
       setDid(null)
     }
 
