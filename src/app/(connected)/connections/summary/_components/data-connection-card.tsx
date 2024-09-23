@@ -28,7 +28,7 @@ export function DataConnectionCard(props: DataConnectionCardProps) {
           <Button size="lg" variant="outline" asChild>
             <Link
               href={getConnectionPageRoute({
-                connectionId: connection.name,
+                connectionId: connection._id,
               })}
             >
               Details

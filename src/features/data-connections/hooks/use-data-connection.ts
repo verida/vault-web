@@ -6,7 +6,7 @@ export function useDataConnection(connectionName: string) {
   const { connections, ...query } = useDataConnections()
 
   const connection = useMemo(
-    () => connections?.find((connection) => connection.name === connectionName),
+    () => connections?.find((connection) => connection._id === connectionName),
     [connections, connectionName]
   )
 

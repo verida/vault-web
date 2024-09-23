@@ -43,7 +43,7 @@ export function DataConnectionDetails(props: DataConnectionDetailsProps) {
     setIsSyncing(true)
     syncDataConnection(
       {
-        connectionId: connection.name,
+        connectionId: connection._id,
       },
       {
         onSettled: () => {
@@ -51,7 +51,7 @@ export function DataConnectionDetails(props: DataConnectionDetailsProps) {
         },
       }
     )
-  }, [connection.name, syncDataConnection])
+  }, [connection, syncDataConnection])
 
   return (
     <div className={cn(className)} {...divProps}>

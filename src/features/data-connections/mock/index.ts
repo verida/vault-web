@@ -35,7 +35,7 @@ export const MOCK_DATA_PROVIDERS: DataProvider[] = [
 
 export const MOCK_USER_DATA_CONNECTIONS: DataConnection[] = [
   {
-    name: "twitter:123",
+    _id: "twitter:123",
     providerId: "twitter",
     accountId: "123",
     profile: {
@@ -57,7 +57,7 @@ export const MOCK_USER_DATA_CONNECTIONS: DataConnection[] = [
     config: {},
   },
   {
-    name: "google:456",
+    _id: "google:456",
     providerId: "google",
     accountId: "456",
     profile: {

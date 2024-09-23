@@ -51,7 +51,7 @@ export function DisconnectDataConnectionDialog(
     setStatus("disconnecting")
     disconnectDataConnection(
       {
-        connectionId: connection.name,
+        connectionId: connection._id,
       },
       {
         onSuccess: () => {

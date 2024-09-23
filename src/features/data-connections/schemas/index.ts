@@ -77,7 +77,7 @@ export const DataConnectionHandlerSchema = z
   .passthrough()
 
 export const DataConnectionSchema = z.object({
-  name: z.string(),
+  _id: z.string(),
   providerId: z.string(),
   accountId: z.string(),
   profile: DataConnectionProfileSchema.passthrough(),
