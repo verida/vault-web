@@ -240,6 +240,9 @@ export async function syncDataConnection(
         "Content-Type": "application/json",
         "key": key,
       },
+      body: JSON.stringify({
+        instantComplete: true,
+      }),
     })
 
     if (!response.ok) {

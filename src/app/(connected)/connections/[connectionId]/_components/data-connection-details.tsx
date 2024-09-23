@@ -16,7 +16,9 @@ import {
   useDataProvider,
   useSyncDataConnection,
 } from "@/features/data-connections"
+import { useToast } from "@/features/toasts"
 import { cn } from "@/styles/utils"
+import { wait } from "@/utils/misc"
 
 const dateFormatter = new Intl.DateTimeFormat(undefined, {
   month: "short",
@@ -36,6 +38,8 @@ export function DataConnectionDetails(props: DataConnectionDetailsProps) {
 
   const [isSyncing, setIsSyncing] = useState(false)
 
+  const { toast } = useToast()
+
   const { provider } = useDataProvider(connection.providerId)
   const { syncDataConnection } = useSyncDataConnection()
 
@@ -47,11 +51,23 @@ export function DataConnectionDetails(props: DataConnectionDetailsProps) {
       },
       {
         onSettled: () => {
-          setIsSyncing(false)
+          wait(1000 * 4).then(() => {
+            setIsSyncing(false)
+          })
+        },
+        onSuccess: () => {
+          toast({
+            description: "Data connection is synchronizing",
+          })
+        },
+        onError: () => {
+          toast({
+            description: "There was an error synchronizing the data connection",
+          })
         },
       }
     )
-  }, [connection, syncDataConnection])
+  }, [connection, syncDataConnection, toast])
 
   return (
     <div className={cn(className)} {...divProps}>
