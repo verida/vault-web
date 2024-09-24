@@ -6,8 +6,12 @@ export const CommonConfigSchema = z.object({
   DEV_MODE: z
     .string()
     .optional()
-    .transform((value) => (value === "true" ? true : false)),
+    .transform((value) => value === "true"),
   LOG_LEVEL: z.enum(["error", "warn", "info", "debug"]).default("info"),
+  SENTRY_ENABLED: z
+    .string()
+    .optional()
+    .transform((value) => value === "true"),
   VERIDA_NETWORK: z
     .enum(["mainnet", "testnet", "devnet", "local"])
     .default("testnet")
@@ -24,26 +28,27 @@ export const CommonConfigSchema = z.object({
   FEATURE_FLAG_AI_ASSISTANT_ENABLED: z
     .string()
     .optional()
-    .transform((value) => (value === "true" ? true : false)),
+    .transform((value) => value === "true"),
   FEATURE_FLAG_INBOX_ENABLED: z
     .string()
     .optional()
-    .transform((value) => (value === "true" ? true : false)),
+    .transform((value) => value === "true"),
   FEATURE_FLAG_DATA_ENABLED: z
     .string()
     .optional()
-    .transform((value) => (value === "true" ? true : false)),
+    .transform((value) => value === "true"),
   FEATURE_FLAG_DATA_CONNECTIONS_ENABLED: z
     .string()
     .optional()
-    .transform((value) => (value === "true" ? true : false)),
+    .transform((value) => value === "true"),
   FEATURE_FLAG_DATA_CONNECTIONS_LOGS_ENABLED: z
     .string()
     .optional()
-    .transform((value) => (value === "true" ? true : false)),
+    .transform((value) => value === "true"),
   PRIVATE_DATA_API_BASE_URL: z.string().url().optional(), // Temporary solution until the endpoints are fetched from the DID Document
   PRIVATE_DATA_API_PRIVATE_KEY: z.string().optional(), // Temporary solution until we have a proper auth solution on the backend
   isClient: z.boolean(),
+  appVersion: z.string(),
 })
 
 export const ServerConfigSchema = z.object({

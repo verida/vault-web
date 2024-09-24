@@ -1,5 +1,6 @@
 "use client"
 
+import { MessageCircle } from "lucide-react"
 import React, { useCallback } from "react"
 
 import { Copy } from "@/components/icons/copy"
@@ -17,6 +18,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Skeleton } from "@/components/ui/skeleton"
 import { EMPTY_PROFILE_NAME_FALLBACK } from "@/features/profiles/constants"
+import { useUserFeedback } from "@/features/telemetry/hooks/use-user-feedback"
 import { useToast } from "@/features/toasts"
 import { useVerida } from "@/features/verida"
 import { cn } from "@/styles/utils"
@@ -30,6 +32,9 @@ export function IdentityDropdownMenu(props: IdentityDropdownMenuProps) {
   const { className } = props
 
   const { isConnected, did, profile, disconnect } = useVerida()
+
+  const { openForm: openUserFeedbackForm, isReady: isUserFeedbackReady } =
+    useUserFeedback()
 
   const { toast } = useToast()
 
@@ -101,7 +106,7 @@ export function IdentityDropdownMenu(props: IdentityDropdownMenuProps) {
               {profile ? (
                 <p
                   className={cn(
-                    "truncate text-base font-semibold leading-snug text-muted-foreground",
+                    "truncate text-base font-semibold leading-snug",
                     profile.name ? "" : "italic"
                   )}
                 >
@@ -131,6 +136,15 @@ export function IdentityDropdownMenu(props: IdentityDropdownMenuProps) {
             ) : null}
           </div>
         </DropdownMenuItem>
+        {isUserFeedbackReady ? (
+          <DropdownMenuItem
+            onClick={openUserFeedbackForm}
+            className="cursor-pointer gap-3 px-4 py-4 text-muted-foreground"
+          >
+            <MessageCircle />
+            <Typography variant="base-semibold">Give your feedback</Typography>
+          </DropdownMenuItem>
+        ) : null}
         <DropdownMenuSeparator className="my-0" />
         <DropdownMenuItem
           onClick={disconnect}

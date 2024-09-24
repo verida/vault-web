@@ -1,8 +1,18 @@
 /* eslint-disable no-console */
+import { CaptureContext } from "@sentry/types"
+
 import { commonConfig } from "@/config/common"
+import { Sentry } from "@/features/telemetry/sentry"
 import { LogLevel } from "@/features/telemetry/types"
 
 const levelOrder: LogLevel[] = ["error", "warn", "info", "debug"]
+
+const sentryLevelMapping = {
+  error: "error",
+  warn: "warning",
+  info: "info",
+  debug: "debug",
+} as const
 
 /**
  * Custom logger to use the console.
@@ -66,6 +76,15 @@ export class Logger {
       return
     }
 
+    if (commonConfig.SENTRY_ENABLED && (level === "warn" || level === "info")) {
+      Sentry.addBreadcrumb({
+        category: this.category,
+        level: sentryLevelMapping[level],
+        message,
+        data: extra,
+      })
+    }
+
     const formattedMessage = this.formatMessage(message)
 
     const formattedExtra: Record<string, unknown>[] = []
@@ -76,7 +95,20 @@ export class Logger {
     console[level](formattedMessage, ...formattedExtra)
   }
 
-  public error(error: Error | unknown) {
+  public error(error: Error | unknown, sentryCaptureContext?: CaptureContext) {
+    if (commonConfig.SENTRY_ENABLED) {
+      Sentry.captureException(error, {
+        ...sentryCaptureContext,
+        tags: {
+          // For some reason the `tags` property is not recognise while clearly defined. Not a big deal to ignore the warning given how we use this property here
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          ...sentryCaptureContext?.tags,
+          feature: this.category,
+        },
+      })
+    }
+
     if (this.shouldSkipPrint("error")) {
       return
     }

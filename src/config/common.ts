@@ -1,4 +1,5 @@
 import { CommonConfigSchema } from "@/config/schemas"
+import { version } from "@/config/version"
 
 const commonConfigCheckResult = CommonConfigSchema.safeParse({
   // Have to pass the variables one-by-one on the client because they are set
@@ -8,6 +9,7 @@ const commonConfigCheckResult = CommonConfigSchema.safeParse({
   BASE_URL: process.env.NEXT_PUBLIC_BASE_URL,
   DEV_MODE: process.env.NEXT_PUBLIC_DEV_MODE,
   LOG_LEVEL: process.env.NEXT_PUBLIC_LOG_LEVEL,
+  SENTRY_ENABLED: process.env.NEXT_PUBLIC_SENTRY_ENABLED,
   VERIDA_NETWORK: process.env.NEXT_PUBLIC_VERIDA_NETWORK,
   VERIDA_RPC_URL: process.env.NEXT_PUBLIC_VERIDA_RPC_URL,
   PRIVATE_DATA_API_BASE_URL: process.env.NEXT_PUBLIC_PRIVATE_DATA_API_BASE_URL,
@@ -23,6 +25,7 @@ const commonConfigCheckResult = CommonConfigSchema.safeParse({
   FEATURE_FLAG_DATA_CONNECTIONS_LOGS_ENABLED:
     process.env.NEXT_PUBLIC_FEATURE_FLAG_DATA_CONNECTIONS_LOGS_ENABLED,
   isClient: !(typeof window === "undefined"),
+  appVersion: version,
 })
 
 if (!commonConfigCheckResult.success) {
