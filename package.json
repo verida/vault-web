@@ -36,6 +36,7 @@
     "@radix-ui/react-tooltip": "^1.1.2",
     "@sentry/nextjs": "^8.31.0",
     "@tanstack/react-query": "^5.40.1",
+    "@tanstack/react-table": "^8.20.5",
     "@verida/account-web-vault": "^3.0.2",
     "@verida/client-ts": "^3.0.2",
     "@verida/helpers": "^3.0.1",
