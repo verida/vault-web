@@ -11,7 +11,22 @@ Sentry.init({
   dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
   environment: process.env.NEXT_PUBLIC_SENTRY_ENVIRONMENT,
   release: `${APP_PACKAGE_NAME}@${version}`,
-  integrations: [Sentry.replayIntegration()],
+  integrations: [
+    Sentry.replayIntegration(),
+    Sentry.feedbackAsyncIntegration({
+      colorScheme: "light",
+      showName: true,
+      isNameRequired: false,
+      showEmail: true,
+      isEmailRequired: false,
+      autoInject: false,
+      showBranding: false,
+      formTitle: "Give your feedback",
+      submitButtonLabel: "Send",
+      messagePlaceholder:
+        "Did you encounter a bug? Or do you have any suggestions?",
+    }),
+  ],
   tracesSampleRate: Number(
     process.env.NEXT_PUBLIC_SENTRY_TRACE_SAMPLE_RATE || 0.1
   ),
