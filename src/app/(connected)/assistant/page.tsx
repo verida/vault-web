@@ -54,9 +54,11 @@ export default function AssistantChatPage() {
         <Alert variant="error" className="mb-2">
           <AlertTitle>Assistant error</AlertTitle>
           <AlertDescription>
-            {hotload.status === "error"
-              ? "There was an error loading your assistant"
-              : error ?? "Something went wrong while loading your assistant"}
+            {error
+              ? error
+              : hotload.status === "error"
+                ? "There was an error loading your assistant"
+                : "Something went wrong while loading your assistant"}
           </AlertDescription>
         </Alert>
       ) : null}
