@@ -6,13 +6,13 @@ import { cn } from "@/styles/utils"
 
 export type AssistantChatMessagesListProps = {
   messages: AssistantChatMessageType[]
-  isProcessing?: boolean
+  isProcessingMessage?: boolean
 } & Omit<React.ComponentProps<"ul">, "children">
 
 export function AssistantChatMessagesList(
   props: AssistantChatMessagesListProps
 ) {
-  const { messages, isProcessing, className, ...ulProps } = props
+  const { messages, isProcessingMessage, className, ...ulProps } = props
 
   return (
     <ul className={cn("flex flex-col gap-3 sm:gap-4", className)} {...ulProps}>
@@ -21,7 +21,7 @@ export function AssistantChatMessagesList(
           <AssistantChatMessage message={message} />
         </li>
       ))}
-      {isProcessing ? (
+      {isProcessingMessage ? (
         <li>
           <AssistantChatMessage
             message={{
