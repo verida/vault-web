@@ -4,9 +4,14 @@ import { useQueryClient } from "@tanstack/react-query"
 import { createContext, useCallback, useEffect, useMemo, useRef } from "react"
 
 import { DATA_CONNECTIONS_CHANNEL } from "@/features/data-connections/constants"
+import {
+  prefetchDataConnections,
+  prefetchDataProviders,
+} from "@/features/data-connections/hooks"
 import { DataConnectionsQueryKeys } from "@/features/data-connections/queries"
 import { DataConnectionsChannelEvent } from "@/features/data-connections/types"
 import { Logger } from "@/features/telemetry"
+import { useVerida } from "@/features/verida"
 import { StrictBroadcastChannel } from "@/types/strict-broadcast-channel"
 
 const logger = Logger.create("DataConnectionsContext")
@@ -29,7 +34,10 @@ export type DataConnectionsProviderProps = {
 
 export function DataConnectionsProvider(props: DataConnectionsProviderProps) {
   const { children } = props
+
+  const { did } = useVerida()
   const queryClient = useQueryClient()
+
   const broadcastChannelRef = useRef<
     StrictBroadcastChannel<DataConnectionsChannelEvent>
   >(new BroadcastChannel(DATA_CONNECTIONS_CHANNEL))
@@ -76,6 +84,14 @@ export function DataConnectionsProvider(props: DataConnectionsProviderProps) {
       broadcastChannel.removeEventListener("message", handleNewDataConnection)
     }
   }, [handleNewDataConnection])
+
+  useEffect(() => {
+    // No need to catch, prefetch doesn't throw errors
+    prefetchDataProviders(queryClient)
+
+    // No need to catch, prefetch doesn't throw errors
+    prefetchDataConnections(queryClient, did)
+  }, [queryClient, did])
 
   const contextValue = useMemo(
     () => ({
