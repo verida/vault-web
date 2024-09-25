@@ -1,9 +1,14 @@
+"use client"
+
+import Link from "next/link"
 import React from "react"
 
 import { VeridaNetworkColouredLogo } from "@/components/icons/verida-network-coloured-logo"
 import { Typography } from "@/components/typography"
 import { Button } from "@/components/ui/button"
 import { RECOMMENDED_PROMPTS_FOR_NEW_CHAT } from "@/features/assistant"
+import { useDataConnections } from "@/features/data-connections"
+import { getConnectionsPageRoute } from "@/features/routes/utils"
 import { cn } from "@/styles/utils"
 
 export type AssistantChatEmptyContentProps = {
@@ -14,6 +19,9 @@ export function AssistantChatEmptyContent(
   props: AssistantChatEmptyContentProps
 ) {
   const { onRecommendedPromptClick, className, ...divProps } = props
+
+  const { connections, isLoading: isLoadingDataConnections } =
+    useDataConnections()
 
   return (
     <div
@@ -30,25 +38,43 @@ export function AssistantChatEmptyContent(
             Start chatting with your assistant about your private data
           </Typography>
         </div>
-        <div className="flex flex-col gap-4 text-center">
-          <Typography variant="base-regular">Ask about:</Typography>
-          <div className="flex flex-col items-center gap-2">
-            {RECOMMENDED_PROMPTS_FOR_NEW_CHAT.map((prompt, index) => (
-              <Button
-                key={index}
-                variant="outline"
-                className="h-auto rounded-full px-4 py-2.5"
-                onClick={() => {
-                  onRecommendedPromptClick?.(prompt)
-                }}
-              >
-                <Typography key={index} variant="base-s-regular">
-                  {prompt}
-                </Typography>
-              </Button>
-            ))}
+        {isLoadingDataConnections ? null : connections?.length ? (
+          <div className="flex flex-col gap-4 text-center">
+            <Typography variant="base-regular">Ask about:</Typography>
+            <div className="flex flex-col items-center gap-2">
+              {RECOMMENDED_PROMPTS_FOR_NEW_CHAT.map((prompt, index) => (
+                <Button
+                  key={index}
+                  variant="outline"
+                  className="h-auto rounded-full px-4 py-2.5"
+                  onClick={() => {
+                    onRecommendedPromptClick?.(prompt)
+                  }}
+                >
+                  <Typography key={index} variant="base-s-regular">
+                    {prompt}
+                  </Typography>
+                </Button>
+              ))}
+            </div>
           </div>
-        </div>
+        ) : (
+          <div className="flex flex-col gap-4 text-center">
+            <Typography variant="base-semibold">
+              Your assistant works best when you connect your accounts and
+              extract your data.
+            </Typography>
+            <Button
+              variant="outline"
+              className="h-auto rounded-full px-4 py-2.5"
+              asChild
+            >
+              <Link href={getConnectionsPageRoute()}>
+                Connect your accounts
+              </Link>
+            </Button>
+          </div>
+        )}
       </div>
     </div>
   )
