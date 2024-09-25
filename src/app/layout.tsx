@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 
+import { RestrictedAccessHandler } from "@/app/_components/restricted-access-handler"
 import { RootProviders } from "@/app/_components/root-providers"
 import { BreakpointIndicator } from "@/components/breakpoint-indicator"
 import { commonConfig } from "@/config/common"
@@ -44,7 +45,9 @@ export default function RootLayout(props: RootLayoutProps) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={cn("h-dvh", sora.variable)}>
-        <RootProviders>{children}</RootProviders>
+        <RootProviders>
+          <RestrictedAccessHandler>{children}</RestrictedAccessHandler>
+        </RootProviders>
         <BreakpointIndicator />
       </body>
     </html>
