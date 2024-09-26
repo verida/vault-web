@@ -1,10 +1,9 @@
 import { ServerConfigSchema } from "@/config/schemas"
 
 const serverConfigCheckResult = ServerConfigSchema.safeParse({
-  // Passing the env vars one-by-one as they don't have the same name as the
-  // expected value in the schema(e.g.NEXT_PUBLIC_BASE_URL instead of BASE_URL)
-  // Also because the schema is not passthrough, for strong typing, so can't
-  // pass process.env as there could have other env vars
+  NOTION_API_KEY: process.env.NOTION_API_KEY,
+  NOTION_RESTRICTED_ACCESS_DATABASE_ID:
+    process.env.NOTION_RESTRICTED_ACCESS_DATABASE_ID,
 })
 
 if (!serverConfigCheckResult.success) {
@@ -19,7 +18,7 @@ if (!serverConfigCheckResult.success) {
 }
 
 /**
- * Configuration only avaialble on the server.
+ * Configuration only available on the server.
  *
  * Never use on a client component or piece of code that can run on the client, use commonConfig instead.
  */
