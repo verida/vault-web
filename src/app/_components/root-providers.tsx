@@ -4,7 +4,7 @@ import { Suspense } from "react"
 
 import { Toaster } from "@/components/ui/toaster"
 import { TooltipProvider } from "@/components/ui/tooltip"
-import { DataConnectionsProvider } from "@/features/data-connections"
+import { DataConnectionsBroadcastProvider } from "@/features/data-connections/components/data-connections-broadcast-provider"
 import { QueriesProvider } from "@/features/queries/queries-provider"
 import { ThemesProvider } from "@/features/themes/themes-provider"
 import { VeridaProvider } from "@/features/verida"
@@ -16,15 +16,17 @@ export type RootProvidersProps = {
 export function RootProviders(props: RootProvidersProps) {
   const { children } = props
 
-  // Put global providers that are required in both cases (connected and disconnected user).
-  // For providers requiring the user to be connected, use the AppProviders component instead.
+  // Put global providers not requiring the user to be connected or authorised to use the app.
+  // For providers requiring the user to be connected and/or authorised to use the app, use the AppRestrictedProviders or AppUnrestrictedProviders components instead.
   return (
     <Suspense>
       <ThemesProvider>
         <TooltipProvider>
           <QueriesProvider>
             <VeridaProvider>
-              <DataConnectionsProvider>{children}</DataConnectionsProvider>
+              <DataConnectionsBroadcastProvider>
+                {children}
+              </DataConnectionsBroadcastProvider>
             </VeridaProvider>
           </QueriesProvider>
           <Toaster />

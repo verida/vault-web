@@ -23,6 +23,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 import { featureFlags } from "@/config/features"
+import { useRestrictedAccess } from "@/features/restricted-access/hooks/use-restricted-access"
 import {
   getAssistantPageRoute,
   getConnectionsPageRoute,
@@ -39,7 +40,14 @@ export type AppHeaderNavBarProps = Pick<
 
 export function AppHeaderNavBar(props: AppHeaderNavBarProps) {
   const { className } = props
+
   const path = usePathname()
+
+  const { access } = useRestrictedAccess()
+
+  if (access !== "allowed") {
+    return null
+  }
 
   return (
     <NavigationMenu className={cn("items-stretch", className)}>
@@ -148,6 +156,12 @@ export function AppHeaderNavMenu() {
   }, [])
 
   const path = usePathname()
+
+  const { access } = useRestrictedAccess()
+
+  if (access !== "allowed") {
+    return null
+  }
 
   return (
     <Popover modal open={isOpen} onOpenChange={handleOpenChange}>

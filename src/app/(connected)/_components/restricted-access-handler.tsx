@@ -1,6 +1,6 @@
 "use client"
 
-import { RestrictedAccessPageContent } from "@/app/_components/restricted-access-page-content"
+import { RestrictedAccessPageContent } from "@/app/(connected)/_components/restricted-access-page-content"
 import { useRestrictedAccess } from "@/features/restricted-access/hooks/use-restricted-access"
 import { useVerida } from "@/features/verida"
 
