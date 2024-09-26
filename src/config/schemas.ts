@@ -52,5 +52,7 @@ export const CommonConfigSchema = z.object({
 })
 
 export const ServerConfigSchema = z.object({
-  // TODO: Add server specific configuration properties here
+  NOTION_API_KEY: z.string(),
+  NOTION_RESTRICTED_ACCESS_DATABASE_ID: z.string(),
+  // ... any other server-specific properties
 })

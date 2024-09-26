@@ -1,41 +1,29 @@
 "use client"
 
 import { useQueryClient } from "@tanstack/react-query"
-import { createContext, useCallback, useEffect, useMemo, useRef } from "react"
+import { useCallback, useEffect, useMemo, useRef } from "react"
 
 import { DATA_CONNECTIONS_CHANNEL } from "@/features/data-connections/constants"
 import {
-  prefetchDataConnections,
-  prefetchDataProviders,
-} from "@/features/data-connections/hooks"
+  DataConnectionsBroadcastContext,
+  DataConnectionsBroadcastContextValue,
+} from "@/features/data-connections/contexts/data-connections-broadcast-context"
 import { DataConnectionsQueryKeys } from "@/features/data-connections/queries"
 import { DataConnectionsChannelEvent } from "@/features/data-connections/types"
 import { Logger } from "@/features/telemetry"
-import { useVerida } from "@/features/verida"
 import { StrictBroadcastChannel } from "@/types/strict-broadcast-channel"
 
-const logger = Logger.create("DataConnectionsContext")
+const logger = Logger.create("data-connections")
 
-export type DataConnectionsContextValue = {
-  triggerNewDataConnectionEvent: ({
-    connectionId,
-  }: {
-    connectionId?: string // TODO: Make connectionId required when available
-  }) => void
-  broadcastChannel: StrictBroadcastChannel<DataConnectionsChannelEvent>
-}
-
-export const DataConnectionsContext =
-  createContext<DataConnectionsContextValue | null>(null)
-
-export type DataConnectionsProviderProps = {
+export type DataConnectionsBroadcastProviderProps = {
   children: React.ReactNode
 }
 
-export function DataConnectionsProvider(props: DataConnectionsProviderProps) {
+export function DataConnectionsBroadcastProvider(
+  props: DataConnectionsBroadcastProviderProps
+) {
   const { children } = props
 
-  const { did } = useVerida()
   const queryClient = useQueryClient()
 
   const broadcastChannelRef = useRef<
@@ -78,22 +66,21 @@ export function DataConnectionsProvider(props: DataConnectionsProviderProps) {
   )
 
   useEffect(() => {
-    const broadcastChannel = broadcastChannelRef.current
-    broadcastChannel.addEventListener("message", handleNewDataConnection)
+    const controller = new AbortController()
+
+    broadcastChannelRef.current.addEventListener(
+      "message",
+      handleNewDataConnection,
+      {
+        signal: controller.signal,
+      }
+    )
     return () => {
-      broadcastChannel.removeEventListener("message", handleNewDataConnection)
+      controller.abort()
     }
   }, [handleNewDataConnection])
 
-  useEffect(() => {
-    // No need to catch, prefetch doesn't throw errors
-    prefetchDataProviders(queryClient)
-
-    // No need to catch, prefetch doesn't throw errors
-    prefetchDataConnections(queryClient, did)
-  }, [queryClient, did])
-
-  const contextValue = useMemo(
+  const contextValue: DataConnectionsBroadcastContextValue = useMemo(
     () => ({
       triggerNewDataConnectionEvent,
       broadcastChannel: broadcastChannelRef.current,
@@ -102,9 +89,10 @@ export function DataConnectionsProvider(props: DataConnectionsProviderProps) {
   )
 
   return (
-    <DataConnectionsContext.Provider value={contextValue}>
+    <DataConnectionsBroadcastContext.Provider value={contextValue}>
       {children}
-    </DataConnectionsContext.Provider>
+    </DataConnectionsBroadcastContext.Provider>
   )
 }
-DataConnectionsProvider.displayName = "DataConnectionsProvider"
+DataConnectionsBroadcastProvider.displayName =
+  "DataConnectionsBroadcastProvider"
