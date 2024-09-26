@@ -9,7 +9,8 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { useAssistant } from "@/features/assistant"
 
 export default function AssistantChatPage() {
-  const { messages, sendMessage, isProcessing, error } = useAssistant()
+  const { messages, sendMessage, isProcessingMessage, error, hotload } =
+    useAssistant()
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
   const handleSendMessage = useCallback(
@@ -42,22 +43,36 @@ export default function AssistantChatPage() {
           <div className="flex min-h-full flex-col justify-end">
             <AssistantChatMessagesList
               messages={messages}
-              isProcessing={isProcessing}
+              isProcessingMessage={isProcessingMessage}
               className="pb-3"
             />
             <div ref={messagesEndRef} />
           </div>
         )}
       </div>
-      {error ? (
+      {error || hotload.status === "error" ? (
         <Alert variant="error" className="mb-2">
           <AlertTitle>Assistant error</AlertTitle>
-          <AlertDescription>{error}</AlertDescription>
+          <AlertDescription>
+            {error
+              ? error
+              : hotload.status === "error"
+                ? "There was an error loading your assistant"
+                : "Something went wrong while loading your assistant"}
+          </AlertDescription>
+        </Alert>
+      ) : null}
+      {hotload.status === "loading" ? (
+        <Alert variant="info" className="mb-2">
+          <AlertDescription>{`Securely loading your data in your assistant ... ${Math.round(hotload.progress * 100)}%`}</AlertDescription>
+          <AlertDescription>
+            Answers may not be accurate until completed
+          </AlertDescription>
         </Alert>
       ) : null}
       <AssistantChatInput
         onSendMessage={handleSendMessage}
-        isProcessing={isProcessing}
+        isProcessingMessage={isProcessingMessage}
       />
     </div>
   )

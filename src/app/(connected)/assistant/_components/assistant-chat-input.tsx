@@ -15,11 +15,11 @@ import { Input } from "@/components/ui/input"
 
 export type AssistantChatInputProps = {
   onSendMessage: (message: string) => void
-  isProcessing: boolean
+  isProcessingMessage: boolean
 } & React.ComponentProps<"div">
 
 export function AssistantChatInput(props: AssistantChatInputProps) {
-  const { onSendMessage, isProcessing, ...divProps } = props
+  const { onSendMessage, isProcessingMessage, ...divProps } = props
 
   const inputRef = useRef<HTMLInputElement>(null)
 
@@ -33,11 +33,11 @@ export function AssistantChatInput(props: AssistantChatInputProps) {
   )
 
   const handleSendMessage = useCallback(() => {
-    if (message && !isProcessing) {
+    if (message && !isProcessingMessage) {
       onSendMessage?.(message)
       setMessage("")
     }
-  }, [onSendMessage, message, isProcessing])
+  }, [onSendMessage, message, isProcessingMessage])
 
   const handleKeyDown: KeyboardEventHandler<HTMLInputElement> = useCallback(
     (event) => {
@@ -70,7 +70,7 @@ export function AssistantChatInput(props: AssistantChatInputProps) {
               variant="primary"
               size="icon"
               onClick={handleSendMessage}
-              disabled={!message || isProcessing}
+              disabled={!message || isProcessingMessage}
               className="mr-2"
             >
               <SendIcon />

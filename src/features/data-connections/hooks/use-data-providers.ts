@@ -1,7 +1,10 @@
-import { useQuery } from "@tanstack/react-query"
+import { QueryClient, useQuery } from "@tanstack/react-query"
 
 import { DataConnectionsQueryKeys } from "@/features/data-connections/queries"
 import { getDataProviders } from "@/features/data-connections/utils"
+import { Logger } from "@/features/telemetry"
+
+const logger = Logger.create("DataConnections")
 
 export function useDataProviders() {
   const { data, ...query } = useQuery({
@@ -19,4 +22,14 @@ export function useDataProviders() {
     providers: data,
     ...query,
   }
+}
+
+export async function prefetchDataProviders(queryClient: QueryClient) {
+  logger.info("Prefetching data providers")
+  await queryClient.prefetchQuery({
+    queryKey: DataConnectionsQueryKeys.dataProviders(),
+    queryFn: getDataProviders,
+    staleTime: 1000 * 60 * 60 * 6, // 6 hours
+    gcTime: 1000 * 60 * 60 * 24, // 24 hours
+  })
 }

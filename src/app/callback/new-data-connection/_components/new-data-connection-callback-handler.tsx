@@ -3,7 +3,7 @@
 import { useSearchParams } from "next/navigation"
 import { useEffect } from "react"
 
-import { useDataConnectionsContext } from "@/features/data-connections"
+import { useDataConnectionsBroadcast } from "@/features/data-connections"
 import { Logger } from "@/features/telemetry"
 
 const logger = Logger.create("NewDataConnectionCallbackPage")
@@ -17,7 +17,7 @@ export function NewDataConnectionCallbackHandler(
 ) {
   const { children } = props
 
-  const { triggerNewDataConnectionEvent } = useDataConnectionsContext()
+  const { triggerNewDataConnectionEvent } = useDataConnectionsBroadcast()
   const searchParams = useSearchParams()
 
   useEffect(() => {

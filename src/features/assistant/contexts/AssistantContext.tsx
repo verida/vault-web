@@ -20,7 +20,7 @@ type HotloadStatus = "idle" | "loading" | "success" | "error"
 type AssistantContextType = {
   messages: AssistantChatMessage[]
   sendMessage: (message: string) => Promise<void>
-  isProcessing: boolean
+  isProcessingMessage: boolean
   error: string | null
   hotload: {
     status: HotloadStatus
@@ -44,7 +44,7 @@ export function AssistantProvider(props: AssistantProviderProps) {
   const { children } = props
 
   const [messages, setMessages] = useState<AssistantChatMessage[]>([])
-  const [isProcessing, setIsProcessing] = useState(false)
+  const [isProcessingMessage, setIsProcessingMessage] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [hotload, setHotload] = useState<AssistantContextType["hotload"]>({
     status: "idle",
@@ -76,7 +76,7 @@ export function AssistantProvider(props: AssistantProviderProps) {
 
   const sendMessage = useCallback(async (message: string) => {
     logger.info("Sending message to assistant")
-    setIsProcessing(true)
+    setIsProcessingMessage(true)
     setError(null)
 
     const newUserMessage: AssistantChatMessage = {
@@ -103,7 +103,7 @@ export function AssistantProvider(props: AssistantProviderProps) {
       logger.error(error)
       setError("Something went wrong with the assistant")
     } finally {
-      setIsProcessing(false)
+      setIsProcessingMessage(false)
     }
   }, [])
 
@@ -111,11 +111,11 @@ export function AssistantProvider(props: AssistantProviderProps) {
     () => ({
       messages,
       sendMessage,
-      isProcessing,
+      isProcessingMessage,
       error,
       hotload,
     }),
-    [messages, sendMessage, isProcessing, error, hotload]
+    [messages, sendMessage, isProcessingMessage, error, hotload]
   )
 
   return (

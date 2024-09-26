@@ -31,6 +31,7 @@ export function AppHeader(props: AppHeaderProps) {
                 width={95}
               />
             </div>
+
             <AppHeaderNavBar className="hidden lg:flex" />
           </div>
           <div className="flex flex-row items-center gap-4 py-4 pr-4 md:pr-6 xl:pr-8">

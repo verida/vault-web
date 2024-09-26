@@ -36,7 +36,7 @@ import {
   DataConnectionsChannelEvent,
   DataProvider,
   buildConnectProviderUrl,
-  useDataConnectionsContext,
+  useDataConnectionsBroadcast,
   useDataProviders,
 } from "@/features/data-connections"
 import { getConnectionPageRoute } from "@/features/routes/utils"
@@ -72,7 +72,7 @@ export function ConnectDataProviderDialog(
   }, [providerId])
 
   const { broadcastChannel: dataConnectionsChannel } =
-    useDataConnectionsContext()
+    useDataConnectionsBroadcast()
   const [status, setStatus] = useState<
     "idle" | "connecting" | "connected" | "error"
   >("idle")
