@@ -15,7 +15,7 @@ export function RestrictedAccessHandler(props: RestrictedAccessHandlerProps) {
   const { access } = useRestrictedAccess()
 
   if (access === "allowed" || !isConnected) {
-    return children
+    return <>{children}</>
   }
 
   return <RestrictedAccessPageContent />
