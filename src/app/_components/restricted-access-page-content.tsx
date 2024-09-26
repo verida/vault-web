@@ -3,17 +3,22 @@ import {
   ErrorBlockDescription,
   ErrorBlockTitle,
 } from "@/components/ui/error"
+import {
+  LoadingBlock,
+  LoadingBlockDescription,
+  LoadingBlockSpinner,
+  LoadingBlockTitle,
+} from "@/components/ui/loading"
 import { cn } from "@/styles/utils"
 
-export type RestrictedAccessPageContentProps = Omit<
-  React.ComponentPropsWithoutRef<"div">,
-  "children"
->
+export type RestrictedAccessPageContentProps = {
+  isLoading: boolean
+} & Omit<React.ComponentPropsWithoutRef<"div">, "children">
 
 export function RestrictedAccessPageContent(
   props: RestrictedAccessPageContentProps
 ) {
-  const { className, ...divProps } = props
+  const { isLoading, className, ...divProps } = props
 
   return (
     <div
@@ -23,13 +28,26 @@ export function RestrictedAccessPageContent(
       )}
       {...divProps}
     >
-      <ErrorBlock>
-        <ErrorBlockTitle variant="heading-1">Limited Access</ErrorBlockTitle>
-        <ErrorBlockDescription variant="base-l">
-          You have been added to the wait list. You will be notified when the
-          access is granted.
-        </ErrorBlockDescription>
-      </ErrorBlock>
+      {isLoading ? (
+        <LoadingBlock>
+          <LoadingBlockSpinner />
+          <LoadingBlockTitle variant="heading-1">
+            Checking your access...
+          </LoadingBlockTitle>
+          <LoadingBlockDescription variant="base-l">
+            The Vault app is currently in limited access, please wait while we
+            are checking your access to the application.
+          </LoadingBlockDescription>
+        </LoadingBlock>
+      ) : (
+        <ErrorBlock>
+          <ErrorBlockTitle variant="heading-1">Limited Access</ErrorBlockTitle>
+          <ErrorBlockDescription variant="base-l">
+            You have been added to the wait list. You will be notified when your
+            access is granted.
+          </ErrorBlockDescription>
+        </ErrorBlock>
+      )}
     </div>
   )
 }

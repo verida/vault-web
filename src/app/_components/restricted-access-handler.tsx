@@ -12,12 +12,12 @@ export function RestrictedAccessHandler(props: RestrictedAccessHandlerProps) {
   const { children } = props
 
   const { isConnected } = useVerida()
-  const { access } = useRestrictedAccess()
+  const { access, isLoading } = useRestrictedAccess()
 
   if (access === "allowed" || !isConnected) {
     return <>{children}</>
   }
 
-  return <RestrictedAccessPageContent />
+  return <RestrictedAccessPageContent isLoading={isLoading} />
 }
 RestrictedAccessHandler.displayName = "RestrictedAccessHandler"
