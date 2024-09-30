@@ -1,23 +1,18 @@
-import { Column } from "@tanstack/react-table"
 import React from "react"
 
 import { cn } from "@/styles/utils"
 
-export type DataTableColumnHeaderProps<TData, TValue> = {
-  column: Column<TData, TValue> // Not used yet but will be when sorting is implemented
-  title: string
+export type DataTableColumnHeaderProps = {
   align?: "left" | "center" | "right"
 } & React.ComponentProps<"div">
 
-export function DataTableColumnHeader<TData, TValue>(
-  props: DataTableColumnHeaderProps<TData, TValue>
-) {
-  const { title, align = "left", className, ...divProps } = props
+export function DataTableColumnHeader(props: DataTableColumnHeaderProps) {
+  const { align = "left", children, className, ...divProps } = props
 
   return (
     <div
       className={cn(
-        "flex w-full flex-row",
+        "flex w-full flex-row text-xs font-semibold leading-normal text-muted-foreground",
         align === "right"
           ? "justify-end"
           : align === "center"
@@ -27,7 +22,7 @@ export function DataTableColumnHeader<TData, TValue>(
       )}
       {...divProps}
     >
-      <span>{title}</span>
+      <span>{children}</span>
     </div>
   )
 }
