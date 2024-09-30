@@ -19,7 +19,7 @@ export function DataTableHeader<TData, TValue>(
           return (
             <div key={header.id} className={cn(header.getClassName())}>
               {header.isPlaceholder ? null : (
-                <DataTableColumnHeader>
+                <DataTableColumnHeader align={header.getAlign()}>
                   {flexRender(
                     header.column.columnDef.header,
                     header.getContext()

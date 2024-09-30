@@ -1,9 +1,10 @@
 import React from "react"
 
+import { DataTableColumnAlign } from "@/features/data-table/types"
 import { cn } from "@/styles/utils"
 
 export type DataTableColumnHeaderProps = {
-  align?: "left" | "center" | "right"
+  align?: DataTableColumnAlign
 } & React.ComponentProps<"div">
 
 export function DataTableColumnHeader(props: DataTableColumnHeaderProps) {
