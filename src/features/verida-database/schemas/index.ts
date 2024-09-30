@@ -5,6 +5,8 @@ export const VeridaBaseRecordSchema = z
     _id: z.string(),
     _rev: z.string().optional(),
     name: z.string().optional(),
+    summary: z.string().optional(),
+    icon: z.string().optional(),
     schema: z.string().optional(),
     insertedAt: z.string().datetime().optional(),
     modifiedAt: z.string().datetime().optional(),
