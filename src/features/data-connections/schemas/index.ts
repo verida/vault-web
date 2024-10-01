@@ -52,6 +52,7 @@ export const DataConnectionProfileSchema = z.object({
 export const DataConnectionStatusSchema = z.enum([
   "connected",
   "error",
+  "invalid-auth",
   "paused",
   "active",
 ])
@@ -60,6 +61,7 @@ export const DataConnectionHandlerStatusSchema = z.enum([
   "enabled",
   "disabled",
   "error",
+  "invalid-auth",
   "syncing",
 ])
 
