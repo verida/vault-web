@@ -97,7 +97,7 @@ export function DataRecordsTable(props: DataRecordsTableProps) {
         <ul className="flex flex-1 flex-col gap-3">
           {table.getRowModel().rows.map((row) => (
             <li key={row.id}>
-              <Link href={`?id=${row.original._id}`} className="rounded-lg">
+              <Link href={`?itemId=${row.original._id}`} className="rounded-lg">
                 <DataTableGenericRow
                   row={row}
                   className="hover:border-border-hover hover:bg-surface-hover"
