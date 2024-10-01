@@ -1,4 +1,4 @@
-import moment from "moment"
+import { format } from "date-fns"
 import Image from "next/image"
 import React from "react"
 
@@ -28,7 +28,7 @@ export function RequesterProfile(props: RequesterProfileProps) {
       <div>
         <Typography variant="heading-5">{sentBy?.name}</Typography>
         <Typography variant="base-s-semibold" className="text-muted-foreground">
-          {moment(new Date(sentAt)).format("DD/MM/YY hh:mm")}
+          {format(new Date(sentAt), "DD/MM/YY hh:mm")}
         </Typography>
       </div>
     </div>

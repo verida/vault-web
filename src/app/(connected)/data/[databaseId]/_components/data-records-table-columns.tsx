@@ -1,5 +1,5 @@
 import { createColumnHelper } from "@tanstack/react-table"
-import { format, formatDistanceToNow, isAfter, subDays } from "date-fns"
+import { format } from "date-fns"
 
 import { Typography } from "@/components/typography"
 import { VeridaRecord } from "@/features/verida-database"
@@ -67,11 +67,7 @@ export function getDataRecordsTableColumns<T = Record<string, unknown>>() {
             </div>
           )
         }
-        const date = new Date(value)
-        const sevenDaysAgo = subDays(new Date(), 7)
-        const formattedDate = isAfter(date, sevenDaysAgo)
-          ? formatDistanceToNow(date, { addSuffix: true })
-          : format(date, "MMM d, yyyy")
+        const formattedDate = format(new Date(value), "dd/MM/yyyy HH:mm")
         return (
           <div className="text-muted-foreground">
             <Typography variant="base-regular" className="truncate">
