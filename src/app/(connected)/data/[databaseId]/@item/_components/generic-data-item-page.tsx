@@ -10,7 +10,7 @@ export type GenericDataItemPageTitleProps = {
 export function GenericDataItemPageTitle(props: GenericDataItemPageTitleProps) {
   const { record } = props
 
-  return <div>{record.name}</div>
+  return <>{record.name}</>
 }
 GenericDataItemPageTitle.displayName = "GenericDataItemPageTitle"
 
