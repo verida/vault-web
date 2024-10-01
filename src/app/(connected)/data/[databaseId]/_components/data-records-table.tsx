@@ -1,12 +1,17 @@
 "use client"
 
-import { getCoreRowModel, useReactTable } from "@tanstack/react-table"
+import {
+  PaginationState,
+  getCoreRowModel,
+  useReactTable,
+} from "@tanstack/react-table"
 import Link from "next/link"
-import { useMemo } from "react"
+import { useMemo, useState } from "react"
 
 import { getDataRecordsTableColumns } from "@/app/(connected)/data/[databaseId]/_components/data-records-table-columns"
 import { DataTableGenericRow } from "@/components/data-table/data-table-generic-row"
 import { DataTableHeader } from "@/components/data-table/data-table-header"
+import { DataTablePagination } from "@/components/data-table/data-table-pagination"
 import {
   EmptyState,
   EmptyStateDescription,
@@ -27,6 +32,7 @@ import {
 } from "@/components/ui/loading"
 import { EMPTY_VALUE_FALLBACK } from "@/constants/misc"
 import { DatabaseDefinition } from "@/features/data"
+import { DATA_TABLE_PAGINATION_SIZE_DEFAULT } from "@/features/data-table/constants"
 import { DataTableColumnAlignFeature } from "@/features/data-table/data-table-column-align-feature"
 import { DataTableColumnClassNameFeature } from "@/features/data-table/data-table-column-classname-feature"
 import { VeridaRecord, useVeridaDataRecords } from "@/features/verida-database"
@@ -42,8 +48,22 @@ export type DataRecordsTableProps = {
 export function DataRecordsTable(props: DataRecordsTableProps) {
   const { databaseDefinition } = props
 
-  const { records, isLoading, isError } = useVeridaDataRecords({
+  const [pagination, setPagination] = useState<PaginationState>({
+    pageIndex: 0,
+    pageSize: DATA_TABLE_PAGINATION_SIZE_DEFAULT,
+  })
+
+  const {
+    records,
+    pagination: recordsPaginationInfo,
+    isLoading,
+    isError,
+  } = useVeridaDataRecords({
     databaseName: databaseDefinition.databaseVaultName,
+    options: {
+      limit: pagination.pageSize,
+      skip: pagination.pageIndex * pagination.pageSize,
+    },
   })
 
   const columns = useMemo(() => getDataRecordsTableColumns(), [])
@@ -55,6 +75,12 @@ export function DataRecordsTable(props: DataRecordsTableProps) {
     _features: [DataTableColumnAlignFeature, DataTableColumnClassNameFeature],
     getRowId,
     getCoreRowModel: getCoreRowModel(),
+    manualPagination: true,
+    rowCount: recordsPaginationInfo?.unfilteredTotalRecordsCount ?? undefined,
+    onPaginationChange: setPagination,
+    state: {
+      pagination,
+    },
   })
 
   return (
@@ -81,7 +107,7 @@ export function DataRecordsTable(props: DataRecordsTableProps) {
           ))}
         </ul>
       ) : (
-        <div className="flex-1">
+        <div className="flex flex-1 flex-col items-center justify-center">
           {isLoading ? (
             <LoadingBlock>
               <LoadingBlockSpinner />
@@ -113,6 +139,7 @@ export function DataRecordsTable(props: DataRecordsTableProps) {
           )}
         </div>
       )}
+      <DataTablePagination table={table} className="mt-6" />
     </div>
   )
 }
