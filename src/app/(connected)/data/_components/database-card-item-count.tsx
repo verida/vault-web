@@ -2,7 +2,7 @@
 
 import { Typography } from "@/components/typography"
 import { Skeleton } from "@/components/ui/skeleton"
-import { useData } from "@/features/data"
+import { useVeridaDataRecords } from "@/features/verida-database"
 import { cn } from "@/styles/utils"
 
 export type DatabaseCardItemCountProps = {
@@ -12,19 +12,22 @@ export type DatabaseCardItemCountProps = {
 export function DatabaseCardItemCount(props: DatabaseCardItemCountProps) {
   const { databaseVaultName, className, ...divProps } = props
 
-  const { dataItemsCount, isDataItemsCountPending } = useData(databaseVaultName)
+  const { pagination, isLoading } = useVeridaDataRecords({
+    databaseName: databaseVaultName,
+  })
 
   return (
     <div className={cn("text-muted-foreground", className)} {...divProps}>
-      {dataItemsCount !== undefined ? (
+      {pagination?.unfilteredTotalRecordsCount !== undefined &&
+      pagination.unfilteredTotalRecordsCount !== null ? (
         <Typography variant="base-l" className="leading-6">
-          {`${dataItemsCount} items`}
+          {`${pagination.unfilteredTotalRecordsCount} items`}
         </Typography>
-      ) : isDataItemsCountPending ? (
+      ) : isLoading ? (
         <Skeleton className="my-1 h-4 w-28" />
       ) : (
         <Typography variant="base-l" className="leading-6">
-          Unknown items
+          - items
         </Typography>
       )}
     </div>

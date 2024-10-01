@@ -37,18 +37,18 @@ export function DataConnectionLogsTableRow(
 ) {
   const { log, hideConnectionColumn = false, className, ...cardProps } = props
 
-  const { provider } = useDataProvider(log.providerName)
+  const { provider } = useDataProvider(log.providerId)
 
   const { connection } = useDataConnection(
     buildConnectionId({
-      providerId: log.providerName,
-      accountId: log.providerId,
+      providerId: log.providerId,
+      accountId: log.accountId,
     })
   )
 
   const handlerDefinition = useMemo(() => {
-    return provider?.handlers?.find((handler) => handler.id === log.handlerName)
-  }, [provider?.handlers, log.handlerName])
+    return provider?.handlers?.find((handler) => handler.id === log.handlerId)
+  }, [provider?.handlers, log.handlerId])
 
   return (
     <Card
@@ -80,7 +80,7 @@ export function DataConnectionLogsTableRow(
           <DataConnectionLogLevelBadge level={log.level} />
           {provider ? (
             <Typography variant="base-semibold">
-              {log.handlerName ? handlerDefinition?.label : provider.label}
+              {log.handlerId ? handlerDefinition?.label : provider.label}
             </Typography>
           ) : (
             <Skeleton className="my-0.5 h-3.5 w-24" />

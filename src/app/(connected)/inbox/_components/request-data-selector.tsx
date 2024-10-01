@@ -1,7 +1,7 @@
 "use client"
 
 import { useQuery } from "@tanstack/react-query"
-import moment from "moment"
+import { format } from "date-fns"
 import Image from "next/image"
 import { useCallback, useEffect, useState } from "react"
 
@@ -145,7 +145,7 @@ export function RequestDataSelector(props: RequestDataSelectorProps) {
                     variant="base-s-semibold"
                     className="text-muted-foreground/60"
                   >
-                    {moment(new Date(item.insertedAt)).format("DD/MM/YY hh:mm")}
+                    {format(new Date(item.insertedAt), "DD/MM/YY hh:mm")}
                   </Typography>
                 </div>
               </label>

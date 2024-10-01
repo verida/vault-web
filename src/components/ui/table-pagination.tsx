@@ -17,6 +17,9 @@ type TablePaginationProps = {
   onChange: (offset: number, limit: number) => void
 }
 
+/**
+ * @deprecated
+ */
 export const TablePagination: React.FC<TablePaginationProps> = ({
   totalItems = 0,
   onChange,

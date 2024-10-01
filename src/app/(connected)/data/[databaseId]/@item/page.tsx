@@ -3,14 +3,25 @@
 import { useRouter } from "next/navigation"
 import { useCallback, useMemo } from "react"
 
-import { GenericDataItemPageContent } from "@/app/(connected)/data/[databaseId]/@item/_components/generic-data-item-page-content"
+import { DataItemPageContent } from "@/app/(connected)/data/[databaseId]/@item/_components/data-item-page-content"
+import { DATABASE_DEFS } from "@/features/data"
 
 type DataItemPageProps = {
+  params: { databaseId: string }
   searchParams: { itemId: string }
 }
 
 export default function DataItemPage(props: DataItemPageProps) {
-  const { searchParams } = props
+  const { params, searchParams } = props
+
+  const { databaseId: encodedDatabaseId } = params
+  const databaseId = decodeURIComponent(encodedDatabaseId)
+
+  const databaseDefinition = useMemo(
+    () => DATABASE_DEFS.find((databaseDef) => databaseDef.id === databaseId),
+    [databaseId]
+  )
+
   const { itemId: encodedItemId } = searchParams
   const itemId = encodedItemId ? decodeURIComponent(encodedItemId) : undefined
 
@@ -22,18 +33,20 @@ export default function DataItemPage(props: DataItemPageProps) {
     router.push(url.toString())
   }, [router])
 
-  // TODO: fetch item
-
-  // TODO: Handle loading and error states
-
   const itemPage = useMemo(() => {
-    if (!itemId) {
+    if (!itemId || !databaseDefinition) {
       return null
     }
 
-    // TODO: Implement switch over data types with specific item pages
-    return <GenericDataItemPageContent open onClose={handleClose} />
-  }, [itemId, handleClose])
+    return (
+      <DataItemPageContent
+        open
+        onClose={handleClose}
+        databaseDefinition={databaseDefinition}
+        itemId={itemId}
+      />
+    )
+  }, [itemId, handleClose, databaseDefinition])
 
   if (itemPage) {
     return <>{itemPage}</>

@@ -15,5 +15,5 @@ Sentry.init({
   tracesSampleRate: Number(
     process.env.NEXT_PUBLIC_SENTRY_TRACE_SAMPLE_RATE || 0.1
   ),
-  debug: process.env.NEXT_PUBLIC_DEV_MODE === "true",
+  debug: false,
 })

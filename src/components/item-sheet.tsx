@@ -104,7 +104,7 @@ export function ItemSheetBody(props: ItemSheetBodyProps) {
   const { className, ...drawerBodyProps } = props
   return (
     <DrawerBody
-      className={cn("flex-1 overflow-y-auto p-6", className)}
+      className={cn("flex-1 overflow-y-auto overflow-x-hidden p-6", className)}
       {...drawerBodyProps}
     />
   )
