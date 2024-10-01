@@ -14,8 +14,8 @@ export function useDataConnectionLogs({
     useVeridaDataRecords<DataConnectionSyncLog>({
       databaseName: DATA_CONNECTIONS_SYNC_LOGS_DATABASE_NAME,
       filter: {
-        providerName: providerId,
-        providerId: accountId,
+        providerId,
+        accountId,
       },
       options: {
         // TODO: Handle pagination

@@ -47,9 +47,9 @@ export type DataConnectionSyncLogLevel = "debug" | "info" | "error" | "warning"
 
 // TODO: Infer from a zod schema
 export type DataConnectionSyncLog = {
-  providerName: string
   providerId: string
-  handlerName?: string
+  accountId: string
+  handlerId?: string
   level: DataConnectionSyncLogLevel
   message: string
   insertedAt: string
