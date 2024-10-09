@@ -1,3 +1,7 @@
+import Link from "next/link"
+
+import { LockIcon } from "@/components/icons/lock"
+import { Typography } from "@/components/typography"
 import {
   ErrorBlock,
   ErrorBlockDescription,
@@ -41,11 +45,24 @@ export function RestrictedAccessPageContent(
         </LoadingBlock>
       ) : (
         <ErrorBlock>
+          <LockIcon className="text-accent" />
           <ErrorBlockTitle variant="heading-1">Limited Access</ErrorBlockTitle>
           <ErrorBlockDescription variant="base-l">
-            You have been added to the wait list. You will be notified when your
-            access is granted.
+            {`Your account currently has limited access. We've added your DID to the waitlist, and you'll be notified once access is granted.`}
           </ErrorBlockDescription>
+          <Typography variant="base-semibold">
+            <span className="text-accent">
+              For more details and updates visit{" "}
+              <Link
+                href="https://verida.ai"
+                className="underline"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Verida.ai
+              </Link>
+            </span>
+          </Typography>
         </ErrorBlock>
       )}
     </div>
