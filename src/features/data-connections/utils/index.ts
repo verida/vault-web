@@ -353,7 +353,7 @@ export function buildConnectProviderUrl(
   connectUrl.searchParams.append("key", key)
 
   const redirectUrl = new URL(
-    `${commonConfig.BASE_URL}/${getNewDataConnectionCallbackPageRoute()}`
+    `${commonConfig.BASE_URL}${getNewDataConnectionCallbackPageRoute()}`
   )
 
   // Redirecting to the connections summary page
