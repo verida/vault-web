@@ -1,4 +1,4 @@
-import { EnvironmentType } from "@verida/types"
+import { Network } from "@verida/types"
 import { z } from "zod"
 
 export const CommonConfigSchema = z.object({
@@ -13,16 +13,16 @@ export const CommonConfigSchema = z.object({
     .optional()
     .transform((value) => value === "true"),
   VERIDA_NETWORK: z
-    .enum(["mainnet", "testnet", "devnet", "local"])
-    .default("testnet")
+    .enum(["myrtle", "banksia", "devnet", "local"])
+    .default("banksia")
     .transform((value) => {
-      return value === "mainnet"
-        ? EnvironmentType.MAINNET
-        : value === "devnet"
-          ? EnvironmentType.DEVNET
+      return value === "myrtle"
+        ? Network.MYRTLE
+        : value === "banksia"
+          ? Network.DEVNET
           : value === "local"
-            ? EnvironmentType.LOCAL
-            : EnvironmentType.TESTNET
+            ? Network.LOCAL
+            : Network.BANKSIA
     }),
   VERIDA_RPC_URL: z.string().url().optional(),
   FEATURE_FLAG_AI_ASSISTANT_ENABLED: z

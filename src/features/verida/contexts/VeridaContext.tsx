@@ -16,7 +16,7 @@ const logger = Logger.create("Verida")
 const webUserInstance = new WebUser({
   debug: commonConfig.DEV_MODE,
   clientConfig: {
-    environment: commonConfig.VERIDA_NETWORK,
+    network: commonConfig.VERIDA_NETWORK,
     didClientConfig: {
       network: commonConfig.VERIDA_NETWORK,
       rpcUrl: commonConfig.VERIDA_RPC_URL,
@@ -29,7 +29,7 @@ const webUserInstance = new WebUser({
     request: {
       logoUrl: `${commonConfig.BASE_URL}/images/verida_vault_logo_for_connect.png`,
     },
-    environment: commonConfig.VERIDA_NETWORK,
+    network: commonConfig.VERIDA_NETWORK,
   },
 })
 

@@ -15,7 +15,7 @@ async function getPublicProfileDatastore(
 
   try {
     const client = new Client({
-      environment: commonConfig.VERIDA_NETWORK,
+      network: commonConfig.VERIDA_NETWORK,
       didClientConfig: {
         rpcUrl: commonConfig.VERIDA_RPC_URL,
         network: commonConfig.VERIDA_NETWORK,
