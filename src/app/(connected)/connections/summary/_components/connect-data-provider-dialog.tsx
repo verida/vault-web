@@ -31,7 +31,6 @@ import {
   SuccessBlockImage,
   SuccessBlockTitle,
 } from "@/components/ui/success"
-import { commonConfig } from "@/config/common"
 import {
   DataConnectionsChannelEvent,
   DataProvider,
@@ -41,6 +40,7 @@ import {
 } from "@/features/data-connections"
 import { getConnectionPageRoute } from "@/features/routes/utils"
 import { Logger } from "@/features/telemetry"
+import { useVerida } from "@/features/verida"
 
 const logger = Logger.create("ConnectDataProviderDialog")
 
@@ -54,6 +54,7 @@ export function ConnectDataProviderDialog(
 ) {
   const { children, providerId } = props
 
+  const { getAccountSessionToken } = useVerida()
   const router = useRouter()
 
   const { providers } = useDataProviders()
@@ -77,17 +78,15 @@ export function ConnectDataProviderDialog(
     "idle" | "connecting" | "connected" | "error"
   >("idle")
 
-  const handleConnectClick = useCallback(() => {
+  const handleConnectClick = useCallback(async () => {
     if (!provider) {
       return
     }
 
     setStatus("connecting")
     try {
-      const url = buildConnectProviderUrl(
-        provider.id,
-        commonConfig.PRIVATE_DATA_API_PRIVATE_KEY
-      )
+      const sessionToken = await getAccountSessionToken()
+      const url = buildConnectProviderUrl(provider.id, sessionToken)
       window.open(url, "_blank")
     } catch (error) {
       setStatus("error")
@@ -97,7 +96,7 @@ export function ConnectDataProviderDialog(
         })
       )
     }
-  }, [provider])
+  }, [provider, getAccountSessionToken])
 
   const handleNewDataConnection = useCallback(
     (event: MessageEvent<DataConnectionsChannelEvent>) => {

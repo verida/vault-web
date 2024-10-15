@@ -27,7 +27,7 @@ const defaultVeridaDataRecordsQueryOptions: VeridaDatabaseQueryOptions = {
  * @returns Promise resolving to an array of VeridaRecord objects
  */
 export async function fetchVeridaDataRecords<T = Record<string, unknown>>({
-  key,
+  sessionToken,
   databaseName,
   filter,
   options,
@@ -44,7 +44,7 @@ export async function fetchVeridaDataRecords<T = Record<string, unknown>>({
       options: resolvedOptions,
     })
 
-    if (!commonConfig.PRIVATE_DATA_API_BASE_URL || !key) {
+    if (!commonConfig.PRIVATE_DATA_API_BASE_URL) {
       logger.warn(
         "Cannot fetch Verida data records due to incorrect API configuration"
       )
@@ -58,7 +58,7 @@ export async function fetchVeridaDataRecords<T = Record<string, unknown>>({
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "key": key,
+          "Authorization": `Bearer ${sessionToken}`,
         },
         body: JSON.stringify({ query: filter, options: resolvedOptions }),
       }
@@ -99,7 +99,7 @@ export async function fetchVeridaDataRecords<T = Record<string, unknown>>({
 }
 
 type FetchVeridaDataRecordArgs = {
-  key?: string
+  sessionToken: string
   databaseName: string
   recordId: string
 }
@@ -113,7 +113,7 @@ type FetchVeridaDataRecordArgs = {
  * @returns Promise resolving to a single VeridaRecord object
  */
 export async function fetchVeridaDataRecord<T = Record<string, unknown>>({
-  key,
+  sessionToken,
   databaseName,
   recordId,
 }: FetchVeridaDataRecordArgs): Promise<VeridaRecord<T>> {
@@ -123,7 +123,7 @@ export async function fetchVeridaDataRecord<T = Record<string, unknown>>({
       recordId,
     })
 
-    if (!commonConfig.PRIVATE_DATA_API_BASE_URL || !key) {
+    if (!commonConfig.PRIVATE_DATA_API_BASE_URL) {
       logger.warn(
         "Cannot fetch Verida data record due to incorrect API configuration"
       )
@@ -137,7 +137,7 @@ export async function fetchVeridaDataRecord<T = Record<string, unknown>>({
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          "key": key,
+          "Authorization": `Bearer ${sessionToken}`,
         },
       }
     )

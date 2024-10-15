@@ -1,6 +1,5 @@
 "use client"
 
-import { hasSession } from "@verida/account-web-vault"
 import { type DatastoreOpenConfig, type IDatastore } from "@verida/types"
 import { WebUser } from "@verida/web-helpers"
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"
@@ -43,6 +42,7 @@ type VeridaContextType = {
   profile: PublicProfile | null
   connect: () => Promise<void>
   disconnect: () => Promise<void>
+  getAccountSessionToken: () => Promise<string>
   openDatastore: (
     schemaUrl: string,
     config?: DatastoreOpenConfig
@@ -113,7 +113,7 @@ export const VeridaProvider: React.FunctionComponent<VeridaProviderProps> = (
   const autoConnect = useCallback(async () => {
     logger.info("Checking for existing Verida session")
 
-    if (!hasSession(VERIDA_VAULT_CONTEXT_NAME)) {
+    if (!webUserInstance.hasSession()) {
       logger.info("No existing Verida session found, skipping connection")
       return
     }
@@ -175,6 +175,19 @@ export const VeridaProvider: React.FunctionComponent<VeridaProviderProps> = (
     logger.info("User successfully disconnected from Verida")
   }, [webUserInstanceRef])
 
+  const getAccountSessionToken = useCallback(async () => {
+    const account = webUserInstanceRef.current.getAccount()
+    const session = await account.getSession(VERIDA_VAULT_CONTEXT_NAME)
+
+    if (!session) {
+      throw new Error("No session found")
+    }
+
+    const stringifiedSession = JSON.stringify(session)
+    const sessionToken = Buffer.from(stringifiedSession).toString("base64")
+    return sessionToken
+  }, [webUserInstanceRef])
+
   const openDatastore = useCallback(
     async (schemaUrl: string, config?: DatastoreOpenConfig) => {
       logger.info("Opening Verida datastore", {
@@ -205,6 +218,7 @@ export const VeridaProvider: React.FunctionComponent<VeridaProviderProps> = (
       did,
       connect,
       disconnect,
+      getAccountSessionToken,
       openDatastore,
       profile,
       webUserInstanceRef,
@@ -216,6 +230,7 @@ export const VeridaProvider: React.FunctionComponent<VeridaProviderProps> = (
       did,
       connect,
       disconnect,
+      getAccountSessionToken,
       openDatastore,
       profile,
       webUserInstanceRef,

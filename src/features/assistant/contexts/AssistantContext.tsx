@@ -8,10 +8,10 @@ import React, {
   useState,
 } from "react"
 
-import { commonConfig } from "@/config/common"
 import { AssistantChatMessage } from "@/features/assistant/types"
 import { hotloadAPI, processUserPrompt } from "@/features/assistant/utils"
 import { Logger } from "@/features/telemetry"
+import { useVerida } from "@/features/verida"
 
 const logger = Logger.create("Assistant")
 
@@ -43,6 +43,8 @@ export type AssistantProviderProps = {
 export function AssistantProvider(props: AssistantProviderProps) {
   const { children } = props
 
+  const { getAccountSessionToken } = useVerida()
+
   const [messages, setMessages] = useState<AssistantChatMessage[]>([])
   const [isProcessingMessage, setIsProcessingMessage] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -51,61 +53,61 @@ export function AssistantProvider(props: AssistantProviderProps) {
     progress: 0,
   })
 
-  useEffect(() => {
+  const initialise = useCallback(async () => {
     logger.info("Initialising the assistant")
-    if (!commonConfig.PRIVATE_DATA_API_PRIVATE_KEY) {
-      logger.warn(
-        "PRIVATE_DATA_API_PRIVATE_KEY missing, unable to initializethe assistant"
-      )
-      return
-    }
 
     setHotload({ status: "loading", progress: 0 })
-    hotloadAPI(commonConfig.PRIVATE_DATA_API_PRIVATE_KEY, (progress) => {
+
+    const sessionToken = await getAccountSessionToken()
+
+    await hotloadAPI(sessionToken, (progress) => {
       setHotload({ status: "loading", progress })
     })
-      .then(() => {
-        setHotload({ status: "success", progress: 1 })
-        logger.info("Assisant initialized")
-      })
-      .catch((error) => {
-        logger.error(error)
-        setHotload({ status: "error", progress: 0 })
-      })
-  }, [])
 
-  const sendMessage = useCallback(async (message: string) => {
-    logger.info("Sending message to assistant")
-    setIsProcessingMessage(true)
-    setError(null)
+    setHotload({ status: "success", progress: 1 })
+    logger.info("Assisant initialized")
+  }, [getAccountSessionToken])
 
-    const newUserMessage: AssistantChatMessage = {
-      sender: "user",
-      content: message,
-    }
+  useEffect(() => {
+    initialise().catch((error) => {
+      logger.error(error)
+      setHotload({ status: "error", progress: 0 })
+    })
+  }, [initialise])
 
-    setMessages((prevMessages) => [...prevMessages, newUserMessage])
+  const sendMessage = useCallback(
+    async (message: string) => {
+      logger.info("Sending message to assistant")
+      setIsProcessingMessage(true)
+      setError(null)
 
-    try {
-      const response = await processUserPrompt(
-        message,
-        commonConfig.PRIVATE_DATA_API_PRIVATE_KEY
-      )
-
-      const newAssistantMessage: AssistantChatMessage = {
-        sender: "assistant",
-        content: response,
+      const newUserMessage: AssistantChatMessage = {
+        sender: "user",
+        content: message,
       }
 
-      setMessages((prevMessages) => [...prevMessages, newAssistantMessage])
-      logger.info("Received response from assistant")
-    } catch (error) {
-      logger.error(error)
-      setError("Something went wrong with the assistant")
-    } finally {
-      setIsProcessingMessage(false)
-    }
-  }, [])
+      setMessages((prevMessages) => [...prevMessages, newUserMessage])
+
+      try {
+        const sessionToken = await getAccountSessionToken()
+        const response = await processUserPrompt(message, sessionToken)
+
+        const newAssistantMessage: AssistantChatMessage = {
+          sender: "assistant",
+          content: response,
+        }
+
+        setMessages((prevMessages) => [...prevMessages, newAssistantMessage])
+        logger.info("Received response from assistant")
+      } catch (error) {
+        logger.error(error)
+        setError("Something went wrong with the assistant")
+      } finally {
+        setIsProcessingMessage(false)
+      }
+    },
+    [getAccountSessionToken]
+  )
 
   const value = useMemo<AssistantContextType>(
     () => ({

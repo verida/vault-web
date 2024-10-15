@@ -1,10 +1,10 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { useCallback } from "react"
 
-import { commonConfig } from "@/config/common"
 import { DataConnectionsQueryKeys } from "@/features/data-connections/queries"
 import { syncDataConnection } from "@/features/data-connections/utils"
 import { Logger } from "@/features/telemetry"
+import { useVerida } from "@/features/verida"
 import { wait } from "@/utils/misc"
 
 const logger = Logger.create("DataConnections")
@@ -14,6 +14,7 @@ type SyncDataConnectionVariables = {
 }
 
 export function useSyncDataConnection() {
+  const { getAccountSessionToken } = useVerida()
   const queryClient = useQueryClient()
 
   const invalidateDataConnectionsQueries = useCallback(() => {
@@ -28,11 +29,10 @@ export function useSyncDataConnection() {
   }, [queryClient])
 
   const { mutate, mutateAsync, ...mutation } = useMutation({
-    mutationFn: ({ connectionId }: SyncDataConnectionVariables) =>
-      syncDataConnection(
-        connectionId,
-        commonConfig.PRIVATE_DATA_API_PRIVATE_KEY
-      ),
+    mutationFn: async ({ connectionId }: SyncDataConnectionVariables) => {
+      const sessionToken = await getAccountSessionToken()
+      return syncDataConnection(connectionId, sessionToken)
+    },
     onMutate: () => {
       // Give time for the data connection to be updated on the server
       wait(1000 * 2).then(() => {
