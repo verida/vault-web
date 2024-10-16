@@ -177,13 +177,15 @@ export const VeridaProvider: React.FunctionComponent<VeridaProviderProps> = (
 
   const getAccountSessionToken = useCallback(async () => {
     const account = webUserInstanceRef.current.getAccount()
-    const session = await account.getSession(VERIDA_VAULT_CONTEXT_NAME)
+    const contextSession = await account.getContextSession(
+      VERIDA_VAULT_CONTEXT_NAME
+    )
 
-    if (!session) {
-      throw new Error("No session found")
+    if (!contextSession) {
+      throw new Error("No context session found")
     }
 
-    const stringifiedSession = JSON.stringify(session)
+    const stringifiedSession = JSON.stringify(contextSession)
     const sessionToken = Buffer.from(stringifiedSession).toString("base64")
     return sessionToken
   }, [webUserInstanceRef])
