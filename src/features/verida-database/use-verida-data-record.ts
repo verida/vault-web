@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query"
 
 import { VeridaDatabaseQueryKeys } from "@/features/verida-database/queries"
 import { fetchVeridaDataRecord } from "@/features/verida-database/utils"
-import { useVerida } from "@/features/verida/hooks"
+import { useVerida } from "@/features/verida/use-verida"
 
 type UseVeridaDataRecordArgs = {
   databaseName: string

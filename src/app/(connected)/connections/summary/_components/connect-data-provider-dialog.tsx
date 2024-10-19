@@ -31,16 +31,16 @@ import {
   SuccessBlockImage,
   SuccessBlockTitle,
 } from "@/components/ui/success"
+import { useDataConnectionsBroadcast } from "@/features/data-connections/hooks/use-data-connections-broadcast"
+import { useDataProviders } from "@/features/data-connections/hooks/use-data-providers"
 import {
   DataConnectionsChannelEvent,
   DataProvider,
-  buildConnectProviderUrl,
-  useDataConnectionsBroadcast,
-  useDataProviders,
-} from "@/features/data-connections"
+} from "@/features/data-connections/types"
+import { buildConnectProviderUrl } from "@/features/data-connections/utils"
 import { getConnectionPageRoute } from "@/features/routes/utils"
 import { Logger } from "@/features/telemetry"
-import { useVerida } from "@/features/verida"
+import { useVerida } from "@/features/verida/use-verida"
 
 const logger = Logger.create("connect-data-provider-dialog")
 

@@ -3,12 +3,10 @@
 import { useQueryClient } from "@tanstack/react-query"
 import { useEffect } from "react"
 
-import {
-  prefetchDataConnections,
-  prefetchDataProviders,
-} from "@/features/data-connections/hooks"
+import { prefetchDataConnections } from "@/features/data-connections/hooks/use-data-connections"
+import { prefetchDataProviders } from "@/features/data-connections/hooks/use-data-providers"
 import { Logger } from "@/features/telemetry"
-import { useVerida } from "@/features/verida"
+import { useVerida } from "@/features/verida/use-verida"
 
 const logger = Logger.create("data-connections")
 

@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query"
 
 import { searchData } from "@/features/data-search/utils"
-import { useVerida } from "@/features/verida"
+import { useVerida } from "@/features/verida/use-verida"
 
 export function useSearchData(searchValue?: string) {
   const { getAccountSessionToken } = useVerida()

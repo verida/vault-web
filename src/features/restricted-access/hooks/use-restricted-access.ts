@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query"
 
 import { RestrictedAccessStatus } from "@/features/restricted-access/types"
 import { Logger } from "@/features/telemetry"
-import { useVerida } from "@/features/verida"
+import { useVerida } from "@/features/verida/use-verida"
 
 const logger = Logger.create("restricted-access")
 

@@ -4,7 +4,7 @@ import { notFound } from "next/navigation"
 
 import { DataConnectionPageContent } from "@/app/(connected)/connections/[connectionId]/_components/data-connection-page-content"
 import ConnectionLoadingPage from "@/app/(connected)/connections/[connectionId]/loading"
-import { useDataConnection } from "@/features/data-connections"
+import { useDataConnection } from "@/features/data-connections/hooks/use-data-connection"
 
 type ConnectionPageProps = {
   params: { connectionId: string }

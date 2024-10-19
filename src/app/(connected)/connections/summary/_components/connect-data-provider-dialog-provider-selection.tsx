@@ -9,7 +9,8 @@ import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { DialogBody } from "@/components/ui/dialog"
 import { Skeleton } from "@/components/ui/skeleton"
-import { DataProvider, useDataProviders } from "@/features/data-connections"
+import { useDataProviders } from "@/features/data-connections/hooks/use-data-providers"
+import { DataProvider } from "@/features/data-connections/types"
 import { cn } from "@/styles/utils"
 
 export type ConnectDataProviderDialogProviderSelectionProps = {

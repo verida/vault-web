@@ -1,6 +1,6 @@
 import { Typography } from "@/components/typography"
 import { Button } from "@/components/ui/button"
-import { VeridaRecord } from "@/features/verida-database"
+import { VeridaRecord } from "@/features/verida-database/types"
 
 export type GenericDataItemPageTitleProps = {
   record: VeridaRecord

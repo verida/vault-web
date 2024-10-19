@@ -3,7 +3,7 @@ import { QueryClient, useQuery } from "@tanstack/react-query"
 import { DataConnectionsQueryKeys } from "@/features/data-connections/queries"
 import { getDataConnections } from "@/features/data-connections/utils"
 import { Logger } from "@/features/telemetry"
-import { useVerida } from "@/features/verida/hooks/useVerida"
+import { useVerida } from "@/features/verida/use-verida"
 
 const logger = Logger.create("data-connections")
 

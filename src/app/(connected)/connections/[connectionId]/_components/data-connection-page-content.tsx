@@ -9,7 +9,8 @@ import { PageTitle, PageWrapper } from "@/components/page-wrapper"
 import { Typography } from "@/components/typography"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Skeleton } from "@/components/ui/skeleton"
-import { DataConnection, useDataProvider } from "@/features/data-connections"
+import { useDataProvider } from "@/features/data-connections/hooks/use-data-provider"
+import { DataConnection } from "@/features/data-connections/types"
 import { getConnectionsSummaryPageRoute } from "@/features/routes/utils"
 
 export type DataConnectionPageContentProps = {

@@ -1,6 +1,6 @@
 "use client"
 
-import { AssistantProvider } from "@/features/assistant/contexts/AssistantContext"
+import { AssistantProvider } from "@/features/assistant/assistant-context"
 import { DataConnectionsProvider } from "@/features/data-connections/components/data-connections-provider"
 
 export type AppRestrictedProvidersProps = {

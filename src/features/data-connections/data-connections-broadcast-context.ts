@@ -1,5 +1,3 @@
-"use client"
-
 import { createContext } from "react"
 
 import { DataConnectionsChannelEvent } from "@/features/data-connections/types"

@@ -9,7 +9,7 @@ import {
   EmptyStateImage,
   EmptyStateTitle,
 } from "@/components/ui/empty-state"
-import { useDataConnectionsLogs } from "@/features/data-connections"
+import { useDataConnectionsLogs } from "@/features/data-connections/hooks/use-data-connections-logs"
 
 export default function ConnectionsLogsPage() {
   const { logs, isLoading, isError, error } = useDataConnectionsLogs()

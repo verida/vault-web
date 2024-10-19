@@ -17,11 +17,9 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button"
-import {
-  DataConnection,
-  useDataProvider,
-  useDisconnectDataConnection,
-} from "@/features/data-connections"
+import { useDataProvider } from "@/features/data-connections/hooks/use-data-provider"
+import { useDisconnectDataConnection } from "@/features/data-connections/hooks/use-disconnect-data-connection"
+import { DataConnection } from "@/features/data-connections/types"
 import { getConnectionsSummaryPageRoute } from "@/features/routes/utils"
 import { useToast } from "@/features/toasts/use-toast"
 
