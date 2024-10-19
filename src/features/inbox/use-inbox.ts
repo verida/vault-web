@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query"
 import { useCallback } from "react"
 
-import { useInboxContext } from "@/features/inbox/hooks/useInboxContext"
+import { useInboxContext } from "@/features/inbox/use-inbox-context"
 import { useVerida } from "@/features/verida"
 
 export const useInbox = () => {

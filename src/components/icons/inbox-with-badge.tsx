@@ -1,7 +1,7 @@
 "use client"
 
 import { Inbox } from "@/components/icons/inbox"
-import { useInbox } from "@/features/inbox/hooks"
+import { useInbox } from "@/features/inbox/use-inbox"
 
 export function InboxWithBadge() {
   const { unreadMessageCount } = useInbox()

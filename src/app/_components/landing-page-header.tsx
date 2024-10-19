@@ -2,7 +2,7 @@ import Image from "next/image"
 import Link from "next/link"
 
 import { Button } from "@/components/ui/button"
-import { VERIDA_PLATFORMS } from "@/features/landing"
+import { VERIDA_PLATFORMS } from "@/features/landing/verida-platforms"
 import { cn } from "@/styles/utils"
 
 export type LandingPageHeaderProps = Omit<

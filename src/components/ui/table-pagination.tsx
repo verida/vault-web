@@ -9,7 +9,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { usePagination } from "@/hooks/usePagination"
+import { usePagination } from "@/hooks/use-pagination"
 import { cn } from "@/styles/utils"
 
 type TablePaginationProps = {

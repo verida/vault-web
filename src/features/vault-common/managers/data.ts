@@ -1,4 +1,4 @@
-import { DATABASE_DEFS } from "@/features/data"
+import { DATABASE_DEFS } from "@/features/data/constants"
 
 import VaultCommon from "../vault"
 import Folder from "./data/folder"

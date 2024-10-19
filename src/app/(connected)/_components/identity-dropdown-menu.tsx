@@ -18,8 +18,8 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Skeleton } from "@/components/ui/skeleton"
 import { EMPTY_PROFILE_NAME_FALLBACK } from "@/features/profiles/constants"
-import { useUserFeedback } from "@/features/telemetry/hooks/use-user-feedback"
-import { useToast } from "@/features/toasts"
+import { useUserFeedback } from "@/features/telemetry/use-user-feedback"
+import { useToast } from "@/features/toasts/use-toast"
 import { useVerida } from "@/features/verida"
 import { cn } from "@/styles/utils"
 

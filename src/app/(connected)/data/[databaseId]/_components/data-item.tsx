@@ -4,7 +4,7 @@ import React from "react"
 import { Typography } from "@/components/typography"
 import { Avatar, AvatarImage } from "@/components/ui/avatar"
 import { Card } from "@/components/ui/card"
-import { DataSchema } from "@/features/data"
+import { DataSchema } from "@/features/data/types"
 
 export type DataItemProps = {
   data: any
