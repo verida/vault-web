@@ -1,3 +1,4 @@
+import { AppCommandDialog } from "@/app/(connected)/_components/app-command-dialog"
 import { AppConnectionHandler } from "@/app/(connected)/_components/app-connection-handler"
 import { AppHeader } from "@/app/(connected)/_components/app-header"
 import { AppRestrictedProviders } from "@/app/(connected)/_components/app-restricted-providers"
@@ -24,6 +25,7 @@ export default function AppLayout(props: AppLayoutProps) {
             </main>
           </div>
         </div>
+        <AppCommandDialog />
       </AppUnrestrictedProviders>
     </AppConnectionHandler>
   )

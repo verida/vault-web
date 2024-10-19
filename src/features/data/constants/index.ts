@@ -7,6 +7,7 @@ export const DATABASE_DEFS: DatabaseDefinition[] = [
     titlePlural: "Credentials",
     color: "#5BE1B0",
     databaseVaultName: "credential",
+    schemaUrlBase: "https://common.schemas.verida.io/credential/base",
   },
   {
     id: "contacts",
@@ -14,6 +15,7 @@ export const DATABASE_DEFS: DatabaseDefinition[] = [
     titlePlural: "Contacts",
     color: "#47E6E5",
     databaseVaultName: "social_contact",
+    schemaUrlBase: "https://common.schemas.verida.io/social/contact",
   },
   {
     id: "social-followings",
@@ -21,6 +23,8 @@ export const DATABASE_DEFS: DatabaseDefinition[] = [
     titlePlural: "Social Followings",
     color: "#7A78E5",
     databaseVaultName: "social_following",
+    schemaUrlBase: "https://common.schemas.verida.io/social/following",
+    searchType: "followed_pages",
   },
   {
     id: "social-posts",
@@ -28,6 +32,8 @@ export const DATABASE_DEFS: DatabaseDefinition[] = [
     titlePlural: "Social Posts",
     color: "#EE7D91",
     databaseVaultName: "social_post",
+    schemaUrlBase: "https://common.schemas.verida.io/social/post",
+    searchType: "posts",
   },
   {
     id: "emails",
@@ -35,6 +41,8 @@ export const DATABASE_DEFS: DatabaseDefinition[] = [
     titlePlural: "Emails",
     color: "#FFB347",
     databaseVaultName: "social_email",
+    schemaUrlBase: "https://common.schemas.verida.io/social/email",
+    searchType: "emails",
   },
   {
     id: "favourites",
@@ -42,6 +50,8 @@ export const DATABASE_DEFS: DatabaseDefinition[] = [
     titlePlural: "Favourites",
     color: "#FF69B4",
     databaseVaultName: "favourite",
+    schemaUrlBase: "https://common.schemas.verida.io/favourite",
+    searchType: "favorites",
   },
   {
     id: "chat-groups",
@@ -49,6 +59,7 @@ export const DATABASE_DEFS: DatabaseDefinition[] = [
     titlePlural: "Chat groups",
     color: "#20B2AA",
     databaseVaultName: "social_chat_group",
+    schemaUrlBase: "https://common.schemas.verida.io/social/chat/group",
   },
   {
     id: "chat-messages",
@@ -56,5 +67,7 @@ export const DATABASE_DEFS: DatabaseDefinition[] = [
     titlePlural: "Chat messages",
     color: "#9370DB",
     databaseVaultName: "social_chat_message",
+    schemaUrlBase: "https://common.schemas.verida.io/social/chat/message",
+    searchType: "messages",
   },
 ]

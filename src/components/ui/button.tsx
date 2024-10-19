@@ -16,9 +16,9 @@ const buttonVariants = cva(
         "destructive":
           "border border-destructive bg-destructive text-destructive-foreground hover:border-destructive-hover hover:bg-destructive-hover focus-visible:ring-destructive focus-visible:ring-offset-2",
         "outline-destructive":
-          "hover:bg-surfrace-hover border bg-surface text-destructive hover:border-border-hover focus-visible:ring-destructive",
+          "border bg-surface text-destructive hover:border-border-hover hover:bg-surface-hover focus-visible:ring-destructive",
         "ghost":
-          "hover:bg-surfrace-hover bg-transparent text-foreground hover:text-foreground focus-visible:ring-ring",
+          "bg-transparent text-foreground hover:bg-surface-hover hover:text-foreground focus-visible:ring-ring",
       },
       size: {
         default: "h-12 px-4 py-2",
