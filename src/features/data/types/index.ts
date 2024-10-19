@@ -1,3 +1,5 @@
+import { SearchType } from "@/features/data-search/types"
+
 /**
  * @deprecated
  */
@@ -20,6 +22,8 @@ export type DatabaseDefinition = {
   titlePlural: string
   color: string
   databaseVaultName: string
+  schemaUrlBase: string
+  searchType?: SearchType
 }
 
 export type DataSchema = {

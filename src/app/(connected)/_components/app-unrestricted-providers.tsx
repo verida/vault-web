@@ -1,5 +1,6 @@
 "use client"
 
+import { CommandProvider } from "@/features/command/command-provider"
 import { InboxProvider } from "@/features/inbox/contexts/InboxContext"
 
 export type AppUnrestrictedProvidersProps = {
@@ -14,5 +15,9 @@ export function AppUnrestrictedProviders(props: AppUnrestrictedProvidersProps) {
   // For all the other providers, prefer using AppRestrictedProviders instead.
 
   // For global providers required in any cases, use the RootProviders component.
-  return <InboxProvider>{children}</InboxProvider>
+  return (
+    <InboxProvider>
+      <CommandProvider>{children}</CommandProvider>
+    </InboxProvider>
+  )
 }
