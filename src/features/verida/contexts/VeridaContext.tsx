@@ -5,12 +5,12 @@ import { WebUser } from "@verida/web-helpers"
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"
 
 import { commonConfig } from "@/config/common"
-import { getPublicProfile } from "@/features/profiles"
 import { PublicProfile } from "@/features/profiles/types"
+import { getPublicProfile } from "@/features/profiles/utils"
 import { Logger, Sentry } from "@/features/telemetry"
 import { VERIDA_VAULT_CONTEXT_NAME } from "@/features/verida/constants"
 
-const logger = Logger.create("Verida")
+const logger = Logger.create("verida")
 
 const webUserInstance = new WebUser({
   debug: commonConfig.DEV_MODE,

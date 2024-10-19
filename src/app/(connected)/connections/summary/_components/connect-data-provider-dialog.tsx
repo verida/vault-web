@@ -42,7 +42,7 @@ import { getConnectionPageRoute } from "@/features/routes/utils"
 import { Logger } from "@/features/telemetry"
 import { useVerida } from "@/features/verida"
 
-const logger = Logger.create("ConnectDataProviderDialog")
+const logger = Logger.create("connect-data-provider-dialog")
 
 export type ConnectDataProviderDialogProps = {
   children: React.ReactNode

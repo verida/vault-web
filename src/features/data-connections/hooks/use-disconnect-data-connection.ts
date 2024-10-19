@@ -28,7 +28,7 @@ export function useDisconnectDataConnection() {
       })
     },
     meta: {
-      logCategory: "DataConnections",
+      logCategory: "data-connections",
       errorMessage: "Error disconnecting data connection",
     },
   })

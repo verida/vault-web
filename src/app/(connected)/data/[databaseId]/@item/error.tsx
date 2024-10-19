@@ -5,7 +5,7 @@ import { useEffect } from "react"
 import { ErrorPageProps } from "@/components/error-page-content"
 import { Logger } from "@/features/telemetry"
 
-const logger = Logger.create("ErrorBoundary")
+const logger = Logger.create("error-boundary")
 
 export default function DataItemErrorPage(props: ErrorPageProps) {
   const { error } = props

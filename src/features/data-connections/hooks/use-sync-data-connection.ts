@@ -7,7 +7,7 @@ import { Logger } from "@/features/telemetry"
 import { useVerida } from "@/features/verida"
 import { wait } from "@/utils/misc"
 
-const logger = Logger.create("DataConnections")
+const logger = Logger.create("data-connections")
 
 type SyncDataConnectionVariables = {
   connectionId: string
@@ -42,7 +42,7 @@ export function useSyncDataConnection() {
       })
     },
     meta: {
-      logCategory: "DataConnections",
+      logCategory: "data-connections",
       errorMessage: "Error syncing data connection",
       onSettledInvalidationQueryKeys:
         DataConnectionsQueryKeys.invalidateDataConnections(),

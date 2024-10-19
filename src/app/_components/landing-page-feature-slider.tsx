@@ -5,7 +5,7 @@ import { useEffect, useState } from "react"
 import { CSSTransition, SwitchTransition } from "react-transition-group"
 
 import { Typography } from "@/components/typography"
-import { LANDING_PAGE_SLIDES } from "@/features/landing"
+import { LANDING_PAGE_SLIDES } from "@/features/landing/landing-page-slides"
 import { cn } from "@/styles/utils"
 
 const nbSlides = LANDING_PAGE_SLIDES.length

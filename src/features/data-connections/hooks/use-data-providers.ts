@@ -4,7 +4,7 @@ import { DataConnectionsQueryKeys } from "@/features/data-connections/queries"
 import { getDataProviders } from "@/features/data-connections/utils"
 import { Logger } from "@/features/telemetry"
 
-const logger = Logger.create("DataConnections")
+const logger = Logger.create("data-connections")
 
 export function useDataProviders() {
   const { data, ...query } = useQuery({
@@ -13,7 +13,7 @@ export function useDataProviders() {
     staleTime: 1000 * 60 * 60 * 6, // 6 hours
     gcTime: 1000 * 60 * 60 * 24, // 24 hours
     meta: {
-      logCategory: "DataConnections",
+      logCategory: "data-connections",
       errorMessage: "Error fetching data providers",
     },
   })

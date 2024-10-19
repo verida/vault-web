@@ -9,7 +9,7 @@ import {
   EmptyStateImage,
   EmptyStateTitle,
 } from "@/components/ui/empty-state"
-import { DataSchema, DatabaseDefinition } from "@/features/data"
+import { DataSchema, DatabaseDefinition } from "@/features/data/types"
 import { VeridaRecord } from "@/features/verida-database/types"
 
 export type DatabaseRecordsTableProps = {

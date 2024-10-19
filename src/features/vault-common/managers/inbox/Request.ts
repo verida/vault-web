@@ -3,7 +3,7 @@ import { Logger } from "@/features/telemetry"
 import { InboxResponse, InboxType } from "../../interfaces/inbox/Inbox"
 import { DataAction } from "./DataAction"
 
-const logger = Logger.create("InboxDataRequest")
+const logger = Logger.create("inbox")
 
 const MSG = "Send you the requested data"
 

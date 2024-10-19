@@ -21,7 +21,7 @@ import {
 import { Logger } from "@/features/telemetry"
 import { useVerida } from "@/features/verida"
 
-const logger = Logger.create("Inbox")
+const logger = Logger.create("inbox")
 
 export type RequestDataSelectorProps = {
   schemaUrl: string

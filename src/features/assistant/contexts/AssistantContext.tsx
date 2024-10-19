@@ -13,7 +13,7 @@ import { hotloadAPI, processUserPrompt } from "@/features/assistant/utils"
 import { Logger } from "@/features/telemetry"
 import { useVerida } from "@/features/verida"
 
-const logger = Logger.create("Assistant")
+const logger = Logger.create("assistant")
 
 type HotloadStatus = "idle" | "loading" | "success" | "error"
 

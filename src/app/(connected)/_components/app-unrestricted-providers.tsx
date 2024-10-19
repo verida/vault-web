@@ -1,7 +1,7 @@
 "use client"
 
 import { CommandProvider } from "@/features/command/command-provider"
-import { InboxProvider } from "@/features/inbox/contexts/InboxContext"
+import { InboxProvider } from "@/features/inbox/inbox-context"
 
 export type AppUnrestrictedProvidersProps = {
   children: React.ReactNode

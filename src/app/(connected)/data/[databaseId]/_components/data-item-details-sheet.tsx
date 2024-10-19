@@ -21,7 +21,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
-import { DataSchema, DatabaseDefinition } from "@/features/data"
+import { DataSchema, DatabaseDefinition } from "@/features/data/types"
 
 export type DataItemDetailsSheetProps = {
   open: boolean

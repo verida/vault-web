@@ -11,7 +11,7 @@ import {
   VeridaRecord,
 } from "@/features/verida-database/types"
 
-const logger = Logger.create("VeridaDatabase")
+const logger = Logger.create("verida-database")
 
 const defaultVeridaDataRecordsQueryOptions: VeridaDatabaseQueryOptions = {
   skip: 0,
@@ -91,10 +91,7 @@ export async function fetchVeridaDataRecords<T = Record<string, unknown>>({
       },
     }
   } catch (error) {
-    logger.error(
-      new Error("Error fetching Verida data records", { cause: error })
-    )
-    throw error
+    throw new Error("Error fetching Verida data records", { cause: error })
   }
 }
 
@@ -165,9 +162,8 @@ export async function fetchVeridaDataRecord<T = Record<string, unknown>>({
 
     return record
   } catch (error) {
-    logger.error(
-      new Error("Error fetching single Verida data record", { cause: error })
-    )
-    throw error
+    throw new Error("Error fetching single Verida data record", {
+      cause: error,
+    })
   }
 }
