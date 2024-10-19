@@ -13,7 +13,7 @@ import {
   VeridaMessageType,
 } from "@/features/verida"
 
-const logger = Logger.create("Verida")
+const logger = Logger.create("verida")
 
 export function truncateDid(
   did: string,

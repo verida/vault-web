@@ -43,8 +43,7 @@ export async function searchData({
 
     url.searchParams.set("searchTypes", searchTypes.join(","))
 
-    // Make API request to fetch data
-    // Make API request to fetch data
+    // Make API request to search data
     const response = await fetch(url.toString(), {
       method: "GET",
       headers: {
