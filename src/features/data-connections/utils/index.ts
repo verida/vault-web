@@ -209,7 +209,7 @@ async function mockGetDataConnections(): Promise<DataConnection[]> {
 }
 
 /**
- * Sync a given data connection
+ * Sync\ a given data connection
  *
  * @param connectionId - The connection ID
  * @param key - The API key for authentication
