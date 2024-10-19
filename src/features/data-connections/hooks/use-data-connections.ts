@@ -6,7 +6,7 @@ import { getDataConnections } from "@/features/data-connections/utils"
 import { Logger } from "@/features/telemetry"
 import { useVerida } from "@/features/verida/hooks/useVerida"
 
-const logger = Logger.create("DataConnections")
+const logger = Logger.create("data-connections")
 
 export function useDataConnections() {
   const { did } = useVerida()
@@ -21,7 +21,7 @@ export function useDataConnections() {
     // invalidate the cache
     gcTime: 1000 * 60 * 30, // 30 minutes
     meta: {
-      logCategory: "DataConnections",
+      logCategory: "data-connections",
       errorMessage: "Error fetching data connections",
     },
   })

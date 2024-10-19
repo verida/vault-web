@@ -8,7 +8,7 @@ import { Message } from "./inbox/Message"
 import { Request } from "./inbox/Request"
 import { Send } from "./inbox/Send"
 
-const logger = Logger.create("InboxManager")
+const logger = Logger.create("inbox")
 
 /**
  * @deprecated

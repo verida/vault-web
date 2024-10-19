@@ -7,7 +7,7 @@ import {
 import { Logger } from "@/features/telemetry"
 import { wait } from "@/utils/misc"
 
-const logger = Logger.create("Assistant")
+const logger = Logger.create("assistant")
 
 /**
  * Simulates a response from the AI assistant for testing purposes.

@@ -13,7 +13,7 @@ import { AssistantChatMessage } from "@/features/assistant/types"
 import { hotloadAPI, processUserPrompt } from "@/features/assistant/utils"
 import { Logger } from "@/features/telemetry"
 
-const logger = Logger.create("Assistant")
+const logger = Logger.create("assistant")
 
 type HotloadStatus = "idle" | "loading" | "success" | "error"
 

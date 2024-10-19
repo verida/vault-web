@@ -15,7 +15,7 @@ import { getRootPageRoute } from "@/features/routes/utils"
 import { Logger } from "@/features/telemetry"
 import { cn } from "@/styles/utils"
 
-const logger = Logger.create("ErrorBoundary")
+const logger = Logger.create("error-boundary")
 
 export type ErrorPageProps = {
   error: Error & { digest?: string }
