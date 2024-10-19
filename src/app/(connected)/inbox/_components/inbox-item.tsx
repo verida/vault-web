@@ -5,7 +5,7 @@ import { InboxStatusText } from "@/app/(connected)/inbox/_components/inbox-statu
 import { Typography } from "@/components/typography"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Card } from "@/components/ui/card"
-import { inboxTypes } from "@/features/inbox/constants"
+import { INBOX_TYPE_DEFS } from "@/features/inbox/constants"
 import { InboxEntry } from "@/features/inbox/types"
 import { cn } from "@/styles/utils"
 import { formatDate } from "@/utils/misc"
@@ -18,7 +18,7 @@ export type InboxRowItemProps = {
 export function InboxRowItem(props: InboxRowItemProps) {
   const { message, href } = props
   const { message: title, read, sentAt, sentBy, type, data } = message
-  const InboxTypeIcon = inboxTypes[type].icon
+  const InboxTypeIcon = INBOX_TYPE_DEFS[type].icon
 
   return (
     <Link href={href || "#"} className="w-full rounded-lg">
@@ -57,7 +57,7 @@ export function InboxRowItem(props: InboxRowItemProps) {
             <div className="flex items-center gap-2">
               <InboxTypeIcon />
               <Typography variant="base-semibold">
-                {inboxTypes[type].text}
+                {INBOX_TYPE_DEFS[type].text}
               </Typography>
             </div>
 
@@ -107,7 +107,7 @@ export function InboxRowItem(props: InboxRowItemProps) {
               <div className="flex items-center gap-2">
                 <InboxTypeIcon className="h-4 w-4" />
                 <Typography variant="base-s-semibold">
-                  {inboxTypes[type].text}
+                  {INBOX_TYPE_DEFS[type].text}
                 </Typography>
               </div>
               <span

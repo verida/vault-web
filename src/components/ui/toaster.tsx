@@ -12,7 +12,7 @@ import {
   ToastTitle,
   ToastViewport,
 } from "@/components/ui/toast"
-import { useToast } from "@/features/toasts"
+import { useToast } from "@/features/toasts/use-toast"
 
 export function Toaster() {
   const { toasts } = useToast()

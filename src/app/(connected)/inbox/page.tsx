@@ -20,10 +20,10 @@ import {
   LoadingBlockTitle,
 } from "@/components/ui/loading"
 import { TablePagination } from "@/components/ui/table-pagination"
-import { useInbox } from "@/features/inbox/hooks"
-import { useInboxContext } from "@/features/inbox/hooks/useInboxContext"
-import { useMessages } from "@/features/inbox/hooks/useMessages"
 import { InboxEntry } from "@/features/inbox/types"
+import { useInbox } from "@/features/inbox/use-inbox"
+import { useInboxContext } from "@/features/inbox/use-inbox-context"
+import { useMessages } from "@/features/inbox/use-messages"
 
 export default function InboxPage() {
   const router = useRouter()

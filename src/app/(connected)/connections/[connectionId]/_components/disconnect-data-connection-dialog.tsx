@@ -23,7 +23,7 @@ import {
   useDisconnectDataConnection,
 } from "@/features/data-connections"
 import { getConnectionsSummaryPageRoute } from "@/features/routes/utils"
-import { useToast } from "@/features/toasts"
+import { useToast } from "@/features/toasts/use-toast"
 
 export type DisconnectDataConnectionDialogProps = {
   children: React.ReactNode
