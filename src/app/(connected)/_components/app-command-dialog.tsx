@@ -28,9 +28,9 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { useCommand } from "@/features/command/use-command"
-import { DATABASE_DEFS } from "@/features/data"
 import { SearchDataResult } from "@/features/data-search/types"
 import { useSearchData } from "@/features/data-search/use-search-data"
+import { DATABASE_DEFS } from "@/features/data/constants"
 import { getDatabaseItemPageRoute } from "@/features/routes/utils"
 import { cn } from "@/styles/utils"
 

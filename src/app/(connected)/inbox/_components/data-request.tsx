@@ -33,11 +33,11 @@ import {
   SuccessBlockImage,
   SuccessBlockTitle,
 } from "@/components/ui/success"
-import { useInboxAction } from "@/features/inbox/hooks/useInboxAction"
 import { InboxType } from "@/features/inbox/types"
+import { useInboxAction } from "@/features/inbox/use-inbox-action"
 import { Logger } from "@/features/telemetry"
 
-const logger = Logger.create("Inbox")
+const logger = Logger.create("inbox")
 
 // TODO: Use custom logger and remove this eslint by-pass
 /* eslint-disable no-console */

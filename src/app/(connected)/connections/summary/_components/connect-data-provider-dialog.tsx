@@ -42,7 +42,7 @@ import {
 import { getConnectionPageRoute } from "@/features/routes/utils"
 import { Logger } from "@/features/telemetry"
 
-const logger = Logger.create("ConnectDataProviderDialog")
+const logger = Logger.create("connect-data-provider-dialog")
 
 export type ConnectDataProviderDialogProps = {
   children: React.ReactNode

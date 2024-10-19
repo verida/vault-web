@@ -3,7 +3,7 @@ import { QueryClient, QueryKey } from "@tanstack/react-query"
 import { Logger } from "@/features/telemetry"
 
 export function getLogger(logCategory?: string) {
-  return Logger.create(logCategory || "Queries")
+  return Logger.create(logCategory || "queries")
 }
 
 export function invalidateQueries(

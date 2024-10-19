@@ -1,12 +1,12 @@
 import { useQueryClient } from "@tanstack/react-query"
 import { useCallback, useState } from "react"
 
-import { useInboxContext } from "@/features/inbox/hooks/useInboxContext"
 import { InboxEntry, InboxType } from "@/features/inbox/types"
+import { useInboxContext } from "@/features/inbox/use-inbox-context"
 import { Logger } from "@/features/telemetry"
 import { useVerida } from "@/features/verida"
 
-const logger = Logger.create("Inbox")
+const logger = Logger.create("inbox")
 
 export const useInboxAction = () => {
   const { openDatastore } = useVerida()

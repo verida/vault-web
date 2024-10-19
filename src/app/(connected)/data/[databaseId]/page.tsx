@@ -3,7 +3,7 @@ import React from "react"
 
 import { DatabasePageContent } from "@/app/(connected)/data/[databaseId]/_components/database-page-content"
 import { PageWrapper } from "@/components/page-wrapper"
-import { DATABASE_DEFS } from "@/features/data"
+import { DATABASE_DEFS } from "@/features/data/constants"
 import { getDataPageRoute } from "@/features/routes/utils"
 
 export type DatabasePageProps = {

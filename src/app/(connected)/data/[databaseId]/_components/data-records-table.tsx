@@ -31,10 +31,10 @@ import {
   LoadingBlockTitle,
 } from "@/components/ui/loading"
 import { EMPTY_VALUE_FALLBACK } from "@/constants/misc"
-import { DatabaseDefinition } from "@/features/data"
 import { DATA_TABLE_PAGINATION_SIZE_DEFAULT } from "@/features/data-table/constants"
 import { DataTableColumnAlignFeature } from "@/features/data-table/data-table-column-align-feature"
 import { DataTableColumnClassNameFeature } from "@/features/data-table/data-table-column-classname-feature"
+import { DatabaseDefinition } from "@/features/data/types"
 import { VeridaRecord, useVeridaDataRecords } from "@/features/verida-database"
 
 const fallbackData: VeridaRecord[] = []

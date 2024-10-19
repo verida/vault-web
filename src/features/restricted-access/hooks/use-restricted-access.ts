@@ -19,8 +19,8 @@ export function useRestrictedAccess() {
     staleTime: 1000 * 60 * 60 * 24, // 1 day
     gcTime: 1000 * 60 * 60 * 24, // 1 day
     meta: {
-      errorMessage: "Failed to get user access",
       logCategory: "restricted-access",
+      errorMessage: "Failed to get user access",
     },
     // TODO: Add persistence to the query
   })

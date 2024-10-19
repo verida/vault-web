@@ -1,6 +1,6 @@
 import { get, merge } from "lodash"
 
-import { DataField } from "@/features/data"
+import { DataField } from "@/features/data/types"
 
 import VaultCommon from "../../vault"
 

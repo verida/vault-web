@@ -60,10 +60,10 @@ export function useVeridaDataRecords<T = Record<string, unknown>>({
 
       return result
     },
-    // TODO: Set staleTime?
+    staleTime: 1000 * 60 * 1, // 1 minute
     gcTime: 1000 * 60 * 30, // 30 minutes
     meta: {
-      logCategory: "VeridaDatabase",
+      logCategory: "verida-database",
       errorMessage: "Error fetching Verida data records",
     },
   })

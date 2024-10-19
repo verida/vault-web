@@ -6,7 +6,7 @@ import { useEffect } from "react"
 import { useDataConnectionsBroadcast } from "@/features/data-connections"
 import { Logger } from "@/features/telemetry"
 
-const logger = Logger.create("NewDataConnectionCallbackPage")
+const logger = Logger.create("data-connections")
 
 export type NewDataConnectionCallbackHandlerProps = {
   children: React.ReactNode

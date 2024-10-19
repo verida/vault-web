@@ -20,7 +20,7 @@ import { getNewDataConnectionCallbackPageRoute } from "@/features/routes/utils"
 import { Logger } from "@/features/telemetry"
 import { wait } from "@/utils/misc"
 
-const logger = Logger.create("DataConnections")
+const logger = Logger.create("data-connections")
 
 /**
  * Builds a unique connection ID by combining the provider ID and account ID.

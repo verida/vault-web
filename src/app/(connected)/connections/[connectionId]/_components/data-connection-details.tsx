@@ -16,7 +16,7 @@ import {
   useDataProvider,
   useSyncDataConnection,
 } from "@/features/data-connections"
-import { useToast } from "@/features/toasts"
+import { useToast } from "@/features/toasts/use-toast"
 import { cn } from "@/styles/utils"
 import { wait } from "@/utils/misc"
 

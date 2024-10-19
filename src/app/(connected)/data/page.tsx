@@ -3,7 +3,7 @@ import React from "react"
 
 import { DatabaseCard } from "@/app/(connected)/data/_components/database-card"
 import { PageWrapper } from "@/components/page-wrapper"
-import { DATABASE_DEFS } from "@/features/data"
+import { DATABASE_DEFS } from "@/features/data/constants"
 import { getDatabasePageRoute } from "@/features/routes/utils"
 
 export default function DataPage() {

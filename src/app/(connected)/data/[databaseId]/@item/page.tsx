@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation"
 import { useCallback, useMemo } from "react"
 
 import { DataItemPageContent } from "@/app/(connected)/data/[databaseId]/@item/_components/data-item-page-content"
-import { DATABASE_DEFS } from "@/features/data"
+import { DATABASE_DEFS } from "@/features/data/constants"
 
 type DataItemPageProps = {
   params: { databaseId: string }

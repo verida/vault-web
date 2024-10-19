@@ -10,8 +10,8 @@ import {
 } from "@/components/modal-sheet"
 import { Typography } from "@/components/typography"
 import { Button } from "@/components/ui/button"
-import { useInboxAction } from "@/features/inbox/hooks/useInboxAction"
 import { InboxType } from "@/features/inbox/types"
+import { useInboxAction } from "@/features/inbox/use-inbox-action"
 
 export function InboxMessageDetails(props: InboxDetailsProps) {
   const { message: inboxItem, onClose } = props
