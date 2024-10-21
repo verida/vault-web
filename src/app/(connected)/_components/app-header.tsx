@@ -6,6 +6,7 @@ import {
   AppHeaderNavMenu,
 } from "@/app/(connected)/_components/app-header-nav"
 import { IdentityDropdownMenu } from "@/app/(connected)/_components/identity-dropdown-menu"
+import { featureFlags } from "@/config/features"
 import { cn } from "@/styles/utils"
 
 export type AppHeaderProps = Omit<React.ComponentProps<"header">, "children">
@@ -36,7 +37,9 @@ export function AppHeader(props: AppHeaderProps) {
             <AppHeaderNavBar className="hidden lg:flex" />
           </div>
           <div className="flex flex-row items-center gap-4 py-4 pr-4 md:pr-6 xl:pr-8">
-            <AppCommandDialogTrigger className="" />
+            {featureFlags.commandDialog.enabled ? (
+              <AppCommandDialogTrigger className="" />
+            ) : null}
             <IdentityDropdownMenu />
           </div>
         </div>

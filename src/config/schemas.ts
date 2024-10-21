@@ -37,6 +37,10 @@ export const CommonConfigSchema = z.object({
     .string()
     .optional()
     .transform((value) => value === "true"),
+  FEATURE_FLAG_COMMAND_DIALOG_ENABLED: z
+    .string()
+    .optional()
+    .transform((value) => value === "true"),
   FEATURE_FLAG_DATA_CONNECTIONS_ENABLED: z
     .string()
     .optional()
