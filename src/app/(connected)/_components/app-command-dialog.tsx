@@ -178,6 +178,11 @@ export function AppCommandDialogTrigger(props: AppCommandDialogTriggerProps) {
 
   const { openCommand } = useCommand()
 
+  const shortcutText = useMemo(() => {
+    const macosPlatforms = /macOS|Macintosh|MacIntel|MacPPC|Mac68K/
+    return macosPlatforms.test(window.navigator.userAgent) ? "⌘K" : "Ctrl+K"
+  }, [])
+
   return (
     <Tooltip>
       <TooltipTrigger asChild>
@@ -191,7 +196,7 @@ export function AppCommandDialogTrigger(props: AppCommandDialogTriggerProps) {
           <SearchIcon className="h-4 w-4 shrink-0 opacity-50" />
           <span className="sr-only">Search</span>
           <span className="hidden rounded-sm bg-background p-1 text-base-s-regular text-muted-foreground sm:inline-block">
-            ⌘K
+            {shortcutText}
           </span>
         </Button>
       </TooltipTrigger>
