@@ -23,7 +23,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 import { featureFlags } from "@/config/features"
-import { useRestrictedAccess } from "@/features/restricted-access/hooks/use-restricted-access"
+import { useRestrictedAccess } from "@/features/restricted-access/use-restricted-access"
 import {
   getAssistantPageRoute,
   getConnectionsPageRoute,

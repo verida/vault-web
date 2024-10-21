@@ -1,7 +1,7 @@
 "use client"
 
 import { RestrictedAccessPageContent } from "@/app/(connected)/_components/restricted-access-page-content"
-import { useRestrictedAccess } from "@/features/restricted-access/hooks/use-restricted-access"
+import { useRestrictedAccess } from "@/features/restricted-access/use-restricted-access"
 import { useVerida } from "@/features/verida/use-verida"
 
 export type RestrictedAccessHandlerProps = {
