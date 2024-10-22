@@ -58,7 +58,7 @@ export async function fetchVeridaDataRecords<T = Record<string, unknown>>({
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${sessionToken}`,
+          "X-API-Key": sessionToken,
         },
         body: JSON.stringify({ query: filter, options: resolvedOptions }),
       }
@@ -134,7 +134,7 @@ export async function fetchVeridaDataRecord<T = Record<string, unknown>>({
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${sessionToken}`,
+          "X-API-Key": sessionToken,
         },
       }
     )

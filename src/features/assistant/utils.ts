@@ -54,7 +54,7 @@ export async function processUserPrompt(
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${sessionToken}`,
+          "X-API-Key": sessionToken,
         },
         body: JSON.stringify({ prompt }),
       }
@@ -99,7 +99,7 @@ export function hotloadAPI(
     const url = new URL(
       `${commonConfig.PRIVATE_DATA_API_BASE_URL}/api/rest/v1/llm/hotload`
     )
-    url.searchParams.append("token", sessionToken)
+    url.searchParams.append("api_key", sessionToken)
     const eventSource = new EventSource(url.toString())
 
     eventSource.onmessage = (event) => {

@@ -168,7 +168,7 @@ export async function getDataConnections(
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${sessionToken}`,
+          "X-API-Key": sessionToken,
         },
       }
     )
@@ -238,7 +238,7 @@ export async function syncDataConnection(
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${sessionToken}`,
+        "X-API-Key": sessionToken,
       },
       body: JSON.stringify({
         instantComplete: true,
@@ -302,7 +302,7 @@ export async function disconnectDataConnection(
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${sessionToken}`,
+        "X-API-Key": sessionToken,
       },
     })
 
@@ -351,7 +351,7 @@ export function buildConnectProviderUrl(
   const connectUrl = new URL(
     `${commonConfig.PRIVATE_DATA_API_BASE_URL}/providers/${providerId}/connect`
   )
-  connectUrl.searchParams.append("token", sessionToken)
+  connectUrl.searchParams.append("api_key", sessionToken)
 
   const redirectUrl = new URL(
     `${commonConfig.BASE_URL}${getNewDataConnectionCallbackPageRoute()}`

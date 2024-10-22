@@ -48,7 +48,7 @@ export async function searchData({
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${sessionToken}`,
+        "X-API-Key": sessionToken,
       },
     })
 
