@@ -60,7 +60,7 @@ const PaginationCurrent = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "flex flex-row gap-1 rounded-sm border bg-surface px-4 py-2.5 text-sm font-medium",
+      "flex h-10 flex-row items-center gap-1 rounded-md border bg-surface px-4 text-sm font-medium",
       className
     )}
     {...divProps}
@@ -99,8 +99,7 @@ const PaginationFirst = ({
 }: React.ComponentProps<typeof PaginationButton>) => (
   <PaginationButton
     aria-label="Go to first page"
-    size="default"
-    className={cn("gap-1 pl-2.5", className)}
+    className={cn(className)}
     {...props}
   >
     <ChevronFirst className="h-4 w-4" />
@@ -115,8 +114,7 @@ const PaginationPrevious = ({
 }: React.ComponentProps<typeof PaginationButton>) => (
   <PaginationButton
     aria-label="Go to previous page"
-    size="default"
-    className={cn("gap-1 pl-2.5", className)}
+    className={cn(className)}
     {...props}
   >
     <ChevronLeft className="h-4 w-4" />
@@ -131,8 +129,7 @@ const PaginationNext = ({
 }: React.ComponentProps<typeof PaginationButton>) => (
   <PaginationButton
     aria-label="Go to next page"
-    size="default"
-    className={cn("gap-1 pr-2.5", className)}
+    className={cn(className)}
     {...props}
   >
     <span className="sr-only">Next page</span>
@@ -147,8 +144,7 @@ const PaginationLast = ({
 }: React.ComponentProps<typeof PaginationButton>) => (
   <PaginationButton
     aria-label="Go to last page"
-    size="default"
-    className={cn("gap-1 pr-2.5", className)}
+    className={cn(className)}
     {...props}
   >
     <span className="sr-only">Last page</span>
@@ -163,7 +159,7 @@ const PaginationEllipsis = ({
 }: React.ComponentProps<"span">) => (
   <span
     aria-hidden
-    className={cn("flex h-9 w-9 items-center justify-center", className)}
+    className={cn("flex size-10 items-center justify-center", className)}
     {...props}
   >
     <MoreHorizontal className="h-4 w-4" />

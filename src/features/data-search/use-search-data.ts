@@ -1,11 +1,15 @@
 import { useQuery } from "@tanstack/react-query"
 
 import { commonConfig } from "@/config/common"
+import { SearchType } from "@/features/data-search/types"
 import { searchData } from "@/features/data-search/utils"
 
-export function useSearchData(searchValue?: string) {
+export function useSearchData(
+  searchValue?: string,
+  searchTypes?: SearchType[]
+) {
   const { data, ...query } = useQuery({
-    queryKey: ["searchData", searchValue],
+    queryKey: ["data", "search", searchTypes, searchValue],
     enabled: !!searchValue,
     queryFn: () => {
       if (!searchValue) {
@@ -16,6 +20,7 @@ export function useSearchData(searchValue?: string) {
       return searchData({
         key: commonConfig.PRIVATE_DATA_API_PRIVATE_KEY,
         searchValue,
+        searchTypes,
       })
     },
     staleTime: 1000 * 10, // 10 seconds
