@@ -9,6 +9,7 @@ import { DatabaseIcon } from "@/components/icons/database-icon"
 import { GridIcon } from "@/components/icons/grid-icon"
 import { Typography } from "@/components/typography"
 import { Button } from "@/components/ui/button"
+import { Checkbox } from "@/components/ui/checkbox"
 import {
   Command,
   CommandEmpty,
@@ -25,8 +26,8 @@ import {
 } from "@/components/ui/dialog"
 import {
   DropdownMenu,
-  DropdownMenuCheckboxItem,
   DropdownMenuContent,
+  DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import {
@@ -120,19 +121,21 @@ export function AppCommandDialog() {
             Search your data
           </DialogDescription>
           <div className="flex flex-row items-center gap-2 p-4 pb-0.5">
-            <SearchCommandSearchTypeMenu
-              selectedSearchTypes={searchTypes}
-              onSelectSearchType={handleSelectSearchType}
-              showIndicator={hasCustomSearchTypes}
-              className="shrink-0"
-            />
-            <CommandInput
-              placeholder="Search your data..."
-              value={search}
-              onValueChange={setSearch}
-              displayClearButton={search.length > 0}
-              onClear={handleClearSearch}
-            />
+            <div className="flex flex-1 flex-row-reverse items-center gap-2">
+              <CommandInput
+                placeholder="Search your data..."
+                value={search}
+                onValueChange={setSearch}
+                displayClearButton={search.length > 0}
+                onClear={handleClearSearch}
+              />
+              <SearchCommandSearchTypeMenu
+                selectedSearchTypes={searchTypes}
+                onSelectSearchType={handleSelectSearchType}
+                showIndicator={hasCustomSearchTypes}
+                className="shrink-0"
+              />
+            </div>
             <Button
               variant="outline"
               onClick={handleClose}
@@ -246,21 +249,63 @@ function SearchCommandSearchTypeMenu(props: SearchCommandSearchTypeMenuProps) {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="start">
+        <DropdownMenuItem
+          // TODO: Find a way to use a DropdownMenuCheckboxItem to improve accessibility
+          // Right now, the user action is on the menu item itself,
+          // which is good, and the Checkbox is for visual only but
+          // is picked up by the screen readers as an actual control
+          // which doesn't have any action associated with it
+          key="all-types"
+          onSelect={(event) => {
+            event.preventDefault()
+            availableSearchTypes.forEach((type) => {
+              onSelectSearchType(
+                type.value,
+                !availableSearchTypes.every((type) =>
+                  selectedSearchTypes.includes(type.value)
+                )
+              )
+            })
+          }}
+          className="gap-2 px-3 py-2.5"
+        >
+          <Checkbox
+            checked={availableSearchTypes.every((type) =>
+              selectedSearchTypes.includes(type.value)
+            )}
+            aria-labelledby="search-type-all"
+          />
+          <span id="search-type-all">All</span>
+        </DropdownMenuItem>
         {availableSearchTypes.map((type) => (
-          <DropdownMenuCheckboxItem
+          <DropdownMenuItem
+            // TODO: Find a way to use a DropdownMenuCheckboxItem to improve accessibility
+            // Right now, the user action is on the menu item itself,
+            // which is good, and the Checkbox is for visual only but
+            // is picked up by the screen readers as an actual control
+            // which doesn't have any action associated with it
             key={type.value}
-            checked={selectedSearchTypes.includes(type.value)}
-            onCheckedChange={(isSelected) =>
-              onSelectSearchType(type.value, isSelected)
-            }
             onSelect={(event) => {
               event.preventDefault()
+              onSelectSearchType(
+                type.value,
+                !selectedSearchTypes.includes(type.value)
+              )
             }}
-            className="gap-2"
+            className="gap-2 px-3 py-2.5"
           >
-            <DatabaseIcon fill={type.color} className="size-5 shrink-0" />
-            {type.label}
-          </DropdownMenuCheckboxItem>
+            <Checkbox
+              checked={selectedSearchTypes.includes(type.value)}
+              aria-labelledby={`search-type-${type.value}`}
+            />
+            <span
+              id={`search-type-${type.value}`}
+              className="flex flex-row items-center gap-2"
+            >
+              <DatabaseIcon fill={type.color} className="size-5 shrink-0" />
+              {type.label}
+            </span>
+          </DropdownMenuItem>
         ))}
       </DropdownMenuContent>
     </DropdownMenu>
