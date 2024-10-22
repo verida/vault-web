@@ -1,43 +1,38 @@
 import type { Config } from "tailwindcss"
+import { fontFamily } from "tailwindcss/defaultTheme"
 
 const config = {
   darkMode: ["class"],
-  content: [
-    './pages/**/*.{ts,tsx}',
-    './components/**/*.{ts,tsx}',
-    './app/**/*.{ts,tsx}',
-    './src/**/*.{ts,tsx}',
-	],
+  safelist: ["dark"],
+  content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"],
   prefix: "",
   theme: {
-    container: {
-      center: true,
-      padding: "2rem",
-      screens: {
-        "2xl": "1400px",
-      },
-    },
     fontFamily: {
-      sans: 'Sora, sans-serif'
+      sans: ["var(--font-sora)", ...fontFamily.sans],
     },
     extend: {
+      backgroundImage: {
+        "gradient-conic":
+          "conic-gradient(from -90deg at 50% 100%, #5354D1 0deg, #F7F8FA 234deg)", // TODO: To rework
+        "radial-gradient":
+          "radial-gradient(61% 61% at 50% 50%, #7986F7 0%, #5354D1 100%)", // TODO: To rework
+        "ai-assistant-gradient":
+          "radial-gradient(156% 83% at 27% 13%, #D14DF1 0%, #7755F1 44.01%, #37E0C9 100%)",
+      },
       colors: {
-        border: "hsl(var(--border))",
-        input: "hsl(var(--input))",
-        ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
-        primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
+        surface: {
+          DEFAULT: "hsl(var(--surface))",
+          hover: "hsl(var(--surface-hover))",
+          active: "hsl(var(--surface-active))",
         },
-        secondary: {
-          DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
-        },
-        destructive: {
-          DEFAULT: "hsl(var(--destructive))",
-          foreground: "hsl(var(--destructive-foreground))",
+        overlay: "hsl(var(--overlay) / 0.4)",
+        ring: "hsl(var(--ring))",
+        input: "hsl(var(--input))",
+        border: {
+          DEFAULT: "hsl(var(--border))",
+          hover: "hsl(var(--border-hover))",
         },
         muted: {
           DEFAULT: "hsl(var(--muted))",
@@ -46,48 +41,164 @@ const config = {
         accent: {
           DEFAULT: "hsl(var(--accent))",
           foreground: "hsl(var(--accent-foreground))",
+          hover: "hsl(var(--accent-hover))",
+        },
+        primary: {
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
+          hover: "hsl(var(--primary-hover))",
+        },
+        destructive: {
+          DEFAULT: "hsl(var(--destructive))",
+          foreground: "hsl(var(--destructive-foreground))",
+          hover: "hsl(var(--destructive-hover))",
         },
         popover: {
           DEFAULT: "hsl(var(--popover))",
           foreground: "hsl(var(--popover-foreground))",
         },
-        card: {
-          DEFAULT: "hsl(var(--card))",
-          foreground: "hsl(var(--card-foreground))",
+        status: {
+          success: {
+            DEFAULT: "hsl(var(--status-success))",
+            foreground: "hsl(var(--status-success-foreground))",
+          },
+          added: {
+            DEFAULT: "hsl(var(--status-added))",
+            foreground: "hsl(var(--status-added-foreground))",
+          },
+          approved: {
+            DEFAULT: "hsl(var(--status-approved))",
+            foreground: "hsl(var(--status-approved-foreground))",
+          },
+          connected: {
+            DEFAULT: "hsl(var(--status-connected))",
+            foreground: "hsl(var(--status-connected-foreground))",
+          },
+          info: {
+            DEFAULT: "hsl(var(--status-info))",
+            foreground: "hsl(var(--status-info-foreground))",
+          },
+          warning: {
+            DEFAULT: "hsl(var(--status-warning))",
+            foreground: "hsl(var(--status-warning-foreground))",
+          },
+          error: {
+            DEFAULT: "hsl(var(--status-error))",
+            foreground: "hsl(var(--status-error-foreground))",
+          },
         },
-        gray: {
-          50: '#F9FAFB',
-          100: '#F3F4F6',
-          200: '#E2E8F0',
-          300: '#D1D5DB',
-          500: '#6B7280',
-          800: '#1F2937'
-        },
-        purple: {
-          50: '#F5F4FF',
-          100: '#ECEBFA',
-          200: '#D9D8F5',
-          400: '#7986F7',
-          500: '#5354D1',
-          700: '#0D0782'
-        },
-        green:{
-          100: '#DCFCE7',
-          800: '#166534'
-        },
-        cyan: {
-          100: '#CFFAFE',
-          800: '#155E75'
-        },
-        yellow: {
-          100: '#FEF9C3',
-          800: '#854D0E'
-        }
       },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+      },
+      fontSize: {
+        "heading-1": [
+          "2rem",
+          {
+            lineHeight: "130%",
+            fontWeight: "700",
+          },
+        ],
+        "heading-2": [
+          "1.5rem",
+          {
+            lineHeight: "140%",
+            fontWeight: "600",
+          },
+        ],
+        "heading-3": [
+          "1.25rem",
+          {
+            lineHeight: "140%",
+            fontWeight: "600",
+          },
+        ],
+        "heading-4": [
+          "1.125rem",
+          {
+            lineHeight: "140%",
+            fontWeight: "600",
+          },
+        ],
+        "heading-5": [
+          "1rem",
+          {
+            lineHeight: "140%",
+            fontWeight: "600",
+          },
+        ],
+        "base-l": [
+          "1rem",
+          {
+            lineHeight: "140%",
+            fontWeight: "400",
+          },
+        ],
+        "base-s-regular": [
+          "0.75rem",
+          {
+            lineHeight: "140%",
+            fontWeight: "400",
+          },
+        ],
+        "base-s-semibold": [
+          "0.75rem",
+          {
+            lineHeight: "140%",
+            fontWeight: "600",
+          },
+        ],
+        "base-regular": [
+          "0.875rem",
+          {
+            lineHeight: "140%",
+            fontWeight: "400",
+          },
+        ],
+        "base-semibold": [
+          "0.875rem",
+          {
+            lineHeight: "140%",
+            fontWeight: "600",
+          },
+        ],
+        "desktop-heading-1": [
+          "2.5rem",
+          {
+            lineHeight: "130%",
+            fontWeight: "700",
+          },
+        ],
+        "desktop-heading-2": [
+          "2rem",
+          {
+            lineHeight: "140%",
+            fontWeight: "600",
+          },
+        ],
+        "desktop-heading-3": [
+          "1.5rem",
+          {
+            lineHeight: "140%",
+            fontWeight: "600",
+          },
+        ],
+        "desktop-heading-4": [
+          "1.25rem",
+          {
+            lineHeight: "140%",
+            fontWeight: "600",
+          },
+        ],
+        "desktop-heading-5": [
+          "1rem",
+          {
+            lineHeight: "140%",
+            fontWeight: "600",
+          },
+        ],
       },
       keyframes: {
         "accordion-down": {
@@ -102,10 +213,11 @@ const config = {
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "spin-slow": "spin 4s linear infinite",
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [require("tailwindcss-animate"), require("@tailwindcss/typography")],
 } satisfies Config
 
 export default config

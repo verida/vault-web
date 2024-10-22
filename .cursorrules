@@ -1,0 +1,62 @@
+You are an expert in TypeScript, Node.js, Next.js App Router, React, Shadcn UI, Radix UI and Tailwind.
+
+Code Style and Structure
+
+- Write concise, technical TypeScript code with accurate examples.
+- Use functional and declarative programming patterns; avoid classes.
+- Prefer iteration and modularization over code duplication.
+- Use descriptive variable names with auxiliary verbs (e.g., isLoading, hasError).
+- Structure files: exported component, subcomponents, helpers, static content, types.
+- For components used in a single route, favor a `_components` folder in the corresponding route folder in the `/app` folder.
+- Use a `features` folder to group components, hooks, utils, etc. by feature. But keep the UI components either in the `/app` folder of in the `/components` folder.
+- We have a `<Typography>` component that should be favored for text rendering.
+
+Naming Conventions
+
+- Use lowercase with dashes for directories and files (e.g., components/auth-wizard).
+- Favor named exports for components but default export for what Next.js expect as default export.
+- For conventional Next.js files, name the component inside with a prefix for the route, for example for the `/app/dashboard/layout.tsx` file, the component should be named `DashboardLayout`.
+- For all components, always set the display name to the component name, after the function.
+
+TypeScript Usage
+
+- Use TypeScript for all code; prefer types over interfaces.
+- Prefer to declare the types in a `types.ts` file, except for the React component props which should be declared in the component file.
+- Name the component props type with a `Props` suffix. Declare the type above the component function.
+- Do not destructure the `props` parameter in the function signature, destructure it as the first line in the function body.
+- Avoid enums; use maps instead.
+- Use functional components with TypeScript types.
+
+Syntax and Formatting
+
+- Use the "function" keyword for pure functions.
+- Use declarative JSX.
+
+UI and Styling
+
+- Use Shadcn UI, Radix, and Tailwind for components and styling.
+- Implement responsive design with Tailwind CSS; use a mobile-first approach.
+- This app has a custom design system, so the Shadcn UI components should be customised to fit the design system.
+- When refactoring code, be mindful of some of the classes that are already applied to the components, only add or remove classes necessary for the tasks, be careful of not loosing some of the styles (for example paddings, border radius, color, etc.).
+- With Tailwind, do not use the `dark:` prefix for the dark mode classes as we use CSS variables for the colors that are automatically overridden when the theme is changed.
+
+Performance Optimization
+
+- Minimize 'useEffect', and 'setState'.
+- Until we use React 19, use `useMemo` and `useCallback` for performance optimization as well as `React.forwardRef` for reusable components.
+- Wrap client components in Suspense with fallback.
+- Use dynamic loading for non-critical components.
+- Optimize images: use WebP format, include size data, implement lazy loading.
+
+Key Conventions
+
+- Optimize Web Vitals (LCP, CLS, FID).
+- Limit client components ('use client'):
+  - Favor server components and Next.js SSR.
+  - Use only for Web API access in small components.
+  - Avoid for data fetching or state management.
+- Add some documentation to the code, not too much, just enough to understand the most important parts of the code.
+- Use Zod for validation. Favor declaring the schemas in a `schemas.ts` file in the feature folder.
+- Never use `console` to log anything. Use the custom logger that is exported from `src/features/telemetry`, check its signature in the exported Logger class.
+
+Follow Next.js docs for Data Fetching, Rendering, and Routing.

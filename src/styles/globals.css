@@ -1,0 +1,97 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 220 23% 97%;
+    --foreground: 0 0% 7%;
+
+    --surface: 0 0% 100%;
+    --surface-hover: 210 20% 98%;
+    --surface-active: 220 14% 96%;
+
+    --overlay: 0 0% 0%;
+
+    --ring: 240 58% 57%;
+
+    --border: 214 32% 91%;
+    --border-hover: 220 13% 84%;
+
+    --muted: 220 14% 96%;
+    --muted-foreground: 220 9% 46%;
+
+    --accent: 240 58% 57%;
+    --accent-foreground: 0 0% 100%;
+    --accent-hover: 243 90% 27%;
+
+    --primary: 240 58% 57%;
+    --primary-foreground: 0 0% 100%;
+    --primary-hover: 243 90% 27%;
+
+    --destructive: 353 98% 65%;
+    --destructive-foreground: 0 0% 100%;
+    --destructive-hover: 353 57% 52%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 7%;
+
+    --status-success: 158 53% 59%;
+    --status-success-foreground: 0 0% 100%;
+
+    --status-added: 141, 84%, 93%;
+    --status-added-foreground: 0 0% 7%;
+
+    --status-approved: 158 53% 59%;
+    --status-approved-foreground: 0 0% 100%;
+
+    --status-connected: 158 53% 59%;
+    --status-connected-foreground: 0 0% 100%;
+
+    --status-info: 213 100% 50%;
+    --status-info-foreground: 0 0% 100%;
+
+    --status-warning: 36 93% 59%;
+    --status-warning-foreground: 0 0% 100%;
+
+    --status-error: 353 98% 65%;
+    --status-error-foreground: 0 0% 100%;
+
+    --radius: 0.5rem;
+  }
+
+  /* .dark {
+    When supporting dark mode, set the same CSS variables as above here
+  } */
+}
+
+@layer base {
+  * {
+    @apply border-border focus-visible:outline-accent;
+  }
+
+  body {
+    @apply bg-background font-sans text-foreground antialiased caret-accent selection:bg-accent selection:text-accent-foreground;
+  }
+}
+
+.fade-enter {
+  opacity: 0;
+}
+
+.fade-enter-active {
+  opacity: 1;
+}
+
+.fade-exit {
+  opacity: 1;
+}
+
+.fade-exit-active {
+  opacity: 0;
+}
+
+.fade-enter-active,
+.fade-exit-active {
+  transition: opacity 300ms;
+}

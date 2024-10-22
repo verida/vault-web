@@ -1,0 +1,54 @@
+import { QueryClient, useQuery } from "@tanstack/react-query"
+
+import { commonConfig } from "@/config/common"
+import { DataConnectionsQueryKeys } from "@/features/data-connections/queries"
+import { getDataConnections } from "@/features/data-connections/utils"
+import { Logger } from "@/features/telemetry"
+import { useVerida } from "@/features/verida/hooks/useVerida"
+
+const logger = Logger.create("data-connections")
+
+export function useDataConnections() {
+  const { did } = useVerida()
+
+  const { data, ...query } = useQuery({
+    queryKey: DataConnectionsQueryKeys.dataConnections({ did }),
+    queryFn: () =>
+      getDataConnections(commonConfig.PRIVATE_DATA_API_PRIVATE_KEY),
+    staleTime: 1000 * 60 * 2, // 2 minutes
+    // TODO: Can increase the stale time once the status is fetched separately
+    // as the connections definition won't change much unless mutated which can
+    // invalidate the cache
+    gcTime: 1000 * 60 * 30, // 30 minutes
+    meta: {
+      logCategory: "data-connections",
+      errorMessage: "Error fetching data connections",
+    },
+  })
+
+  return {
+    connections: data,
+    ...query,
+  }
+}
+
+export async function prefetchDataConnections(
+  queryClient: QueryClient,
+  did: string | null
+) {
+  if (!did) {
+    return
+  }
+
+  logger.info("Prefetching data connections")
+  await queryClient.prefetchQuery({
+    queryKey: DataConnectionsQueryKeys.dataConnections({ did }),
+    queryFn: () =>
+      getDataConnections(commonConfig.PRIVATE_DATA_API_PRIVATE_KEY),
+    staleTime: 1000 * 60 * 2, // 2 minutes
+    // TODO: Can increase the stale time once the status is fetched separately
+    // as the connections definition won't change much unless mutated which can
+    // invalidate the cache
+    gcTime: 1000 * 60 * 30, // 30 minutes
+  })
+}
