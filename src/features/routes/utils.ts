@@ -55,3 +55,7 @@ export function getConnectionsSummaryLogsPageRoute() {
 export function getNewDataConnectionCallbackPageRoute() {
   return `/callback/new-data-connection`
 }
+
+export function getApiKeysPageRoute() {
+  return `/api-keys`
+}

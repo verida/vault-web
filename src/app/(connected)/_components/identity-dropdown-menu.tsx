@@ -1,8 +1,10 @@
 "use client"
 
 import { MessageCircle } from "lucide-react"
+import { useRouter } from "next/navigation"
 import React, { useCallback } from "react"
 
+import { ApiKeyIcon } from "@/components/icons/api-key-icon"
 import { Copy } from "@/components/icons/copy"
 import { Logout } from "@/components/icons/logout"
 import { SimpleDown } from "@/components/icons/simple-down"
@@ -18,6 +20,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Skeleton } from "@/components/ui/skeleton"
 import { EMPTY_PROFILE_NAME_FALLBACK } from "@/features/profiles/constants"
+import { getApiKeysPageRoute } from "@/features/routes/utils"
 import { useUserFeedback } from "@/features/telemetry/use-user-feedback"
 import { useToast } from "@/features/toasts/use-toast"
 import { useVerida } from "@/features/verida"
@@ -31,6 +34,7 @@ export type IdentityDropdownMenuProps = Pick<
 export function IdentityDropdownMenu(props: IdentityDropdownMenuProps) {
   const { className } = props
 
+  const router = useRouter()
   const { isConnected, did, profile, disconnect } = useVerida()
 
   const { openForm: openUserFeedbackForm, isReady: isUserFeedbackReady } =
@@ -47,6 +51,10 @@ export function IdentityDropdownMenu(props: IdentityDropdownMenuProps) {
       })
     }
   }, [did, toast])
+
+  const handleApiKeysClick = useCallback(() => {
+    router.push(getApiKeysPageRoute())
+  }, [router])
 
   return (
     <DropdownMenu>
@@ -87,7 +95,7 @@ export function IdentityDropdownMenu(props: IdentityDropdownMenuProps) {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
-        className="w-screen max-w-80 rounded-xl p-0"
+        className="w-screen max-w-80 rounded-xl p-0 text-muted-foreground"
         align="end"
       >
         <DropdownMenuItem className="block px-4 py-3" onClick={handleCopyDid}>
@@ -145,6 +153,14 @@ export function IdentityDropdownMenu(props: IdentityDropdownMenuProps) {
             <Typography variant="base-semibold">Give your feedback</Typography>
           </DropdownMenuItem>
         ) : null}
+        <DropdownMenuSeparator className="my-0" />
+        <DropdownMenuItem
+          onClick={handleApiKeysClick}
+          className="cursor-pointer gap-3 px-4 py-4"
+        >
+          <ApiKeyIcon className="size-5" />
+          <Typography variant="base-semibold">API Keys</Typography>
+        </DropdownMenuItem>
         <DropdownMenuSeparator className="my-0" />
         <DropdownMenuItem
           onClick={disconnect}
