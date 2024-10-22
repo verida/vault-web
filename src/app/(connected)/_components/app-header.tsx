@@ -38,7 +38,7 @@ export function AppHeader(props: AppHeaderProps) {
           </div>
           <div className="flex flex-row items-center gap-4 py-4 pr-4 md:pr-6 xl:pr-8">
             {featureFlags.commandDialog.enabled ? (
-              <AppCommandDialogTrigger className="" />
+              <AppCommandDialogTrigger className="h-8 w-8 sm:w-auto md:h-12" />
             ) : null}
             <IdentityDropdownMenu />
           </div>

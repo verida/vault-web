@@ -121,7 +121,11 @@ export function AppCommandDialog() {
             Search your data
           </DialogDescription>
           <div className="flex flex-row items-center gap-2 p-4 pb-0.5">
-            <div className="flex flex-1 flex-row-reverse items-center gap-2">
+            <div
+              className="flex flex-1 flex-row-reverse items-center gap-2"
+              // HACK: Using flow reverse to put the input first in the DOM flow
+              // Apparently what's used to give the input the focus
+            >
               <CommandInput
                 placeholder="Search your data..."
                 value={search}
@@ -350,7 +354,7 @@ export function AppCommandDialogTrigger(props: AppCommandDialogTriggerProps) {
         >
           <SearchIcon className="h-4 w-4 shrink-0 opacity-50" />
           <span className="sr-only">Search</span>
-          <span className="hidden rounded-sm bg-background p-1 text-base-s-regular text-muted-foreground sm:inline-block">
+          <span className="hidden rounded-sm bg-surface-hover p-1 text-base-s-regular text-muted-foreground sm:inline-block">
             {shortcutText}
           </span>
         </Button>
