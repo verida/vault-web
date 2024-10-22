@@ -4,6 +4,7 @@ import { AppHeader } from "@/app/(connected)/_components/app-header"
 import { AppRestrictedProviders } from "@/app/(connected)/_components/app-restricted-providers"
 import { AppUnrestrictedProviders } from "@/app/(connected)/_components/app-unrestricted-providers"
 import { RestrictedAccessHandler } from "@/app/(connected)/_components/restricted-access-handler"
+import { featureFlags } from "@/config/features"
 
 type AppLayoutProps = {
   children: React.ReactNode
@@ -25,7 +26,7 @@ export default function AppLayout(props: AppLayoutProps) {
             </main>
           </div>
         </div>
-        <AppCommandDialog />
+        {featureFlags.commandDialog.enabled ? <AppCommandDialog /> : null}
       </AppUnrestrictedProviders>
     </AppConnectionHandler>
   )

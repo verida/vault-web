@@ -9,6 +9,9 @@ export const featureFlags = {
   data: {
     enabled: commonConfig.FEATURE_FLAG_DATA_ENABLED,
   },
+  commandDialog: {
+    enabled: commonConfig.FEATURE_FLAG_COMMAND_DIALOG_ENABLED,
+  },
   assistant: {
     enabled: commonConfig.FEATURE_FLAG_AI_ASSISTANT_ENABLED,
   },

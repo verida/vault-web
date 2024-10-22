@@ -40,7 +40,9 @@ export function DataTablePagination<TData>(
           />
         </div>
         <Pagination className="flex flex-row items-center gap-2">
-          <p className="text-sm font-medium text-muted-foreground">Page</p>
+          <p className="hidden text-sm font-medium text-muted-foreground sm:block">
+            Page
+          </p>
           <PaginationContent>
             <PaginationItem>
               <PaginationPrevious
