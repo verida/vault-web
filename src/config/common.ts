@@ -26,6 +26,8 @@ const commonConfigCheckResult = CommonConfigSchema.safeParse({
     process.env.NEXT_PUBLIC_FEATURE_FLAG_DATA_CONNECTIONS_ENABLED,
   FEATURE_FLAG_DATA_CONNECTIONS_LOGS_ENABLED:
     process.env.NEXT_PUBLIC_FEATURE_FLAG_DATA_CONNECTIONS_LOGS_ENABLED,
+  FEATURE_FLAG_API_KEYS_ENABLED:
+    process.env.NEXT_PUBLIC_FEATURE_FLAG_API_KEYS_ENABLED,
   isClient: !(typeof window === "undefined"),
   appVersion: version,
 })

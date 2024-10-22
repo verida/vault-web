@@ -21,4 +21,7 @@ export const featureFlags = {
       enabled: commonConfig.FEATURE_FLAG_DATA_CONNECTIONS_LOGS_ENABLED,
     },
   },
+  apiKeys: {
+    enabled: commonConfig.FEATURE_FLAG_API_KEYS_ENABLED,
+  },
 }

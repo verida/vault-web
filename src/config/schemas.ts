@@ -49,6 +49,10 @@ export const CommonConfigSchema = z.object({
     .string()
     .optional()
     .transform((value) => value === "true"),
+  FEATURE_FLAG_API_KEYS_ENABLED: z
+    .string()
+    .optional()
+    .transform((value) => value === "true"),
   PRIVATE_DATA_API_BASE_URL: z.string().url().optional(), // Temporary solution until the endpoints are fetched from the DID Document
   PRIVATE_DATA_API_PRIVATE_KEY: z.string().optional(), // Temporary solution until we have a proper auth solution on the backend
   isClient: z.boolean(),
