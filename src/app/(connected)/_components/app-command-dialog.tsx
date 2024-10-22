@@ -235,7 +235,18 @@ function SearchCommandSearchTypeMenu(props: SearchCommandSearchTypeMenuProps) {
   }))
 
   return (
-    <DropdownMenu>
+    <DropdownMenu
+    // FIXME: Because of an internal conflict in radix-ui, we had to fix the
+    // version of @radix-ui/react-dialog and @radix-ui/dismissable-layer to
+    // 1.0.5.
+    // The issue was when pressing ESC on the dropdown menu, it would close
+    // the dialog as well. Even worse, the focus would be trapped in the
+    // no longer displayed dialog modal, making the whole UI unresponsive to
+    // clicks.
+    // The downside of this hack is that, for some reasons, the menu is no
+    // longer navigable by the keyboard direction keys, which is not ideal from
+    // an accessibility standpoint but better than the loss of click
+    >
       <DropdownMenuTrigger asChild>
         <Button
           variant="outline"
