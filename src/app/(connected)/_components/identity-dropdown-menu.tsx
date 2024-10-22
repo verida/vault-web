@@ -19,6 +19,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Skeleton } from "@/components/ui/skeleton"
+import { featureFlags } from "@/config/features"
 import { EMPTY_PROFILE_NAME_FALLBACK } from "@/features/profiles/constants"
 import { getApiKeysPageRoute } from "@/features/routes/utils"
 import { useUserFeedback } from "@/features/telemetry/use-user-feedback"
@@ -153,14 +154,18 @@ export function IdentityDropdownMenu(props: IdentityDropdownMenuProps) {
             <Typography variant="base-semibold">Give your feedback</Typography>
           </DropdownMenuItem>
         ) : null}
-        <DropdownMenuSeparator className="my-0" />
-        <DropdownMenuItem
-          onClick={handleApiKeysClick}
-          className="cursor-pointer gap-3 px-4 py-4"
-        >
-          <ApiKeyIcon className="size-5" />
-          <Typography variant="base-semibold">API Keys</Typography>
-        </DropdownMenuItem>
+        {featureFlags.apiKeys.enabled ? (
+          <>
+            <DropdownMenuSeparator className="my-0" />
+            <DropdownMenuItem
+              onClick={handleApiKeysClick}
+              className="cursor-pointer gap-3 px-4 py-4"
+            >
+              <ApiKeyIcon className="size-5" />
+              <Typography variant="base-semibold">API Keys</Typography>
+            </DropdownMenuItem>
+          </>
+        ) : null}
         <DropdownMenuSeparator className="my-0" />
         <DropdownMenuItem
           onClick={disconnect}
