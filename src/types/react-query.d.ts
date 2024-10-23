@@ -4,6 +4,7 @@ import { QueryKey } from "@tanstack/react-query"
 interface CustomQueryMeta extends Record<string, unknown> {
   logCategory: string
   errorMessage: string
+  persist?: boolean
 }
 
 interface CustomMutationMeta extends Record<string, unknown> {

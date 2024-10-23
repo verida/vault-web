@@ -11,8 +11,8 @@ export function useDataProviders() {
     queryKey: DataConnectionsQueryKeys.dataProviders(),
     queryFn: getDataProviders,
     staleTime: 1000 * 60 * 60 * 6, // 6 hours
-    gcTime: 1000 * 60 * 60 * 24, // 24 hours
     meta: {
+      persist: true,
       logCategory: "data-connections",
       errorMessage: "Error fetching data providers",
     },
@@ -30,6 +30,10 @@ export async function prefetchDataProviders(queryClient: QueryClient) {
     queryKey: DataConnectionsQueryKeys.dataProviders(),
     queryFn: getDataProviders,
     staleTime: 1000 * 60 * 60 * 6, // 6 hours
-    gcTime: 1000 * 60 * 60 * 24, // 24 hours
+    meta: {
+      persist: true,
+      logCategory: "data-connections",
+      errorMessage: "Error fetching data providers",
+    },
   })
 }
