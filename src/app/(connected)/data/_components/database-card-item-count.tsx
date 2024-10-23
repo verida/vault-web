@@ -2,7 +2,7 @@
 
 import { Typography } from "@/components/typography"
 import { Skeleton } from "@/components/ui/skeleton"
-import { useVeridaDataRecords } from "@/features/verida-database"
+import { useVeridaDataRecords } from "@/features/verida-database/use-verida-data-records"
 import { cn } from "@/styles/utils"
 
 export type DatabaseCardItemCountProps = {

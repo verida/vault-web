@@ -35,7 +35,8 @@ import { DATA_TABLE_PAGINATION_SIZE_DEFAULT } from "@/features/data-table/consta
 import { DataTableColumnAlignFeature } from "@/features/data-table/data-table-column-align-feature"
 import { DataTableColumnClassNameFeature } from "@/features/data-table/data-table-column-classname-feature"
 import { DatabaseDefinition } from "@/features/data/types"
-import { VeridaRecord, useVeridaDataRecords } from "@/features/verida-database"
+import { VeridaRecord } from "@/features/verida-database/types"
+import { useVeridaDataRecords } from "@/features/verida-database/use-verida-data-records"
 
 const fallbackData: VeridaRecord[] = []
 

@@ -19,10 +19,8 @@ import {
   LoadingBlockSpinner,
   LoadingBlockTitle,
 } from "@/components/ui/loading"
-import {
-  DataConnection,
-  useDataConnectionLogs,
-} from "@/features/data-connections"
+import { useDataConnectionLogs } from "@/features/data-connections/hooks/use-data-connection-logs"
+import { DataConnection } from "@/features/data-connections/types"
 import { cn } from "@/styles/utils"
 
 export type DataConnectionLogsProps = {

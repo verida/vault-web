@@ -7,7 +7,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton"
-import { DataProvider } from "@/features/data-connections"
+import { DataProvider } from "@/features/data-connections/types"
 import { cn } from "@/styles/utils"
 
 export type DataProviderCardProps = {

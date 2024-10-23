@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query"
 import { useCallback } from "react"
 
 import { getPublicProfile } from "@/features/profiles/utils"
-import { useVerida } from "@/features/verida"
+import { useVerida } from "@/features/verida/use-verida"
 
 export const useMessages = (
   messagingEngine: any,

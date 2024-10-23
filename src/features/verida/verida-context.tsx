@@ -1,6 +1,5 @@
 "use client"
 
-import { hasSession } from "@verida/account-web-vault"
 import { type DatastoreOpenConfig, type IDatastore } from "@verida/types"
 import { WebUser } from "@verida/web-helpers"
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"
@@ -16,7 +15,7 @@ const logger = Logger.create("verida")
 const webUserInstance = new WebUser({
   debug: commonConfig.DEV_MODE,
   clientConfig: {
-    environment: commonConfig.VERIDA_NETWORK,
+    network: commonConfig.VERIDA_NETWORK,
     didClientConfig: {
       network: commonConfig.VERIDA_NETWORK,
       rpcUrl: commonConfig.VERIDA_RPC_URL,
@@ -29,7 +28,7 @@ const webUserInstance = new WebUser({
     request: {
       logoUrl: `${commonConfig.BASE_URL}/images/verida_vault_logo_for_connect.png`,
     },
-    environment: commonConfig.VERIDA_NETWORK,
+    network: commonConfig.VERIDA_NETWORK,
   },
 })
 
@@ -43,6 +42,7 @@ type VeridaContextType = {
   profile: PublicProfile | null
   connect: () => Promise<void>
   disconnect: () => Promise<void>
+  getAccountSessionToken: () => Promise<string>
   openDatastore: (
     schemaUrl: string,
     config?: DatastoreOpenConfig
@@ -113,7 +113,7 @@ export const VeridaProvider: React.FunctionComponent<VeridaProviderProps> = (
   const autoConnect = useCallback(async () => {
     logger.info("Checking for existing Verida session")
 
-    if (!hasSession(VERIDA_VAULT_CONTEXT_NAME)) {
+    if (!webUserInstance.hasSession()) {
       logger.info("No existing Verida session found, skipping connection")
       return
     }
@@ -175,6 +175,21 @@ export const VeridaProvider: React.FunctionComponent<VeridaProviderProps> = (
     logger.info("User successfully disconnected from Verida")
   }, [webUserInstanceRef])
 
+  const getAccountSessionToken = useCallback(async () => {
+    const account = webUserInstanceRef.current.getAccount()
+    const contextSession = await account.getContextSession(
+      VERIDA_VAULT_CONTEXT_NAME
+    )
+
+    if (!contextSession) {
+      throw new Error("No context session found")
+    }
+
+    const stringifiedSession = JSON.stringify(contextSession)
+    const sessionToken = Buffer.from(stringifiedSession).toString("base64")
+    return sessionToken
+  }, [webUserInstanceRef])
+
   const openDatastore = useCallback(
     async (schemaUrl: string, config?: DatastoreOpenConfig) => {
       logger.info("Opening Verida datastore", {
@@ -205,6 +220,7 @@ export const VeridaProvider: React.FunctionComponent<VeridaProviderProps> = (
       did,
       connect,
       disconnect,
+      getAccountSessionToken,
       openDatastore,
       profile,
       webUserInstanceRef,
@@ -216,6 +232,7 @@ export const VeridaProvider: React.FunctionComponent<VeridaProviderProps> = (
       did,
       connect,
       disconnect,
+      getAccountSessionToken,
       openDatastore,
       profile,
       webUserInstanceRef,

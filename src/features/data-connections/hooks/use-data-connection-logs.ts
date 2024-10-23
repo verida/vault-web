@@ -1,6 +1,6 @@
 import { DATA_CONNECTIONS_SYNC_LOGS_DATABASE_NAME } from "@/features/data-connections/constants"
 import { DataConnectionSyncLog } from "@/features/data-connections/types"
-import { useVeridaDataRecords } from "@/features/verida-database"
+import { useVeridaDataRecords } from "@/features/verida-database/use-verida-data-records"
 
 export function useDataConnectionLogs({
   providerId,

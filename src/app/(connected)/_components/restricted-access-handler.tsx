@@ -2,7 +2,7 @@
 
 import { RestrictedAccessPageContent } from "@/app/(connected)/_components/restricted-access-page-content"
 import { useRestrictedAccess } from "@/features/restricted-access/use-restricted-access"
-import { useVerida } from "@/features/verida"
+import { useVerida } from "@/features/verida/use-verida"
 
 export type RestrictedAccessHandlerProps = {
   children: React.ReactNode

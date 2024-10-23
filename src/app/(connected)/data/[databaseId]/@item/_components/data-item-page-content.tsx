@@ -29,7 +29,7 @@ import {
 } from "@/components/ui/loading"
 import { Skeleton } from "@/components/ui/skeleton"
 import { DatabaseDefinition } from "@/features/data/types"
-import { useVeridaDataRecord } from "@/features/verida-database/hooks/use-verida-data-record"
+import { useVeridaDataRecord } from "@/features/verida-database/use-verida-data-record"
 
 export type DataItemPageContentProps = {
   open: boolean

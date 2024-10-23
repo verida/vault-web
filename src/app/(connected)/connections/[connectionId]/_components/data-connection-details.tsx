@@ -11,11 +11,9 @@ import { DataConnectionStatusBadge } from "@/components/data-connections/data-co
 import { Typography } from "@/components/typography"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
-import {
-  DataConnection,
-  useDataProvider,
-  useSyncDataConnection,
-} from "@/features/data-connections"
+import { useDataProvider } from "@/features/data-connections/hooks/use-data-provider"
+import { useSyncDataConnection } from "@/features/data-connections/hooks/use-sync-data-connection"
+import { DataConnection } from "@/features/data-connections/types"
 import { useToast } from "@/features/toasts/use-toast"
 import { cn } from "@/styles/utils"
 import { wait } from "@/utils/misc"
