@@ -145,7 +145,7 @@ export function RequestDataSelector(props: RequestDataSelectorProps) {
                     variant="base-s-semibold"
                     className="text-muted-foreground/60"
                   >
-                    {format(new Date(item.insertedAt), "DD/MM/YY hh:mm")}
+                    {format(new Date(item.insertedAt), "dd/MM/yyy hh:mm")}
                   </Typography>
                 </div>
               </label>

@@ -28,7 +28,7 @@ export function RequesterProfile(props: RequesterProfileProps) {
       <div>
         <Typography variant="heading-5">{sentBy?.name}</Typography>
         <Typography variant="base-s-semibold" className="text-muted-foreground">
-          {format(new Date(sentAt), "DD/MM/YY hh:mm")}
+          {format(new Date(sentAt), "dd/MM/yyy hh:mm")}
         </Typography>
       </div>
     </div>
