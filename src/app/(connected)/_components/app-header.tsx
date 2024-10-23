@@ -23,7 +23,7 @@ export function AppHeader(props: AppHeaderProps) {
         <div className="flex w-full max-w-screen-2xl flex-1 flex-row items-stretch justify-between gap-4">
           <div className="flex flex-row items-stretch gap-4 pl-4 md:pl-6 xl:pl-8">
             <div className="flex flex-row items-center lg:hidden">
-              <AppHeaderNavMenu />
+              <AppHeaderNavMenu className="-mx-2" />
             </div>
             <div className="flex shrink-0 flex-row items-center">
               <Image
