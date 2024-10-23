@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query"
 
 import { RestrictedAccessStatus } from "@/features/restricted-access/types"
 import { getRestrictedAccessStatus } from "@/features/restricted-access/utils"
-import { useVerida } from "@/features/verida"
+import { useVerida } from "@/features/verida/use-verida"
 
 export function useRestrictedAccess() {
   const { did } = useVerida()

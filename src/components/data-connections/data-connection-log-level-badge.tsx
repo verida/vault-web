@@ -9,7 +9,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
-import { DataConnectionSyncLogLevel } from "@/features/data-connections"
+import { DataConnectionSyncLogLevel } from "@/features/data-connections/types"
 import { cn } from "@/styles/utils"
 
 export type DataConnectionLogLevelBadgeProps = {

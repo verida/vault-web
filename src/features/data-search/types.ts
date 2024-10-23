@@ -5,7 +5,7 @@ import { SearchTypeSchema } from "@/features/data-search/schemas"
 export type SearchType = z.infer<typeof SearchTypeSchema>
 
 export type SearchDataArgs = {
-  key?: string
+  sessionToken: string
   searchValue: string
   limit?: number
   minResultsPerType?: number

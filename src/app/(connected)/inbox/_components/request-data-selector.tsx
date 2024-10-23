@@ -19,7 +19,7 @@ import {
   DrawerTitle,
 } from "@/components/ui/drawer"
 import { Logger } from "@/features/telemetry"
-import { useVerida } from "@/features/verida"
+import { useVerida } from "@/features/verida/use-verida"
 
 const logger = Logger.create("inbox")
 

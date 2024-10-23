@@ -4,7 +4,7 @@ import { redirect, useSearchParams } from "next/navigation"
 
 import { ConnectionLoading } from "@/app/_components/connection-loading"
 import { getDefaultRedirectPathAfterConnection } from "@/features/routes/utils"
-import { useVerida } from "@/features/verida"
+import { useVerida } from "@/features/verida/use-verida"
 
 const DEFAULT_REDIRECT_PATH = getDefaultRedirectPathAfterConnection()
 

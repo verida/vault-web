@@ -8,7 +8,7 @@ import { Logger } from "@/features/telemetry"
 const logger = Logger.create("search-data")
 
 export async function searchData({
-  key,
+  sessionToken,
   searchValue,
   limit,
   minResultsPerType,
@@ -22,7 +22,7 @@ export async function searchData({
       searchTypes,
     })
 
-    if (!commonConfig.PRIVATE_DATA_API_BASE_URL || !key) {
+    if (!commonConfig.PRIVATE_DATA_API_BASE_URL) {
       logger.warn(
         "Cannot fetch Verida data records due to incorrect API configuration"
       )
@@ -48,7 +48,7 @@ export async function searchData({
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        "key": key,
+        "X-API-Key": sessionToken,
       },
     })
 

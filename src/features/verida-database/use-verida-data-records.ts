@@ -1,13 +1,12 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query"
 
-import { commonConfig } from "@/config/common"
 import { VeridaDatabaseQueryKeys } from "@/features/verida-database/queries"
 import {
   VeridaDatabaseQueryFilter,
   VeridaDatabaseQueryOptions,
 } from "@/features/verida-database/types"
 import { fetchVeridaDataRecords } from "@/features/verida-database/utils"
-import { useVerida } from "@/features/verida/hooks"
+import { useVerida } from "@/features/verida/use-verida"
 
 type UseVeridaDataRecordsArgs<T = Record<string, unknown>> = {
   databaseName: string
@@ -28,7 +27,7 @@ export function useVeridaDataRecords<T = Record<string, unknown>>({
   filter,
   options,
 }: UseVeridaDataRecordsArgs<T>) {
-  const { did } = useVerida()
+  const { did, getAccountSessionToken } = useVerida()
 
   const queryClient = useQueryClient()
 
@@ -40,8 +39,10 @@ export function useVeridaDataRecords<T = Record<string, unknown>>({
       options,
     }),
     queryFn: async () => {
+      const token = await getAccountSessionToken()
+
       const result = await fetchVeridaDataRecords<T>({
-        key: commonConfig.PRIVATE_DATA_API_PRIVATE_KEY,
+        sessionToken: token,
         databaseName,
         filter,
         options,

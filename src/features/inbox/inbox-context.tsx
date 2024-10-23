@@ -3,7 +3,7 @@ import { IMessaging } from "@verida/types"
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { useThrottledCallback } from "use-debounce"
 
-import { useVerida } from "@/features/verida"
+import { useVerida } from "@/features/verida/use-verida"
 
 type InboxContextType = {
   messagingEngine: IMessaging | undefined

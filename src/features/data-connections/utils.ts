@@ -148,12 +148,12 @@ async function mockGetDataProviders(): Promise<DataProvider[]> {
  * @throws Error if there's an issue fetching the data connections
  */
 export async function getDataConnections(
-  key?: string
+  sessionToken: string
 ): Promise<DataConnection[]> {
   logger.info("Fetching data connections")
 
-  // Use mock response if API configuration is missing or key is not provided
-  if (!commonConfig.PRIVATE_DATA_API_BASE_URL || !key) {
+  // Use mock response if API configuration is missing
+  if (!commonConfig.PRIVATE_DATA_API_BASE_URL) {
     logger.warn(
       "Using mock response due to incorrect Private Data API configuration"
     )
@@ -168,7 +168,7 @@ export async function getDataConnections(
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          "key": key,
+          "X-API-Key": sessionToken,
         },
       }
     )
@@ -212,16 +212,16 @@ async function mockGetDataConnections(): Promise<DataConnection[]> {
  * Sync\ a given data connection
  *
  * @param connectionId - The connection ID
- * @param key - The API key for authentication
+ * @param sessionToken - The session token for authentication
  * @throws Error if there's an issue syncing the data connection
  */
 export async function syncDataConnection(
   connectionId: string,
-  key?: string
+  sessionToken: string
 ): Promise<DataConnectionsApiV1SyncConnectionResponse> {
   logger.info("Syncing data connection", { connectionId })
 
-  if (!commonConfig.PRIVATE_DATA_API_BASE_URL || !key) {
+  if (!commonConfig.PRIVATE_DATA_API_BASE_URL) {
     logger.warn(
       "Cannot sync data connection due to incorrect API configuration"
     )
@@ -238,7 +238,7 @@ export async function syncDataConnection(
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "key": key,
+        "X-API-Key": sessionToken,
       },
       body: JSON.stringify({
         instantComplete: true,
@@ -273,19 +273,19 @@ export async function syncDataConnection(
  * Disconnect a give data connection
  *
  * @param connectionId - The connection ID
- * @param key - The API key for authentication
+ * @param sessionToken - The session token for authentication
  * @returns A promise that resolves to a DataConnectionDisconnectApiResponse indicating success
  * @throws Error if there's an issue disconnecting the data connection
  */
 export async function disconnectDataConnection(
   connectionId: string,
-  key?: string
+  sessionToken: string
 ): Promise<DataConnectionsApiV1DisconnectConnectionResponse> {
   logger.info("Disconnecting data connection", {
     connectionId,
   })
 
-  if (!commonConfig.PRIVATE_DATA_API_BASE_URL || !key) {
+  if (!commonConfig.PRIVATE_DATA_API_BASE_URL) {
     logger.warn(
       "Cannot disconnect data connection due to incorrect Private Data API configuration"
     )
@@ -302,7 +302,7 @@ export async function disconnectDataConnection(
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
-        "key": key,
+        "X-API-Key": sessionToken,
       },
     })
 
@@ -332,14 +332,15 @@ export async function disconnectDataConnection(
  * Builds the URL to connect to a given provider.
  *
  * @param providerId - The provider ID
+ * @param sessionToken - The session token for authentication
  * @returns The URL string for connecting to the provider
  * @throws Error if the API configuration is missing
  */
 export function buildConnectProviderUrl(
   providerId: string,
-  key?: string
+  sessionToken: string
 ): string {
-  if (!commonConfig.PRIVATE_DATA_API_BASE_URL || !key) {
+  if (!commonConfig.PRIVATE_DATA_API_BASE_URL) {
     throw new Error("Incorrect Private Data API configuration")
   }
 
@@ -350,7 +351,7 @@ export function buildConnectProviderUrl(
   const connectUrl = new URL(
     `${commonConfig.PRIVATE_DATA_API_BASE_URL}/providers/${providerId}/connect`
   )
-  connectUrl.searchParams.append("key", key)
+  connectUrl.searchParams.append("api_key", sessionToken)
 
   const redirectUrl = new URL(
     `${commonConfig.BASE_URL}${getNewDataConnectionCallbackPageRoute()}`

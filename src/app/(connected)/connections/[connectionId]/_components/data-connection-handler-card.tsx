@@ -7,7 +7,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 import {
   DataConnectionHandler,
   DataProviderHandler,
-} from "@/features/data-connections"
+} from "@/features/data-connections/types"
 import { cn } from "@/styles/utils"
 
 const dateFormatter = new Intl.DateTimeFormat(undefined, {

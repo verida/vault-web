@@ -10,7 +10,7 @@ import {
   ErrorBlockDescription,
   ErrorBlockImage,
 } from "@/components/ui/error"
-import { useDataProviders } from "@/features/data-connections"
+import { useDataProviders } from "@/features/data-connections/hooks/use-data-providers"
 import { cn } from "@/styles/utils"
 
 export type DataProvidersListProps = React.ComponentProps<"div">

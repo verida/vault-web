@@ -34,7 +34,7 @@ export type VeridaDatabaseQueryOptions<T = Record<string, unknown>> = {
 }
 
 export type FetchVeridaDataRecordsArgs<T = Record<string, unknown>> = {
-  key?: string
+  sessionToken: string
   databaseName: string
   filter?: VeridaDatabaseQueryFilter<T>
   options?: VeridaDatabaseQueryOptions<T>

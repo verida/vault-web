@@ -3,11 +3,12 @@
 import { useQueryClient } from "@tanstack/react-query"
 import { useEffect } from "react"
 
-import {
-  prefetchDataConnections,
-  prefetchDataProviders,
-} from "@/features/data-connections/hooks"
-import { useVerida } from "@/features/verida"
+import { prefetchDataConnections } from "@/features/data-connections/hooks/use-data-connections"
+import { prefetchDataProviders } from "@/features/data-connections/hooks/use-data-providers"
+import { Logger } from "@/features/telemetry"
+import { useVerida } from "@/features/verida/use-verida"
+
+const logger = Logger.create("data-connections")
 
 export type DataConnectionsProviderProps = {
   children: React.ReactNode
@@ -16,16 +17,30 @@ export type DataConnectionsProviderProps = {
 export function DataConnectionsProvider(props: DataConnectionsProviderProps) {
   const { children } = props
 
-  const { did } = useVerida()
+  const { did, getAccountSessionToken } = useVerida()
   const queryClient = useQueryClient()
 
   useEffect(() => {
     // No need to catch, prefetch doesn't throw errors
-    prefetchDataProviders(queryClient)
+    prefetchDataProviders(queryClient).catch((error) => {
+      logger.error(
+        new Error("Error prefetching data providers", {
+          cause: error,
+        })
+      )
+    })
 
     // No need to catch, prefetch doesn't throw errors
-    prefetchDataConnections(queryClient, did)
-  }, [queryClient, did])
+    getAccountSessionToken()
+      .then((token) => prefetchDataConnections(queryClient, did, token))
+      .catch((error) => {
+        logger.error(
+          new Error("Error prefetching data connections", {
+            cause: error,
+          })
+        )
+      })
+  }, [queryClient, did, getAccountSessionToken])
 
   return <>{children}</>
 }
