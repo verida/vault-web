@@ -20,7 +20,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { EMPTY_PROFILE_NAME_FALLBACK } from "@/features/profiles/constants"
 import { useUserFeedback } from "@/features/telemetry/use-user-feedback"
 import { useToast } from "@/features/toasts/use-toast"
-import { useVerida } from "@/features/verida"
+import { useVerida } from "@/features/verida/use-verida"
 import { cn } from "@/styles/utils"
 
 export type IdentityDropdownMenuProps = Pick<
@@ -87,7 +87,7 @@ export function IdentityDropdownMenu(props: IdentityDropdownMenuProps) {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
-        className="w-screen max-w-80 rounded-xl p-0"
+        className="w-screen max-w-80 rounded-xl p-0 text-muted-foreground"
         align="end"
       >
         <DropdownMenuItem className="block px-4 py-3" onClick={handleCopyDid}>

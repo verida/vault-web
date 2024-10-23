@@ -5,7 +5,7 @@ import { Typography } from "@/components/typography"
 import {
   DataConnectionHandlerStatus,
   DataConnectionStatus,
-} from "@/features/data-connections"
+} from "@/features/data-connections/types"
 import { cn } from "@/styles/utils"
 
 export const badgeVariants = cva(

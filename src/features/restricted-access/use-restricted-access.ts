@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query"
 
 import { RestrictedAccessStatus } from "@/features/restricted-access/types"
 import { getRestrictedAccessStatus } from "@/features/restricted-access/utils"
-import { useVerida } from "@/features/verida"
+import { useVerida } from "@/features/verida/use-verida"
 
 export function useRestrictedAccess() {
   const { did } = useVerida()
@@ -16,13 +16,13 @@ export function useRestrictedAccess() {
       return getRestrictedAccessStatus(did)
     },
     enabled: !!did,
-    staleTime: 1000 * 60 * 60 * 24, // 1 day
+    staleTime: 1000 * 60 * 60 * 2, // 2 hours
     gcTime: 1000 * 60 * 60 * 24, // 1 day
     meta: {
+      persist: true,
       logCategory: "restricted-access",
       errorMessage: "Failed to get user access",
     },
-    // TODO: Add persistence to the query
   })
 
   return { access: data, ...query }

@@ -1,6 +1,6 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Skeleton } from "@/components/ui/skeleton"
-import { DataConnection, DataProvider } from "@/features/data-connections"
+import { DataConnection, DataProvider } from "@/features/data-connections/types"
 import { cn } from "@/styles/utils"
 
 export type DataConnectionAvatarProps = {

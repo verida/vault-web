@@ -1,6 +1,6 @@
 import { useContext } from "react"
 
-import { AssistantContext } from "@/features/assistant/contexts"
+import { AssistantContext } from "@/features/assistant/assistant-context"
 
 export function useAssistant() {
   const context = useContext(AssistantContext)

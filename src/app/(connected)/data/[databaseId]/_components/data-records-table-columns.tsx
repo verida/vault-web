@@ -2,7 +2,7 @@ import { createColumnHelper } from "@tanstack/react-table"
 import { format } from "date-fns"
 
 import { Typography } from "@/components/typography"
-import { VeridaRecord } from "@/features/verida-database"
+import { VeridaRecord } from "@/features/verida-database/types"
 
 // TODO: Pass a schema here to dynamically generate the columns
 export function getDataRecordsTableColumns<T = Record<string, unknown>>() {

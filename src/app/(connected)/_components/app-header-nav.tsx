@@ -140,7 +140,14 @@ export function AppHeaderNavBar(props: AppHeaderNavBarProps) {
   )
 }
 
-export function AppHeaderNavMenu() {
+type AppHeaderNavMenuProps = Pick<
+  React.ComponentProps<typeof Button>,
+  "className"
+>
+
+export function AppHeaderNavMenu(props: AppHeaderNavMenuProps) {
+  const { className } = props
+
   const [isOpen, setIsOpen] = useState(false)
 
   const handleOpenChange = useCallback((isOpen: boolean) => {
@@ -166,7 +173,11 @@ export function AppHeaderNavMenu() {
   return (
     <Popover modal open={isOpen} onOpenChange={handleOpenChange}>
       <PopoverTrigger asChild className="group">
-        <Button variant="ghost" className="h-auto px-2" onClick={toggleIsOpen}>
+        <Button
+          variant="ghost"
+          className={cn("h-auto px-2", className)}
+          onClick={toggleIsOpen}
+        >
           <div className="hidden group-data-[state=open]:block">
             <CloseIcon className="size-6" />
             <span className="sr-only">Close navigation menu</span>

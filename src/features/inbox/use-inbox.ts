@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query"
 import { useCallback } from "react"
 
 import { useInboxContext } from "@/features/inbox/use-inbox-context"
-import { useVerida } from "@/features/verida"
+import { useVerida } from "@/features/verida/use-verida"
 
 export const useInbox = () => {
   const { messagingEngine } = useInboxContext()

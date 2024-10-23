@@ -6,7 +6,7 @@ import { AssistantChatEmptyContent } from "@/app/(connected)/assistant/_componen
 import { AssistantChatInput } from "@/app/(connected)/assistant/_components/assistant-chat-input"
 import { AssistantChatMessagesList } from "@/app/(connected)/assistant/_components/assistant-chat-messages-list"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-import { useAssistant } from "@/features/assistant"
+import { useAssistant } from "@/features/assistant/use-assistant"
 
 export default function AssistantChatPage() {
   const { messages, sendMessage, isProcessingMessage, error, hotload } =

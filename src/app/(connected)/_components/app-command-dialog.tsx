@@ -40,12 +40,15 @@ import { DEFAULT_SELECTED_SEARCH_TYPES } from "@/features/data-search/constants"
 import { SearchDataResult, SearchType } from "@/features/data-search/types"
 import { useSearchData } from "@/features/data-search/use-search-data"
 import { DATABASE_DEFS } from "@/features/data/constants"
+import { useRestrictedAccess } from "@/features/restricted-access/use-restricted-access"
 import { getDatabaseItemPageRoute } from "@/features/routes/utils"
 import { cn } from "@/styles/utils"
 
 export function AppCommandDialog() {
-  const { isOpen, changeCommandState } = useCommand()
+  const { access } = useRestrictedAccess()
+
   const router = useRouter()
+  const { isOpen, changeCommandState } = useCommand()
 
   const [searchTypes, setSearchTypes] = useState<SearchType[]>(
     DEFAULT_SELECTED_SEARCH_TYPES
@@ -107,6 +110,10 @@ export function AppCommandDialog() {
     },
     [router, handleClose]
   )
+
+  if (access !== "allowed") {
+    return null
+  }
 
   return (
     <Dialog open={isOpen} onOpenChange={handleChangeDialogState}>
@@ -336,11 +343,16 @@ export function AppCommandDialogTrigger(props: AppCommandDialogTriggerProps) {
   const { variant = "ghost", size = "sm", className, ...buttonProps } = props
 
   const { openCommand } = useCommand()
+  const { access } = useRestrictedAccess()
 
   const shortcutText = useMemo(() => {
     const macosPlatforms = /macOS|Macintosh|MacIntel|MacPPC|Mac68K/
     return macosPlatforms.test(window.navigator.userAgent) ? "⌘K" : "Ctrl+K"
   }, [])
+
+  if (access !== "allowed") {
+    return null
+  }
 
   return (
     <Tooltip>

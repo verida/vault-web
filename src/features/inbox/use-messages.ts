@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query"
 import { useCallback } from "react"
 
 import { getPublicProfile } from "@/features/profiles/utils"
-import { useVerida } from "@/features/verida"
+import { useVerida } from "@/features/verida/use-verida"
 
 export const useMessages = (
   messagingEngine: any,
@@ -42,7 +42,6 @@ export const useMessages = (
     queryKey: [did, "inbox", "messages", offset, limit],
     queryFn: () => fetchMessages(filters, offset, limit),
     enabled: !!messagingEngine,
-    staleTime: 0,
   })
 
   return { messages, isMessagesPending, isMessagesError }

@@ -3,7 +3,7 @@
 import { useCallback } from "react"
 
 import { Button } from "@/components/ui/button"
-import { useVerida } from "@/features/verida"
+import { useVerida } from "@/features/verida/use-verida"
 import { cn } from "@/styles/utils"
 
 export type ConnectionButtonProps = Omit<

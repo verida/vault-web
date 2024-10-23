@@ -2,16 +2,18 @@ import { type WebUser } from "@verida/web-helpers"
 
 import { Logger } from "@/features/telemetry"
 import {
+  VERIDA_DID_REGEXP,
+  VERIDA_VAULT_CONTEXT_NAME,
+} from "@/features/verida/constants"
+import {
   SendDataRequestData,
   type SendDataRequestOptions,
   SendMessageData,
   type SendSimpleMessageOptions,
   type SentMessage,
   SimpleMessage,
-  VERIDA_DID_REGEXP,
-  VERIDA_VAULT_CONTEXT_NAME,
   VeridaMessageType,
-} from "@/features/verida"
+} from "@/features/verida/types"
 
 const logger = Logger.create("verida")
 

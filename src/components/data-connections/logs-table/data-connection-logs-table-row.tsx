@@ -8,12 +8,10 @@ import { DataConnectionLogLevelBadge } from "@/components/data-connections/data-
 import { Typography } from "@/components/typography"
 import { Card } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton"
-import {
-  DataConnectionSyncLog,
-  buildConnectionId,
-  useDataConnection,
-  useDataProvider,
-} from "@/features/data-connections"
+import { useDataConnection } from "@/features/data-connections/hooks/use-data-connection"
+import { useDataProvider } from "@/features/data-connections/hooks/use-data-provider"
+import { DataConnectionSyncLog } from "@/features/data-connections/types"
+import { buildConnectionId } from "@/features/data-connections/utils"
 import { getConnectionPageRoute } from "@/features/routes/utils"
 import { cn } from "@/styles/utils"
 

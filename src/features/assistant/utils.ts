@@ -26,13 +26,13 @@ async function mockProcessUserPrompt(): Promise<string> {
  * Processes a user prompt by sending it to the LLM API or using a mock response.
  *
  * @param prompt - The user's input prompt
- * @param key - The API key for authentication
+ * @param sessionToken - The session token for authentication
  * @returns A promise that resolves to the AI-generated response
  * @throws Error if the prompt is empty or if there's an issue with the API call
  */
 export async function processUserPrompt(
   prompt: string,
-  key?: string
+  sessionToken: string
 ): Promise<string> {
   if (!prompt) {
     throw new Error("Prompt is required")
@@ -41,7 +41,7 @@ export async function processUserPrompt(
   logger.info("Processing user prompt")
 
   // Use mock response if API configuration is missing
-  if (!commonConfig.PRIVATE_DATA_API_BASE_URL || !key) {
+  if (!commonConfig.PRIVATE_DATA_API_BASE_URL) {
     logger.warn("Using mock response due to missing API configuration")
     return mockProcessUserPrompt()
   }
@@ -53,8 +53,8 @@ export async function processUserPrompt(
       {
         method: "POST",
         headers: {
-          "key": key,
           "Content-Type": "application/json",
+          "X-API-Key": sessionToken,
         },
         body: JSON.stringify({ prompt }),
       }
@@ -79,12 +79,12 @@ export async function processUserPrompt(
 /**
  * Initiates the hotloading process for the LLM API.
  *
- * @param key - The API key for authentication
+ * @param sessionToken - The session token for authentication
  * @param progressCallback - Optional callback function to report progress
  * @returns A promise that resolves when hotloading is complete
  */
 export function hotloadAPI(
-  key: string,
+  sessionToken: string,
   progressCallback?: (progress: number) => void
 ): Promise<void> {
   return new Promise((resolve, reject) => {
@@ -99,7 +99,7 @@ export function hotloadAPI(
     const url = new URL(
       `${commonConfig.PRIVATE_DATA_API_BASE_URL}/api/rest/v1/llm/hotload`
     )
-    url.searchParams.append("key", key)
+    url.searchParams.append("api_key", sessionToken)
     const eventSource = new EventSource(url.toString())
 
     eventSource.onmessage = (event) => {

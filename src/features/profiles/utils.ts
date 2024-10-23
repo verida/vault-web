@@ -2,7 +2,8 @@ import { Client } from "@verida/client-ts"
 
 import { commonConfig } from "@/config/common"
 import { PublicProfile } from "@/features/profiles/types"
-import { VERIDA_VAULT_CONTEXT_NAME, isValidVeridaDid } from "@/features/verida"
+import { VERIDA_VAULT_CONTEXT_NAME } from "@/features/verida/constants"
+import { isValidVeridaDid } from "@/features/verida/utils"
 
 async function getPublicProfileDatastore(
   did: string,
@@ -15,7 +16,7 @@ async function getPublicProfileDatastore(
 
   try {
     const client = new Client({
-      environment: commonConfig.VERIDA_NETWORK,
+      network: commonConfig.VERIDA_NETWORK,
       didClientConfig: {
         rpcUrl: commonConfig.VERIDA_RPC_URL,
         network: commonConfig.VERIDA_NETWORK,

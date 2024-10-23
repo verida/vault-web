@@ -3,7 +3,7 @@
 import { useSearchParams } from "next/navigation"
 import { useEffect } from "react"
 
-import { useDataConnectionsBroadcast } from "@/features/data-connections"
+import { useDataConnectionsBroadcast } from "@/features/data-connections/hooks/use-data-connections-broadcast"
 import { Logger } from "@/features/telemetry"
 
 const logger = Logger.create("data-connections")

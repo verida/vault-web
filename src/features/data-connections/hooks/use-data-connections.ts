@@ -1,20 +1,21 @@
 import { QueryClient, useQuery } from "@tanstack/react-query"
 
-import { commonConfig } from "@/config/common"
 import { DataConnectionsQueryKeys } from "@/features/data-connections/queries"
 import { getDataConnections } from "@/features/data-connections/utils"
 import { Logger } from "@/features/telemetry"
-import { useVerida } from "@/features/verida/hooks/useVerida"
+import { useVerida } from "@/features/verida/use-verida"
 
 const logger = Logger.create("data-connections")
 
 export function useDataConnections() {
-  const { did } = useVerida()
+  const { did, getAccountSessionToken } = useVerida()
 
   const { data, ...query } = useQuery({
     queryKey: DataConnectionsQueryKeys.dataConnections({ did }),
-    queryFn: () =>
-      getDataConnections(commonConfig.PRIVATE_DATA_API_PRIVATE_KEY),
+    queryFn: async () => {
+      const sessionToken = await getAccountSessionToken()
+      return getDataConnections(sessionToken)
+    },
     staleTime: 1000 * 60 * 2, // 2 minutes
     // TODO: Can increase the stale time once the status is fetched separately
     // as the connections definition won't change much unless mutated which can
@@ -34,7 +35,8 @@ export function useDataConnections() {
 
 export async function prefetchDataConnections(
   queryClient: QueryClient,
-  did: string | null
+  did: string | null,
+  sessionToken: string
 ) {
   if (!did) {
     return
@@ -43,8 +45,9 @@ export async function prefetchDataConnections(
   logger.info("Prefetching data connections")
   await queryClient.prefetchQuery({
     queryKey: DataConnectionsQueryKeys.dataConnections({ did }),
-    queryFn: () =>
-      getDataConnections(commonConfig.PRIVATE_DATA_API_PRIVATE_KEY),
+    queryFn: async () => {
+      return getDataConnections(sessionToken)
+    },
     staleTime: 1000 * 60 * 2, // 2 minutes
     // TODO: Can increase the stale time once the status is fetched separately
     // as the connections definition won't change much unless mutated which can

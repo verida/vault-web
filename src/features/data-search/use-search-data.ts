@@ -1,24 +1,27 @@
 import { useQuery } from "@tanstack/react-query"
 
-import { commonConfig } from "@/config/common"
 import { SearchType } from "@/features/data-search/types"
 import { searchData } from "@/features/data-search/utils"
+import { useVerida } from "@/features/verida/use-verida"
 
 export function useSearchData(
   searchValue?: string,
   searchTypes?: SearchType[]
 ) {
+  const { getAccountSessionToken } = useVerida()
+
   const { data, ...query } = useQuery({
     queryKey: ["data", "search", searchTypes, searchValue],
     enabled: !!searchValue,
-    queryFn: () => {
+    queryFn: async () => {
       if (!searchValue) {
         // Should not be happening as enabled is set to false if searchValue is not present
         return []
       }
 
+      const sessionToken = await getAccountSessionToken()
       return searchData({
-        key: commonConfig.PRIVATE_DATA_API_PRIVATE_KEY,
+        sessionToken,
         searchValue,
         searchTypes,
       })

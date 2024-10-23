@@ -4,10 +4,8 @@ import {
   DataConnectionHandlerCard,
   DataConnectionHandlerCardSkeleton,
 } from "@/app/(connected)/connections/[connectionId]/_components/data-connection-handler-card"
-import {
-  DataConnectionHandler,
-  useDataProvider,
-} from "@/features/data-connections"
+import { useDataProvider } from "@/features/data-connections/hooks/use-data-provider"
+import { DataConnectionHandler } from "@/features/data-connections/types"
 import { cn } from "@/styles/utils"
 
 export type DataConnectionsHandlersListProps = {

@@ -57,13 +57,15 @@ export function ErrorPageContent(props: ErrorPageContentProps) {
   }, [error])
 
   const main = useMemo(() => {
-    return mainMessage === null ? null : mainMessage ?? "Something went wrong!"
+    return mainMessage === null
+      ? null
+      : (mainMessage ?? "Something went wrong!")
   }, [mainMessage])
 
   const sub = useMemo(() => {
     return subMessage === null
       ? null
-      : subMessage ?? "We apologize for the inconvenience"
+      : (subMessage ?? "We apologize for the inconvenience")
   }, [subMessage])
 
   return (
