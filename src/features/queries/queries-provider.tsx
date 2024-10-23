@@ -1,12 +1,12 @@
 "use client"
 
-import {
-  MutationCache,
-  QueryCache,
-  QueryClient,
-  QueryClientProvider,
-} from "@tanstack/react-query"
+import { createSyncStoragePersister } from "@tanstack/query-sync-storage-persister"
+import { MutationCache, QueryCache, QueryClient } from "@tanstack/react-query"
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
+import {
+  PersistQueryClientProvider,
+  removeOldestQuery,
+} from "@tanstack/react-query-persist-client"
 
 import {
   getLogger,
@@ -14,10 +14,14 @@ import {
   logError,
 } from "@/features/queries/utils"
 
+const PERSISTENCE_MAX_AGE = 1000 * 60 * 60 * 24 * 5 // 5 days
+const GC_TIME = Infinity
+
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       refetchOnWindowFocus: true,
+      gcTime: GC_TIME,
     },
   },
   queryCache: new QueryCache({
@@ -56,6 +60,12 @@ const queryClient = new QueryClient({
   }),
 })
 
+// For security reasons, do not persist user's private data
+const localStoragePersister = createSyncStoragePersister({
+  storage: typeof window !== "undefined" ? window.localStorage : undefined,
+  retry: removeOldestQuery,
+})
+
 type QueriesProviderProps = {
   children: React.ReactNode
 }
@@ -64,9 +74,20 @@ export function QueriesProvider(props: QueriesProviderProps) {
   const { children } = props
 
   return (
-    <QueryClientProvider client={queryClient}>
+    <PersistQueryClientProvider
+      client={queryClient}
+      persistOptions={{
+        maxAge: PERSISTENCE_MAX_AGE,
+        persister: localStoragePersister,
+        dehydrateOptions: {
+          shouldDehydrateQuery(query) {
+            return query.meta?.persist ? true : false
+          },
+        },
+      }}
+    >
       {children}
       <ReactQueryDevtools initialIsOpen={false} />
-    </QueryClientProvider>
+    </PersistQueryClientProvider>
   )
 }

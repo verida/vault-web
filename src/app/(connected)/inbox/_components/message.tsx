@@ -1,4 +1,3 @@
-import { isEmpty } from "lodash"
 import Link from "next/link"
 
 import { InboxDetailsProps } from "@/app/(connected)/inbox/_components/inbox-details"
@@ -16,7 +15,7 @@ import { useInboxAction } from "@/features/inbox/use-inbox-action"
 export function InboxMessageDetails(props: InboxDetailsProps) {
   const { message: inboxItem, onClose } = props
   const { message, data } = inboxItem
-  const itemData = !isEmpty(data.data) ? data.data[0] : null
+  const itemData = data.data?.at(0) ?? null
 
   const { handleAccept, isLoading } = useInboxAction()
   return (
