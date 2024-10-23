@@ -87,7 +87,7 @@ export function IdentityDropdownMenu(props: IdentityDropdownMenuProps) {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
-        className="w-screen max-w-80 rounded-xl p-0"
+        className="w-screen max-w-80 rounded-xl p-0 text-muted-foreground"
         align="end"
       >
         <DropdownMenuItem className="block px-4 py-3" onClick={handleCopyDid}>
