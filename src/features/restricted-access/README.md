@@ -92,8 +92,9 @@ To utilize the Restricted Access feature within your React components:
 
 The `useRestrictedAccess` hook utilizes React Query with specific configurations:
 
-- **Stale Time:** 24 hours (`staleTime: 1000 * 60 * 60 * 24`)
-- **Garbage Collection Time:** 24 hours (`gcTime: 1000 * 60 * 60 * 24`)
+- **Stale Time:** 10 minutes (`staleTime: 1000 * 60 * 10`)
+
+As the access status is not expected to change frequently. The query result is persisted in local storage, so the `gcTime` is set to `Infinity` to disable garbage collection but the max age of the local storage entry is set to 5 days.
 
 These settings ensure that the access status is cached efficiently, reducing unnecessary API calls.
 
