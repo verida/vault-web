@@ -31,8 +31,19 @@ export default function AssistantChatPage() {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
   }, [messages])
 
+  useEffect(() => {
+    if ("virtualKeyboard" in navigator) {
+      ;(navigator as any).virtualKeyboard.overlaysContent = true
+    }
+  }, [])
+
   return (
-    <div className="flex h-full flex-col gap-1">
+    <div
+      className="flex h-full flex-col gap-1"
+      style={{
+        marginBottom: "env(keyboard-inset-height, 0px)",
+      }}
+    >
       <div className="flex-1 overflow-y-auto">
         {messages.length === 0 ? (
           <AssistantChatEmptyContent
