@@ -11,14 +11,12 @@ import { cn } from "@/styles/utils"
 export type DataConnectionsHandlersListProps = {
   connectionHandlers: DataConnectionHandler[]
   providerId: string
-  lastSynced?: string
 } & React.ComponentProps<"div">
 
 export function DataConnectionsHandlersList(
   props: DataConnectionsHandlersListProps
 ) {
-  const { connectionHandlers, providerId, lastSynced, className, ...divProps } =
-    props
+  const { connectionHandlers, providerId, className, ...divProps } = props
 
   const { provider, isLoading } = useDataProvider(providerId)
 
@@ -42,7 +40,6 @@ export function DataConnectionsHandlersList(
               <DataConnectionHandlerCard
                 handlerDefinition={handlerDefinition}
                 connectionHandler={connectionHandler}
-                lastSynced={lastSynced}
                 className="h-full"
               />
             </article>
