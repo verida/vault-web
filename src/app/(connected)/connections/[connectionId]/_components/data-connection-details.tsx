@@ -1,6 +1,6 @@
 "use client"
 
-import { useCallback, useState } from "react"
+import { useCallback, useMemo, useState } from "react"
 
 import {
   DisconnectDataConnectionDialog,
@@ -67,6 +67,21 @@ export function DataConnectionDetails(props: DataConnectionDetailsProps) {
     )
   }, [connection, syncDataConnection, toast])
 
+  const latestSyncEnd = useMemo(() => {
+    return connection.handlers.reduce((latest: string | undefined, handler) => {
+      if (!handler.latestSyncEnd) {
+        return latest
+      }
+      if (!latest) {
+        return handler.latestSyncEnd
+      }
+      return new Date(handler.latestSyncEnd).getTime() >
+        new Date(latest).getTime()
+        ? handler.latestSyncEnd
+        : latest
+    }, undefined)
+  }, [connection.handlers])
+
   return (
     <div className={cn(className)} {...divProps}>
       <div className="rounded-2xl bg-foreground/5">
@@ -111,8 +126,8 @@ export function DataConnectionDetails(props: DataConnectionDetailsProps) {
               <Typography variant="base-regular">Last synced</Typography>
             </div>
             <Typography variant="heading-5" component="p">
-              {connection.syncEnd
-                ? dateFormatter.format(new Date(connection.syncEnd))
+              {latestSyncEnd
+                ? dateFormatter.format(new Date(latestSyncEnd))
                 : "-"}
             </Typography>
           </div>
