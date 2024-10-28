@@ -63,7 +63,7 @@
   "devDependencies": {
     "@sentry/types": "^8.35.0",
     "@tailwindcss/typography": "^0.5.15",
-    "@tanstack/react-query-devtools": "^5.59.15",
+    "@tanstack/react-query-devtools": "^5.59.16",
     "@trivago/prettier-plugin-sort-imports": "^4.3.0",
     "@types/node": "^18.19.47",
     "@types/react": "^18.3.12",
