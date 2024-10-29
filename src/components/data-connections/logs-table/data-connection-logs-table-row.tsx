@@ -27,9 +27,11 @@ export function DataConnectionLogsTableRow(
 ) {
   const { log, hideConnectionColumn = false, className, ...cardProps } = props
 
-  const { provider } = useDataProvider(log.providerId)
+  const { provider, isLoading: isLoadingProvider } = useDataProvider(
+    log.providerId
+  )
 
-  const { connection } = useDataConnection(
+  const { connection, isLoading: isConnectionLoading } = useDataConnection(
     buildConnectionId({
       providerId: log.providerId,
       accountId: log.accountId,
@@ -50,7 +52,12 @@ export function DataConnectionLogsTableRow(
     >
       {!hideConnectionColumn ? (
         <div className="flex w-full flex-col gap-3 md:w-52">
-          <DataConnectionAvatar connection={connection} provider={provider} />
+          <DataConnectionAvatar
+            connection={connection}
+            isConnectionLoading={isConnectionLoading}
+            provider={provider}
+            isProviderLoading={isLoadingProvider}
+          />
           {connection ? (
             <Link
               href={getConnectionPageRoute({ connectionId: connection._id })}
@@ -60,8 +67,12 @@ export function DataConnectionLogsTableRow(
                 {connection.profile.readableId}
               </Typography>
             </Link>
-          ) : (
+          ) : isConnectionLoading ? (
             <Skeleton className="my-0.5 h-3.5 w-40" />
+          ) : (
+            <Typography variant="base-regular" className="truncate italic">
+              {`Connection not found`}
+            </Typography>
           )}
         </div>
       ) : null}
