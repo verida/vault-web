@@ -1,5 +1,6 @@
 "use client"
 
+import { intlFormat } from "date-fns"
 import Link from "next/link"
 import React, { useMemo } from "react"
 
@@ -14,16 +15,7 @@ import { DataConnectionSyncLog } from "@/features/data-connections/types"
 import { buildConnectionId } from "@/features/data-connections/utils"
 import { getConnectionPageRoute } from "@/features/routes/utils"
 import { cn } from "@/styles/utils"
-
-// TODO: Factorise the date formatter
-const dateFormatter = new Intl.DateTimeFormat(undefined, {
-  month: "short",
-  day: "numeric",
-  year: "numeric",
-  hour: "numeric",
-  minute: "numeric",
-  hour12: true,
-})
+import { LONG_DATE_TIME_FORMAT_OPTIONS } from "@/utils/date"
 
 export type DataConnectionLogsTableRowProps = {
   log: DataConnectionSyncLog
@@ -90,7 +82,7 @@ export function DataConnectionLogsTableRow(
       </div>
       <div className="w-full text-left text-muted-foreground md:w-44 md:text-right">
         <Typography variant="base-regular">
-          {dateFormatter.format(new Date(log.insertedAt))}
+          {intlFormat(new Date(log.insertedAt), LONG_DATE_TIME_FORMAT_OPTIONS)}
         </Typography>
       </div>
     </Card>

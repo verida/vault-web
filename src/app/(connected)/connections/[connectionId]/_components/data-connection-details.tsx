@@ -1,5 +1,6 @@
 "use client"
 
+import { intlFormat, isDate } from "date-fns"
 import { useCallback, useMemo, useState } from "react"
 
 import {
@@ -16,16 +17,8 @@ import { useSyncDataConnection } from "@/features/data-connections/hooks/use-syn
 import { DataConnection } from "@/features/data-connections/types"
 import { useToast } from "@/features/toasts/use-toast"
 import { cn } from "@/styles/utils"
+import { LONG_DATE_TIME_FORMAT_OPTIONS } from "@/utils/date"
 import { wait } from "@/utils/misc"
-
-const dateFormatter = new Intl.DateTimeFormat(undefined, {
-  month: "short",
-  day: "numeric",
-  year: "numeric",
-  hour: "numeric",
-  minute: "numeric",
-  hour12: true,
-})
 
 export type DataConnectionDetailsProps = {
   connection: DataConnection
@@ -67,17 +60,23 @@ export function DataConnectionDetails(props: DataConnectionDetailsProps) {
     )
   }, [connection, syncDataConnection, toast])
 
-  const latestSyncEnd = useMemo(() => {
-    return connection.handlers.reduce((latest: string | undefined, handler) => {
+  const latestSyncEnd: Date | undefined = useMemo(() => {
+    return connection.handlers.reduce((latest: Date | undefined, handler) => {
       if (!handler.latestSyncEnd) {
         return latest
       }
-      if (!latest) {
-        return handler.latestSyncEnd
+
+      const latestSyncEndDate = new Date(handler.latestSyncEnd)
+      if (!isDate(latestSyncEndDate)) {
+        return latest
       }
-      return new Date(handler.latestSyncEnd).getTime() >
-        new Date(latest).getTime()
-        ? handler.latestSyncEnd
+
+      if (!latest) {
+        return latestSyncEndDate
+      }
+
+      return latestSyncEndDate.getTime() > new Date(latest).getTime()
+        ? latestSyncEndDate
         : latest
     }, undefined)
   }, [connection.handlers])
@@ -127,7 +126,7 @@ export function DataConnectionDetails(props: DataConnectionDetailsProps) {
             </div>
             <Typography variant="heading-5" component="p">
               {latestSyncEnd
-                ? dateFormatter.format(new Date(latestSyncEnd))
+                ? intlFormat(latestSyncEnd, LONG_DATE_TIME_FORMAT_OPTIONS)
                 : "-"}
             </Typography>
           </div>
