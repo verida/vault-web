@@ -13,10 +13,12 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuSeparator,
+  DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Skeleton } from "@/components/ui/skeleton"
+import { version } from "@/config/version"
+import { APP_NAME } from "@/constants/app"
 import { EMPTY_PROFILE_NAME_FALLBACK } from "@/features/profiles/constants"
 import { useUserFeedback } from "@/features/telemetry/use-user-feedback"
 import { useToast } from "@/features/toasts/use-toast"
@@ -145,7 +147,6 @@ export function IdentityDropdownMenu(props: IdentityDropdownMenuProps) {
             <Typography variant="base-semibold">Give your feedback</Typography>
           </DropdownMenuItem>
         ) : null}
-        <DropdownMenuSeparator className="my-0" />
         <DropdownMenuItem
           onClick={disconnect}
           disabled={!isConnected}
@@ -154,6 +155,9 @@ export function IdentityDropdownMenu(props: IdentityDropdownMenuProps) {
           <Logout />
           <Typography variant="base-semibold">Disconnect</Typography>
         </DropdownMenuItem>
+        <DropdownMenuLabel className="text-center text-xs font-normal">
+          {`${APP_NAME} ${version}`}
+        </DropdownMenuLabel>
       </DropdownMenuContent>
     </DropdownMenu>
   )
