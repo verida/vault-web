@@ -1,4 +1,4 @@
-import { isDate } from "date-fns"
+import { intlFormat, isDate } from "date-fns"
 import React from "react"
 
 import { DataConnectionStatusBadge } from "@/components/data-connections/data-connection-status-badge"
@@ -10,15 +10,7 @@ import {
   DataProviderHandler,
 } from "@/features/data-connections/types"
 import { cn } from "@/styles/utils"
-
-const dateFormatter = new Intl.DateTimeFormat(undefined, {
-  month: "short",
-  day: "numeric",
-  year: "numeric",
-  hour: "numeric",
-  minute: "numeric",
-  hour12: true,
-})
+import { LONG_DATE_TIME_FORMAT_OPTIONS } from "@/utils/date"
 
 export type DataConnectionHandlerCardProps = {
   handlerDefinition?: DataProviderHandler
@@ -61,7 +53,10 @@ export function DataConnectionHandlerCard(
             {connectionHandler?.enabled &&
             connectionHandler?.latestSyncEnd &&
             isDate(new Date(connectionHandler.latestSyncEnd))
-              ? dateFormatter.format(new Date(connectionHandler.latestSyncEnd))
+              ? intlFormat(
+                  new Date(connectionHandler.latestSyncEnd),
+                  LONG_DATE_TIME_FORMAT_OPTIONS
+                )
               : "-"}
           </Typography>
         </div>
