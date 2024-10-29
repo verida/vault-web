@@ -1,3 +1,4 @@
+import { isDate } from "date-fns"
 import React from "react"
 
 import { DataConnectionStatusBadge } from "@/components/data-connections/data-connection-status-badge"
@@ -57,7 +58,9 @@ export function DataConnectionHandlerCard(
             <Typography variant="base-regular">Last synced</Typography>
           </div>
           <Typography variant="base-regular" className="flex-1 text-end">
-            {connectionHandler?.latestSyncEnd && connectionHandler?.enabled
+            {connectionHandler?.enabled &&
+            connectionHandler?.latestSyncEnd &&
+            isDate(new Date(connectionHandler.latestSyncEnd))
               ? dateFormatter.format(new Date(connectionHandler.latestSyncEnd))
               : "-"}
           </Typography>

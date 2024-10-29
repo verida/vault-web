@@ -1,5 +1,6 @@
 "use client"
 
+import { isDate } from "date-fns"
 import { useCallback, useMemo, useState } from "react"
 
 import {
@@ -67,17 +68,23 @@ export function DataConnectionDetails(props: DataConnectionDetailsProps) {
     )
   }, [connection, syncDataConnection, toast])
 
-  const latestSyncEnd = useMemo(() => {
-    return connection.handlers.reduce((latest: string | undefined, handler) => {
+  const latestSyncEnd: Date | undefined = useMemo(() => {
+    return connection.handlers.reduce((latest: Date | undefined, handler) => {
       if (!handler.latestSyncEnd) {
         return latest
       }
-      if (!latest) {
-        return handler.latestSyncEnd
+
+      const latestSyncEndDate = new Date(handler.latestSyncEnd)
+      if (!isDate(latestSyncEndDate)) {
+        return latest
       }
-      return new Date(handler.latestSyncEnd).getTime() >
-        new Date(latest).getTime()
-        ? handler.latestSyncEnd
+
+      if (!latest) {
+        return latestSyncEndDate
+      }
+
+      return latestSyncEndDate.getTime() > new Date(latest).getTime()
+        ? latestSyncEndDate
         : latest
     }, undefined)
   }, [connection.handlers])
@@ -126,9 +133,7 @@ export function DataConnectionDetails(props: DataConnectionDetailsProps) {
               <Typography variant="base-regular">Last synced</Typography>
             </div>
             <Typography variant="heading-5" component="p">
-              {latestSyncEnd
-                ? dateFormatter.format(new Date(latestSyncEnd))
-                : "-"}
+              {latestSyncEnd ? dateFormatter.format(latestSyncEnd) : "-"}
             </Typography>
           </div>
           <div className="flex flex-col items-start gap-1 md:flex-row md:items-center md:gap-4">

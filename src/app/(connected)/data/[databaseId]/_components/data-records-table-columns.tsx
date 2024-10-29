@@ -1,7 +1,8 @@
 import { createColumnHelper } from "@tanstack/react-table"
-import { format } from "date-fns"
+import { format, isDate } from "date-fns"
 
 import { Typography } from "@/components/typography"
+import { EMPTY_VALUE_FALLBACK } from "@/constants/misc"
 import { VeridaRecord } from "@/features/verida-database/types"
 
 // TODO: Pass a schema here to dynamically generate the columns
@@ -58,16 +59,18 @@ export function getDataRecordsTableColumns<T = Record<string, unknown>>() {
       header: "Modified At",
       cell: (context) => {
         const value = context.getValue()
-        if (!value) {
+        const date = new Date(value || "")
+        if (!isDate(date)) {
           return (
             <div className="text-muted-foreground">
               <Typography variant="base-regular" className="truncate">
-                {context.renderValue()}
+                {EMPTY_VALUE_FALLBACK}
               </Typography>
             </div>
           )
         }
-        const formattedDate = format(new Date(value), "dd/MM/yyyy HH:mm")
+
+        const formattedDate = format(date, "dd/MM/yyyy HH:mm")
         return (
           <div className="text-muted-foreground">
             <Typography variant="base-regular" className="truncate">
