@@ -18,7 +18,7 @@ export default function AssistantLayout(props: AssistantLayoutProps) {
   return (
     <PageWrapper
       pageTitle="AI Assistant"
-      className="h-full"
+      className="h-full gap-0"
       contentClassName="h-full min-h-0 items-center"
     >
       <div className="flex h-full w-full max-w-screen-md flex-col">
