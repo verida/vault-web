@@ -1,7 +1,7 @@
 "use client"
 
 import { useQuery } from "@tanstack/react-query"
-import { format } from "date-fns"
+import { intlFormat } from "date-fns"
 import Image from "next/image"
 import { useCallback, useEffect, useState } from "react"
 
@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/drawer"
 import { Logger } from "@/features/telemetry"
 import { useVerida } from "@/features/verida/use-verida"
+import { SHORT_DATE_TIME_FORMAT_OPTIONS } from "@/utils/date"
 
 const logger = Logger.create("inbox")
 
@@ -145,7 +146,10 @@ export function RequestDataSelector(props: RequestDataSelectorProps) {
                     variant="base-s-semibold"
                     className="text-muted-foreground/60"
                   >
-                    {format(new Date(item.insertedAt), "dd/MM/yyy hh:mm")}
+                    {intlFormat(
+                      new Date(item.insertedAt),
+                      SHORT_DATE_TIME_FORMAT_OPTIONS
+                    )}
                   </Typography>
                 </div>
               </label>

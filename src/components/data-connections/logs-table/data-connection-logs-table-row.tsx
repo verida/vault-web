@@ -1,5 +1,6 @@
 "use client"
 
+import { intlFormat } from "date-fns"
 import Link from "next/link"
 import React, { useMemo } from "react"
 
@@ -14,16 +15,7 @@ import { DataConnectionSyncLog } from "@/features/data-connections/types"
 import { buildConnectionId } from "@/features/data-connections/utils"
 import { getConnectionPageRoute } from "@/features/routes/utils"
 import { cn } from "@/styles/utils"
-
-// TODO: Factorise the date formatter
-const dateFormatter = new Intl.DateTimeFormat(undefined, {
-  month: "short",
-  day: "numeric",
-  year: "numeric",
-  hour: "numeric",
-  minute: "numeric",
-  hour12: true,
-})
+import { LONG_DATE_TIME_FORMAT_OPTIONS } from "@/utils/date"
 
 export type DataConnectionLogsTableRowProps = {
   log: DataConnectionSyncLog
@@ -35,9 +27,11 @@ export function DataConnectionLogsTableRow(
 ) {
   const { log, hideConnectionColumn = false, className, ...cardProps } = props
 
-  const { provider } = useDataProvider(log.providerId)
+  const { provider, isLoading: isLoadingProvider } = useDataProvider(
+    log.providerId
+  )
 
-  const { connection } = useDataConnection(
+  const { connection, isLoading: isConnectionLoading } = useDataConnection(
     buildConnectionId({
       providerId: log.providerId,
       accountId: log.accountId,
@@ -58,7 +52,12 @@ export function DataConnectionLogsTableRow(
     >
       {!hideConnectionColumn ? (
         <div className="flex w-full flex-col gap-3 md:w-52">
-          <DataConnectionAvatar connection={connection} provider={provider} />
+          <DataConnectionAvatar
+            connection={connection}
+            isConnectionLoading={isConnectionLoading}
+            provider={provider}
+            isProviderLoading={isLoadingProvider}
+          />
           {connection ? (
             <Link
               href={getConnectionPageRoute({ connectionId: connection._id })}
@@ -68,8 +67,12 @@ export function DataConnectionLogsTableRow(
                 {connection.profile.readableId}
               </Typography>
             </Link>
-          ) : (
+          ) : isConnectionLoading ? (
             <Skeleton className="my-0.5 h-3.5 w-40" />
+          ) : (
+            <Typography variant="base-regular" className="truncate italic">
+              {`Connection not found`}
+            </Typography>
           )}
         </div>
       ) : null}
@@ -90,7 +93,7 @@ export function DataConnectionLogsTableRow(
       </div>
       <div className="w-full text-left text-muted-foreground md:w-44 md:text-right">
         <Typography variant="base-regular">
-          {dateFormatter.format(new Date(log.insertedAt))}
+          {intlFormat(new Date(log.insertedAt), LONG_DATE_TIME_FORMAT_OPTIONS)}
         </Typography>
       </div>
     </Card>

@@ -37,7 +37,7 @@ export default function AssistantChatPage() {
         {messages.length === 0 ? (
           <AssistantChatEmptyContent
             onRecommendedPromptClick={handleRecommendedPromptClick}
-            className="pb-4"
+            className="pb-4 pt-6"
           />
         ) : (
           <div className="flex min-h-full flex-col justify-end">

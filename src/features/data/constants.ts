@@ -70,4 +70,20 @@ export const DATABASE_DEFS: DatabaseDefinition[] = [
     schemaUrlBase: "https://common.schemas.verida.io/social/chat/message",
     searchType: "messages",
   },
+  {
+    id: "calendars",
+    title: "Calendar",
+    titlePlural: "Calendars",
+    color: "#FFD700",
+    databaseVaultName: "calendar_data",
+    schemaUrlBase: "https://common.schemas.verida.io/social/calendar",
+  },
+  {
+    id: "calendar-events",
+    title: "Calendar event",
+    titlePlural: "Calendar events",
+    color: "#FFA500",
+    databaseVaultName: "social_event",
+    schemaUrlBase: "https://common.schemas.verida.io/social/event",
+  },
 ]
