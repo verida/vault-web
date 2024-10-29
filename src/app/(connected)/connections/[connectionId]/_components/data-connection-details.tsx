@@ -111,7 +111,7 @@ export function DataConnectionDetails(props: DataConnectionDetailsProps) {
             <Button
               variant="outline"
               onClick={handleSyncClick}
-              disabled={isSyncing || connection.syncStatus === "active"}
+              disabled={isSyncing || connection.syncStatus !== "connected"}
             >
               {isSyncing || connection.syncStatus === "active"
                 ? "Syncing..."
