@@ -4,3 +4,5 @@ export const DATA_CONNECTIONS_CHANNEL = "data-connections"
 
 export const DATA_CONNECTIONS_SYNC_LOGS_DATABASE_NAME =
   "data_connections_sync_log"
+
+export const DATA_CONNECTIONS_SYNC_INTERVAL = 1000 * 60 * 30 // 30 minutes

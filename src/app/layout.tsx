@@ -1,4 +1,4 @@
-import type { Metadata } from "next"
+import type { Metadata, Viewport } from "next"
 
 import { RootProviders } from "@/app/_components/root-providers"
 import { BreakpointIndicator } from "@/components/breakpoint-indicator"
@@ -32,6 +32,10 @@ export const metadata: Metadata = {
     siteName: APP_NAME,
     type: "website",
   },
+}
+
+export const viewport: Viewport = {
+  interactiveWidget: "resizes-content",
 }
 
 type RootLayoutProps = {

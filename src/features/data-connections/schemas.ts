@@ -75,6 +75,10 @@ export const DataConnectionHandlerSchema = z
     config: z.record(z.string(), z.string()),
     status: DataConnectionHandlerStatusSchema,
     syncMessage: z.string().optional(),
+    latestSyncStart: z.string().datetime().optional(),
+    latestSyncEnd: z.string().datetime().optional(),
+    oldestDataTimestamp: z.string().datetime().optional(),
+    newestDataTimestamp: z.string().datetime().optional(),
   })
   .passthrough()
 
@@ -85,8 +89,6 @@ export const DataConnectionSchema = z.object({
   profile: DataConnectionProfileSchema.passthrough(),
   syncStatus: DataConnectionStatusSchema,
   syncFrequency: z.string(),
-  syncStart: z.string().datetime().optional(),
-  syncEnd: z.string().datetime().optional(),
   syncNext: z.string().datetime().optional(),
   config: z.record(z.string(), z.string()),
   handlers: z.array(DataConnectionHandlerSchema),
