@@ -1,6 +1,6 @@
 {
   "name": "vault-web",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "private": true,
   "scripts": {
     "version": "npx genversion --es6 --double ./src/config/version.ts",
