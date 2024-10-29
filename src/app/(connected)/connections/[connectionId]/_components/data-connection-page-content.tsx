@@ -55,7 +55,6 @@ export function DataConnectionPageContent(
         <DataConnectionsHandlersList
           connectionHandlers={connection.handlers}
           providerId={connection.providerId}
-          lastSynced={connection.syncEnd}
         />
       </section>
       <section className="flex flex-col gap-4 md:gap-0">

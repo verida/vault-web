@@ -193,7 +193,7 @@ export function AppHeaderNavMenu(props: AppHeaderNavMenuProps) {
         className="h-[calc(100dvh_-_73px)] w-screen rounded-none border-0 shadow-none"
       >
         <NavigationMenu orientation="vertical">
-          <NavigationMenuList className="px-2" orientation="vertical">
+          <NavigationMenuList orientation="vertical">
             {featureFlags.assistant.enabled ? (
               <NavigationMenuItem>
                 <Link

@@ -117,7 +117,7 @@ export function AppCommandDialog() {
 
   return (
     <Dialog open={isOpen} onOpenChange={handleChangeDialogState}>
-      <DialogContent className="h-dvh max-h-none overflow-hidden rounded-none p-0 sm:max-h-96 sm:max-w-2xl sm:p-0">
+      <DialogContent className="inset-0 max-h-none overflow-hidden rounded-none p-0 sm:right-auto sm:top-auto sm:max-h-96 sm:max-w-2xl sm:p-0">
         <Command
           shouldFilter={false}
           loop

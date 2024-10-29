@@ -22,19 +22,13 @@ const dateFormatter = new Intl.DateTimeFormat(undefined, {
 export type DataConnectionHandlerCardProps = {
   handlerDefinition?: DataProviderHandler
   connectionHandler?: DataConnectionHandler
-  lastSynced?: string
 } & React.ComponentProps<typeof Card>
 
 export function DataConnectionHandlerCard(
   props: DataConnectionHandlerCardProps
 ) {
-  const {
-    handlerDefinition,
-    connectionHandler,
-    lastSynced,
-    className,
-    ...cardProps
-  } = props
+  const { handlerDefinition, connectionHandler, className, ...cardProps } =
+    props
 
   return (
     <Card
@@ -63,8 +57,8 @@ export function DataConnectionHandlerCard(
             <Typography variant="base-regular">Last synced</Typography>
           </div>
           <Typography variant="base-regular" className="flex-1 text-end">
-            {lastSynced && connectionHandler?.enabled
-              ? dateFormatter.format(new Date(lastSynced))
+            {connectionHandler?.latestSyncEnd && connectionHandler?.enabled
+              ? dateFormatter.format(new Date(connectionHandler.latestSyncEnd))
               : "-"}
           </Typography>
         </div>

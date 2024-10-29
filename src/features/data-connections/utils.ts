@@ -1,10 +1,6 @@
 import { commonConfig } from "@/config/common"
 import { DEFAULT_DATA_PROVIDER_DESCRIPTION } from "@/features/data-connections/constants"
 import {
-  MOCK_DATA_PROVIDERS,
-  MOCK_USER_DATA_CONNECTIONS,
-} from "@/features/data-connections/mock"
-import {
   DataConnectionsApiV1DisconnectConnectionResponseSchema,
   DataConnectionsApiV1GetConnectionsResponseSchema,
   DataConnectionsApiV1GetProvidersResponseSchema,
@@ -18,7 +14,6 @@ import {
 } from "@/features/data-connections/types"
 import { getNewDataConnectionCallbackPageRoute } from "@/features/routes/utils"
 import { Logger } from "@/features/telemetry"
-import { wait } from "@/utils/misc"
 
 const logger = Logger.create("data-connections")
 
@@ -72,10 +67,8 @@ export async function getDataProviders(): Promise<DataProvider[]> {
 
   // Use mock response if API configuration is missing
   if (!commonConfig.PRIVATE_DATA_API_BASE_URL) {
-    logger.warn(
-      "Using mock response due to incorrect Private Data API configuration"
-    )
-    return mockGetDataProviders()
+    logger.warn("Cannot get data providers due to incorrect API configuration")
+    throw new Error("Incorrect Private Data API configuration")
   }
 
   try {
@@ -123,24 +116,6 @@ export async function getDataProviders(): Promise<DataProvider[]> {
 }
 
 /**
- * Simulates fetching data providers for testing purposes.
- *
- * @returns A promise that resolves to an array of mock DataProvider objects
- */
-async function mockGetDataProviders(): Promise<DataProvider[]> {
-  // Simulate API delay
-  await wait(5000)
-
-  // Return mock data providers with default description if not provided
-  return Promise.resolve(
-    MOCK_DATA_PROVIDERS.map((provider) => ({
-      ...provider,
-      description: provider.description || DEFAULT_DATA_PROVIDER_DESCRIPTION,
-    }))
-  )
-}
-
-/**
  * Fetches data connections from the API or returns mock data if the API is not configured.
  *
  * @param key - The API key for authentication
@@ -155,9 +130,9 @@ export async function getDataConnections(
   // Use mock response if API configuration is missing
   if (!commonConfig.PRIVATE_DATA_API_BASE_URL) {
     logger.warn(
-      "Using mock response due to incorrect Private Data API configuration"
+      "Cannot get data connections due to incorrect API configuration"
     )
-    return mockGetDataConnections()
+    throw new Error("Incorrect Private Data API configuration")
   }
 
   try {
@@ -194,18 +169,6 @@ export async function getDataConnections(
   } catch (error) {
     throw new Error("Error fetching data connections", { cause: error })
   }
-}
-
-/**
- * Simulates fetching data connections for testing purposes.
- *
- * @returns A promise that resolves to an array of mock DataConnection objects
- */
-async function mockGetDataConnections(): Promise<DataConnection[]> {
-  // Simulate API delay
-  await wait(5000)
-
-  return Promise.resolve(MOCK_USER_DATA_CONNECTIONS)
 }
 
 /**

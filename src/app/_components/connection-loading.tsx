@@ -17,7 +17,7 @@ export function ConnectionLoading(props: ConnectionLoadingProps) {
   return (
     <div
       className={cn(
-        "flex h-full w-full flex-col items-center justify-center gap-8",
+        "flex h-full w-full flex-col items-center justify-center gap-8 p-4",
         className
       )}
       {...divProps}
