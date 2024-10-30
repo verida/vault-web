@@ -52,7 +52,7 @@ export function DataConnectionLogsTableRow(
             : null}
         </div>
       ) : null}
-      <div className="flex flex-1 flex-col gap-2">
+      <div className="flex min-w-0 flex-1 flex-col gap-2">
         <div className="flex flex-row items-center gap-2">
           {levelCell
             ? flexRender(
