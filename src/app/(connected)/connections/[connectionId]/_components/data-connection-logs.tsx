@@ -76,7 +76,6 @@ export function DataConnectionLogs(props: DataConnectionLogsProps) {
     pagination: logsPaginationInfo,
     isLoading,
     isError,
-    error,
   } = useDataConnectionLogs({
     providerId: connection.providerId,
     accountId: connection.accountId,

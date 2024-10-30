@@ -26,10 +26,12 @@ export const dataConnectionLogsTableColumns = [
     },
     header: "Connection",
     cell: (context) => {
+      // eslint-disable-next-line react-hooks/rules-of-hooks
       const { provider, isLoading: isLoadingProvider } = useDataProvider(
         context.row.original.providerId
       )
 
+      // eslint-disable-next-line react-hooks/rules-of-hooks
       const { connection, isLoading: isConnectionLoading } = useDataConnection(
         buildConnectionId({
           providerId: context.row.original.providerId,

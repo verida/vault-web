@@ -7,7 +7,6 @@ import {
 } from "@tanstack/react-table"
 import { useState } from "react"
 
-import ConnectionsSummaryLogsLoadingPage from "@/app/(connected)/connections/summary/logs/loading"
 import { dataConnectionLogsTableColumns } from "@/components/data-connections/logs-table/data-connection-logs-table-columns"
 import { DataConnectionLogsTableRow } from "@/components/data-connections/logs-table/data-connection-logs-table-row"
 import { DataTableHeader } from "@/components/data-table/data-table-header"
@@ -54,7 +53,6 @@ export default function ConnectionsLogsPage() {
     pagination: logsPaginationInfo,
     isLoading,
     isError,
-    error,
   } = useDataConnectionsLogs({
     options: {
       limit: pagination.pageSize,
