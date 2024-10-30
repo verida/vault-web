@@ -5,6 +5,11 @@ import {
   PrivateDataApiV1LlmHotloadResponseSchema,
 } from "@/features/assistant/schemas"
 
+export type RecommendedPrompt = {
+  label: string
+  prompt: string
+}
+
 /**
  * Very basic implementation for UI purpose for now
  */
