@@ -6,7 +6,7 @@ import { cn } from "@/styles/utils"
 
 export type DataTableGenericRowProps<TData> = {
   row: Row<TData>
-} & React.ComponentProps<typeof DataTableBaseRow>
+} & Omit<React.ComponentProps<typeof DataTableBaseRow>, "children">
 
 export function DataTableGenericRow<TData>(
   props: DataTableGenericRowProps<TData>
