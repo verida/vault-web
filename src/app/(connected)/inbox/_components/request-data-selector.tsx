@@ -5,7 +5,7 @@ import { intlFormat } from "date-fns"
 import Image from "next/image"
 import { useCallback, useEffect, useState } from "react"
 
-import { ArrowLeft } from "@/components/icons/arrow-left"
+import { ArrowLeftIcon } from "@/components/icons/arrow-left-icon"
 import { SearchInput } from "@/components/search-input"
 import { Typography } from "@/components/typography"
 import { Alert, AlertDescription } from "@/components/ui/alert"
@@ -92,7 +92,7 @@ export function RequestDataSelector(props: RequestDataSelectorProps) {
     <>
       <DrawerHeader className="flex flex-col gap-1.5 space-y-3 border-b px-6 py-4 text-center sm:text-left">
         <div className="flex items-center space-x-3">
-          <ArrowLeft onClick={() => onClose()} className="cursor-pointer" />
+          <ArrowLeftIcon onClick={() => onClose()} className="cursor-pointer" />
           <DrawerTitle className="text-lg font-semibold leading-none tracking-tight">
             Select an Item
           </DrawerTitle>

@@ -1,15 +1,29 @@
 import { DATA_CONNECTIONS_SYNC_LOGS_DATABASE_NAME } from "@/features/data-connections/constants"
 import { DataConnectionSyncLog } from "@/features/data-connections/types"
+import {
+  VeridaDatabaseQueryFilter,
+  VeridaDatabaseQueryOptions,
+} from "@/features/verida-database/types"
+import { VeridaRecord } from "@/features/verida-database/types"
 import { useVeridaDataRecords } from "@/features/verida-database/use-verida-data-records"
 
-export function useDataConnectionsLogs() {
+type UseDataConnectionsLogsArgs = {
+  filter?: VeridaDatabaseQueryFilter<VeridaRecord<DataConnectionSyncLog>>
+  options?: VeridaDatabaseQueryOptions<VeridaRecord<DataConnectionSyncLog>>
+}
+
+export function useDataConnectionsLogs({
+  filter,
+  options,
+}: UseDataConnectionsLogsArgs) {
   // TODO: Use a proper schema of the logs once supported by useVeridaDataRecords
   const { records, pagination, ...query } =
     useVeridaDataRecords<DataConnectionSyncLog>({
       databaseName: DATA_CONNECTIONS_SYNC_LOGS_DATABASE_NAME,
+      filter,
       options: {
-        // TODO: Handle pagination
-        sort: [
+        ...options,
+        sort: options?.sort ?? [
           {
             insertedAt: "desc",
           },

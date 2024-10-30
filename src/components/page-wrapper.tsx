@@ -1,6 +1,6 @@
 import Link from "next/link"
 
-import { ArrowLeft } from "@/components/icons/arrow-left"
+import { ArrowLeftIcon } from "@/components/icons/arrow-left-icon"
 import { Typography } from "@/components/typography"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/styles/utils"
@@ -41,7 +41,7 @@ export function PageWrapper(props: PageWrapperProps) {
               className="-mx-2 -my-2 h-auto w-auto p-2"
             >
               <Link href={backNavigationHref}>
-                <ArrowLeft />
+                <ArrowLeftIcon />
               </Link>
             </Button>
             {backNavigationLabel ? (

@@ -4,6 +4,7 @@ import {
 } from "@/app/(connected)/connections/summary/_components/connect-data-provider-dialog"
 import { DataConnectionsList } from "@/app/(connected)/connections/summary/_components/data-connections-list"
 import { DataProvidersList } from "@/app/(connected)/connections/summary/_components/data-providers-list"
+import { SyncAllConnectionsButton } from "@/app/(connected)/connections/summary/_components/sync-all-connections-button"
 import { PageWrapper } from "@/components/page-wrapper"
 import { Typography } from "@/components/typography"
 import { Button } from "@/components/ui/button"
@@ -14,6 +15,7 @@ export default function ConnectionsSummaryPage() {
       pageTitle="Connections"
       leftContent={
         <div className="flex flex-row items-center gap-2">
+          <SyncAllConnectionsButton />
           <ConnectDataProviderDialog>
             <ConnectDataProviderDialogTrigger asChild>
               <Button variant="primary">Add Connection</Button>
