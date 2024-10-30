@@ -13,23 +13,27 @@ export function DataTableHeader<TData, TValue>(
   const { columnHeaders, className, ...headerProps } = props
 
   return (
-    <header className={cn("py-3", className)} {...headerProps}>
-      <div className="flex flex-row items-center justify-between gap-8 px-5 sm:flex-row">
-        {columnHeaders.map((header) => {
-          return (
-            <div key={header.id} className={cn(header.getClassName())}>
-              {header.isPlaceholder ? null : (
-                <DataTableColumnHeader align={header.getAlign()}>
-                  {flexRender(
-                    header.column.columnDef.header,
-                    header.getContext()
-                  )}
-                </DataTableColumnHeader>
-              )}
-            </div>
-          )
-        })}
-      </div>
+    <header
+      className={cn(
+        "flex flex-row items-center justify-between gap-6 px-5 py-3",
+        className
+      )}
+      {...headerProps}
+    >
+      {columnHeaders.map((header) => {
+        return (
+          <div key={header.id} className={cn(header.getClassName())}>
+            {header.isPlaceholder ? null : (
+              <DataTableColumnHeader align={header.getAlign()}>
+                {flexRender(
+                  header.column.columnDef.header,
+                  header.getContext()
+                )}
+              </DataTableColumnHeader>
+            )}
+          </div>
+        )
+      })}
     </header>
   )
 }

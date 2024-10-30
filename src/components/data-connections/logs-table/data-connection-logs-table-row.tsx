@@ -74,7 +74,7 @@ export function DataConnectionLogsTableRow(
             )
           : null}
       </div>
-      <div className="shrink-0 self-center md:w-44 md:text-right">
+      <div className="shrink-0 md:w-44 md:self-center md:text-right">
         {timestampCell
           ? flexRender(
               timestampCell.column.columnDef.cell,

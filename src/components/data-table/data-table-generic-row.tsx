@@ -29,7 +29,7 @@ export function DataTableGenericRow<TData>(
           {typeof cell.column.columnDef.header === "string" ? (
             <div className="md:hidden">
               {cell.getIsPlaceholder() ? null : (
-                <DataTableColumnHeader align={cell.getAlign()}>
+                <DataTableColumnHeader>
                   {cell.column.columnDef.header}
                 </DataTableColumnHeader>
               )}

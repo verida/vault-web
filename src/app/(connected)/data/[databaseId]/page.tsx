@@ -26,7 +26,10 @@ export default function DatabasePage(props: DatabasePageProps) {
         backNavigationHref={getDataPageRoute()}
         backNavigationLabel="Back to all Data"
       >
-        <DatabasePageContent databaseDefinition={databaseDefinition} />
+        <DatabasePageContent
+          databaseDefinition={databaseDefinition}
+          className="flex-1"
+        />
       </PageWrapper>
     )
   }

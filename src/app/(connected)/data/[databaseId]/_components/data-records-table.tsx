@@ -37,6 +37,7 @@ import { DataTableColumnClassNameFeature } from "@/features/data-table/data-tabl
 import { DatabaseDefinition } from "@/features/data/types"
 import { VeridaRecord } from "@/features/verida-database/types"
 import { useVeridaDataRecords } from "@/features/verida-database/use-verida-data-records"
+import { cn } from "@/styles/utils"
 
 const fallbackData: VeridaRecord[] = []
 
@@ -44,10 +45,10 @@ const getRowId = (record: VeridaRecord) => record._id
 
 export type DataRecordsTableProps = {
   databaseDefinition: DatabaseDefinition
-}
+} & Omit<React.ComponentProps<"div">, "children">
 
 export function DataRecordsTable(props: DataRecordsTableProps) {
-  const { databaseDefinition } = props
+  const { databaseDefinition, className, ...divProps } = props
 
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,
@@ -85,7 +86,7 @@ export function DataRecordsTable(props: DataRecordsTableProps) {
   })
 
   return (
-    <div className="flex flex-1 flex-col gap-0">
+    <div className={cn("flex flex-col gap-0", className)} {...divProps}>
       <div className="hidden md:block">
         {table.getHeaderGroups().map((headerGroup) => (
           <DataTableHeader

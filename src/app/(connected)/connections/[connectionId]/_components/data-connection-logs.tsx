@@ -108,7 +108,7 @@ export function DataConnectionLogs(props: DataConnectionLogsProps) {
   })
 
   return (
-    <div className={cn("flex flex-1 flex-col gap-0", className)} {...divProps}>
+    <div className={cn("flex flex-col gap-0", className)} {...divProps}>
       <div className="hidden md:block">
         {table.getHeaderGroups().map((headerGroup) => (
           <DataTableHeader
