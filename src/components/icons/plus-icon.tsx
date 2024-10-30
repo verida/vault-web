@@ -2,7 +2,7 @@ import { SVGProps } from "react"
 
 interface Props extends SVGProps<SVGSVGElement> {}
 
-const Plus = (props: Props) => (
+export const PlusIcon = (props: Props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="13"
@@ -17,5 +17,3 @@ const Plus = (props: Props) => (
     />
   </svg>
 )
-
-export { Plus }

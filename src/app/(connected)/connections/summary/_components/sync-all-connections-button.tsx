@@ -2,10 +2,12 @@
 
 import { useCallback, useState } from "react"
 
+import { RefreshIcon } from "@/components/icons/refresh-icon"
 import { Button } from "@/components/ui/button"
 import { useDataConnections } from "@/features/data-connections/hooks/use-data-connections"
 import { useSyncAllDataConnections } from "@/features/data-connections/hooks/use-sync-all-data-connections"
 import { useToast } from "@/features/toasts/use-toast"
+import { cn } from "@/styles/utils"
 import { wait } from "@/utils/misc"
 
 export type SyncAllConnectionsButtonProps = Pick<
@@ -49,11 +51,12 @@ export function SyncAllConnectionsButton(props: SyncAllConnectionsButtonProps) {
     return (
       <Button
         variant="outline"
-        className={className}
+        className={cn("h-12 w-12 p-0 sm:w-auto sm:px-4 sm:py-2", className)}
         disabled={isSyncing || disabled}
         onClick={handleClick}
       >
-        Sync All
+        <RefreshIcon className="h-5 w-5 sm:hidden" />
+        <span className="sr-only sm:not-sr-only">Sync All</span>
       </Button>
     )
   }
