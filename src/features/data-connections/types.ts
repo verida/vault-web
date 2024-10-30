@@ -7,6 +7,7 @@ import {
   DataConnectionSchema,
   DataConnectionStatusSchema,
   DataConnectionsApiV1DisconnectConnectionResponseSchema,
+  DataConnectionsApiV1SyncAllConnectionsResponseSchema,
   DataConnectionsApiV1SyncConnectionResponseSchema,
   DataProviderHandlerSchema,
   DataProviderSchema,
@@ -32,6 +33,10 @@ export type DataConnectionHandler = z.infer<typeof DataConnectionHandlerSchema>
 
 export type DataConnectionHandlerStatus = z.infer<
   typeof DataConnectionHandlerStatusSchema
+>
+
+export type DataConnectionsApiV1SyncAllConnectionsResponse = z.infer<
+  typeof DataConnectionsApiV1SyncAllConnectionsResponseSchema
 >
 
 export type DataConnectionsApiV1SyncConnectionResponse = z.infer<

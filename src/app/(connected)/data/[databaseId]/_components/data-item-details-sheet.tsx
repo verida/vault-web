@@ -5,7 +5,7 @@ import { usePathname, useRouter } from "next/navigation"
 import React from "react"
 
 import { Copy } from "@/components/icons/copy"
-import { Delete } from "@/components/icons/delete"
+import { DeleteIcon } from "@/components/icons/delete-icon"
 import { Pin } from "@/components/icons/pin"
 import {
   ModalSheet,
@@ -65,8 +65,8 @@ export function DataItemDetailsSheet(props: DataItemDetailsSheetProps) {
             </Tooltip>
             <Tooltip>
               <TooltipTrigger asChild>
-                <Button size="icon" variant="outline">
-                  <Delete className="[&_*]:stroke-destructive" />
+                <Button size="icon" variant="outline-destructive">
+                  <DeleteIcon />
                 </Button>
               </TooltipTrigger>
               <TooltipContent>Delete</TooltipContent>

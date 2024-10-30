@@ -1,12 +1,13 @@
 "use client"
 
-import { SearchIcon } from "lucide-react"
+// import { SearchIcon } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useCallback, useMemo, useState } from "react"
 import { useDebounce } from "use-debounce"
 
 import { DatabaseIcon } from "@/components/icons/database-icon"
 import { GridIcon } from "@/components/icons/grid-icon"
+import { SearchIcon } from "@/components/icons/search-icon"
 import { Typography } from "@/components/typography"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
@@ -364,7 +365,7 @@ export function AppCommandDialogTrigger(props: AppCommandDialogTriggerProps) {
           onClick={openCommand}
           {...buttonProps}
         >
-          <SearchIcon className="h-4 w-4 shrink-0 opacity-50" />
+          <SearchIcon className="h-5 w-5 shrink-0" />
           <span className="sr-only">Search</span>
           <span className="hidden rounded-sm bg-surface-hover p-1 text-base-s-regular text-muted-foreground sm:inline-block">
             {shortcutText}

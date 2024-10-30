@@ -3,7 +3,7 @@
 import React from "react"
 import { useDebouncedCallback } from "use-debounce"
 
-import { Search } from "@/components/icons/search"
+import { SearchIcon } from "@/components/icons/search-icon"
 import { cn } from "@/styles/utils"
 
 export type SearchInputProps = {
@@ -27,7 +27,7 @@ export function SearchInput(props: SearchInputProps) {
         className
       )}
     >
-      <Search className="box-content h-5 w-5 text-muted-foreground md:h-6 md:w-6" />
+      <SearchIcon className="box-content h-5 w-5 text-muted-foreground md:h-6 md:w-6" />
       <input
         {...inputProps}
         className="hidden bg-transparent text-sm outline-none md:block"

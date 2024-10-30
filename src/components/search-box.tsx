@@ -1,6 +1,6 @@
 import React from "react"
 
-import { Search } from "@/components/icons/search"
+import { SearchIcon } from "@/components/icons/search-icon"
 import { Button } from "@/components/ui/button"
 import {
   Drawer,
@@ -24,13 +24,13 @@ export function SearchBox(props: SearchBoxProps) {
           {...inputProps}
         />
 
-        <Search className="absolute left-3 top-3 [&_*]:stroke-muted-foreground" />
+        <SearchIcon className="absolute left-3 top-3 [&_*]:stroke-muted-foreground" />
       </div>
       <div className="block md:hidden">
         <Drawer direction="right">
           <DrawerTrigger asChild>
             <Button variant="outline" size="icon">
-              <Search className="[&_*]:stroke-muted-foreground" />
+              <SearchIcon className="[&_*]:stroke-muted-foreground" />
             </Button>
           </DrawerTrigger>
           <DrawerContent
@@ -45,7 +45,7 @@ export function SearchBox(props: SearchBoxProps) {
                   {...inputProps}
                 />
 
-                <Search className="absolute left-3 top-3 [&_*]:stroke-muted-foreground" />
+                <SearchIcon className="absolute left-3 top-3 [&_*]:stroke-muted-foreground" />
               </div>
             </DrawerHeader>
           </DrawerContent>

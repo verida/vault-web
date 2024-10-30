@@ -48,11 +48,13 @@ export function DataConnectionDetails(props: DataConnectionDetailsProps) {
         },
         onSuccess: () => {
           toast({
+            variant: "success",
             description: "Data connection is synchronizing",
           })
         },
         onError: () => {
           toast({
+            variant: "error",
             description: "There was an error synchronizing the data connection",
           })
         },
@@ -115,7 +117,7 @@ export function DataConnectionDetails(props: DataConnectionDetailsProps) {
             >
               {isSyncing || connection.syncStatus === "active"
                 ? "Syncing..."
-                : "Sync All"}
+                : "Sync"}
             </Button>
           </div>
         </Card>

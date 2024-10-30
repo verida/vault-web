@@ -1,9 +1,10 @@
 "use client"
 
 import { Command as CommandPrimitive } from "cmdk"
-import { Search, XIcon } from "lucide-react"
+import { XIcon } from "lucide-react"
 import * as React from "react"
 
+import { SearchIcon } from "@/components/icons/search-icon"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/styles/utils"
 
@@ -33,7 +34,7 @@ const CommandInput = React.forwardRef<
     className="relative flex w-full flex-row items-center"
     cmdk-input-wrapper=""
   >
-    <Search className="absolute left-0 ml-2 size-5 shrink-0 opacity-50 sm:ml-3 sm:size-6" />
+    <SearchIcon className="absolute left-0 ml-2 size-5 shrink-0 opacity-50 sm:ml-3 sm:size-6" />
     <CommandPrimitive.Input
       ref={ref}
       className={cn(
