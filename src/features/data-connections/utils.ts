@@ -4,11 +4,13 @@ import {
   DataConnectionsApiV1DisconnectConnectionResponseSchema,
   DataConnectionsApiV1GetConnectionsResponseSchema,
   DataConnectionsApiV1GetProvidersResponseSchema,
+  DataConnectionsApiV1SyncAllConnectionsResponseSchema,
   DataConnectionsApiV1SyncConnectionResponseSchema,
 } from "@/features/data-connections/schemas"
 import {
   DataConnection,
   DataConnectionsApiV1DisconnectConnectionResponse,
+  DataConnectionsApiV1SyncAllConnectionsResponse,
   DataConnectionsApiV1SyncConnectionResponse,
   DataProvider,
 } from "@/features/data-connections/types"
@@ -229,6 +231,63 @@ export async function syncDataConnection(
     return validatedData
   } catch (error) {
     throw new Error("Error syncing data connection", { cause: error })
+  }
+}
+
+/**
+ * Sync all data connections
+ *
+ * @param sessionToken - The session token for authentication
+ * @returns A promise that resolves to a DataConnectionsApiV1SyncAllConnectionsResponse indicating success
+ * @throws Error if there's an issue syncing all data connections
+ */
+export async function syncAllDataConnections(
+  sessionToken: string
+): Promise<DataConnectionsApiV1SyncAllConnectionsResponse> {
+  logger.info("Syncing all data connections")
+
+  if (!commonConfig.PRIVATE_DATA_API_BASE_URL) {
+    logger.warn(
+      "Cannot sync data connection due to incorrect API configuration"
+    )
+    throw new Error("Incorrect Private Data API configuration")
+  }
+
+  const url = new URL(
+    `${commonConfig.PRIVATE_DATA_API_BASE_URL}/api/rest/v1/connections/sync`
+  )
+
+  try {
+    logger.debug("Sending API request to sync data connection")
+    const response = await fetch(url.toString(), {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-API-Key": sessionToken,
+      },
+      body: JSON.stringify({
+        instantComplete: true,
+      }),
+    })
+
+    if (!response.ok) {
+      throw new Error(`HTTP error ${response.status}`)
+    }
+
+    const data = await response.json()
+
+    const validatedData =
+      DataConnectionsApiV1SyncAllConnectionsResponseSchema.parse(data)
+
+    if (!validatedData.success) {
+      throw new Error("API returned unsuccessful operation")
+    }
+
+    logger.info("Successfully synced all data connections")
+
+    return validatedData
+  } catch (error) {
+    throw new Error("Error syncing all data connections", { cause: error })
   }
 }
 

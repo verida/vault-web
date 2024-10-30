@@ -99,6 +99,12 @@ export const DataConnectionsApiV1GetConnectionsResponseSchema = z.object({
   success: z.boolean(),
 })
 
+export const DataConnectionsApiV1SyncAllConnectionsResponseSchema = z
+  .object({
+    success: z.boolean(),
+  })
+  .passthrough()
+
 export const DataConnectionsApiV1SyncConnectionResponseSchema = z
   .object({
     // TODO: Define the returned data connection when needed

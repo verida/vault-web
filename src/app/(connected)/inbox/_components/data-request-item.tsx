@@ -4,7 +4,7 @@ import Image from "next/image"
 import { useMemo } from "react"
 
 import { Close } from "@/components/icons/close"
-import { Plus } from "@/components/icons/plus"
+import { PlusIcon } from "@/components/icons/plus-icon"
 import { Typography } from "@/components/typography"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -77,7 +77,7 @@ export function DataRequestItem(props: DataRequestItemProps) {
         <></>
       ) : (
         <Button variant="outline" className="w-full gap-2" onClick={onAdd}>
-          <Plus />
+          <PlusIcon />
           Add
         </Button>
       )}

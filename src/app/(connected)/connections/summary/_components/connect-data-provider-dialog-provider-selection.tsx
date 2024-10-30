@@ -83,7 +83,7 @@ function ProviderSelectionItem(props: ProviderSelectionItemProps) {
           <AvatarImage src={provider.icon} alt={provider.label} />
           <AvatarFallback>{provider.label?.[0]?.toUpperCase()}</AvatarFallback>
         </Avatar>
-        <div className="flex flex-1 flex-col items-start text-start">
+        <div className="flex flex-1 flex-col items-start text-start text-foreground">
           <Typography variant="heading-4">{provider.label}</Typography>
           <div
             className="text-muted-foreground" // FIXME: Fix class conflicts in the Typography with text-muted-foreground removing the class text-base-s-regular

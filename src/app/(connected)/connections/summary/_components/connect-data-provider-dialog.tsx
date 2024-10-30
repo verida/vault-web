@@ -110,7 +110,9 @@ export function ConnectDataProviderDialog(
       const { connectionId } = payload
 
       if (connectionId) {
-        router.push(getConnectionPageRoute({ connectionId }))
+        setTimeout(() => {
+          router.push(getConnectionPageRoute({ connectionId }))
+        }, 1000 * 3) // 3 seconds
       } else {
         // For the moment the connectionId is not available, so we handle that other case to set conencted status and adapt the UI
         setStatus("connected")
@@ -120,12 +122,17 @@ export function ConnectDataProviderDialog(
   )
 
   useEffect(() => {
-    dataConnectionsChannel.addEventListener("message", handleNewDataConnection)
+    const controller = new AbortController()
+
+    dataConnectionsChannel.addEventListener(
+      "message",
+      handleNewDataConnection,
+      {
+        signal: controller.signal,
+      }
+    )
     return () => {
-      dataConnectionsChannel.removeEventListener(
-        "message",
-        handleNewDataConnection
-      )
+      controller.abort()
     }
   }, [dataConnectionsChannel, handleNewDataConnection])
 

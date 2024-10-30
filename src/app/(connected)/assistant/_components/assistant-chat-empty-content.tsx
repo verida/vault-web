@@ -12,7 +12,7 @@ import { getConnectionsPageRoute } from "@/features/routes/utils"
 import { cn } from "@/styles/utils"
 
 export type AssistantChatEmptyContentProps = {
-  onRecommendedPromptClick?: (prompt: string) => void
+  onRecommendedPromptClick: (prompt: string) => void
 } & React.ComponentProps<"div">
 
 export function AssistantChatEmptyContent(
@@ -36,27 +36,30 @@ export function AssistantChatEmptyContent(
           <Typography variant="heading-4">Talk about your data</Typography>
           <Typography variant="base-regular">
             Start chatting with your assistant about your private data
+            {isLoadingDataConnections ? null : connections?.length ? (
+              <Typography
+                variant="base-regular"
+                component="span"
+              >{`, for example:`}</Typography>
+            ) : null}
           </Typography>
         </div>
         {isLoadingDataConnections ? null : connections?.length ? (
-          <div className="flex flex-col gap-4 text-center">
-            <Typography variant="base-regular">Ask about:</Typography>
-            <div className="flex flex-col items-center gap-2">
-              {RECOMMENDED_PROMPTS_FOR_NEW_CHAT.map((prompt, index) => (
-                <Button
-                  key={index}
-                  variant="outline"
-                  className="h-auto rounded-full px-4 py-2.5"
-                  onClick={() => {
-                    onRecommendedPromptClick?.(prompt)
-                  }}
-                >
-                  <Typography key={index} variant="base-s-regular">
-                    {prompt}
-                  </Typography>
-                </Button>
-              ))}
-            </div>
+          <div className="flex flex-col items-center gap-2">
+            {RECOMMENDED_PROMPTS_FOR_NEW_CHAT.map((recommendations, index) => (
+              <Button
+                key={index}
+                variant="outline"
+                className="h-auto rounded-full px-4 py-2.5"
+                onClick={() => {
+                  onRecommendedPromptClick(recommendations.prompt)
+                }}
+              >
+                <Typography key={index} variant="base-s-regular">
+                  {recommendations.label}
+                </Typography>
+              </Button>
+            ))}
           </div>
         ) : (
           <div className="flex flex-col gap-4 text-center">

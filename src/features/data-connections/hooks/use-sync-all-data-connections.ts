@@ -1,28 +1,47 @@
-import { useMutation } from "@tanstack/react-query"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { useCallback } from "react"
 
-import { useDataConnections } from "@/features/data-connections/hooks/use-data-connections"
-import { useSyncDataConnection } from "@/features/data-connections/hooks/use-sync-data-connection"
+import { DataConnectionsQueryKeys } from "@/features/data-connections/queries"
+import { syncAllDataConnections } from "@/features/data-connections/utils"
+import { Logger } from "@/features/telemetry/logger"
+import { useVerida } from "@/features/verida/use-verida"
+import { wait } from "@/utils/misc"
+
+const logger = Logger.create("data-connections")
 
 export function useSyncAllDataConnections() {
-  const { syncDataConnection } = useSyncDataConnection()
+  const { getAccountSessionToken } = useVerida()
+  const queryClient = useQueryClient()
 
-  const { connections } = useDataConnections()
+  const invalidateDataConnectionsQueries = useCallback(() => {
+    logger.debug("Invalidating data connections queries")
+    queryClient
+      .invalidateQueries({
+        queryKey: DataConnectionsQueryKeys.invalidateDataConnections(),
+      })
+      .then(() => {
+        logger.debug("Successfully invalidated data connections queries")
+      })
+  }, [queryClient])
 
   const { mutate, mutateAsync, ...mutation } = useMutation({
     mutationFn: async () => {
-      if (!connections || connections.length === 0) {
-        return
-      }
-
-      await Promise.allSettled(
-        connections.map((connection) => {
-          return syncDataConnection({ connectionId: connection._id })
-        })
-      )
+      const sessionToken = await getAccountSessionToken()
+      return syncAllDataConnections(sessionToken)
+    },
+    onMutate: () => {
+      // Give time for the data connection to be updated on the server
+      wait(1000 * 2).then(() => {
+        // Invalidate the data connections to fetch the updated status just
+        // after starting the sync
+        invalidateDataConnectionsQueries()
+      })
     },
     meta: {
       logCategory: "data-connections",
       errorMessage: "Error syncing all data connections",
+      onSettledInvalidationQueryKeys:
+        DataConnectionsQueryKeys.invalidateDataConnections(),
     },
   })
 
