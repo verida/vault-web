@@ -95,7 +95,7 @@ export function DataRecordsTable(props: DataRecordsTableProps) {
         ))}
       </div>
       {table.getRowModel().rows?.length ? (
-        <ul className="flex flex-1 flex-col gap-3">
+        <ul className="flex flex-col gap-3">
           {table.getRowModel().rows.map((row) => (
             <li key={row.id}>
               <Link href={`?itemId=${row.original._id}`} className="rounded-lg">

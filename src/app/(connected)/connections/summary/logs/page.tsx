@@ -93,7 +93,7 @@ export default function ConnectionsLogsPage() {
           ))}
         </div>
         {table.getRowModel().rows?.length ? (
-          <ul className="flex flex-1 flex-col gap-3">
+          <ul className="flex flex-col gap-3">
             {table.getRowModel().rows.map((row) => (
               <li key={row.id}>
                 <DataConnectionLogsTableRow row={row} />
