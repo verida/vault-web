@@ -33,10 +33,8 @@ export function DataConnectionsProvider(props: DataConnectionsProviderProps) {
   // Sync all connections
   const { syncAllConnections } = useSyncAllDataConnections()
   useEffect(() => {
-    // Sync at startup, with a delay to allow the data connections to be fetched
-    setTimeout(() => {
-      syncAllConnections()
-    }, 1000 * 10) // 10 seconds
+    // Sync at startup
+    syncAllConnections()
 
     // Sync at regular intervals
     const interval = setInterval(() => {
