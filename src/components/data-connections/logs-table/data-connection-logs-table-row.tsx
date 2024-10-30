@@ -39,14 +39,11 @@ export function DataConnectionLogsTableRow(
 
   return (
     <DataTableBaseRow
-      className={cn(
-        "flex flex-col items-start gap-6 sm:h-auto sm:flex-col sm:items-start sm:justify-start sm:gap-6 md:flex-row md:gap-8",
-        className
-      )}
+      className={cn("flex flex-col gap-6 md:flex-row", className)}
       {...cardProps}
     >
       {!hideConnectionColumn ? (
-        <div className="md:w-52">
+        <div className="shrink-0 md:w-52">
           {connectionCell
             ? flexRender(
                 connectionCell.column.columnDef.cell,
@@ -77,7 +74,7 @@ export function DataConnectionLogsTableRow(
             )
           : null}
       </div>
-      <div className="text-right md:w-44">
+      <div className="shrink-0 self-center md:w-44 md:text-right">
         {timestampCell
           ? flexRender(
               timestampCell.column.columnDef.cell,

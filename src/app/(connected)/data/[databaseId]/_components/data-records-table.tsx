@@ -86,7 +86,7 @@ export function DataRecordsTable(props: DataRecordsTableProps) {
 
   return (
     <div className="flex flex-1 flex-col gap-0">
-      <div className="hidden sm:block">
+      <div className="hidden md:block">
         {table.getHeaderGroups().map((headerGroup) => (
           <DataTableHeader
             key={headerGroup.id}

@@ -14,7 +14,7 @@ export function DataTableHeader<TData, TValue>(
 
   return (
     <header className={cn("py-3", className)} {...headerProps}>
-      <div className="flex flex-row items-center justify-between gap-8 px-4 sm:flex-row">
+      <div className="flex flex-row items-center justify-between gap-8 px-5 sm:flex-row">
         {columnHeaders.map((header) => {
           return (
             <div key={header.id} className={cn(header.getClassName())}>
