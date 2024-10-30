@@ -365,7 +365,7 @@ export function AppCommandDialogTrigger(props: AppCommandDialogTriggerProps) {
           onClick={openCommand}
           {...buttonProps}
         >
-          <SearchIcon className="h-5 w-5 shrink-0" />
+          <SearchIcon className="size-6 shrink-0" />
           <span className="sr-only">Search</span>
           <span className="hidden rounded-sm bg-surface-hover p-1 text-base-s-regular text-muted-foreground sm:inline-block">
             {shortcutText}
