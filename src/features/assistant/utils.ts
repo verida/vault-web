@@ -1,4 +1,8 @@
 import { commonConfig } from "@/config/common"
+import {
+  DEFAULT_LLM_MODEL,
+  DEFAULT_LLM_PROVIDER,
+} from "@/features/assistant/constants"
 import { DUMMY_ANSWERS } from "@/features/assistant/mock"
 import {
   PrivateDataApiV1LLMPersonalResponseSchema,
@@ -56,7 +60,11 @@ export async function processUserPrompt(
           "Content-Type": "application/json",
           "X-API-Key": sessionToken,
         },
-        body: JSON.stringify({ prompt }),
+        body: JSON.stringify({
+          prompt,
+          provider: DEFAULT_LLM_PROVIDER,
+          model: DEFAULT_LLM_MODEL,
+        }),
       }
     )
 
