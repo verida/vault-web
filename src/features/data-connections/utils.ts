@@ -1,3 +1,5 @@
+import { isDate } from "date-fns"
+
 import { commonConfig } from "@/config/common"
 import { DEFAULT_DATA_PROVIDER_DESCRIPTION } from "@/features/data-connections/constants"
 import {
@@ -383,4 +385,33 @@ export function buildConnectProviderUrl(
   connectUrl.searchParams.append("redirect", redirectUrl.toString())
 
   return connectUrl.toString()
+}
+
+/**
+ * Gets the latest sync end date from a data connection
+ *
+ * @param connection - The data connection
+ * @returns The latest sync end date
+ */
+export function getDataConnectionLatestSyncEnd(
+  connection: DataConnection
+): Date | undefined {
+  return connection.handlers.reduce((latest: Date | undefined, handler) => {
+    if (!handler.latestSyncEnd) {
+      return latest
+    }
+
+    const latestSyncEndDate = new Date(handler.latestSyncEnd)
+    if (!isDate(latestSyncEndDate)) {
+      return latest
+    }
+
+    if (!latest) {
+      return latestSyncEndDate
+    }
+
+    return latestSyncEndDate.getTime() > new Date(latest).getTime()
+      ? latestSyncEndDate
+      : latest
+  }, undefined)
 }
