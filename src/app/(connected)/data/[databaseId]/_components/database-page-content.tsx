@@ -5,11 +5,16 @@ import { DatabaseDefinition } from "@/features/data/types"
 
 export type DatabasePageContentProps = {
   databaseDefinition: DatabaseDefinition
-}
+} & Omit<React.ComponentProps<typeof DataRecordsTable>, "children">
 
 export function DatabasePageContent(props: DatabasePageContentProps) {
-  const { databaseDefinition } = props
+  const { databaseDefinition, ...dataRecordsTableProps } = props
 
-  return <DataRecordsTable databaseDefinition={databaseDefinition} />
+  return (
+    <DataRecordsTable
+      databaseDefinition={databaseDefinition}
+      {...dataRecordsTableProps}
+    />
+  )
 }
 DatabasePageContent.displayName = "DatabasePageContent"
