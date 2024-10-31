@@ -11,11 +11,7 @@ import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 import { Skeleton } from "@/components/ui/skeleton"
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipIndicator,
-} from "@/components/ui/tooltip"
+import { TooltipIndicator } from "@/components/ui/tooltip"
 import { useDataProvider } from "@/features/data-connections/hooks/use-data-provider"
 import { DataConnection } from "@/features/data-connections/types"
 import { getDataConnectionLatestSyncEnd } from "@/features/data-connections/utils"
@@ -81,12 +77,7 @@ export function DataConnectionCard(props: DataConnectionCardProps) {
                       ? intlFormat(latestSyncEnd, LONG_DATE_TIME_FORMAT_OPTIONS)
                       : "-"}
                   </Typography>
-                  <Tooltip>
-                    <TooltipIndicator />
-                    <TooltipContent>
-                      Sync runs at most once per hour
-                    </TooltipContent>
-                  </Tooltip>
+                  <TooltipIndicator content="Sync runs at most once per hour" />
                 </div>
               </>
             ) : (

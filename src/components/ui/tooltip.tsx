@@ -1,9 +1,10 @@
 "use client"
 
 import * as TooltipPrimitive from "@radix-ui/react-tooltip"
-import * as React from "react"
+import React, { useCallback, useEffect, useRef, useState } from "react"
 
 import { QuestionMarkIcon } from "@/components/icons/question-mark-icon"
+import { Button } from "@/components/ui/button"
 import { cn } from "@/styles/utils"
 
 const TooltipProvider = TooltipPrimitive.Provider
@@ -11,16 +12,6 @@ const TooltipProvider = TooltipPrimitive.Provider
 const Tooltip = TooltipPrimitive.Root
 
 const TooltipTrigger = TooltipPrimitive.Trigger
-
-const TooltipIndicator = React.forwardRef<
-  React.ElementRef<typeof TooltipTrigger>,
-  React.ComponentPropsWithoutRef<typeof TooltipTrigger>
->(({ className, ...props }, ref) => (
-  <TooltipTrigger ref={ref} className={cn(className)} {...props}>
-    <QuestionMarkIcon className="h-5 w-5 shrink-0 text-muted-foreground" />
-  </TooltipTrigger>
-))
-TooltipIndicator.displayName = "TooltipIndicator"
 
 const TooltipContent = React.forwardRef<
   React.ElementRef<typeof TooltipPrimitive.Content>,
@@ -37,6 +28,56 @@ const TooltipContent = React.forwardRef<
   />
 ))
 TooltipContent.displayName = TooltipPrimitive.Content.displayName
+
+type TooltipIndicatorProps = {
+  content: string
+} & Pick<React.ComponentProps<typeof Button>, "className">
+
+function TooltipIndicator(props: TooltipIndicatorProps) {
+  const { content, className } = props
+
+  const [isTooltipOpen, setIsTooltipOpen] = useState(false)
+  const tooltipRef = useRef<HTMLDivElement>(null)
+
+  const handleTooltipToggle = useCallback(() => {
+    setIsTooltipOpen((prevState) => !prevState)
+  }, [])
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        tooltipRef.current &&
+        !tooltipRef.current.contains(event.target as Node)
+      ) {
+        setIsTooltipOpen(false)
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside)
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside)
+    }
+  }, [])
+
+  return (
+    <Tooltip open={isTooltipOpen} onOpenChange={setIsTooltipOpen}>
+      <TooltipTrigger asChild>
+        <Button
+          variant="ghost"
+          size="icon"
+          className={cn("size-5 rounded-full p-0", className)}
+          onClick={handleTooltipToggle}
+        >
+          <QuestionMarkIcon className="size-5 shrink-0 text-muted-foreground" />
+          <span className="sr-only">Show tooltip</span>
+        </Button>
+      </TooltipTrigger>
+      <TooltipContent ref={tooltipRef}>
+        <p>{content}</p>
+      </TooltipContent>
+    </Tooltip>
+  )
+}
 
 export {
   Tooltip,

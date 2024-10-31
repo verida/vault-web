@@ -12,11 +12,7 @@ import { DataConnectionStatusBadge } from "@/components/data-connections/data-co
 import { Typography } from "@/components/typography"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipIndicator,
-} from "@/components/ui/tooltip"
+import { TooltipIndicator } from "@/components/ui/tooltip"
 import { useDataProvider } from "@/features/data-connections/hooks/use-data-provider"
 import { useSyncDataConnection } from "@/features/data-connections/hooks/use-sync-data-connection"
 import { DataConnection } from "@/features/data-connections/types"
@@ -121,10 +117,7 @@ export function DataConnectionDetails(props: DataConnectionDetailsProps) {
                   ? intlFormat(latestSyncEnd, LONG_DATE_TIME_FORMAT_OPTIONS)
                   : "-"}
               </Typography>
-              <Tooltip>
-                <TooltipIndicator />
-                <TooltipContent>Sync runs at most once per hour</TooltipContent>
-              </Tooltip>
+              <TooltipIndicator content="Sync runs at most once per hour" />
             </div>
           </div>
           <div className="flex flex-col items-start gap-1 md:flex-row md:items-center md:gap-4">

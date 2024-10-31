@@ -37,7 +37,7 @@ export function DataConnectionLogLevelBadge(
 
   return (
     <Tooltip>
-      <TooltipTrigger>
+      <TooltipTrigger className="rounded-full p-0 ring-offset-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-0">
         <Icon className={cn("size-5", className)} />
       </TooltipTrigger>
       <TooltipContent>{levelLabel}</TooltipContent>
