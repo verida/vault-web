@@ -3,6 +3,7 @@
 import * as TooltipPrimitive from "@radix-ui/react-tooltip"
 import * as React from "react"
 
+import { QuestionMarkIcon } from "@/components/icons/question-mark-icon"
 import { cn } from "@/styles/utils"
 
 const TooltipProvider = TooltipPrimitive.Provider
@@ -10,6 +11,16 @@ const TooltipProvider = TooltipPrimitive.Provider
 const Tooltip = TooltipPrimitive.Root
 
 const TooltipTrigger = TooltipPrimitive.Trigger
+
+const TooltipIndicator = React.forwardRef<
+  React.ElementRef<typeof TooltipTrigger>,
+  React.ComponentPropsWithoutRef<typeof TooltipTrigger>
+>(({ className, ...props }, ref) => (
+  <TooltipTrigger ref={ref} className={cn(className)} {...props}>
+    <QuestionMarkIcon className="h-5 w-5 shrink-0 text-muted-foreground" />
+  </TooltipTrigger>
+))
+TooltipIndicator.displayName = "TooltipIndicator"
 
 const TooltipContent = React.forwardRef<
   React.ElementRef<typeof TooltipPrimitive.Content>,
@@ -27,4 +38,10 @@ const TooltipContent = React.forwardRef<
 ))
 TooltipContent.displayName = TooltipPrimitive.Content.displayName
 
-export { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider }
+export {
+  Tooltip,
+  TooltipTrigger,
+  TooltipIndicator,
+  TooltipContent,
+  TooltipProvider,
+}

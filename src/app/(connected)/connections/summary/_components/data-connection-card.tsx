@@ -11,6 +11,11 @@ import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 import { Skeleton } from "@/components/ui/skeleton"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipIndicator,
+} from "@/components/ui/tooltip"
 import { useDataProvider } from "@/features/data-connections/hooks/use-data-provider"
 import { DataConnection } from "@/features/data-connections/types"
 import { getDataConnectionLatestSyncEnd } from "@/features/data-connections/utils"
@@ -61,7 +66,7 @@ export function DataConnectionCard(props: DataConnectionCardProps) {
           <div className="flex flex-row items-center justify-between gap-2">
             {connection.syncStatus === "connected" ? (
               <>
-                <div className="flex flex-row items-center gap-1 text-muted-foreground">
+                <div className="text-muted-foreground">
                   <Typography
                     variant="base-regular"
                     // HACK: Set line-height on both "Last synced" and "Status" label to ensure constant height of the row
@@ -70,11 +75,19 @@ export function DataConnectionCard(props: DataConnectionCardProps) {
                     Last synced
                   </Typography>
                 </div>
-                <Typography variant="base-s-semibold">
-                  {latestSyncEnd
-                    ? intlFormat(latestSyncEnd, LONG_DATE_TIME_FORMAT_OPTIONS)
-                    : "-"}
-                </Typography>
+                <div className="flex flex-row items-center gap-1">
+                  <Typography variant="base-s-semibold">
+                    {latestSyncEnd
+                      ? intlFormat(latestSyncEnd, LONG_DATE_TIME_FORMAT_OPTIONS)
+                      : "-"}
+                  </Typography>
+                  <Tooltip>
+                    <TooltipIndicator />
+                    <TooltipContent>
+                      Sync runs at most once per hour
+                    </TooltipContent>
+                  </Tooltip>
+                </div>
               </>
             ) : (
               <>
