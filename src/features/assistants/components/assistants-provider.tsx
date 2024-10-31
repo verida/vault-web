@@ -6,6 +6,7 @@ import {
   AssistantsContext,
   AssistantsContextType,
 } from "@/features/assistants/contexts/assistants-context"
+import { HotloadResult } from "@/features/assistants/types"
 import { AssistantChatMessage } from "@/features/assistants/types"
 import { hotloadAPI, processUserPrompt } from "@/features/assistants/utils"
 import { Logger } from "@/features/telemetry"
@@ -18,27 +19,29 @@ export type AssistantsProviderProps = {
 }
 
 /**
- * AssistantProvider component
+ * AssistantsProvider component
  *
  * This component provides the context for the AI assistant functionality.
- * It manages the state of messages, processing status, errors, and hotloading progress.
+ * It manages the latest user prompt and assistant reply, processing status, and errors.
  */
 export function AssistantsProvider(props: AssistantsProviderProps) {
   const { children } = props
-
   const { getAccountSessionToken } = useVerida()
 
-  const [messages, setMessages] = useState<AssistantChatMessage[]>([])
-  const [isProcessingMessage, setIsProcessingMessage] = useState(false)
+  const [userMessage, setUserMessage] = useState<AssistantChatMessage | null>(
+    null
+  )
+  const [assistantMessage, setAssistantMessage] =
+    useState<AssistantChatMessage | null>(null)
+  const [isProcessingPrompt, setIsProcessingPrompt] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const [hotload, setHotload] = useState<AssistantsContextType["hotload"]>({
+  const [hotload, setHotload] = useState<HotloadResult>({
     status: "idle",
     progress: 0,
   })
 
   const initialise = useCallback(async () => {
     logger.info("Initialising the assistant")
-
     setHotload({ status: "loading", progress: 0 })
 
     const sessionToken = await getAccountSessionToken()
@@ -48,7 +51,7 @@ export function AssistantsProvider(props: AssistantsProviderProps) {
     })
 
     setHotload({ status: "success", progress: 1 })
-    logger.info("Assisant initialized")
+    logger.info("Assistant initialized")
   }, [getAccountSessionToken])
 
   useEffect(() => {
@@ -58,35 +61,30 @@ export function AssistantsProvider(props: AssistantsProviderProps) {
     })
   }, [initialise])
 
-  const sendMessage = useCallback(
-    async (message: string) => {
-      logger.info("Sending message to assistant")
-      setIsProcessingMessage(true)
+  const sendPrompt = useCallback(
+    async (prompt: string) => {
+      logger.info("Sending prompt to assistant")
+      setIsProcessingPrompt(true)
       setError(null)
-
-      const newUserMessage: AssistantChatMessage = {
+      setUserMessage({
         sender: "user",
-        content: message,
-      }
-
-      setMessages((prevMessages) => [...prevMessages, newUserMessage])
+        content: prompt,
+      })
+      setAssistantMessage(null)
 
       try {
         const sessionToken = await getAccountSessionToken()
-        const response = await processUserPrompt(message, sessionToken)
-
-        const newAssistantMessage: AssistantChatMessage = {
+        const response = await processUserPrompt(prompt, sessionToken)
+        setAssistantMessage({
           sender: "assistant",
           content: response,
-        }
-
-        setMessages((prevMessages) => [...prevMessages, newAssistantMessage])
+        })
         logger.info("Received response from assistant")
       } catch (error) {
         logger.error(error)
         setError("Something went wrong with the assistant")
       } finally {
-        setIsProcessingMessage(false)
+        setIsProcessingPrompt(false)
       }
     },
     [getAccountSessionToken]
@@ -94,13 +92,21 @@ export function AssistantsProvider(props: AssistantsProviderProps) {
 
   const value = useMemo<AssistantsContextType>(
     () => ({
-      messages,
-      sendMessage,
-      isProcessingMessage,
+      userMessage,
+      assistantMessage,
+      sendPrompt,
+      isProcessingPrompt,
       error,
       hotload,
     }),
-    [messages, sendMessage, isProcessingMessage, error, hotload]
+    [
+      userMessage,
+      assistantMessage,
+      sendPrompt,
+      isProcessingPrompt,
+      error,
+      hotload,
+    ]
   )
 
   return (

@@ -4,18 +4,16 @@ import { createContext } from "react"
 
 import {
   AssistantChatMessage,
-  HotloadStatus,
+  HotloadResult,
 } from "@/features/assistants/types"
 
 export type AssistantsContextType = {
-  messages: AssistantChatMessage[]
-  sendMessage: (message: string) => Promise<void>
-  isProcessingMessage: boolean
+  userMessage: AssistantChatMessage | null
+  assistantMessage: AssistantChatMessage | null
+  sendPrompt: (prompt: string) => Promise<void>
+  isProcessingPrompt: boolean
   error: string | null
-  hotload: {
-    status: HotloadStatus
-    progress: number
-  }
+  hotload: HotloadResult
 }
 
 export const AssistantsContext = createContext<AssistantsContextType | null>(

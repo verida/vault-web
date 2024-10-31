@@ -1,52 +1,37 @@
 "use client"
 
-import { useCallback, useEffect, useRef } from "react"
-
 import { AssistantChatEmptyContent } from "@/app/(connected)/assistant/_components/assistant-chat-empty-content"
 import { AssistantChatInput } from "@/app/(connected)/assistant/_components/assistant-chat-input"
-import { AssistantChatMessagesList } from "@/app/(connected)/assistant/_components/assistant-chat-messages-list"
+import { AssistantLatestMessages } from "@/app/(connected)/assistant/_components/assistant-latest-messages"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { useAssistants } from "@/features/assistants/hooks/use-assistants"
 
 export default function AssistantsPage() {
-  const { messages, sendMessage, isProcessingMessage, error, hotload } =
-    useAssistants()
-  const messagesEndRef = useRef<HTMLDivElement>(null)
-
-  const handleSendMessage = useCallback(
-    async (message: string) => {
-      await sendMessage(message)
-    },
-    [sendMessage]
-  )
-
-  const handleRecommendedPromptClick = useCallback(
-    (prompt: string) => {
-      handleSendMessage(prompt)
-    },
-    [handleSendMessage]
-  )
-
-  useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
-  }, [messages])
+  const {
+    userMessage,
+    assistantMessage,
+    sendPrompt,
+    isProcessingPrompt,
+    error,
+    hotload,
+  } = useAssistants()
 
   return (
     <div className="flex h-full flex-col gap-1">
       <div className="flex-1 overflow-y-auto">
-        {messages.length === 0 ? (
+        {!userMessage ? (
           <AssistantChatEmptyContent
-            onRecommendedPromptClick={handleRecommendedPromptClick}
+            onRecommendedPromptClick={sendPrompt}
             className="pb-4 pt-6"
           />
         ) : (
           <div className="flex min-h-full flex-col justify-end">
-            <AssistantChatMessagesList
-              messages={messages}
-              isProcessingMessage={isProcessingMessage}
+            <AssistantLatestMessages
+              userMessage={userMessage}
+              assistantMessage={assistantMessage}
+              isProcessingMessage={isProcessingPrompt}
               className="pb-3"
             />
-            <div ref={messagesEndRef} />
           </div>
         )}
       </div>
@@ -64,15 +49,19 @@ export default function AssistantsPage() {
       ) : null}
       {hotload.status === "loading" ? (
         <Alert variant="info" className="mb-2">
-          <AlertDescription>{`Securely loading your data in your assistant ... ${Math.round(hotload.progress * 100)}%`}</AlertDescription>
+          <AlertDescription>
+            {`Securely loading your data in your assistant ... ${Math.round(
+              hotload.progress * 100
+            )}%`}
+          </AlertDescription>
           <AlertDescription>
             Answers may not be accurate until completed
           </AlertDescription>
         </Alert>
       ) : null}
       <AssistantChatInput
-        onSendMessage={handleSendMessage}
-        isProcessingMessage={isProcessingMessage}
+        onSendMessage={sendPrompt}
+        isProcessingMessage={isProcessingPrompt}
       />
     </div>
   )

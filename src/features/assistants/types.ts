@@ -7,6 +7,11 @@ import {
 
 export type HotloadStatus = "idle" | "loading" | "success" | "error"
 
+export type HotloadResult = {
+  status: HotloadStatus
+  progress: number
+}
+
 export type RecommendedPrompt = {
   label: string
   prompt: string
