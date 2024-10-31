@@ -25,7 +25,7 @@ import {
 import { featureFlags } from "@/config/features"
 import { useRestrictedAccess } from "@/features/restricted-access/use-restricted-access"
 import {
-  getAssistantPageRoute,
+  getAssistantsPageRoute,
   getConnectionsPageRoute,
   getConnectionsSummaryPageRoute,
   getDataPageRoute,
@@ -55,9 +55,9 @@ export function AppHeaderNavBar(props: AppHeaderNavBarProps) {
         {featureFlags.assistant.enabled ? (
           <NavigationMenuItem>
             <Link
-              href={getAssistantPageRoute()}
+              href={getAssistantsPageRoute()}
               data-active={
-                path.startsWith(getAssistantPageRoute()) ? true : undefined
+                path.startsWith(getAssistantsPageRoute()) ? true : undefined
               }
               className={cn(
                 navigationMenuTriggerStyle({
@@ -197,10 +197,10 @@ export function AppHeaderNavMenu(props: AppHeaderNavMenuProps) {
             {featureFlags.assistant.enabled ? (
               <NavigationMenuItem>
                 <Link
-                  href={getAssistantPageRoute()}
+                  href={getAssistantsPageRoute()}
                   onClick={handleClickItem}
                   data-active={
-                    path.startsWith(getAssistantPageRoute()) ? true : undefined
+                    path.startsWith(getAssistantsPageRoute()) ? true : undefined
                   }
                   className={cn(
                     navigationMenuTriggerStyle({

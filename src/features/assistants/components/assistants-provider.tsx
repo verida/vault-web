@@ -1,36 +1,19 @@
 "use client"
 
-import React, {
-  createContext,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from "react"
+import React, { useCallback, useEffect, useMemo, useState } from "react"
 
-import { AssistantChatMessage } from "@/features/assistant/types"
-import { hotloadAPI, processUserPrompt } from "@/features/assistant/utils"
+import {
+  AssistantsContext,
+  AssistantsContextType,
+} from "@/features/assistants/contexts/assistants-context"
+import { AssistantChatMessage } from "@/features/assistants/types"
+import { hotloadAPI, processUserPrompt } from "@/features/assistants/utils"
 import { Logger } from "@/features/telemetry"
 import { useVerida } from "@/features/verida/use-verida"
 
-const logger = Logger.create("assistant")
+const logger = Logger.create("assistants")
 
-type HotloadStatus = "idle" | "loading" | "success" | "error"
-
-type AssistantContextType = {
-  messages: AssistantChatMessage[]
-  sendMessage: (message: string) => Promise<void>
-  isProcessingMessage: boolean
-  error: string | null
-  hotload: {
-    status: HotloadStatus
-    progress: number
-  }
-}
-
-export const AssistantContext = createContext<AssistantContextType | null>(null)
-
-export type AssistantProviderProps = {
+export type AssistantsProviderProps = {
   children: React.ReactNode
 }
 
@@ -40,7 +23,7 @@ export type AssistantProviderProps = {
  * This component provides the context for the AI assistant functionality.
  * It manages the state of messages, processing status, errors, and hotloading progress.
  */
-export function AssistantProvider(props: AssistantProviderProps) {
+export function AssistantsProvider(props: AssistantsProviderProps) {
   const { children } = props
 
   const { getAccountSessionToken } = useVerida()
@@ -48,7 +31,7 @@ export function AssistantProvider(props: AssistantProviderProps) {
   const [messages, setMessages] = useState<AssistantChatMessage[]>([])
   const [isProcessingMessage, setIsProcessingMessage] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const [hotload, setHotload] = useState<AssistantContextType["hotload"]>({
+  const [hotload, setHotload] = useState<AssistantsContextType["hotload"]>({
     status: "idle",
     progress: 0,
   })
@@ -109,7 +92,7 @@ export function AssistantProvider(props: AssistantProviderProps) {
     [getAccountSessionToken]
   )
 
-  const value = useMemo<AssistantContextType>(
+  const value = useMemo<AssistantsContextType>(
     () => ({
       messages,
       sendMessage,
@@ -121,8 +104,9 @@ export function AssistantProvider(props: AssistantProviderProps) {
   )
 
   return (
-    <AssistantContext.Provider value={value}>
+    <AssistantsContext.Provider value={value}>
       {children}
-    </AssistantContext.Provider>
+    </AssistantsContext.Provider>
   )
 }
+AssistantsProvider.displayName = "AssistantsProvider"

@@ -3,7 +3,9 @@ import { z } from "zod"
 import {
   PrivateDataApiV1LLMPersonalResponseSchema,
   PrivateDataApiV1LlmHotloadResponseSchema,
-} from "@/features/assistant/schemas"
+} from "@/features/assistants/schemas"
+
+export type HotloadStatus = "idle" | "loading" | "success" | "error"
 
 export type RecommendedPrompt = {
   label: string

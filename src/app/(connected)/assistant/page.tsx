@@ -6,11 +6,11 @@ import { AssistantChatEmptyContent } from "@/app/(connected)/assistant/_componen
 import { AssistantChatInput } from "@/app/(connected)/assistant/_components/assistant-chat-input"
 import { AssistantChatMessagesList } from "@/app/(connected)/assistant/_components/assistant-chat-messages-list"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-import { useAssistant } from "@/features/assistant/use-assistant"
+import { useAssistants } from "@/features/assistants/hooks/use-assistants"
 
-export default function AssistantChatPage() {
+export default function AssistantsPage() {
   const { messages, sendMessage, isProcessingMessage, error, hotload } =
-    useAssistant()
+    useAssistants()
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
   const handleSendMessage = useCallback(
@@ -77,4 +77,4 @@ export default function AssistantChatPage() {
     </div>
   )
 }
-AssistantChatPage.displayName = "AssistantChatPage"
+AssistantsPage.displayName = "AssistantsPage"

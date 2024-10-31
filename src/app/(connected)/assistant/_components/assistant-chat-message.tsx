@@ -4,7 +4,7 @@ import remarkGfm from "remark-gfm"
 import { VeridaNetworkLogo } from "@/components/icons/verida-network-logo"
 import { Avatar } from "@/components/ui/avatar"
 import { Skeleton } from "@/components/ui/skeleton"
-import { AssistantChatMessage as AssistantChatMessageType } from "@/features/assistant/types"
+import { AssistantChatMessage as AssistantChatMessageType } from "@/features/assistants/types"
 import { cn } from "@/styles/utils"
 
 export type AssistantChatMessageProps = {

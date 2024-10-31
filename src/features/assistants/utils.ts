@@ -2,16 +2,16 @@ import { commonConfig } from "@/config/common"
 import {
   DEFAULT_LLM_MODEL,
   DEFAULT_LLM_PROVIDER,
-} from "@/features/assistant/constants"
-import { DUMMY_ANSWERS } from "@/features/assistant/mock"
+} from "@/features/assistants/constants"
+import { DUMMY_ANSWERS } from "@/features/assistants/mock"
 import {
   PrivateDataApiV1LLMPersonalResponseSchema,
   PrivateDataApiV1LlmHotloadResponseSchema,
-} from "@/features/assistant/schemas"
+} from "@/features/assistants/schemas"
 import { Logger } from "@/features/telemetry"
 import { wait } from "@/utils/misc"
 
-const logger = Logger.create("assistant")
+const logger = Logger.create("assistants")
 
 /**
  * Simulates a response from the AI assistant for testing purposes.

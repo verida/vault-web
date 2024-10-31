@@ -1,4 +1,4 @@
-import { RecommendedPrompt } from "@/features/assistant/types"
+import { RecommendedPrompt } from "@/features/assistants/types"
 
 export const DEFAULT_LLM_PROVIDER = "groq"
 

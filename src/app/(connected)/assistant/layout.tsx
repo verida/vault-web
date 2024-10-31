@@ -4,11 +4,11 @@ import React from "react"
 import { PageWrapper } from "@/components/page-wrapper"
 import { featureFlags } from "@/config/features"
 
-type AssistantLayoutProps = {
+type AssistantsLayoutProps = {
   children: React.ReactNode
 }
 
-export default function AssistantLayout(props: AssistantLayoutProps) {
+export default function AssistantsLayout(props: AssistantsLayoutProps) {
   const { children } = props
 
   if (!featureFlags.assistant.enabled) {
@@ -27,4 +27,4 @@ export default function AssistantLayout(props: AssistantLayoutProps) {
     </PageWrapper>
   )
 }
-AssistantLayout.displayName = "AssistantLayout"
+AssistantsLayout.displayName = "AssistantsLayout"
