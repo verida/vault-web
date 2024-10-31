@@ -1,6 +1,6 @@
 "use client"
 
-import { intlFormat, isDate } from "date-fns"
+import { intlFormat } from "date-fns"
 import Link from "next/link"
 import { useMemo } from "react"
 
@@ -13,6 +13,7 @@ import { Separator } from "@/components/ui/separator"
 import { Skeleton } from "@/components/ui/skeleton"
 import { useDataProvider } from "@/features/data-connections/hooks/use-data-provider"
 import { DataConnection } from "@/features/data-connections/types"
+import { getDataConnectionLatestSyncEnd } from "@/features/data-connections/utils"
 import { getConnectionPageRoute } from "@/features/routes/utils"
 import { cn } from "@/styles/utils"
 import { LONG_DATE_TIME_FORMAT_OPTIONS } from "@/utils/date"
@@ -26,26 +27,9 @@ export function DataConnectionCard(props: DataConnectionCardProps) {
 
   const { provider } = useDataProvider(connection.providerId)
 
-  const latestSyncEnd: Date | undefined = useMemo(() => {
-    return connection.handlers.reduce((latest: Date | undefined, handler) => {
-      if (!handler.latestSyncEnd) {
-        return latest
-      }
-
-      const latestSyncEndDate = new Date(handler.latestSyncEnd)
-      if (!isDate(latestSyncEndDate)) {
-        return latest
-      }
-
-      if (!latest) {
-        return latestSyncEndDate
-      }
-
-      return latestSyncEndDate.getTime() > new Date(latest).getTime()
-        ? latestSyncEndDate
-        : latest
-    }, undefined)
-  }, [connection.handlers])
+  const latestSyncEnd = useMemo(() => {
+    return getDataConnectionLatestSyncEnd(connection)
+  }, [connection])
 
   return (
     <Card className={cn(className)} {...cardProps}>
