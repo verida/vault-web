@@ -1,6 +1,6 @@
-import { cn } from "@/styles/utils"
 import { AssistantChatMessage } from "@/app/(connected)/assistant/_components/assistant-chat-message"
 import { AssistantChatMessage as AssistantChatMessageType } from "@/features/assistants/types"
+import { cn } from "@/styles/utils"
 
 type AssistantLatestMessagesProps = {
   userMessage: AssistantChatMessageType
@@ -16,7 +16,7 @@ export function AssistantLatestMessages({
   className,
 }: AssistantLatestMessagesProps) {
   return (
-    <div className={cn("space-y-4", className)}>
+    <div className={cn("flex flex-col gap-4", className)}>
       <AssistantChatMessage message={userMessage} />
       {(assistantMessage || isProcessingMessage) && (
         <AssistantChatMessage

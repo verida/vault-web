@@ -17,26 +17,31 @@ export default function AssistantsPage() {
   } = useAssistants()
 
   return (
-    <div className="flex h-full flex-col gap-1">
+    <div className="flex h-full flex-col gap-2">
+      <AssistantChatInput
+        onSendMessage={sendPrompt}
+        isProcessingMessage={isProcessingPrompt}
+        className="z-10 -mb-5"
+      />
       <div className="flex-1 overflow-y-auto">
         {!userMessage ? (
           <AssistantChatEmptyContent
             onRecommendedPromptClick={sendPrompt}
-            className="pb-4 pt-6"
+            className="pb-4 pt-10"
           />
         ) : (
-          <div className="flex min-h-full flex-col justify-end">
+          <div className="flex min-h-full flex-col justify-start">
             <AssistantLatestMessages
               userMessage={userMessage}
               assistantMessage={assistantMessage}
               isProcessingMessage={isProcessingPrompt}
-              className="pb-3"
+              className="py-4"
             />
           </div>
         )}
       </div>
       {error || hotload.status === "error" ? (
-        <Alert variant="error" className="mb-2">
+        <Alert variant="error" className="">
           <AlertTitle>Assistant error</AlertTitle>
           <AlertDescription>
             {error
@@ -48,7 +53,7 @@ export default function AssistantsPage() {
         </Alert>
       ) : null}
       {hotload.status === "loading" ? (
-        <Alert variant="info" className="mb-2">
+        <Alert variant="info" className="">
           <AlertDescription>
             {`Securely loading your data in your assistant ... ${Math.round(
               hotload.progress * 100
@@ -59,10 +64,6 @@ export default function AssistantsPage() {
           </AlertDescription>
         </Alert>
       ) : null}
-      <AssistantChatInput
-        onSendMessage={sendPrompt}
-        isProcessingMessage={isProcessingPrompt}
-      />
     </div>
   )
 }
