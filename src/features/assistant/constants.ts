@@ -1,5 +1,9 @@
 import { RecommendedPrompt } from "@/features/assistant/types"
 
+export const DEFAULT_LLM_PROVIDER = "groq"
+
+export const DEFAULT_LLM_MODEL = "LLAMA31_70B"
+
 export const RECOMMENDED_PROMPTS_FOR_NEW_CHAT: RecommendedPrompt[] = [
   {
     label: "What do I have to focus on today?",
