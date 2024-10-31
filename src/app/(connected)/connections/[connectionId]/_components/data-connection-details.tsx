@@ -1,6 +1,6 @@
 "use client"
 
-import { intlFormat, isDate } from "date-fns"
+import { intlFormat } from "date-fns"
 import { useCallback, useMemo, useState } from "react"
 
 import {
@@ -12,9 +12,11 @@ import { DataConnectionStatusBadge } from "@/components/data-connections/data-co
 import { Typography } from "@/components/typography"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
+import { TooltipIndicator } from "@/components/ui/tooltip"
 import { useDataProvider } from "@/features/data-connections/hooks/use-data-provider"
 import { useSyncDataConnection } from "@/features/data-connections/hooks/use-sync-data-connection"
 import { DataConnection } from "@/features/data-connections/types"
+import { getDataConnectionLatestSyncEnd } from "@/features/data-connections/utils"
 import { useToast } from "@/features/toasts/use-toast"
 import { cn } from "@/styles/utils"
 import { LONG_DATE_TIME_FORMAT_OPTIONS } from "@/utils/date"
@@ -62,26 +64,9 @@ export function DataConnectionDetails(props: DataConnectionDetailsProps) {
     )
   }, [connection, syncDataConnection, toast])
 
-  const latestSyncEnd: Date | undefined = useMemo(() => {
-    return connection.handlers.reduce((latest: Date | undefined, handler) => {
-      if (!handler.latestSyncEnd) {
-        return latest
-      }
-
-      const latestSyncEndDate = new Date(handler.latestSyncEnd)
-      if (!isDate(latestSyncEndDate)) {
-        return latest
-      }
-
-      if (!latest) {
-        return latestSyncEndDate
-      }
-
-      return latestSyncEndDate.getTime() > new Date(latest).getTime()
-        ? latestSyncEndDate
-        : latest
-    }, undefined)
-  }, [connection.handlers])
+  const latestSyncEnd = useMemo(() => {
+    return getDataConnectionLatestSyncEnd(connection)
+  }, [connection])
 
   return (
     <div className={cn(className)} {...divProps}>
@@ -126,11 +111,14 @@ export function DataConnectionDetails(props: DataConnectionDetailsProps) {
             <div className="text-muted-foreground">
               <Typography variant="base-regular">Last synced</Typography>
             </div>
-            <Typography variant="heading-5" component="p">
-              {latestSyncEnd
-                ? intlFormat(latestSyncEnd, LONG_DATE_TIME_FORMAT_OPTIONS)
-                : "-"}
-            </Typography>
+            <div className="flex flex-row items-center gap-1">
+              <Typography variant="heading-5" component="p">
+                {latestSyncEnd
+                  ? intlFormat(latestSyncEnd, LONG_DATE_TIME_FORMAT_OPTIONS)
+                  : "-"}
+              </Typography>
+              <TooltipIndicator content="Sync runs at most once per hour" />
+            </div>
           </div>
           <div className="flex flex-col items-start gap-1 md:flex-row md:items-center md:gap-4">
             <div className="text-muted-foreground">
