@@ -56,6 +56,7 @@ export function getDataRecordsTableColumns<T = Record<string, unknown>>() {
       meta: {
         headerClassName: "w-40 shrink-0",
         cellClassName: "w-40 shrink-0",
+        align: "right",
       },
       header: "Modified At",
       cell: (context) => {

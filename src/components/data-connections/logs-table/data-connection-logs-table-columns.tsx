@@ -112,7 +112,7 @@ export const dataConnectionLogsTableColumns = [
     },
     header: "Message",
     cell: (context) => (
-      <Typography variant="base-regular" className="line-clamp-6">
+      <Typography variant="base-regular" className="line-clamp-6 text-ellipsis">
         {context.renderValue()}
       </Typography>
     ),
