@@ -8,7 +8,10 @@ import {
 } from "@/features/assistants/contexts/assistants-context"
 import { AssistantUserInput, HotloadResult } from "@/features/assistants/types"
 import { AssistantOutput } from "@/features/assistants/types"
-import { hotloadAPI, processUserInput } from "@/features/assistants/utils"
+import {
+  hotloadAPI,
+  sendUserInputToAssistant,
+} from "@/features/assistants/utils"
 import { Logger } from "@/features/telemetry"
 import { useVerida } from "@/features/verida/use-verida"
 
@@ -59,7 +62,7 @@ export function AssistantsProvider(props: AssistantsProviderProps) {
     })
   }, [initialise])
 
-  const sendUserInputToAssistant = useCallback(async () => {
+  const processUserInput = useCallback(async () => {
     if (!userInput?.prompt || isProcessing) {
       return
     }
@@ -71,7 +74,7 @@ export function AssistantsProvider(props: AssistantsProviderProps) {
 
     try {
       const sessionToken = await getAccountSessionToken()
-      const result = await processUserInput(userInput, sessionToken)
+      const result = await sendUserInputToAssistant(userInput, sessionToken)
       setAssistantOutput(result)
       logger.info("Received response from assistant")
     } catch (error) {
@@ -101,7 +104,7 @@ export function AssistantsProvider(props: AssistantsProviderProps) {
     () => ({
       userInput,
       assistantOutput,
-      sendUserInputToAssistant,
+      processUserInput,
       updateUserPrompt,
       clearUserInput,
       clearAssistantOutput,
@@ -112,7 +115,7 @@ export function AssistantsProvider(props: AssistantsProviderProps) {
     [
       userInput,
       assistantOutput,
-      sendUserInputToAssistant,
+      processUserInput,
       updateUserPrompt,
       clearUserInput,
       clearAssistantOutput,

@@ -18,12 +18,8 @@ export type AssistantPromptInputProps = React.ComponentProps<"div">
 export function AssistantPromptInput(props: AssistantPromptInputProps) {
   const { ...divProps } = props
 
-  const {
-    userInput,
-    sendUserInputToAssistant,
-    updateUserPrompt,
-    isProcessing,
-  } = useAssistants()
+  const { userInput, processUserInput, updateUserPrompt, isProcessing } =
+    useAssistants()
 
   const inputRef = useRef<HTMLInputElement>(null)
 
@@ -39,10 +35,10 @@ export function AssistantPromptInput(props: AssistantPromptInputProps) {
     (event) => {
       if (event.key === "Enter" && !event.shiftKey) {
         event.preventDefault()
-        sendUserInputToAssistant()
+        processUserInput()
       }
     },
-    [sendUserInputToAssistant]
+    [processUserInput]
   )
 
   useLayoutEffect(() => {
@@ -65,7 +61,7 @@ export function AssistantPromptInput(props: AssistantPromptInputProps) {
             <Button
               variant="primary"
               size="icon"
-              onClick={sendUserInputToAssistant}
+              onClick={processUserInput}
               disabled={!userInput?.prompt || isProcessing}
               className="mr-2"
             >

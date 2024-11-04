@@ -18,7 +18,7 @@ export type AssistantEmptyContentProps = React.ComponentProps<"div">
 export function AssistantEmptyContent(props: AssistantEmptyContentProps) {
   const { className, ...divProps } = props
 
-  const { updateUserPrompt, sendUserInputToAssistant } = useAssistants()
+  const { updateUserPrompt, processUserInput } = useAssistants()
 
   const { connections, isLoading: isLoadingDataConnections } =
     useDataConnections()
@@ -27,9 +27,9 @@ export function AssistantEmptyContent(props: AssistantEmptyContentProps) {
     async (prompt: string) => {
       updateUserPrompt(prompt)
       await wait(1000)
-      await sendUserInputToAssistant()
+      await processUserInput()
     },
-    [updateUserPrompt, sendUserInputToAssistant]
+    [updateUserPrompt, processUserInput]
   )
 
   return (

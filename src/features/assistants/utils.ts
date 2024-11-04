@@ -23,7 +23,7 @@ const logger = Logger.create("assistants")
  * @returns A promise that resolves to the AI-generated response
  * @throws Error if the prompt is empty or if there's an issue with the API call
  */
-export async function processUserInput(
+export async function sendUserInputToAssistant(
   userInput: AssistantUserInput,
   sessionToken: string
 ): Promise<AssistantOutput> {

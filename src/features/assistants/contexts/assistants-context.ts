@@ -9,7 +9,7 @@ import {
 export type AssistantsContextType = {
   userInput: AssistantUserInput | null
   assistantOutput: AssistantOutput | null
-  sendUserInputToAssistant: () => Promise<void>
+  processUserInput: () => Promise<void>
   updateUserPrompt: (userPrompt: string) => void
   clearUserInput: () => void
   clearAssistantOutput: () => void
