@@ -15,21 +15,19 @@ export type HotloadResult = {
 export type RecommendedPrompt = {
   label: string
   prompt: string
+  // TODO: add further configuration options (LLM model, data type, filters, etc.)
 }
 
-/**
- * Very basic implementation for UI purpose for now
- */
-export type AssistantChatParticipant = "user" | "assistant"
+export type AssistantUserInput = {
+  prompt: string
+  // TODO: add further configuration options (LLM model, data type, filters, etc.)
+}
 
-/**
- * Very basic implementation for UI purpose for now
- */
-export type AssistantChatMessage = {
-  // id: string
-  sender: AssistantChatParticipant
-  content: string
-  // timestamp: string
+export type AssistantOutput = {
+  result: string
+  processingTime?: number
+  databases?: string[]
+  keywords?: string[]
 }
 
 export type PrivateDataApiV1LLMPersonalResponse = z.infer<

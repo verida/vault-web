@@ -1,27 +1,36 @@
 "use client"
 
 import Link from "next/link"
-import React from "react"
+import React, { useCallback } from "react"
 
 import { VeridaNetworkColouredLogo } from "@/components/icons/verida-network-coloured-logo"
 import { Typography } from "@/components/typography"
 import { Button } from "@/components/ui/button"
 import { RECOMMENDED_PROMPTS_FOR_NEW_CHAT } from "@/features/assistants/constants"
+import { useAssistants } from "@/features/assistants/hooks/use-assistants"
 import { useDataConnections } from "@/features/data-connections/hooks/use-data-connections"
 import { getConnectionsPageRoute } from "@/features/routes/utils"
 import { cn } from "@/styles/utils"
+import { wait } from "@/utils/misc"
 
-export type AssistantChatEmptyContentProps = {
-  onRecommendedPromptClick: (prompt: string) => void
-} & React.ComponentProps<"div">
+export type AssistantEmptyContentProps = React.ComponentProps<"div">
 
-export function AssistantChatEmptyContent(
-  props: AssistantChatEmptyContentProps
-) {
-  const { onRecommendedPromptClick, className, ...divProps } = props
+export function AssistantEmptyContent(props: AssistantEmptyContentProps) {
+  const { className, ...divProps } = props
+
+  const { updateUserPrompt, sendUserInputToAssistant } = useAssistants()
 
   const { connections, isLoading: isLoadingDataConnections } =
     useDataConnections()
+
+  const handleRecommendedPromptClick = useCallback(
+    async (prompt: string) => {
+      updateUserPrompt(prompt)
+      await wait(1000)
+      await sendUserInputToAssistant()
+    },
+    [updateUserPrompt, sendUserInputToAssistant]
+  )
 
   return (
     <div
@@ -52,7 +61,7 @@ export function AssistantChatEmptyContent(
                 variant="outline"
                 className="h-auto rounded-full px-4 py-2.5"
                 onClick={() => {
-                  onRecommendedPromptClick(recommendations.prompt)
+                  handleRecommendedPromptClick(recommendations.prompt)
                 }}
               >
                 <Typography key={index} variant="base-s-regular">

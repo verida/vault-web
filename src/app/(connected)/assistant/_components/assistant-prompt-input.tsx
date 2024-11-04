@@ -6,45 +6,43 @@ import React, {
   useCallback,
   useLayoutEffect,
   useRef,
-  useState,
 } from "react"
 
 import { SendIcon } from "@/components/icons/send-icon"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { useAssistants } from "@/features/assistants/hooks/use-assistants"
 
-export type AssistantPromptInputProps = {
-  onSend: (prompt: string) => void
-  isProcessing: boolean
-} & React.ComponentProps<"div">
+export type AssistantPromptInputProps = React.ComponentProps<"div">
 
 export function AssistantPromptInput(props: AssistantPromptInputProps) {
-  const { onSend, isProcessing, ...divProps } = props
+  const { ...divProps } = props
+
+  const {
+    userInput,
+    sendUserInputToAssistant,
+    updateUserPrompt,
+    isProcessing,
+  } = useAssistants()
 
   const inputRef = useRef<HTMLInputElement>(null)
 
-  const [userPrompt, setUserPrompt] = useState("")
-
   const handleUserPromptChange: ChangeEventHandler<HTMLInputElement> =
-    useCallback((event) => {
-      setUserPrompt(event.target.value)
-    }, [])
-
-  const handleSend = useCallback(() => {
-    if (userPrompt && !isProcessing) {
-      onSend?.(userPrompt)
-      setUserPrompt("")
-    }
-  }, [onSend, userPrompt, isProcessing])
+    useCallback(
+      (event) => {
+        updateUserPrompt(event.target.value)
+      },
+      [updateUserPrompt]
+    )
 
   const handleKeyDown: KeyboardEventHandler<HTMLInputElement> = useCallback(
     (event) => {
       if (event.key === "Enter" && !event.shiftKey) {
         event.preventDefault()
-        handleSend()
+        sendUserInputToAssistant()
       }
     },
-    [handleSend]
+    [sendUserInputToAssistant]
   )
 
   useLayoutEffect(() => {
@@ -57,7 +55,7 @@ export function AssistantPromptInput(props: AssistantPromptInputProps) {
         ref={inputRef}
         // TODO: Replace by a text area
         placeholder="Type your question here"
-        value={userPrompt}
+        value={userInput?.prompt ?? ""}
         onChange={handleUserPromptChange}
         onKeyDown={handleKeyDown}
         className="h-auto rounded-xl py-[1.125rem] pl-5 pr-14"
@@ -67,8 +65,8 @@ export function AssistantPromptInput(props: AssistantPromptInputProps) {
             <Button
               variant="primary"
               size="icon"
-              onClick={handleSend}
-              disabled={!userPrompt || isProcessing}
+              onClick={sendUserInputToAssistant}
+              disabled={!userInput?.prompt || isProcessing}
               className="mr-2"
             >
               <SendIcon />

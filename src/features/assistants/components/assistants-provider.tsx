@@ -6,9 +6,9 @@ import {
   AssistantsContext,
   AssistantsContextType,
 } from "@/features/assistants/contexts/assistants-context"
-import { HotloadResult } from "@/features/assistants/types"
-import { AssistantChatMessage } from "@/features/assistants/types"
-import { hotloadAPI, processUserPrompt } from "@/features/assistants/utils"
+import { AssistantUserInput, HotloadResult } from "@/features/assistants/types"
+import { AssistantOutput } from "@/features/assistants/types"
+import { hotloadAPI, processUserInput } from "@/features/assistants/utils"
 import { Logger } from "@/features/telemetry"
 import { useVerida } from "@/features/verida/use-verida"
 
@@ -28,12 +28,10 @@ export function AssistantsProvider(props: AssistantsProviderProps) {
   const { children } = props
   const { getAccountSessionToken } = useVerida()
 
-  const [userMessage, setUserMessage] = useState<AssistantChatMessage | null>(
-    null
-  )
-  const [assistantMessage, setAssistantMessage] =
-    useState<AssistantChatMessage | null>(null)
-  const [isProcessingPrompt, setIsProcessingPrompt] = useState(false)
+  const [userInput, setUserInput] = useState<AssistantUserInput | null>(null)
+  const [assistantOutput, setAssistantOutput] =
+    useState<AssistantOutput | null>(null)
+  const [isProcessing, setIsProcessing] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [hotload, setHotload] = useState<HotloadResult>({
     status: "idle",
@@ -61,49 +59,64 @@ export function AssistantsProvider(props: AssistantsProviderProps) {
     })
   }, [initialise])
 
-  const sendPrompt = useCallback(
-    async (prompt: string) => {
-      logger.info("Sending prompt to assistant")
-      setIsProcessingPrompt(true)
-      setError(null)
-      setUserMessage({
-        sender: "user",
-        content: prompt,
-      })
-      setAssistantMessage(null)
+  const sendUserInputToAssistant = useCallback(async () => {
+    if (!userInput?.prompt || isProcessing) {
+      return
+    }
 
-      try {
-        const sessionToken = await getAccountSessionToken()
-        const response = await processUserPrompt(prompt, sessionToken)
-        setAssistantMessage({
-          sender: "assistant",
-          content: response,
-        })
-        logger.info("Received response from assistant")
-      } catch (error) {
-        logger.error(error)
-        setError("Something went wrong with the assistant")
-      } finally {
-        setIsProcessingPrompt(false)
-      }
-    },
-    [getAccountSessionToken]
-  )
+    logger.info("Sending user input to assistant")
+    setIsProcessing(true)
+    setError(null)
+    setAssistantOutput(null)
+
+    try {
+      const sessionToken = await getAccountSessionToken()
+      const result = await processUserInput(userInput, sessionToken)
+      setAssistantOutput(result)
+      logger.info("Received response from assistant")
+    } catch (error) {
+      logger.error(error)
+      setError("Something went wrong with the assistant")
+    } finally {
+      setIsProcessing(false)
+    }
+  }, [getAccountSessionToken, userInput, isProcessing])
+
+  const updateUserPrompt = useCallback((userPrompt: string) => {
+    setUserInput((prev) => ({
+      ...prev,
+      prompt: userPrompt,
+    }))
+  }, [])
+
+  const clearUserInput = useCallback(() => {
+    setUserInput(null)
+  }, [])
+
+  const clearAssistantOutput = useCallback(() => {
+    setAssistantOutput(null)
+  }, [])
 
   const value = useMemo<AssistantsContextType>(
     () => ({
-      userMessage,
-      assistantMessage,
-      sendPrompt,
-      isProcessingPrompt,
+      userInput,
+      assistantOutput,
+      sendUserInputToAssistant,
+      updateUserPrompt,
+      clearUserInput,
+      clearAssistantOutput,
+      isProcessing,
       error,
       hotload,
     }),
     [
-      userMessage,
-      assistantMessage,
-      sendPrompt,
-      isProcessingPrompt,
+      userInput,
+      assistantOutput,
+      sendUserInputToAssistant,
+      updateUserPrompt,
+      clearUserInput,
+      clearAssistantOutput,
+      isProcessing,
       error,
       hotload,
     ]

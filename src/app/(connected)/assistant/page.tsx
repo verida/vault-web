@@ -1,28 +1,17 @@
 "use client"
 
-import { AssistantChatEmptyContent } from "@/app/(connected)/assistant/_components/assistant-chat-empty-content"
-import { AssistantLatestMessages } from "@/app/(connected)/assistant/_components/assistant-latest-messages"
+import { AssistantEmptyContent } from "@/app/(connected)/assistant/_components/assistant-empty-content"
+import { AssistantOutputRenderer } from "@/app/(connected)/assistant/_components/assistant-output-renderer"
 import { AssistantPromptInput } from "@/app/(connected)/assistant/_components/assistant-prompt-input"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { useAssistants } from "@/features/assistants/hooks/use-assistants"
 
 export default function AssistantsPage() {
-  const {
-    userMessage,
-    assistantMessage,
-    sendPrompt,
-    isProcessingPrompt,
-    error,
-    hotload,
-  } = useAssistants()
+  const { assistantOutput, isProcessing, error, hotload } = useAssistants()
 
   return (
     <div className="flex h-full flex-col">
-      <AssistantPromptInput
-        onSend={sendPrompt}
-        isProcessing={isProcessingPrompt}
-        className="z-10 -mb-5"
-      />
+      <AssistantPromptInput className="z-10 -mb-5" />
       <div className="flex-1 overflow-y-auto">
         <div className="flex flex-1 flex-col gap-10 pb-4 pt-9 md:pb-6 xl:pb-8">
           {error || hotload.status === "error" ? (
@@ -49,16 +38,10 @@ export default function AssistantsPage() {
               </AlertDescription>
             </Alert>
           ) : null}
-          {!userMessage ? (
-            <AssistantChatEmptyContent onRecommendedPromptClick={sendPrompt} />
+          {assistantOutput || isProcessing ? (
+            <AssistantOutputRenderer />
           ) : (
-            <div className="flex min-h-full flex-col justify-start">
-              <AssistantLatestMessages
-                userMessage={userMessage}
-                assistantMessage={assistantMessage}
-                isProcessingMessage={isProcessingPrompt}
-              />
-            </div>
+            <AssistantEmptyContent />
           )}
         </div>
       </div>

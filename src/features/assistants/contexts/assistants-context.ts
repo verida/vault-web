@@ -1,17 +1,19 @@
-"use client"
-
 import { createContext } from "react"
 
 import {
-  AssistantChatMessage,
+  AssistantOutput,
+  AssistantUserInput,
   HotloadResult,
 } from "@/features/assistants/types"
 
 export type AssistantsContextType = {
-  userMessage: AssistantChatMessage | null
-  assistantMessage: AssistantChatMessage | null
-  sendPrompt: (prompt: string) => Promise<void>
-  isProcessingPrompt: boolean
+  userInput: AssistantUserInput | null
+  assistantOutput: AssistantOutput | null
+  sendUserInputToAssistant: () => Promise<void>
+  updateUserPrompt: (userPrompt: string) => void
+  clearUserInput: () => void
+  clearAssistantOutput: () => void
+  isProcessing: boolean
   error: string | null
   hotload: HotloadResult
 }
