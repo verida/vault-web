@@ -13,40 +13,38 @@ import { SendIcon } from "@/components/icons/send-icon"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 
-export type AssistantChatInputProps = {
-  onSendMessage: (message: string) => void
-  isProcessingMessage: boolean
+export type AssistantPromptInputProps = {
+  onSend: (prompt: string) => void
+  isProcessing: boolean
 } & React.ComponentProps<"div">
 
-export function AssistantChatInput(props: AssistantChatInputProps) {
-  const { onSendMessage, isProcessingMessage, ...divProps } = props
+export function AssistantPromptInput(props: AssistantPromptInputProps) {
+  const { onSend, isProcessing, ...divProps } = props
 
   const inputRef = useRef<HTMLInputElement>(null)
 
-  const [message, setMessage] = useState("")
+  const [userPrompt, setUserPrompt] = useState("")
 
-  const handleChangeMessage: ChangeEventHandler<HTMLInputElement> = useCallback(
-    (event) => {
-      setMessage(event.target.value)
-    },
-    []
-  )
+  const handleUserPromptChange: ChangeEventHandler<HTMLInputElement> =
+    useCallback((event) => {
+      setUserPrompt(event.target.value)
+    }, [])
 
-  const handleSendMessage = useCallback(() => {
-    if (message && !isProcessingMessage) {
-      onSendMessage?.(message)
-      setMessage("")
+  const handleSend = useCallback(() => {
+    if (userPrompt && !isProcessing) {
+      onSend?.(userPrompt)
+      setUserPrompt("")
     }
-  }, [onSendMessage, message, isProcessingMessage])
+  }, [onSend, userPrompt, isProcessing])
 
   const handleKeyDown: KeyboardEventHandler<HTMLInputElement> = useCallback(
     (event) => {
       if (event.key === "Enter" && !event.shiftKey) {
         event.preventDefault()
-        handleSendMessage()
+        handleSend()
       }
     },
-    [handleSendMessage]
+    [handleSend]
   )
 
   useLayoutEffect(() => {
@@ -59,8 +57,8 @@ export function AssistantChatInput(props: AssistantChatInputProps) {
         ref={inputRef}
         // TODO: Replace by a text area
         placeholder="Type your question here"
-        value={message}
-        onChange={handleChangeMessage}
+        value={userPrompt}
+        onChange={handleUserPromptChange}
         onKeyDown={handleKeyDown}
         className="h-auto rounded-xl py-[1.125rem] pl-5 pr-14"
         containerClassName="shadow-md rounded-xl"
@@ -69,8 +67,8 @@ export function AssistantChatInput(props: AssistantChatInputProps) {
             <Button
               variant="primary"
               size="icon"
-              onClick={handleSendMessage}
-              disabled={!message || isProcessingMessage}
+              onClick={handleSend}
+              disabled={!userPrompt || isProcessing}
               className="mr-2"
             >
               <SendIcon />
