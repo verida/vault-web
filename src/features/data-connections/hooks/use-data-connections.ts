@@ -1,7 +1,11 @@
 import { QueryClient, useQuery } from "@tanstack/react-query"
+import { useMemo } from "react"
 
 import { DataConnectionsQueryKeys } from "@/features/data-connections/queries"
-import { getDataConnections } from "@/features/data-connections/utils"
+import {
+  getDataConnections,
+  getDataConnectionsLatestSyncEnd,
+} from "@/features/data-connections/utils"
 import { Logger } from "@/features/telemetry"
 import { useVerida } from "@/features/verida/use-verida"
 
@@ -27,8 +31,22 @@ export function useDataConnections() {
     },
   })
 
+  const isAnySyncing = useMemo(() => {
+    return data?.some((connection) => connection.syncStatus === "active")
+  }, [data])
+
+  const latestSync = useMemo(() => {
+    if (!data) {
+      return undefined
+    }
+
+    return getDataConnectionsLatestSyncEnd(data)
+  }, [data])
+
   return {
     connections: data,
+    isAnySyncing,
+    latestSync,
     ...query,
   }
 }
