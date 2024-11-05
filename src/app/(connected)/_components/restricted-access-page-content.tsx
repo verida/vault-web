@@ -2,6 +2,7 @@ import Link from "next/link"
 
 import { LockIcon } from "@/components/icons/lock"
 import { Typography } from "@/components/typography"
+import { Button } from "@/components/ui/button"
 import {
   ErrorBlock,
   ErrorBlockDescription,
@@ -13,6 +14,7 @@ import {
   LoadingBlockSpinner,
   LoadingBlockTitle,
 } from "@/components/ui/loading"
+import { ACCESS_REQUEST_FORM_URL } from "@/features/restricted-access/constants"
 import { cn } from "@/styles/utils"
 
 export type RestrictedAccessPageContentProps = {
@@ -48,8 +50,17 @@ export function RestrictedAccessPageContent(
           <LockIcon className="text-accent" />
           <ErrorBlockTitle variant="heading-1">Limited Access</ErrorBlockTitle>
           <ErrorBlockDescription variant="base-l">
-            {`Your account currently has limited access. We've added your DID to the waitlist, and you'll be notified once access is granted.`}
+            You currently have limited access to the Verida Vault
           </ErrorBlockDescription>
+          <Button asChild>
+            <Link
+              href={ACCESS_REQUEST_FORM_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Request Access
+            </Link>
+          </Button>
           <Typography variant="base-semibold">
             <span className="text-accent">
               For more details and updates visit{" "}
