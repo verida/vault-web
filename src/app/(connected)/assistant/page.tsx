@@ -2,7 +2,7 @@
 
 import { AssistantEmptyContent } from "@/app/(connected)/assistant/_components/assistant-empty-content"
 import { AssistantOutputRenderer } from "@/app/(connected)/assistant/_components/assistant-output-renderer"
-import { AssistantPromptInput } from "@/app/(connected)/assistant/_components/assistant-prompt-input"
+import { AssistantUserInputField } from "@/app/(connected)/assistant/_components/assistant-user-input-field"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { useAssistants } from "@/features/assistants/hooks/use-assistants"
 
@@ -11,7 +11,7 @@ export default function AssistantsPage() {
 
   return (
     <div className="flex h-full flex-col">
-      <AssistantPromptInput className="z-10 -mb-5" />
+      <AssistantUserInputField className="z-10 -mb-5" />
       <div className="flex-1 overflow-y-auto">
         <div className="flex flex-1 flex-col gap-10 pb-4 pt-9 md:pb-6 xl:pb-8">
           {error || hotload.status === "error" ? (

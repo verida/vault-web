@@ -10,20 +10,23 @@ import React, {
 
 import { SendIcon } from "@/components/icons/send-icon"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
 import { useAssistants } from "@/features/assistants/hooks/use-assistants"
 
-export type AssistantPromptInputProps = React.ComponentProps<"div">
+export type AssistantUserInputFieldProps = Omit<
+  React.ComponentProps<"div">,
+  "children"
+>
 
-export function AssistantPromptInput(props: AssistantPromptInputProps) {
+export function AssistantUserInputField(props: AssistantUserInputFieldProps) {
   const { ...divProps } = props
 
   const { userInput, processUserInput, updateUserPrompt, isProcessing } =
     useAssistants()
 
-  const inputRef = useRef<HTMLInputElement>(null)
+  const inputRef = useRef<HTMLTextAreaElement>(null)
 
-  const handleUserPromptChange: ChangeEventHandler<HTMLInputElement> =
+  const handleUserPromptChange: ChangeEventHandler<HTMLTextAreaElement> =
     useCallback(
       (event) => {
         updateUserPrompt(event.target.value)
@@ -31,7 +34,7 @@ export function AssistantPromptInput(props: AssistantPromptInputProps) {
       [updateUserPrompt]
     )
 
-  const handleKeyDown: KeyboardEventHandler<HTMLInputElement> = useCallback(
+  const handleKeyDown: KeyboardEventHandler<HTMLTextAreaElement> = useCallback(
     (event) => {
       if (event.key === "Enter" && !event.shiftKey) {
         event.preventDefault()
@@ -47,15 +50,19 @@ export function AssistantPromptInput(props: AssistantPromptInputProps) {
 
   return (
     <div {...divProps}>
-      <Input
+      <Textarea
         ref={inputRef}
-        // TODO: Replace by a text area
         placeholder="Type your question here"
         value={userInput?.prompt ?? ""}
         onChange={handleUserPromptChange}
         onKeyDown={handleKeyDown}
-        className="h-auto rounded-xl py-[1.125rem] pl-5 pr-14"
+        className="max-h-40 rounded-xl py-[1.125rem] pl-5 pr-14"
+        autoComplete="off"
+        autoCapitalize="off"
+        autoCorrect="off"
+        spellCheck="false"
         containerClassName="shadow-md rounded-xl"
+        endAdornmentContainerClassName="bottom-0 p-2 flex flex-row gap-1"
         endAdornment={
           <>
             <Button
@@ -63,7 +70,6 @@ export function AssistantPromptInput(props: AssistantPromptInputProps) {
               size="icon"
               onClick={processUserInput}
               disabled={!userInput?.prompt || isProcessing}
-              className="mr-2"
             >
               <SendIcon />
             </Button>
@@ -73,3 +79,4 @@ export function AssistantPromptInput(props: AssistantPromptInputProps) {
     </div>
   )
 }
+AssistantUserInputField.displayName = "AssistantUserInputField"

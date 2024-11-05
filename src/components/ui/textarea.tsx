@@ -27,7 +27,7 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
     } = props
 
     // Create internal ref if no ref is provided
-    const textareaRef = useRef<HTMLTextAreaElement | null>(null)
+    const textareaRef = useRef<HTMLTextAreaElement>(null)
     const resolvedRef =
       (ref as React.MutableRefObject<HTMLTextAreaElement>) || textareaRef
 
