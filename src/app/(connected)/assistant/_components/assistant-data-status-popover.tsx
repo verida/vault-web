@@ -40,7 +40,7 @@ export function AssistantDataStatusPopover(
           {...buttonProps}
         >
           <QuestionMarkIcon className="size-5 shrink-0 text-muted-foreground" />
-          <span className="sr-only">Show tooltip</span>
+          <span className="sr-only">Show data connections status</span>
         </Button>
       </PopoverTrigger>
       <PopoverContent
