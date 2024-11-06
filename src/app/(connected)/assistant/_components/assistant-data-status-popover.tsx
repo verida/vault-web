@@ -110,14 +110,15 @@ function AssistantDataStatusPopoverItem(
           </Typography>
         </div>
         <div className="shrink-0">
-          {/* {connection.syncStatus === "connected" ? (
-            <Typography variant="base-s-regular" className="leading-7">
-              {`Synced ${formattedLatestSync || "unknown"}`}
-            </Typography>
+          {connection.syncStatus === "connected" ? (
+            <div className="text-muted-foreground">
+              <Typography variant="base-s-regular" className="leading-7">
+                {`Synced ${formattedLatestSync || "unknown"}`}
+              </Typography>
+            </div>
           ) : (
             <DataConnectionStatusBadge status={connection.syncStatus} />
-          )} */}
-          <DataConnectionStatusBadge status={connection.syncStatus} />
+          )}
         </div>
       </div>
     )
