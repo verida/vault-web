@@ -8,7 +8,7 @@ export default function AssistantsPage() {
       <AssistantUserInput className="z-10 -mb-5" />
       <div className="flex-1 overflow-y-auto">
         <div className="flex flex-1 flex-col gap-4 pb-4 pt-9 md:pb-6 xl:pb-8">
-          <AssistantDataStatus className="px-1" />
+          <AssistantDataStatus className="pl-3 md:pl-4" />
           <AssistantOutput />
         </div>
       </div>

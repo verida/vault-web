@@ -59,7 +59,7 @@ export function AssistantUserInput(props: AssistantUserInputProps) {
 
   return (
     <div {...divProps}>
-      <Card className="flex flex-col gap-1 rounded-xl p-2 shadow-md ring-offset-surface focus-within:outline-none focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-0 hover:border-border-hover">
+      <Card className="flex flex-col gap-1 rounded-xl p-3 shadow-md ring-offset-surface focus-within:outline-none focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-0 hover:border-border-hover md:gap-2 md:p-4">
         <CardContent className="p-0">
           <Textarea
             ref={inputRef}
@@ -68,7 +68,7 @@ export function AssistantUserInput(props: AssistantUserInputProps) {
             onChange={handleUserPromptChange}
             onKeyDown={handleKeyDown}
             className={cn(
-              "max-h-32 rounded-none border-none py-1 pl-1 focus-visible:ring-0",
+              "max-h-32 rounded-none border-none py-1 pl-0 focus-visible:ring-0",
               userInput?.prompt ? "pr-8 sm:pr-10" : "pr-1"
             )}
             autoComplete="off"
@@ -94,7 +94,11 @@ export function AssistantUserInput(props: AssistantUserInputProps) {
         <CardFooter className="flex-row justify-between p-0">
           <div className="flex flex-row items-center justify-start gap-2">
             <AssistantUserInputPromptsMenu>
-              <Button variant="ghost" size="icon" className="size-8 sm:size-10">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="-ml-1.5 size-8 sm:size-10 md:-ml-2"
+              >
                 <MessageSquareMoreIcon className="size-5 sm:size-6" />
                 <span className="sr-only">Open prompts menu</span>
               </Button>

@@ -22,13 +22,13 @@ export function AssistantUserInputPromptsMenu(
 ) {
   const { children } = props
 
-  const { updateUserPrompt, setAndProcessUserInput } = useAssistants()
+  const { setAndProcessUserInput } = useAssistants()
 
   const handleRecommendedPromptClick = useCallback(
     async (input: AssistantUserInput) => {
       setAndProcessUserInput(input)
     },
-    [updateUserPrompt, setAndProcessUserInput]
+    [setAndProcessUserInput]
   )
 
   return (
@@ -36,7 +36,7 @@ export function AssistantUserInputPromptsMenu(
       <DropdownMenuTrigger asChild>{children}</DropdownMenuTrigger>
       <DropdownMenuContent
         align="start"
-        alignOffset={-16}
+        alignOffset={0}
         collisionPadding={8}
         className="w-[calc(100vw-1rem)] max-w-sm"
       >
