@@ -1,9 +1,7 @@
 "use client"
 
-import ReactMarkdown from "react-markdown"
-import remarkGfm from "remark-gfm"
-
 import { VeridaNetworkLogo } from "@/components/icons/verida-network-logo"
+import { MarkdownRenderer } from "@/components/markdown-renderer"
 import { Avatar } from "@/components/ui/avatar"
 import { Skeleton } from "@/components/ui/skeleton"
 import { useAssistants } from "@/features/assistants/hooks/use-assistants"
@@ -42,39 +40,6 @@ export function AssistantOutputRenderer(props: AssistantOutputRendererProps) {
   )
 }
 AssistantOutputRenderer.displayName = "AssistantOutputRenderer"
-
-type MarkdownRendererProps = Omit<
-  React.ComponentProps<typeof ReactMarkdown>,
-  "remarkPlugins" | "components"
->
-
-function MarkdownRenderer(props: MarkdownRendererProps) {
-  const { children, ...rest } = props
-
-  return (
-    <ReactMarkdown
-      remarkPlugins={[remarkGfm]}
-      components={{
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        a: ({ node, ...props }) => (
-          <a target="_blank" rel="noopener noreferrer" {...props} />
-        ),
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        pre: ({ node, ...props }) => (
-          <pre className="overflow-x-auto" {...props} />
-        ),
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        code: ({ node, ...props }) => (
-          <code className="overflow-x-auto" {...props} />
-        ),
-      }}
-      {...rest}
-    >
-      {children}
-    </ReactMarkdown>
-  )
-}
-MarkdownRenderer.displayName = "MarkdownRenderer"
 
 type AssistantOutputSkeletonProps = Omit<
   React.ComponentProps<"div">,
