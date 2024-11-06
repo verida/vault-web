@@ -35,7 +35,7 @@ export function AssistantOutputCardMenu(props: AssistantOutputCardMenuProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>{children}</DropdownMenuTrigger>
-      <DropdownMenuContent align="end" alignOffset={-16} collisionPadding={8}>
+      <DropdownMenuContent align="end" collisionPadding={8}>
         <DropdownMenuItem
           onClick={handleCopyAssistantOutput}
           disabled={!assistantOutput?.result}
