@@ -17,12 +17,12 @@ import { Textarea } from "@/components/ui/textarea"
 import { useAssistants } from "@/features/assistants/hooks/use-assistants"
 import { cn } from "@/styles/utils"
 
-export type AssistantUserInputFieldProps = Omit<
+export type AssistantUserInputProps = Omit<
   React.ComponentProps<"div">,
   "children"
 >
 
-export function AssistantUserInputField(props: AssistantUserInputFieldProps) {
+export function AssistantUserInput(props: AssistantUserInputProps) {
   const { ...divProps } = props
 
   const {
@@ -117,4 +117,4 @@ export function AssistantUserInputField(props: AssistantUserInputFieldProps) {
     </div>
   )
 }
-AssistantUserInputField.displayName = "AssistantUserInputField"
+AssistantUserInput.displayName = "AssistantUserInput"
