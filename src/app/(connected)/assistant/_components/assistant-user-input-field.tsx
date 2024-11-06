@@ -1,5 +1,6 @@
 "use client"
 
+import { XIcon } from "lucide-react"
 import React, {
   ChangeEventHandler,
   KeyboardEventHandler,
@@ -10,8 +11,10 @@ import React, {
 
 import { SendIcon } from "@/components/icons/send-icon"
 import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { Textarea } from "@/components/ui/textarea"
 import { useAssistants } from "@/features/assistants/hooks/use-assistants"
+import { cn } from "@/styles/utils"
 
 export type AssistantUserInputFieldProps = Omit<
   React.ComponentProps<"div">,
@@ -21,8 +24,13 @@ export type AssistantUserInputFieldProps = Omit<
 export function AssistantUserInputField(props: AssistantUserInputFieldProps) {
   const { ...divProps } = props
 
-  const { userInput, processUserInput, updateUserPrompt, isProcessing } =
-    useAssistants()
+  const {
+    userInput,
+    processUserInput,
+    updateUserPrompt,
+    clearUserInput,
+    isProcessing,
+  } = useAssistants()
 
   const inputRef = useRef<HTMLTextAreaElement>(null)
 
@@ -50,32 +58,51 @@ export function AssistantUserInputField(props: AssistantUserInputFieldProps) {
 
   return (
     <div {...divProps}>
-      <Textarea
-        ref={inputRef}
-        placeholder="Type your question here"
-        value={userInput?.prompt ?? ""}
-        onChange={handleUserPromptChange}
-        onKeyDown={handleKeyDown}
-        className="max-h-40 rounded-xl py-[1.125rem] pl-5 pr-14"
-        autoComplete="off"
-        autoCapitalize="off"
-        autoCorrect="off"
-        spellCheck="false"
-        containerClassName="shadow-md rounded-xl"
-        endAdornmentContainerClassName="bottom-0 p-2 flex flex-row gap-1"
-        endAdornment={
-          <>
+      <Card className="flex flex-col gap-2 rounded-xl p-2 shadow-md ring-offset-surface focus-within:outline-none focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-0 hover:border-border-hover">
+        <CardContent className="p-0">
+          <Textarea
+            ref={inputRef}
+            placeholder="Type your question here"
+            value={userInput?.prompt ?? ""}
+            onChange={handleUserPromptChange}
+            onKeyDown={handleKeyDown}
+            className={cn(
+              "max-h-32 rounded-none border-none py-1 pl-1 focus-visible:ring-0",
+              userInput?.prompt ? "pr-8 sm:pr-10" : "pr-1"
+            )}
+            autoComplete="off"
+            autoCapitalize="off"
+            autoCorrect="off"
+            spellCheck="false"
+            endAdornmentContainerClassName="top-0 pt-1 pr-1.5 sm:pr-2.5 flex flex-row gap-1"
+            endAdornment={
+              userInput?.prompt ? (
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="size-5"
+                  onClick={clearUserInput}
+                >
+                  <XIcon className="size-5 opacity-50 sm:size-6" />
+                </Button>
+              ) : null
+            }
+          />
+        </CardContent>
+        <CardFooter className="flex-row justify-end p-0">
+          <div className="flex flex-row items-center gap-2">
             <Button
               variant="primary"
               size="icon"
+              className="size-8 sm:size-10"
               onClick={processUserInput}
               disabled={!userInput?.prompt || isProcessing}
             >
-              <SendIcon />
+              <SendIcon className="size-5 sm:size-6" />
             </Button>
-          </>
-        }
-      />
+          </div>
+        </CardFooter>
+      </Card>
     </div>
   )
 }
