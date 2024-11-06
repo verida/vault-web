@@ -35,14 +35,14 @@ export function AssistantEmptyContent(props: AssistantEmptyContentProps) {
       className={cn("flex flex-col items-center justify-center", className)}
       {...divProps}
     >
-      <div className="flex flex-col items-center gap-8">
+      <div className="flex flex-col items-center gap-6 sm:gap-8">
         <div className="size-14 rounded-md border bg-white p-2">
           <VeridaNetworkColouredLogo className="size-10" />
         </div>
         <div className="flex flex-col items-center gap-2 text-center">
           <Typography variant="heading-4">Talk about your data</Typography>
           <Typography variant="base-regular">
-            Start chatting with your assistant about your private data
+            Ask questions to your assistant about your private data
             {isLoadingDataConnections ? null : connections?.length ? (
               <Typography
                 variant="base-regular"
@@ -52,7 +52,7 @@ export function AssistantEmptyContent(props: AssistantEmptyContentProps) {
           </Typography>
         </div>
         {isLoadingDataConnections ? null : connections?.length ? (
-          <div className="flex flex-col items-center gap-2">
+          <div className="flex flex-row flex-wrap items-center justify-center gap-2">
             {SUGGESTED_INPUTS.map((recommendations, index) => (
               <Button
                 key={index}

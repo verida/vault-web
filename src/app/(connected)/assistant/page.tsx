@@ -1,32 +1,15 @@
-"use client"
-
 import { AssistantDataStatus } from "@/app/(connected)/assistant/_components/assistant-data-status"
-import { AssistantEmptyContent } from "@/app/(connected)/assistant/_components/assistant-empty-content"
-import { AssistantOutputCard } from "@/app/(connected)/assistant/_components/assistant-output-card"
+import { AssistantOutput } from "@/app/(connected)/assistant/_components/assistant-output"
 import { AssistantUserInputField } from "@/app/(connected)/assistant/_components/assistant-user-input-field"
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-import { useAssistants } from "@/features/assistants/hooks/use-assistants"
 
 export default function AssistantsPage() {
-  const { assistantOutput, isProcessing, error } = useAssistants()
-
   return (
     <div className="flex h-full flex-col">
       <AssistantUserInputField className="z-10 -mb-5" />
       <div className="flex-1 overflow-y-auto">
         <div className="flex flex-1 flex-col gap-4 pb-4 pt-9 md:pb-6 xl:pb-8">
           <AssistantDataStatus className="px-1" />
-          {error ? (
-            <Alert variant="error">
-              <AlertTitle>Assistant error</AlertTitle>
-              <AlertDescription>{error}</AlertDescription>
-            </Alert>
-          ) : null}
-          {assistantOutput || isProcessing ? (
-            <AssistantOutputCard />
-          ) : (
-            <AssistantEmptyContent />
-          )}
+          <AssistantOutput />
         </div>
       </div>
     </div>

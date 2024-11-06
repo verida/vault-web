@@ -11,12 +11,6 @@ import { Typography } from "@/components/typography"
 import { Avatar } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
-import {
-  ErrorBlock,
-  ErrorBlockDescription,
-  ErrorBlockImage,
-  ErrorBlockTitle,
-} from "@/components/ui/error"
 import { Skeleton } from "@/components/ui/skeleton"
 import { useAssistants } from "@/features/assistants/hooks/use-assistants"
 import { DATABASE_DEFS } from "@/features/data/constants"
@@ -128,16 +122,7 @@ export function AssistantOutputCard(props: AssistantOutputCardProps) {
             </MarkdownRenderer>
           ) : isProcessing ? (
             <AssistantOutputSkeleton className="w-full" />
-          ) : (
-            <ErrorBlock>
-              <ErrorBlockImage />
-              <ErrorBlockTitle>Error</ErrorBlockTitle>
-              <ErrorBlockDescription>
-                {error ??
-                  "Something went wrong with the assistant. Please try again."}
-              </ErrorBlockDescription>
-            </ErrorBlock>
-          )}
+          ) : null}
         </CardContent>
         {displayFooterInfo ? (
           <CardFooter className="flex flex-row justify-end p-0 text-end text-muted-foreground">
