@@ -59,7 +59,7 @@ export function AssistantUserInputField(props: AssistantUserInputFieldProps) {
 
   return (
     <div {...divProps}>
-      <Card className="flex flex-col gap-2 rounded-xl p-2 shadow-md ring-offset-surface focus-within:outline-none focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-0 hover:border-border-hover">
+      <Card className="flex flex-col gap-1 rounded-xl p-2 shadow-md ring-offset-surface focus-within:outline-none focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-0 hover:border-border-hover">
         <CardContent className="p-0">
           <Textarea
             ref={inputRef}
