@@ -14,8 +14,8 @@ export default function AssistantsPage() {
     <div className="flex h-full flex-col">
       <AssistantUserInputField className="z-10 -mb-5" />
       <div className="flex-1 overflow-y-auto">
-        <div className="flex flex-1 flex-col gap-4 pb-4 pt-9 md:pb-6 xl:pb-8">
-          <AssistantDataStatus />
+        <div className="flex flex-1 flex-col gap-4 pb-4 pt-7 md:pb-6 xl:pb-8">
+          <AssistantDataStatus className="px-1" />
           {error ? (
             <Alert variant="error">
               <AlertTitle>Assistant error</AlertTitle>

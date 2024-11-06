@@ -189,7 +189,8 @@ export function AppHeaderNavMenu(props: AppHeaderNavMenuProps) {
         </Button>
       </PopoverTrigger>
       <PopoverContent
-        sideOffset={17}
+        sideOffset={16}
+        collisionPadding={0}
         className="h-[calc(100dvh_-_73px)] w-screen rounded-none border-0 shadow-none"
       >
         <NavigationMenu orientation="vertical">
