@@ -53,7 +53,20 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
 
     // Adjust height on mount and when content changes
     useLayoutEffect(() => {
+      const abortController = new AbortController()
       requestAnimationFrame(adjustHeight)
+
+      const handleResize = () => {
+        requestAnimationFrame(adjustHeight)
+      }
+
+      window.addEventListener("resize", handleResize, {
+        signal: abortController.signal,
+      })
+
+      return () => {
+        abortController.abort()
+      }
     }, [adjustHeight, textareaProps.value])
 
     return (
