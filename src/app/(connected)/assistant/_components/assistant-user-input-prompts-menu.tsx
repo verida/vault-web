@@ -36,7 +36,7 @@ export function AssistantUserInputPromptsMenu(
       <DropdownMenuTrigger asChild>{children}</DropdownMenuTrigger>
       <DropdownMenuContent
         align="start"
-        alignOffset={0}
+        alignOffset={-16}
         collisionPadding={8}
         className="w-[calc(100vw-1rem)] max-w-sm"
       >

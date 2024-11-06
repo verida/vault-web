@@ -45,7 +45,7 @@ export function AssistantDataStatusPopover(
       </PopoverTrigger>
       <PopoverContent
         align="start"
-        alignOffset={-4}
+        alignOffset={-16}
         collisionPadding={8}
         className="w-[calc(100vw-1rem)] max-w-sm"
       >
