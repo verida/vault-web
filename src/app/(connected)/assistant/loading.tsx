@@ -7,7 +7,7 @@ import {
   LoadingBlockTitle,
 } from "@/components/ui/loading"
 
-export default function AssistantLoadingPage() {
+export default function AssistantsLoadingPage() {
   return (
     <div className="flex h-full flex-1 flex-row items-center justify-center p-4">
       <LoadingBlock>
@@ -20,4 +20,4 @@ export default function AssistantLoadingPage() {
     </div>
   )
 }
-AssistantLoadingPage.displayName = "AssistantLoadingPage"
+AssistantsLoadingPage.displayName = "AssistantsLoadingPage"

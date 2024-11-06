@@ -85,5 +85,6 @@ export const DATABASE_DEFS: DatabaseDefinition[] = [
     color: "#FFA500",
     databaseVaultName: "social_event",
     schemaUrlBase: "https://common.schemas.verida.io/social/event",
+    searchType: "calendar",
   },
 ]

@@ -10,6 +10,12 @@ export const SHORT_DATE_FORMAT_OPTIONS: Intl.DateTimeFormatOptions = {
   year: "2-digit",
 }
 
+export const SHORT_TIME_FORMAT_OPTIONS: Intl.DateTimeFormatOptions = {
+  hour: "2-digit",
+  minute: "2-digit",
+  hour12: true,
+}
+
 export const LONG_DATE_TIME_FORMAT_OPTIONS: Intl.DateTimeFormatOptions = {
   month: "short",
   day: "numeric",
