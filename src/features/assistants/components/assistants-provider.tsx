@@ -93,6 +93,7 @@ export function AssistantsProvider(props: AssistantsProviderProps) {
     if (!userInput?.prompt) {
       return
     }
+    await _processUserInput(userInput)
   }, [getAccountSessionToken, userInput, isProcessing])
 
   const setAndProcessUserInput = useCallback(
