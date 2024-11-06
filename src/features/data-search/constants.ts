@@ -6,4 +6,5 @@ export const DEFAULT_SELECTED_SEARCH_TYPES: SearchType[] = [
   "followed_pages",
   "messages",
   "posts",
+  "calendar",
 ]
