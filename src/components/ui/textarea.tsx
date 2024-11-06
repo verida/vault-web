@@ -17,7 +17,6 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
     const {
       className,
       onChange,
-      children,
       containerClassName,
       startAdornment,
       startAdornmentContainerClassName,
@@ -54,8 +53,8 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
 
     // Adjust height on mount and when content changes
     useLayoutEffect(() => {
-      adjustHeight()
-    }, [adjustHeight, children])
+      requestAnimationFrame(adjustHeight)
+    }, [adjustHeight, textareaProps.value])
 
     return (
       <div
@@ -83,9 +82,7 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
           rows={1}
           aria-multiline
           {...textareaProps}
-        >
-          {children}
-        </textarea>
+        />
         {endAdornment ? (
           <div
             className={cn("absolute right-0", endAdornmentContainerClassName)}
