@@ -85,6 +85,7 @@ export function AssistantUserInputField(props: AssistantUserInputFieldProps) {
                   onClick={clearUserInput}
                 >
                   <XIcon className="size-5 opacity-50 sm:size-6" />
+                  <span className="sr-only">Clear user input</span>
                 </Button>
               ) : null
             }
@@ -95,6 +96,7 @@ export function AssistantUserInputField(props: AssistantUserInputFieldProps) {
             <AssistantUserInputPromptsMenu>
               <Button variant="ghost" size="icon" className="size-8 sm:size-10">
                 <MessageSquareMoreIcon className="size-5 sm:size-6" />
+                <span className="sr-only">Open prompts menu</span>
               </Button>
             </AssistantUserInputPromptsMenu>
           </div>
@@ -107,6 +109,7 @@ export function AssistantUserInputField(props: AssistantUserInputFieldProps) {
               disabled={!userInput?.prompt || isProcessing}
             >
               <SendIcon className="size-5 sm:size-6" />
+              <span className="sr-only">Send to assistant for processing</span>
             </Button>
           </div>
         </CardFooter>

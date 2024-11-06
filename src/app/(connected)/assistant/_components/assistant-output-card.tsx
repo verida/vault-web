@@ -110,6 +110,9 @@ export function AssistantOutputCard(props: AssistantOutputCardProps) {
                   className="size-8 sm:size-10"
                 >
                   <MoreIcon className="size-5 sm:size-6" />
+                  <span className="sr-only">
+                    Open assistant output actions menu
+                  </span>
                 </Button>
               </AssistantOutputCardMenu>
             </div>
