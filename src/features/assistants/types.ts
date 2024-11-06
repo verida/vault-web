@@ -12,10 +12,9 @@ export type HotloadResult = {
   progress: number
 }
 
-export type RecommendedPrompt = {
+export type SuggestedInput = {
   label: string
-  prompt: string
-  // TODO: add further configuration options (LLM model, data type, filters, etc.)
+  input: AssistantUserInput
 }
 
 export type AssistantUserInput = {

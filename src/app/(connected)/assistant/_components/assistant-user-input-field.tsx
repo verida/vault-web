@@ -1,6 +1,6 @@
 "use client"
 
-import { XIcon } from "lucide-react"
+import { MessageSquareMoreIcon, XIcon } from "lucide-react"
 import React, {
   ChangeEventHandler,
   KeyboardEventHandler,
@@ -9,6 +9,7 @@ import React, {
   useRef,
 } from "react"
 
+import { AssistantUserInputPromptsMenu } from "@/app/(connected)/assistant/_components/assistant-user-input-prompts-menu"
 import { SendIcon } from "@/components/icons/send-icon"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
@@ -89,8 +90,19 @@ export function AssistantUserInputField(props: AssistantUserInputFieldProps) {
             }
           />
         </CardContent>
-        <CardFooter className="flex-row justify-end p-0">
-          <div className="flex flex-row items-center gap-2">
+        <CardFooter className="flex-row justify-between p-0">
+          <div className="flex flex-row items-center justify-start gap-2">
+            <AssistantUserInputPromptsMenu>
+              <Button
+                variant="outline"
+                size="icon"
+                className="size-8 sm:size-10"
+              >
+                <MessageSquareMoreIcon className="size-5 sm:size-6" />
+              </Button>
+            </AssistantUserInputPromptsMenu>
+          </div>
+          <div className="flex flex-row items-center justify-end gap-2">
             <Button
               variant="primary"
               size="icon"

@@ -10,6 +10,7 @@ export type AssistantsContextType = {
   userInput: AssistantUserInput | null
   assistantOutput: AssistantOutput | null
   processUserInput: () => Promise<void>
+  setAndProcessUserInput: (userInput: AssistantUserInput) => Promise<void>
   updateUserPrompt: (userPrompt: string) => void
   clearUserInput: () => void
   clearAssistantOutput: () => void

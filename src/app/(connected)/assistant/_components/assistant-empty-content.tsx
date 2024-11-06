@@ -6,30 +6,28 @@ import React, { useCallback } from "react"
 import { VeridaNetworkColouredLogo } from "@/components/icons/verida-network-coloured-logo"
 import { Typography } from "@/components/typography"
 import { Button } from "@/components/ui/button"
-import { RECOMMENDED_PROMPTS_FOR_NEW_CHAT } from "@/features/assistants/constants"
+import { SUGGESTED_INPUTS } from "@/features/assistants/constants"
 import { useAssistants } from "@/features/assistants/hooks/use-assistants"
+import { AssistantUserInput } from "@/features/assistants/types"
 import { useDataConnections } from "@/features/data-connections/hooks/use-data-connections"
 import { getConnectionsPageRoute } from "@/features/routes/utils"
 import { cn } from "@/styles/utils"
-import { wait } from "@/utils/misc"
 
 export type AssistantEmptyContentProps = React.ComponentProps<"div">
 
 export function AssistantEmptyContent(props: AssistantEmptyContentProps) {
   const { className, ...divProps } = props
 
-  const { updateUserPrompt, processUserInput } = useAssistants()
+  const { updateUserPrompt, setAndProcessUserInput } = useAssistants()
 
   const { connections, isLoading: isLoadingDataConnections } =
     useDataConnections()
 
   const handleRecommendedPromptClick = useCallback(
-    async (prompt: string) => {
-      updateUserPrompt(prompt)
-      await wait(1000)
-      await processUserInput()
+    async (input: AssistantUserInput) => {
+      setAndProcessUserInput(input)
     },
-    [updateUserPrompt, processUserInput]
+    [updateUserPrompt, setAndProcessUserInput]
   )
 
   return (
@@ -55,13 +53,13 @@ export function AssistantEmptyContent(props: AssistantEmptyContentProps) {
         </div>
         {isLoadingDataConnections ? null : connections?.length ? (
           <div className="flex flex-col items-center gap-2">
-            {RECOMMENDED_PROMPTS_FOR_NEW_CHAT.map((recommendations, index) => (
+            {SUGGESTED_INPUTS.map((recommendations, index) => (
               <Button
                 key={index}
                 variant="outline"
                 className="h-auto rounded-full px-4 py-2.5"
                 onClick={() => {
-                  handleRecommendedPromptClick(recommendations.prompt)
+                  handleRecommendedPromptClick(recommendations.input)
                 }}
               >
                 <Typography key={index} variant="base-s-regular">

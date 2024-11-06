@@ -62,28 +62,45 @@ export function AssistantsProvider(props: AssistantsProviderProps) {
     })
   }, [initialise])
 
+  const _processUserInput = useCallback(
+    async (userInput: AssistantUserInput) => {
+      if (isProcessing) {
+        return
+      }
+
+      logger.info("Sending user input to assistant")
+      setIsProcessing(true)
+      setError(null)
+      setAssistantOutput(null)
+
+      try {
+        const sessionToken = await getAccountSessionToken()
+        const result = await sendUserInputToAssistant(userInput, sessionToken)
+        setAssistantOutput(result)
+        logger.info("Received response from assistant")
+      } catch (error) {
+        logger.error(error)
+        setError("Something went wrong with the assistant")
+      } finally {
+        setIsProcessing(false)
+      }
+    },
+    [getAccountSessionToken, userInput, isProcessing]
+  )
+
   const processUserInput = useCallback(async () => {
-    if (!userInput?.prompt || isProcessing) {
+    if (!userInput?.prompt) {
       return
     }
-
-    logger.info("Sending user input to assistant")
-    setIsProcessing(true)
-    setError(null)
-    setAssistantOutput(null)
-
-    try {
-      const sessionToken = await getAccountSessionToken()
-      const result = await sendUserInputToAssistant(userInput, sessionToken)
-      setAssistantOutput(result)
-      logger.info("Received response from assistant")
-    } catch (error) {
-      logger.error(error)
-      setError("Something went wrong with the assistant")
-    } finally {
-      setIsProcessing(false)
-    }
   }, [getAccountSessionToken, userInput, isProcessing])
+
+  const setAndProcessUserInput = useCallback(
+    async (userInput: AssistantUserInput) => {
+      setUserInput(userInput)
+      await _processUserInput(userInput)
+    },
+    [processUserInput]
+  )
 
   const updateUserPrompt = useCallback((userPrompt: string) => {
     setUserInput((prev) => ({
@@ -105,6 +122,7 @@ export function AssistantsProvider(props: AssistantsProviderProps) {
       userInput,
       assistantOutput,
       processUserInput,
+      setAndProcessUserInput,
       updateUserPrompt,
       clearUserInput,
       clearAssistantOutput,
@@ -116,6 +134,7 @@ export function AssistantsProvider(props: AssistantsProviderProps) {
       userInput,
       assistantOutput,
       processUserInput,
+      setAndProcessUserInput,
       updateUserPrompt,
       clearUserInput,
       clearAssistantOutput,
