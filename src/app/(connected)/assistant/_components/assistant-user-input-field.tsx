@@ -93,11 +93,7 @@ export function AssistantUserInputField(props: AssistantUserInputFieldProps) {
         <CardFooter className="flex-row justify-between p-0">
           <div className="flex flex-row items-center justify-start gap-2">
             <AssistantUserInputPromptsMenu>
-              <Button
-                variant="outline"
-                size="icon"
-                className="size-8 sm:size-10"
-              >
+              <Button variant="ghost" size="icon" className="size-8 sm:size-10">
                 <MessageSquareMoreIcon className="size-5 sm:size-6" />
               </Button>
             </AssistantUserInputPromptsMenu>

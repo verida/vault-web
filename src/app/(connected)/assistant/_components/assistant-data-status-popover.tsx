@@ -66,6 +66,7 @@ export function AssistantDataStatusPopover(
     </Popover>
   )
 }
+AssistantDataStatusPopover.displayName = "AssistantDataStatusPopover"
 
 type AssistantDataStatusPopoverItemProps = {
   connection: DataConnection
@@ -126,3 +127,4 @@ function AssistantDataStatusPopoverItem(
 
   return null
 }
+AssistantDataStatusPopoverItem.displayName = "AssistantDataStatusPopoverItem"

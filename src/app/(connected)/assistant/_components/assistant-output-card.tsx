@@ -3,6 +3,8 @@
 import { formatDuration, intlFormat } from "date-fns"
 import { useMemo } from "react"
 
+import { AssistantOutputCardMenu } from "@/app/(connected)/assistant/_components/assistant-output-card-menu"
+import { MoreIcon } from "@/components/icons/more-icon"
 import { VeridaNetworkLogo } from "@/components/icons/verida-network-logo"
 import { MarkdownRenderer } from "@/components/markdown-renderer"
 import { Typography } from "@/components/typography"
@@ -21,9 +23,9 @@ import { DATABASE_DEFS } from "@/features/data/constants"
 import { cn } from "@/styles/utils"
 import { SHORT_TIME_FORMAT_OPTIONS } from "@/utils/date"
 
-export type AssistantOutputRendererProps = React.ComponentProps<"div">
+export type AssistantOutputCardProps = React.ComponentProps<"div">
 
-export function AssistantOutputRenderer(props: AssistantOutputRendererProps) {
+export function AssistantOutputCard(props: AssistantOutputCardProps) {
   const { className, ...divProps } = props
 
   const { assistantOutput, isProcessing, error } = useAssistants()
@@ -105,6 +107,19 @@ export function AssistantOutputRenderer(props: AssistantOutputRendererProps) {
               )}
             </div>
           </div>
+          {assistantOutput ? (
+            <div className="flex flex-row items-center justify-end gap-2">
+              <AssistantOutputCardMenu>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="size-8 sm:size-10"
+                >
+                  <MoreIcon className="size-5 sm:size-6" />
+                </Button>
+              </AssistantOutputCardMenu>
+            </div>
+          ) : null}
         </CardHeader>
         <CardContent className="p-0">
           {assistantOutput ? (
@@ -144,7 +159,7 @@ export function AssistantOutputRenderer(props: AssistantOutputRendererProps) {
     </div>
   )
 }
-AssistantOutputRenderer.displayName = "AssistantOutputRenderer"
+AssistantOutputCard.displayName = "AssistantOutputCard"
 
 type AssistantOutputSkeletonProps = Omit<
   React.ComponentProps<"div">,

@@ -2,7 +2,7 @@
 
 import { AssistantDataStatus } from "@/app/(connected)/assistant/_components/assistant-data-status"
 import { AssistantEmptyContent } from "@/app/(connected)/assistant/_components/assistant-empty-content"
-import { AssistantOutputRenderer } from "@/app/(connected)/assistant/_components/assistant-output-renderer"
+import { AssistantOutputCard } from "@/app/(connected)/assistant/_components/assistant-output-card"
 import { AssistantUserInputField } from "@/app/(connected)/assistant/_components/assistant-user-input-field"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { useAssistants } from "@/features/assistants/hooks/use-assistants"
@@ -23,7 +23,7 @@ export default function AssistantsPage() {
             </Alert>
           ) : null}
           {assistantOutput || isProcessing ? (
-            <AssistantOutputRenderer />
+            <AssistantOutputCard />
           ) : (
             <AssistantEmptyContent />
           )}

@@ -89,3 +89,4 @@ export function AssistantEmptyContent(props: AssistantEmptyContentProps) {
     </div>
   )
 }
+AssistantEmptyContent.displayName = "AssistantEmptyContent"
