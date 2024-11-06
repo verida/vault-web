@@ -80,6 +80,7 @@ export function AssistantsProvider(props: AssistantsProviderProps) {
         logger.info("Received response from assistant")
       } catch (error) {
         logger.error(error)
+        // TODO: Analyse error and set appropriate error message
         setError("Something went wrong with the assistant")
       } finally {
         setIsProcessing(false)

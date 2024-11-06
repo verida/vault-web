@@ -24,6 +24,7 @@ export type AssistantUserInput = {
 
 export type AssistantOutput = {
   result: string
+  processedAt: Date
   processingTime?: number
   databases?: string[]
   keywords?: string[]

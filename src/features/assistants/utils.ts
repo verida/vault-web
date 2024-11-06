@@ -70,6 +70,7 @@ export async function sendUserInputToAssistant(
 
     const output: AssistantOutput = {
       result: validatedData.result,
+      processedAt: new Date(),
       processingTime: validatedData.duration,
       databases: validatedData.process.databases,
       keywords: validatedData.process.keywords,
