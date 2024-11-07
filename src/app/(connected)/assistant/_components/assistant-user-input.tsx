@@ -95,9 +95,9 @@ export function AssistantUserInput(props: AssistantUserInputProps) {
           <div className="flex flex-row items-center justify-start gap-2">
             <AssistantUserInputPromptsMenu>
               <Button
-                variant="ghost"
+                variant="outline"
                 size="icon"
-                className="-ml-1.5 size-8 sm:size-10 md:-ml-2"
+                className="size-8 sm:size-10"
               >
                 <MessageSquareMoreIcon className="size-5 sm:size-6" />
                 <span className="sr-only">Open prompts menu</span>
