@@ -1,6 +1,6 @@
 import { DatabaseDefinition } from "@/features/data/types"
 
-export const DATABASE_DEFS: DatabaseDefinition[] = [
+const DEFS: DatabaseDefinition[] = [
   {
     id: "credentials",
     title: "Credential",
@@ -85,5 +85,17 @@ export const DATABASE_DEFS: DatabaseDefinition[] = [
     color: "#FFA500",
     databaseVaultName: "social_event",
     schemaUrlBase: "https://common.schemas.verida.io/social/event",
+    searchType: "calendar",
+  },
+  {
+    id: "files",
+    title: "File",
+    titlePlural: "Files",
+    color: "#FF4500",
+    databaseVaultName: "file",
+    schemaUrlBase: "https://common.schemas.verida.io/file",
+    searchType: "files",
   },
 ]
+
+export const DATABASE_DEFS = DEFS.sort((a, b) => a.id.localeCompare(b.id))

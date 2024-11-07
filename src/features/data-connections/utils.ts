@@ -410,7 +410,26 @@ export function getDataConnectionLatestSyncEnd(
       return latestSyncEndDate
     }
 
-    return latestSyncEndDate.getTime() > new Date(latest).getTime()
+    return latestSyncEndDate.getTime() > latest.getTime()
+      ? latestSyncEndDate
+      : latest
+  }, undefined)
+}
+
+export function getDataConnectionsLatestSyncEnd(
+  connections: DataConnection[]
+): Date | undefined {
+  return connections.reduce((latest: Date | undefined, connection) => {
+    const latestSyncEndDate = getDataConnectionLatestSyncEnd(connection)
+    if (!latestSyncEndDate) {
+      return latest
+    }
+
+    if (!latest) {
+      return latestSyncEndDate
+    }
+
+    return latestSyncEndDate.getTime() > latest.getTime()
       ? latestSyncEndDate
       : latest
   }, undefined)

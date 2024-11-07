@@ -1,80 +1,18 @@
-"use client"
+import { AssistantDataStatus } from "@/app/(connected)/assistant/_components/assistant-data-status"
+import { AssistantOutput } from "@/app/(connected)/assistant/_components/assistant-output"
+import { AssistantUserInput } from "@/app/(connected)/assistant/_components/assistant-user-input"
 
-import { useCallback, useEffect, useRef } from "react"
-
-import { AssistantChatEmptyContent } from "@/app/(connected)/assistant/_components/assistant-chat-empty-content"
-import { AssistantChatInput } from "@/app/(connected)/assistant/_components/assistant-chat-input"
-import { AssistantChatMessagesList } from "@/app/(connected)/assistant/_components/assistant-chat-messages-list"
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-import { useAssistant } from "@/features/assistant/use-assistant"
-
-export default function AssistantChatPage() {
-  const { messages, sendMessage, isProcessingMessage, error, hotload } =
-    useAssistant()
-  const messagesEndRef = useRef<HTMLDivElement>(null)
-
-  const handleSendMessage = useCallback(
-    async (message: string) => {
-      await sendMessage(message)
-    },
-    [sendMessage]
-  )
-
-  const handleRecommendedPromptClick = useCallback(
-    (prompt: string) => {
-      handleSendMessage(prompt)
-    },
-    [handleSendMessage]
-  )
-
-  useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
-  }, [messages])
-
+export default function AssistantsPage() {
   return (
-    <div className="flex h-full flex-col gap-1">
+    <div className="flex h-full flex-col">
+      <AssistantUserInput className="z-10 -mb-5" />
       <div className="flex-1 overflow-y-auto">
-        {messages.length === 0 ? (
-          <AssistantChatEmptyContent
-            onRecommendedPromptClick={handleRecommendedPromptClick}
-            className="pb-4 pt-6"
-          />
-        ) : (
-          <div className="flex min-h-full flex-col justify-end">
-            <AssistantChatMessagesList
-              messages={messages}
-              isProcessingMessage={isProcessingMessage}
-              className="pb-3"
-            />
-            <div ref={messagesEndRef} />
-          </div>
-        )}
+        <div className="flex flex-1 flex-col gap-4 pb-4 pt-9 md:pb-6 xl:pb-8">
+          <AssistantDataStatus className="pl-3 md:pl-4" />
+          <AssistantOutput />
+        </div>
       </div>
-      {error || hotload.status === "error" ? (
-        <Alert variant="error" className="mb-2">
-          <AlertTitle>Assistant error</AlertTitle>
-          <AlertDescription>
-            {error
-              ? error
-              : hotload.status === "error"
-                ? "There was an error loading your assistant"
-                : "Something went wrong while loading your assistant"}
-          </AlertDescription>
-        </Alert>
-      ) : null}
-      {hotload.status === "loading" ? (
-        <Alert variant="info" className="mb-2">
-          <AlertDescription>{`Securely loading your data in your assistant ... ${Math.round(hotload.progress * 100)}%`}</AlertDescription>
-          <AlertDescription>
-            Answers may not be accurate until completed
-          </AlertDescription>
-        </Alert>
-      ) : null}
-      <AssistantChatInput
-        onSendMessage={handleSendMessage}
-        isProcessingMessage={isProcessingMessage}
-      />
     </div>
   )
 }
-AssistantChatPage.displayName = "AssistantChatPage"
+AssistantsPage.displayName = "AssistantsPage"

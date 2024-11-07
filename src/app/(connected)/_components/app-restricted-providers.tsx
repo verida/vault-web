@@ -1,6 +1,6 @@
 "use client"
 
-import { AssistantProvider } from "@/features/assistant/assistant-context"
+import { AssistantsProvider } from "@/features/assistants/components/assistants-provider"
 import { DataConnectionsProvider } from "@/features/data-connections/components/data-connections-provider"
 
 export type AppRestrictedProvidersProps = {
@@ -15,7 +15,7 @@ export function AppRestrictedProviders(props: AppRestrictedProvidersProps) {
   // For global providers required in any cases, use the RootProviders component.
   return (
     <DataConnectionsProvider>
-      <AssistantProvider>{children}</AssistantProvider>
+      <AssistantsProvider>{children}</AssistantsProvider>
     </DataConnectionsProvider>
   )
 }

@@ -7,7 +7,7 @@ import {
   ErrorPageProps,
 } from "@/components/error-page-content"
 
-export default function AssistantErrorPage(props: ErrorPageProps) {
+export default function AssistantsErrorPage(props: ErrorPageProps) {
   const { error, reset } = props
 
   return (
@@ -18,4 +18,4 @@ export default function AssistantErrorPage(props: ErrorPageProps) {
     />
   )
 }
-AssistantErrorPage.displayName = "AssistantErrorPage"
+AssistantsErrorPage.displayName = "AssistantsErrorPage"

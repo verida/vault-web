@@ -25,7 +25,7 @@ import {
 import { featureFlags } from "@/config/features"
 import { useRestrictedAccess } from "@/features/restricted-access/use-restricted-access"
 import {
-  getAssistantPageRoute,
+  getAssistantsPageRoute,
   getConnectionsPageRoute,
   getConnectionsSummaryPageRoute,
   getDataPageRoute,
@@ -55,9 +55,9 @@ export function AppHeaderNavBar(props: AppHeaderNavBarProps) {
         {featureFlags.assistant.enabled ? (
           <NavigationMenuItem>
             <Link
-              href={getAssistantPageRoute()}
+              href={getAssistantsPageRoute()}
               data-active={
-                path.startsWith(getAssistantPageRoute()) ? true : undefined
+                path.startsWith(getAssistantsPageRoute()) ? true : undefined
               }
               className={cn(
                 navigationMenuTriggerStyle({
@@ -189,18 +189,19 @@ export function AppHeaderNavMenu(props: AppHeaderNavMenuProps) {
         </Button>
       </PopoverTrigger>
       <PopoverContent
-        sideOffset={17}
-        className="h-[calc(100dvh_-_73px)] w-screen rounded-none border-0 shadow-none"
+        sideOffset={16}
+        collisionPadding={0}
+        className="h-[calc(100dvh_-_73px)] w-screen rounded-none border-0 shadow-none data-[state=closed]:zoom-out-100 data-[state=open]:zoom-in-100"
       >
         <NavigationMenu orientation="vertical">
           <NavigationMenuList orientation="vertical">
             {featureFlags.assistant.enabled ? (
               <NavigationMenuItem>
                 <Link
-                  href={getAssistantPageRoute()}
+                  href={getAssistantsPageRoute()}
                   onClick={handleClickItem}
                   data-active={
-                    path.startsWith(getAssistantPageRoute()) ? true : undefined
+                    path.startsWith(getAssistantsPageRoute()) ? true : undefined
                   }
                   className={cn(
                     navigationMenuTriggerStyle({
