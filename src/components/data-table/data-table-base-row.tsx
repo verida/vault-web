@@ -7,13 +7,7 @@ export function DataTableBaseRow(props: DataTableBaseRowProps) {
   const { children, className, ...cardProps } = props
 
   return (
-    <Card
-      className={cn(
-        "flex w-full flex-col gap-4 rounded-lg px-4 py-4 sm:h-20 sm:flex-row sm:items-center sm:justify-between sm:gap-8",
-        className
-      )}
-      {...cardProps}
-    >
+    <Card className={cn("w-full p-5", className)} {...cardProps}>
       {children}
     </Card>
   )

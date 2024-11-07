@@ -6,24 +6,30 @@ import { cn } from "@/styles/utils"
 
 export type DataTableGenericRowProps<TData> = {
   row: Row<TData>
-} & React.ComponentProps<typeof DataTableBaseRow>
+} & Omit<React.ComponentProps<typeof DataTableBaseRow>, "children">
 
 export function DataTableGenericRow<TData>(
   props: DataTableGenericRowProps<TData>
 ) {
-  const { row, ...cardProps } = props
+  const { row, className, ...cardProps } = props
 
   return (
-    <DataTableBaseRow {...cardProps}>
+    <DataTableBaseRow
+      className={cn(
+        "flex flex-col gap-6 md:h-20 md:flex-row md:items-center md:justify-between",
+        className
+      )}
+      {...cardProps}
+    >
       {row.getVisibleCells().map((cell) => (
         <div
           key={cell.id}
           className={cn("flex flex-col gap-2", cell.getClassName())}
         >
           {typeof cell.column.columnDef.header === "string" ? (
-            <div className="sm:hidden">
+            <div className="md:hidden">
               {cell.getIsPlaceholder() ? null : (
-                <DataTableColumnHeader align={cell.getAlign()}>
+                <DataTableColumnHeader>
                   {cell.column.columnDef.header}
                 </DataTableColumnHeader>
               )}

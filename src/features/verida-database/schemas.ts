@@ -8,8 +8,8 @@ export const VeridaBaseRecordSchema = z
     summary: z.string().optional(),
     icon: z.string().optional(),
     schema: z.string().optional(),
-    insertedAt: z.string().datetime().optional(),
-    modifiedAt: z.string().datetime().optional(),
+    insertedAt: z.string().optional(),
+    modifiedAt: z.string().optional(),
   })
   .passthrough()
 

@@ -75,10 +75,10 @@ export const DataConnectionHandlerSchema = z
     config: z.record(z.string(), z.string()),
     status: DataConnectionHandlerStatusSchema,
     syncMessage: z.string().optional(),
-    latestSyncStart: z.string().datetime().optional(),
-    latestSyncEnd: z.string().datetime().optional(),
-    oldestDataTimestamp: z.string().datetime().optional(),
-    newestDataTimestamp: z.string().datetime().optional(),
+    latestSyncStart: z.string().optional(),
+    latestSyncEnd: z.string().optional(),
+    oldestDataTimestamp: z.string().optional(),
+    newestDataTimestamp: z.string().optional(),
   })
   .passthrough()
 
@@ -89,7 +89,7 @@ export const DataConnectionSchema = z.object({
   profile: DataConnectionProfileSchema.passthrough(),
   syncStatus: DataConnectionStatusSchema,
   syncFrequency: z.string(),
-  syncNext: z.string().datetime().optional(),
+  syncNext: z.string().optional(),
   config: z.record(z.string(), z.string()),
   handlers: z.array(DataConnectionHandlerSchema),
 })
@@ -98,6 +98,12 @@ export const DataConnectionsApiV1GetConnectionsResponseSchema = z.object({
   items: z.record(z.string(), DataConnectionSchema.passthrough()),
   success: z.boolean(),
 })
+
+export const DataConnectionsApiV1SyncAllConnectionsResponseSchema = z
+  .object({
+    success: z.boolean(),
+  })
+  .passthrough()
 
 export const DataConnectionsApiV1SyncConnectionResponseSchema = z
   .object({

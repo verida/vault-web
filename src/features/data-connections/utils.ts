@@ -1,14 +1,18 @@
+import { isDate } from "date-fns"
+
 import { commonConfig } from "@/config/common"
 import { DEFAULT_DATA_PROVIDER_DESCRIPTION } from "@/features/data-connections/constants"
 import {
   DataConnectionsApiV1DisconnectConnectionResponseSchema,
   DataConnectionsApiV1GetConnectionsResponseSchema,
   DataConnectionsApiV1GetProvidersResponseSchema,
+  DataConnectionsApiV1SyncAllConnectionsResponseSchema,
   DataConnectionsApiV1SyncConnectionResponseSchema,
 } from "@/features/data-connections/schemas"
 import {
   DataConnection,
   DataConnectionsApiV1DisconnectConnectionResponse,
+  DataConnectionsApiV1SyncAllConnectionsResponse,
   DataConnectionsApiV1SyncConnectionResponse,
   DataProvider,
 } from "@/features/data-connections/types"
@@ -233,6 +237,63 @@ export async function syncDataConnection(
 }
 
 /**
+ * Sync all data connections
+ *
+ * @param sessionToken - The session token for authentication
+ * @returns A promise that resolves to a DataConnectionsApiV1SyncAllConnectionsResponse indicating success
+ * @throws Error if there's an issue syncing all data connections
+ */
+export async function syncAllDataConnections(
+  sessionToken: string
+): Promise<DataConnectionsApiV1SyncAllConnectionsResponse> {
+  logger.info("Syncing all data connections")
+
+  if (!commonConfig.PRIVATE_DATA_API_BASE_URL) {
+    logger.warn(
+      "Cannot sync data connection due to incorrect API configuration"
+    )
+    throw new Error("Incorrect Private Data API configuration")
+  }
+
+  const url = new URL(
+    `${commonConfig.PRIVATE_DATA_API_BASE_URL}/api/rest/v1/connections/sync`
+  )
+
+  try {
+    logger.debug("Sending API request to sync data connection")
+    const response = await fetch(url.toString(), {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-API-Key": sessionToken,
+      },
+      body: JSON.stringify({
+        instantComplete: true,
+      }),
+    })
+
+    if (!response.ok) {
+      throw new Error(`HTTP error ${response.status}`)
+    }
+
+    const data = await response.json()
+
+    const validatedData =
+      DataConnectionsApiV1SyncAllConnectionsResponseSchema.parse(data)
+
+    if (!validatedData.success) {
+      throw new Error("API returned unsuccessful operation")
+    }
+
+    logger.info("Successfully synced all data connections")
+
+    return validatedData
+  } catch (error) {
+    throw new Error("Error syncing all data connections", { cause: error })
+  }
+}
+
+/**
  * Disconnect a give data connection
  *
  * @param connectionId - The connection ID
@@ -324,4 +385,52 @@ export function buildConnectProviderUrl(
   connectUrl.searchParams.append("redirect", redirectUrl.toString())
 
   return connectUrl.toString()
+}
+
+/**
+ * Gets the latest sync end date from a data connection
+ *
+ * @param connection - The data connection
+ * @returns The latest sync end date
+ */
+export function getDataConnectionLatestSyncEnd(
+  connection: DataConnection
+): Date | undefined {
+  return connection.handlers.reduce((latest: Date | undefined, handler) => {
+    if (!handler.latestSyncEnd) {
+      return latest
+    }
+
+    const latestSyncEndDate = new Date(handler.latestSyncEnd)
+    if (!isDate(latestSyncEndDate)) {
+      return latest
+    }
+
+    if (!latest) {
+      return latestSyncEndDate
+    }
+
+    return latestSyncEndDate.getTime() > latest.getTime()
+      ? latestSyncEndDate
+      : latest
+  }, undefined)
+}
+
+export function getDataConnectionsLatestSyncEnd(
+  connections: DataConnection[]
+): Date | undefined {
+  return connections.reduce((latest: Date | undefined, connection) => {
+    const latestSyncEndDate = getDataConnectionLatestSyncEnd(connection)
+    if (!latestSyncEndDate) {
+      return latest
+    }
+
+    if (!latest) {
+      return latestSyncEndDate
+    }
+
+    return latestSyncEndDate.getTime() > latest.getTime()
+      ? latestSyncEndDate
+      : latest
+  }, undefined)
 }

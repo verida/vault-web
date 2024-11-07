@@ -9,6 +9,7 @@ const SEARCH_TYPES = [
   "favorites",
   "followed_pages",
   "posts",
+  "calendar",
 ] as const
 
 export const SearchTypeSchema = z.enum(SEARCH_TYPES)

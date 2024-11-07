@@ -1,3 +1,4 @@
+import { isDate } from "date-fns"
 import React from "react"
 
 import { CredentialItem } from "@/app/(connected)/data/[databaseId]/_components/credential-item"
@@ -65,7 +66,7 @@ export function DatabaseRecordsTable(props: DatabaseRecordsTableProps) {
               href={`?id=${record._id}`}
               title={record.name}
               date={
-                record.insertedAt
+                record.insertedAt && isDate(new Date(record.insertedAt))
                   ? new Date(record.insertedAt).getTime()
                   : undefined
               }

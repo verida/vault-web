@@ -1,12 +1,13 @@
 "use client"
 
-import { SearchIcon } from "lucide-react"
+// import { SearchIcon } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useCallback, useMemo, useState } from "react"
 import { useDebounce } from "use-debounce"
 
 import { DatabaseIcon } from "@/components/icons/database-icon"
 import { GridIcon } from "@/components/icons/grid-icon"
+import { SearchIcon } from "@/components/icons/search-icon"
 import { Typography } from "@/components/typography"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
@@ -117,7 +118,7 @@ export function AppCommandDialog() {
 
   return (
     <Dialog open={isOpen} onOpenChange={handleChangeDialogState}>
-      <DialogContent className="inset-0 max-h-none overflow-hidden rounded-none p-0 sm:right-auto sm:top-auto sm:max-h-96 sm:max-w-2xl sm:p-0">
+      <DialogContent className="inset-0 max-h-none overflow-hidden rounded-none p-0 duration-500 data-[state=closed]:zoom-out-100 data-[state=open]:zoom-in-100 data-[state=closed]:slide-out-to-bottom-0 data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-bottom-0 data-[state=open]:slide-in-from-right sm:right-auto sm:top-auto sm:max-h-96 sm:max-w-2xl sm:p-0">
         <Command
           shouldFilter={false}
           loop
@@ -364,7 +365,7 @@ export function AppCommandDialogTrigger(props: AppCommandDialogTriggerProps) {
           onClick={openCommand}
           {...buttonProps}
         >
-          <SearchIcon className="h-4 w-4 shrink-0 opacity-50" />
+          <SearchIcon className="size-6 shrink-0" />
           <span className="sr-only">Search</span>
           <span className="hidden rounded-sm bg-surface-hover p-1 text-base-s-regular text-muted-foreground sm:inline-block">
             {shortcutText}

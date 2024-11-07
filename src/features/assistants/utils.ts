@@ -1,49 +1,42 @@
 import { commonConfig } from "@/config/common"
-import { DUMMY_ANSWERS } from "@/features/assistant/mock"
+import {
+  DEFAULT_LLM_MODEL,
+  DEFAULT_LLM_PROVIDER,
+} from "@/features/assistants/constants"
 import {
   PrivateDataApiV1LLMPersonalResponseSchema,
   PrivateDataApiV1LlmHotloadResponseSchema,
-} from "@/features/assistant/schemas"
+} from "@/features/assistants/schemas"
+import {
+  AssistantOutput,
+  AssistantUserInput,
+} from "@/features/assistants/types"
 import { Logger } from "@/features/telemetry"
-import { wait } from "@/utils/misc"
 
-const logger = Logger.create("assistant")
-
-/**
- * Simulates a response from the AI assistant for testing purposes.
- * @returns A promise that resolves to a randomly selected mock answer.
- */
-async function mockProcessUserPrompt(): Promise<string> {
-  // Select a random answer from the predefined list
-  const answer = DUMMY_ANSWERS[Math.floor(Math.random() * DUMMY_ANSWERS.length)]
-  // Calculate a wait time based on the answer length, between 500ms and 5000ms
-  const waitTime = Math.max(500, Math.min(5000, answer.length * 10))
-  await wait(waitTime)
-  return answer
-}
+const logger = Logger.create("assistants")
 
 /**
  * Processes a user prompt by sending it to the LLM API or using a mock response.
  *
- * @param prompt - The user's input prompt
+ * @param userInput - The user's input
  * @param sessionToken - The session token for authentication
  * @returns A promise that resolves to the AI-generated response
  * @throws Error if the prompt is empty or if there's an issue with the API call
  */
-export async function processUserPrompt(
-  prompt: string,
+export async function sendUserInputToAssistant(
+  userInput: AssistantUserInput,
   sessionToken: string
-): Promise<string> {
-  if (!prompt) {
-    throw new Error("Prompt is required")
+): Promise<AssistantOutput> {
+  if (!userInput) {
+    throw new Error("User input is required")
   }
 
-  logger.info("Processing user prompt")
+  logger.info("Processing user input")
 
   // Use mock response if API configuration is missing
   if (!commonConfig.PRIVATE_DATA_API_BASE_URL) {
     logger.warn("Using mock response due to missing API configuration")
-    return mockProcessUserPrompt()
+    throw new Error("API configuration is missing")
   }
 
   try {
@@ -56,7 +49,11 @@ export async function processUserPrompt(
           "Content-Type": "application/json",
           "X-API-Key": sessionToken,
         },
-        body: JSON.stringify({ prompt }),
+        body: JSON.stringify({
+          prompt: userInput.prompt,
+          provider: DEFAULT_LLM_PROVIDER,
+          model: DEFAULT_LLM_MODEL, // Could come from the user input
+        }),
       }
     )
 
@@ -70,7 +67,16 @@ export async function processUserPrompt(
     // Validate the API response against the expected schema
     const validatedData = PrivateDataApiV1LLMPersonalResponseSchema.parse(data)
     logger.info("Successfully processed user prompt")
-    return validatedData.result
+
+    const output: AssistantOutput = {
+      result: validatedData.result,
+      processedAt: new Date(),
+      processingTime: validatedData.duration,
+      databases: validatedData.process.databases,
+      keywords: validatedData.process.keywords,
+    }
+
+    return output
   } catch (error) {
     throw new Error("Error calling LLM API", { cause: error })
   }

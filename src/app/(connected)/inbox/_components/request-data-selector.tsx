@@ -1,11 +1,11 @@
 "use client"
 
 import { useQuery } from "@tanstack/react-query"
-import { format } from "date-fns"
+import { intlFormat } from "date-fns"
 import Image from "next/image"
 import { useCallback, useEffect, useState } from "react"
 
-import { ArrowLeft } from "@/components/icons/arrow-left"
+import { ArrowLeftIcon } from "@/components/icons/arrow-left-icon"
 import { SearchInput } from "@/components/search-input"
 import { Typography } from "@/components/typography"
 import { Alert, AlertDescription } from "@/components/ui/alert"
@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/drawer"
 import { Logger } from "@/features/telemetry"
 import { useVerida } from "@/features/verida/use-verida"
+import { SHORT_DATE_TIME_FORMAT_OPTIONS } from "@/utils/date"
 
 const logger = Logger.create("inbox")
 
@@ -91,7 +92,7 @@ export function RequestDataSelector(props: RequestDataSelectorProps) {
     <>
       <DrawerHeader className="flex flex-col gap-1.5 space-y-3 border-b px-6 py-4 text-center sm:text-left">
         <div className="flex items-center space-x-3">
-          <ArrowLeft onClick={() => onClose()} className="cursor-pointer" />
+          <ArrowLeftIcon onClick={() => onClose()} className="cursor-pointer" />
           <DrawerTitle className="text-lg font-semibold leading-none tracking-tight">
             Select an Item
           </DrawerTitle>
@@ -145,7 +146,10 @@ export function RequestDataSelector(props: RequestDataSelectorProps) {
                     variant="base-s-semibold"
                     className="text-muted-foreground/60"
                   >
-                    {format(new Date(item.insertedAt), "dd/MM/yyy hh:mm")}
+                    {intlFormat(
+                      new Date(item.insertedAt),
+                      SHORT_DATE_TIME_FORMAT_OPTIONS
+                    )}
                   </Typography>
                 </div>
               </label>

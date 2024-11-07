@@ -15,7 +15,7 @@ import { DataTablePaginationSizeValue } from "@/features/data-table/types"
 export type DataTablePaginationProps<TData> = {
   table: Table<TData>
   paginationSizes?: DataTablePaginationSizeValue[]
-} & Omit<React.ComponentProps<"div">, "children">
+} & Omit<React.ComponentProps<"footer">, "children">
 
 export function DataTablePagination<TData>(
   props: DataTablePaginationProps<TData>
@@ -27,7 +27,7 @@ export function DataTablePagination<TData>(
   } = props
 
   return (
-    <div {...divProps}>
+    <footer {...divProps}>
       <div className="relative flex flex-row items-center justify-center gap-2 sm:justify-between">
         <div className="hidden flex-row items-center gap-2 sm:flex">
           <p className="text-sm font-medium text-muted-foreground">Rows</p>
@@ -65,7 +65,7 @@ export function DataTablePagination<TData>(
           </PaginationContent>
         </Pagination>
       </div>
-    </div>
+    </footer>
   )
 }
 DataTablePagination.displayName = "DataTablePagination"

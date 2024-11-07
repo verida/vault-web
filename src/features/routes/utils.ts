@@ -3,10 +3,10 @@ export function getRootPageRoute() {
 }
 
 export function getDefaultRedirectPathAfterConnection() {
-  return getAssistantPageRoute()
+  return getAssistantsPageRoute()
 }
 
-export function getAssistantPageRoute() {
+export function getAssistantsPageRoute() {
   return `/assistant`
 }
 
