@@ -191,7 +191,7 @@ export function AppHeaderNavMenu(props: AppHeaderNavMenuProps) {
       <PopoverContent
         sideOffset={16}
         collisionPadding={0}
-        className="h-[calc(100dvh_-_73px)] w-screen rounded-none border-0 shadow-none"
+        className="h-[calc(100dvh_-_73px)] w-screen rounded-none border-0 shadow-none data-[state=closed]:zoom-out-100 data-[state=open]:zoom-in-100"
       >
         <NavigationMenu orientation="vertical">
           <NavigationMenuList orientation="vertical">

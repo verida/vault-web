@@ -118,7 +118,7 @@ export function AppCommandDialog() {
 
   return (
     <Dialog open={isOpen} onOpenChange={handleChangeDialogState}>
-      <DialogContent className="inset-0 max-h-none overflow-hidden rounded-none p-0 sm:right-auto sm:top-auto sm:max-h-96 sm:max-w-2xl sm:p-0">
+      <DialogContent className="inset-0 max-h-none overflow-hidden rounded-none p-0 duration-500 data-[state=closed]:zoom-out-100 data-[state=open]:zoom-in-100 data-[state=closed]:slide-out-to-bottom-0 data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-bottom-0 data-[state=open]:slide-in-from-right sm:right-auto sm:top-auto sm:max-h-96 sm:max-w-2xl sm:p-0">
         <Command
           shouldFilter={false}
           loop
