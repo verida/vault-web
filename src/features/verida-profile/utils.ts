@@ -1,81 +1,29 @@
 import { Client } from "@verida/client-ts"
 import { Network } from "@verida/types"
 
-import { commonConfig } from "@/config/common"
-import { Logger } from "@/features/telemetry/logger"
 import { VERIDA_PROFILE_DB_NAME } from "@/features/verida-profile/constants"
-import { VeridaPublicProfileApiResponseSchema } from "@/features/verida-profile/schemas"
-import { VeridaPublicProfile } from "@/features/verida-profile/types"
+import { VeridaProfileApiResponseSchema } from "@/features/verida-profile/schemas"
+import { VeridaProfile } from "@/features/verida-profile/types"
 import { VERIDA_VAULT_CONTEXT_NAME } from "@/features/verida/constants"
 import { isValidVeridaDid } from "@/features/verida/utils"
 
-const logger = Logger.create("verida-profile")
-
-export async function getPublicProfile(
-  did: string,
-  contextName = VERIDA_VAULT_CONTEXT_NAME,
-  fallbackToVaultContext = true
-): Promise<VeridaPublicProfile> {
-  try {
-    const profileDb = await getPublicProfileDatastore({
-      did,
-      network: commonConfig.VERIDA_NETWORK,
-      contextName,
-      fallbackToVaultContext,
-      rpcUrl: commonConfig.VERIDA_RPC_URL,
-    })
-
-    if (!profileDb) {
-      return {}
-    }
-
-    const [
-      nameResult,
-      avatarResult,
-      descriptionResult,
-      countryResult,
-      websiteResult,
-    ] = await Promise.allSettled([
-      await profileDb.get("name"),
-      await profileDb.get("avatar"),
-      await profileDb.get("description"),
-      await profileDb.get("country"),
-      await profileDb.get("website"),
-    ])
-
-    return {
-      name: nameResult.status === "fulfilled" ? nameResult.value : undefined,
-      avatar:
-        avatarResult.status === "fulfilled" ? avatarResult.value : undefined,
-      description:
-        descriptionResult.status === "fulfilled"
-          ? descriptionResult.value
-          : undefined,
-      country:
-        countryResult.status === "fulfilled" ? countryResult.value : undefined,
-      website:
-        websiteResult.status === "fulfilled" ? websiteResult.value : undefined,
-    }
-  } catch (error) {
-    return {}
-  }
-}
-
-type FetchPublicProfileArgs = {
+type FetchVeridaProfileArgs = {
   did: string
   network: Network
   contextName?: string
-  ignoreCache?: boolean
+  options?: {
+    ignoreCache?: boolean
+  }
 }
 
-export async function fetchPublicProfileFromApi({
+export async function fetchVeridaProfileFromApi({
   did,
   network,
   contextName = VERIDA_VAULT_CONTEXT_NAME,
-  ignoreCache = false,
-}: FetchPublicProfileArgs): Promise<VeridaPublicProfile> {
+  options,
+}: FetchVeridaProfileArgs): Promise<VeridaProfile> {
   if (!isValidVeridaDid(did)) {
-    throw new Error("Invalid DID")
+    throw new Error("Invalid Verida DID")
   }
 
   try {
@@ -83,49 +31,52 @@ export async function fetchPublicProfileFromApi({
       // TODO: Extract the base URL in an env variable
       `https://data.verida.network/${did}/${network}/${contextName}/profile_public/${VERIDA_PROFILE_DB_NAME}`
     )
-    url.searchParams.set("ignoreCache", ignoreCache.toString())
+    if (options?.ignoreCache) {
+      url.searchParams.set("ignoreCache", "true")
+    }
 
     const response = await fetch(url.toString())
     const data = await response.json()
 
-    logger.debug("fetchPublicProfileFromApi", { data })
-
-    const validatedProfile = VeridaPublicProfileApiResponseSchema.parse(data)
+    const validatedProfile = VeridaProfileApiResponseSchema.parse(data)
 
     return validatedProfile
   } catch (error) {
-    throw new Error("Failed to fetch Verida profile", { cause: error })
+    throw new Error("Failed to fetch Verida profile from API", { cause: error })
   }
 }
 
-type GetPublicProfileFromClientArgs = {
+type GetVeridaProfileFromClientArgs = {
   did: string
   network: Network
   contextName?: string
-  fallbackToVaultContext?: boolean
+  options?: {
+    fallbackToVaultContext?: boolean
+    rpcUrl?: string
+  }
 }
 
-export async function getPublicProfileFromClient({
+export async function getVeridaProfileFromClient({
   did,
   network,
   contextName = VERIDA_VAULT_CONTEXT_NAME,
-  fallbackToVaultContext = true,
-}: GetPublicProfileFromClientArgs): Promise<VeridaPublicProfile> {
+  options,
+}: GetVeridaProfileFromClientArgs): Promise<VeridaProfile> {
   if (!isValidVeridaDid(did)) {
-    throw new Error("Invalid DID")
+    throw new Error("Invalid Verida DID")
   }
 
   try {
-    const profileDb = await getPublicProfileDatastore({
+    const profileDb = await getVeridaProfileDatastore({
       did,
       network,
       contextName,
-      fallbackToVaultContext,
-      rpcUrl: commonConfig.VERIDA_RPC_URL,
+      fallbackToVaultContext: options?.fallbackToVaultContext,
+      rpcUrl: options?.rpcUrl,
     })
 
     if (!profileDb) {
-      throw new Error("No public profile datastore found")
+      throw new Error("No Verida profile datastore found")
     }
 
     const [
@@ -156,13 +107,51 @@ export async function getPublicProfileFromClient({
         websiteResult.status === "fulfilled" ? websiteResult.value : undefined,
     }
   } catch (error) {
-    throw new Error("Failed to get public profile from client", {
+    throw new Error("Failed to get Verida profile from client", {
       cause: error,
     })
   }
 }
 
-type GetPublicProfileDatastoreArgs = {
+type GetVeridaProfileArgs = {
+  did: string
+  network: Network
+  contextName?: string
+  apiOptions?: FetchVeridaProfileArgs["options"]
+  clientOptions?: GetVeridaProfileFromClientArgs["options"]
+}
+
+export async function getVeridaProfile({
+  did,
+  network,
+  contextName,
+  apiOptions,
+  clientOptions,
+}: GetVeridaProfileArgs): Promise<VeridaProfile> {
+  // Try to fetch from the API first
+  try {
+    return await fetchVeridaProfileFromApi({
+      did,
+      network,
+      contextName,
+      options: apiOptions,
+    })
+  } catch (error) {
+    // If that fails, try to fetch from the client
+    try {
+      return await getVeridaProfileFromClient({
+        did,
+        network,
+        contextName,
+        options: clientOptions,
+      })
+    } catch (error) {
+      throw new Error("Failed to get Verida profile", { cause: error })
+    }
+  }
+}
+
+type GetVeridaProfileDatastoreArgs = {
   did: string
   network: Network
   contextName: string
@@ -170,15 +159,15 @@ type GetPublicProfileDatastoreArgs = {
   rpcUrl?: string
 }
 
-async function getPublicProfileDatastore({
+async function getVeridaProfileDatastore({
   did,
   network,
   contextName,
   fallbackToVaultContext = true,
   rpcUrl,
-}: GetPublicProfileDatastoreArgs) {
+}: GetVeridaProfileDatastoreArgs) {
   if (!isValidVeridaDid(did)) {
-    throw new Error("Invalid DID")
+    throw new Error("Invalid Verida DID")
   }
 
   try {
@@ -199,7 +188,7 @@ async function getPublicProfileDatastore({
         : undefined
     )
   } catch (error) {
-    throw new Error("Failed to get public profile datastore", {
+    throw new Error("Failed to get Verida profile datastore", {
       cause: error,
     })
   }

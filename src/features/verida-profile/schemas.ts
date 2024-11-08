@@ -2,7 +2,7 @@ import { z } from "zod"
 
 import { VeridaBaseRecordSchema } from "@/features/verida-database/schemas"
 
-export const VeridaPublicProfileSchema = z.object({
+export const VeridaProfileSchema = z.object({
   name: z.string().optional(),
   description: z.string().optional(),
   avatar: z
@@ -15,5 +15,6 @@ export const VeridaPublicProfileSchema = z.object({
   username: z.string().optional(),
 })
 
-export const VeridaPublicProfileApiResponseSchema =
-  VeridaBaseRecordSchema.extend(VeridaPublicProfileSchema.shape).passthrough()
+export const VeridaProfileApiResponseSchema = VeridaBaseRecordSchema.extend(
+  VeridaProfileSchema.shape
+).passthrough()

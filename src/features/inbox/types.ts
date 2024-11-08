@@ -18,8 +18,6 @@ export type InboxEntry = {
 export type InboxSentBy = {
   did: string
   context: string
-  name: string
-  avatar?: Record<string, any>
 }
 
 export enum VeridaMessageType {

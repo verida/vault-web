@@ -1,5 +1,5 @@
 import { z } from "zod"
 
-import { VeridaPublicProfileSchema } from "@/features/verida-profile/schemas"
+import { VeridaProfileSchema } from "@/features/verida-profile/schemas"
 
-export type VeridaPublicProfile = z.infer<typeof VeridaPublicProfileSchema>
+export type VeridaProfile = z.infer<typeof VeridaProfileSchema>
