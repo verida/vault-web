@@ -1,9 +1,5 @@
-export type PublicProfile = {
-  name: string
-  description?: string
-  avatar?: {
-    uri?: string
-  }
-  country?: string
-  website?: string
-}
+import { z } from "zod"
+
+import { VeridaPublicProfileSchema } from "@/features/verida-profile/schemas"
+
+export type VeridaPublicProfile = z.infer<typeof VeridaPublicProfileSchema>

@@ -6,7 +6,7 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"
 
 import { commonConfig } from "@/config/common"
 import { Logger, Sentry } from "@/features/telemetry"
-import { PublicProfile } from "@/features/verida-profile/types"
+import { VeridaPublicProfile } from "@/features/verida-profile/types"
 import { getPublicProfile } from "@/features/verida-profile/utils"
 import { VERIDA_VAULT_CONTEXT_NAME } from "@/features/verida/constants"
 import {
@@ -49,7 +49,7 @@ export const VeridaProvider: React.FunctionComponent<VeridaProviderProps> = (
   const [isConnecting, setIsConnecting] = useState(false)
   const [isDisconnecting, setIsDisconnecting] = useState(false)
   const [did, setDid] = useState<string | null>(null)
-  const [profile, setProfile] = useState<PublicProfile | null>(null)
+  const [profile, setProfile] = useState<VeridaPublicProfile | null>(null)
 
   const updateStates = useCallback(async () => {
     const newIsConnected = webUserInstance.isConnected()
