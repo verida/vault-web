@@ -66,7 +66,7 @@ export function AppHeaderNavBar(props: AppHeaderNavBarProps) {
             >
               <div className="flex items-center gap-2">
                 <AiAssistantIcon className="text-ai-assistant-gradient" />
-                <span className="bg-ai-assistant-gradient bg-clip-text text-transparent">
+                <span className="sr-only bg-ai-assistant-gradient bg-clip-text text-transparent lg:not-sr-only">
                   AI Assistant
                 </span>
               </div>
@@ -88,7 +88,7 @@ export function AppHeaderNavBar(props: AppHeaderNavBarProps) {
             >
               <div className="flex items-center gap-2">
                 <Data />
-                <span>Data</span>
+                <span className="sr-only lg:not-sr-only">Data</span>
               </div>
             </Link>
           </NavigationMenuItem>
@@ -108,7 +108,7 @@ export function AppHeaderNavBar(props: AppHeaderNavBarProps) {
             >
               <div className="flex items-center gap-2">
                 <Connection />
-                <span>Connections</span>
+                <span className="sr-only lg:not-sr-only">Connections</span>
               </div>
             </Link>
           </NavigationMenuItem>

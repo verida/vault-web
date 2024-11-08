@@ -23,7 +23,7 @@ export function AppHeader(props: AppHeaderProps) {
       <div className="flex h-full flex-row justify-center">
         <div className="flex w-full max-w-screen-2xl flex-1 flex-row items-stretch justify-between gap-4">
           <div className="flex flex-row items-stretch gap-4 pl-4 md:pl-6 xl:pl-8">
-            <div className="flex flex-row items-center lg:hidden">
+            <div className="flex flex-row items-center md:hidden">
               <AppHeaderNavMenu className="-mx-2" />
             </div>
             <div className="flex shrink-0 flex-row items-center">
@@ -35,7 +35,7 @@ export function AppHeader(props: AppHeaderProps) {
               />
             </div>
 
-            <AppHeaderNavBar className="hidden lg:flex" />
+            <AppHeaderNavBar className="hidden md:flex" />
           </div>
           <div className="flex flex-row items-center gap-4 py-4 pr-4 md:pr-6 xl:pr-8">
             {featureFlags.commandDialog.enabled ? (
