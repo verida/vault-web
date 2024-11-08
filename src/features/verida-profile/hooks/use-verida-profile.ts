@@ -1,12 +1,15 @@
-import { useQuery } from "@tanstack/react-query"
+import { QueryClient, useQuery } from "@tanstack/react-query"
 
 import { commonConfig } from "@/config/common"
+import { Logger } from "@/features/telemetry/logger"
 import { fetchPublicProfileFromApi } from "@/features/verida-profile/utils"
 import { VERIDA_VAULT_CONTEXT_NAME } from "@/features/verida/constants"
 
+const logger = Logger.create("verida-profile")
+
 export function useVeridaProfile(did: string | null | undefined) {
   const { data, ...query } = useQuery({
-    queryKey: ["profile", did],
+    queryKey: ["verida", "profile", did],
     queryFn: () => {
       if (!did) {
         // To satisfy the type checker
@@ -32,4 +35,12 @@ export function useVeridaProfile(did: string | null | undefined) {
     profile: data,
     ...query,
   }
+}
+
+export async function invalidateVeridaProfile(
+  queryClient: QueryClient,
+  did: string
+) {
+  await queryClient.invalidateQueries({ queryKey: ["verida", "profile", did] })
+  logger.info("Successfully invalidated Verida profile queries")
 }
