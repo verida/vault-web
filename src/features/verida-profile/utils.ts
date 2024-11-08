@@ -1,7 +1,7 @@
 import { Client } from "@verida/client-ts"
 
 import { commonConfig } from "@/config/common"
-import { PublicProfile } from "@/features/profiles/types"
+import { PublicProfile } from "@/features/verida-profile/types"
 import { VERIDA_VAULT_CONTEXT_NAME } from "@/features/verida/constants"
 import { isValidVeridaDid } from "@/features/verida/utils"
 

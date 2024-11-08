@@ -19,9 +19,9 @@ import {
 import { Skeleton } from "@/components/ui/skeleton"
 import { version } from "@/config/version"
 import { APP_NAME } from "@/constants/app"
-import { EMPTY_PROFILE_NAME_FALLBACK } from "@/features/profiles/constants"
 import { useUserFeedback } from "@/features/telemetry/use-user-feedback"
 import { useToast } from "@/features/toasts/use-toast"
+import { EMPTY_PROFILE_NAME_FALLBACK } from "@/features/verida-profile/constants"
 import { useVerida } from "@/features/verida/use-verida"
 import { cn } from "@/styles/utils"
 

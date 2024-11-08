@@ -1,14 +1,18 @@
 "use client"
 
-import { type DatastoreOpenConfig, type IDatastore } from "@verida/types"
+import { type DatastoreOpenConfig } from "@verida/types"
 import { WebUser } from "@verida/web-helpers"
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"
 
 import { commonConfig } from "@/config/common"
-import { PublicProfile } from "@/features/profiles/types"
-import { getPublicProfile } from "@/features/profiles/utils"
 import { Logger, Sentry } from "@/features/telemetry"
+import { PublicProfile } from "@/features/verida-profile/types"
+import { getPublicProfile } from "@/features/verida-profile/utils"
 import { VERIDA_VAULT_CONTEXT_NAME } from "@/features/verida/constants"
+import {
+  VeridaContext,
+  VeridaContextType,
+} from "@/features/verida/contexts/verida-context"
 
 const logger = Logger.create("verida")
 
@@ -31,25 +35,6 @@ const webUserInstance = new WebUser({
     network: commonConfig.VERIDA_NETWORK,
   },
 })
-
-type VeridaContextType = {
-  webUserInstanceRef: React.MutableRefObject<WebUser>
-  isReady: boolean
-  isConnected: boolean
-  isConnecting: boolean
-  isDisconnecting: boolean
-  did: string | null
-  profile: PublicProfile | null
-  connect: () => Promise<void>
-  disconnect: () => Promise<void>
-  getAccountSessionToken: () => Promise<string>
-  openDatastore: (
-    schemaUrl: string,
-    config?: DatastoreOpenConfig
-  ) => Promise<IDatastore>
-}
-
-export const VeridaContext = React.createContext<VeridaContextType | null>(null)
 
 type VeridaProviderProps = {
   children?: React.ReactNode

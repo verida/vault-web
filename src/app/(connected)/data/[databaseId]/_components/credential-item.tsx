@@ -9,7 +9,7 @@ import { Typography } from "@/components/typography"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Card } from "@/components/ui/card"
 // import { DataSchema } from "@/features/data"
-import { getPublicProfile } from "@/features/profiles/utils"
+import { getPublicProfile } from "@/features/verida-profile/utils"
 
 export type CredentialItemProps = {
   logo?: string

@@ -6,6 +6,4 @@ export type PublicProfile = {
   }
   country?: string
   website?: string
-  username?: string
-  modifiedAt?: string // '2023-07-05T06:25:22.401Z'
 }
