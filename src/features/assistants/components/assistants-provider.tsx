@@ -13,7 +13,7 @@ import {
   sendUserInputToAssistant,
 } from "@/features/assistants/utils"
 import { Logger } from "@/features/telemetry"
-import { useVerida } from "@/features/verida/use-verida"
+import { useVerida } from "@/features/verida/hooks/use-verida"
 
 const logger = Logger.create("assistants")
 
@@ -86,7 +86,7 @@ export function AssistantsProvider(props: AssistantsProviderProps) {
         setIsProcessing(false)
       }
     },
-    [getAccountSessionToken, userInput, isProcessing]
+    [getAccountSessionToken, isProcessing]
   )
 
   const processUserInput = useCallback(async () => {
@@ -94,14 +94,14 @@ export function AssistantsProvider(props: AssistantsProviderProps) {
       return
     }
     await _processUserInput(userInput)
-  }, [getAccountSessionToken, userInput, isProcessing])
+  }, [userInput, _processUserInput])
 
   const setAndProcessUserInput = useCallback(
     async (userInput: AssistantUserInput) => {
       setUserInput(userInput)
       await _processUserInput(userInput)
     },
-    [processUserInput]
+    [_processUserInput]
   )
 
   const updateUserPrompt = useCallback((userPrompt: string) => {

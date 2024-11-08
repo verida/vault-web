@@ -1,7 +1,5 @@
-import { isDate } from "date-fns"
 import React from "react"
 
-import { CredentialItem } from "@/app/(connected)/data/[databaseId]/_components/credential-item"
 import { DataItem } from "@/app/(connected)/data/[databaseId]/_components/data-item"
 import { Typography } from "@/components/typography"
 import {
@@ -57,26 +55,9 @@ export function DatabaseRecordsTable(props: DatabaseRecordsTableProps) {
           </Typography>
         ))}
       </div>
-      {databaseDefinition.id === "credentials"
-        ? records.map((record, index) => (
-            <CredentialItem
-              key={index}
-              credential={record.didJwtVc}
-              fallbackAvatar=""
-              href={`?id=${record._id}`}
-              title={record.name}
-              date={
-                record.insertedAt && isDate(new Date(record.insertedAt))
-                  ? new Date(record.insertedAt).getTime()
-                  : undefined
-              }
-              source="Government of New South Wales"
-              status="valid"
-            />
-          ))
-        : records.map((record, index) => (
-            <DataItem data={record} key={index} schema={dataSchema} />
-          ))}
+      {records.map((record, index) => (
+        <DataItem data={record} key={index} schema={dataSchema} />
+      ))}
     </div>
   )
 }
