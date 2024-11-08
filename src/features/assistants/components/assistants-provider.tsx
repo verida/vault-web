@@ -13,7 +13,7 @@ import {
   sendUserInputToAssistant,
 } from "@/features/assistants/utils"
 import { Logger } from "@/features/telemetry"
-import { useVerida } from "@/features/verida/use-verida"
+import { useVerida } from "@/features/verida/hooks/use-verida"
 
 const logger = Logger.create("assistants")
 
