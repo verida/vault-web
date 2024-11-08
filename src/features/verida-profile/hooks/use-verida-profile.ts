@@ -32,6 +32,9 @@ export function useVeridaProfile({
         did,
         network,
         contextName,
+        apiOptions: {
+          ignoreCache: true,
+        },
         clientOptions: {
           rpcUrl: commonConfig.VERIDA_RPC_URL,
         },
