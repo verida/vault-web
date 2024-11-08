@@ -1,6 +1,7 @@
 import Image from "next/image"
 
 import { AppCommandDialogTrigger } from "@/app/(connected)/_components/app-command-dialog"
+import { AppHeaderInboxLink } from "@/app/(connected)/_components/app-header-inbox-link"
 import {
   AppHeaderNavBar,
   AppHeaderNavMenu,
@@ -39,6 +40,9 @@ export function AppHeader(props: AppHeaderProps) {
           <div className="flex flex-row items-center gap-4 py-4 pr-4 md:pr-6 xl:pr-8">
             {featureFlags.commandDialog.enabled ? (
               <AppCommandDialogTrigger className="h-8 w-8 sm:w-auto md:h-12" />
+            ) : null}
+            {featureFlags.inbox.enabled ? (
+              <AppHeaderInboxLink className="h-8 w-8 sm:w-auto md:h-12" />
             ) : null}
             <IdentityDropdownMenu />
           </div>

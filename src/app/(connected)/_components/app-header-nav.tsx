@@ -9,7 +9,6 @@ import { Close as CloseIcon } from "@/components/icons/close"
 import { Connection } from "@/components/icons/connection"
 import { Data } from "@/components/icons/data"
 import { Hamburger as MenuIcon } from "@/components/icons/hamburger"
-import { InboxWithBadge } from "@/components/icons/inbox-with-badge"
 import { Button } from "@/components/ui/button"
 import {
   NavigationMenu,
@@ -29,7 +28,6 @@ import {
   getConnectionsPageRoute,
   getConnectionsSummaryPageRoute,
   getDataPageRoute,
-  getInboxPageRoute,
 } from "@/features/routes/utils"
 import { cn } from "@/styles/utils"
 
@@ -71,26 +69,6 @@ export function AppHeaderNavBar(props: AppHeaderNavBarProps) {
                 <span className="bg-ai-assistant-gradient bg-clip-text text-transparent">
                   AI Assistant
                 </span>
-              </div>
-            </Link>
-          </NavigationMenuItem>
-        ) : null}
-        {featureFlags.inbox.enabled ? (
-          <NavigationMenuItem>
-            <Link
-              href={getInboxPageRoute()}
-              data-active={
-                path.startsWith(getInboxPageRoute()) ? true : undefined
-              }
-              className={cn(
-                navigationMenuTriggerStyle({
-                  className: "h-full rounded-none border-b-2 font-semibold",
-                })
-              )}
-            >
-              <div className="flex items-center gap-2">
-                <InboxWithBadge />
-                <span>Inbox</span>
               </div>
             </Link>
           </NavigationMenuItem>
@@ -215,28 +193,6 @@ export function AppHeaderNavMenu(props: AppHeaderNavMenuProps) {
                     <span className="bg-ai-assistant-gradient bg-clip-text text-transparent">
                       AI Assistant
                     </span>
-                  </div>
-                </Link>
-              </NavigationMenuItem>
-            ) : null}
-            {featureFlags.inbox.enabled ? (
-              <NavigationMenuItem>
-                <Link
-                  href={getInboxPageRoute()}
-                  onClick={handleClickItem}
-                  data-active={
-                    path.startsWith(getInboxPageRoute()) ? true : undefined
-                  }
-                  className={cn(
-                    navigationMenuTriggerStyle({
-                      className:
-                        "h-auto w-full justify-start py-4 font-semibold data-[active]:bg-surface-active data-[active]:hover:bg-surface-hover data-[active]:focus:bg-surface-hover",
-                    })
-                  )}
-                >
-                  <div className="flex items-center gap-2">
-                    <InboxWithBadge />
-                    <span>Inbox</span>
                   </div>
                 </Link>
               </NavigationMenuItem>
