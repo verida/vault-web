@@ -40,7 +40,7 @@ export function InboxRowItem(props: InboxRowItemProps) {
           <div className="flex shrink items-center gap-3 px-4">
             <span
               className={cn(
-                "size-2 rounded-full bg-accent",
+                "relative size-2 rounded-full bg-accent",
                 read ? "opacity-0" : "opacity-100"
               )}
             >
@@ -128,7 +128,7 @@ export function InboxRowItem(props: InboxRowItemProps) {
               </div>
               <span
                 className={cn(
-                  "size-2 rounded-full bg-accent",
+                  "relative size-2 rounded-full bg-accent",
                   read ? "opacity-0" : "opacity-100"
                 )}
               >
