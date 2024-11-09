@@ -3,7 +3,7 @@ import { Network } from "@verida/types"
 
 import { commonConfig } from "@/config/common"
 import { Logger } from "@/features/telemetry/logger"
-import { getVeridaProfile } from "@/features/verida-profile/utils"
+import { getVeridaProfileFromClient } from "@/features/verida-profile/utils"
 import { VERIDA_VAULT_CONTEXT_NAME } from "@/features/verida/constants"
 
 const logger = Logger.create("verida-profile")
@@ -28,14 +28,14 @@ export function useVeridaProfile({
         // Should not happen as the hook is disabled if !did
         throw new Error("DID is required")
       }
-      return getVeridaProfile({
+
+      // TODO: Use getVeridaProfile instead once the backend is stable.
+      // Lots of calls returning errors and no profile right now.
+      return getVeridaProfileFromClient({
         did,
         network,
         contextName,
-        apiOptions: {
-          ignoreCache: true,
-        },
-        clientOptions: {
+        options: {
           rpcUrl: commonConfig.VERIDA_RPC_URL,
         },
       })
