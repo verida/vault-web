@@ -90,11 +90,6 @@ export function DataConnectionDetails(props: DataConnectionDetailsProps) {
             </div>
           </div>
           <div className="flex shrink-0 flex-col gap-3 md:flex-row">
-            <DisconnectDataConnectionDialog connection={connection}>
-              <DisconnectDataConnectionDialogTrigger asChild>
-                <Button variant="outline-destructive">Disconnect</Button>
-              </DisconnectDataConnectionDialogTrigger>
-            </DisconnectDataConnectionDialog>
             <Button
               variant="outline"
               onClick={handleSyncClick}
@@ -104,6 +99,11 @@ export function DataConnectionDetails(props: DataConnectionDetailsProps) {
                 ? "Syncing..."
                 : "Sync"}
             </Button>
+            <DisconnectDataConnectionDialog connection={connection}>
+              <DisconnectDataConnectionDialogTrigger asChild>
+                <Button variant="outline-destructive">Disconnect</Button>
+              </DisconnectDataConnectionDialogTrigger>
+            </DisconnectDataConnectionDialog>
           </div>
         </Card>
         <div className="flex flex-col justify-between gap-6 px-4 py-4 md:flex-row md:items-center md:px-6">
