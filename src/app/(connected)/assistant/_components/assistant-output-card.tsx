@@ -1,6 +1,6 @@
 "use client"
 
-import { formatDuration, intlFormat } from "date-fns"
+import { intlFormat } from "date-fns"
 import { useMemo } from "react"
 
 import { AssistantOutputCardMenu } from "@/app/(connected)/assistant/_components/assistant-output-card-menu"
@@ -40,21 +40,25 @@ export function AssistantOutputCard(props: AssistantOutputCardProps) {
     const milliseconds = assistantOutput.processingTime
     const minutes = Math.floor(milliseconds / 60000)
     const seconds = Math.floor((milliseconds % 60000) / 1000)
+    const remainingMs = milliseconds % 1000
 
-    const formattedValue = formatDuration(
-      {
-        minutes,
-        seconds,
-      },
-      { format: ["minutes", "seconds"] }
-    )
+    // If less than a second, show milliseconds
+    if (minutes === 0 && seconds === 0) {
+      return `${remainingMs}ms`
+    }
 
-    return `Processed in ${formattedValue}`
+    // If less than a minute, show seconds
+    if (minutes === 0) {
+      return `${seconds}s`
+    }
+
+    // If more than a minute, show minutes and seconds
+    return `${minutes}min ${seconds}s`
   }, [assistantOutput?.processingTime])
 
   const dataInfo = useMemo(() => {
     if (!assistantOutput?.databases || assistantOutput.databases.length === 0) {
-      return ""
+      return undefined
     }
 
     const databaseNames = assistantOutput.databases.map((dbId) => {
@@ -62,9 +66,11 @@ export function AssistantOutputCard(props: AssistantOutputCardProps) {
       return dbDef ? dbDef.titlePlural : dbId
     })
 
-    const formattedValue = databaseNames.join(", ")
+    if (databaseNames.length === 0) {
+      return undefined
+    }
 
-    return `Used ${formattedValue}`
+    return databaseNames.join(", ")
   }, [assistantOutput?.databases])
 
   const displayFooterInfo = useMemo(
@@ -132,12 +138,13 @@ export function AssistantOutputCard(props: AssistantOutputCardProps) {
             <div className="flex flex-col gap-0">
               {processingTimeInfo ? (
                 <Typography variant="base-s-regular">
-                  {processingTimeInfo}
+                  {`Processed in ${processingTimeInfo}`}
                 </Typography>
               ) : null}
               {dataInfo ? (
-                <Typography variant="base-s-regular" className="">
-                  {dataInfo}
+                <Typography variant="base-s-regular">
+                  {`Used `}
+                  <span className="lowercase">{dataInfo}</span>
                 </Typography>
               ) : null}
             </div>

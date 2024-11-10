@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query"
 
 import { DataConnectionsQueryKeys } from "@/features/data-connections/queries"
 import { disconnectDataConnection } from "@/features/data-connections/utils"
-import { useVerida } from "@/features/verida/use-verida"
+import { useVerida } from "@/features/verida/hooks/use-verida"
 import { wait } from "@/utils/misc"
 
 type DisconnectDataConnectionVariables = {

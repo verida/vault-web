@@ -51,11 +51,11 @@ export function SyncAllConnectionsButton(props: SyncAllConnectionsButtonProps) {
     return (
       <Button
         variant="outline"
-        className={cn("h-12 w-12 p-0 sm:w-auto sm:px-4 sm:py-2", className)}
+        className={cn("h-12 w-12 p-0 sm:w-auto sm:px-6 sm:py-2", className)}
         disabled={isSyncing || disabled}
         onClick={handleClick}
       >
-        <RefreshIcon className="h-5 w-5 sm:hidden" />
+        <RefreshIcon className="size-5 sm:hidden" />
         <span className="sr-only sm:not-sr-only">Sync All</span>
       </Button>
     )

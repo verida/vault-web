@@ -2,7 +2,7 @@
 
 import { redirect, usePathname, useSearchParams } from "next/navigation"
 
-import { useVerida } from "@/features/verida/use-verida"
+import { useVerida } from "@/features/verida/hooks/use-verida"
 
 export type AppConnectionHandlerProps = {
   children: React.ReactNode

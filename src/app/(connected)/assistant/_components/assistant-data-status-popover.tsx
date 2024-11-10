@@ -49,19 +49,27 @@ export function AssistantDataStatusPopover(
         collisionPadding={8}
         className="w-[calc(100vw-1rem)] max-w-sm"
       >
-        <div className="flex flex-col gap-2">
-          <div className="flex flex-row items-center justify-between gap-2 text-muted-foreground">
-            <Typography variant="base-s-regular">Connections</Typography>
-            <Typography variant="base-s-regular">Status</Typography>
+        {connections && connections.length > 0 ? (
+          <div className="flex flex-col gap-2">
+            <div className="flex flex-row items-center justify-between gap-2 text-muted-foreground">
+              <Typography variant="base-s-regular">Connections</Typography>
+              <Typography variant="base-s-regular">Status</Typography>
+            </div>
+            <ul className="flex flex-col gap-2">
+              {connections.map((connection) => (
+                <li key={connection._id}>
+                  <AssistantDataStatusPopoverItem connection={connection} />
+                </li>
+              ))}
+            </ul>
           </div>
-          <ul className="flex flex-col gap-2">
-            {connections?.map((connection) => (
-              <li key={connection._id}>
-                <AssistantDataStatusPopoverItem connection={connection} />
-              </li>
-            ))}
-          </ul>
-        </div>
+        ) : (
+          <div className="text-muted-foreground">
+            <Typography variant="base-regular">
+              No data connections available
+            </Typography>
+          </div>
+        )}
       </PopoverContent>
     </Popover>
   )

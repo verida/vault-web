@@ -9,7 +9,6 @@ import { Close as CloseIcon } from "@/components/icons/close"
 import { Connection } from "@/components/icons/connection"
 import { Data } from "@/components/icons/data"
 import { Hamburger as MenuIcon } from "@/components/icons/hamburger"
-import { InboxWithBadge } from "@/components/icons/inbox-with-badge"
 import { Button } from "@/components/ui/button"
 import {
   NavigationMenu,
@@ -29,7 +28,6 @@ import {
   getConnectionsPageRoute,
   getConnectionsSummaryPageRoute,
   getDataPageRoute,
-  getInboxPageRoute,
 } from "@/features/routes/utils"
 import { cn } from "@/styles/utils"
 
@@ -68,29 +66,9 @@ export function AppHeaderNavBar(props: AppHeaderNavBarProps) {
             >
               <div className="flex items-center gap-2">
                 <AiAssistantIcon className="text-ai-assistant-gradient" />
-                <span className="bg-ai-assistant-gradient bg-clip-text text-transparent">
+                <span className="sr-only bg-ai-assistant-gradient bg-clip-text text-transparent lg:not-sr-only">
                   AI Assistant
                 </span>
-              </div>
-            </Link>
-          </NavigationMenuItem>
-        ) : null}
-        {featureFlags.inbox.enabled ? (
-          <NavigationMenuItem>
-            <Link
-              href={getInboxPageRoute()}
-              data-active={
-                path.startsWith(getInboxPageRoute()) ? true : undefined
-              }
-              className={cn(
-                navigationMenuTriggerStyle({
-                  className: "h-full rounded-none border-b-2 font-semibold",
-                })
-              )}
-            >
-              <div className="flex items-center gap-2">
-                <InboxWithBadge />
-                <span>Inbox</span>
               </div>
             </Link>
           </NavigationMenuItem>
@@ -110,7 +88,7 @@ export function AppHeaderNavBar(props: AppHeaderNavBarProps) {
             >
               <div className="flex items-center gap-2">
                 <Data />
-                <span>Data</span>
+                <span className="sr-only lg:not-sr-only">Data</span>
               </div>
             </Link>
           </NavigationMenuItem>
@@ -130,7 +108,7 @@ export function AppHeaderNavBar(props: AppHeaderNavBarProps) {
             >
               <div className="flex items-center gap-2">
                 <Connection />
-                <span>Connections</span>
+                <span className="sr-only lg:not-sr-only">Connections</span>
               </div>
             </Link>
           </NavigationMenuItem>
@@ -215,28 +193,6 @@ export function AppHeaderNavMenu(props: AppHeaderNavMenuProps) {
                     <span className="bg-ai-assistant-gradient bg-clip-text text-transparent">
                       AI Assistant
                     </span>
-                  </div>
-                </Link>
-              </NavigationMenuItem>
-            ) : null}
-            {featureFlags.inbox.enabled ? (
-              <NavigationMenuItem>
-                <Link
-                  href={getInboxPageRoute()}
-                  onClick={handleClickItem}
-                  data-active={
-                    path.startsWith(getInboxPageRoute()) ? true : undefined
-                  }
-                  className={cn(
-                    navigationMenuTriggerStyle({
-                      className:
-                        "h-auto w-full justify-start py-4 font-semibold data-[active]:bg-surface-active data-[active]:hover:bg-surface-hover data-[active]:focus:bg-surface-hover",
-                    })
-                  )}
-                >
-                  <div className="flex items-center gap-2">
-                    <InboxWithBadge />
-                    <span>Inbox</span>
                   </div>
                 </Link>
               </NavigationMenuItem>

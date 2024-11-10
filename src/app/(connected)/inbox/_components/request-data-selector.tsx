@@ -19,7 +19,7 @@ import {
   DrawerTitle,
 } from "@/components/ui/drawer"
 import { Logger } from "@/features/telemetry"
-import { useVerida } from "@/features/verida/use-verida"
+import { useVerida } from "@/features/verida/hooks/use-verida"
 import { SHORT_DATE_TIME_FORMAT_OPTIONS } from "@/utils/date"
 
 const logger = Logger.create("inbox")

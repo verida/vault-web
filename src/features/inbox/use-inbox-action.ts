@@ -4,7 +4,7 @@ import { useCallback, useState } from "react"
 import { InboxEntry, InboxType } from "@/features/inbox/types"
 import { useInboxContext } from "@/features/inbox/use-inbox-context"
 import { Logger } from "@/features/telemetry"
-import { useVerida } from "@/features/verida/use-verida"
+import { useVerida } from "@/features/verida/hooks/use-verida"
 
 const logger = Logger.create("inbox")
 

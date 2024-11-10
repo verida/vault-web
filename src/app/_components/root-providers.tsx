@@ -7,7 +7,7 @@ import { TooltipProvider } from "@/components/ui/tooltip"
 import { DataConnectionsBroadcastProvider } from "@/features/data-connections/components/data-connections-broadcast-provider"
 import { QueriesProvider } from "@/features/queries/queries-provider"
 import { ThemesProvider } from "@/features/themes/themes-provider"
-import { VeridaProvider } from "@/features/verida/verida-context"
+import { VeridaProvider } from "@/features/verida/components/verida-provider"
 
 export type RootProvidersProps = {
   children: React.ReactNode

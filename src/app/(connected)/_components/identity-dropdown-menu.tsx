@@ -22,11 +22,12 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { featureFlags } from "@/config/features"
 import { version } from "@/config/version"
 import { APP_NAME } from "@/constants/app"
-import { EMPTY_PROFILE_NAME_FALLBACK } from "@/features/profiles/constants"
 import { getApiKeysPageRoute } from "@/features/routes/utils"
 import { useUserFeedback } from "@/features/telemetry/use-user-feedback"
 import { useToast } from "@/features/toasts/use-toast"
-import { useVerida } from "@/features/verida/use-verida"
+import { EMPTY_PROFILE_NAME_FALLBACK } from "@/features/verida-profile/constants"
+import { useUserProfile } from "@/features/verida-profile/hooks/use-user-profile"
+import { useVerida } from "@/features/verida/hooks/use-verida"
 import { cn } from "@/styles/utils"
 
 export type IdentityDropdownMenuProps = Pick<
@@ -38,7 +39,9 @@ export function IdentityDropdownMenu(props: IdentityDropdownMenuProps) {
   const { className } = props
 
   const router = useRouter()
-  const { isConnected, did, profile, disconnect } = useVerida()
+
+  const { isConnected, did, disconnect } = useVerida()
+  const { profile } = useUserProfile()
 
   const { openForm: openUserFeedbackForm, isReady: isUserFeedbackReady } =
     useUserFeedback()
@@ -75,7 +78,7 @@ export function IdentityDropdownMenu(props: IdentityDropdownMenuProps) {
                 <Avatar className="size-8">
                   <AvatarImage alt="User Avatar" src={profile.avatar?.uri} />
                   <AvatarFallback>
-                    {profile.name?.at(0)?.toUpperCase()}
+                    {profile.name?.at(0)?.toUpperCase() || "-"}
                   </AvatarFallback>
                 </Avatar>
                 <p
@@ -107,7 +110,7 @@ export function IdentityDropdownMenu(props: IdentityDropdownMenuProps) {
               <Avatar className="size-12">
                 <AvatarImage alt="User Avatar" src={profile.avatar?.uri} />
                 <AvatarFallback>
-                  {profile.name.at(0)?.toUpperCase()}
+                  {profile.name?.at(0)?.toUpperCase() || "-"}
                 </AvatarFallback>
               </Avatar>
             ) : (

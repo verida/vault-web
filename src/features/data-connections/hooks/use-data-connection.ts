@@ -6,7 +6,9 @@ import { getDataConnectionLatestSyncEnd } from "@/features/data-connections/util
 export function useDataConnection(connectionName: string) {
   const {
     connections,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     isAnySyncing, // destructure to remove it from query
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     latestSync: latestConnectionsSync, // destructure to remove it from query
     ...query
   } = useDataConnections()

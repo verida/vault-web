@@ -81,7 +81,16 @@ export function QueriesProvider(props: QueriesProviderProps) {
         persister: localStoragePersister,
         dehydrateOptions: {
           shouldDehydrateQuery(query) {
-            return query.meta?.persist ? true : false
+            // Only persist queries that explicitly opt-in
+            if (!query.meta?.persist) {
+              return false
+            }
+            // If data is stale, don't dehydrate it so it will trigger a fresh fetch
+            if (query.isStale()) {
+              return false
+            }
+
+            return true
           },
         },
       }}

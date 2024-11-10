@@ -63,7 +63,7 @@ export function AssistantUserInput(props: AssistantUserInputProps) {
         <CardContent className="p-0">
           <Textarea
             ref={inputRef}
-            placeholder="Type your question here"
+            placeholder="Ask your assistant"
             value={userInput?.prompt ?? ""}
             onChange={handleUserPromptChange}
             onKeyDown={handleKeyDown}

@@ -1,3 +1,5 @@
+"use client"
+
 import Image from "next/image"
 import Link from "next/link"
 
@@ -7,6 +9,8 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Card } from "@/components/ui/card"
 import { INBOX_TYPE_DEFS } from "@/features/inbox/constants"
 import { InboxEntry } from "@/features/inbox/types"
+import { EMPTY_PROFILE_NAME_FALLBACK } from "@/features/verida-profile/constants"
+import { useVeridaProfile } from "@/features/verida-profile/hooks/use-verida-profile"
 import { cn } from "@/styles/utils"
 import { formatDate } from "@/utils/misc"
 
@@ -17,7 +21,15 @@ export type InboxRowItemProps = {
 
 export function InboxRowItem(props: InboxRowItemProps) {
   const { message, href } = props
-  const { message: title, read, sentAt, sentBy, type, data } = message
+
+  const { message: title, read, sentAt, type, data } = message
+  const { did, context } = message.sentBy
+
+  const { profile: senderProfile } = useVeridaProfile({
+    did,
+    contextName: context,
+  })
+
   const InboxTypeIcon = INBOX_TYPE_DEFS[type].icon
 
   return (
@@ -28,7 +40,7 @@ export function InboxRowItem(props: InboxRowItemProps) {
           <div className="flex shrink items-center gap-3 px-4">
             <span
               className={cn(
-                "size-2 rounded-full bg-accent",
+                "relative size-2 rounded-full bg-accent",
                 read ? "opacity-0" : "opacity-100"
               )}
             >
@@ -38,10 +50,10 @@ export function InboxRowItem(props: InboxRowItemProps) {
             </span>
             <div className="relative">
               <Avatar>
-                {sentBy.avatar?.uri && (
-                  <AvatarImage src={sentBy.avatar?.uri} asChild>
+                {senderProfile?.avatar?.uri && (
+                  <AvatarImage src={senderProfile.avatar.uri} asChild>
                     <Image
-                      src={sentBy.avatar?.uri}
+                      src={senderProfile.avatar.uri}
                       width={48}
                       height={48}
                       alt=""
@@ -51,7 +63,9 @@ export function InboxRowItem(props: InboxRowItemProps) {
                 <AvatarFallback>{"U"}</AvatarFallback>
               </Avatar>
             </div>
-            <Typography variant="base-semibold">{sentBy.name}</Typography>
+            <Typography variant="base-semibold">
+              {senderProfile?.name || EMPTY_PROFILE_NAME_FALLBACK}
+            </Typography>
           </div>
           <div className="flex shrink items-center gap-4 px-4">
             <div className="flex items-center gap-2">
@@ -82,10 +96,10 @@ export function InboxRowItem(props: InboxRowItemProps) {
         <div className="flex w-full items-start space-x-3 p-4 md:hidden">
           <div className="relative">
             <Avatar>
-              {sentBy.avatar?.uri && (
-                <AvatarImage src={sentBy.avatar?.uri} asChild>
+              {senderProfile?.avatar?.uri && (
+                <AvatarImage src={senderProfile.avatar.uri} asChild>
                   <Image
-                    src={sentBy.avatar?.uri}
+                    src={senderProfile.avatar.uri}
                     width={48}
                     height={48}
                     alt=""
@@ -97,7 +111,9 @@ export function InboxRowItem(props: InboxRowItemProps) {
           </div>
           <div className="flex-grow space-y-[6px]">
             <div className="flex items-center justify-between">
-              <Typography variant="heading-5">{sentBy.name}</Typography>
+              <Typography variant="heading-5">
+                {senderProfile?.name || EMPTY_PROFILE_NAME_FALLBACK}
+              </Typography>
               <Typography variant="base-s-regular">
                 {formatDate(sentAt)}
               </Typography>
@@ -112,7 +128,7 @@ export function InboxRowItem(props: InboxRowItemProps) {
               </div>
               <span
                 className={cn(
-                  "size-2 rounded-full bg-accent",
+                  "relative size-2 rounded-full bg-accent",
                   read ? "opacity-0" : "opacity-100"
                 )}
               >

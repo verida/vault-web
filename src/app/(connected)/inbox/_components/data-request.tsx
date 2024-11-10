@@ -36,6 +36,8 @@ import {
 import { InboxType } from "@/features/inbox/types"
 import { useInboxAction } from "@/features/inbox/use-inbox-action"
 import { Logger } from "@/features/telemetry"
+import { EMPTY_PROFILE_NAME_FALLBACK } from "@/features/verida-profile/constants"
+import { useVeridaProfile } from "@/features/verida-profile/hooks/use-verida-profile"
 
 const logger = Logger.create("inbox")
 
@@ -44,8 +46,13 @@ const logger = Logger.create("inbox")
 
 export function DataRequestDetails(props: InboxDetailsProps) {
   const { message, onClose } = props
-  const { message: title, data, type, sentBy } = message
+  const { message: title, data, type } = message
   const { fallbackAction, requestSchema, filter } = data
+
+  const { profile } = useVeridaProfile({
+    did: message.sentBy.did,
+    contextName: message.sentBy.context,
+  })
 
   const [requestSchemaData, setRequestSchemaData] = useState<any>({})
   const [isSelecting, setIsSelecting] = useState<boolean>(false)
@@ -158,7 +165,7 @@ export function DataRequestDetails(props: InboxDetailsProps) {
               </span>{" "}
               to{" "}
               <span className="font-semibold text-foreground">
-                {sentBy.name}
+                {profile?.name || EMPTY_PROFILE_NAME_FALLBACK}
               </span>
             </SuccessBlockDescription>
           </SuccessBlock>

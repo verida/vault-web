@@ -6,7 +6,7 @@ import {
   VeridaDatabaseQueryOptions,
 } from "@/features/verida-database/types"
 import { fetchVeridaDataRecords } from "@/features/verida-database/utils"
-import { useVerida } from "@/features/verida/use-verida"
+import { useVerida } from "@/features/verida/hooks/use-verida"
 
 type UseVeridaDataRecordsArgs<T = Record<string, unknown>> = {
   databaseName: string
