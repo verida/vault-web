@@ -46,7 +46,7 @@ export function DataDestroyDatabaseDialog(
         onSuccess: () => {
           toast({
             variant: "success",
-            description: "Data item successfully deleted",
+            description: "All data items successfully deleted",
           })
           setOpen(false)
         },
@@ -54,7 +54,7 @@ export function DataDestroyDatabaseDialog(
           setStatus("error")
           toast({
             variant: "error",
-            description: "Something went wrong while deleting the data item",
+            description: "Something went wrong while deleting all data items",
           })
           setOpen(false)
         },
