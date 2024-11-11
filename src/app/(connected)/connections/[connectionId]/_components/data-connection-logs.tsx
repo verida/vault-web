@@ -55,6 +55,7 @@ export function DataConnectionLogs(props: DataConnectionLogsProps) {
     logs,
     pagination: logsPaginationInfo,
     isLoading,
+    isFetching,
     isError,
   } = useDataConnectionLogs({
     providerId: connection.providerId,
@@ -96,6 +97,7 @@ export function DataConnectionLogs(props: DataConnectionLogsProps) {
       className={className}
       paginationSizes={PAGINATION_SIZES}
       isLoading={isLoading}
+      isRefreshing={isFetching}
       isError={isError}
       loadingTitle="Loading connections logs..."
       loadingDescription="Please wait while we load the connections logs."

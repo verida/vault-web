@@ -14,7 +14,7 @@ export const VeridaBaseRecordSchema = z
   .passthrough()
 
 // TODO: Instead, create a function taking a schema as argument and then build the API response schema with it
-export const VeridaDatabaseQueryApiResponseSchema = z.object({
+export const VeridaDatabaseQueryApiV1ResponseSchema = z.object({
   items: z.array(VeridaBaseRecordSchema),
   limit: z.number().optional(),
   skip: z.number().optional(),
@@ -22,6 +22,12 @@ export const VeridaDatabaseQueryApiResponseSchema = z.object({
 })
 
 // TODO: Instead, create a function taking a schema as argument and then build the API response schema with it
-export const VeridaDatabaseGetRecordApiResponseSchema = z.object({
+export const VeridaDatabaseGetRecordApiV1ResponseSchema = z.object({
   item: VeridaBaseRecordSchema,
 })
+
+export const VeridaDatabaseDeleteApiV1ResponseSchema = z
+  .object({
+    success: z.boolean(),
+  })
+  .passthrough()

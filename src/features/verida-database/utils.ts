@@ -1,12 +1,14 @@
 import { commonConfig } from "@/config/common"
+import { DATABASE_DEFS } from "@/features/data/constants"
 import { Logger } from "@/features/telemetry"
 import {
-  VeridaDatabaseGetRecordApiResponseSchema,
-  VeridaDatabaseQueryApiResponseSchema,
+  VeridaDatabaseDeleteApiV1ResponseSchema,
+  VeridaDatabaseGetRecordApiV1ResponseSchema,
+  VeridaDatabaseQueryApiV1ResponseSchema,
 } from "@/features/verida-database/schemas"
 import {
-  FetchVeridaDataRecordsArgs,
   FetchVeridaDataRecordsResult,
+  VeridaDatabaseQueryFilter,
   VeridaDatabaseQueryOptions,
   VeridaRecord,
 } from "@/features/verida-database/types"
@@ -16,6 +18,13 @@ const logger = Logger.create("verida-database")
 const defaultVeridaDataRecordsQueryOptions: VeridaDatabaseQueryOptions = {
   skip: 0,
   limit: 10,
+}
+
+export type FetchVeridaDataRecordsArgs<T = Record<string, unknown>> = {
+  sessionToken: string
+  databaseName: string
+  filter?: VeridaDatabaseQueryFilter<T>
+  options?: VeridaDatabaseQueryOptions<T>
 }
 
 /**
@@ -71,7 +80,7 @@ export async function fetchVeridaDataRecords<T = Record<string, unknown>>({
     const data = await response.json()
 
     // Validate the response data against the VeridaBaseRecordSchema
-    const validatedData = VeridaDatabaseQueryApiResponseSchema.parse(data)
+    const validatedData = VeridaDatabaseQueryApiV1ResponseSchema.parse(data)
 
     logger.info("Successfully fetched Verida data records", {
       databaseName,
@@ -146,7 +155,7 @@ export async function fetchVeridaDataRecord<T = Record<string, unknown>>({
     const data = await response.json()
 
     // Validate the response data against the VeridaDatabaseGetRecordApiResponseSchema
-    const validatedData = VeridaDatabaseGetRecordApiResponseSchema.parse(data)
+    const validatedData = VeridaDatabaseGetRecordApiV1ResponseSchema.parse(data)
 
     // FIXME: This is a temporary fix to ensure the data is returned as VeridaRecord<T>
     // We need to find a better way to type the data coming from the database.
@@ -165,5 +174,126 @@ export async function fetchVeridaDataRecord<T = Record<string, unknown>>({
     throw new Error("Error fetching single Verida data record", {
       cause: error,
     })
+  }
+}
+
+export type DestroyVeridaDatabaseArgs = {
+  sessionToken: string
+  databaseName: string
+}
+
+/**
+ * Destroys a Verida database.
+ *
+ * @param params - The parameters for destroying the database.
+ * @param params.sessionToken - The session token for authentication.
+ * @param params.databaseName - The name of the database to destroy.
+ */
+export async function destroyVeridaDatabase({
+  sessionToken,
+  databaseName,
+}: DestroyVeridaDatabaseArgs) {
+  await performVeridaDeleteOperation({ sessionToken, databaseName })
+}
+
+export type DeleteVeridaDataRecordArgs = {
+  sessionToken: string
+  databaseName: string
+  recordId: string
+}
+
+/**
+ * Deletes a single Verida data record from the specified database.
+ *
+ * @param params - The parameters for deleting the record.
+ * @param params.sessionToken - The session token for authentication.
+ * @param params.databaseName - The name of the database containing the record.
+ * @param params.recordId - The ID of the record to delete.
+ */
+export async function deleteVeridaDataRecord({
+  sessionToken,
+  databaseName,
+  recordId,
+}: DeleteVeridaDataRecordArgs) {
+  await performVeridaDeleteOperation({ sessionToken, databaseName, recordId })
+}
+
+type VeridaDeleteOperationArgs = {
+  sessionToken: string
+  databaseName: string
+  recordId?: string
+}
+
+/**
+ * Performs a delete operation on a Verida database or a single record.
+ *
+ * @param params - The parameters for the delete operation.
+ * @param params.sessionToken - The session token for authentication.
+ * @param params.databaseName - The name of the database.
+ * @param params.recordId - The ID of the record to delete (optional).
+ * @throws If the API configuration is incorrect, the database definition is not found, or the API operation fails.
+ */
+async function performVeridaDeleteOperation({
+  sessionToken,
+  databaseName,
+  recordId,
+}: VeridaDeleteOperationArgs) {
+  if (!commonConfig.PRIVATE_DATA_API_BASE_URL) {
+    logger.warn(
+      "Cannot perform Verida delete operation due to incorrect API configuration"
+    )
+    throw new Error("Incorrect Private Data API configuration")
+  }
+
+  const operationType = recordId ? "record" : "database"
+  logger.info(`Deleting Verida ${operationType}`, {
+    databaseName,
+    ...(recordId && { recordId }),
+  })
+
+  try {
+    const databaseDef = DATABASE_DEFS.find(
+      (def) => def.databaseVaultName === databaseName
+    )
+    if (!databaseDef) {
+      throw new Error(`Database definition not found for ${databaseName}`)
+    }
+
+    const schemaUrlBase64 = Buffer.from(
+      databaseDef.schemaUrlLatest,
+      "utf8"
+    ).toString("base64")
+
+    const url = new URL(
+      `/api/rest/v1/ds/${schemaUrlBase64}${recordId ? `/${recordId}` : ""}`,
+      commonConfig.PRIVATE_DATA_API_BASE_URL
+    )
+    url.searchParams.set("destroy", recordId ? "false" : "true")
+
+    const response = await fetch(url, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        "X-API-Key": sessionToken,
+      },
+    })
+
+    if (!response.ok) {
+      throw new Error(`HTTP error ${response.status}`)
+    }
+
+    const data = await response.json()
+    const validatedData = VeridaDatabaseDeleteApiV1ResponseSchema.parse(data)
+
+    if (!validatedData.success) {
+      throw new Error("API returned unsuccessful operation")
+    }
+
+    logger.info(`Successfully deleted Verida ${operationType}`, {
+      databaseName,
+      ...(recordId && { recordId }),
+    })
+  } catch (error) {
+    throw new Error(`Error deleting Verida ${operationType}`, { cause: error })
   }
 }

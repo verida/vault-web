@@ -1,32 +1,57 @@
+"use client"
+
+import { useLayoutEffect, useRef, useState } from "react"
+
+import { cn } from "@/styles/utils"
+
 export type SpinnerProps = {
-  width?: number
-  height?: number
-}
+  spinnerClassName?: React.ComponentProps<"div">["className"]
+} & React.ComponentProps<"div">
 
 export function Spinner(props: SpinnerProps) {
-  const { width = 80, height = 80 } = props
+  const { className, spinnerClassName, ...divProps } = props
+
+  const svgRef = useRef<SVGSVGElement>(null)
+  const [svgSize, setSvgSize] = useState(80)
+
+  useLayoutEffect(() => {
+    if (svgRef.current) {
+      const { width, height } = svgRef.current.getBoundingClientRect()
+      setSvgSize(Math.max(width, height))
+    }
+  }, [spinnerClassName])
 
   return (
-    <>
+    <div className={className} {...divProps}>
       <div
-        className="h-20 w-20 animate-spin rounded-full bg-gradient-conic"
+        className={cn(
+          "size-20 animate-spin rounded-full bg-gradient-conic",
+          spinnerClassName,
+          "relative"
+        )}
         style={{
-          width,
-          height,
-          mask: "url(#mask) no-repeat center",
-          WebkitMask: "url(#mask) no-repeat center",
+          mask: "url(#spinner-mask) no-repeat center",
+          WebkitMask: "url(#spinner-mask) no-repeat center",
           WebkitMaskSize: "100%",
           maskSize: "100%",
         }}
-      ></div>
-      <svg width="0" height="0">
-        <defs>
-          <mask id="mask" x="0" y="0" width="1" height="1">
-            <rect x="0" y="0" width="80" height="80" fill="white" />
-            <circle cx="40" cy="40" r="30" fill="black" />
-          </mask>
-        </defs>
-      </svg>
-    </>
+      >
+        <svg
+          ref={svgRef}
+          width="0"
+          height="0"
+          viewBox={`0 0 ${svgSize} ${svgSize}`}
+          className={cn("size-20", spinnerClassName, "absolute inset-0")}
+        >
+          <defs>
+            <mask id="spinner-mask" x="0" y="0" width="1" height="1">
+              <rect x="0" y="0" width="100%" height="100%" fill="white" />
+              <circle cx="50%" cy="50%" r="37.5%" fill="black" />
+            </mask>
+          </defs>
+        </svg>
+      </div>
+    </div>
   )
 }
+Spinner.displayName = "Spinner"
