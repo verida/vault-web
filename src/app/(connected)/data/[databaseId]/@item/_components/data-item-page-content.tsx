@@ -40,7 +40,7 @@ import {
 } from "@/components/ui/tooltip"
 import { featureFlags } from "@/config/features"
 import { DatabaseDefinition } from "@/features/data/types"
-import { useVeridaDataRecord } from "@/features/verida-database/use-verida-data-record"
+import { useVeridaDataRecord } from "@/features/verida-database/hooks/use-verida-data-record"
 
 export type DataItemPageContentProps = {
   open: boolean

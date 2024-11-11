@@ -1,11 +1,11 @@
 import { DATA_CONNECTIONS_SYNC_LOGS_DATABASE_NAME } from "@/features/data-connections/constants"
 import { DataConnectionSyncLog } from "@/features/data-connections/types"
+import { useVeridaDataRecords } from "@/features/verida-database/hooks/use-verida-data-records"
 import {
   VeridaDatabaseQueryFilter,
   VeridaDatabaseQueryOptions,
 } from "@/features/verida-database/types"
 import { VeridaRecord } from "@/features/verida-database/types"
-import { useVeridaDataRecords } from "@/features/verida-database/use-verida-data-records"
 
 type UseDataConnectionsLogsArgs = {
   filter?: VeridaDatabaseQueryFilter<VeridaRecord<DataConnectionSyncLog>>
