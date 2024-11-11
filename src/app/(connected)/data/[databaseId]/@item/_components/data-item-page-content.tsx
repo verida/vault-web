@@ -3,10 +3,15 @@
 import { useMemo } from "react"
 
 import {
+  DataDeleteRecordDialog,
+  DataDeleteRecordDialogTrigger,
+} from "@/app/(connected)/data/[databaseId]/@item/_components/data-delete-record-dialog"
+import {
   GenericDataItemPageBody,
   GenericDataItemPageFooter,
   GenericDataItemPageTitle,
 } from "@/app/(connected)/data/[databaseId]/@item/_components/generic-data-item-page"
+import { DeleteIcon } from "@/components/icons/delete-icon"
 import {
   ItemSheet,
   ItemSheetBody,
@@ -28,6 +33,12 @@ import {
   LoadingBlockTitle,
 } from "@/components/ui/loading"
 import { Skeleton } from "@/components/ui/skeleton"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
+import { featureFlags } from "@/config/features"
 import { DatabaseDefinition } from "@/features/data/types"
 import { useVeridaDataRecord } from "@/features/verida-database/use-verida-data-record"
 
@@ -118,7 +129,29 @@ export function DataItemPageContent(props: DataItemPageContentProps) {
 
   return (
     <ItemSheet open={open} onClose={onClose}>
-      <ItemSheetHeader onClose={onClose}>
+      <ItemSheetHeader
+        onClose={onClose}
+        right={
+          record && featureFlags.data.record.delete ? (
+            <Tooltip>
+              <DataDeleteRecordDialog
+                databaseDefinition={databaseDefinition}
+                recordId={itemId}
+              >
+                <DataDeleteRecordDialogTrigger asChild>
+                  <TooltipTrigger asChild>
+                    <Button variant="outline-destructive" size="icon">
+                      <DeleteIcon className="size-5 shrink-0" />
+                      <span className="sr-only">Delete</span>
+                    </Button>
+                  </TooltipTrigger>
+                </DataDeleteRecordDialogTrigger>
+              </DataDeleteRecordDialog>
+              <TooltipContent>Delete</TooltipContent>
+            </Tooltip>
+          ) : undefined
+        }
+      >
         <ItemSheetTitle description="Data item">{title}</ItemSheetTitle>
       </ItemSheetHeader>
       <ItemSheetBody>{body}</ItemSheetBody>
