@@ -14,7 +14,7 @@ export default function ConnectionsSummaryPage() {
   return (
     <PageWrapper
       pageTitle="Connections"
-      leftContent={
+      rightContent={
         <div className="flex flex-row items-center gap-2">
           <SyncAllConnectionsButton />
           <ConnectDataProviderDialog>
