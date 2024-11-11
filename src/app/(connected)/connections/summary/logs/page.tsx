@@ -33,6 +33,7 @@ export default function ConnectionsLogsPage() {
     logs,
     pagination: logsPaginationInfo,
     isLoading,
+    isFetching,
     isError,
   } = useDataConnectionsLogs({
     options: {
@@ -69,6 +70,7 @@ export default function ConnectionsLogsPage() {
         rowComponent={(row) => <DataConnectionLogsTableRow row={row} />}
         className="flex-1"
         isLoading={isLoading}
+        isRefreshing={isFetching}
         isError={isError}
         loadingTitle="Loading connections logs..."
         loadingDescription="Please wait while we load the connections logs."
