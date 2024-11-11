@@ -10,7 +10,6 @@ import { useState } from "react"
 import { dataConnectionLogsTableColumns } from "@/components/data-connections/logs-table/data-connection-logs-table-columns"
 import { DataConnectionLogsTableRow } from "@/components/data-connections/logs-table/data-connection-logs-table-row"
 import { DataTable } from "@/components/data-table/data-table"
-import { PageWrapper } from "@/components/page-wrapper"
 import { EMPTY_VALUE_FALLBACK } from "@/constants/misc"
 import { useDataConnectionsLogs } from "@/features/data-connections/hooks/use-data-connections-logs"
 import { DataConnectionSyncLog } from "@/features/data-connections/types"
@@ -64,22 +63,20 @@ export default function ConnectionsLogsPage() {
   })
 
   return (
-    <PageWrapper pageTitle="Connection Logs">
-      <DataTable
-        table={table}
-        rowComponent={(row) => <DataConnectionLogsTableRow row={row} />}
-        className="flex-1"
-        isLoading={isLoading}
-        isRefreshing={isFetching}
-        isError={isError}
-        loadingTitle="Loading connections logs..."
-        loadingDescription="Please wait while we load the connections logs."
-        errorTitle="Error"
-        errorDescription="There was an error getting the connections logs. Please try again later."
-        emptyStateTitle="No connections logs yet"
-        emptyStateDescription="There hasn't been any sync activities on your data connections yet."
-      />
-    </PageWrapper>
+    <DataTable
+      table={table}
+      rowComponent={(row) => <DataConnectionLogsTableRow row={row} />}
+      className="flex-1"
+      isLoading={isLoading}
+      isRefreshing={isFetching}
+      isError={isError}
+      loadingTitle="Loading connections logs..."
+      loadingDescription="Please wait while we load the connections logs."
+      errorTitle="Error"
+      errorDescription="There was an error getting the connections logs. Please try again later."
+      emptyStateTitle="No connections logs yet"
+      emptyStateDescription="There hasn't been any sync activities on your data connections yet."
+    />
   )
 }
 ConnectionsLogsPage.displayName = "ConnectionsLogsPage"

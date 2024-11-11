@@ -57,6 +57,10 @@ export const CommonConfigSchema = z.object({
     .string()
     .optional()
     .transform((value) => value === "true"),
+  FEATURE_FLAG_DATA_CONNECTIONS_LOGS_DESTROY_ENABLED: z
+    .string()
+    .optional()
+    .transform((value) => value === "true"),
   PRIVATE_DATA_API_BASE_URL: z.string().url().optional(), // Temporary solution until the endpoints are fetched from the DID Document
   isClient: z.boolean(),
   appVersion: z.string(),

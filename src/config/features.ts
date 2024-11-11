@@ -25,6 +25,7 @@ export const featureFlags = {
     enabled: commonConfig.FEATURE_FLAG_DATA_CONNECTIONS_ENABLED,
     logs: {
       enabled: commonConfig.FEATURE_FLAG_DATA_CONNECTIONS_LOGS_ENABLED,
+      destroy: commonConfig.FEATURE_FLAG_DATA_CONNECTIONS_LOGS_DESTROY_ENABLED,
     },
   },
 }
