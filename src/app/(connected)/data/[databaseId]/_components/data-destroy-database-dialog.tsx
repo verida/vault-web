@@ -1,6 +1,5 @@
 "use client"
 
-import { useRouter } from "next/navigation"
 import { useCallback, useState } from "react"
 
 import {
@@ -17,33 +16,31 @@ import {
 import { Button } from "@/components/ui/button"
 import { featureFlags } from "@/config/features"
 import { DatabaseDefinition } from "@/features/data/types"
-import { getDatabasePageRoute } from "@/features/routes/utils"
 import { useToast } from "@/features/toasts/use-toast"
-import { useVeridaDeleteRecord } from "@/features/verida-database/hooks/use-verida-delete-record"
+import { useVeridaDestroyDatabase } from "@/features/verida-database/hooks/use-verida-destroy-database"
 
-export type DataDeleteRecordDialogProps = {
+export type DataDestroyDatabaseDialogProps = {
   children: React.ReactNode
   databaseDefinition: DatabaseDefinition
-  recordId: string
 }
 
-export function DataDeleteRecordDialog(props: DataDeleteRecordDialogProps) {
-  const { children, databaseDefinition, recordId } = props
-
-  const router = useRouter()
+export function DataDestroyDatabaseDialog(
+  props: DataDestroyDatabaseDialogProps
+) {
+  const { children, databaseDefinition } = props
 
   const { toast } = useToast()
 
+  const [open, setOpen] = useState(false)
   const [status, setStatus] = useState<"idle" | "processing" | "error">("idle")
 
-  const { deleteRecord } = useVeridaDeleteRecord()
+  const { destroyDatabase } = useVeridaDestroyDatabase()
 
   const handleProcessClick = useCallback(() => {
     setStatus("processing")
-    deleteRecord(
+    destroyDatabase(
       {
         databaseName: databaseDefinition.databaseVaultName,
-        recordId,
       },
       {
         onSuccess: () => {
@@ -51,9 +48,7 @@ export function DataDeleteRecordDialog(props: DataDeleteRecordDialogProps) {
             variant: "success",
             description: "Data item successfully deleted",
           })
-          router.replace(
-            getDatabasePageRoute({ databaseId: databaseDefinition.id })
-          )
+          setOpen(false)
         },
         onError: () => {
           setStatus("error")
@@ -61,25 +56,26 @@ export function DataDeleteRecordDialog(props: DataDeleteRecordDialogProps) {
             variant: "error",
             description: "Something went wrong while deleting the data item",
           })
+          setOpen(false)
         },
       }
     )
-  }, [recordId, databaseDefinition, deleteRecord, router, toast])
+  }, [databaseDefinition, destroyDatabase, toast])
 
-  if (!featureFlags.data.record.delete) {
+  if (!featureFlags.data.db.destroy) {
     return null
   }
 
   return (
-    <AlertDialog>
-      {children}
+    <AlertDialog open={open} onOpenChange={setOpen}>
+      <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Delete Data Item</AlertDialogTitle>
+          <AlertDialogTitle>Delete All Data</AlertDialogTitle>
         </AlertDialogHeader>
         <AlertDialogBody>
           <AlertDialogDescription>
-            Are you sure you want to delete this data item?
+            Are you sure you want to delete all data items of this type?
           </AlertDialogDescription>
         </AlertDialogBody>
         <AlertDialogFooter>
@@ -96,6 +92,4 @@ export function DataDeleteRecordDialog(props: DataDeleteRecordDialogProps) {
     </AlertDialog>
   )
 }
-DataDeleteRecordDialog.displayName = "DataDeleteRecordDialog"
-
-export const DataDeleteRecordDialogTrigger = AlertDialogTrigger
+DataDestroyDatabaseDialog.displayName = "DataDestroyDatabaseDialog"

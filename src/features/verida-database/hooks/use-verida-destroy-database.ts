@@ -8,14 +8,14 @@ type DestroyDatabaseVariables = {
   databaseName: string
 }
 
-export function useVeridaDeleteRecord() {
+export function useVeridaDestroyDatabase() {
   const { getAccountSessionToken } = useVerida()
   const queryClient = useQueryClient()
 
   const { mutate, mutateAsync, ...mutation } = useMutation({
     mutationFn: async ({ databaseName }: DestroyDatabaseVariables) => {
       const sessionToken = await getAccountSessionToken()
-      return destroyVeridaDatabase({ databaseId: databaseName, sessionToken })
+      return destroyVeridaDatabase({ databaseName, sessionToken })
     },
     onSuccess: (_data, variables) => {
       queryClient.invalidateQueries({
