@@ -29,5 +29,10 @@ export const VeridaDatabaseQueryKeys = {
     did: string | null
     databaseName: string
     recordId: string
-  }) => ["data", "records", databaseName, did, recordId],
+  }) => ["data", "record", databaseName, did, recordId],
+  invalidateDataRecord: ({ databaseName }: { databaseName: string }) => [
+    "data",
+    "record",
+    databaseName,
+  ],
 }
