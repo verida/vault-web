@@ -27,7 +27,6 @@ export type AssistantOutput = {
   processedAt: Date
   processingTime?: number
   databases?: string[]
-  keywords?: string[]
 }
 
 export type PrivateDataApiV1LLMPersonalResponse = z.infer<

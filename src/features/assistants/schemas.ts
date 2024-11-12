@@ -10,11 +10,7 @@ export const PrivateDataApiV1LlmHotloadResponseSchema = z.object({
 export const PrivateDataApiV1LLMPersonalResponseSchema = z.object({
   result: z.string().min(1, "LLM response is empty"),
   duration: z.number(),
-  process: z
-    .object({
-      databases: z.array(z.string()),
-      keywords: z.array(z.string()),
-      // Add other fields as needed
-    })
-    .passthrough(),
+  process: z.object({
+    databases: z.array(z.string()).optional(),
+  }),
 })
