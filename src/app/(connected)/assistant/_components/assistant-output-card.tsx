@@ -37,19 +37,19 @@ export function AssistantOutputCard(props: AssistantOutputCardProps) {
       return undefined
     }
 
-    const milliseconds = assistantOutput.processingTime
-    const minutes = Math.floor(milliseconds / 60000)
-    const seconds = Math.floor((milliseconds % 60000) / 1000)
-    const remainingMs = milliseconds % 1000
+    const totalSeconds = assistantOutput.processingTime
+    const minutes = Math.floor(totalSeconds / 60)
+    const seconds = Math.floor(totalSeconds % 60)
+    const milliseconds = Math.floor((totalSeconds % 1) * 1000)
 
     // If less than a second, show milliseconds
     if (minutes === 0 && seconds === 0) {
-      return `${remainingMs}ms`
+      return `${milliseconds}ms`
     }
 
-    // If less than a minute, show seconds
+    // If less than a minute, show seconds and milliseconds
     if (minutes === 0) {
-      return `${seconds}s`
+      return `${seconds}s ${milliseconds}ms`
     }
 
     // If more than a minute, show minutes and seconds
