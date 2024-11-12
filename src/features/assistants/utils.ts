@@ -73,7 +73,6 @@ export async function sendUserInputToAssistant(
       processedAt: new Date(),
       processingTime: validatedData.duration,
       databases: validatedData.process.databases,
-      keywords: validatedData.process.keywords,
     }
 
     return output
