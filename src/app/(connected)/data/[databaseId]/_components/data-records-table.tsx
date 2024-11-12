@@ -70,7 +70,10 @@ export function DataRecordsTable(props: DataRecordsTableProps) {
     <DataTable
       table={table}
       rowComponent={(row) => (
-        <Link href={`?itemId=${row.original._id}`} className="rounded-lg">
+        <Link
+          href={`?itemId=${encodeURIComponent(row.original._id)}`}
+          className="rounded-lg"
+        >
           <DataTableGenericRow
             row={row}
             className="hover:border-border-hover hover:bg-surface-hover"
