@@ -17,4 +17,4 @@ export const VeridaProfileSchema = z.object({
 
 export const VeridaProfileApiResponseSchema = VeridaBaseRecordSchema.extend(
   VeridaProfileSchema.shape
-).passthrough()
+)
