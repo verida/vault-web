@@ -371,7 +371,7 @@ export function AppCommandDialogTrigger(props: AppCommandDialogTriggerProps) {
         >
           <SearchIcon className="size-6 shrink-0" />
           <span className="sr-only">Search</span>
-          <span className="hidden rounded-sm bg-surface-hover p-1 text-base-s-regular text-muted-foreground sm:inline-block">
+          <span className="hidden rounded-sm bg-surface-hover p-1 text-base-s-regular text-muted-foreground md:inline-block">
             {shortcutText}
           </span>
         </Button>

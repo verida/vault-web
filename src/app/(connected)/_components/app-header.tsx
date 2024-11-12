@@ -39,10 +39,10 @@ export function AppHeader(props: AppHeaderProps) {
           </div>
           <div className="flex flex-row items-center gap-4 py-4 pr-4 md:pr-6 xl:pr-8">
             {featureFlags.commandDialog.enabled ? (
-              <AppCommandDialogTrigger className="h-8 w-8 sm:w-auto md:h-12" />
+              <AppCommandDialogTrigger className="h-8 w-8 md:h-12 md:w-auto" />
             ) : null}
             {featureFlags.inbox.enabled ? (
-              <AppHeaderInboxLink className="h-8 w-8 sm:w-auto md:h-12" />
+              <AppHeaderInboxLink className="h-8 w-8 md:h-12 md:w-auto" />
             ) : null}
             <IdentityDropdownMenu />
           </div>
