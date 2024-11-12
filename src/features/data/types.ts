@@ -21,9 +21,10 @@ export type DatabaseDefinition = {
   title: string
   titlePlural: string
   color: string
+  searchType?: SearchType
   databaseVaultName: string
   schemaUrlBase: string
-  searchType?: SearchType
+  schemaUrlLatest: string
 }
 
 export type DataSchema = {

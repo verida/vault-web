@@ -27,10 +27,12 @@ export type DataTableProps<TData> = {
   table: Table<TData>
   rowComponent: (row: Row<TData>) => React.ReactNode
   isLoading?: boolean
+  isRefreshing?: boolean
   isError?: boolean
   paginationSizes?: DataTablePaginationSizeValue[]
   loadingTitle?: string
   loadingDescription?: string
+  refreshingMessage?: string
   errorTitle?: string
   errorDescription?: string
   emptyStateTitle?: string
@@ -43,10 +45,12 @@ export function DataTable<TData>(props: DataTableProps<TData>) {
     rowComponent,
     className,
     isLoading,
+    isRefreshing,
     isError,
     paginationSizes,
     loadingTitle = "Loading...",
     loadingDescription = "Please wait while we load the data.",
+    refreshingMessage = "Refreshing...",
     errorTitle = "Error",
     errorDescription = "There was an error getting the data. Please try again later.",
     emptyStateTitle = "No data",
@@ -65,10 +69,22 @@ export function DataTable<TData>(props: DataTableProps<TData>) {
         ))}
       </div>
       {table.getRowModel().rows?.length ? (
-        <ul className="flex flex-col gap-3">
+        <ul className="relative flex flex-col gap-3">
           {table.getRowModel().rows.map((row) => (
             <li key={row.id}>{rowComponent(row)}</li>
           ))}
+          {isRefreshing ? (
+            <div className="absolute inset-0 bg-background/70">
+              <div className="flex h-full items-center justify-center">
+                <LoadingBlock>
+                  <LoadingBlockSpinner spinnerClassName="size-14" />
+                  <LoadingBlockDescription>
+                    {refreshingMessage}
+                  </LoadingBlockDescription>
+                </LoadingBlock>
+              </div>
+            </div>
+          ) : null}
         </ul>
       ) : (
         <div className="flex flex-1 flex-col items-center justify-center">

@@ -5,8 +5,9 @@ import { useRouter } from "next/navigation"
 import { useCallback, useMemo, useState } from "react"
 import { useDebounce } from "use-debounce"
 
+import { Close as CloseIcon } from "@/components/icons/close"
+import { Data } from "@/components/icons/data"
 import { DatabaseIcon } from "@/components/icons/database-icon"
-import { GridIcon } from "@/components/icons/grid-icon"
 import { SearchIcon } from "@/components/icons/search-icon"
 import { Typography } from "@/components/typography"
 import { Button } from "@/components/ui/button"
@@ -118,7 +119,7 @@ export function AppCommandDialog() {
 
   return (
     <Dialog open={isOpen} onOpenChange={handleChangeDialogState}>
-      <DialogContent className="inset-0 max-h-none overflow-hidden rounded-none p-0 duration-500 data-[state=closed]:zoom-out-100 data-[state=open]:zoom-in-100 data-[state=closed]:slide-out-to-bottom-0 data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-bottom-0 data-[state=open]:slide-in-from-right sm:right-auto sm:top-auto sm:max-h-96 sm:max-w-2xl sm:p-0">
+      <DialogContent className="inset-0 max-h-none overflow-hidden rounded-none p-0 duration-500 data-[state=closed]:zoom-out-100 data-[state=open]:zoom-in-100 data-[state=closed]:slide-out-to-bottom-0 data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-bottom-0 data-[state=open]:slide-in-from-right sm:right-auto sm:top-auto sm:h-[90vh] sm:max-h-96 sm:max-w-2xl sm:p-0">
         <Command
           shouldFilter={false}
           loop
@@ -150,10 +151,12 @@ export function AppCommandDialog() {
             </div>
             <Button
               variant="outline"
+              size="icon"
               onClick={handleClose}
-              className="sm:hidden"
+              className="h-12 w-12 sm:hidden"
             >
-              Cancel
+              <CloseIcon className="size-6 shrink-0" />
+              <span className="sr-only">Close</span>
             </Button>
           </div>
           <CommandList className="pt-3.5 [&_[cmdk-list-sizer]]:px-4 [&_[cmdk-list-sizer]]:pb-4">
@@ -265,7 +268,8 @@ function SearchCommandSearchTypeMenu(props: SearchCommandSearchTypeMenuProps) {
           size="icon"
           className={cn("relative flex h-12 w-12 flex-row gap-1", className)}
         >
-          <GridIcon className="size-5 shrink-0" />
+          <Data className="size-5 shrink-0" />
+          <span className="sr-only">Select data type</span>
           {showIndicator && (
             <div className="absolute right-0 top-0 size-3 -translate-y-1/3 translate-x-1/3 rounded-full bg-primary" />
           )}
@@ -367,7 +371,7 @@ export function AppCommandDialogTrigger(props: AppCommandDialogTriggerProps) {
         >
           <SearchIcon className="size-6 shrink-0" />
           <span className="sr-only">Search</span>
-          <span className="hidden rounded-sm bg-surface-hover p-1 text-base-s-regular text-muted-foreground sm:inline-block">
+          <span className="hidden rounded-sm bg-surface-hover p-1 text-base-s-regular text-muted-foreground md:inline-block">
             {shortcutText}
           </span>
         </Button>

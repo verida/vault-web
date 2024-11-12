@@ -1,7 +1,7 @@
 "use client"
 
 import { formatDistanceToNow } from "date-fns"
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useEffect, useMemo, useState } from "react"
 
 import { AssistantDataStatusPopover } from "@/app/(connected)/assistant/_components/assistant-data-status-popover"
 import { Typography } from "@/components/typography"
@@ -18,7 +18,7 @@ export function AssistantDataStatus(props: AssistantDataStatusProps) {
   const { className, ...divProps } = props
 
   const { hotload } = useAssistants()
-  const { isAnySyncing, latestSync } = useDataConnections()
+  const { connections, isAnySyncing, latestSync } = useDataConnections()
 
   const [formattedLatestSync, setFormattedLatestSync] = useState<string>("")
 
@@ -36,6 +36,37 @@ export function AssistantDataStatus(props: AssistantDataStatusProps) {
     return () => clearInterval(intervalId)
   }, [updateFormattedLatestSync])
 
+  const statusMessage = useMemo(() => {
+    if (hotload.status === "loading") {
+      return `Data loading in assistant... ${Math.round(hotload.progress * 100)}%`
+    }
+
+    if (isAnySyncing) {
+      return "Data currently syncing..."
+    }
+
+    if (connections === undefined) {
+      return "Checking data connections..."
+    }
+
+    if (connections.length === 0) {
+      return "No data connections"
+    }
+
+    if (!latestSync) {
+      return "Data connections not synced"
+    }
+
+    return `Data synced ${formattedLatestSync}`
+  }, [
+    hotload.status,
+    hotload.progress,
+    isAnySyncing,
+    connections,
+    latestSync,
+    formattedLatestSync,
+  ])
+
   return (
     <div
       {...divProps}
@@ -45,15 +76,7 @@ export function AssistantDataStatus(props: AssistantDataStatusProps) {
       )}
     >
       <AssistantDataStatusPopover />
-      <Typography variant="base-s-regular">
-        {hotload.status === "loading"
-          ? `Data loading in assistant... ${Math.round(hotload.progress * 100)}%`
-          : isAnySyncing
-            ? "Data currently syncing..."
-            : latestSync
-              ? `Data synced ${formattedLatestSync}`
-              : "Data sync unknown"}
-      </Typography>
+      <Typography variant="base-s-regular">{statusMessage}</Typography>
     </div>
   )
 }

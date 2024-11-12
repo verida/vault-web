@@ -10,6 +10,11 @@ import {
   DrawerHeader,
   DrawerTitle,
 } from "@/components/ui/drawer"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
 import { cn } from "@/styles/utils"
 
 export type ItemSheetProps = {
@@ -52,15 +57,20 @@ export function ItemSheetHeader(props: ItemSheetHeaderProps) {
       <div className="flex flex-row items-center justify-between gap-3">
         <div className="flex min-w-0 flex-1 flex-row items-center gap-3">
           {!hideCloseButton && (
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={onClose}
-              className="-ml-2 shrink-0"
-            >
-              <CloseSideRight />
-              <span className="sr-only">Close</span>
-            </Button>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={onClose}
+                  className="-ml-2 shrink-0"
+                >
+                  <CloseSideRight />
+                  <span className="sr-only">Close</span>
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>Close</TooltipContent>
+            </Tooltip>
           )}
           <div className="hidden truncate sm:block">{children}</div>
         </div>

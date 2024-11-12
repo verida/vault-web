@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query"
 
 import { SearchType } from "@/features/data-search/types"
 import { searchData } from "@/features/data-search/utils"
-import { useVerida } from "@/features/verida/use-verida"
+import { useVerida } from "@/features/verida/hooks/use-verida"
 
 export function useSearchData(
   searchValue?: string,

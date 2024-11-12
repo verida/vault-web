@@ -4,8 +4,7 @@ import { version } from "@/config/version"
 const commonConfigCheckResult = CommonConfigSchema.safeParse({
   // Have to pass the variables one-by-one on the client because they are set
   // and replaced at build time only if they are explicitly used somewhere in
-  // the code(like here). Also because the schema is not passthrough, for
-  // strong typing, so can't pass process.env as there could have other env vars
+  // the code(like here). It also allows us to have shorter names.
   BASE_URL: process.env.NEXT_PUBLIC_BASE_URL,
   DEV_MODE: process.env.NEXT_PUBLIC_DEV_MODE,
   LOG_LEVEL: process.env.NEXT_PUBLIC_LOG_LEVEL,
@@ -18,12 +17,18 @@ const commonConfigCheckResult = CommonConfigSchema.safeParse({
   FEATURE_FLAG_INBOX_ENABLED:
     process.env.NEXT_PUBLIC_FEATURE_FLAG_INBOX_ENABLED,
   FEATURE_FLAG_DATA_ENABLED: process.env.NEXT_PUBLIC_FEATURE_FLAG_DATA_ENABLED,
+  FEATURE_FLAG_DATA_DESTROY_DB_ENABLED:
+    process.env.NEXT_PUBLIC_FEATURE_FLAG_DATA_DESTROY_DB_ENABLED,
+  FEATURE_FLAG_DATA_DELETE_RECORD_ENABLED:
+    process.env.NEXT_PUBLIC_FEATURE_FLAG_DATA_DELETE_RECORD_ENABLED,
   FEATURE_FLAG_COMMAND_DIALOG_ENABLED:
     process.env.NEXT_PUBLIC_FEATURE_FLAG_COMMAND_DIALOG_ENABLED,
   FEATURE_FLAG_DATA_CONNECTIONS_ENABLED:
     process.env.NEXT_PUBLIC_FEATURE_FLAG_DATA_CONNECTIONS_ENABLED,
   FEATURE_FLAG_DATA_CONNECTIONS_LOGS_ENABLED:
     process.env.NEXT_PUBLIC_FEATURE_FLAG_DATA_CONNECTIONS_LOGS_ENABLED,
+  FEATURE_FLAG_DATA_CONNECTIONS_LOGS_DESTROY_ENABLED:
+    process.env.NEXT_PUBLIC_FEATURE_FLAG_DATA_CONNECTIONS_LOGS_DESTROY_ENABLED,
   isClient: !(typeof window === "undefined"),
   appVersion: version,
 })

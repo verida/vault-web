@@ -1,14 +1,18 @@
 "use client"
 
-import { type DatastoreOpenConfig, type IDatastore } from "@verida/types"
+import { useQueryClient } from "@tanstack/react-query"
+import { type DatastoreOpenConfig } from "@verida/types"
 import { WebUser } from "@verida/web-helpers"
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"
 
 import { commonConfig } from "@/config/common"
-import { PublicProfile } from "@/features/profiles/types"
-import { getPublicProfile } from "@/features/profiles/utils"
 import { Logger, Sentry } from "@/features/telemetry"
+import { invalidateVeridaProfile } from "@/features/verida-profile/hooks/use-verida-profile"
 import { VERIDA_VAULT_CONTEXT_NAME } from "@/features/verida/constants"
+import {
+  VeridaContext,
+  VeridaContextType,
+} from "@/features/verida/contexts/verida-context"
 
 const logger = Logger.create("verida")
 
@@ -32,25 +36,6 @@ const webUserInstance = new WebUser({
   },
 })
 
-type VeridaContextType = {
-  webUserInstanceRef: React.MutableRefObject<WebUser>
-  isReady: boolean
-  isConnected: boolean
-  isConnecting: boolean
-  isDisconnecting: boolean
-  did: string | null
-  profile: PublicProfile | null
-  connect: () => Promise<void>
-  disconnect: () => Promise<void>
-  getAccountSessionToken: () => Promise<string>
-  openDatastore: (
-    schemaUrl: string,
-    config?: DatastoreOpenConfig
-  ) => Promise<IDatastore>
-}
-
-export const VeridaContext = React.createContext<VeridaContextType | null>(null)
-
 type VeridaProviderProps = {
   children?: React.ReactNode
 }
@@ -64,7 +49,6 @@ export const VeridaProvider: React.FunctionComponent<VeridaProviderProps> = (
   const [isConnecting, setIsConnecting] = useState(false)
   const [isDisconnecting, setIsDisconnecting] = useState(false)
   const [did, setDid] = useState<string | null>(null)
-  const [profile, setProfile] = useState<PublicProfile | null>(null)
 
   const updateStates = useCallback(async () => {
     const newIsConnected = webUserInstance.isConnected()
@@ -75,7 +59,6 @@ export const VeridaProvider: React.FunctionComponent<VeridaProviderProps> = (
     if (!newIsConnected) {
       // If not connected, no need to continue, just clear everything
       setDid(null)
-      setProfile(null)
       Sentry.setUser(null)
       return
     }
@@ -89,26 +72,7 @@ export const VeridaProvider: React.FunctionComponent<VeridaProviderProps> = (
       Sentry.setUser(null)
       setDid(null)
     }
-
-    try {
-      const newProfile = await getPublicProfile(webUserInstance.getDid())
-      logger.debug("User profile", newProfile)
-      setProfile(newProfile)
-    } catch (error) {
-      if (
-        error instanceof Error &&
-        error.message !== "Not connected to Verida Network"
-      ) {
-        setProfile(null)
-      } else {
-        logger.error(error)
-      }
-    }
   }, [])
-
-  const veridaEventListener = useCallback(() => {
-    void updateStates()
-  }, [updateStates])
 
   const autoConnect = useCallback(async () => {
     logger.info("Checking for existing Verida session")
@@ -137,11 +101,24 @@ export const VeridaProvider: React.FunctionComponent<VeridaProviderProps> = (
     }
   }, [])
 
+  const connectionEventListener = useCallback(() => {
+    void updateStates()
+  }, [updateStates])
+
+  const queryClient = useQueryClient()
+
+  const profileChangedEventListener = useCallback(() => {
+    if (!did) {
+      return
+    }
+    invalidateVeridaProfile(queryClient, did)
+  }, [queryClient, did])
+
   useEffect(() => {
     logger.info("Initialising the Verida client")
-    webUserInstance.addListener("connected", veridaEventListener)
-    webUserInstance.addListener("profileChanged", veridaEventListener)
-    webUserInstance.addListener("disconnected", veridaEventListener)
+    webUserInstance.addListener("connected", connectionEventListener)
+    webUserInstance.addListener("profileChanged", profileChangedEventListener)
+    webUserInstance.addListener("disconnected", connectionEventListener)
 
     void autoConnect()
 
@@ -149,7 +126,7 @@ export const VeridaProvider: React.FunctionComponent<VeridaProviderProps> = (
       logger.info("Cleaning the Verida client")
       webUserInstance.removeAllListeners()
     }
-  }, [veridaEventListener, autoConnect])
+  }, [connectionEventListener, profileChangedEventListener, autoConnect])
 
   const connect = useCallback(async () => {
     logger.info("User connecting to Verida")
@@ -213,7 +190,7 @@ export const VeridaProvider: React.FunctionComponent<VeridaProviderProps> = (
 
   const contextValue: VeridaContextType = useMemo(
     () => ({
-      isReady: isConnected && !!did && !!profile,
+      isReady: isConnected && !!did,
       isConnected,
       isConnecting,
       isDisconnecting,
@@ -222,7 +199,6 @@ export const VeridaProvider: React.FunctionComponent<VeridaProviderProps> = (
       disconnect,
       getAccountSessionToken,
       openDatastore,
-      profile,
       webUserInstanceRef,
     }),
     [
@@ -234,7 +210,6 @@ export const VeridaProvider: React.FunctionComponent<VeridaProviderProps> = (
       disconnect,
       getAccountSessionToken,
       openDatastore,
-      profile,
       webUserInstanceRef,
     ]
   )
