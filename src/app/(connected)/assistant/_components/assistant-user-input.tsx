@@ -1,6 +1,6 @@
 "use client"
 
-import { MessageSquareMoreIcon, XIcon } from "lucide-react"
+import { XIcon } from "lucide-react"
 import React, {
   ChangeEventHandler,
   KeyboardEventHandler,
@@ -9,7 +9,7 @@ import React, {
   useRef,
 } from "react"
 
-import { AssistantUserInputPromptsMenu } from "@/app/(connected)/assistant/_components/assistant-user-input-prompts-menu"
+import { AssistantUserInputPromptsCombobox } from "@/app/(connected)/assistant/_components/assistant-user-input-prompts-combobox"
 import { SendIcon } from "@/components/icons/send-icon"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
@@ -57,6 +57,10 @@ export function AssistantUserInput(props: AssistantUserInputProps) {
     inputRef.current?.focus()
   }, [])
 
+  const handleEditPrompt = useCallback(() => {
+    inputRef.current?.focus()
+  }, [])
+
   return (
     <div {...divProps}>
       <Card className="flex flex-col gap-1 rounded-xl p-3 shadow-md ring-offset-surface focus-within:outline-none focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-0 hover:border-border-hover md:gap-2 md:p-4">
@@ -93,16 +97,10 @@ export function AssistantUserInput(props: AssistantUserInputProps) {
         </CardContent>
         <CardFooter className="flex-row justify-between p-0">
           <div className="flex flex-row items-center justify-start gap-2">
-            <AssistantUserInputPromptsMenu>
-              <Button
-                variant="outline"
-                size="icon"
-                className="size-8 sm:size-10"
-              >
-                <MessageSquareMoreIcon className="size-5 sm:size-6" />
-                <span className="sr-only">Open prompts menu</span>
-              </Button>
-            </AssistantUserInputPromptsMenu>
+            <AssistantUserInputPromptsCombobox
+              onClickEdit={handleEditPrompt}
+              className="size-8 sm:size-10"
+            />
           </div>
           <div className="flex flex-row items-center justify-end gap-2">
             <Button
