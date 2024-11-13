@@ -1,13 +1,16 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 
 import { VeridaDatabaseQueryKeys } from "@/features/verida-database/queries"
-import { VeridaRecord } from "@/features/verida-database/types"
+import {
+  UnsavedVeridaRecord,
+  VeridaRecord,
+} from "@/features/verida-database/types"
 import { createVeridaDataRecord } from "@/features/verida-database/utils"
 import { useVerida } from "@/features/verida/hooks/use-verida"
 
 type CreateRecordArgs<T> = {
   databaseName: string
-  record: T
+  record: UnsavedVeridaRecord<T>
 }
 
 export function useCreateVeridaRecord<T = Record<string, unknown>>() {

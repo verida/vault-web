@@ -9,6 +9,7 @@ import {
 } from "@/features/verida-database/schemas"
 import {
   FetchVeridaDataRecordsResult,
+  UnsavedVeridaRecord,
   VeridaDatabaseQueryFilter,
   VeridaDatabaseQueryOptions,
   VeridaRecord,
@@ -181,7 +182,7 @@ export async function fetchVeridaDataRecord<T = Record<string, unknown>>({
 type CreateVeridaDataRecordArgs<T> = {
   sessionToken: string
   databaseName: string
-  record: T
+  record: UnsavedVeridaRecord<T>
 }
 
 /**
