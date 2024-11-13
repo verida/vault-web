@@ -2,6 +2,7 @@ import { commonConfig } from "@/config/common"
 import { DATABASE_DEFS } from "@/features/data/constants"
 import { Logger } from "@/features/telemetry"
 import {
+  VeridaDatabaseCreateRecordApiV1ResponseSchema,
   VeridaDatabaseDeleteApiV1ResponseSchema,
   VeridaDatabaseGetRecordApiV1ResponseSchema,
   VeridaDatabaseQueryApiV1ResponseSchema,
@@ -177,6 +178,82 @@ export async function fetchVeridaDataRecord<T = Record<string, unknown>>({
   }
 }
 
+type CreateVeridaDataRecordArgs<T> = {
+  sessionToken: string
+  databaseName: string
+  record: T
+}
+
+/**
+ * Creates a new Verida data record in the specified database.
+ *
+ * @template T - The type of the record being created.
+ * @param params - The parameters for creating the record.
+ * @param params.sessionToken - The session token for authentication.
+ * @param params.databaseName - The name of the database to create the record in.
+ * @param params.record - The record data to be created.
+ * @returns A promise that resolves to the created Verida record.
+ * @throws If the API configuration is incorrect or if the creation operation fails.
+ */
+export async function createVeridaDataRecord<T = Record<string, unknown>>({
+  sessionToken,
+  databaseName,
+  record,
+}: CreateVeridaDataRecordArgs<T>): Promise<VeridaRecord<T>> {
+  // Check if the API base URL is configured
+  if (!commonConfig.PRIVATE_DATA_API_BASE_URL) {
+    logger.warn(
+      "Cannot perform Verida create operation due to incorrect API configuration"
+    )
+    throw new Error("Incorrect Private Data API configuration")
+  }
+
+  try {
+    // Encode the schema URL for the database
+    const schemaUrlBase64 = getEncodedSchemaFromDatabaseName(databaseName)
+
+    // Construct the API endpoint URL
+    const url = new URL(
+      `/api/rest/v1/ds/${schemaUrlBase64}`,
+      commonConfig.PRIVATE_DATA_API_BASE_URL
+    )
+
+    // Make the API request to create the record
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-API-Key": sessionToken,
+      },
+      body: JSON.stringify({
+        record,
+        // Note: `options` parameter is available if needed in the future
+      }),
+    })
+
+    // Check if the response is successful
+    if (!response.ok) {
+      throw new Error(`HTTP error ${response.status}`)
+    }
+
+    // Parse and validate the response data
+    const data = await response.json()
+    const validatedData =
+      // TODO: Use a function to build the schema from the expected record schema
+      VeridaDatabaseCreateRecordApiV1ResponseSchema.parse(data)
+
+    // Check if the operation was successful
+    if (!validatedData.success) {
+      throw new Error("API returned unsuccessful operation")
+    }
+
+    // Return the created record
+    return validatedData.record as VeridaRecord<T>
+  } catch (error) {
+    throw new Error("Error creating Verida data record", { cause: error })
+  }
+}
+
 export type DestroyVeridaDatabaseArgs = {
   sessionToken: string
   databaseName: string
@@ -252,17 +329,7 @@ async function performVeridaDeleteOperation({
   })
 
   try {
-    const databaseDef = DATABASE_DEFS.find(
-      (def) => def.databaseVaultName === databaseName
-    )
-    if (!databaseDef) {
-      throw new Error(`Database definition not found for ${databaseName}`)
-    }
-
-    const schemaUrlBase64 = Buffer.from(
-      databaseDef.schemaUrlLatest,
-      "utf8"
-    ).toString("base64")
+    const schemaUrlBase64 = getEncodedSchemaFromDatabaseName(databaseName)
 
     const url = new URL(
       `/api/rest/v1/ds/${schemaUrlBase64}${recordId ? `/${recordId}` : ""}`,
@@ -296,4 +363,16 @@ async function performVeridaDeleteOperation({
   } catch (error) {
     throw new Error(`Error deleting Verida ${operationType}`, { cause: error })
   }
+}
+
+function getEncodedSchemaFromDatabaseName(databaseName: string) {
+  const databaseDef = DATABASE_DEFS.find(
+    (def) => def.databaseVaultName === databaseName
+  )
+
+  if (!databaseDef) {
+    throw new Error(`Database definition not found for ${databaseName}`)
+  }
+
+  return Buffer.from(databaseDef.schemaUrlLatest, "utf8").toString("base64")
 }

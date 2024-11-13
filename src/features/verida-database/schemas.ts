@@ -27,3 +27,16 @@ export const VeridaDatabaseGetRecordApiV1ResponseSchema = z.object({
 export const VeridaDatabaseDeleteApiV1ResponseSchema = z.object({
   success: z.boolean(),
 })
+
+// TODO: Instead, create a function taking a schema as argument and then build the API response schema with it
+export const VeridaDatabaseCreateRecordApiV1ResponseSchema =
+  z.discriminatedUnion("success", [
+    z.object({
+      success: z.literal(true),
+      record: VeridaBaseRecordSchema.passthrough(),
+    }),
+    z.object({
+      success: z.literal(false),
+      errors: z.any(), // TODO: Define better type, unsure what it is
+    }),
+  ])
