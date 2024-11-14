@@ -28,7 +28,10 @@ import {
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { useAssistants } from "@/features/assistants/hooks/use-assistants"
-import { wait } from "@/utils/misc"
+import { useCreateAssistantPrompt } from "@/features/assistants/hooks/use-create-assistant-prompt"
+import { Logger } from "@/features/telemetry"
+
+const logger = Logger.create("assistants")
 
 const newPromptSchema = z.object({
   name: z.string().min(1, "Label is required"),
@@ -48,6 +51,7 @@ export function AssistantSavePromptDialog(
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   const { userInput } = useAssistants()
+  const { createAssistantPrompt } = useCreateAssistantPrompt()
 
   const form = useForm<z.infer<typeof newPromptSchema>>({
     resolver: zodResolver(newPromptSchema),
@@ -59,17 +63,22 @@ export function AssistantSavePromptDialog(
 
   const handleSubmit = useCallback(
     async (data: z.infer<typeof newPromptSchema>) => {
-      // TODO: Implement save functionality
-
-      // eslint-disable-next-line no-console
-      console.debug("Saving prompt", data)
-
       setIsSubmitting(true)
-      await wait(3000)
-      setIsSubmitting(false)
-      setModalOpen(false)
+      try {
+        await createAssistantPrompt({
+          name: data.name,
+          data: {
+            prompt: data.prompt,
+          },
+        })
+        setModalOpen(false)
+      } catch (error) {
+        logger.error(error)
+      } finally {
+        setIsSubmitting(false)
+      }
     },
-    []
+    [createAssistantPrompt]
   )
 
   useEffect(() => {
