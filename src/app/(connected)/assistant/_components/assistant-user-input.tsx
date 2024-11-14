@@ -105,7 +105,7 @@ export function AssistantUserInput(props: AssistantUserInputProps) {
           <div className="flex flex-row items-center justify-start gap-2">
             <AssistantUserInputPromptsCombobox
               onClickEdit={handleEditPrompt}
-              className="size-8 sm:size-10"
+              className="size-8 sm:size-10 xl:hidden"
             />
             <Tooltip>
               <AssistantSavePromptDialog>

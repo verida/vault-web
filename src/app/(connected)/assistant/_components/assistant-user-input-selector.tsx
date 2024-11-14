@@ -1,0 +1,138 @@
+"use client"
+
+import { ArrowUpRightIcon } from "lucide-react"
+import { useCallback } from "react"
+
+import { Button } from "@/components/ui/button"
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command"
+import { SUGGESTED_INPUTS } from "@/features/assistants/constants"
+import { useAssistants } from "@/features/assistants/hooks/use-assistants"
+import { useSavedAssistantPrompts } from "@/features/assistants/hooks/use-saved-assistant-prompts"
+import { AssistantUserInput } from "@/features/assistants/types"
+import { cn } from "@/styles/utils"
+
+export type AssistantUserInputSelectorProps = {
+  onClickSetPrompt?: (input: AssistantUserInput) => void
+  onItemClick?: (input: AssistantUserInput) => void
+} & Omit<React.ComponentProps<"div">, "children">
+
+export function AssistantUserInputSelector(
+  props: AssistantUserInputSelectorProps
+) {
+  const { className, onClickSetPrompt, onItemClick, ...divProps } = props
+
+  const { setAndProcessUserInput, updateUserPrompt } = useAssistants()
+
+  // TODO: Handle pagination, filter and sort. Link this to the value in the
+  // CommandInput and turn the whole Command to a controlled component
+  const { savedPrompts } = useSavedAssistantPrompts()
+
+  const handleItemClick = useCallback(
+    async (input: AssistantUserInput) => {
+      setAndProcessUserInput(input)
+      onItemClick?.(input)
+    },
+    [setAndProcessUserInput, onItemClick]
+  )
+
+  const handleSetPromptClick = useCallback(
+    async (input: AssistantUserInput) => {
+      updateUserPrompt(input.prompt)
+      onClickSetPrompt?.(input)
+    },
+    [updateUserPrompt, onClickSetPrompt]
+  )
+
+  return (
+    <div {...divProps} className={cn(className)}>
+      <Command>
+        <div className="p-1">
+          <CommandInput placeholder="Search..." />
+        </div>
+        <CommandList>
+          <CommandEmpty>No results found</CommandEmpty>
+          {savedPrompts && savedPrompts.length > 0 ? (
+            <CommandGroup heading="Saved">
+              {savedPrompts.map((savedPrompt) => (
+                <PromptItem
+                  key={savedPrompt._id}
+                  label={savedPrompt.name ?? savedPrompt.data.prompt}
+                  prompt={savedPrompt.data.prompt}
+                  onSelect={() => {
+                    handleItemClick({
+                      prompt: savedPrompt.data.prompt,
+                    })
+                  }}
+                  onClickSetPrompt={() => {
+                    handleSetPromptClick({
+                      prompt: savedPrompt.data.prompt,
+                    })
+                  }}
+                />
+              ))}
+            </CommandGroup>
+          ) : null}
+          <CommandGroup heading="Suggested by Verida">
+            {SUGGESTED_INPUTS.map((suggestedInput, index) => (
+              <PromptItem
+                key={index}
+                label={suggestedInput.label}
+                prompt={suggestedInput.input.prompt}
+                onSelect={() => {
+                  handleItemClick(suggestedInput.input)
+                }}
+                onClickSetPrompt={() => {
+                  handleSetPromptClick(suggestedInput.input)
+                }}
+              />
+            ))}
+          </CommandGroup>
+        </CommandList>
+      </Command>
+    </div>
+  )
+}
+AssistantUserInputSelector.displayName = "AssistantUserInputSelector"
+
+type PromptItemProps = {
+  label: string
+  prompt: string
+  onSelect: () => void
+  onClickSetPrompt: () => void
+}
+
+function PromptItem(props: PromptItemProps) {
+  const { label, prompt, onSelect, onClickSetPrompt } = props
+
+  return (
+    <CommandItem
+      value={prompt}
+      onSelect={onSelect}
+      className="cursor-pointer py-1 pl-2 pr-1"
+    >
+      <div className="flex flex-row items-center gap-2">
+        <div className="flex-1 truncate">{label}</div>
+        <div className="shrink-0">
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={(e) => {
+              e.stopPropagation()
+              onClickSetPrompt()
+            }}
+          >
+            <ArrowUpRightIcon className="size-5 sm:size-6" />
+          </Button>
+        </div>
+      </div>
+    </CommandItem>
+  )
+}
+PromptItem.displayName = "PromptItem"

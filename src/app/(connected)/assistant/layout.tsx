@@ -19,11 +19,10 @@ export default function AssistantsLayout(props: AssistantsLayoutProps) {
     <PageWrapper
       pageTitle="AI Assistant"
       className="h-full gap-0"
-      contentClassName="h-full min-h-0 items-center pb-0 md:pb-0 xl:pb-0"
+      contentClassName="h-full min-h-0 pb-0 md:pb-0 xl:pb-0"
     >
-      <div className="flex h-full w-full max-w-screen-md flex-col">
-        {children}
-      </div>
+      {/* <div className="flex h-full w-full flex-col">{children}</div> */}
+      {children}
     </PageWrapper>
   )
 }
