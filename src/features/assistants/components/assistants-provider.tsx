@@ -1,11 +1,13 @@
 "use client"
 
+import { useQueryClient } from "@tanstack/react-query"
 import React, { useCallback, useEffect, useMemo, useState } from "react"
 
 import {
   AssistantsContext,
   AssistantsContextType,
 } from "@/features/assistants/contexts/assistants-context"
+import { prefetchSavedAssistantPrompts } from "@/features/assistants/hooks/use-saved-assistant-prompts"
 import { AssistantUserInput, HotloadResult } from "@/features/assistants/types"
 import { AssistantOutput } from "@/features/assistants/types"
 import {
@@ -29,7 +31,9 @@ export type AssistantsProviderProps = {
  */
 export function AssistantsProvider(props: AssistantsProviderProps) {
   const { children } = props
-  const { getAccountSessionToken } = useVerida()
+  const { did, getAccountSessionToken } = useVerida()
+
+  const queryClient = useQueryClient()
 
   const [userInput, setUserInput] = useState<AssistantUserInput | null>(null)
   const [assistantOutput, setAssistantOutput] =
@@ -61,6 +65,28 @@ export function AssistantsProvider(props: AssistantsProviderProps) {
       setHotload({ status: "error", progress: 0 })
     })
   }, [initialise])
+
+  useEffect(() => {
+    if (!did) {
+      return
+    }
+
+    getAccountSessionToken()
+      .then((sessionToken) => {
+        prefetchSavedAssistantPrompts({
+          queryClient,
+          did,
+          sessionToken,
+        })
+      })
+      .catch((error) => {
+        logger.error(
+          new Error("Error prefetching saved assistant prompts", {
+            cause: error,
+          })
+        )
+      })
+  }, [getAccountSessionToken, queryClient, did])
 
   const _processUserInput = useCallback(
     async (userInput: AssistantUserInput) => {
