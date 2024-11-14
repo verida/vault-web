@@ -5,8 +5,8 @@ import { useMediaQuery } from "usehooks-ts"
 
 import { AssistantDataStatus } from "@/app/(connected)/assistant/_components/assistant-data-status"
 import { AssistantOutput } from "@/app/(connected)/assistant/_components/assistant-output"
+import { AssistantPromptsSelector } from "@/app/(connected)/assistant/_components/assistant-prompts-selector"
 import { AssistantUserInput } from "@/app/(connected)/assistant/_components/assistant-user-input"
-import { AssistantUserInputSelector } from "@/app/(connected)/assistant/_components/assistant-user-input-selector"
 import { Typography } from "@/components/typography"
 import { Card } from "@/components/ui/card"
 import { getMediaQuery } from "@/styles/utils"
@@ -23,7 +23,7 @@ export default function AssistantsPage() {
               <MessageSquareMoreIcon className="size-5 sm:size-6" />
               <Typography variant="base-semibold">Your prompts</Typography>
             </div>
-            <AssistantUserInputSelector />
+            <AssistantPromptsSelector />
           </Card>
         </aside>
       ) : null}

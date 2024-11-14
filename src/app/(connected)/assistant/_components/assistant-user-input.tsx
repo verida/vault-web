@@ -10,8 +10,8 @@ import React, {
 } from "react"
 import { useMediaQuery } from "usehooks-ts"
 
+import { AssistantPromptsCombobox } from "@/app/(connected)/assistant/_components/assistant-prompts-combobox"
 import { AssistantSavePromptDialog } from "@/app/(connected)/assistant/_components/assistant-save-prompt-dialog"
-import { AssistantUserInputPromptsCombobox } from "@/app/(connected)/assistant/_components/assistant-user-input-prompts-combobox"
 import { SendIcon } from "@/components/icons/send-icon"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
@@ -107,7 +107,7 @@ export function AssistantUserInput(props: AssistantUserInputProps) {
         <CardFooter className="flex-row justify-between p-0">
           <div className="flex flex-row items-center justify-start gap-2">
             {!isXL ? (
-              <AssistantUserInputPromptsCombobox
+              <AssistantPromptsCombobox
                 onClickEdit={handleEditPrompt}
                 className="size-8 sm:size-10"
               />

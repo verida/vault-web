@@ -19,14 +19,12 @@ import { useSavedAssistantPrompts } from "@/features/assistants/hooks/use-saved-
 import { AssistantUserInput } from "@/features/assistants/types"
 import { cn } from "@/styles/utils"
 
-export type AssistantUserInputSelectorProps = {
+export type AssistantPromptsSelectorProps = {
   onClickSetPrompt?: (input: AssistantUserInput) => void
   onItemClick?: (input: AssistantUserInput) => void
 } & Omit<React.ComponentProps<"div">, "children">
 
-export function AssistantUserInputSelector(
-  props: AssistantUserInputSelectorProps
-) {
+export function AssistantPromptsSelector(props: AssistantPromptsSelectorProps) {
   const { className, onClickSetPrompt, onItemClick, ...divProps } = props
 
   const { setAndProcessUserInput, updateUserPrompt } = useAssistants()
@@ -100,7 +98,7 @@ export function AssistantUserInputSelector(
     </div>
   )
 }
-AssistantUserInputSelector.displayName = "AssistantUserInputSelector"
+AssistantPromptsSelector.displayName = "AssistantPromptsSelector"
 
 type PromptItemProps = {
   label: string

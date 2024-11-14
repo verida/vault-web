@@ -3,7 +3,7 @@
 import { MessageSquareMoreIcon } from "lucide-react"
 import { useCallback, useState } from "react"
 
-import { AssistantUserInputSelector } from "@/app/(connected)/assistant/_components/assistant-user-input-selector"
+import { AssistantPromptsSelector } from "@/app/(connected)/assistant/_components/assistant-prompts-selector"
 import { Button } from "@/components/ui/button"
 import {
   Popover,
@@ -18,13 +18,11 @@ import {
 import { AssistantUserInput } from "@/features/assistants/types"
 import { cn } from "@/styles/utils"
 
-export type AssistantUserInputPromptsComboboxProps = {
+export type AssistantPromptsComboboxProps = {
   onClickEdit?: (input: AssistantUserInput) => void
 } & React.ComponentProps<typeof Button>
 
-export function AssistantUserInputPromptsCombobox(
-  props: AssistantUserInputPromptsComboboxProps
-) {
+export function AssistantPromptsCombobox(props: AssistantPromptsComboboxProps) {
   const { className, onClickEdit, ...buttonProps } = props
 
   const [open, setOpen] = useState(false)
@@ -66,7 +64,7 @@ export function AssistantUserInputPromptsCombobox(
         collisionPadding={8}
         className="w-[calc(100vw-1rem)] max-w-sm p-1"
       >
-        <AssistantUserInputSelector
+        <AssistantPromptsSelector
           onItemClick={handleItemClick}
           onClickSetPrompt={handleSetPromptClick}
         />
@@ -74,5 +72,4 @@ export function AssistantUserInputPromptsCombobox(
     </Popover>
   )
 }
-AssistantUserInputPromptsCombobox.displayName =
-  "AssistantUserInputPromptsCombobox"
+AssistantPromptsCombobox.displayName = "AssistantPromptsCombobox"
