@@ -62,7 +62,7 @@ export function AssistantPromptsCombobox(props: AssistantPromptsComboboxProps) {
         align="start"
         alignOffset={-20}
         collisionPadding={8}
-        className="w-[calc(100vw-1rem)] max-w-sm p-1"
+        className="w-[calc(100vw-1rem)] max-w-sm rounded-[0.875rem] p-1"
       >
         <AssistantPromptsSelector
           onItemClick={handleItemClick}

@@ -27,7 +27,12 @@ export type AssistantPromptsSelectorProps = {
 export function AssistantPromptsSelector(props: AssistantPromptsSelectorProps) {
   const { className, onClickSetPrompt, onItemClick, ...divProps } = props
 
-  const { setAndProcessUserInput, updateUserPrompt } = useAssistants()
+  const {
+    setAndProcessUserInput,
+    updateUserPrompt,
+    promptSearchValue,
+    setPromptSearchValue,
+  } = useAssistants()
 
   // TODO: Handle pagination, filter and sort. Link this to the value in the
   // CommandInput and turn the whole Command to a controlled component
@@ -49,11 +54,21 @@ export function AssistantPromptsSelector(props: AssistantPromptsSelectorProps) {
     [updateUserPrompt, onClickSetPrompt]
   )
 
+  const handleClearSearch = useCallback(() => {
+    setPromptSearchValue("")
+  }, [setPromptSearchValue])
+
   return (
     <div {...divProps} className={cn(className)}>
-      <Command>
+      <Command loop>
         <div className="p-1">
-          <CommandInput placeholder="Search..." />
+          <CommandInput
+            placeholder="Search..."
+            value={promptSearchValue}
+            onValueChange={setPromptSearchValue}
+            displayClearButton={promptSearchValue.length > 0}
+            onClear={handleClearSearch}
+          />
         </div>
         <CommandList>
           <CommandEmpty>No results found</CommandEmpty>

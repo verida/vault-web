@@ -17,6 +17,8 @@ export type AssistantsContextType = {
   isProcessing: boolean
   error: string | null
   hotload: HotloadResult
+  promptSearchValue: string
+  setPromptSearchValue: (value: string) => void
 }
 
 export const AssistantsContext = createContext<AssistantsContextType | null>(

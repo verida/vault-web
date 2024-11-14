@@ -44,6 +44,7 @@ export function AssistantsProvider(props: AssistantsProviderProps) {
     status: "idle",
     progress: 0,
   })
+  const [promptSearchValue, setPromptSearchValue] = useState("")
 
   const initialise = useCallback(async () => {
     logger.info("Initialising the assistant")
@@ -157,6 +158,8 @@ export function AssistantsProvider(props: AssistantsProviderProps) {
       isProcessing,
       error,
       hotload,
+      promptSearchValue,
+      setPromptSearchValue,
     }),
     [
       userInput,
@@ -169,6 +172,8 @@ export function AssistantsProvider(props: AssistantsProviderProps) {
       isProcessing,
       error,
       hotload,
+      promptSearchValue,
+      setPromptSearchValue,
     ]
   )
 
