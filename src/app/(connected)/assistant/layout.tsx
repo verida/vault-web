@@ -21,7 +21,6 @@ export default function AssistantsLayout(props: AssistantsLayoutProps) {
       className="h-full gap-0"
       contentClassName="h-full min-h-0 pb-0 md:pb-0 xl:pb-0"
     >
-      {/* <div className="flex h-full w-full flex-col">{children}</div> */}
       {children}
     </PageWrapper>
   )

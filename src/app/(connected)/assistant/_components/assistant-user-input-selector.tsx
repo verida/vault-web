@@ -3,6 +3,7 @@
 import { ArrowUpRightIcon } from "lucide-react"
 import { useCallback } from "react"
 
+import { Typography } from "@/components/typography"
 import { Button } from "@/components/ui/button"
 import {
   Command,
@@ -118,7 +119,11 @@ function PromptItem(props: PromptItemProps) {
       className="cursor-pointer py-1 pl-2 pr-1"
     >
       <div className="flex flex-row items-center gap-2">
-        <div className="flex-1 truncate">{label}</div>
+        <div className="min-w-0 flex-1">
+          <Typography variant="base-regular" className="truncate">
+            {label}
+          </Typography>
+        </div>
         <div className="shrink-0">
           <Button
             variant="ghost"

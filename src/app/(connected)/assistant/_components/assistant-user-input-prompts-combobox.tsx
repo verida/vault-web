@@ -10,6 +10,11 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
 import { AssistantUserInput } from "@/features/assistants/types"
 import { cn } from "@/styles/utils"
 
@@ -38,18 +43,23 @@ export function AssistantUserInputPromptsCombobox(
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
-        <Button
-          variant="outline"
-          size="icon"
-          {...buttonProps}
-          aria-expanded={open}
-          className={cn(className)}
-        >
-          <MessageSquareMoreIcon className="size-5 sm:size-6" />
-          <span className="sr-only">Open prompts menu</span>
-        </Button>
-      </PopoverTrigger>
+      <Tooltip>
+        <TooltipTrigger>
+          <PopoverTrigger asChild>
+            <Button
+              variant="outline"
+              size="icon"
+              {...buttonProps}
+              aria-expanded={open}
+              className={cn(className)}
+            >
+              <MessageSquareMoreIcon className="size-5 sm:size-6" />
+              <span className="sr-only">Open prompts menu</span>
+            </Button>
+          </PopoverTrigger>
+        </TooltipTrigger>
+        <TooltipContent>Your prompts</TooltipContent>
+      </Tooltip>
       <PopoverContent
         align="start"
         alignOffset={-20}

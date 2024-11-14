@@ -8,6 +8,7 @@ import React, {
   useLayoutEffect,
   useRef,
 } from "react"
+import { useMediaQuery } from "usehooks-ts"
 
 import { AssistantSavePromptDialog } from "@/app/(connected)/assistant/_components/assistant-save-prompt-dialog"
 import { AssistantUserInputPromptsCombobox } from "@/app/(connected)/assistant/_components/assistant-user-input-prompts-combobox"
@@ -21,7 +22,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { useAssistants } from "@/features/assistants/hooks/use-assistants"
-import { cn } from "@/styles/utils"
+import { cn, getMediaQuery } from "@/styles/utils"
 
 export type AssistantUserInputProps = Omit<
   React.ComponentProps<"div">,
@@ -67,6 +68,8 @@ export function AssistantUserInput(props: AssistantUserInputProps) {
     inputRef.current?.focus()
   }, [])
 
+  const isXL = useMediaQuery(getMediaQuery("xl"))
+
   return (
     <div {...divProps}>
       <Card className="flex flex-col gap-1 rounded-xl p-3 shadow-md ring-offset-surface focus-within:outline-none focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-0 hover:border-border-hover md:gap-2 md:p-4">
@@ -103,10 +106,12 @@ export function AssistantUserInput(props: AssistantUserInputProps) {
         </CardContent>
         <CardFooter className="flex-row justify-between p-0">
           <div className="flex flex-row items-center justify-start gap-2">
-            <AssistantUserInputPromptsCombobox
-              onClickEdit={handleEditPrompt}
-              className="size-8 sm:size-10 xl:hidden"
-            />
+            {!isXL ? (
+              <AssistantUserInputPromptsCombobox
+                onClickEdit={handleEditPrompt}
+                className="size-8 sm:size-10"
+              />
+            ) : null}
             <Tooltip>
               <AssistantSavePromptDialog>
                 <TooltipTrigger asChild>
@@ -117,11 +122,11 @@ export function AssistantUserInput(props: AssistantUserInputProps) {
                     disabled={!userInput?.prompt}
                   >
                     <BookmarkIcon className="size-5 sm:size-6" />
-                    <span className="sr-only">Save to reuse later</span>
+                    <span className="sr-only">Save this prompt</span>
                   </Button>
                 </TooltipTrigger>
               </AssistantSavePromptDialog>
-              <TooltipContent>Save</TooltipContent>
+              <TooltipContent>Save this prompt</TooltipContent>
             </Tooltip>
           </div>
           <div className="flex flex-row items-center justify-end gap-2">
