@@ -1,7 +1,6 @@
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
-import { BookmarkIcon } from "lucide-react"
 import { useCallback, useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
@@ -61,6 +60,8 @@ export function AssistantSavePromptDialog(
   const handleSubmit = useCallback(
     async (data: z.infer<typeof newPromptSchema>) => {
       // TODO: Implement save functionality
+
+      // eslint-disable-next-line no-console
       console.debug("Saving prompt", data)
 
       setIsSubmitting(true)
@@ -73,14 +74,14 @@ export function AssistantSavePromptDialog(
 
   useEffect(() => {
     form.setValue("prompt", userInput?.prompt ?? "")
-  }, [userInput])
+  }, [form, userInput])
 
   useEffect(() => {
     if (!modalOpen) {
       form.clearErrors()
       form.resetField("name")
     }
-  }, [modalOpen])
+  }, [form, modalOpen])
 
   return (
     <Dialog open={modalOpen} onOpenChange={setModalOpen}>
