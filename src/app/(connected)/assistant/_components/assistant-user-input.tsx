@@ -1,6 +1,6 @@
 "use client"
 
-import { XIcon } from "lucide-react"
+import { BookmarkIcon, XIcon } from "lucide-react"
 import React, {
   ChangeEventHandler,
   KeyboardEventHandler,
@@ -9,11 +9,17 @@ import React, {
   useRef,
 } from "react"
 
+import { AssistantSavePromptDialog } from "@/app/(connected)/assistant/_components/assistant-save-prompt-dialog"
 import { AssistantUserInputPromptsCombobox } from "@/app/(connected)/assistant/_components/assistant-user-input-prompts-combobox"
 import { SendIcon } from "@/components/icons/send-icon"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { Textarea } from "@/components/ui/textarea"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
 import { useAssistants } from "@/features/assistants/hooks/use-assistants"
 import { cn } from "@/styles/utils"
 
@@ -101,6 +107,22 @@ export function AssistantUserInput(props: AssistantUserInputProps) {
               onClickEdit={handleEditPrompt}
               className="size-8 sm:size-10"
             />
+            <Tooltip>
+              <AssistantSavePromptDialog>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    className="size-8 sm:size-10"
+                    disabled={!userInput?.prompt}
+                  >
+                    <BookmarkIcon className="size-5 sm:size-6" />
+                    <span className="sr-only">Save to reuse later</span>
+                  </Button>
+                </TooltipTrigger>
+              </AssistantSavePromptDialog>
+              <TooltipContent>Save</TooltipContent>
+            </Tooltip>
           </div>
           <div className="flex flex-row items-center justify-end gap-2">
             <Button
