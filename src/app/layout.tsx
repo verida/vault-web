@@ -11,7 +11,10 @@ import { cn } from "@/styles/utils"
 const baseUrl = new URL(commonConfig.BASE_URL)
 
 export const metadata: Metadata = {
-  title: APP_TITLE,
+  title: {
+    default: APP_TITLE,
+    template: `%s | ${APP_TITLE}`,
+  },
   description: APP_DESCRIPTION,
   applicationName: APP_NAME,
   metadataBase: baseUrl,
@@ -20,8 +23,6 @@ export const metadata: Metadata = {
   },
   openGraph: {
     url: baseUrl,
-    title: APP_TITLE,
-    description: APP_DESCRIPTION,
     images: {
       // TODO: Change this image url to update the image with proper one.
       url: `${baseUrl.toString()}images/inbox-page.png`,
