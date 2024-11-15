@@ -1,22 +1,21 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 
 import { VeridaDatabaseQueryKeys } from "@/features/verida-database/queries"
-import { deleteVeridaDataRecord } from "@/features/verida-database/utils"
+import { destroyVeridaDatabase } from "@/features/verida-database/utils"
 import { useVerida } from "@/features/verida/hooks/use-verida"
 
-type DeleteVeridaRecordArgs = {
+type DestroyVeridaDatabaseArgs = {
   databaseName: string
-  recordId: string
 }
 
-export function useVeridaDeleteRecord() {
-  const { did, getAccountSessionToken } = useVerida()
+export function useDestroyVeridaDatabase() {
+  const { getAccountSessionToken } = useVerida()
   const queryClient = useQueryClient()
 
   const { mutate, mutateAsync, ...mutation } = useMutation({
-    mutationFn: async ({ databaseName, recordId }: DeleteVeridaRecordArgs) => {
+    mutationFn: async ({ databaseName }: DestroyVeridaDatabaseArgs) => {
       const sessionToken = await getAccountSessionToken()
-      return deleteVeridaDataRecord({ databaseName, recordId, sessionToken })
+      return destroyVeridaDatabase({ databaseName, sessionToken })
     },
     onSuccess: (_data, variables) => {
       queryClient.invalidateQueries({
@@ -25,22 +24,20 @@ export function useVeridaDeleteRecord() {
         }),
       })
       queryClient.removeQueries({
-        queryKey: VeridaDatabaseQueryKeys.dataRecord({
-          did,
+        queryKey: VeridaDatabaseQueryKeys.invalidateDataRecord({
           databaseName: variables.databaseName,
-          recordId: variables.recordId,
         }),
       })
     },
     meta: {
       logCategory: "verida-database",
-      errorMessage: "Error deleting Verida data record",
+      errorMessage: "Error destroying Verida database",
     },
   })
 
   return {
-    deleteRecord: mutate,
-    deleteRecordAsync: mutateAsync,
+    destroyDatabase: mutate,
+    destroyDatabaseAsync: mutateAsync,
     ...mutation,
   }
 }

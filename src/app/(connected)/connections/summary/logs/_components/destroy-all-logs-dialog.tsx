@@ -17,7 +17,7 @@ import { Button } from "@/components/ui/button"
 import { featureFlags } from "@/config/features"
 import { DATA_CONNECTIONS_SYNC_LOGS_DATABASE_NAME } from "@/features/data-connections/constants"
 import { useToast } from "@/features/toasts/use-toast"
-import { useVeridaDestroyDatabase } from "@/features/verida-database/hooks/use-verida-destroy-database"
+import { useDestroyVeridaDatabase } from "@/features/verida-database/hooks/use-destroy-verida-database"
 
 export type DestroyAllLogsDialogProps = {
   children: React.ReactNode
@@ -31,7 +31,7 @@ export function DestroyAllLogsDialog(props: DestroyAllLogsDialogProps) {
   const [open, setOpen] = useState(false)
   const [status, setStatus] = useState<"idle" | "processing" | "error">("idle")
 
-  const { destroyDatabase } = useVeridaDestroyDatabase()
+  const { destroyDatabase } = useDestroyVeridaDatabase()
 
   const handleProcessClick = useCallback(() => {
     setStatus("processing")
