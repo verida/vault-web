@@ -5,7 +5,7 @@ import { disconnectDataConnection } from "@/features/data-connections/utils"
 import { useVerida } from "@/features/verida/hooks/use-verida"
 import { wait } from "@/utils/misc"
 
-type DisconnectDataConnectionVariables = {
+type DisconnectDataConnectionArgs = {
   connectionId: string
 }
 
@@ -14,7 +14,7 @@ export function useDisconnectDataConnection() {
   const queryClient = useQueryClient()
 
   const { mutate, mutateAsync, ...mutation } = useMutation({
-    mutationFn: async ({ connectionId }: DisconnectDataConnectionVariables) => {
+    mutationFn: async ({ connectionId }: DisconnectDataConnectionArgs) => {
       const sessionToken = await getAccountSessionToken()
       return disconnectDataConnection(connectionId, sessionToken)
     },

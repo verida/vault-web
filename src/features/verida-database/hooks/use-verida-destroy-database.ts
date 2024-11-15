@@ -4,7 +4,7 @@ import { VeridaDatabaseQueryKeys } from "@/features/verida-database/queries"
 import { destroyVeridaDatabase } from "@/features/verida-database/utils"
 import { useVerida } from "@/features/verida/hooks/use-verida"
 
-type DestroyDatabaseVariables = {
+type DestroyVeridaDatabaseArgs = {
   databaseName: string
 }
 
@@ -13,7 +13,7 @@ export function useVeridaDestroyDatabase() {
   const queryClient = useQueryClient()
 
   const { mutate, mutateAsync, ...mutation } = useMutation({
-    mutationFn: async ({ databaseName }: DestroyDatabaseVariables) => {
+    mutationFn: async ({ databaseName }: DestroyVeridaDatabaseArgs) => {
       const sessionToken = await getAccountSessionToken()
       return destroyVeridaDatabase({ databaseName, sessionToken })
     },

@@ -4,7 +4,7 @@ import { VeridaDatabaseQueryKeys } from "@/features/verida-database/queries"
 import { deleteVeridaDataRecord } from "@/features/verida-database/utils"
 import { useVerida } from "@/features/verida/hooks/use-verida"
 
-type DeleteRecordVariables = {
+type DeleteVeridaRecordArgs = {
   databaseName: string
   recordId: string
 }
@@ -14,7 +14,7 @@ export function useVeridaDeleteRecord() {
   const queryClient = useQueryClient()
 
   const { mutate, mutateAsync, ...mutation } = useMutation({
-    mutationFn: async ({ databaseName, recordId }: DeleteRecordVariables) => {
+    mutationFn: async ({ databaseName, recordId }: DeleteVeridaRecordArgs) => {
       const sessionToken = await getAccountSessionToken()
       return deleteVeridaDataRecord({ databaseName, recordId, sessionToken })
     },
