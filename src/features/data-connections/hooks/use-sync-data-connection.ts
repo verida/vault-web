@@ -9,7 +9,7 @@ import { wait } from "@/utils/misc"
 
 const logger = Logger.create("data-connections")
 
-type SyncDataConnectionVariables = {
+type SyncDataConnectionArgs = {
   connectionId: string
 }
 
@@ -29,7 +29,7 @@ export function useSyncDataConnection() {
   }, [queryClient])
 
   const { mutate, mutateAsync, ...mutation } = useMutation({
-    mutationFn: async ({ connectionId }: SyncDataConnectionVariables) => {
+    mutationFn: async ({ connectionId }: SyncDataConnectionArgs) => {
       const sessionToken = await getAccountSessionToken()
       return syncDataConnection(connectionId, sessionToken)
     },
