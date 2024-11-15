@@ -23,35 +23,34 @@ export function Spinner(props: SpinnerProps) {
 
   return (
     <div className={cn("relative", className)} {...divProps}>
-      <div
-        className={cn(
-          "size-20 animate-spin rounded-full bg-gradient-conic",
-          spinnerClassName
-        )}
-        style={{
-          // Add webkit mask image gradient to fix Safari mask issues
-          WebkitMaskImage: "-webkit-radial-gradient(white, black)",
-          mask: "url(#spinner-mask) no-repeat center",
-          WebkitMask: "url(#spinner-mask) no-repeat center",
-          WebkitMaskSize: "100%",
-          maskSize: "100%",
-          // Add isolation to help with mask rendering
-          isolation: "isolate",
-        }}
-      ></div>
       <svg
         ref={svgRef}
-        width="0"
-        height="0"
+        width={svgSize}
+        height={svgSize}
         viewBox={`0 0 ${svgSize} ${svgSize}`}
-        className={cn("size-20", spinnerClassName, "absolute inset-0")}
+        className={cn("size-20 animate-spin text-primary", spinnerClassName)}
       >
         <defs>
-          <mask id="spinner-mask" x="0" y="0" width="1" height="1">
-            <rect x="0" y="0" width="100%" height="100%" fill="white" />
-            <circle cx="50%" cy="50%" r="37.5%" fill="black" />
-          </mask>
+          <clipPath id="spinner-clip">
+            <path
+              d={`M0 0 h${svgSize} v${svgSize} H0 Z M${svgSize / 2} ${svgSize / 2} m-${svgSize * 0.375} 0 a${svgSize * 0.375},${svgSize * 0.375} 0 1,0 ${svgSize * 0.75},0 a${svgSize * 0.375},${svgSize * 0.375} 0 1,0 -${svgSize * 0.75},0`}
+            />
+          </clipPath>
         </defs>
+        <circle
+          cx={svgSize / 2}
+          cy={svgSize / 2}
+          r={svgSize / 2}
+          style={{
+            fill: "url(#spinner-gradient)",
+            transformOrigin: "center",
+          }}
+          clipPath="url(#spinner-clip)"
+        />
+        <linearGradient id="spinner-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stopColor="currentColor" stopOpacity="1" />
+          <stop offset="100%" stopColor="currentColor" stopOpacity="0" />
+        </linearGradient>
       </svg>
     </div>
   )
