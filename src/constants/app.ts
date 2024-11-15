@@ -1,9 +1,10 @@
 export const APP_NAME = "Verida Vault"
 
-export const APP_TITLE = "Verida Vault"
+export const APP_TITLE =
+  "Verida Vault | Connect private data with AI applications"
 
 export const APP_DESCRIPTION =
-  "Securely manage your private data and zero knowledge credentials with the Verida Vault App."
+  "Take ownership of your personal data and connect it to the next generation of private AI solutions and agents"
 
 export const VERIDA_WEBSITE_URL = "https://verida.network"
 

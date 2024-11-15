@@ -8,13 +8,13 @@ import { sora } from "@/styles/font"
 import "@/styles/globals.css"
 import { cn } from "@/styles/utils"
 
-const baseUrl = commonConfig.BASE_URL
+const baseUrl = new URL(commonConfig.BASE_URL)
 
 export const metadata: Metadata = {
   title: APP_TITLE,
   description: APP_DESCRIPTION,
   applicationName: APP_NAME,
-  metadataBase: new URL(baseUrl),
+  metadataBase: baseUrl,
   alternates: {
     canonical: "/",
   },
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     description: APP_DESCRIPTION,
     images: {
       // TODO: Change this image url to update the image with proper one.
-      url: `${baseUrl}/images/inbox-page.png`,
+      url: `${baseUrl.toString()}images/inbox-page.png`,
       width: 1200,
       height: 630,
       alt: APP_NAME,
