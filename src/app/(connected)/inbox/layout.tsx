@@ -1,3 +1,4 @@
+import { Metadata } from "next"
 import { notFound } from "next/navigation"
 import { Suspense } from "react"
 
@@ -8,6 +9,10 @@ import {
   LoadingBlockTitle,
 } from "@/components/ui/loading"
 import { featureFlags } from "@/config/features"
+
+export const metadata: Metadata = {
+  title: "Inbox",
+}
 
 type InboxLayoutProps = {
   children: React.ReactNode

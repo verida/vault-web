@@ -1,6 +1,11 @@
+import { Metadata } from "next"
 import { notFound } from "next/navigation"
 
 import { featureFlags } from "@/config/features"
+
+export const metadata: Metadata = {
+  title: "Connections",
+}
 
 type ConnectionsLayoutProps = {
   children: React.ReactNode
