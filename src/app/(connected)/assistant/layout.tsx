@@ -1,8 +1,13 @@
+import { Metadata } from "next"
 import { notFound } from "next/navigation"
 import React from "react"
 
 import { PageWrapper } from "@/components/page-wrapper"
 import { featureFlags } from "@/config/features"
+
+export const metadata: Metadata = {
+  title: "AI Assistant",
+}
 
 type AssistantsLayoutProps = {
   children: React.ReactNode

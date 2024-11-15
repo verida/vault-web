@@ -77,7 +77,7 @@ export function DataTable<TData>(props: DataTableProps<TData>) {
             <div className="absolute inset-0 bg-background/70">
               <div className="flex h-full items-center justify-center">
                 <LoadingBlock>
-                  <LoadingBlockSpinner spinnerClassName="size-14" />
+                  <LoadingBlockSpinner className="size-14" />
                   <LoadingBlockDescription>
                     {refreshingMessage}
                   </LoadingBlockDescription>

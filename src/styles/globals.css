@@ -71,7 +71,7 @@
   }
 
   body {
-    @apply bg-background font-sans text-foreground antialiased caret-accent selection:bg-accent selection:text-accent-foreground;
+    @apply bg-surface font-sans text-foreground antialiased caret-accent selection:bg-accent selection:text-accent-foreground;
   }
 }
 

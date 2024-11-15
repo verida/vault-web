@@ -17,7 +17,7 @@ import { Button } from "@/components/ui/button"
 import { featureFlags } from "@/config/features"
 import { DatabaseDefinition } from "@/features/data/types"
 import { useToast } from "@/features/toasts/use-toast"
-import { useVeridaDestroyDatabase } from "@/features/verida-database/hooks/use-verida-destroy-database"
+import { useDestroyVeridaDatabase } from "@/features/verida-database/hooks/use-destroy-verida-database"
 
 export type DataDestroyDatabaseDialogProps = {
   children: React.ReactNode
@@ -34,7 +34,7 @@ export function DataDestroyDatabaseDialog(
   const [open, setOpen] = useState(false)
   const [status, setStatus] = useState<"idle" | "processing" | "error">("idle")
 
-  const { destroyDatabase } = useVeridaDestroyDatabase()
+  const { destroyDatabase } = useDestroyVeridaDatabase()
 
   const handleProcessClick = useCallback(() => {
     setStatus("processing")
