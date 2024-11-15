@@ -29,10 +29,14 @@ export function Spinner(props: SpinnerProps) {
           spinnerClassName
         )}
         style={{
+          // Add webkit mask image gradient to fix Safari mask issues
+          WebkitMaskImage: "-webkit-radial-gradient(white, black)",
           mask: "url(#spinner-mask) no-repeat center",
           WebkitMask: "url(#spinner-mask) no-repeat center",
           WebkitMaskSize: "100%",
           maskSize: "100%",
+          // Add isolation to help with mask rendering
+          isolation: "isolate",
         }}
       ></div>
       <svg
