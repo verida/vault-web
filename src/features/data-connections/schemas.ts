@@ -1,15 +1,13 @@
 import { z } from "zod"
 
 // TODO: Finalise the schema
-export const DataConnectionConfigOptionSchema = z
-  .object({
-    id: z.string(),
-    label: z.string(),
-    type: z.string(), // TODO: Set up enum of types
-    // TODO: Add options for different types
-    defaultValue: z.string().optional(),
-  })
-  .passthrough()
+export const DataConnectionConfigOptionSchema = z.object({
+  id: z.string(),
+  label: z.string(),
+  type: z.string(), // TODO: Set up enum of types
+  // TODO: Add options for different types
+  defaultValue: z.string().optional(),
+})
 
 export const DataProviderHandlerSchema = z.object({
   id: z.string(),
@@ -65,28 +63,26 @@ export const DataConnectionHandlerStatusSchema = z.enum([
   "syncing",
 ])
 
-export const DataConnectionHandlerSchema = z
-  .object({
-    id: z.string(),
-    providerId: z.string(),
-    accountId: z.string(),
-    handlerId: z.string(),
-    enabled: z.boolean(),
-    config: z.record(z.string(), z.string()),
-    status: DataConnectionHandlerStatusSchema,
-    syncMessage: z.string().optional(),
-    latestSyncStart: z.string().optional(),
-    latestSyncEnd: z.string().optional(),
-    oldestDataTimestamp: z.string().optional(),
-    newestDataTimestamp: z.string().optional(),
-  })
-  .passthrough()
+export const DataConnectionHandlerSchema = z.object({
+  id: z.string(),
+  providerId: z.string(),
+  accountId: z.string(),
+  handlerId: z.string(),
+  enabled: z.boolean(),
+  config: z.record(z.string(), z.string()),
+  status: DataConnectionHandlerStatusSchema,
+  syncMessage: z.string().optional(),
+  latestSyncStart: z.string().optional(),
+  latestSyncEnd: z.string().optional(),
+  oldestDataTimestamp: z.string().optional(),
+  newestDataTimestamp: z.string().optional(),
+})
 
 export const DataConnectionSchema = z.object({
   _id: z.string(),
   providerId: z.string(),
   accountId: z.string(),
-  profile: DataConnectionProfileSchema.passthrough(),
+  profile: DataConnectionProfileSchema,
   syncStatus: DataConnectionStatusSchema,
   syncFrequency: z.string(),
   syncNext: z.string().optional(),
@@ -95,22 +91,18 @@ export const DataConnectionSchema = z.object({
 })
 
 export const DataConnectionsApiV1GetConnectionsResponseSchema = z.object({
-  items: z.record(z.string(), DataConnectionSchema.passthrough()),
+  items: z.record(z.string(), DataConnectionSchema),
   success: z.boolean(),
 })
 
-export const DataConnectionsApiV1SyncAllConnectionsResponseSchema = z
-  .object({
-    success: z.boolean(),
-  })
-  .passthrough()
+export const DataConnectionsApiV1SyncAllConnectionsResponseSchema = z.object({
+  success: z.boolean(),
+})
 
-export const DataConnectionsApiV1SyncConnectionResponseSchema = z
-  .object({
-    // TODO: Define the returned data connection when needed
-    success: z.boolean(),
-  })
-  .passthrough()
+export const DataConnectionsApiV1SyncConnectionResponseSchema = z.object({
+  // TODO: Define the returned data connection when needed
+  success: z.boolean(),
+})
 
 export const DataConnectionsApiV1DisconnectConnectionResponseSchema = z.object({
   success: z.boolean(),

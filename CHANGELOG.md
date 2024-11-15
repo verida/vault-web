@@ -1,3 +1,23 @@
+# 0.8.0 (2024-11-12)
+
+## Enhancements
+
+- Improve performance for loading Verida identity profile
+- Add ability to delete a data record
+- Add ability to destroy a whole database
+- Move inbox link from navigation to icon button in header
+
+## Bug fixes
+
+- Fix assistant error for invalid response
+- Fix data item not found when opening it
+- Fix incorrect processing time and data status in assistant
+
+## Misc
+
+- Create CHANGELOG.md
+- Update dependencies
+
 # 0.7.0 (2024-11-07)
 
 ## Enhancements

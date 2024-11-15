@@ -37,23 +37,27 @@ export function AssistantOutputCard(props: AssistantOutputCardProps) {
       return undefined
     }
 
-    const milliseconds = assistantOutput.processingTime
-    const minutes = Math.floor(milliseconds / 60000)
-    const seconds = Math.floor((milliseconds % 60000) / 1000)
-    const remainingMs = milliseconds % 1000
+    const totalSeconds = assistantOutput.processingTime
+    let minutes = Math.floor(totalSeconds / 60)
+    const remainingSeconds = totalSeconds % 60
+    const milliseconds = Math.floor((totalSeconds % 1) * 1000)
 
     // If less than a second, show milliseconds
-    if (minutes === 0 && seconds === 0) {
-      return `${remainingMs}ms`
+    if (minutes === 0 && remainingSeconds < 1) {
+      return `${milliseconds}ms`
     }
 
-    // If less than a minute, show seconds
-    if (minutes === 0) {
-      return `${seconds}s`
+    // If less than a minute or 60 seconds, show seconds rounded up
+    const roundedSeconds = Math.round(remainingSeconds)
+    if (minutes === 0 && roundedSeconds < 60) {
+      return `${roundedSeconds}s`
     }
 
-    // If more than a minute, show minutes and seconds
-    return `${minutes}min ${seconds}s`
+    // If more than a minute, show minutes rounded up based on seconds
+    if (remainingSeconds >= 30) {
+      minutes += 1
+    }
+    return `${minutes}min`
   }, [assistantOutput?.processingTime])
 
   const dataInfo = useMemo(() => {

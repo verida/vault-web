@@ -8,6 +8,12 @@ export const featureFlags = {
   },
   data: {
     enabled: commonConfig.FEATURE_FLAG_DATA_ENABLED,
+    db: {
+      destroy: commonConfig.FEATURE_FLAG_DATA_DESTROY_DB_ENABLED,
+    },
+    record: {
+      delete: commonConfig.FEATURE_FLAG_DATA_DELETE_RECORD_ENABLED,
+    },
   },
   commandDialog: {
     enabled: commonConfig.FEATURE_FLAG_COMMAND_DIALOG_ENABLED,
@@ -19,6 +25,7 @@ export const featureFlags = {
     enabled: commonConfig.FEATURE_FLAG_DATA_CONNECTIONS_ENABLED,
     logs: {
       enabled: commonConfig.FEATURE_FLAG_DATA_CONNECTIONS_LOGS_ENABLED,
+      destroy: commonConfig.FEATURE_FLAG_DATA_CONNECTIONS_LOGS_DESTROY_ENABLED,
     },
   },
   apiKeys: {

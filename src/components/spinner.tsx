@@ -1,32 +1,55 @@
-export type SpinnerProps = {
-  width?: number
-  height?: number
-}
+"use client"
+
+import { SVGProps, useLayoutEffect, useRef, useState } from "react"
+
+import { cn } from "@/styles/utils"
+
+export type SpinnerProps = SVGProps<SVGSVGElement>
 
 export function Spinner(props: SpinnerProps) {
-  const { width = 80, height = 80 } = props
+  const { className, ...svgProps } = props
+
+  const svgRef = useRef<SVGSVGElement>(null)
+  const [svgSize, setSvgSize] = useState(80)
+
+  useLayoutEffect(() => {
+    if (svgRef.current) {
+      const { width, height } = svgRef.current.getBoundingClientRect()
+      setSvgSize(Math.max(width, height))
+    }
+  }, [className])
 
   return (
-    <>
-      <div
-        className="h-20 w-20 animate-spin rounded-full bg-gradient-conic"
+    <svg
+      ref={svgRef}
+      width={svgSize}
+      height={svgSize}
+      viewBox={`0 0 ${svgSize} ${svgSize}`}
+      className={cn("size-20 animate-spin text-primary", className)}
+      {...svgProps}
+    >
+      <defs>
+        <clipPath id="spinner-clip">
+          <path
+            d={`M0 0 h${svgSize} v${svgSize} H0 Z M${svgSize / 2} ${svgSize / 2} m-${svgSize * 0.375} 0 a${svgSize * 0.375},${svgSize * 0.375} 0 1,0 ${svgSize * 0.75},0 a${svgSize * 0.375},${svgSize * 0.375} 0 1,0 -${svgSize * 0.75},0`}
+          />
+        </clipPath>
+      </defs>
+      <circle
+        cx={svgSize / 2}
+        cy={svgSize / 2}
+        r={svgSize / 2}
         style={{
-          width,
-          height,
-          mask: "url(#mask) no-repeat center",
-          WebkitMask: "url(#mask) no-repeat center",
-          WebkitMaskSize: "100%",
-          maskSize: "100%",
+          fill: "url(#spinner-gradient)",
+          transformOrigin: "center",
         }}
-      ></div>
-      <svg width="0" height="0">
-        <defs>
-          <mask id="mask" x="0" y="0" width="1" height="1">
-            <rect x="0" y="0" width="80" height="80" fill="white" />
-            <circle cx="40" cy="40" r="30" fill="black" />
-          </mask>
-        </defs>
-      </svg>
-    </>
+        clipPath="url(#spinner-clip)"
+      />
+      <linearGradient id="spinner-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" stopColor="currentColor" stopOpacity="1" />
+        <stop offset="100%" stopColor="currentColor" stopOpacity="0" />
+      </linearGradient>
+    </svg>
   )
 }
+Spinner.displayName = "Spinner"

@@ -16,8 +16,8 @@ import { DATA_TABLE_PAGINATION_SIZE_DEFAULT } from "@/features/data-table/consta
 import { DataTableColumnAlignFeature } from "@/features/data-table/data-table-column-align-feature"
 import { DataTableColumnClassNameFeature } from "@/features/data-table/data-table-column-classname-feature"
 import { DatabaseDefinition } from "@/features/data/types"
+import { useVeridaDataRecords } from "@/features/verida-database/hooks/use-verida-data-records"
 import { VeridaRecord } from "@/features/verida-database/types"
-import { useVeridaDataRecords } from "@/features/verida-database/use-verida-data-records"
 
 const fallbackData: VeridaRecord[] = []
 
@@ -40,6 +40,7 @@ export function DataRecordsTable(props: DataRecordsTableProps) {
     pagination: recordsPaginationInfo,
     isLoading,
     isError,
+    isFetching,
   } = useVeridaDataRecords({
     databaseName: databaseDefinition.databaseVaultName,
     options: {
@@ -69,7 +70,10 @@ export function DataRecordsTable(props: DataRecordsTableProps) {
     <DataTable
       table={table}
       rowComponent={(row) => (
-        <Link href={`?itemId=${row.original._id}`} className="rounded-lg">
+        <Link
+          href={`?itemId=${encodeURIComponent(row.original._id)}`}
+          className="rounded-lg"
+        >
           <DataTableGenericRow
             row={row}
             className="hover:border-border-hover hover:bg-surface-hover"
@@ -78,6 +82,7 @@ export function DataRecordsTable(props: DataRecordsTableProps) {
       )}
       className={className}
       isLoading={isLoading}
+      isRefreshing={isFetching}
       isError={isError}
       loadingTitle={`Loading ${databaseDefinition.titlePlural}...`}
       loadingDescription="Please wait while we load your data."

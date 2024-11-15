@@ -7,7 +7,7 @@ import { cn } from "@/styles/utils"
 
 export type PageWrapperProps = {
   pageTitle?: string | React.ReactNode
-  leftContent?: React.ReactNode
+  rightContent?: React.ReactNode
   backNavigationHref?: string
   backNavigationLabel?: string
   children: React.ReactNode
@@ -17,7 +17,7 @@ export type PageWrapperProps = {
 export function PageWrapper(props: PageWrapperProps) {
   const {
     pageTitle,
-    leftContent,
+    rightContent,
     backNavigationHref,
     backNavigationLabel,
     children,
@@ -51,14 +51,14 @@ export function PageWrapper(props: PageWrapperProps) {
             ) : null}
           </div>
         ) : null}
-        {pageTitle || leftContent ? (
+        {pageTitle || rightContent ? (
           <div className="flex min-h-12 flex-row items-center justify-between gap-6">
             {typeof pageTitle === "string" ? (
               <PageTitle>{pageTitle}</PageTitle>
             ) : (
               pageTitle
             )}
-            {leftContent}
+            {rightContent}
           </div>
         ) : null}
       </div>

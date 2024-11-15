@@ -18,8 +18,10 @@ export function LoadingBlock(props: LoadingBlockProps) {
 }
 LoadingBlock.displayName = "LoadingBlock"
 
-export function LoadingBlockSpinner() {
-  return <Spinner />
+export type LoadingBlockSpinnerProps = React.ComponentProps<typeof Spinner>
+
+export function LoadingBlockSpinner(props: LoadingBlockSpinnerProps) {
+  return <Spinner {...props} />
 }
 LoadingBlockSpinner.displayName = "LoadingBlockSpinner"
 

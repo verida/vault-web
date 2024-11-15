@@ -9,6 +9,9 @@ export async function wait(ms = 2000) {
 }
 
 // TODO: To refactor or get rid of in favor of a lib
+/**
+ * @deprecated Use date-fns instead and build a custom function in `/utils/date.ts` if needed
+ */
 export function formatDate(date: Date | string) {
   const now = new Date()
   const inputDate = new Date(date)

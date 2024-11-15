@@ -33,13 +33,6 @@ export type VeridaDatabaseQueryOptions<T = Record<string, unknown>> = {
   skip?: number
 }
 
-export type FetchVeridaDataRecordsArgs<T = Record<string, unknown>> = {
-  sessionToken: string
-  databaseName: string
-  filter?: VeridaDatabaseQueryFilter<T>
-  options?: VeridaDatabaseQueryOptions<T>
-}
-
 export type FetchVeridaDataRecordsResult<T = Record<string, unknown>> = {
   records: VeridaRecord<T>[]
   pagination: {

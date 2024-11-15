@@ -48,7 +48,10 @@ export default function InboxPage() {
     limit
   )
 
-  const messageId = searchParams.get("id")
+  const encodedMessageId = searchParams.get("id")
+  const messageId = encodedMessageId
+    ? decodeURIComponent(encodedMessageId)
+    : null
 
   const selectedMessage = messages?.find(
     (message: any) => message._id === messageId
@@ -107,7 +110,7 @@ export default function InboxPage() {
               <InboxRowItem
                 key={`inbox-row-${message._id}`}
                 message={message}
-                href={`?id=${message._id}`}
+                href={`?id=${encodeURIComponent(message._id)}`}
               />
             ))}
           </div>
