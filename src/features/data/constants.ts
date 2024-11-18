@@ -1,3 +1,4 @@
+import { SAVED_PROMPTS_DB_DEF } from "@/features/assistants/constants"
 import { DatabaseDefinition } from "@/features/data/types"
 
 const DEFS: DatabaseDefinition[] = [
@@ -117,6 +118,7 @@ const DEFS: DatabaseDefinition[] = [
     schemaUrlBase: "https://common.schemas.verida.io/file",
     schemaUrlLatest: "https://common.schemas.verida.io/file/v0.1.0/schema.json",
   },
+  SAVED_PROMPTS_DB_DEF,
 ]
 
 export const DATABASE_DEFS = DEFS.sort((a, b) => a.id.localeCompare(b.id))

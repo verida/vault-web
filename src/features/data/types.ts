@@ -18,6 +18,7 @@ export type DataItem = {
 
 export type DatabaseDefinition = {
   id: string
+  hide?: boolean
   title: string
   titlePlural: string
   color: string
