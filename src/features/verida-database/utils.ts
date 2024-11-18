@@ -5,10 +5,10 @@ import { DATABASE_DEFS } from "@/features/data/constants"
 import { Logger } from "@/features/telemetry"
 import {
   VeridaDatabaseDeleteApiV1ResponseSchema,
-  VeridaDatabaseGetRecordApiV1ResponseSchema,
-  VeridaDatabaseQueryApiV1ResponseSchema,
   getCreateVeridaRecordApiV1ResponseSchema,
   getUpdateVeridaRecordApiV1ResponseSchema,
+  getVeridaDatabaseGetRecordApiV1ResponseSchema,
+  getVeridaDatabaseQueryApiV1ResponseSchema,
 } from "@/features/verida-database/schemas"
 import {
   FetchVeridaDataRecordsResult,
@@ -25,27 +25,34 @@ const defaultVeridaDataRecordsQueryOptions: VeridaDatabaseQueryOptions = {
   limit: 10,
 }
 
-export type GetVeridaDataRecordsArgs<T = Record<string, unknown>> = {
+export type GetVeridaDataRecordsArgs<T extends z.ZodObject<any>> = {
   sessionToken: string
   databaseName: string
-  filter?: VeridaDatabaseQueryFilter<T>
-  options?: VeridaDatabaseQueryOptions<T>
+  filter?: VeridaDatabaseQueryFilter<z.infer<T>>
+  options?: VeridaDatabaseQueryOptions<z.infer<T>>
+  baseSchema?: T
 }
 
 /**
  * Gets Verida data records from the specified database.
  *
- * @param databaseName - The name of the database to query
- * @param filter - Optional query filter to apply to the records
- * @param options - Optional query parameters (sort, limit, skip)
+ * @param params - Function parameters
+ * @param params.sessionToken - The session token for authentication
+ * @param params.databaseName - The name of the database to query
+ * @param params.filter - Optional query filter to apply to the records
+ * @param params.options - Optional query parameters (sort, limit, skip)
+ * @param params.baseSchema - Optional base schema to extend the records with
  * @returns Promise resolving to an array of VeridaRecord objects
  */
-export async function getVeridaDataRecords<T = Record<string, unknown>>({
+export async function getVeridaDataRecords<T extends z.ZodObject<any>>({
   sessionToken,
   databaseName,
   filter,
   options,
-}: GetVeridaDataRecordsArgs<T>): Promise<FetchVeridaDataRecordsResult<T>> {
+  baseSchema,
+}: GetVeridaDataRecordsArgs<T>): Promise<
+  FetchVeridaDataRecordsResult<z.infer<T>>
+> {
   const resolvedOptions = {
     // A simple merge is enough as the default options are not in nested objects
     ...defaultVeridaDataRecordsQueryOptions,
@@ -85,20 +92,18 @@ export async function getVeridaDataRecords<T = Record<string, unknown>>({
 
     const data = await response.json()
 
-    // Validate the response data against the VeridaBaseRecordSchema
-    const validatedData = VeridaDatabaseQueryApiV1ResponseSchema.parse(data)
+    // Validate the response data
+    const valdationSchema =
+      getVeridaDatabaseQueryApiV1ResponseSchema(baseSchema)
+
+    const validatedData = valdationSchema.parse(data)
 
     logger.info("Successfully got Verida records", {
       databaseName,
     })
 
     return {
-      // FIXME: This is a temporary fix to ensure the data is returned as an
-      // array of VeridaRecord<T>. We need to find a better way to type the
-      // data coming from the database. Idea would be to pass a schema to the
-      // function and then use that schema to validate the data. And concerning
-      // typescript, infer the returned type from the schema.
-      records: validatedData.items as VeridaRecord<T>[],
+      records: validatedData.items as VeridaRecord<z.infer<T>>[],
       pagination: {
         limit: validatedData.limit ?? null,
         skipped: validatedData.skip ?? null,
@@ -110,10 +115,11 @@ export async function getVeridaDataRecords<T = Record<string, unknown>>({
   }
 }
 
-type GetVeridaDataRecordArgs = {
+type GetVeridaDataRecordArgs<T extends z.ZodObject<any>> = {
   sessionToken: string
   databaseName: string
   recordId: string
+  baseSchema?: T
 }
 
 /**
@@ -122,13 +128,15 @@ type GetVeridaDataRecordArgs = {
  * @param key - API key for authentication
  * @param databaseName - The name of the database to query
  * @param recordId - The ID of the record to fetch
+ * @param baseSchema - Optional base schema to extend the record with
  * @returns Promise resolving to a single VeridaRecord object
  */
-export async function getVeridaDataRecord<T = Record<string, unknown>>({
+export async function getVeridaDataRecord<T extends z.ZodObject<any>>({
   sessionToken,
   databaseName,
   recordId,
-}: GetVeridaDataRecordArgs): Promise<VeridaRecord<T>> {
+  baseSchema,
+}: GetVeridaDataRecordArgs<T>): Promise<VeridaRecord<z.infer<T>>> {
   logger.info("Getting a single Verida record", {
     databaseName,
   })
@@ -163,22 +171,18 @@ export async function getVeridaDataRecord<T = Record<string, unknown>>({
 
     const data = await response.json()
 
-    // Validate the response data against the VeridaDatabaseGetRecordApiResponseSchema
-    const validatedData = VeridaDatabaseGetRecordApiV1ResponseSchema.parse(data)
+    // Validate the response data
+    const validationSchema =
+      getVeridaDatabaseGetRecordApiV1ResponseSchema(baseSchema)
 
-    // FIXME: This is a temporary fix to ensure the data is returned as VeridaRecord<T>
-    // We need to find a better way to type the data coming from the database.
-    // Idea would be to pass a schema to the function and then use that schema
-    // to validate the data. And concerning typescript, infer the returned type
-    // from the schema.
-    const record = validatedData.item as VeridaRecord<T>
+    const validatedData = validationSchema.parse(data)
 
     logger.info("Successfully got a Verida record", {
       databaseName,
       recordId,
     })
 
-    return record
+    return validatedData.item as VeridaRecord<z.infer<T>>
   } catch (error) {
     throw new Error("Error getting a Verida record", {
       cause: error,

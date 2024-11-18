@@ -1,4 +1,5 @@
 import { QueryClient, useQuery, useQueryClient } from "@tanstack/react-query"
+import { z } from "zod"
 
 import { Logger } from "@/features/telemetry"
 import { VeridaDatabaseQueryKeys } from "@/features/verida-database/queries"
@@ -11,24 +12,28 @@ import { useVerida } from "@/features/verida/hooks/use-verida"
 
 const logger = Logger.create("verida-database")
 
-type UseVeridaDataRecordsArgs<T = Record<string, unknown>> = {
+type UseVeridaDataRecordsArgs<T extends z.ZodObject<any>> = {
   databaseName: string
-  filter?: VeridaDatabaseQueryFilter<T>
-  options?: VeridaDatabaseQueryOptions<T>
+  filter?: VeridaDatabaseQueryFilter<z.infer<T>>
+  options?: VeridaDatabaseQueryOptions<z.infer<T>>
+  baseSchema?: T
 }
 
 /**
  * Custom hook to fetch Verida data records.
  *
- * @param databaseName - The name of the database to query
- * @param filter - Optional query filter to apply to the records
- * @param options - Optional query parameters (sort, limit, skip)
+ * @param params - Hook parameters
+ * @param params.databaseName - The name of the database to query
+ * @param params.filter - Optional query filter to apply to the records
+ * @param params.options - Optional query parameters (sort, limit, skip)
+ * @param params.baseSchema - Optional base schema to extend the records with
  * @returns Query result object containing data, loading state, and error state
  */
-export function useVeridaDataRecords<T = Record<string, unknown>>({
+export function useVeridaDataRecords<T extends z.ZodObject<any>>({
   databaseName,
   filter,
   options,
+  baseSchema,
 }: UseVeridaDataRecordsArgs<T>) {
   const { did, getAccountSessionToken } = useVerida()
 
@@ -49,6 +54,7 @@ export function useVeridaDataRecords<T = Record<string, unknown>>({
         databaseName,
         filter,
         options,
+        baseSchema,
       })
 
       result.records.forEach((record) => {
@@ -79,22 +85,24 @@ export function useVeridaDataRecords<T = Record<string, unknown>>({
   }
 }
 
-type PrefetchVeridaDataRecordsArgs<T = Record<string, unknown>> = {
+type PrefetchVeridaDataRecordsArgs<T extends z.ZodObject<any>> = {
   queryClient: QueryClient
   did: string
   sessionToken: string
   databaseName: string
-  filter?: VeridaDatabaseQueryFilter<T>
-  options?: VeridaDatabaseQueryOptions<T>
+  filter?: VeridaDatabaseQueryFilter<z.infer<T>>
+  options?: VeridaDatabaseQueryOptions<z.infer<T>>
+  baseSchema?: T
 }
 
-export async function prefetchVeridaDataRecords<T = Record<string, unknown>>({
+export async function prefetchVeridaDataRecords<T extends z.ZodObject<any>>({
   queryClient,
   did,
   sessionToken,
   databaseName,
   filter,
   options,
+  baseSchema,
 }: PrefetchVeridaDataRecordsArgs<T>) {
   logger.info("Prefetching Verida data records")
   await queryClient.prefetchQuery({
@@ -110,6 +118,7 @@ export async function prefetchVeridaDataRecords<T = Record<string, unknown>>({
         databaseName,
         filter,
         options,
+        baseSchema,
       })
 
       result.records.forEach((record) => {

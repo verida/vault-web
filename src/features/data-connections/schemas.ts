@@ -107,3 +107,19 @@ export const DataConnectionsApiV1SyncConnectionResponseSchema = z.object({
 export const DataConnectionsApiV1DisconnectConnectionResponseSchema = z.object({
   success: z.boolean(),
 })
+
+export const DataConnectionSyncLogLevelSchema = z.enum([
+  "debug",
+  "info",
+  "error",
+  "warning",
+])
+
+export const DataConnectionSyncLogBaseSchema = z.object({
+  providerId: z.string(),
+  accountId: z.string(),
+  handlerId: z.string().optional(),
+  level: DataConnectionSyncLogLevelSchema,
+  message: z.string(),
+  insertedAt: z.string(),
+})

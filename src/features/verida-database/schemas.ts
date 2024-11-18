@@ -11,18 +11,61 @@ export const VeridaBaseRecordSchema = z.object({
   modifiedAt: z.string().optional(),
 })
 
-// TODO: Instead, create a function taking a schema as argument and then build the API response schema with it
-export const VeridaDatabaseQueryApiV1ResponseSchema = z.object({
-  items: z.array(VeridaBaseRecordSchema.passthrough()),
-  limit: z.number().optional(),
-  skip: z.number().optional(),
-  dbRows: z.number().optional(),
-})
+/**
+ * Creates a Zod schema for validating Verida database query API responses.
+ *
+ * @param baseSchema - Optional Zod object schema that will extend the base Verida record schema.
+ * @returns A Zod schema for validating the API response
+ *
+ * @example
+ * ```ts
+ * const CustomSchema = z.object({
+ *   customField: z.string()
+ * })
+ * const responseSchema = getVeridaDatabaseQueryApiV1ResponseSchema(CustomSchema)
+ * ```
+ */
+export function getVeridaDatabaseQueryApiV1ResponseSchema<
+  T extends z.ZodObject<any>,
+>(baseSchema?: T) {
+  const itemSchema = baseSchema
+    ? VeridaBaseRecordSchema.extend(baseSchema.shape)
+    : VeridaBaseRecordSchema.passthrough()
 
-// TODO: Instead, create a function taking a schema as argument and then build the API response schema with it
-export const VeridaDatabaseGetRecordApiV1ResponseSchema = z.object({
-  item: VeridaBaseRecordSchema.passthrough(),
-})
+  return z.object({
+    // TODO: Use an iteration schema removing the invalid items but keeping the valid ones
+    items: z.array(itemSchema),
+    limit: z.number().optional(),
+    skip: z.number().optional(),
+    dbRows: z.number().optional(),
+  })
+}
+
+/**
+ * Creates a Zod schema for validating Verida get record API responses.
+ *
+ * @param baseSchema - Optional Zod object schema that will extend the base Verida record schema.
+ * @returns A Zod schema for validating the API response
+ *
+ * @example
+ * ```ts
+ * const CustomSchema = z.object({
+ *   customField: z.string()
+ * })
+ * const responseSchema = getVeridaDatabaseGetRecordApiV1ResponseSchema(CustomSchema)
+ * ```
+ */
+export function getVeridaDatabaseGetRecordApiV1ResponseSchema<
+  T extends z.ZodObject<any>,
+>(baseSchema?: T) {
+  const itemSchema = baseSchema
+    ? VeridaBaseRecordSchema.extend(baseSchema.shape)
+    : VeridaBaseRecordSchema.passthrough()
+
+  return z.object({
+    item: itemSchema,
+  })
+}
 
 export const VeridaDatabaseDeleteApiV1ResponseSchema = z.object({
   success: z.boolean(),
