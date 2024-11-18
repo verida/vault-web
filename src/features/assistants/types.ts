@@ -3,6 +3,7 @@ import { z } from "zod"
 import {
   PrivateDataApiV1LLMPersonalResponseSchema,
   PrivateDataApiV1LlmHotloadResponseSchema,
+  SavedPromptBaseSchema,
 } from "@/features/assistants/schemas"
 import { VeridaRecord } from "@/features/verida-database/types"
 
@@ -13,12 +14,7 @@ export type HotloadResult = {
   progress: number
 }
 
-export type SavedPromptBase = {
-  data: {
-    prompt: string
-    order?: number
-  }
-}
+export type SavedPromptBase = z.infer<typeof SavedPromptBaseSchema>
 
 export type SavedPromptRecord = VeridaRecord<SavedPromptBase>
 

@@ -14,3 +14,10 @@ export const PrivateDataApiV1LLMPersonalResponseSchema = z.object({
     databases: z.array(z.string()).optional(),
   }),
 })
+
+export const SavedPromptBaseSchema = z.object({
+  data: z.object({
+    prompt: z.string(),
+    order: z.number().optional(),
+  }),
+})
