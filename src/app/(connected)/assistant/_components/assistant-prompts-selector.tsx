@@ -88,16 +88,16 @@ export function AssistantPromptsSelector(props: AssistantPromptsSelectorProps) {
               {savedPrompts.map((savedPrompt) => (
                 <PromptItem
                   key={savedPrompt._id}
-                  label={savedPrompt.name ?? savedPrompt.data.prompt}
-                  prompt={savedPrompt.data.prompt}
+                  label={savedPrompt.name ?? savedPrompt.prompt}
+                  prompt={savedPrompt.prompt}
                   onSelect={() => {
                     handleItemClick({
-                      prompt: savedPrompt.data.prompt,
+                      prompt: savedPrompt.prompt,
                     })
                   }}
                   onClickSetPrompt={() => {
                     handleSetPromptClick({
-                      prompt: savedPrompt.data.prompt,
+                      prompt: savedPrompt.prompt,
                     })
                   }}
                   additionalActions={
@@ -107,16 +107,13 @@ export function AssistantPromptsSelector(props: AssistantPromptsSelectorProps) {
                           type="edit"
                           initialData={{
                             name: savedPrompt.name,
-                            prompt: savedPrompt.data.prompt,
+                            prompt: savedPrompt.prompt,
                           }}
                           onSubmit={async (data) => {
                             await updateAssistantPrompt({
                               ...savedPrompt,
                               name: data.name,
-                              data: {
-                                ...savedPrompt.data,
-                                prompt: data.prompt,
-                              },
+                              prompt: data.prompt,
                             })
                           }}
                           onDelete={async () => {

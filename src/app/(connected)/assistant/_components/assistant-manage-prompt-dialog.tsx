@@ -39,6 +39,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Logger } from "@/features/telemetry"
+import { cn } from "@/styles/utils"
 
 const logger = Logger.create("assistants")
 
@@ -168,7 +169,11 @@ export function AssistantManagePromptDialog(
                 )}
               />
             </DialogBody>
-            <DialogFooter className="sm:justify-between">
+            <DialogFooter
+              className={cn(
+                type === "edit" && onDelete ? "sm:justify-between" : ""
+              )}
+            >
               {type === "edit" && onDelete ? (
                 <DeletePromptDialog
                   onDelete={handleDelete}

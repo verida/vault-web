@@ -49,7 +49,7 @@ export function AssistantUserInput(props: AssistantUserInputProps) {
     async (data: PromptFormData) => {
       await createAssistantPrompt({
         name: data.name,
-        data: { prompt: data.prompt },
+        prompt: data.prompt,
       })
     },
     [createAssistantPrompt]
