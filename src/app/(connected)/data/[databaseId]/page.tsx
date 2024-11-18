@@ -7,7 +7,7 @@ import { DeleteIcon } from "@/components/icons/delete-icon"
 import { PageWrapper } from "@/components/page-wrapper"
 import { Button } from "@/components/ui/button"
 import { featureFlags } from "@/config/features"
-import { DATABASE_DEFS } from "@/features/data/constants"
+import { USER_DATABASE_DEFS } from "@/features/data/constants"
 import { getDataPageRoute } from "@/features/routes/utils"
 
 export type DatabasePageProps = {
@@ -19,7 +19,7 @@ export default function DatabasePage(props: DatabasePageProps) {
   const { databaseId: encodedDatabaseId } = params
   const databaseId = decodeURIComponent(encodedDatabaseId)
 
-  const databaseDefinition = DATABASE_DEFS.find(
+  const databaseDefinition = USER_DATABASE_DEFS.find(
     (databaseDef) => databaseDef.id === databaseId
   )
 

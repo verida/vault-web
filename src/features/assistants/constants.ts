@@ -3,7 +3,7 @@ import { DatabaseDefinition } from "@/features/data/types"
 
 export const SAVED_PROMPTS_DB_DEF: DatabaseDefinition = {
   id: "saved-prompts",
-  hide: true,
+  type: "technical",
   title: "User Prompt",
   titlePlural: "User Prompts",
   color: "#5BE1B0",

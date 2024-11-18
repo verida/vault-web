@@ -1,7 +1,7 @@
 import { z } from "zod"
 
 import { commonConfig } from "@/config/common"
-import { DATABASE_DEFS } from "@/features/data/constants"
+import { ALL_DATABASE_DEFS } from "@/features/data/constants"
 import { Logger } from "@/features/telemetry"
 import {
   VeridaDatabaseDeleteApiV1ResponseSchema,
@@ -494,7 +494,7 @@ async function performVeridaDeleteOperation({
 }
 
 function getEncodedSchemaFromDatabaseName(databaseName: string) {
-  const databaseDef = DATABASE_DEFS.find(
+  const databaseDef = ALL_DATABASE_DEFS.find(
     (def) => def.databaseVaultName === databaseName
   )
 

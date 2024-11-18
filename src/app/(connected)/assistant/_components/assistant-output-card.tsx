@@ -13,7 +13,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton"
 import { useAssistants } from "@/features/assistants/hooks/use-assistants"
-import { DATABASE_DEFS } from "@/features/data/constants"
+import { USER_DATABASE_DEFS } from "@/features/data/constants"
 import { cn } from "@/styles/utils"
 import { SHORT_TIME_FORMAT_OPTIONS } from "@/utils/date"
 
@@ -66,7 +66,7 @@ export function AssistantOutputCard(props: AssistantOutputCardProps) {
     }
 
     const databaseNames = assistantOutput.databases.map((dbId) => {
-      const dbDef = DATABASE_DEFS.find((def) => def.searchType === dbId)
+      const dbDef = USER_DATABASE_DEFS.find((def) => def.searchType === dbId)
       return dbDef ? dbDef.titlePlural : dbId
     })
 

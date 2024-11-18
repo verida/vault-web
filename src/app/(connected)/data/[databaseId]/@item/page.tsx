@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation"
 import { useCallback, useMemo } from "react"
 
 import { DataItemPageContent } from "@/app/(connected)/data/[databaseId]/@item/_components/data-item-page-content"
-import { DATABASE_DEFS } from "@/features/data/constants"
+import { USER_DATABASE_DEFS } from "@/features/data/constants"
 
 type DataItemPageProps = {
   params: { databaseId: string }
@@ -18,7 +18,8 @@ export default function DataItemPage(props: DataItemPageProps) {
   const databaseId = decodeURIComponent(encodedDatabaseId)
 
   const databaseDefinition = useMemo(
-    () => DATABASE_DEFS.find((databaseDef) => databaseDef.id === databaseId),
+    () =>
+      USER_DATABASE_DEFS.find((databaseDef) => databaseDef.id === databaseId),
     [databaseId]
   )
 

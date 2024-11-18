@@ -1,9 +1,13 @@
 import { SAVED_PROMPTS_DB_DEF } from "@/features/assistants/constants"
 import { DatabaseDefinition } from "@/features/data/types"
 
-const DEFS: DatabaseDefinition[] = [
+/**
+ * Not sorted and including databases definitions that are not included in the UI
+ */
+export const ALL_DATABASE_DEFS: DatabaseDefinition[] = [
   {
     id: "credentials",
+    type: "user",
     title: "Credential",
     titlePlural: "Credentials",
     color: "#5BE1B0",
@@ -14,6 +18,7 @@ const DEFS: DatabaseDefinition[] = [
   },
   {
     id: "contacts",
+    type: "user",
     title: "Contact",
     titlePlural: "Contacts",
     color: "#47E6E5",
@@ -24,6 +29,7 @@ const DEFS: DatabaseDefinition[] = [
   },
   {
     id: "social-followings",
+    type: "user",
     title: "Social Following",
     titlePlural: "Social Followings",
     color: "#7A78E5",
@@ -35,6 +41,7 @@ const DEFS: DatabaseDefinition[] = [
   },
   {
     id: "social-posts",
+    type: "user",
     title: "Social Post",
     titlePlural: "Social Posts",
     color: "#EE7D91",
@@ -46,6 +53,7 @@ const DEFS: DatabaseDefinition[] = [
   },
   {
     id: "emails",
+    type: "user",
     title: "Email",
     titlePlural: "Emails",
     color: "#FFB347",
@@ -57,6 +65,7 @@ const DEFS: DatabaseDefinition[] = [
   },
   {
     id: "favourites",
+    type: "user",
     title: "Favourite",
     titlePlural: "Favourites",
     color: "#FF69B4",
@@ -68,6 +77,7 @@ const DEFS: DatabaseDefinition[] = [
   },
   {
     id: "chat-groups",
+    type: "user",
     title: "Chat group",
     titlePlural: "Chat groups",
     color: "#20B2AA",
@@ -78,6 +88,7 @@ const DEFS: DatabaseDefinition[] = [
   },
   {
     id: "chat-messages",
+    type: "user",
     title: "Chat message",
     titlePlural: "Chat messages",
     color: "#9370DB",
@@ -89,6 +100,7 @@ const DEFS: DatabaseDefinition[] = [
   },
   {
     id: "calendars",
+    type: "user",
     title: "Calendar",
     titlePlural: "Calendars",
     color: "#FFD700",
@@ -99,6 +111,7 @@ const DEFS: DatabaseDefinition[] = [
   },
   {
     id: "calendar-events",
+    type: "user",
     title: "Calendar event",
     titlePlural: "Calendar events",
     color: "#FFA500",
@@ -110,6 +123,7 @@ const DEFS: DatabaseDefinition[] = [
   },
   {
     id: "files",
+    type: "user",
     title: "File",
     titlePlural: "Files",
     color: "#FF4500",
@@ -121,4 +135,9 @@ const DEFS: DatabaseDefinition[] = [
   SAVED_PROMPTS_DB_DEF,
 ]
 
-export const DATABASE_DEFS = DEFS.sort((a, b) => a.id.localeCompare(b.id))
+/**
+ * Sorted and excluding databases definitions that are not included in the UI
+ */
+export const USER_DATABASE_DEFS = ALL_DATABASE_DEFS.filter(
+  (db) => db.type === "user"
+).sort((a, b) => a.id.localeCompare(b.id))

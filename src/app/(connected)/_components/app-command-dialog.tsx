@@ -41,7 +41,7 @@ import { useCommand } from "@/features/command/use-command"
 import { DEFAULT_SELECTED_SEARCH_TYPES } from "@/features/data-search/constants"
 import { SearchDataResult, SearchType } from "@/features/data-search/types"
 import { useSearchData } from "@/features/data-search/use-search-data"
-import { DATABASE_DEFS } from "@/features/data/constants"
+import { USER_DATABASE_DEFS } from "@/features/data/constants"
 import { useRestrictedAccess } from "@/features/restricted-access/use-restricted-access"
 import { getDatabaseItemPageRoute } from "@/features/routes/utils"
 import { cn } from "@/styles/utils"
@@ -200,7 +200,7 @@ function SearchCommandItem(props: SearchCommandItemProps) {
   }, [item, onSelect])
 
   const database = useMemo(() => {
-    return DATABASE_DEFS.find((db) => item.databaseId === db.id)
+    return USER_DATABASE_DEFS.find((db) => item.databaseId === db.id)
   }, [item.databaseId])
 
   return (
@@ -241,7 +241,7 @@ function SearchCommandSearchTypeMenu(props: SearchCommandSearchTypeMenuProps) {
     color: string
   }
 
-  const availableSearchTypes: SearchTypeDef[] = DATABASE_DEFS.filter(
+  const availableSearchTypes: SearchTypeDef[] = USER_DATABASE_DEFS.filter(
     (db) => !!db.searchType
   ).map((db) => ({
     value: db.searchType as SearchType, // Ok to assert as we filter above
