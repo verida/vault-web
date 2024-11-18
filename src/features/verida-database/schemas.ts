@@ -1,5 +1,10 @@
 import { z } from "zod"
 
+import { Logger } from "@/features/telemetry/logger"
+import { filteredArraySchema } from "@/utils/schemas"
+
+const logger = Logger.create("verida-database")
+
 export const VeridaBaseRecordSchema = z.object({
   _id: z.string(),
   _rev: z.string().optional(),
@@ -33,8 +38,7 @@ export function getVeridaDatabaseQueryApiV1ResponseSchema<
     : VeridaBaseRecordSchema.passthrough()
 
   return z.object({
-    // TODO: Use an iteration schema removing the invalid items but keeping the valid ones
-    items: z.array(itemSchema),
+    items: filteredArraySchema(itemSchema, logger),
     limit: z.number().optional(),
     skip: z.number().optional(),
     dbRows: z.number().optional(),

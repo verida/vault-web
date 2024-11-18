@@ -1,5 +1,10 @@
 import { z } from "zod"
 
+import { Logger } from "@/features/telemetry/logger"
+import { filteredArraySchema } from "@/utils/schemas"
+
+const logger = Logger.create("data-connections")
+
 // TODO: Finalise the schema
 export const DataConnectionConfigOptionSchema = z.object({
   id: z.string(),
@@ -26,7 +31,7 @@ export const DataProviderSchema = z.object({
 
 export const DataConnectionsApiV1GetProvidersResponseSchema = z.object({
   success: z.boolean(),
-  items: z.array(DataProviderSchema),
+  items: filteredArraySchema(DataProviderSchema, logger),
 })
 
 export const DataConnectionProfileSchema = z.object({
