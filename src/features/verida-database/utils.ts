@@ -1,11 +1,13 @@
+import { z } from "zod"
+
 import { commonConfig } from "@/config/common"
 import { DATABASE_DEFS } from "@/features/data/constants"
 import { Logger } from "@/features/telemetry"
 import {
-  VeridaDatabaseCreateRecordApiV1ResponseSchema,
   VeridaDatabaseDeleteApiV1ResponseSchema,
   VeridaDatabaseGetRecordApiV1ResponseSchema,
   VeridaDatabaseQueryApiV1ResponseSchema,
+  getCreateVeridaRecordApiV1ResponseSchema,
   getUpdateVeridaRecordApiV1ResponseSchema,
 } from "@/features/verida-database/schemas"
 import {
@@ -184,10 +186,11 @@ export async function getVeridaDataRecord<T = Record<string, unknown>>({
   }
 }
 
-type CreateVeridaDataRecordArgs<T> = {
+type CreateVeridaDataRecordArgs<T extends z.ZodObject<any>> = {
   sessionToken: string
   databaseName: string
-  record: UnsavedVeridaRecord<T>
+  record: UnsavedVeridaRecord<z.infer<T>>
+  baseSchema?: T
 }
 
 /**
@@ -201,11 +204,12 @@ type CreateVeridaDataRecordArgs<T> = {
  * @returns A promise that resolves to the created Verida record.
  * @throws If the API configuration is incorrect or if the creation operation fails.
  */
-export async function createVeridaDataRecord<T = Record<string, unknown>>({
+export async function createVeridaDataRecord<T extends z.ZodObject<any>>({
   sessionToken,
   databaseName,
   record,
-}: CreateVeridaDataRecordArgs<T>): Promise<VeridaRecord<T>> {
+  baseSchema,
+}: CreateVeridaDataRecordArgs<T>): Promise<VeridaRecord<z.infer<T>>> {
   logger.info("Creating a Verida record", {
     databaseName,
   })
@@ -251,10 +255,11 @@ export async function createVeridaDataRecord<T = Record<string, unknown>>({
     }
 
     // Parse and validate the response data
+    const validationSchema =
+      getCreateVeridaRecordApiV1ResponseSchema(baseSchema)
+
     const data = await response.json()
-    const validatedData =
-      // TODO: Use a function to build the schema from the expected record schema
-      VeridaDatabaseCreateRecordApiV1ResponseSchema.parse(data)
+    const validatedData = validationSchema.parse(data)
 
     // Check if the operation was successful
     if (!validatedData.success) {
@@ -266,17 +271,21 @@ export async function createVeridaDataRecord<T = Record<string, unknown>>({
     })
 
     // Return the created record
-    return validatedData.record as VeridaRecord<T>
+    // HACK: Had to assert the result because typescript doesn't recognise the
+    // _id, probably because "_" is considered a private property
+    return validatedData.record as VeridaRecord<z.infer<T>>
   } catch (error) {
     throw new Error("Error creating Verida data record", { cause: error })
   }
 }
 
-type UpdateVeridaDataRecordArgs<T> = {
+type UpdateVeridaDataRecordArgs<T extends z.ZodObject<any>> = {
   sessionToken: string
   databaseName: string
-  record: VeridaRecord<T>
+  record: VeridaRecord<z.infer<T>>
+  baseSchema?: T
 }
+
 /**
  * Updates a Verida record in the specified database.
  *
@@ -290,12 +299,12 @@ type UpdateVeridaDataRecordArgs<T> = {
  * @returns A promise that resolves to the updated record
  * @throws If the API configuration is incorrect, the API request fails, or the operation is unsuccessful
  */
-export async function updateVeridaDataRecord<T = Record<string, unknown>>({
+export async function updateVeridaDataRecord<T extends z.ZodObject<any>>({
   sessionToken,
   databaseName,
   record,
-  // TODO: Infer the return type based on the record schema
-}: UpdateVeridaDataRecordArgs<T>): Promise<VeridaRecord<T>> {
+  baseSchema,
+}: UpdateVeridaDataRecordArgs<T>): Promise<VeridaRecord<z.infer<T>>> {
   logger.info("Updating a Verida record", {
     databaseName,
   })
@@ -342,7 +351,8 @@ export async function updateVeridaDataRecord<T = Record<string, unknown>>({
 
     // Parse and validate the response data
     // TODO: Get the schema of the record from the arguments
-    const validationSchema = getUpdateVeridaRecordApiV1ResponseSchema()
+    const validationSchema =
+      getUpdateVeridaRecordApiV1ResponseSchema(baseSchema)
 
     const data = await response.json()
     const validatedData = validationSchema.parse(data)
@@ -357,7 +367,9 @@ export async function updateVeridaDataRecord<T = Record<string, unknown>>({
     })
 
     // Return the updated record
-    return validatedData.record as VeridaRecord<T>
+    // HACK: Had to assert the result because typescript doesn't recognise the
+    // _id, probably because "_" is considered a private property
+    return validatedData.record as VeridaRecord<z.infer<T>>
   } catch (error) {
     throw new Error("Error updating Verida data record", { cause: error })
   }

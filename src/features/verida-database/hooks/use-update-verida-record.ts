@@ -1,21 +1,24 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { z } from "zod"
 
 import { VeridaDatabaseQueryKeys } from "@/features/verida-database/queries"
 import { VeridaRecord } from "@/features/verida-database/types"
 import { updateVeridaDataRecord } from "@/features/verida-database/utils"
 import { useVerida } from "@/features/verida/hooks/use-verida"
 
-type UpdateRecordArgs<T> = {
+type UpdateRecordArgs<T extends z.ZodObject<any>> = {
   databaseName: string
-  record: VeridaRecord<T>
+  record: VeridaRecord<z.infer<T>>
 }
 
-export function useUpdateVeridaRecord<T = Record<string, unknown>>() {
+export function useUpdateVeridaRecord<T extends z.ZodObject<any>>(
+  baseSchema?: T
+) {
   const { did, getAccountSessionToken } = useVerida()
   const queryClient = useQueryClient()
 
   const { mutate, mutateAsync, ...mutation } = useMutation<
-    VeridaRecord<T>,
+    VeridaRecord<z.infer<T>>,
     Error,
     UpdateRecordArgs<T>
   >({
@@ -26,6 +29,7 @@ export function useUpdateVeridaRecord<T = Record<string, unknown>>() {
         sessionToken,
         databaseName,
         record,
+        baseSchema,
       })
     },
     onSuccess: (data, variables) => {
