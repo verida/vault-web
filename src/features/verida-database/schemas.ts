@@ -40,3 +40,35 @@ export const VeridaDatabaseCreateRecordApiV1ResponseSchema =
       errors: z.any(), // TODO: Define better type, unsure what it is
     }),
   ])
+
+/**
+ * Creates a Zod schema for validating Verida record update API responses.
+ *
+ * @param baseSchema - Optional Zod object schema that will extend the base Verida record schema. No need to pass a VeridaRecord schema already, simply the specific fields of the record.
+ * @returns A Zod schema for validating the API response
+ *
+ * @example
+ * ```ts
+ * const CustomSchema = z.object({
+ *   customField: z.string()
+ * })
+ * const responseSchema = getUpdateVeridaRecordApiV1ResponseSchema(CustomSchema)
+ * ```
+ */
+export function getUpdateVeridaRecordApiV1ResponseSchema<
+  T extends z.ZodRawShape,
+>(baseSchema?: z.ZodObject<T>) {
+  return z.discriminatedUnion("success", [
+    z.object({
+      success: z.literal(true),
+      record: baseSchema
+        ? VeridaBaseRecordSchema.extend(baseSchema.shape)
+        : VeridaBaseRecordSchema.passthrough(),
+    }),
+    z.object({
+      success: z.literal(false),
+      message: z.string().optional(),
+      errors: z.any().optional(), // TODO: Define better type, unsure what it is
+    }),
+  ])
+}

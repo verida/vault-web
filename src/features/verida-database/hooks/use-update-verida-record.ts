@@ -1,31 +1,28 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 
 import { VeridaDatabaseQueryKeys } from "@/features/verida-database/queries"
-import {
-  UnsavedVeridaRecord,
-  VeridaRecord,
-} from "@/features/verida-database/types"
-import { createVeridaDataRecord } from "@/features/verida-database/utils"
+import { VeridaRecord } from "@/features/verida-database/types"
+import { updateVeridaDataRecord } from "@/features/verida-database/utils"
 import { useVerida } from "@/features/verida/hooks/use-verida"
 
-type CreateRecordArgs<T> = {
+type UpdateRecordArgs<T> = {
   databaseName: string
-  record: UnsavedVeridaRecord<T>
+  record: VeridaRecord<T>
 }
 
-export function useCreateVeridaRecord<T = Record<string, unknown>>() {
+export function useUpdateVeridaRecord<T = Record<string, unknown>>() {
   const { did, getAccountSessionToken } = useVerida()
   const queryClient = useQueryClient()
 
   const { mutate, mutateAsync, ...mutation } = useMutation<
     VeridaRecord<T>,
     Error,
-    CreateRecordArgs<T>
+    UpdateRecordArgs<T>
   >({
     mutationFn: async ({ databaseName, record }) => {
       const sessionToken = await getAccountSessionToken()
 
-      return createVeridaDataRecord<T>({
+      return updateVeridaDataRecord<T>({
         sessionToken,
         databaseName,
         record,
@@ -48,13 +45,13 @@ export function useCreateVeridaRecord<T = Record<string, unknown>>() {
     },
     meta: {
       logCategory: "verida-database",
-      errorMessage: "Error creating Verida record",
+      errorMessage: "Error updating Verida record",
     },
   })
 
   return {
-    createRecord: mutate,
-    createRecordAsync: mutateAsync,
+    updateRecord: mutate,
+    updateRecordAsync: mutateAsync,
     ...mutation,
   }
 }

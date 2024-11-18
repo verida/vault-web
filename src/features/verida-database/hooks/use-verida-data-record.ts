@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query"
 
 import { VeridaDatabaseQueryKeys } from "@/features/verida-database/queries"
-import { fetchVeridaDataRecord } from "@/features/verida-database/utils"
+import { getVeridaDataRecord } from "@/features/verida-database/utils"
 import { useVerida } from "@/features/verida/hooks/use-verida"
 
 type UseVeridaDataRecordArgs = {
@@ -30,7 +30,7 @@ export function useVeridaDataRecord<T = Record<string, unknown>>({
     }),
     queryFn: async () => {
       const token = await getAccountSessionToken()
-      return fetchVeridaDataRecord<T>({
+      return getVeridaDataRecord<T>({
         sessionToken: token,
         databaseName,
         recordId,

@@ -6,7 +6,7 @@ import {
   VeridaDatabaseQueryFilter,
   VeridaDatabaseQueryOptions,
 } from "@/features/verida-database/types"
-import { fetchVeridaDataRecords } from "@/features/verida-database/utils"
+import { getVeridaDataRecords } from "@/features/verida-database/utils"
 import { useVerida } from "@/features/verida/hooks/use-verida"
 
 const logger = Logger.create("verida-database")
@@ -44,7 +44,7 @@ export function useVeridaDataRecords<T = Record<string, unknown>>({
     queryFn: async () => {
       const token = await getAccountSessionToken()
 
-      const result = await fetchVeridaDataRecords<T>({
+      const result = await getVeridaDataRecords<T>({
         sessionToken: token,
         databaseName,
         filter,
@@ -105,7 +105,7 @@ export async function prefetchVeridaDataRecords<T = Record<string, unknown>>({
       options,
     }),
     queryFn: async () => {
-      const result = await fetchVeridaDataRecords<T>({
+      const result = await getVeridaDataRecords<T>({
         sessionToken,
         databaseName,
         filter,

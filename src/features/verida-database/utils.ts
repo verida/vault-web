@@ -6,6 +6,7 @@ import {
   VeridaDatabaseDeleteApiV1ResponseSchema,
   VeridaDatabaseGetRecordApiV1ResponseSchema,
   VeridaDatabaseQueryApiV1ResponseSchema,
+  getUpdateVeridaRecordApiV1ResponseSchema,
 } from "@/features/verida-database/schemas"
 import {
   FetchVeridaDataRecordsResult,
@@ -22,7 +23,7 @@ const defaultVeridaDataRecordsQueryOptions: VeridaDatabaseQueryOptions = {
   limit: 10,
 }
 
-export type FetchVeridaDataRecordsArgs<T = Record<string, unknown>> = {
+export type GetVeridaDataRecordsArgs<T = Record<string, unknown>> = {
   sessionToken: string
   databaseName: string
   filter?: VeridaDatabaseQueryFilter<T>
@@ -30,38 +31,39 @@ export type FetchVeridaDataRecordsArgs<T = Record<string, unknown>> = {
 }
 
 /**
- * Fetches Verida data records from the specified database.
+ * Gets Verida data records from the specified database.
  *
  * @param databaseName - The name of the database to query
  * @param filter - Optional query filter to apply to the records
  * @param options - Optional query parameters (sort, limit, skip)
  * @returns Promise resolving to an array of VeridaRecord objects
  */
-export async function fetchVeridaDataRecords<T = Record<string, unknown>>({
+export async function getVeridaDataRecords<T = Record<string, unknown>>({
   sessionToken,
   databaseName,
   filter,
   options,
-}: FetchVeridaDataRecordsArgs<T>): Promise<FetchVeridaDataRecordsResult<T>> {
+}: GetVeridaDataRecordsArgs<T>): Promise<FetchVeridaDataRecordsResult<T>> {
+  const resolvedOptions = {
+    // A simple merge is enough as the default options are not in nested objects
+    ...defaultVeridaDataRecordsQueryOptions,
+    ...options,
+  }
+
+  logger.info("Getting Verida records", {
+    databaseName,
+  })
+  logger.debug("Get operation arguments", {
+    databaseName,
+    options: resolvedOptions,
+  })
+
+  if (!commonConfig.PRIVATE_DATA_API_BASE_URL) {
+    logger.warn("Cannot get Verida records due to incorrect API configuration")
+    throw new Error("Incorrect Private Data API configuration")
+  }
+
   try {
-    const resolvedOptions = {
-      // A simple merge is enough as the default options are not in nested objects
-      ...defaultVeridaDataRecordsQueryOptions,
-      ...options,
-    }
-
-    logger.debug("Fetching Verida data records", {
-      databaseName,
-      options: resolvedOptions,
-    })
-
-    if (!commonConfig.PRIVATE_DATA_API_BASE_URL) {
-      logger.warn(
-        "Cannot fetch Verida data records due to incorrect API configuration"
-      )
-      throw new Error("Incorrect Private Data API configuration")
-    }
-
     // Make API request to fetch data
     const response = await fetch(
       `${commonConfig.PRIVATE_DATA_API_BASE_URL}/api/rest/v1/db/query/${databaseName}`,
@@ -84,7 +86,7 @@ export async function fetchVeridaDataRecords<T = Record<string, unknown>>({
     // Validate the response data against the VeridaBaseRecordSchema
     const validatedData = VeridaDatabaseQueryApiV1ResponseSchema.parse(data)
 
-    logger.info("Successfully fetched Verida data records", {
+    logger.info("Successfully got Verida records", {
       databaseName,
     })
 
@@ -102,42 +104,45 @@ export async function fetchVeridaDataRecords<T = Record<string, unknown>>({
       },
     }
   } catch (error) {
-    throw new Error("Error fetching Verida data records", { cause: error })
+    throw new Error("Error getting Verida records", { cause: error })
   }
 }
 
-type FetchVeridaDataRecordArgs = {
+type GetVeridaDataRecordArgs = {
   sessionToken: string
   databaseName: string
   recordId: string
 }
 
 /**
- * Fetches a single Verida data record from the specified database.
+ * Gets a single Verida data record from the specified database.
  *
  * @param key - API key for authentication
  * @param databaseName - The name of the database to query
  * @param recordId - The ID of the record to fetch
  * @returns Promise resolving to a single VeridaRecord object
  */
-export async function fetchVeridaDataRecord<T = Record<string, unknown>>({
+export async function getVeridaDataRecord<T = Record<string, unknown>>({
   sessionToken,
   databaseName,
   recordId,
-}: FetchVeridaDataRecordArgs): Promise<VeridaRecord<T>> {
+}: GetVeridaDataRecordArgs): Promise<VeridaRecord<T>> {
+  logger.info("Getting a single Verida record", {
+    databaseName,
+  })
+  logger.debug("Get operation arguments", {
+    databaseName,
+    recordId,
+  })
+
+  if (!commonConfig.PRIVATE_DATA_API_BASE_URL) {
+    logger.warn(
+      "Cannot fetch Verida data record due to incorrect API configuration"
+    )
+    throw new Error("Incorrect Private Data API configuration")
+  }
+
   try {
-    logger.debug("Fetching single Verida data record", {
-      databaseName,
-      recordId,
-    })
-
-    if (!commonConfig.PRIVATE_DATA_API_BASE_URL) {
-      logger.warn(
-        "Cannot fetch Verida data record due to incorrect API configuration"
-      )
-      throw new Error("Incorrect Private Data API configuration")
-    }
-
     // Make API request to fetch data
     const response = await fetch(
       `${commonConfig.PRIVATE_DATA_API_BASE_URL}/api/rest/v1/db/get/${databaseName}/${recordId}`,
@@ -166,14 +171,14 @@ export async function fetchVeridaDataRecord<T = Record<string, unknown>>({
     // from the schema.
     const record = validatedData.item as VeridaRecord<T>
 
-    logger.info("Successfully fetched single Verida data record", {
+    logger.info("Successfully got a Verida record", {
       databaseName,
       recordId,
     })
 
     return record
   } catch (error) {
-    throw new Error("Error fetching single Verida data record", {
+    throw new Error("Error getting a Verida record", {
       cause: error,
     })
   }
@@ -201,10 +206,18 @@ export async function createVeridaDataRecord<T = Record<string, unknown>>({
   databaseName,
   record,
 }: CreateVeridaDataRecordArgs<T>): Promise<VeridaRecord<T>> {
+  logger.info("Creating a Verida record", {
+    databaseName,
+  })
+  logger.debug("Create operation arguments", {
+    databaseName,
+    record,
+  })
+
   // Check if the API base URL is configured
   if (!commonConfig.PRIVATE_DATA_API_BASE_URL) {
     logger.warn(
-      "Cannot perform Verida create operation due to incorrect API configuration"
+      "Cannot create Verida record due to incorrect API configuration"
     )
     throw new Error("Incorrect Private Data API configuration")
   }
@@ -248,10 +261,104 @@ export async function createVeridaDataRecord<T = Record<string, unknown>>({
       throw new Error("API returned unsuccessful operation")
     }
 
+    logger.info("Successfully created a Verida record", {
+      databaseName,
+    })
+
     // Return the created record
     return validatedData.record as VeridaRecord<T>
   } catch (error) {
     throw new Error("Error creating Verida data record", { cause: error })
+  }
+}
+
+type UpdateVeridaDataRecordArgs<T> = {
+  sessionToken: string
+  databaseName: string
+  record: VeridaRecord<T>
+}
+/**
+ * Updates a Verida record in the specified database.
+ *
+ * This function sends a PUT request to the Verida API to update an existing record.
+ * It handles the API communication, error checking, and response validation.
+ *
+ * @param params - The parameters for updating the record
+ * @param params.sessionToken - The session token for authentication
+ * @param params.databaseName - The name of the database containing the record
+ * @param params.record - The record to be updated, including its _id
+ * @returns A promise that resolves to the updated record
+ * @throws If the API configuration is incorrect, the API request fails, or the operation is unsuccessful
+ */
+export async function updateVeridaDataRecord<T = Record<string, unknown>>({
+  sessionToken,
+  databaseName,
+  record,
+}: UpdateVeridaDataRecordArgs<T>): Promise<VeridaRecord<T>> {
+  logger.info("Updating a Verida record", {
+    databaseName,
+  })
+  logger.debug("Update operation arguments", {
+    databaseName,
+    record,
+  })
+
+  // Check if the API base URL is configured
+  if (!commonConfig.PRIVATE_DATA_API_BASE_URL) {
+    logger.warn(
+      "Cannot update Verida record due to incorrect API configuration"
+    )
+    throw new Error("Incorrect Private Data API configuration")
+  }
+
+  try {
+    // Encode the schema URL for the database
+    const schemaUrlBase64 = getEncodedSchemaFromDatabaseName(databaseName)
+
+    // Construct the API endpoint URL
+    const url = new URL(
+      `/api/rest/v1/ds/${schemaUrlBase64}/${record._id}`,
+      commonConfig.PRIVATE_DATA_API_BASE_URL
+    )
+
+    // Make the API request to update the record
+    const response = await fetch(url, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        "X-API-Key": sessionToken,
+      },
+      body: JSON.stringify({
+        record,
+        // Note: `options` parameter is available if needed in the future
+      }),
+    })
+
+    // Check if the response is successful
+    if (!response.ok) {
+      throw new Error(`HTTP error ${response.status}`)
+    }
+
+    // Parse and validate the response data
+    // TODO: Get the schema of the record from the arguments
+    const validationSchema = getUpdateVeridaRecordApiV1ResponseSchema()
+
+    const data = await response.json()
+    const validatedData = validationSchema.parse(data)
+
+    // Check if the operation was successful
+    if (!validatedData.success) {
+      throw new Error("API returned unsuccessful operation")
+    }
+
+    logger.info("Successfully updated a Verida record", {
+      databaseName,
+    })
+
+    // Return the updated record
+    return validatedData.record as VeridaRecord<T>
+  } catch (error) {
+    throw new Error("Error updating Verida data record", { cause: error })
   }
 }
 
@@ -316,18 +423,21 @@ async function performVeridaDeleteOperation({
   databaseName,
   recordId,
 }: VeridaDeleteOperationArgs) {
-  if (!commonConfig.PRIVATE_DATA_API_BASE_URL) {
-    logger.warn(
-      "Cannot perform Verida delete operation due to incorrect API configuration"
-    )
-    throw new Error("Incorrect Private Data API configuration")
-  }
-
   const operationType = recordId ? "record" : "database"
-  logger.info(`Deleting Verida ${operationType}`, {
+  logger.info(`Deleting a Verida ${operationType}`, {
+    databaseName,
+  })
+  logger.debug("Delete operation arguments", {
     databaseName,
     ...(recordId && { recordId }),
   })
+
+  if (!commonConfig.PRIVATE_DATA_API_BASE_URL) {
+    logger.warn(
+      "Cannot perform delete operation due to incorrect API configuration"
+    )
+    throw new Error("Incorrect Private Data API configuration")
+  }
 
   try {
     const schemaUrlBase64 = getEncodedSchemaFromDatabaseName(databaseName)
@@ -357,7 +467,7 @@ async function performVeridaDeleteOperation({
       throw new Error("API returned unsuccessful operation")
     }
 
-    logger.info(`Successfully deleted Verida ${operationType}`, {
+    logger.info(`Successfully deleted a Verida ${operationType}`, {
       databaseName,
       ...(recordId && { recordId }),
     })
