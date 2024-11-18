@@ -5,6 +5,17 @@ import { useCallback, useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
+import {
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -27,8 +38,6 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { useAssistants } from "@/features/assistants/hooks/use-assistants"
-import { useCreateAssistantPrompt } from "@/features/assistants/hooks/use-create-assistant-prompt"
 import { Logger } from "@/features/telemetry"
 
 const logger = Logger.create("assistants")
@@ -38,39 +47,37 @@ const newPromptSchema = z.object({
   prompt: z.string().min(1, "Prompt is required"),
 })
 
-export type AssistantSavePromptDialogProps = {
+export type PromptFormData = z.infer<typeof newPromptSchema>
+
+export type AssistantManagePromptDialogProps = {
   children: React.ReactNode
+  type: "save" | "edit"
+  initialData: Partial<PromptFormData>
+  onSubmit: (data: PromptFormData) => Promise<void>
+  onDelete?: () => Promise<void>
 }
 
-export function AssistantSavePromptDialog(
-  props: AssistantSavePromptDialogProps
+export function AssistantManagePromptDialog(
+  props: AssistantManagePromptDialogProps
 ) {
-  const { children } = props
+  const { type, initialData, onSubmit, onDelete, children } = props
 
   const [modalOpen, setModalOpen] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const { userInput } = useAssistants()
-  const { createAssistantPrompt } = useCreateAssistantPrompt()
-
-  const form = useForm<z.infer<typeof newPromptSchema>>({
+  const form = useForm<PromptFormData>({
     resolver: zodResolver(newPromptSchema),
     defaultValues: {
-      name: "",
-      prompt: userInput?.prompt ?? "",
+      name: initialData.name ?? "",
+      prompt: initialData.prompt ?? "",
     },
   })
 
   const handleSubmit = useCallback(
-    async (data: z.infer<typeof newPromptSchema>) => {
+    async (data: PromptFormData) => {
       setIsSubmitting(true)
       try {
-        await createAssistantPrompt({
-          name: data.name,
-          data: {
-            prompt: data.prompt,
-          },
-        })
+        await onSubmit(data)
         setModalOpen(false)
       } catch (error) {
         logger.error(error)
@@ -78,12 +85,24 @@ export function AssistantSavePromptDialog(
         setIsSubmitting(false)
       }
     },
-    [createAssistantPrompt]
+    [onSubmit]
   )
 
+  const handleDelete = useCallback(async () => {
+    setIsSubmitting(true)
+    try {
+      await onDelete?.()
+      setModalOpen(false)
+    } catch (error) {
+      logger.error(error)
+    } finally {
+      setIsSubmitting(false)
+    }
+  }, [onDelete])
+
   useEffect(() => {
-    form.setValue("prompt", userInput?.prompt ?? "")
-  }, [form, userInput])
+    form.setValue("prompt", initialData?.prompt ?? "")
+  }, [form, initialData.prompt])
 
   useEffect(() => {
     if (!modalOpen) {
@@ -101,9 +120,11 @@ export function AssistantSavePromptDialog(
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handleSubmit)}>
             <DialogHeader>
-              <DialogTitle>Save</DialogTitle>
+              <DialogTitle>{type === "save" ? "Save" : "Edit"}</DialogTitle>
               <DialogDescription>
-                Save your prompt to reuse it later
+                {type === "save"
+                  ? "Save your prompt to reuse it later"
+                  : "Edit your prompt"}
               </DialogDescription>
             </DialogHeader>
             <DialogBody className="flex flex-col gap-6 px-0.5">
@@ -147,7 +168,17 @@ export function AssistantSavePromptDialog(
                 )}
               />
             </DialogBody>
-            <DialogFooter>
+            <DialogFooter className="sm:justify-between">
+              {type === "edit" && onDelete ? (
+                <DeletePromptDialog
+                  onDelete={handleDelete}
+                  isProcessing={isSubmitting}
+                >
+                  <Button variant="outline-destructive" disabled={isSubmitting}>
+                    Delete
+                  </Button>
+                </DeletePromptDialog>
+              ) : null}
               <Button variant="primary" type="submit" disabled={isSubmitting}>
                 Save
               </Button>
@@ -158,4 +189,41 @@ export function AssistantSavePromptDialog(
     </Dialog>
   )
 }
-AssistantSavePromptDialog.displayName = "AssistantSavePromptDialog"
+AssistantManagePromptDialog.displayName = "AssistantManagePromptDialog"
+
+type DeletePromptDialogProps = {
+  children: React.ReactNode
+  onDelete: () => Promise<void>
+  isProcessing: boolean
+}
+
+function DeletePromptDialog(props: DeletePromptDialogProps) {
+  const { children, onDelete, isProcessing } = props
+
+  return (
+    <AlertDialog>
+      <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>Delete Prompt</AlertDialogTitle>
+        </AlertDialogHeader>
+        <AlertDialogBody>
+          <AlertDialogDescription>
+            Are you sure you want to delete this prompt?
+          </AlertDialogDescription>
+        </AlertDialogBody>
+        <AlertDialogFooter>
+          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <Button
+            variant="destructive"
+            onClick={onDelete}
+            disabled={isProcessing}
+          >
+            Delete
+          </Button>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+  )
+}
+DeletePromptDialog.displayName = "DeletePromptDialog"

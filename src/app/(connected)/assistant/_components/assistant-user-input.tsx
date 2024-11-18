@@ -10,8 +10,11 @@ import React, {
 } from "react"
 import { useMediaQuery } from "usehooks-ts"
 
+import {
+  AssistantManagePromptDialog,
+  PromptFormData,
+} from "@/app/(connected)/assistant/_components/assistant-manage-prompt-dialog"
 import { AssistantPromptsCombobox } from "@/app/(connected)/assistant/_components/assistant-prompts-combobox"
-import { AssistantSavePromptDialog } from "@/app/(connected)/assistant/_components/assistant-save-prompt-dialog"
 import { SendIcon } from "@/components/icons/send-icon"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
@@ -22,6 +25,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { useAssistants } from "@/features/assistants/hooks/use-assistants"
+import { useCreateAssistantPrompt } from "@/features/assistants/hooks/use-create-assistant-prompt"
 import { cn, getMediaQuery } from "@/styles/utils"
 
 export type AssistantUserInputProps = Omit<
@@ -39,6 +43,17 @@ export function AssistantUserInput(props: AssistantUserInputProps) {
     clearUserInput,
     isProcessing,
   } = useAssistants()
+  const { createAssistantPrompt } = useCreateAssistantPrompt()
+
+  const handleSavePrompt = useCallback(
+    async (data: PromptFormData) => {
+      await createAssistantPrompt({
+        name: data.name,
+        data: { prompt: data.prompt },
+      })
+    },
+    [createAssistantPrompt]
+  )
 
   const inputRef = useRef<HTMLTextAreaElement>(null)
 
@@ -113,7 +128,13 @@ export function AssistantUserInput(props: AssistantUserInputProps) {
               />
             ) : null}
             <Tooltip>
-              <AssistantSavePromptDialog>
+              <AssistantManagePromptDialog
+                type="save"
+                initialData={{
+                  prompt: userInput?.prompt,
+                }}
+                onSubmit={handleSavePrompt}
+              >
                 <TooltipTrigger asChild>
                   <Button
                     variant="outline"
@@ -125,7 +146,7 @@ export function AssistantUserInput(props: AssistantUserInputProps) {
                     <span className="sr-only">Save this prompt</span>
                   </Button>
                 </TooltipTrigger>
-              </AssistantSavePromptDialog>
+              </AssistantManagePromptDialog>
               <TooltipContent>Save this prompt</TooltipContent>
             </Tooltip>
           </div>

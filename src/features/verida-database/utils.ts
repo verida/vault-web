@@ -294,6 +294,7 @@ export async function updateVeridaDataRecord<T = Record<string, unknown>>({
   sessionToken,
   databaseName,
   record,
+  // TODO: Infer the return type based on the record schema
 }: UpdateVeridaDataRecordArgs<T>): Promise<VeridaRecord<T>> {
   logger.info("Updating a Verida record", {
     databaseName,
