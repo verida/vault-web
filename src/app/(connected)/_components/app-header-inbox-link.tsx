@@ -1,3 +1,5 @@
+"use client"
+
 import Link from "next/link"
 
 import { InboxWithBadge } from "@/components/icons/inbox-with-badge"
@@ -8,6 +10,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { featureFlags } from "@/config/features"
+import { useRestrictedAccess } from "@/features/restricted-access/use-restricted-access"
 import { getInboxPageRoute } from "@/features/routes/utils"
 import { cn } from "@/styles/utils"
 
@@ -19,7 +22,9 @@ export type AppHeaderInboxLinkProps = Pick<
 export function AppHeaderInboxLink(props: AppHeaderInboxLinkProps) {
   const { variant = "ghost", size = "sm", className } = props
 
-  if (!featureFlags.inbox.enabled) {
+  const { access } = useRestrictedAccess()
+
+  if (!featureFlags.inbox.enabled || access !== "allowed") {
     return null
   }
 
