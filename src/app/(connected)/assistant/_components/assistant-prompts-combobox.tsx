@@ -42,7 +42,7 @@ export function AssistantPromptsCombobox(props: AssistantPromptsComboboxProps) {
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <Tooltip>
-        <TooltipTrigger>
+        <TooltipTrigger asChild>
           <PopoverTrigger asChild>
             <Button
               variant="outline"
