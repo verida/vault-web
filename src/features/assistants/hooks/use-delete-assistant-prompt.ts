@@ -21,11 +21,13 @@ export function useDeleteAssistantPrompt() {
         {
           onSuccess: () => {
             toast({
+              variant: "success",
               description: "Deleted successfully",
             })
           },
           onError: () => {
             toast({
+              variant: "error",
               description: "Deleting failed",
             })
           },

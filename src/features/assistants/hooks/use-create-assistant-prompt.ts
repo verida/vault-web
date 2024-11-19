@@ -24,11 +24,13 @@ export function useCreateAssistantPrompt() {
         {
           onSuccess: () => {
             toast({
+              variant: "success",
               description: "Saved successfully",
             })
           },
           onError: () => {
             toast({
+              variant: "error",
               description: "Saving failed",
             })
           },
