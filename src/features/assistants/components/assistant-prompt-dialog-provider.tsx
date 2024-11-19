@@ -6,6 +6,7 @@ import {
   AssistantManagePromptDialog,
   PromptFormData,
 } from "@/app/(connected)/assistant/_components/assistant-manage-prompt-dialog"
+import { featureFlags } from "@/config/features"
 import {
   AssistantPromptDialogContext,
   AssistantPromptDialogState,
@@ -97,14 +98,16 @@ export function AssistantPromptDialogProvider(
   return (
     <AssistantPromptDialogContext.Provider value={value}>
       {children}
-      <AssistantManagePromptDialog
-        type={dialogState.type}
-        initialData={dialogState.initialData ?? {}}
-        open={dialogState.isOpen}
-        onOpenChange={(open) => !open && closeDialog()}
-        onSubmit={handleSubmit}
-        onDelete={dialogState.type === "edit" ? handleDelete : undefined}
-      />
+      {featureFlags.assistant.userPrompts.enabled ? (
+        <AssistantManagePromptDialog
+          type={dialogState.type}
+          initialData={dialogState.initialData ?? {}}
+          open={dialogState.isOpen}
+          onOpenChange={(open) => !open && closeDialog()}
+          onSubmit={handleSubmit}
+          onDelete={dialogState.type === "edit" ? handleDelete : undefined}
+        />
+      ) : null}
     </AssistantPromptDialogContext.Provider>
   )
 }

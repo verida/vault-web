@@ -20,6 +20,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
+import { featureFlags } from "@/config/features"
 import { useAssistantPromptDialog } from "@/features/assistants/hooks/use-assistant-prompt-dialog"
 import { useAssistants } from "@/features/assistants/hooks/use-assistants"
 import { cn, getMediaQuery } from "@/styles/utils"
@@ -114,25 +115,27 @@ export function AssistantUserInput(props: AssistantUserInputProps) {
                 className="size-8 sm:size-10"
               />
             ) : null}
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button
-                  variant="outline"
-                  size="icon"
-                  className="size-8 sm:size-10"
-                  disabled={!userInput?.prompt}
-                  onClick={() => {
-                    openSaveDialog({
-                      prompt: userInput?.prompt,
-                    })
-                  }}
-                >
-                  <BookmarkIcon className="size-5 sm:size-6" />
-                  <span className="sr-only">Save this prompt</span>
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>Save this prompt</TooltipContent>
-            </Tooltip>
+            {featureFlags.assistant.userPrompts.enabled ? (
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    className="size-8 sm:size-10"
+                    disabled={!userInput?.prompt}
+                    onClick={() => {
+                      openSaveDialog({
+                        prompt: userInput?.prompt,
+                      })
+                    }}
+                  >
+                    <BookmarkIcon className="size-5 sm:size-6" />
+                    <span className="sr-only">Save this prompt</span>
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>Save this prompt</TooltipContent>
+              </Tooltip>
+            ) : null}
           </div>
           <div className="flex flex-row items-center justify-end gap-2">
             <Button

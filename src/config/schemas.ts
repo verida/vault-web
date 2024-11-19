@@ -29,6 +29,10 @@ export const CommonConfigSchema = z.object({
     .string()
     .optional()
     .transform((value) => value === "true"),
+  FEATURE_FLAG_AI_ASSISTANT_USER_PROMPTS_ENABLED: z
+    .string()
+    .optional()
+    .transform((value) => value === "true"),
   DEFAULT_AI_PROVIDER: z.enum(["bedrock", "groq"]).default("groq"),
   DEFAULT_AI_MODEL: z
     .enum(["LLAMA3_70B", "LLAMA31_70B", "LLAMA3_8B", "MIXTRAL_8_7B"])

@@ -19,6 +19,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
+import { featureFlags } from "@/config/features"
 import { SUGGESTED_INPUTS } from "@/features/assistants/constants"
 import { useAssistantPromptDialog } from "@/features/assistants/hooks/use-assistant-prompt-dialog"
 import { useAssistants } from "@/features/assistants/hooks/use-assistants"
@@ -81,7 +82,9 @@ export function AssistantPromptsSelector(props: AssistantPromptsSelectorProps) {
         </div>
         <CommandList>
           <CommandEmpty>No results found</CommandEmpty>
-          {savedPrompts && savedPrompts.length > 0 ? (
+          {featureFlags.assistant.userPrompts.enabled &&
+          savedPrompts &&
+          savedPrompts.length > 0 ? (
             <CommandGroup heading="Saved">
               {savedPrompts.map((savedPrompt) => (
                 <PromptItem
