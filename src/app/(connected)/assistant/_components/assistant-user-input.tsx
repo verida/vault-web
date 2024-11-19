@@ -10,10 +10,6 @@ import React, {
 } from "react"
 import { useMediaQuery } from "usehooks-ts"
 
-import {
-  AssistantManagePromptDialog,
-  PromptFormData,
-} from "@/app/(connected)/assistant/_components/assistant-manage-prompt-dialog"
 import { AssistantPromptsCombobox } from "@/app/(connected)/assistant/_components/assistant-prompts-combobox"
 import { SendIcon } from "@/components/icons/send-icon"
 import { Button } from "@/components/ui/button"
@@ -24,8 +20,8 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
+import { useAssistantPromptDialog } from "@/features/assistants/hooks/use-assistant-prompt-dialog"
 import { useAssistants } from "@/features/assistants/hooks/use-assistants"
-import { useCreateAssistantPrompt } from "@/features/assistants/hooks/use-create-assistant-prompt"
 import { cn, getMediaQuery } from "@/styles/utils"
 
 export type AssistantUserInputProps = Omit<
@@ -43,17 +39,8 @@ export function AssistantUserInput(props: AssistantUserInputProps) {
     clearUserInput,
     isProcessing,
   } = useAssistants()
-  const { createAssistantPrompt } = useCreateAssistantPrompt()
 
-  const handleSavePrompt = useCallback(
-    async (data: PromptFormData) => {
-      await createAssistantPrompt({
-        name: data.name,
-        prompt: data.prompt,
-      })
-    },
-    [createAssistantPrompt]
-  )
+  const { openSaveDialog } = useAssistantPromptDialog()
 
   const inputRef = useRef<HTMLTextAreaElement>(null)
 
@@ -128,25 +115,22 @@ export function AssistantUserInput(props: AssistantUserInputProps) {
               />
             ) : null}
             <Tooltip>
-              <AssistantManagePromptDialog
-                type="save"
-                initialData={{
-                  prompt: userInput?.prompt,
-                }}
-                onSubmit={handleSavePrompt}
-              >
-                <TooltipTrigger asChild>
-                  <Button
-                    variant="outline"
-                    size="icon"
-                    className="size-8 sm:size-10"
-                    disabled={!userInput?.prompt}
-                  >
-                    <BookmarkIcon className="size-5 sm:size-6" />
-                    <span className="sr-only">Save this prompt</span>
-                  </Button>
-                </TooltipTrigger>
-              </AssistantManagePromptDialog>
+              <TooltipTrigger asChild>
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="size-8 sm:size-10"
+                  disabled={!userInput?.prompt}
+                  onClick={() => {
+                    openSaveDialog({
+                      prompt: userInput?.prompt,
+                    })
+                  }}
+                >
+                  <BookmarkIcon className="size-5 sm:size-6" />
+                  <span className="sr-only">Save this prompt</span>
+                </Button>
+              </TooltipTrigger>
               <TooltipContent>Save this prompt</TooltipContent>
             </Tooltip>
           </div>

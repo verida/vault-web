@@ -3,7 +3,6 @@
 import { ArrowUpRightIcon } from "lucide-react"
 import { useCallback } from "react"
 
-import { AssistantManagePromptDialog } from "@/app/(connected)/assistant/_components/assistant-manage-prompt-dialog"
 import { EditIcon } from "@/components/icons/edit-icon"
 import { Typography } from "@/components/typography"
 import { Button } from "@/components/ui/button"
@@ -21,10 +20,9 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { SUGGESTED_INPUTS } from "@/features/assistants/constants"
+import { useAssistantPromptDialog } from "@/features/assistants/hooks/use-assistant-prompt-dialog"
 import { useAssistants } from "@/features/assistants/hooks/use-assistants"
-import { useDeleteAssistantPrompt } from "@/features/assistants/hooks/use-delete-assistant-prompt"
 import { useSavedAssistantPrompts } from "@/features/assistants/hooks/use-saved-assistant-prompts"
-import { useUpdateAssistantPrompt } from "@/features/assistants/hooks/use-update-assistant-prompt"
 import { AssistantUserInput } from "@/features/assistants/types"
 import { cn } from "@/styles/utils"
 
@@ -43,11 +41,11 @@ export function AssistantPromptsSelector(props: AssistantPromptsSelectorProps) {
     setPromptSearchValue,
   } = useAssistants()
 
+  const { openEditDialog } = useAssistantPromptDialog()
+
   // TODO: Handle pagination, filter and sort. Link this to the value in the
   // CommandInput and turn the whole Command to a controlled component
   const { savedPrompts } = useSavedAssistantPrompts()
-  const { updateAssistantPrompt } = useUpdateAssistantPrompt()
-  const { deleteAssistantPrompt } = useDeleteAssistantPrompt()
 
   const handleItemClick = useCallback(
     async (input: AssistantUserInput) => {
@@ -103,36 +101,19 @@ export function AssistantPromptsSelector(props: AssistantPromptsSelectorProps) {
                   additionalActions={
                     <>
                       <Tooltip>
-                        <AssistantManagePromptDialog
-                          type="edit"
-                          initialData={{
-                            name: savedPrompt.name,
-                            prompt: savedPrompt.prompt,
-                          }}
-                          onSubmit={async (data) => {
-                            await updateAssistantPrompt({
-                              ...savedPrompt,
-                              name: data.name,
-                              prompt: data.prompt,
-                            })
-                          }}
-                          onDelete={async () => {
-                            await deleteAssistantPrompt(savedPrompt._id)
-                          }}
-                        >
-                          <TooltipTrigger asChild>
-                            <Button
-                              variant="ghost"
-                              size="icon"
-                              onClick={(e) => {
-                                e.stopPropagation()
-                              }}
-                            >
-                              <EditIcon className="size-5 sm:size-6" />
-                              <span className="sr-only">Edit</span>
-                            </Button>
-                          </TooltipTrigger>
-                        </AssistantManagePromptDialog>
+                        <TooltipTrigger asChild>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              openEditDialog(savedPrompt)
+                            }}
+                          >
+                            <EditIcon className="size-5 sm:size-6" />
+                            <span className="sr-only">Edit</span>
+                          </Button>
+                        </TooltipTrigger>
                         <TooltipContent>Edit</TooltipContent>
                       </Tooltip>
                     </>

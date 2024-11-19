@@ -25,7 +25,6 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog"
 import {
   Form,
@@ -51,9 +50,10 @@ const newPromptSchema = z.object({
 export type PromptFormData = z.infer<typeof newPromptSchema>
 
 export type AssistantManagePromptDialogProps = {
-  children: React.ReactNode
-  type: "save" | "edit"
+  type: "create" | "edit"
   initialData: Partial<PromptFormData>
+  open: boolean
+  onOpenChange: (open: boolean) => void
   onSubmit: (data: PromptFormData) => Promise<void>
   onDelete?: () => Promise<void>
 }
@@ -61,9 +61,8 @@ export type AssistantManagePromptDialogProps = {
 export function AssistantManagePromptDialog(
   props: AssistantManagePromptDialogProps
 ) {
-  const { type, initialData, onSubmit, onDelete, children } = props
+  const { type, initialData, open, onOpenChange, onSubmit, onDelete } = props
 
-  const [modalOpen, setModalOpen] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   const form = useForm<PromptFormData>({
@@ -79,51 +78,50 @@ export function AssistantManagePromptDialog(
       setIsSubmitting(true)
       try {
         await onSubmit(data)
-        setModalOpen(false)
+        onOpenChange(false)
       } catch (error) {
         logger.error(error)
       } finally {
         setIsSubmitting(false)
       }
     },
-    [onSubmit]
+    [onSubmit, onOpenChange]
   )
 
   const handleDelete = useCallback(async () => {
     setIsSubmitting(true)
     try {
       await onDelete?.()
-      setModalOpen(false)
+      onOpenChange(false)
     } catch (error) {
       logger.error(error)
     } finally {
       setIsSubmitting(false)
     }
-  }, [onDelete])
+  }, [onDelete, onOpenChange])
 
   useEffect(() => {
+    form.setValue("name", initialData?.name ?? "")
     form.setValue("prompt", initialData?.prompt ?? "")
-  }, [form, initialData.prompt])
+  }, [form, initialData])
 
   useEffect(() => {
-    if (!modalOpen) {
+    if (!open) {
       form.clearErrors()
       form.resetField("name")
+      form.resetField("prompt")
     }
-  }, [form, modalOpen])
+  }, [form, open])
 
   return (
-    <Dialog open={modalOpen} onOpenChange={setModalOpen}>
-      <DialogTrigger asChild onClick={() => setModalOpen(true)}>
-        {children}
-      </DialogTrigger>
+    <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handleSubmit)}>
             <DialogHeader>
-              <DialogTitle>{type === "save" ? "Save" : "Edit"}</DialogTitle>
+              <DialogTitle>{type === "create" ? "Save" : "Edit"}</DialogTitle>
               <DialogDescription>
-                {type === "save"
+                {type === "create"
                   ? "Save your prompt to reuse it later"
                   : "Edit your prompt"}
               </DialogDescription>
