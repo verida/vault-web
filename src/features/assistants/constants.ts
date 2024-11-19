@@ -13,10 +13,6 @@ export const SAVED_PROMPTS_DB_DEF: DatabaseDefinition = {
     "http://localhost:3000/schemas/assistant/prompt/v0.1.0/schema.json",
 }
 
-export const DEFAULT_LLM_PROVIDER = "groq"
-
-export const DEFAULT_LLM_MODEL = "LLAMA31_70B"
-
 export const SUGGESTED_INPUTS: SuggestedInput[] = [
   {
     label: "What do I have to focus on today?",

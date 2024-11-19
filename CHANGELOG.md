@@ -1,3 +1,21 @@
+# 0.9.0 (2024-11-19)
+
+## Enhancements
+
+- Adjust the processing time displayed in the assistant output
+- Update meta tags for SEO
+- Adapt page title based on active page
+- Remove cache on restrited access check
+
+## Bug Fixes
+
+- Fix loading spinner on iOS
+- Fix background colour on iOS status bar
+
+## Misc
+
+- Move default LLM model to env var
+
 # 0.8.0 (2024-11-12)
 
 ## Enhancements
