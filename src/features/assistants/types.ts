@@ -3,7 +3,9 @@ import { z } from "zod"
 import {
   PrivateDataApiV1LLMPersonalResponseSchema,
   PrivateDataApiV1LlmHotloadResponseSchema,
+  SavedPromptBaseSchema,
 } from "@/features/assistants/schemas"
+import { VeridaRecord } from "@/features/verida-database/types"
 
 export type HotloadStatus = "idle" | "loading" | "success" | "error"
 
@@ -11,6 +13,10 @@ export type HotloadResult = {
   status: HotloadStatus
   progress: number
 }
+
+export type SavedPromptBase = z.infer<typeof SavedPromptBaseSchema>
+
+export type SavedPromptRecord = VeridaRecord<SavedPromptBase>
 
 export type SuggestedInput = {
   label: string

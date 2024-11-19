@@ -14,3 +14,9 @@ export const PrivateDataApiV1LLMPersonalResponseSchema = z.object({
     databases: z.array(z.string()).optional(),
   }),
 })
+
+export const SavedPromptBaseSchema = z.object({
+  name: z.string(),
+  prompt: z.string(),
+  order: z.number().optional(),
+})

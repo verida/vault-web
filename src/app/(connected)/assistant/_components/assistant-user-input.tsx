@@ -1,6 +1,6 @@
 "use client"
 
-import { MessageSquareMoreIcon, XIcon } from "lucide-react"
+import { BookmarkIcon, XIcon } from "lucide-react"
 import React, {
   ChangeEventHandler,
   KeyboardEventHandler,
@@ -8,14 +8,22 @@ import React, {
   useLayoutEffect,
   useRef,
 } from "react"
+import { useMediaQuery } from "usehooks-ts"
 
-import { AssistantUserInputPromptsMenu } from "@/app/(connected)/assistant/_components/assistant-user-input-prompts-menu"
+import { AssistantPromptsCombobox } from "@/app/(connected)/assistant/_components/assistant-prompts-combobox"
 import { SendIcon } from "@/components/icons/send-icon"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { Textarea } from "@/components/ui/textarea"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
+import { featureFlags } from "@/config/features"
+import { useAssistantPromptDialog } from "@/features/assistants/hooks/use-assistant-prompt-dialog"
 import { useAssistants } from "@/features/assistants/hooks/use-assistants"
-import { cn } from "@/styles/utils"
+import { cn, getMediaQuery } from "@/styles/utils"
 
 export type AssistantUserInputProps = Omit<
   React.ComponentProps<"div">,
@@ -32,6 +40,8 @@ export function AssistantUserInput(props: AssistantUserInputProps) {
     clearUserInput,
     isProcessing,
   } = useAssistants()
+
+  const { openSaveDialog } = useAssistantPromptDialog()
 
   const inputRef = useRef<HTMLTextAreaElement>(null)
 
@@ -56,6 +66,12 @@ export function AssistantUserInput(props: AssistantUserInputProps) {
   useLayoutEffect(() => {
     inputRef.current?.focus()
   }, [])
+
+  const handleEditPrompt = useCallback(() => {
+    inputRef.current?.focus()
+  }, [])
+
+  const isXL = useMediaQuery(getMediaQuery("xl"))
 
   return (
     <div {...divProps}>
@@ -93,16 +109,33 @@ export function AssistantUserInput(props: AssistantUserInputProps) {
         </CardContent>
         <CardFooter className="flex-row justify-between p-0">
           <div className="flex flex-row items-center justify-start gap-2">
-            <AssistantUserInputPromptsMenu>
-              <Button
-                variant="outline"
-                size="icon"
+            {!isXL ? (
+              <AssistantPromptsCombobox
+                onClickEdit={handleEditPrompt}
                 className="size-8 sm:size-10"
-              >
-                <MessageSquareMoreIcon className="size-5 sm:size-6" />
-                <span className="sr-only">Open prompts menu</span>
-              </Button>
-            </AssistantUserInputPromptsMenu>
+              />
+            ) : null}
+            {featureFlags.assistant.userPrompts.enabled ? (
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    className="size-8 sm:size-10"
+                    disabled={!userInput?.prompt}
+                    onClick={() => {
+                      openSaveDialog({
+                        prompt: userInput?.prompt,
+                      })
+                    }}
+                  >
+                    <BookmarkIcon className="size-5 sm:size-6" />
+                    <span className="sr-only">Save this prompt</span>
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>Save this prompt</TooltipContent>
+              </Tooltip>
+            ) : null}
           </div>
           <div className="flex flex-row items-center justify-end gap-2">
             <Button

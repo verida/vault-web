@@ -6,6 +6,9 @@ export type VeridaBaseRecord = z.infer<typeof VeridaBaseRecordSchema>
 
 export type VeridaRecord<T = Record<string, unknown>> = VeridaBaseRecord & T
 
+export type UnsavedVeridaRecord<T = Record<string, unknown>> =
+  Partial<VeridaBaseRecord> & T
+
 export type VeridaDatabaseQueryFilter<T = Record<string, unknown>> = {
   [K in keyof T | `${string}.${string}`]?:
     | T[K & keyof T]

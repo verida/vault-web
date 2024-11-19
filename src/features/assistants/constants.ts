@@ -1,4 +1,17 @@
 import { SuggestedInput } from "@/features/assistants/types"
+import { DatabaseDefinition } from "@/features/data/types"
+
+export const SAVED_PROMPTS_DB_DEF: DatabaseDefinition = {
+  id: "saved-prompts",
+  type: "technical",
+  title: "User Prompt",
+  titlePlural: "User Prompts",
+  color: "#5BE1B0",
+  databaseVaultName: "prompts",
+  schemaUrlBase: "http://localhost:3000/schemas/assistant/prompt",
+  schemaUrlLatest:
+    "https://common.schemas.verida.io/assistant/prompt/v0.1.0/schema.json",
+}
 
 export const SUGGESTED_INPUTS: SuggestedInput[] = [
   {

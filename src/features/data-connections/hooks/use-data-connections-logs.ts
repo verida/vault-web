@@ -1,4 +1,5 @@
 import { DATA_CONNECTIONS_SYNC_LOGS_DATABASE_NAME } from "@/features/data-connections/constants"
+import { DataConnectionSyncLogBaseSchema } from "@/features/data-connections/schemas"
 import { DataConnectionSyncLog } from "@/features/data-connections/types"
 import { useVeridaDataRecords } from "@/features/verida-database/hooks/use-verida-data-records"
 import {
@@ -16,20 +17,19 @@ export function useDataConnectionsLogs({
   filter,
   options,
 }: UseDataConnectionsLogsArgs) {
-  // TODO: Use a proper schema of the logs once supported by useVeridaDataRecords
-  const { records, pagination, ...query } =
-    useVeridaDataRecords<DataConnectionSyncLog>({
-      databaseName: DATA_CONNECTIONS_SYNC_LOGS_DATABASE_NAME,
-      filter,
-      options: {
-        ...options,
-        sort: options?.sort ?? [
-          {
-            insertedAt: "desc",
-          },
-        ],
-      },
-    })
+  const { records, pagination, ...query } = useVeridaDataRecords({
+    databaseName: DATA_CONNECTIONS_SYNC_LOGS_DATABASE_NAME,
+    filter,
+    options: {
+      ...options,
+      sort: options?.sort ?? [
+        {
+          insertedAt: "desc",
+        },
+      ],
+    },
+    baseSchema: DataConnectionSyncLogBaseSchema,
+  })
 
   return { logs: records, pagination, ...query }
 }
