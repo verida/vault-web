@@ -18,7 +18,7 @@ export function useRestrictedAccess() {
     enabled: !!did,
     staleTime: 1000 * 60 * 10, // 10 minutes
     meta: {
-      persist: true,
+      // persist: true, // TODO: Uncomment and try to manage the cache for when the result is allowed but with no cache if the result is denied
       logCategory: "restricted-access",
       errorMessage: "Failed to get user access",
     },

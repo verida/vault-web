@@ -1,9 +1,5 @@
 import { SuggestedInput } from "@/features/assistants/types"
 
-export const DEFAULT_LLM_PROVIDER = "groq"
-
-export const DEFAULT_LLM_MODEL = "LLAMA31_70B"
-
 export const SUGGESTED_INPUTS: SuggestedInput[] = [
   {
     label: "What do I have to focus on today?",
