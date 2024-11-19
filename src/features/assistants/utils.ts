@@ -1,9 +1,5 @@
 import { commonConfig } from "@/config/common"
 import {
-  DEFAULT_LLM_MODEL,
-  DEFAULT_LLM_PROVIDER,
-} from "@/features/assistants/constants"
-import {
   PrivateDataApiV1LLMPersonalResponseSchema,
   PrivateDataApiV1LlmHotloadResponseSchema,
 } from "@/features/assistants/schemas"
@@ -51,8 +47,8 @@ export async function sendUserInputToAssistant(
         },
         body: JSON.stringify({
           prompt: userInput.prompt,
-          provider: DEFAULT_LLM_PROVIDER,
-          model: DEFAULT_LLM_MODEL, // Could come from the user input
+          provider: commonConfig.DEFAULT_AI_PROVIDER,
+          model: commonConfig.DEFAULT_AI_MODEL, // Could come from the user input
         }),
       }
     )

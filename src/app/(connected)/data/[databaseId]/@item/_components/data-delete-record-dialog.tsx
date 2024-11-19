@@ -19,7 +19,7 @@ import { featureFlags } from "@/config/features"
 import { DatabaseDefinition } from "@/features/data/types"
 import { getDatabasePageRoute } from "@/features/routes/utils"
 import { useToast } from "@/features/toasts/use-toast"
-import { useVeridaDeleteRecord } from "@/features/verida-database/hooks/use-verida-delete-record"
+import { useDeleteVeridaRecord } from "@/features/verida-database/hooks/use-delete-verida-record"
 
 export type DataDeleteRecordDialogProps = {
   children: React.ReactNode
@@ -36,7 +36,7 @@ export function DataDeleteRecordDialog(props: DataDeleteRecordDialogProps) {
 
   const [status, setStatus] = useState<"idle" | "processing" | "error">("idle")
 
-  const { deleteRecord } = useVeridaDeleteRecord()
+  const { deleteRecord } = useDeleteVeridaRecord()
 
   const handleProcessClick = useCallback(() => {
     setStatus("processing")
