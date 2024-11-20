@@ -1,4 +1,7 @@
-import { SAVED_PROMPTS_DB_DEF } from "@/features/assistants/constants"
+import {
+  AI_ASSISTANTS_DB_DEF,
+  AI_PROMPTS_DB_DEF,
+} from "@/features/assistants/constants"
 import { DatabaseDefinition } from "@/features/data/types"
 
 /**
@@ -132,7 +135,8 @@ export const ALL_DATABASE_DEFS: DatabaseDefinition[] = [
     schemaUrlBase: "https://common.schemas.verida.io/file",
     schemaUrlLatest: "https://common.schemas.verida.io/file/v0.1.0/schema.json",
   },
-  SAVED_PROMPTS_DB_DEF,
+  AI_PROMPTS_DB_DEF,
+  AI_ASSISTANTS_DB_DEF,
 ]
 
 /**

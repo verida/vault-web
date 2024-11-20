@@ -1,6 +1,6 @@
 import { useCallback } from "react"
 
-import { SAVED_PROMPTS_DB_DEF } from "@/features/assistants/constants"
+import { AI_PROMPTS_DB_DEF } from "@/features/assistants/constants"
 import { useToast } from "@/features/toasts/use-toast"
 import { useDeleteVeridaRecord } from "@/features/verida-database/hooks/use-delete-verida-record"
 
@@ -15,7 +15,7 @@ export function useDeleteAssistantPrompt() {
     (promptId: string) => {
       return deleteRecordAsync(
         {
-          databaseName: SAVED_PROMPTS_DB_DEF.databaseVaultName,
+          databaseName: AI_PROMPTS_DB_DEF.databaseVaultName,
           recordId: promptId,
         },
         {

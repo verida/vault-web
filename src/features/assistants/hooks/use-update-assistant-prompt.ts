@@ -1,8 +1,8 @@
 import { useCallback } from "react"
 
-import { SAVED_PROMPTS_DB_DEF } from "@/features/assistants/constants"
-import { SavedPromptBaseSchema } from "@/features/assistants/schemas"
-import { SavedPromptRecord } from "@/features/assistants/types"
+import { AI_PROMPTS_DB_DEF } from "@/features/assistants/constants"
+import { AiPromptBaseSchema } from "@/features/assistants/schemas"
+import { AiPromptRecord } from "@/features/assistants/types"
 import { useToast } from "@/features/toasts/use-toast"
 import { useUpdateVeridaRecord } from "@/features/verida-database/hooks/use-update-verida-record"
 
@@ -11,13 +11,13 @@ export function useUpdateAssistantPrompt() {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { updateRecordAsync, updateRecord, ...mutation } =
-    useUpdateVeridaRecord(SavedPromptBaseSchema)
+    useUpdateVeridaRecord(AiPromptBaseSchema)
 
   const updateAssistantPrompt = useCallback(
-    (promptToUpdate: SavedPromptRecord) => {
+    (promptToUpdate: AiPromptRecord) => {
       return updateRecordAsync(
         {
-          databaseName: SAVED_PROMPTS_DB_DEF.databaseVaultName,
+          databaseName: AI_PROMPTS_DB_DEF.databaseVaultName,
           record: promptToUpdate,
         },
         {

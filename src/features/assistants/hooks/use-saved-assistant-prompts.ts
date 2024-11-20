@@ -1,7 +1,7 @@
 import { QueryClient } from "@tanstack/react-query"
 
-import { SAVED_PROMPTS_DB_DEF } from "@/features/assistants/constants"
-import { SavedPromptBaseSchema } from "@/features/assistants/schemas"
+import { AI_PROMPTS_DB_DEF } from "@/features/assistants/constants"
+import { AiPromptBaseSchema } from "@/features/assistants/schemas"
 import {
   prefetchVeridaDataRecords,
   useVeridaDataRecords,
@@ -9,9 +9,9 @@ import {
 
 export function useSavedAssistantPrompts() {
   const { records, ...query } = useVeridaDataRecords({
-    databaseName: SAVED_PROMPTS_DB_DEF.databaseVaultName,
+    databaseName: AI_PROMPTS_DB_DEF.databaseVaultName,
     // TODO: Handle pagination
-    baseSchema: SavedPromptBaseSchema,
+    baseSchema: AiPromptBaseSchema,
   })
 
   return {
@@ -35,8 +35,8 @@ export async function prefetchSavedAssistantPrompts({
     queryClient,
     did,
     sessionToken,
-    databaseName: SAVED_PROMPTS_DB_DEF.databaseVaultName,
+    databaseName: AI_PROMPTS_DB_DEF.databaseVaultName,
     // TODO: Set pagination
-    baseSchema: SavedPromptBaseSchema,
+    baseSchema: AiPromptBaseSchema,
   })
 }

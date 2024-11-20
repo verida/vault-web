@@ -15,7 +15,13 @@ export const PrivateDataApiV1LLMPersonalResponseSchema = z.object({
   }),
 })
 
-export const SavedPromptBaseSchema = z.object({
+export const AiAssistantBaseSchema = z.object({
+  name: z.string(),
+  order: z.number().optional(),
+})
+
+export const AiPromptBaseSchema = z.object({
+  assistantId: z.string(),
   name: z.string(),
   prompt: z.string(),
   order: z.number().optional(),

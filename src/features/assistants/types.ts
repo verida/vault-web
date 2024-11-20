@@ -1,9 +1,10 @@
 import { z } from "zod"
 
 import {
+  AiAssistantBaseSchema,
+  AiPromptBaseSchema,
   PrivateDataApiV1LLMPersonalResponseSchema,
   PrivateDataApiV1LlmHotloadResponseSchema,
-  SavedPromptBaseSchema,
 } from "@/features/assistants/schemas"
 import { VeridaRecord } from "@/features/verida-database/types"
 
@@ -14,9 +15,13 @@ export type HotloadResult = {
   progress: number
 }
 
-export type SavedPromptBase = z.infer<typeof SavedPromptBaseSchema>
+export type AiAssistantBase = z.infer<typeof AiAssistantBaseSchema>
 
-export type SavedPromptRecord = VeridaRecord<SavedPromptBase>
+export type AiAssistantRecord = VeridaRecord<AiAssistantBase>
+
+export type AiPromptBase = z.infer<typeof AiPromptBaseSchema>
+
+export type AiPromptRecord = VeridaRecord<AiPromptBase>
 
 export type SuggestedInput = {
   label: string

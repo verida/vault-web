@@ -14,7 +14,7 @@ import {
 import { useCreateAssistantPrompt } from "@/features/assistants/hooks/use-create-assistant-prompt"
 import { useDeleteAssistantPrompt } from "@/features/assistants/hooks/use-delete-assistant-prompt"
 import { useUpdateAssistantPrompt } from "@/features/assistants/hooks/use-update-assistant-prompt"
-import { SavedPromptRecord } from "@/features/assistants/types"
+import { AiPromptRecord } from "@/features/assistants/types"
 
 type AssistantPromptDialogProviderProps = {
   children: React.ReactNode
@@ -45,7 +45,7 @@ export function AssistantPromptDialogProvider(
     []
   )
 
-  const openEditDialog = useCallback((savedPrompt: SavedPromptRecord) => {
+  const openEditDialog = useCallback((savedPrompt: AiPromptRecord) => {
     setDialogState({
       type: "edit",
       isOpen: true,
