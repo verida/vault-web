@@ -3,7 +3,6 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useCallback, useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
-import { z } from "zod"
 
 import {
   AlertDialog,
@@ -37,24 +36,19 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
+import { AiPromptFormDataSchema } from "@/features/assistants/schemas"
+import { AiPromptFormData } from "@/features/assistants/types"
 import { Logger } from "@/features/telemetry"
 import { cn } from "@/styles/utils"
 
 const logger = Logger.create("assistants")
 
-const newPromptSchema = z.object({
-  name: z.string().min(1, "Label is required"),
-  prompt: z.string().min(1, "Prompt is required"),
-})
-
-export type PromptFormData = z.infer<typeof newPromptSchema>
-
 export type AssistantManagePromptDialogProps = {
   type: "create" | "edit"
-  initialData: Partial<PromptFormData>
+  initialData: Partial<AiPromptFormData>
   open: boolean
   onOpenChange: (open: boolean) => void
-  onSubmit: (data: PromptFormData) => Promise<void>
+  onSubmit: (data: AiPromptFormData) => Promise<void>
   onDelete?: () => Promise<void>
 }
 
@@ -65,8 +59,8 @@ export function AssistantManagePromptDialog(
 
   const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const form = useForm<PromptFormData>({
-    resolver: zodResolver(newPromptSchema),
+  const form = useForm<AiPromptFormData>({
+    resolver: zodResolver(AiPromptFormDataSchema),
     defaultValues: {
       name: initialData.name ?? "",
       prompt: initialData.prompt ?? "",
@@ -74,7 +68,7 @@ export function AssistantManagePromptDialog(
   })
 
   const handleSubmit = useCallback(
-    async (data: PromptFormData) => {
+    async (data: AiPromptFormData) => {
       setIsSubmitting(true)
       try {
         await onSubmit(data)

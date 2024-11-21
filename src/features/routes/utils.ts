@@ -7,7 +7,15 @@ export function getDefaultRedirectPathAfterConnection() {
 }
 
 export function getAssistantsPageRoute() {
-  return `/assistant`
+  return `/assistants`
+}
+
+export function getAssistantPageRoute({
+  assistantId,
+}: {
+  assistantId: string
+}) {
+  return `/assistants/${assistantId}`
 }
 
 export function getInboxPageRoute() {

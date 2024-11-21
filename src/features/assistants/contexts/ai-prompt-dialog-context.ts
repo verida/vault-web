@@ -1,18 +1,17 @@
 import { createContext } from "react"
 
-import { PromptFormData } from "@/app/(connected)/assistant/_components/assistant-manage-prompt-dialog"
-import { AiPromptRecord } from "@/features/assistants/types"
+import { AiPromptFormData, AiPromptRecord } from "@/features/assistants/types"
 
 export type AiPromptDialogState = {
   type: "create" | "edit"
   isOpen: boolean
-  initialData?: Partial<PromptFormData>
+  initialData?: Partial<AiPromptFormData>
   savedPrompt?: AiPromptRecord
 }
 
 export type AiPromptDialogContextType = {
   dialogState: AiPromptDialogState
-  openSaveDialog: (initialData?: Partial<PromptFormData>) => void
+  openSaveDialog: (initialData?: Partial<AiPromptFormData>) => void
   openEditDialog: (savedPrompt: AiPromptRecord) => void
   closeDialog: () => void
 }

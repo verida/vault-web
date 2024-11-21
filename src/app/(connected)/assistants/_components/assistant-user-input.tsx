@@ -10,7 +10,7 @@ import React, {
 } from "react"
 import { useMediaQuery } from "usehooks-ts"
 
-import { AssistantPromptsCombobox } from "@/app/(connected)/assistant/_components/assistant-prompts-combobox"
+import { AssistantPromptsCombobox } from "@/app/(connected)/assistants/_components/assistant-prompts-combobox"
 import { SendIcon } from "@/components/icons/send-icon"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"

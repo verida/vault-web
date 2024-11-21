@@ -3,6 +3,7 @@ import { z } from "zod"
 import {
   AiAssistantBaseSchema,
   AiPromptBaseSchema,
+  AiPromptFormDataSchema,
   PrivateDataApiV1LLMPersonalResponseSchema,
   PrivateDataApiV1LlmHotloadResponseSchema,
 } from "@/features/assistants/schemas"
@@ -22,6 +23,8 @@ export type AiAssistantRecord = VeridaRecord<AiAssistantBase>
 export type AiPromptBase = z.infer<typeof AiPromptBaseSchema>
 
 export type AiPromptRecord = VeridaRecord<AiPromptBase>
+
+export type AiPromptFormData = z.infer<typeof AiPromptFormDataSchema>
 
 export type SuggestedInput = {
   label: string

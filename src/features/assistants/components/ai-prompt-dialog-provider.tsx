@@ -2,11 +2,8 @@
 
 import { useCallback, useMemo, useState } from "react"
 
-import {
-  AssistantManagePromptDialog,
-  PromptFormData,
-} from "@/app/(connected)/assistant/_components/assistant-manage-prompt-dialog"
 import { featureFlags } from "@/config/features"
+import { AssistantManagePromptDialog } from "@/features/assistants/components/assistant-manage-prompt-dialog"
 import {
   AiPromptDialogContext,
   AiPromptDialogState,
@@ -14,7 +11,7 @@ import {
 import { useCreateAiPrompt } from "@/features/assistants/hooks/use-create-ai-prompt"
 import { useDeleteAiPrompt } from "@/features/assistants/hooks/use-delete-ai-prompt"
 import { useUpdateAiPrompt } from "@/features/assistants/hooks/use-update-ai-prompt"
-import { AiPromptRecord } from "@/features/assistants/types"
+import { AiPromptFormData, AiPromptRecord } from "@/features/assistants/types"
 
 type AiPromptDialogProviderProps = {
   children: React.ReactNode
@@ -33,7 +30,7 @@ export function AiPromptDialogProvider(props: AiPromptDialogProviderProps) {
   const { deleteAiPrompt: deleteAssistantPrompt } = useDeleteAiPrompt()
 
   const openSaveDialog = useCallback(
-    (initialData?: Partial<PromptFormData>) => {
+    (initialData?: Partial<AiPromptFormData>) => {
       setDialogState({
         type: "create",
         isOpen: true,
@@ -60,7 +57,7 @@ export function AiPromptDialogProvider(props: AiPromptDialogProviderProps) {
   }, [])
 
   const handleSubmit = useCallback(
-    async (data: PromptFormData) => {
+    async (data: AiPromptFormData) => {
       if (dialogState.type === "create") {
         await createAssistantPrompt({
           assistantId: "",

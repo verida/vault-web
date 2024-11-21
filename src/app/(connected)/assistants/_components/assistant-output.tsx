@@ -1,7 +1,7 @@
 "use client"
 
-import { AssistantEmptyContent } from "@/app/(connected)/assistant/_components/assistant-empty-content"
-import { AssistantOutputCard } from "@/app/(connected)/assistant/_components/assistant-output-card"
+import { AssistantEmptyContent } from "@/app/(connected)/assistants/_components/assistant-empty-content"
+import { AssistantOutputCard } from "@/app/(connected)/assistants/_components/assistant-output-card"
 import {
   ErrorBlock,
   ErrorBlockDescription,
