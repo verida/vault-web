@@ -3,7 +3,6 @@ import React from "react"
 
 import { AssistantSelector } from "@/app/(connected)/assistants/[assistantId]/_components/assistant-selector"
 import { PageWrapper } from "@/components/page-wrapper"
-import { AiPromptDialogProvider } from "@/features/assistants/components/ai-prompt-dialog-provider"
 
 export const metadata: Metadata = {
   title: "AI Assistant",
@@ -29,7 +28,7 @@ export default function AssistantLayout(props: AssistantLayoutProps) {
       className="h-full gap-2"
       contentClassName="h-full min-h-0 pb-0 md:pb-0 xl:pb-0"
     >
-      <AiPromptDialogProvider>{children}</AiPromptDialogProvider>
+      {children}
     </PageWrapper>
   )
 }

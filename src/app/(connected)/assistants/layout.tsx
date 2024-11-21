@@ -3,6 +3,8 @@ import { notFound } from "next/navigation"
 import React from "react"
 
 import { featureFlags } from "@/config/features"
+import { AiAssistantDialogProvider } from "@/features/assistants/components/ai-assistant-dialog-provider"
+import { AiPromptDialogProvider } from "@/features/assistants/components/ai-prompt-dialog-provider"
 
 export const metadata: Metadata = {
   title: "AI Assistant",
@@ -19,6 +21,10 @@ export default function AssistantsLayout(props: AssistantsLayoutProps) {
     notFound()
   }
 
-  return <>{children}</>
+  return (
+    <AiAssistantDialogProvider>
+      <AiPromptDialogProvider>{children}</AiPromptDialogProvider>
+    </AiAssistantDialogProvider>
+  )
 }
 AssistantsLayout.displayName = "AssistantsLayout"

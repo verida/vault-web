@@ -2,6 +2,7 @@ import { z } from "zod"
 
 import {
   AiAssistantBaseSchema,
+  AiAssistantFormDataSchema,
   AiPromptBaseSchema,
   AiPromptFormDataSchema,
   PrivateDataApiV1LLMPersonalResponseSchema,
@@ -19,6 +20,8 @@ export type AiAssistantHotloadResult = {
 export type AiAssistantBase = z.infer<typeof AiAssistantBaseSchema>
 
 export type AiAssistantRecord = VeridaRecord<AiAssistantBase>
+
+export type AiAssistantFormData = z.infer<typeof AiAssistantFormDataSchema>
 
 export type AiPromptBase = z.infer<typeof AiPromptBaseSchema>
 

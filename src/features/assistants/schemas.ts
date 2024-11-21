@@ -20,6 +20,17 @@ export const AiAssistantBaseSchema = z.object({
   order: z.number().optional(),
 })
 
+export const AiAssistantFormDataSchema = z.object({
+  name: z
+    .string()
+    .min(1, "Name is required")
+    .max(32, "Name must be less than 32 characters")
+    .regex(
+      /^[a-zA-Z0-9-_]+$/,
+      "Name can only contain letters, numbers, hyphens and underscores"
+    ),
+})
+
 export const AiPromptBaseSchema = z.object({
   assistantId: z.string(),
   name: z.string(),
