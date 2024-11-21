@@ -2,7 +2,9 @@
 
 import { useQueryClient } from "@tanstack/react-query"
 import React, { useCallback, useEffect, useMemo, useState } from "react"
+import { useLocalStorage } from "usehooks-ts"
 
+import { DEFAULT_ASSISTANT } from "@/features/assistants/constants"
 import {
   AssistantsContext,
   AssistantsContextType,
@@ -38,6 +40,13 @@ export function AssistantsProvider(props: AssistantsProviderProps) {
 
   const queryClient = useQueryClient()
 
+  const [selectedAiAssistant, setSelectedAiAssistant] = useLocalStorage(
+    "verida-vault-selectedAiAssistant",
+    DEFAULT_ASSISTANT._id,
+    {
+      initializeWithValue: true,
+    }
+  )
   const [aiPromptInput, setAiPromptInput] = useState<AiPromptInput | null>(null)
   const [aiAssistantOutput, setAiAssistantOutput] =
     useState<AiAssistantOutput | null>(null)
@@ -150,6 +159,8 @@ export function AssistantsProvider(props: AssistantsProviderProps) {
 
   const value = useMemo<AssistantsContextType>(
     () => ({
+      selectedAiAssistant,
+      setSelectedAiAssistant,
       aiPromptInput,
       aiAssistantOutput,
       processAiPromptInput,
@@ -164,6 +175,8 @@ export function AssistantsProvider(props: AssistantsProviderProps) {
       setPromptSearchValue,
     }),
     [
+      selectedAiAssistant,
+      setSelectedAiAssistant,
       aiPromptInput,
       aiAssistantOutput,
       processAiPromptInput,

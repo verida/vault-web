@@ -3,7 +3,7 @@
 import { MessageSquareMoreIcon } from "lucide-react"
 import { useCallback, useState } from "react"
 
-import { AssistantPromptsSelector } from "@/app/(connected)/assistants/_components/assistant-prompts-selector"
+import { AssistantPromptsSelector } from "@/app/(connected)/assistants/[assistantId]/_components/assistant-prompts-selector"
 import { Button } from "@/components/ui/button"
 import {
   Popover,

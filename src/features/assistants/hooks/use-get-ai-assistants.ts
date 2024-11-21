@@ -15,7 +15,7 @@ export function useGetAiAssistants() {
   })
 
   return {
-    savedPrompts: records,
+    aiAssistants: records,
     ...query,
   }
 }

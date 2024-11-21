@@ -11,11 +11,13 @@ import {
 import { getAssistantsPageRoute } from "@/features/routes/utils"
 
 export default function AssistantNotFoundPage() {
+  // TODO: list the existing assistants in the page
+
   return (
     <div className="flex h-full flex-1 flex-col items-center justify-center p-4">
       <NotFoundBlock>
         <NotFoundBlockImage />
-        <NotFoundBlockTitle>Data Not Found</NotFoundBlockTitle>
+        <NotFoundBlockTitle>Assistant Not Found</NotFoundBlockTitle>
         <NotFoundBlockDescription>
           The assistant you are looking for does not exist.
         </NotFoundBlockDescription>

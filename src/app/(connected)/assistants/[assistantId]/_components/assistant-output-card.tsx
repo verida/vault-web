@@ -3,7 +3,7 @@
 import { intlFormat } from "date-fns"
 import { useMemo } from "react"
 
-import { AssistantOutputCardMenu } from "@/app/(connected)/assistants/_components/assistant-output-card-menu"
+import { AssistantOutputCardMenu } from "@/app/(connected)/assistants/[assistantId]/_components/assistant-output-card-menu"
 import { MoreIcon } from "@/components/icons/more-icon"
 import { VeridaNetworkLogo } from "@/components/icons/verida-network-logo"
 import { MarkdownRenderer } from "@/components/markdown-renderer"

@@ -1,4 +1,7 @@
-import { SuggestedAiPromptInput } from "@/features/assistants/types"
+import {
+  AiAssistantRecord,
+  SuggestedAiPromptInput,
+} from "@/features/assistants/types"
 import { DatabaseDefinition } from "@/features/data/types"
 
 export const AI_ASSISTANTS_DB_DEF: DatabaseDefinition = {
@@ -23,6 +26,11 @@ export const AI_PROMPTS_DB_DEF: DatabaseDefinition = {
   schemaUrlBase: "https://common.schemas.verida.io/ai/prompt",
   schemaUrlLatest:
     "https://common.schemas.verida.io/ai/prompt/v0.1.0/schema.json",
+}
+
+export const DEFAULT_ASSISTANT: AiAssistantRecord = {
+  _id: "kyra",
+  name: "Kyra",
 }
 
 export const SUGGESTED_PROMPTS: SuggestedAiPromptInput[] = [

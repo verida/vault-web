@@ -7,6 +7,8 @@ import {
 } from "@/features/assistants/types"
 
 export type AssistantsContextType = {
+  selectedAiAssistant: string
+  setSelectedAiAssistant: (assistantId: string) => void
   aiPromptInput: AiPromptInput | null
   aiAssistantOutput: AiAssistantOutput | null
   processAiPromptInput: () => Promise<void>
