@@ -26,7 +26,7 @@ export default function AssistantLayout(props: AssistantLayoutProps) {
   return (
     <PageWrapper
       pageTitle={<AssistantSelector assistantId={assistantId} />}
-      className="h-full gap-0"
+      className="h-full gap-2"
       contentClassName="h-full min-h-0 pb-0 md:pb-0 xl:pb-0"
     >
       <AiPromptDialogProvider>{children}</AiPromptDialogProvider>
