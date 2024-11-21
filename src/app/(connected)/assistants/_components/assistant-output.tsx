@@ -11,7 +11,11 @@ import {
 import { useAssistants } from "@/features/assistants/hooks/use-assistants"
 
 export function AssistantOutput() {
-  const { assistantOutput, isProcessing, error } = useAssistants()
+  const {
+    aiAssistantOutput: assistantOutput,
+    isProcessing,
+    error,
+  } = useAssistants()
 
   return (
     // TODO: Manage when the hotloading had an error

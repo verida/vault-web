@@ -6,6 +6,7 @@ import { featureFlags } from "@/config/features"
 import { AssistantManagePromptDialog } from "@/features/assistants/components/assistant-manage-prompt-dialog"
 import {
   AiPromptDialogContext,
+  AiPromptDialogContextType,
   AiPromptDialogState,
 } from "@/features/assistants/contexts/ai-prompt-dialog-context"
 import { useCreateAiPrompt } from "@/features/assistants/hooks/use-create-ai-prompt"
@@ -40,15 +41,15 @@ export function AiPromptDialogProvider(props: AiPromptDialogProviderProps) {
     []
   )
 
-  const openEditDialog = useCallback((savedPrompt: AiPromptRecord) => {
+  const openEditDialog = useCallback((aiPromptRecord: AiPromptRecord) => {
     setDialogState({
       type: "edit",
       isOpen: true,
       initialData: {
-        name: savedPrompt.name,
-        prompt: savedPrompt.prompt,
+        name: aiPromptRecord.name,
+        prompt: aiPromptRecord.prompt,
       },
-      savedPrompt,
+      aiPromptRecord,
     })
   }, [])
 
@@ -60,13 +61,13 @@ export function AiPromptDialogProvider(props: AiPromptDialogProviderProps) {
     async (data: AiPromptFormData) => {
       if (dialogState.type === "create") {
         await createAssistantPrompt({
-          assistantId: "",
+          assistantId: "", // TODO: Get from form data
           name: data.name,
           prompt: data.prompt,
         })
-      } else if (dialogState.savedPrompt) {
+      } else if (dialogState.aiPromptRecord) {
         await updateAssistantPrompt({
-          ...dialogState.savedPrompt,
+          ...dialogState.aiPromptRecord,
           name: data.name,
           prompt: data.prompt,
         })
@@ -76,12 +77,12 @@ export function AiPromptDialogProvider(props: AiPromptDialogProviderProps) {
   )
 
   const handleDelete = useCallback(async () => {
-    if (dialogState.savedPrompt) {
-      await deleteAssistantPrompt(dialogState.savedPrompt._id)
+    if (dialogState.aiPromptRecord) {
+      await deleteAssistantPrompt(dialogState.aiPromptRecord._id)
     }
   }, [deleteAssistantPrompt, dialogState])
 
-  const value = useMemo(
+  const value: AiPromptDialogContextType = useMemo(
     () => ({
       dialogState,
       openSaveDialog,

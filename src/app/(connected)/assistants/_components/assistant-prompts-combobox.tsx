@@ -15,11 +15,11 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
-import { AssistantUserInput } from "@/features/assistants/types"
+import { AiPromptInput } from "@/features/assistants/types"
 import { cn } from "@/styles/utils"
 
 export type AssistantPromptsComboboxProps = {
-  onClickEdit?: (input: AssistantUserInput) => void
+  onClickEdit?: (input: AiPromptInput) => void
 } & React.ComponentProps<typeof Button>
 
 export function AssistantPromptsCombobox(props: AssistantPromptsComboboxProps) {
@@ -32,7 +32,7 @@ export function AssistantPromptsCombobox(props: AssistantPromptsComboboxProps) {
   }, [])
 
   const handleSetPromptClick = useCallback(
-    async (input: AssistantUserInput) => {
+    async (input: AiPromptInput) => {
       onClickEdit?.(input)
       setOpen(false)
     },

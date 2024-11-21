@@ -20,24 +20,24 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { featureFlags } from "@/config/features"
-import { SUGGESTED_INPUTS } from "@/features/assistants/constants"
+import { SUGGESTED_PROMPTS } from "@/features/assistants/constants"
 import { useAiPromptDialog } from "@/features/assistants/hooks/use-ai-prompt-dialog"
 import { useAssistants } from "@/features/assistants/hooks/use-assistants"
 import { useGetAiPrompts } from "@/features/assistants/hooks/use-get-ai-prompts"
-import { AssistantUserInput } from "@/features/assistants/types"
+import { AiPromptInput } from "@/features/assistants/types"
 import { cn } from "@/styles/utils"
 
 export type AssistantPromptsSelectorProps = {
-  onClickSetPrompt?: (input: AssistantUserInput) => void
-  onItemClick?: (input: AssistantUserInput) => void
+  onClickSetPrompt?: (input: AiPromptInput) => void
+  onItemClick?: (input: AiPromptInput) => void
 } & Omit<React.ComponentProps<"div">, "children">
 
 export function AssistantPromptsSelector(props: AssistantPromptsSelectorProps) {
   const { className, onClickSetPrompt, onItemClick, ...divProps } = props
 
   const {
-    setAndProcessUserInput,
-    updateUserPrompt,
+    setAndProcessAiPromptInput: setAndProcessUserInput,
+    updateAiPrompt: updateUserPrompt,
     promptSearchValue,
     setPromptSearchValue,
   } = useAssistants()
@@ -49,7 +49,7 @@ export function AssistantPromptsSelector(props: AssistantPromptsSelectorProps) {
   const { savedAiPrompts: savedPrompts } = useGetAiPrompts()
 
   const handleItemClick = useCallback(
-    async (input: AssistantUserInput) => {
+    async (input: AiPromptInput) => {
       setAndProcessUserInput(input)
       onItemClick?.(input)
     },
@@ -57,7 +57,7 @@ export function AssistantPromptsSelector(props: AssistantPromptsSelectorProps) {
   )
 
   const handleSetPromptClick = useCallback(
-    async (input: AssistantUserInput) => {
+    async (input: AiPromptInput) => {
       updateUserPrompt(input.prompt)
       onClickSetPrompt?.(input)
     },
@@ -126,16 +126,20 @@ export function AssistantPromptsSelector(props: AssistantPromptsSelectorProps) {
             </CommandGroup>
           ) : null}
           <CommandGroup heading="Suggested by Verida">
-            {SUGGESTED_INPUTS.map((suggestedInput, index) => (
+            {SUGGESTED_PROMPTS.map((suggestedInput, index) => (
               <PromptItem
                 key={index}
                 label={suggestedInput.label}
-                prompt={suggestedInput.input.prompt}
+                prompt={suggestedInput.prompt}
                 onSelect={() => {
-                  handleItemClick(suggestedInput.input)
+                  handleItemClick({
+                    prompt: suggestedInput.prompt,
+                  })
                 }}
                 onClickSetPrompt={() => {
-                  handleSetPromptClick(suggestedInput.input)
+                  handleSetPromptClick({
+                    prompt: suggestedInput.prompt,
+                  })
                 }}
               />
             ))}

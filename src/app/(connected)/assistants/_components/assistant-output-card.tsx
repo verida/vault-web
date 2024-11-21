@@ -22,7 +22,7 @@ export type AssistantOutputCardProps = React.ComponentProps<"div">
 export function AssistantOutputCard(props: AssistantOutputCardProps) {
   const { className, ...divProps } = props
 
-  const { assistantOutput, isProcessing } = useAssistants()
+  const { aiAssistantOutput: assistantOutput, isProcessing } = useAssistants()
 
   const processedAt = useMemo(() => {
     if (!assistantOutput?.processedAt) {

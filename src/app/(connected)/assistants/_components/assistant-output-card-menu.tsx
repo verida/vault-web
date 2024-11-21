@@ -20,7 +20,10 @@ export function AssistantOutputCardMenu(props: AssistantOutputCardMenuProps) {
 
   const { toast } = useToast()
 
-  const { assistantOutput, clearAssistantOutput } = useAssistants()
+  const {
+    aiAssistantOutput: assistantOutput,
+    clearAiAssistantOutput: clearAssistantOutput,
+  } = useAssistants()
 
   const handleCopyAssistantOutput = useCallback(async () => {
     if (assistantOutput?.result) {

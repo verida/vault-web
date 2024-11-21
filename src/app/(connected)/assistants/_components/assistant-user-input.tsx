@@ -34,10 +34,10 @@ export function AssistantUserInput(props: AssistantUserInputProps) {
   const { ...divProps } = props
 
   const {
-    userInput,
-    processUserInput,
-    updateUserPrompt,
-    clearUserInput,
+    aiPromptInput: userInput,
+    processAiPromptInput: processUserInput,
+    updateAiPrompt: updateUserPrompt,
+    clearAiPromptInput: clearUserInput,
     isProcessing,
   } = useAssistants()
 

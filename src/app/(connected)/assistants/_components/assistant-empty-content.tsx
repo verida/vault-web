@@ -6,9 +6,9 @@ import React, { useCallback } from "react"
 import { VeridaNetworkColouredLogo } from "@/components/icons/verida-network-coloured-logo"
 import { Typography } from "@/components/typography"
 import { Button } from "@/components/ui/button"
-import { SUGGESTED_INPUTS } from "@/features/assistants/constants"
+import { SUGGESTED_PROMPTS } from "@/features/assistants/constants"
 import { useAssistants } from "@/features/assistants/hooks/use-assistants"
-import { AssistantUserInput } from "@/features/assistants/types"
+import { AiPromptInput } from "@/features/assistants/types"
 import { useDataConnections } from "@/features/data-connections/hooks/use-data-connections"
 import { getConnectionsPageRoute } from "@/features/routes/utils"
 import { cn } from "@/styles/utils"
@@ -18,13 +18,13 @@ export type AssistantEmptyContentProps = React.ComponentProps<"div">
 export function AssistantEmptyContent(props: AssistantEmptyContentProps) {
   const { className, ...divProps } = props
 
-  const { setAndProcessUserInput } = useAssistants()
+  const { setAndProcessAiPromptInput: setAndProcessUserInput } = useAssistants()
 
   const { connections, isLoading: isLoadingDataConnections } =
     useDataConnections()
 
   const handleRecommendedPromptClick = useCallback(
-    async (input: AssistantUserInput) => {
+    async (input: AiPromptInput) => {
       setAndProcessUserInput(input)
     },
     [setAndProcessUserInput]
@@ -53,13 +53,15 @@ export function AssistantEmptyContent(props: AssistantEmptyContentProps) {
         </div>
         {isLoadingDataConnections ? null : connections?.length ? (
           <div className="flex flex-row flex-wrap items-center justify-center gap-2">
-            {SUGGESTED_INPUTS.map((recommendations, index) => (
+            {SUGGESTED_PROMPTS.map((recommendations, index) => (
               <Button
                 key={index}
                 variant="outline"
                 className="h-auto rounded-full px-4 py-2.5"
                 onClick={() => {
-                  handleRecommendedPromptClick(recommendations.input)
+                  handleRecommendedPromptClick({
+                    prompt: recommendations.prompt,
+                  })
                 }}
               >
                 <Typography key={index} variant="base-s-regular">

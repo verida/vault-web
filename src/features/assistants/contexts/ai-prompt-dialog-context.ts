@@ -6,13 +6,13 @@ export type AiPromptDialogState = {
   type: "create" | "edit"
   isOpen: boolean
   initialData?: Partial<AiPromptFormData>
-  savedPrompt?: AiPromptRecord
+  aiPromptRecord?: AiPromptRecord
 }
 
 export type AiPromptDialogContextType = {
   dialogState: AiPromptDialogState
   openSaveDialog: (initialData?: Partial<AiPromptFormData>) => void
-  openEditDialog: (savedPrompt: AiPromptRecord) => void
+  openEditDialog: (aiPromptRecord: AiPromptRecord) => void
   closeDialog: () => void
 }
 

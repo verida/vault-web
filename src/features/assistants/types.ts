@@ -9,10 +9,10 @@ import {
 } from "@/features/assistants/schemas"
 import { VeridaRecord } from "@/features/verida-database/types"
 
-export type HotloadStatus = "idle" | "loading" | "success" | "error"
+export type AiAssistantHotloadStatus = "idle" | "loading" | "success" | "error"
 
-export type HotloadResult = {
-  status: HotloadStatus
+export type AiAssistantHotloadResult = {
+  status: AiAssistantHotloadStatus
   progress: number
 }
 
@@ -26,17 +26,16 @@ export type AiPromptRecord = VeridaRecord<AiPromptBase>
 
 export type AiPromptFormData = z.infer<typeof AiPromptFormDataSchema>
 
-export type SuggestedInput = {
-  label: string
-  input: AssistantUserInput
-}
-
-export type AssistantUserInput = {
+export type AiPromptInput = {
   prompt: string
   // TODO: add further configuration options (LLM model, data type, filters, etc.)
 }
 
-export type AssistantOutput = {
+export type SuggestedAiPromptInput = {
+  label: string
+} & AiPromptInput
+
+export type AiAssistantOutput = {
   result: string
   processedAt: Date
   processingTime?: number

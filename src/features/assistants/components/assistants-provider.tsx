@@ -8,11 +8,14 @@ import {
   AssistantsContextType,
 } from "@/features/assistants/contexts/assistants-context"
 import { prefetchGetAiPrompts } from "@/features/assistants/hooks/use-get-ai-prompts"
-import { AssistantUserInput, HotloadResult } from "@/features/assistants/types"
-import { AssistantOutput } from "@/features/assistants/types"
+import {
+  AiAssistantHotloadResult,
+  AiPromptInput,
+} from "@/features/assistants/types"
+import { AiAssistantOutput } from "@/features/assistants/types"
 import {
   hotloadAPI,
-  sendUserInputToAssistant,
+  sendAiPromptInputToAssistant,
 } from "@/features/assistants/utils"
 import { Logger } from "@/features/telemetry"
 import { useVerida } from "@/features/verida/hooks/use-verida"
@@ -35,12 +38,12 @@ export function AssistantsProvider(props: AssistantsProviderProps) {
 
   const queryClient = useQueryClient()
 
-  const [userInput, setUserInput] = useState<AssistantUserInput | null>(null)
-  const [assistantOutput, setAssistantOutput] =
-    useState<AssistantOutput | null>(null)
+  const [aiPromptInput, setAiPromptInput] = useState<AiPromptInput | null>(null)
+  const [aiAssistantOutput, setAiAssistantOutput] =
+    useState<AiAssistantOutput | null>(null)
   const [isProcessing, setIsProcessing] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const [hotload, setHotload] = useState<HotloadResult>({
+  const [hotload, setHotload] = useState<AiAssistantHotloadResult>({
     status: "idle",
     progress: 0,
   })
@@ -89,8 +92,8 @@ export function AssistantsProvider(props: AssistantsProviderProps) {
       })
   }, [getAccountSessionToken, queryClient, did])
 
-  const _processUserInput = useCallback(
-    async (userInput: AssistantUserInput) => {
+  const processInput = useCallback(
+    async (input: AiPromptInput) => {
       if (isProcessing) {
         return
       }
@@ -98,13 +101,12 @@ export function AssistantsProvider(props: AssistantsProviderProps) {
       logger.info("Sending user input to assistant")
       setIsProcessing(true)
       setError(null)
-      setAssistantOutput(null)
+      setAiAssistantOutput(null)
 
       try {
         const sessionToken = await getAccountSessionToken()
-        const result = await sendUserInputToAssistant(userInput, sessionToken)
-        setAssistantOutput(result)
-        logger.info("Received response from assistant")
+        const result = await sendAiPromptInputToAssistant(input, sessionToken)
+        setAiAssistantOutput(result)
       } catch (error) {
         logger.error(error)
         // TODO: Analyse error and set appropriate error message
@@ -116,45 +118,45 @@ export function AssistantsProvider(props: AssistantsProviderProps) {
     [getAccountSessionToken, isProcessing]
   )
 
-  const processUserInput = useCallback(async () => {
-    if (!userInput?.prompt) {
+  const processAiPromptInput = useCallback(async () => {
+    if (!aiPromptInput?.prompt) {
       return
     }
-    await _processUserInput(userInput)
-  }, [userInput, _processUserInput])
+    await processInput(aiPromptInput)
+  }, [aiPromptInput, processInput])
 
-  const setAndProcessUserInput = useCallback(
-    async (userInput: AssistantUserInput) => {
-      setUserInput(userInput)
-      await _processUserInput(userInput)
+  const setAndProcessAiPromptInput = useCallback(
+    async (input: AiPromptInput) => {
+      setAiPromptInput(input)
+      await processInput(input)
     },
-    [_processUserInput]
+    [processInput]
   )
 
-  const updateUserPrompt = useCallback((userPrompt: string) => {
-    setUserInput((prev) => ({
+  const updateAiPrompt = useCallback((prompt: string) => {
+    setAiPromptInput((prev) => ({
       ...prev,
-      prompt: userPrompt,
+      prompt,
     }))
   }, [])
 
-  const clearUserInput = useCallback(() => {
-    setUserInput(null)
+  const clearAiPromptInput = useCallback(() => {
+    setAiPromptInput(null)
   }, [])
 
-  const clearAssistantOutput = useCallback(() => {
-    setAssistantOutput(null)
+  const clearAiAssistantOutput = useCallback(() => {
+    setAiAssistantOutput(null)
   }, [])
 
   const value = useMemo<AssistantsContextType>(
     () => ({
-      userInput,
-      assistantOutput,
-      processUserInput,
-      setAndProcessUserInput,
-      updateUserPrompt,
-      clearUserInput,
-      clearAssistantOutput,
+      aiPromptInput,
+      aiAssistantOutput,
+      processAiPromptInput,
+      setAndProcessAiPromptInput,
+      updateAiPrompt,
+      clearAiPromptInput,
+      clearAiAssistantOutput,
       isProcessing,
       error,
       hotload,
@@ -162,13 +164,13 @@ export function AssistantsProvider(props: AssistantsProviderProps) {
       setPromptSearchValue,
     }),
     [
-      userInput,
-      assistantOutput,
-      processUserInput,
-      setAndProcessUserInput,
-      updateUserPrompt,
-      clearUserInput,
-      clearAssistantOutput,
+      aiPromptInput,
+      aiAssistantOutput,
+      processAiPromptInput,
+      setAndProcessAiPromptInput,
+      updateAiPrompt,
+      clearAiPromptInput,
+      clearAiAssistantOutput,
       isProcessing,
       error,
       hotload,
