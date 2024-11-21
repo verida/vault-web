@@ -24,8 +24,7 @@ export const metadata: Metadata = {
   openGraph: {
     url: baseUrl,
     images: {
-      // TODO: Change this image url to update the image with proper one.
-      url: `${baseUrl.toString()}images/inbox-page.png`,
+      url: `${baseUrl.toString()}images/verida_vault_social_preview.png`,
       width: 1200,
       height: 630,
       alt: APP_NAME,
