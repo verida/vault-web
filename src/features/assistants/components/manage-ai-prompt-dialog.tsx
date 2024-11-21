@@ -43,7 +43,7 @@ import { cn } from "@/styles/utils"
 
 const logger = Logger.create("assistants")
 
-export type AssistantManagePromptDialogProps = {
+export type ManageAiPromptDialogProps = {
   type: "create" | "edit"
   initialData: Partial<AiPromptFormData>
   open: boolean
@@ -52,9 +52,7 @@ export type AssistantManagePromptDialogProps = {
   onDelete?: () => Promise<void>
 }
 
-export function AssistantManagePromptDialog(
-  props: AssistantManagePromptDialogProps
-) {
+export function ManageAiPromptDialog(props: ManageAiPromptDialogProps) {
   const { type, initialData, open, onOpenChange, onSubmit, onDelete } = props
 
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -167,14 +165,14 @@ export function AssistantManagePromptDialog(
               )}
             >
               {type === "edit" && onDelete ? (
-                <DeletePromptDialog
+                <DeleteAiPromptDialog
                   onDelete={handleDelete}
                   isProcessing={isSubmitting}
                 >
                   <Button variant="outline-destructive" disabled={isSubmitting}>
                     Delete
                   </Button>
-                </DeletePromptDialog>
+                </DeleteAiPromptDialog>
               ) : null}
               <Button variant="primary" type="submit" disabled={isSubmitting}>
                 Save
@@ -186,15 +184,15 @@ export function AssistantManagePromptDialog(
     </Dialog>
   )
 }
-AssistantManagePromptDialog.displayName = "AssistantManagePromptDialog"
+ManageAiPromptDialog.displayName = "AssistantManagePromptDialog"
 
-type DeletePromptDialogProps = {
+type DeleteAiPromptDialogProps = {
   children: React.ReactNode
   onDelete: () => Promise<void>
   isProcessing: boolean
 }
 
-function DeletePromptDialog(props: DeletePromptDialogProps) {
+function DeleteAiPromptDialog(props: DeleteAiPromptDialogProps) {
   const { children, onDelete, isProcessing } = props
 
   return (
@@ -223,4 +221,4 @@ function DeletePromptDialog(props: DeletePromptDialogProps) {
     </AlertDialog>
   )
 }
-DeletePromptDialog.displayName = "DeletePromptDialog"
+DeleteAiPromptDialog.displayName = "DeletePromptDialog"

@@ -3,7 +3,7 @@
 import { useCallback, useMemo, useState } from "react"
 
 import { featureFlags } from "@/config/features"
-import { AssistantManagePromptDialog } from "@/features/assistants/components/assistant-manage-prompt-dialog"
+import { ManageAiPromptDialog } from "@/features/assistants/components/manage-ai-prompt-dialog"
 import {
   AiPromptDialogContext,
   AiPromptDialogContextType,
@@ -96,7 +96,7 @@ export function AiPromptDialogProvider(props: AiPromptDialogProviderProps) {
     <AiPromptDialogContext.Provider value={value}>
       {children}
       {featureFlags.assistant.userPrompts.enabled ? (
-        <AssistantManagePromptDialog
+        <ManageAiPromptDialog
           type={dialogState.type}
           initialData={dialogState.initialData ?? {}}
           open={dialogState.isOpen}
