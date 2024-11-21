@@ -21,7 +21,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { featureFlags } from "@/config/features"
-import { useAssistantPromptDialog } from "@/features/assistants/hooks/use-assistant-prompt-dialog"
+import { useAiPromptDialog } from "@/features/assistants/hooks/use-ai-prompt-dialog"
 import { useAssistants } from "@/features/assistants/hooks/use-assistants"
 import { cn, getMediaQuery } from "@/styles/utils"
 
@@ -41,7 +41,7 @@ export function AssistantUserInput(props: AssistantUserInputProps) {
     isProcessing,
   } = useAssistants()
 
-  const { openSaveDialog } = useAssistantPromptDialog()
+  const { openSaveDialog } = useAiPromptDialog()
 
   const inputRef = useRef<HTMLTextAreaElement>(null)
 

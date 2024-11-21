@@ -4,14 +4,14 @@ import { AI_PROMPTS_DB_DEF } from "@/features/assistants/constants"
 import { useToast } from "@/features/toasts/use-toast"
 import { useDeleteVeridaRecord } from "@/features/verida-database/hooks/use-delete-verida-record"
 
-export function useDeleteAssistantPrompt() {
+export function useDeleteAiPrompt() {
   const { toast } = useToast()
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { deleteRecord, deleteRecordAsync, ...mutation } =
     useDeleteVeridaRecord()
 
-  const deleteAssistantPrompt = useCallback(
+  const deleteAiPrompt = useCallback(
     (promptId: string) => {
       return deleteRecordAsync(
         {
@@ -38,7 +38,7 @@ export function useDeleteAssistantPrompt() {
   )
 
   return {
-    deleteAssistantPrompt,
+    deleteAiPrompt,
     ...mutation,
   }
 }

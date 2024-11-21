@@ -8,31 +8,29 @@ import {
 } from "@/app/(connected)/assistant/_components/assistant-manage-prompt-dialog"
 import { featureFlags } from "@/config/features"
 import {
-  AssistantPromptDialogContext,
-  AssistantPromptDialogState,
-} from "@/features/assistants/contexts/assistant-prompt-dialog-context"
-import { useCreateAssistantPrompt } from "@/features/assistants/hooks/use-create-assistant-prompt"
-import { useDeleteAssistantPrompt } from "@/features/assistants/hooks/use-delete-assistant-prompt"
-import { useUpdateAssistantPrompt } from "@/features/assistants/hooks/use-update-assistant-prompt"
+  AiPromptDialogContext,
+  AiPromptDialogState,
+} from "@/features/assistants/contexts/ai-prompt-dialog-context"
+import { useCreateAiPrompt } from "@/features/assistants/hooks/use-create-ai-prompt"
+import { useDeleteAiPrompt } from "@/features/assistants/hooks/use-delete-ai-prompt"
+import { useUpdateAiPrompt } from "@/features/assistants/hooks/use-update-ai-prompt"
 import { AiPromptRecord } from "@/features/assistants/types"
 
-type AssistantPromptDialogProviderProps = {
+type AiPromptDialogProviderProps = {
   children: React.ReactNode
 }
 
-export function AssistantPromptDialogProvider(
-  props: AssistantPromptDialogProviderProps
-) {
+export function AiPromptDialogProvider(props: AiPromptDialogProviderProps) {
   const { children } = props
 
-  const [dialogState, setDialogState] = useState<AssistantPromptDialogState>({
+  const [dialogState, setDialogState] = useState<AiPromptDialogState>({
     type: "create",
     isOpen: false,
   })
 
-  const { createAssistantPrompt } = useCreateAssistantPrompt()
-  const { updateAssistantPrompt } = useUpdateAssistantPrompt()
-  const { deleteAssistantPrompt } = useDeleteAssistantPrompt()
+  const { createAiPrompt: createAssistantPrompt } = useCreateAiPrompt()
+  const { updateAiPrompt: updateAssistantPrompt } = useUpdateAiPrompt()
+  const { deleteAiPrompt: deleteAssistantPrompt } = useDeleteAiPrompt()
 
   const openSaveDialog = useCallback(
     (initialData?: Partial<PromptFormData>) => {
@@ -65,6 +63,7 @@ export function AssistantPromptDialogProvider(
     async (data: PromptFormData) => {
       if (dialogState.type === "create") {
         await createAssistantPrompt({
+          assistantId: "",
           name: data.name,
           prompt: data.prompt,
         })
@@ -96,7 +95,7 @@ export function AssistantPromptDialogProvider(
   )
 
   return (
-    <AssistantPromptDialogContext.Provider value={value}>
+    <AiPromptDialogContext.Provider value={value}>
       {children}
       {featureFlags.assistant.userPrompts.enabled ? (
         <AssistantManagePromptDialog
@@ -108,7 +107,7 @@ export function AssistantPromptDialogProvider(
           onDelete={dialogState.type === "edit" ? handleDelete : undefined}
         />
       ) : null}
-    </AssistantPromptDialogContext.Provider>
+    </AiPromptDialogContext.Provider>
   )
 }
-AssistantPromptDialogProvider.displayName = "AssistantPromptDialogProvider"
+AiPromptDialogProvider.displayName = "AiPromptDialogProvider"

@@ -7,7 +7,7 @@ import {
   AssistantsContext,
   AssistantsContextType,
 } from "@/features/assistants/contexts/assistants-context"
-import { prefetchSavedAssistantPrompts } from "@/features/assistants/hooks/use-saved-assistant-prompts"
+import { prefetchGetAiPrompts } from "@/features/assistants/hooks/use-get-ai-prompts"
 import { AssistantUserInput, HotloadResult } from "@/features/assistants/types"
 import { AssistantOutput } from "@/features/assistants/types"
 import {
@@ -74,7 +74,7 @@ export function AssistantsProvider(props: AssistantsProviderProps) {
 
     getAccountSessionToken()
       .then((sessionToken) => {
-        prefetchSavedAssistantPrompts({
+        prefetchGetAiPrompts({
           queryClient,
           did,
           sessionToken,

@@ -21,9 +21,9 @@ import {
 } from "@/components/ui/tooltip"
 import { featureFlags } from "@/config/features"
 import { SUGGESTED_INPUTS } from "@/features/assistants/constants"
-import { useAssistantPromptDialog } from "@/features/assistants/hooks/use-assistant-prompt-dialog"
+import { useAiPromptDialog } from "@/features/assistants/hooks/use-ai-prompt-dialog"
 import { useAssistants } from "@/features/assistants/hooks/use-assistants"
-import { useSavedAssistantPrompts } from "@/features/assistants/hooks/use-saved-assistant-prompts"
+import { useGetAiPrompts } from "@/features/assistants/hooks/use-get-ai-prompts"
 import { AssistantUserInput } from "@/features/assistants/types"
 import { cn } from "@/styles/utils"
 
@@ -42,11 +42,11 @@ export function AssistantPromptsSelector(props: AssistantPromptsSelectorProps) {
     setPromptSearchValue,
   } = useAssistants()
 
-  const { openEditDialog } = useAssistantPromptDialog()
+  const { openEditDialog } = useAiPromptDialog()
 
   // TODO: Handle pagination, filter and sort. Link this to the value in the
   // CommandInput and turn the whole Command to a controlled component
-  const { savedPrompts } = useSavedAssistantPrompts()
+  const { savedAiPrompts: savedPrompts } = useGetAiPrompts()
 
   const handleItemClick = useCallback(
     async (input: AssistantUserInput) => {

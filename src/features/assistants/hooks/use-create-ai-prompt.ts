@@ -7,14 +7,14 @@ import { useToast } from "@/features/toasts/use-toast"
 import { useCreateVeridaRecord } from "@/features/verida-database/hooks/use-create-verida-record"
 import { UnsavedVeridaRecord } from "@/features/verida-database/types"
 
-export function useCreateAssistantPrompt() {
+export function useCreateAiPrompt() {
   const { toast } = useToast()
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { createRecordAsync, createRecord, ...mutation } =
     useCreateVeridaRecord(AiPromptBaseSchema)
 
-  const createAssistantPrompt = useCallback(
+  const createAiPrompt = useCallback(
     (promptToSave: UnsavedVeridaRecord<AiPromptBase>) => {
       return createRecordAsync(
         {
@@ -41,7 +41,7 @@ export function useCreateAssistantPrompt() {
   )
 
   return {
-    createAssistantPrompt,
+    createAiPrompt,
     ...mutation,
   }
 }

@@ -7,7 +7,7 @@ import {
   useVeridaDataRecords,
 } from "@/features/verida-database/hooks/use-verida-data-records"
 
-export function useSavedAssistantPrompts() {
+export function useGetAiPrompts() {
   const { records, ...query } = useVeridaDataRecords({
     databaseName: AI_PROMPTS_DB_DEF.databaseVaultName,
     // TODO: Handle pagination
@@ -15,22 +15,22 @@ export function useSavedAssistantPrompts() {
   })
 
   return {
-    savedPrompts: records,
+    savedAiPrompts: records,
     ...query,
   }
 }
 
-type PrefetchSavedAssistantPromptsArgs = {
+type PrefetchGetAiPromptsArgs = {
   queryClient: QueryClient
   did: string
   sessionToken: string
 }
 
-export async function prefetchSavedAssistantPrompts({
+export async function prefetchGetAiPrompts({
   queryClient,
   did,
   sessionToken,
-}: PrefetchSavedAssistantPromptsArgs) {
+}: PrefetchGetAiPromptsArgs) {
   await prefetchVeridaDataRecords({
     queryClient,
     did,

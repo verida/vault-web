@@ -6,14 +6,14 @@ import { AiPromptRecord } from "@/features/assistants/types"
 import { useToast } from "@/features/toasts/use-toast"
 import { useUpdateVeridaRecord } from "@/features/verida-database/hooks/use-update-verida-record"
 
-export function useUpdateAssistantPrompt() {
+export function useUpdateAiPrompt() {
   const { toast } = useToast()
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { updateRecordAsync, updateRecord, ...mutation } =
     useUpdateVeridaRecord(AiPromptBaseSchema)
 
-  const updateAssistantPrompt = useCallback(
+  const updateAiPrompt = useCallback(
     (promptToUpdate: AiPromptRecord) => {
       return updateRecordAsync(
         {
@@ -40,7 +40,7 @@ export function useUpdateAssistantPrompt() {
   )
 
   return {
-    updateAssistantPrompt,
+    updateAiPrompt,
     ...mutation,
   }
 }
