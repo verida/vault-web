@@ -29,13 +29,7 @@ export function AssistantOutputCard(props: AssistantOutputCardProps) {
   const { aiAssistants } = useGetAiAssistants()
 
   const outputAssistant = useMemo(() => {
-    console.debug(
-      "aiAssistantOutput.assistantId",
-      aiAssistantOutput?.assistantId
-    )
-
     if (!aiAssistantOutput?.assistantId) {
-      console.debug("outputAssistant => returning undefined")
       return undefined
     }
 
@@ -44,22 +38,13 @@ export function AssistantOutputCard(props: AssistantOutputCardProps) {
     )
 
     if (fromUserAssistants) {
-      console.debug(
-        "outputAssistant => returning fromUserAssistants",
-        fromUserAssistants
-      )
       return fromUserAssistants
     }
 
     if (aiAssistantOutput.assistantId === DEFAULT_ASSISTANT._id) {
-      console.debug(
-        "outputAssistant => returning DEFAULT_ASSISTANT",
-        DEFAULT_ASSISTANT
-      )
       return DEFAULT_ASSISTANT
     }
 
-    console.debug("outputAssistant => returning undefined")
     return undefined
   }, [aiAssistantOutput?.assistantId, aiAssistants])
 
