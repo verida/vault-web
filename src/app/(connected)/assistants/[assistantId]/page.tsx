@@ -2,7 +2,6 @@
 
 import { MessageSquareMoreIcon } from "lucide-react"
 import { notFound } from "next/navigation"
-import { useMemo } from "react"
 import { useMediaQuery } from "usehooks-ts"
 
 import { AiPromptSelector } from "@/app/(connected)/assistants/[assistantId]/_components/ai-prompt-selector"
@@ -13,7 +12,7 @@ import AssistantLoadingPage from "@/app/(connected)/assistants/[assistantId]/loa
 import { Typography } from "@/components/typography"
 import { Card } from "@/components/ui/card"
 import { DEFAULT_ASSISTANT } from "@/features/assistants/constants"
-import { useGetAiAssistants } from "@/features/assistants/hooks/use-get-ai-assistants"
+import { useGetAiAssistant } from "@/features/assistants/hooks/use-get-ai-assistant"
 import { getMediaQuery } from "@/styles/utils"
 
 type AssistantPageProps = {
@@ -28,18 +27,13 @@ export default function AssistantPage(props: AssistantPageProps) {
   } = props
   const assistantId = decodeURIComponent(encodedAssistantId)
 
-  const { aiAssistants, isLoading } = useGetAiAssistants()
-
-  const currentAssistant = useMemo(() => {
-    return (
-      aiAssistants?.find((aiAssistant) => aiAssistant._id === assistantId) ??
-      (assistantId === DEFAULT_ASSISTANT._id ? DEFAULT_ASSISTANT : null)
-    )
-  }, [aiAssistants, assistantId])
+  const { assistant, isLoading } = useGetAiAssistant({
+    assistantId,
+  })
 
   const isXL = useMediaQuery(getMediaQuery("xl"))
 
-  if (currentAssistant) {
+  if (assistant || assistantId === DEFAULT_ASSISTANT._id) {
     return (
       <div className="flex h-full w-full flex-row justify-center gap-6">
         {isXL ? (
@@ -48,7 +42,7 @@ export default function AssistantPage(props: AssistantPageProps) {
               <div className="flex flex-row items-center gap-2 px-1 pt-1 text-muted-foreground">
                 <MessageSquareMoreIcon className="size-5 sm:size-6" />
                 <Typography variant="base-semibold">
-                  Your prompts for {currentAssistant.name}
+                  Your prompts{assistant ? ` for ${assistant.name}` : ""}
                 </Typography>
               </div>
               <AiPromptSelector />
