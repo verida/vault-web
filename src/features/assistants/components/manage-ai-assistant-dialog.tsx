@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useCallback, useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 
+import { Alert, AlertDescription } from "@/components/ui/alert"
 import {
   AlertDialog,
   AlertDialogBody,
@@ -111,9 +112,8 @@ export function ManageAiAssistantDialog(props: ManageAiAssistantDialogProps) {
                 {type === "create" ? "Create Assistant" : "Edit Assistant"}
               </DialogTitle>
               <DialogDescription>
-                {type === "create"
-                  ? "Create a new AI assistant"
-                  : "Edit your AI assistant"}
+                An AI assistant lets you organise your prompts and fine-tune the
+                results
               </DialogDescription>
             </DialogHeader>
             <DialogBody className="flex flex-col gap-6 px-0.5">
@@ -133,6 +133,11 @@ export function ManageAiAssistantDialog(props: ManageAiAssistantDialogProps) {
                   </FormItem>
                 )}
               />
+              <Alert variant="info">
+                <AlertDescription>
+                  Custom instructions and settings are coming soon
+                </AlertDescription>
+              </Alert>
             </DialogBody>
             <DialogFooter
               className={cn(
