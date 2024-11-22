@@ -98,7 +98,7 @@ export function AssistantSelector(props: AssistantSelectorProps) {
           <Button
             variant="outline"
             className={cn(
-              "gap-2 px-2",
+              "gap-2 bg-transparent px-2",
               currentAssistant ? "text-foreground" : "text-muted-foreground"
             )}
             aria-expanded={open}
@@ -159,15 +159,12 @@ export function AssistantSelector(props: AssistantSelectorProps) {
                 <CommandItem
                   onSelect={() => handleCreateClick()}
                   disabled={isMaxNbAssistantsReached}
-                  className="flex h-12 cursor-pointer flex-row items-center py-1 pl-2 pr-1"
+                  className="flex h-12 cursor-pointer flex-row items-center py-1 pl-2 pr-1 text-muted-foreground"
                 >
-                  <Typography
-                    variant="base-regular"
-                    className="truncate italic"
-                  >
+                  <Typography variant="base-semibold" className="truncate">
                     {isMaxNbAssistantsReached
                       ? "Can't create more assistants"
-                      : "Create new Assistant..."}
+                      : "Create a new assistant..."}
                   </Typography>
                 </CommandItem>
               </CommandGroup>
