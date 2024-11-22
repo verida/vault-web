@@ -18,16 +18,16 @@ export type AssistantEmptyContentProps = React.ComponentProps<"div">
 export function AssistantEmptyContent(props: AssistantEmptyContentProps) {
   const { className, ...divProps } = props
 
-  const { setAndProcessAiPromptInput: setAndProcessUserInput } = useAssistants()
+  const { selectedAiAssistant, setAndProcessAiPromptInput } = useAssistants()
 
   const { connections, isLoading: isLoadingDataConnections } =
     useDataConnections()
 
-  const handleRecommendedPromptClick = useCallback(
+  const handleSuggestedPromptClick = useCallback(
     async (input: AiPromptInput) => {
-      setAndProcessUserInput(input)
+      setAndProcessAiPromptInput(input)
     },
-    [setAndProcessUserInput]
+    [setAndProcessAiPromptInput]
   )
 
   return (
@@ -59,7 +59,8 @@ export function AssistantEmptyContent(props: AssistantEmptyContentProps) {
                 variant="outline"
                 className="h-auto rounded-full px-4 py-2.5"
                 onClick={() => {
-                  handleRecommendedPromptClick({
+                  handleSuggestedPromptClick({
+                    assistantId: selectedAiAssistant,
                     prompt: recommendations.prompt,
                   })
                 }}

@@ -13,10 +13,9 @@ export type AssistantsContextType = {
   aiAssistantOutput: AiAssistantOutput | null
   processAiPromptInput: () => Promise<void>
   setAndProcessAiPromptInput: (aiPromptInput: AiPromptInput) => Promise<void>
-  updateAiPrompt: (prompt: string) => void
+  updateAiPromptInput: (aiPromptInput: AiPromptInput) => void
   clearAiPromptInput: () => void
   clearAiAssistantOutput: () => void
-  isProcessing: boolean
   error: string | null
   hotload: AiAssistantHotloadResult
   promptSearchValue: string

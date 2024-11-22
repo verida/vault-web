@@ -20,20 +20,17 @@ export function AssistantOutputCardMenu(props: AssistantOutputCardMenuProps) {
 
   const { toast } = useToast()
 
-  const {
-    aiAssistantOutput: assistantOutput,
-    clearAiAssistantOutput: clearAssistantOutput,
-  } = useAssistants()
+  const { aiAssistantOutput, clearAiAssistantOutput } = useAssistants()
 
   const handleCopyAssistantOutput = useCallback(async () => {
-    if (assistantOutput?.result) {
-      await window.navigator.clipboard.writeText(assistantOutput.result)
+    if (aiAssistantOutput?.status === "processed") {
+      await window.navigator.clipboard.writeText(aiAssistantOutput.result)
       toast({
         variant: "success",
         description: "Assistant response copied to clipboard",
       })
     }
-  }, [assistantOutput, toast])
+  }, [aiAssistantOutput, toast])
 
   return (
     <DropdownMenu>
@@ -41,12 +38,12 @@ export function AssistantOutputCardMenu(props: AssistantOutputCardMenuProps) {
       <DropdownMenuContent align="end" collisionPadding={8}>
         <DropdownMenuItem
           onClick={handleCopyAssistantOutput}
-          disabled={!assistantOutput?.result}
+          disabled={aiAssistantOutput?.status !== "processed"}
         >
           Copy
         </DropdownMenuItem>
         <DropdownMenuItem
-          onClick={clearAssistantOutput}
+          onClick={clearAiAssistantOutput}
           className="text-destructive"
         >
           Clear

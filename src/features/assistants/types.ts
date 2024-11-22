@@ -30,6 +30,7 @@ export type AiPromptRecord = VeridaRecord<AiPromptBase>
 export type AiPromptFormData = z.infer<typeof AiPromptFormDataSchema>
 
 export type AiPromptInput = {
+  assistantId?: string
   prompt: string
   // TODO: add further configuration options (LLM model, data type, filters, etc.)
 }
@@ -39,11 +40,19 @@ export type SuggestedAiPromptInput = {
 } & AiPromptInput
 
 export type AiAssistantOutput = {
-  result: string
-  processedAt: Date
-  processingTime?: number
-  databases?: string[]
-}
+  assistantId?: string
+} & (
+  | {
+      status: "processing"
+    }
+  | {
+      status: "processed"
+      result: string
+      processedAt: Date
+      processingTime?: number
+      databases?: string[]
+    }
+)
 
 export type PrivateDataApiV1LLMPersonalResponse = z.infer<
   typeof PrivateDataApiV1LLMPersonalResponseSchema

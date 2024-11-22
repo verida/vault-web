@@ -27,13 +27,13 @@ export default function AssistantPage(props: AssistantPageProps) {
   } = props
   const assistantId = decodeURIComponent(encodedAssistantId)
 
-  const { assistant, isLoading } = useGetAiAssistant({
+  const { aiAssistant, isLoading } = useGetAiAssistant({
     assistantId,
   })
 
   const isXL = useMediaQuery(getMediaQuery("xl"))
 
-  if (assistant || assistantId === DEFAULT_ASSISTANT._id) {
+  if (aiAssistant || assistantId === DEFAULT_ASSISTANT._id) {
     return (
       <div className="flex h-full w-full flex-row justify-center gap-6">
         {isXL ? (
@@ -42,7 +42,7 @@ export default function AssistantPage(props: AssistantPageProps) {
               <div className="flex flex-row items-center gap-2 px-1 pt-1 text-muted-foreground">
                 <MessageSquareMoreIcon className="size-5 sm:size-6" />
                 <Typography variant="base-semibold">
-                  Your prompts{assistant ? ` for ${assistant.name}` : ""}
+                  Your prompts{aiAssistant ? ` for ${aiAssistant.name}` : ""}
                 </Typography>
               </div>
               <AiPromptSelector />

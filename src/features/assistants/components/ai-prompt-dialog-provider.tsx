@@ -72,7 +72,7 @@ export function AiPromptDialogProvider(props: AiPromptDialogProviderProps) {
     async (data: AiPromptFormData) => {
       if (dialogState.type === "create") {
         let assistantId = selectedAiAssistant
-        let creatingAssistant = false
+        let createdAssistant = false
 
         if (
           !aiAssistants ||
@@ -80,11 +80,11 @@ export function AiPromptDialogProvider(props: AiPromptDialogProviderProps) {
             return assistant._id === assistantId
           })
         ) {
-          creatingAssistant = true
           const newAssistantRecord = await createAiAssistantAsync({
             name: DEFAULT_ASSISTANT.name,
           })
           assistantId = newAssistantRecord._id
+          createdAssistant = true
         }
 
         await createAiPromptAsync({
@@ -92,11 +92,13 @@ export function AiPromptDialogProvider(props: AiPromptDialogProviderProps) {
           ...data,
         })
 
-        router.replace(
-          getAssistantPageRoute({
-            assistantId,
-          })
-        )
+        if (createdAssistant) {
+          router.replace(
+            getAssistantPageRoute({
+              assistantId,
+            })
+          )
+        }
       } else if (dialogState.aiPromptRecord) {
         await updateAiPromptAsync({
           ...dialogState.aiPromptRecord,
@@ -104,7 +106,15 @@ export function AiPromptDialogProvider(props: AiPromptDialogProviderProps) {
         })
       }
     },
-    [createAiPromptAsync, updateAiPromptAsync, selectedAiAssistant, dialogState]
+    [
+      createAiAssistantAsync,
+      createAiPromptAsync,
+      updateAiPromptAsync,
+      selectedAiAssistant,
+      dialogState,
+      router,
+      aiAssistants,
+    ]
   )
 
   const handleDelete = useCallback(async () => {

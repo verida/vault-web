@@ -37,8 +37,8 @@ export function AiPromptSelector(props: AiPromptSelectorProps) {
 
   const {
     selectedAiAssistant,
-    setAndProcessAiPromptInput: setAndProcessUserInput,
-    updateAiPrompt: updateUserPrompt,
+    setAndProcessAiPromptInput,
+    updateAiPromptInput,
     promptSearchValue,
     setPromptSearchValue,
   } = useAssistants()
@@ -51,18 +51,18 @@ export function AiPromptSelector(props: AiPromptSelectorProps) {
 
   const handleItemClick = useCallback(
     async (input: AiPromptInput) => {
-      setAndProcessUserInput(input)
+      setAndProcessAiPromptInput(input)
       onItemClick?.(input)
     },
-    [setAndProcessUserInput, onItemClick]
+    [setAndProcessAiPromptInput, onItemClick]
   )
 
   const handleSetPromptClick = useCallback(
     async (input: AiPromptInput) => {
-      updateUserPrompt(input.prompt)
+      updateAiPromptInput(input)
       onClickSetPrompt?.(input)
     },
-    [updateUserPrompt, onClickSetPrompt]
+    [updateAiPromptInput, onClickSetPrompt]
   )
 
   const handleClearSearch = useCallback(() => {
@@ -94,11 +94,13 @@ export function AiPromptSelector(props: AiPromptSelectorProps) {
                   prompt={savedAiPrompt.prompt}
                   onSelect={() => {
                     handleItemClick({
+                      assistantId: selectedAiAssistant,
                       prompt: savedAiPrompt.prompt,
                     })
                   }}
                   onClickSetPrompt={() => {
                     handleSetPromptClick({
+                      assistantId: selectedAiAssistant,
                       prompt: savedAiPrompt.prompt,
                     })
                   }}
@@ -134,11 +136,13 @@ export function AiPromptSelector(props: AiPromptSelectorProps) {
                 prompt={suggestedInput.prompt}
                 onSelect={() => {
                   handleItemClick({
+                    assistantId: selectedAiAssistant,
                     prompt: suggestedInput.prompt,
                   })
                 }}
                 onClickSetPrompt={() => {
                   handleSetPromptClick({
+                    assistantId: selectedAiAssistant,
                     prompt: suggestedInput.prompt,
                   })
                 }}

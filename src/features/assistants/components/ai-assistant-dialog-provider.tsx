@@ -83,7 +83,7 @@ export function AiAssistantDialogProvider(
         })
       }
     },
-    [createAiAssistantAsync, updateAiAssistantAsync, dialogState]
+    [createAiAssistantAsync, updateAiAssistantAsync, dialogState, router]
   )
 
   const handleDelete = useCallback(async () => {
@@ -108,7 +108,13 @@ export function AiAssistantDialogProvider(
         assistantId: nextAssistantId,
       })
     )
-  }, [deleteAiAssistantAsync, dialogState, aiAssistants, router])
+  }, [
+    deleteAiAssistantAsync,
+    dialogState,
+    aiAssistants,
+    router,
+    selectedAiAssistant,
+  ])
 
   const value: AiAssistantDialogContextType = useMemo(
     () => ({

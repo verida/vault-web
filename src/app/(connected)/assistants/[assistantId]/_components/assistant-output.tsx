@@ -11,16 +11,12 @@ import {
 import { useAssistants } from "@/features/assistants/hooks/use-assistants"
 
 export function AssistantOutput() {
-  const {
-    aiAssistantOutput: assistantOutput,
-    isProcessing,
-    error,
-  } = useAssistants()
+  const { aiAssistantOutput, error } = useAssistants()
 
   return (
     // TODO: Manage when the hotloading had an error
     <>
-      {assistantOutput || isProcessing ? (
+      {aiAssistantOutput ? (
         <AssistantOutputCard />
       ) : error ? (
         <ErrorBlock className="mt-2">

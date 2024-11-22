@@ -14,7 +14,7 @@ export function useGetAiAssistant({ assistantId }: UseGetAiAssistantArgs) {
   })
 
   return {
-    assistant: record,
+    aiAssistant: record,
     ...query,
   }
 }

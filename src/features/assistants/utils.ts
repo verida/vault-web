@@ -41,9 +41,11 @@ export async function sendAiPromptInputToAssistant(
           "X-API-Key": sessionToken,
         },
         body: JSON.stringify({
+          // TODO: When and if passing the assistantId is supported, add it here but handle when using the default non-existing assistant
           prompt: aiPromptInput.prompt,
           provider: commonConfig.DEFAULT_AI_PROVIDER,
           model: commonConfig.DEFAULT_AI_MODEL, // Could come from the user input
+          // TODO: Add further configuration options (LLM model, data type, filters, etc.) when endpoint supports it
         }),
       }
     )
@@ -60,6 +62,8 @@ export async function sendAiPromptInputToAssistant(
     logger.info("Successfully processed prompt input")
 
     const output: AiAssistantOutput = {
+      assistantId: aiPromptInput.assistantId,
+      status: "processed",
       result: validatedData.result,
       processedAt: new Date(),
       processingTime: validatedData.duration,

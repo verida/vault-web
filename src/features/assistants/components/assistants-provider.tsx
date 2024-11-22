@@ -50,7 +50,6 @@ export function AssistantsProvider(props: AssistantsProviderProps) {
   const [aiPromptInput, setAiPromptInput] = useState<AiPromptInput | null>(null)
   const [aiAssistantOutput, setAiAssistantOutput] =
     useState<AiAssistantOutput | null>(null)
-  const [isProcessing, setIsProcessing] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [hotload, setHotload] = useState<AiAssistantHotloadResult>({
     status: "idle",
@@ -104,14 +103,16 @@ export function AssistantsProvider(props: AssistantsProviderProps) {
 
   const processInput = useCallback(
     async (input: AiPromptInput) => {
-      if (isProcessing) {
+      if (aiAssistantOutput?.status === "processing") {
         return
       }
 
       logger.info("Sending user input to assistant")
-      setIsProcessing(true)
       setError(null)
-      setAiAssistantOutput(null)
+      setAiAssistantOutput({
+        assistantId: input.assistantId,
+        status: "processing",
+      })
 
       try {
         const sessionToken = await getAccountSessionToken()
@@ -121,11 +122,10 @@ export function AssistantsProvider(props: AssistantsProviderProps) {
         logger.error(error)
         // TODO: Analyse error and set appropriate error message
         setError("Something went wrong with the assistant")
-      } finally {
-        setIsProcessing(false)
+        setAiAssistantOutput(null)
       }
     },
-    [getAccountSessionToken, isProcessing]
+    [getAccountSessionToken, aiAssistantOutput]
   )
 
   const processAiPromptInput = useCallback(async () => {
@@ -143,10 +143,10 @@ export function AssistantsProvider(props: AssistantsProviderProps) {
     [processInput]
   )
 
-  const updateAiPrompt = useCallback((prompt: string) => {
+  const updateAiPromptInput = useCallback((aiPromptInput: AiPromptInput) => {
     setAiPromptInput((prev) => ({
       ...prev,
-      prompt,
+      ...aiPromptInput,
     }))
   }, [])
 
@@ -166,10 +166,9 @@ export function AssistantsProvider(props: AssistantsProviderProps) {
       aiAssistantOutput,
       processAiPromptInput,
       setAndProcessAiPromptInput,
-      updateAiPrompt,
+      updateAiPromptInput,
       clearAiPromptInput,
       clearAiAssistantOutput,
-      isProcessing,
       error,
       hotload,
       promptSearchValue,
@@ -182,10 +181,9 @@ export function AssistantsProvider(props: AssistantsProviderProps) {
       aiAssistantOutput,
       processAiPromptInput,
       setAndProcessAiPromptInput,
-      updateAiPrompt,
+      updateAiPromptInput,
       clearAiPromptInput,
       clearAiAssistantOutput,
-      isProcessing,
       error,
       hotload,
       promptSearchValue,

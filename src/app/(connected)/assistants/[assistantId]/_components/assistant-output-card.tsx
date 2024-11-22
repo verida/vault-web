@@ -12,7 +12,9 @@ import { Avatar } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton"
+import { DEFAULT_ASSISTANT } from "@/features/assistants/constants"
 import { useAssistants } from "@/features/assistants/hooks/use-assistants"
+import { useGetAiAssistants } from "@/features/assistants/hooks/use-get-ai-assistants"
 import { USER_DATABASE_DEFS } from "@/features/data/constants"
 import { cn } from "@/styles/utils"
 import { SHORT_TIME_FORMAT_OPTIONS } from "@/utils/date"
@@ -22,22 +24,62 @@ export type AssistantOutputCardProps = React.ComponentProps<"div">
 export function AssistantOutputCard(props: AssistantOutputCardProps) {
   const { className, ...divProps } = props
 
-  const { aiAssistantOutput: assistantOutput, isProcessing } = useAssistants()
+  const { aiAssistantOutput } = useAssistants()
 
-  const processedAt = useMemo(() => {
-    if (!assistantOutput?.processedAt) {
-      return "-"
-    }
+  const { aiAssistants } = useGetAiAssistants()
 
-    return intlFormat(assistantOutput.processedAt, SHORT_TIME_FORMAT_OPTIONS)
-  }, [assistantOutput?.processedAt])
+  const outputAssistant = useMemo(() => {
+    console.debug(
+      "aiAssistantOutput.assistantId",
+      aiAssistantOutput?.assistantId
+    )
 
-  const processingTimeInfo = useMemo(() => {
-    if (!assistantOutput?.processingTime) {
+    if (!aiAssistantOutput?.assistantId) {
+      console.debug("outputAssistant => returning undefined")
       return undefined
     }
 
-    const totalSeconds = assistantOutput.processingTime
+    const fromUserAssistants = aiAssistants?.find(
+      (a) => a._id === aiAssistantOutput.assistantId
+    )
+
+    if (fromUserAssistants) {
+      console.debug(
+        "outputAssistant => returning fromUserAssistants",
+        fromUserAssistants
+      )
+      return fromUserAssistants
+    }
+
+    if (aiAssistantOutput.assistantId === DEFAULT_ASSISTANT._id) {
+      console.debug(
+        "outputAssistant => returning DEFAULT_ASSISTANT",
+        DEFAULT_ASSISTANT
+      )
+      return DEFAULT_ASSISTANT
+    }
+
+    console.debug("outputAssistant => returning undefined")
+    return undefined
+  }, [aiAssistantOutput?.assistantId, aiAssistants])
+
+  const processedAt = useMemo(() => {
+    if (aiAssistantOutput?.status !== "processed") {
+      return "-"
+    }
+
+    return intlFormat(aiAssistantOutput.processedAt, SHORT_TIME_FORMAT_OPTIONS)
+  }, [aiAssistantOutput])
+
+  const processingTimeInfo = useMemo(() => {
+    if (
+      aiAssistantOutput?.status !== "processed" ||
+      !aiAssistantOutput?.processingTime
+    ) {
+      return undefined
+    }
+
+    const totalSeconds = aiAssistantOutput.processingTime
     let minutes = Math.floor(totalSeconds / 60)
     const remainingSeconds = totalSeconds % 60
     const milliseconds = Math.floor((totalSeconds % 1) * 1000)
@@ -58,14 +100,18 @@ export function AssistantOutputCard(props: AssistantOutputCardProps) {
       minutes += 1
     }
     return `${minutes}min`
-  }, [assistantOutput?.processingTime])
+  }, [aiAssistantOutput])
 
   const dataInfo = useMemo(() => {
-    if (!assistantOutput?.databases || assistantOutput.databases.length === 0) {
+    if (
+      aiAssistantOutput?.status !== "processed" ||
+      !aiAssistantOutput?.databases ||
+      aiAssistantOutput.databases.length === 0
+    ) {
       return undefined
     }
 
-    const databaseNames = assistantOutput.databases.map((dbId) => {
+    const databaseNames = aiAssistantOutput.databases.map((dbId) => {
       const dbDef = USER_DATABASE_DEFS.find((def) => def.searchType === dbId)
       return dbDef ? dbDef.titlePlural : dbId
     })
@@ -75,11 +121,13 @@ export function AssistantOutputCard(props: AssistantOutputCardProps) {
     }
 
     return databaseNames.join(", ")
-  }, [assistantOutput?.databases])
+  }, [aiAssistantOutput])
 
   const displayFooterInfo = useMemo(
-    () => (!!processingTimeInfo || !!dataInfo) && !isProcessing,
-    [processingTimeInfo, dataInfo, isProcessing]
+    () =>
+      (!!processingTimeInfo || !!dataInfo) &&
+      !(!aiAssistantOutput || aiAssistantOutput?.status === "processing"),
+    [processingTimeInfo, dataInfo, aiAssistantOutput]
   )
 
   return (
@@ -91,7 +139,10 @@ export function AssistantOutputCard(props: AssistantOutputCardProps) {
               <div
                 className={cn(
                   "absolute inset-0 bg-ai-assistant-gradient",
-                  isProcessing ? "animate-spin-slow" : ""
+                  !aiAssistantOutput ||
+                    aiAssistantOutput?.status === "processing"
+                    ? "animate-spin-slow"
+                    : ""
                 )}
               />
               <div className="absolute inset-0 flex flex-row items-center justify-center">
@@ -99,8 +150,11 @@ export function AssistantOutputCard(props: AssistantOutputCardProps) {
               </div>
             </Avatar>
             <div className="flex flex-col">
-              <Typography variant="base-semibold">Assistant</Typography>
-              {isProcessing ? (
+              <Typography variant="base-semibold">
+                {outputAssistant ? outputAssistant.name : "Assistant"}
+              </Typography>
+              {!aiAssistantOutput ||
+              aiAssistantOutput?.status === "processing" ? (
                 <Skeleton className="my-[0.15rem] h-3 w-20 rounded-full" />
               ) : (
                 <div className="text-muted-foreground">
@@ -111,7 +165,7 @@ export function AssistantOutputCard(props: AssistantOutputCardProps) {
               )}
             </div>
           </div>
-          {assistantOutput ? (
+          {aiAssistantOutput?.status === "processed" ? (
             <div className="flex flex-row items-center justify-end gap-2">
               <AssistantOutputCardMenu>
                 <Button
@@ -129,13 +183,13 @@ export function AssistantOutputCard(props: AssistantOutputCardProps) {
           ) : null}
         </CardHeader>
         <CardContent className="p-0">
-          {assistantOutput ? (
-            <MarkdownRenderer className="max-w-full overflow-x-auto">
-              {assistantOutput.result}
-            </MarkdownRenderer>
-          ) : isProcessing ? (
+          {!aiAssistantOutput || aiAssistantOutput?.status === "processing" ? (
             <AssistantOutputSkeleton className="w-full" />
-          ) : null}
+          ) : (
+            <MarkdownRenderer className="max-w-full overflow-x-auto">
+              {aiAssistantOutput.result}
+            </MarkdownRenderer>
+          )}
         </CardContent>
         {displayFooterInfo ? (
           <CardFooter className="flex flex-row justify-end p-0 text-end text-muted-foreground">
