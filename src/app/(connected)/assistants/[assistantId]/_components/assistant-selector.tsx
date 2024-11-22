@@ -19,7 +19,10 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
-import { DEFAULT_ASSISTANT } from "@/features/assistants/constants"
+import {
+  DEFAULT_ASSISTANT,
+  MAX_NB_ASSISTANTS,
+} from "@/features/assistants/constants"
 import { useAiAssistantDialog } from "@/features/assistants/hooks/use-ai-assistant-dialog"
 import { useAssistants } from "@/features/assistants/hooks/use-assistants"
 import { useGetAiAssistants } from "@/features/assistants/hooks/use-get-ai-assistants"
@@ -79,6 +82,10 @@ export function AssistantSelector(props: AssistantSelectorProps) {
     },
     [openEditDialog]
   )
+
+  const isMaxNbAssistantsReached = useMemo(() => {
+    return aiAssistants ? aiAssistants?.length >= MAX_NB_ASSISTANTS : false
+  }, [aiAssistants])
 
   return (
     <div
@@ -151,13 +158,16 @@ export function AssistantSelector(props: AssistantSelectorProps) {
               <CommandGroup className="p-2">
                 <CommandItem
                   onSelect={() => handleCreateClick()}
+                  disabled={isMaxNbAssistantsReached}
                   className="flex h-12 cursor-pointer flex-row items-center py-1 pl-2 pr-1"
                 >
                   <Typography
                     variant="base-regular"
                     className="truncate italic"
                   >
-                    Create new Assistant...
+                    {isMaxNbAssistantsReached
+                      ? "Can't create more assistants"
+                      : "Create new Assistant..."}
                   </Typography>
                 </CommandItem>
               </CommandGroup>

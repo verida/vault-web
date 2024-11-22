@@ -4,6 +4,8 @@ import {
 } from "@/features/assistants/types"
 import { DatabaseDefinition } from "@/features/data/types"
 
+export const MAX_NB_ASSISTANTS = 5
+
 export const AI_ASSISTANTS_DB_DEF: DatabaseDefinition = {
   id: "ai-assistants",
   type: "technical",
