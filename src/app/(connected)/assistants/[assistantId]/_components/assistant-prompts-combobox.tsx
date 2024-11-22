@@ -3,7 +3,7 @@
 import { MessageSquareMoreIcon } from "lucide-react"
 import { useCallback, useState } from "react"
 
-import { AssistantPromptsSelector } from "@/app/(connected)/assistants/[assistantId]/_components/assistant-prompts-selector"
+import { AiPromptSelector } from "@/app/(connected)/assistants/[assistantId]/_components/ai-prompt-selector"
 import { Button } from "@/components/ui/button"
 import {
   Popover,
@@ -64,7 +64,7 @@ export function AssistantPromptsCombobox(props: AssistantPromptsComboboxProps) {
         collisionPadding={8}
         className="w-[calc(100vw-1rem)] max-w-sm rounded-[0.875rem] p-1"
       >
-        <AssistantPromptsSelector
+        <AiPromptSelector
           onItemClick={handleItemClick}
           onClickSetPrompt={handleSetPromptClick}
         />

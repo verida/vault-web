@@ -5,9 +5,9 @@ import { notFound } from "next/navigation"
 import { useMemo } from "react"
 import { useMediaQuery } from "usehooks-ts"
 
+import { AiPromptSelector } from "@/app/(connected)/assistants/[assistantId]/_components/ai-prompt-selector"
 import { AssistantDataStatus } from "@/app/(connected)/assistants/[assistantId]/_components/assistant-data-status"
 import { AssistantOutput } from "@/app/(connected)/assistants/[assistantId]/_components/assistant-output"
-import { AssistantPromptsSelector } from "@/app/(connected)/assistants/[assistantId]/_components/assistant-prompts-selector"
 import { AssistantUserInput } from "@/app/(connected)/assistants/[assistantId]/_components/assistant-user-input"
 import AssistantLoadingPage from "@/app/(connected)/assistants/[assistantId]/loading"
 import { Typography } from "@/components/typography"
@@ -31,11 +31,10 @@ export default function AssistantPage(props: AssistantPageProps) {
   const { aiAssistants, isLoading } = useGetAiAssistants()
 
   const currentAssistant = useMemo(() => {
-    return (aiAssistants?.find(
-      (aiAssistant) => aiAssistant._id === assistantId
-    ) ?? assistantId === DEFAULT_ASSISTANT._id)
-      ? DEFAULT_ASSISTANT
-      : null
+    return (
+      aiAssistants?.find((aiAssistant) => aiAssistant._id === assistantId) ??
+      (assistantId === DEFAULT_ASSISTANT._id ? DEFAULT_ASSISTANT : null)
+    )
   }, [aiAssistants, assistantId])
 
   const isXL = useMediaQuery(getMediaQuery("xl"))
@@ -48,9 +47,11 @@ export default function AssistantPage(props: AssistantPageProps) {
             <Card className="flex w-[26.5rem] flex-col gap-3 rounded-xl p-3">
               <div className="flex flex-row items-center gap-2 px-1 pt-1 text-muted-foreground">
                 <MessageSquareMoreIcon className="size-5 sm:size-6" />
-                <Typography variant="base-semibold">Your prompts</Typography>
+                <Typography variant="base-semibold">
+                  Your prompts for {currentAssistant.name}
+                </Typography>
               </div>
-              <AssistantPromptsSelector />
+              <AiPromptSelector />
             </Card>
           </aside>
         ) : null}

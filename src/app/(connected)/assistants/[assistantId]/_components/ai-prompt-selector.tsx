@@ -27,12 +27,12 @@ import { useGetAiPrompts } from "@/features/assistants/hooks/use-get-ai-prompts"
 import { AiPromptInput } from "@/features/assistants/types"
 import { cn } from "@/styles/utils"
 
-export type AssistantPromptsSelectorProps = {
+export type AiPromptSelectorProps = {
   onClickSetPrompt?: (input: AiPromptInput) => void
   onItemClick?: (input: AiPromptInput) => void
 } & Omit<React.ComponentProps<"div">, "children">
 
-export function AssistantPromptsSelector(props: AssistantPromptsSelectorProps) {
+export function AiPromptSelector(props: AiPromptSelectorProps) {
   const { className, onClickSetPrompt, onItemClick, ...divProps } = props
 
   const {
@@ -88,7 +88,7 @@ export function AssistantPromptsSelector(props: AssistantPromptsSelectorProps) {
           savedAiPrompts.length > 0 ? (
             <CommandGroup heading="Saved">
               {savedAiPrompts.map((savedAiPrompt) => (
-                <PromptItem
+                <AiPromptSelectorItem
                   key={savedAiPrompt._id}
                   label={savedAiPrompt.name ?? savedAiPrompt.prompt}
                   prompt={savedAiPrompt.prompt}
@@ -128,7 +128,7 @@ export function AssistantPromptsSelector(props: AssistantPromptsSelectorProps) {
           ) : null}
           <CommandGroup heading="Suggested by Verida">
             {SUGGESTED_PROMPTS.map((suggestedInput, index) => (
-              <PromptItem
+              <AiPromptSelectorItem
                 key={index}
                 label={suggestedInput.label}
                 prompt={suggestedInput.prompt}
@@ -150,9 +150,9 @@ export function AssistantPromptsSelector(props: AssistantPromptsSelectorProps) {
     </div>
   )
 }
-AssistantPromptsSelector.displayName = "AssistantPromptsSelector"
+AiPromptSelector.displayName = "AiPromptSelector"
 
-type PromptItemProps = {
+type AiPromptSelectorItemProps = {
   label: string
   prompt: string
   onSelect: () => void
@@ -160,7 +160,7 @@ type PromptItemProps = {
   additionalActions?: React.ReactNode
 }
 
-function PromptItem(props: PromptItemProps) {
+function AiPromptSelectorItem(props: AiPromptSelectorItemProps) {
   const { label, prompt, onSelect, onClickSetPrompt, additionalActions } = props
 
   return (
@@ -186,11 +186,11 @@ function PromptItem(props: PromptItemProps) {
                   onClickSetPrompt()
                 }}
               >
-                <ArrowUpRightIcon className="size-5 sm:size-6" />
-                <span className="sr-only">Change prompt before sending</span>
+                <ArrowUpRightIcon className="size-4 sm:size-5" />
+                <span className="sr-only">Edit prompt before sending</span>
               </Button>
             </TooltipTrigger>
-            <TooltipContent>Change prompt before sending</TooltipContent>
+            <TooltipContent>Edit before sending</TooltipContent>
           </Tooltip>
           {additionalActions}
         </div>
@@ -198,4 +198,4 @@ function PromptItem(props: PromptItemProps) {
     </CommandItem>
   )
 }
-PromptItem.displayName = "PromptItem"
+AiPromptSelectorItem.displayName = "AiPromptSelectorItem"
