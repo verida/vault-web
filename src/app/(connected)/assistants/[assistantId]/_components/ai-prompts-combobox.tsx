@@ -3,7 +3,7 @@
 import { MessageSquareMoreIcon } from "lucide-react"
 import { useCallback, useState } from "react"
 
-import { AssistantPromptsSelector } from "@/app/(connected)/assistant/_components/assistant-prompts-selector"
+import { AiPromptSelector } from "@/app/(connected)/assistants/[assistantId]/_components/ai-prompt-selector"
 import { Button } from "@/components/ui/button"
 import {
   Popover,
@@ -15,14 +15,14 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
-import { AssistantUserInput } from "@/features/assistants/types"
+import { AiPromptInput } from "@/features/assistants/types"
 import { cn } from "@/styles/utils"
 
-export type AssistantPromptsComboboxProps = {
-  onClickEdit?: (input: AssistantUserInput) => void
+export type AiPromptsComboboxProps = {
+  onClickEdit?: (input: AiPromptInput) => void
 } & React.ComponentProps<typeof Button>
 
-export function AssistantPromptsCombobox(props: AssistantPromptsComboboxProps) {
+export function AiPromptsCombobox(props: AiPromptsComboboxProps) {
   const { className, onClickEdit, ...buttonProps } = props
 
   const [open, setOpen] = useState(false)
@@ -32,7 +32,7 @@ export function AssistantPromptsCombobox(props: AssistantPromptsComboboxProps) {
   }, [])
 
   const handleSetPromptClick = useCallback(
-    async (input: AssistantUserInput) => {
+    async (input: AiPromptInput) => {
       onClickEdit?.(input)
       setOpen(false)
     },
@@ -64,7 +64,7 @@ export function AssistantPromptsCombobox(props: AssistantPromptsComboboxProps) {
         collisionPadding={8}
         className="w-[calc(100vw-1rem)] max-w-sm rounded-[0.875rem] p-1"
       >
-        <AssistantPromptsSelector
+        <AiPromptSelector
           onItemClick={handleItemClick}
           onClickSetPrompt={handleSetPromptClick}
         />
@@ -72,4 +72,4 @@ export function AssistantPromptsCombobox(props: AssistantPromptsComboboxProps) {
     </Popover>
   )
 }
-AssistantPromptsCombobox.displayName = "AssistantPromptsCombobox"
+AiPromptsCombobox.displayName = "AiPromptsCombobox"

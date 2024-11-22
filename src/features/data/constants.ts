@@ -1,4 +1,8 @@
-import { SAVED_PROMPTS_DB_DEF } from "@/features/assistants/constants"
+import { featureFlags } from "@/config/features"
+import {
+  AI_ASSISTANTS_DB_DEF,
+  AI_PROMPTS_DB_DEF,
+} from "@/features/assistants/constants"
 import { DatabaseDefinition } from "@/features/data/types"
 
 /**
@@ -132,12 +136,13 @@ export const ALL_DATABASE_DEFS: DatabaseDefinition[] = [
     schemaUrlBase: "https://common.schemas.verida.io/file",
     schemaUrlLatest: "https://common.schemas.verida.io/file/v0.1.0/schema.json",
   },
-  SAVED_PROMPTS_DB_DEF,
+  AI_PROMPTS_DB_DEF,
+  AI_ASSISTANTS_DB_DEF,
 ]
 
 /**
  * Sorted and excluding databases definitions that are not included in the UI
  */
-export const USER_DATABASE_DEFS = ALL_DATABASE_DEFS.filter(
-  (db) => db.type === "user"
+export const USER_DATABASE_DEFS = ALL_DATABASE_DEFS.filter((db) =>
+  featureFlags.data.displayTechnicalDatabases ? true : db.type === "user"
 ).sort((a, b) => a.id.localeCompare(b.id))

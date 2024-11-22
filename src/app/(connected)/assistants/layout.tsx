@@ -2,9 +2,9 @@ import { Metadata } from "next"
 import { notFound } from "next/navigation"
 import React from "react"
 
-import { PageWrapper } from "@/components/page-wrapper"
 import { featureFlags } from "@/config/features"
-import { AssistantPromptDialogProvider } from "@/features/assistants/components/assistant-prompt-dialog-provider"
+import { AiAssistantDialogProvider } from "@/features/assistants/components/ai-assistant-dialog-provider"
+import { AiPromptDialogProvider } from "@/features/assistants/components/ai-prompt-dialog-provider"
 
 export const metadata: Metadata = {
   title: "AI Assistant",
@@ -22,13 +22,9 @@ export default function AssistantsLayout(props: AssistantsLayoutProps) {
   }
 
   return (
-    <PageWrapper
-      pageTitle="AI Assistant"
-      className="h-full gap-0"
-      contentClassName="h-full min-h-0 pb-0 md:pb-0 xl:pb-0"
-    >
-      <AssistantPromptDialogProvider>{children}</AssistantPromptDialogProvider>
-    </PageWrapper>
+    <AiAssistantDialogProvider>
+      <AiPromptDialogProvider>{children}</AiPromptDialogProvider>
+    </AiAssistantDialogProvider>
   )
 }
 AssistantsLayout.displayName = "AssistantsLayout"

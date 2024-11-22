@@ -3,8 +3,8 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useCallback, useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
-import { z } from "zod"
 
+import { Alert, AlertDescription } from "@/components/ui/alert"
 import {
   AlertDialog,
   AlertDialogBody,
@@ -36,45 +36,36 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
+import { AiAssistantFormDataSchema } from "@/features/assistants/schemas"
+import { AiAssistantFormData } from "@/features/assistants/types"
 import { Logger } from "@/features/telemetry"
 import { cn } from "@/styles/utils"
 
 const logger = Logger.create("assistants")
 
-const newPromptSchema = z.object({
-  name: z.string().min(1, "Label is required"),
-  prompt: z.string().min(1, "Prompt is required"),
-})
-
-export type PromptFormData = z.infer<typeof newPromptSchema>
-
-export type AssistantManagePromptDialogProps = {
+export type ManageAiAssistantDialogProps = {
   type: "create" | "edit"
-  initialData: Partial<PromptFormData>
+  initialData: Partial<AiAssistantFormData>
   open: boolean
   onOpenChange: (open: boolean) => void
-  onSubmit: (data: PromptFormData) => Promise<void>
+  onSubmit: (data: AiAssistantFormData) => Promise<void>
   onDelete?: () => Promise<void>
 }
 
-export function AssistantManagePromptDialog(
-  props: AssistantManagePromptDialogProps
-) {
+export function ManageAiAssistantDialog(props: ManageAiAssistantDialogProps) {
   const { type, initialData, open, onOpenChange, onSubmit, onDelete } = props
 
   const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const form = useForm<PromptFormData>({
-    resolver: zodResolver(newPromptSchema),
+  const form = useForm<AiAssistantFormData>({
+    resolver: zodResolver(AiAssistantFormDataSchema),
     defaultValues: {
       name: initialData.name ?? "",
-      prompt: initialData.prompt ?? "",
     },
   })
 
   const handleSubmit = useCallback(
-    async (data: PromptFormData) => {
+    async (data: AiAssistantFormData) => {
       setIsSubmitting(true)
       try {
         await onSubmit(data)
@@ -102,14 +93,12 @@ export function AssistantManagePromptDialog(
 
   useEffect(() => {
     form.setValue("name", initialData?.name ?? "")
-    form.setValue("prompt", initialData?.prompt ?? "")
   }, [form, initialData])
 
   useEffect(() => {
     if (!open) {
       form.clearErrors()
-      form.resetField("name")
-      form.resetField("prompt")
+      form.reset()
     }
   }, [form, open])
 
@@ -119,11 +108,12 @@ export function AssistantManagePromptDialog(
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handleSubmit)}>
             <DialogHeader>
-              <DialogTitle>{type === "create" ? "Save" : "Edit"}</DialogTitle>
+              <DialogTitle>
+                {type === "create" ? "Create Assistant" : "Edit Assistant"}
+              </DialogTitle>
               <DialogDescription>
-                {type === "create"
-                  ? "Save your prompt to reuse it later"
-                  : "Edit your prompt"}
+                An AI assistant lets you organise your prompts and fine-tune the
+                results
               </DialogDescription>
             </DialogHeader>
             <DialogBody className="flex flex-col gap-6 px-0.5">
@@ -132,40 +122,22 @@ export function AssistantManagePromptDialog(
                 name="name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Label</FormLabel>
+                    <FormLabel>Name</FormLabel>
                     <FormControl>
                       <Input {...field} />
                     </FormControl>
                     <FormDescription>
-                      A short label describing this prompt
+                      A name to identify your assistant
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-              <FormField
-                control={form.control}
-                name="prompt"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Prompt</FormLabel>
-                    <FormControl>
-                      <Textarea
-                        autoComplete="off"
-                        autoCapitalize="off"
-                        autoCorrect="off"
-                        spellCheck="true"
-                        className="max-h-32 min-h-24"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormDescription>
-                      Your message sent to the assistant
-                    </FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+              <Alert variant="info">
+                <AlertDescription>
+                  Custom instructions and settings are coming soon
+                </AlertDescription>
+              </Alert>
             </DialogBody>
             <DialogFooter
               className={cn(
@@ -173,17 +145,17 @@ export function AssistantManagePromptDialog(
               )}
             >
               {type === "edit" && onDelete ? (
-                <DeletePromptDialog
+                <DeleteAiAssistantDialog
                   onDelete={handleDelete}
                   isProcessing={isSubmitting}
                 >
                   <Button variant="outline-destructive" disabled={isSubmitting}>
                     Delete
                   </Button>
-                </DeletePromptDialog>
+                </DeleteAiAssistantDialog>
               ) : null}
               <Button variant="primary" type="submit" disabled={isSubmitting}>
-                Save
+                {type === "create" ? "Create" : "Save"}
               </Button>
             </DialogFooter>
           </form>
@@ -192,15 +164,15 @@ export function AssistantManagePromptDialog(
     </Dialog>
   )
 }
-AssistantManagePromptDialog.displayName = "AssistantManagePromptDialog"
+ManageAiAssistantDialog.displayName = "ManageAiAssistantDialog"
 
-type DeletePromptDialogProps = {
+type DeleteAiAssistantDialogProps = {
   children: React.ReactNode
   onDelete: () => Promise<void>
   isProcessing: boolean
 }
 
-function DeletePromptDialog(props: DeletePromptDialogProps) {
+function DeleteAiAssistantDialog(props: DeleteAiAssistantDialogProps) {
   const { children, onDelete, isProcessing } = props
 
   return (
@@ -208,11 +180,12 @@ function DeletePromptDialog(props: DeletePromptDialogProps) {
       <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Delete Prompt</AlertDialogTitle>
+          <AlertDialogTitle>Delete Assistant</AlertDialogTitle>
         </AlertDialogHeader>
         <AlertDialogBody>
           <AlertDialogDescription>
-            Are you sure you want to delete this prompt?
+            Are you sure you want to delete this assistant? This action cannot
+            be undone.
           </AlertDialogDescription>
         </AlertDialogBody>
         <AlertDialogFooter>
@@ -229,4 +202,4 @@ function DeletePromptDialog(props: DeletePromptDialogProps) {
     </AlertDialog>
   )
 }
-DeletePromptDialog.displayName = "DeletePromptDialog"
+DeleteAiAssistantDialog.displayName = "DeleteAssistantDialog"

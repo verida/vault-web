@@ -3,40 +3,35 @@ import {
   PrivateDataApiV1LLMPersonalResponseSchema,
   PrivateDataApiV1LlmHotloadResponseSchema,
 } from "@/features/assistants/schemas"
-import {
-  AssistantOutput,
-  AssistantUserInput,
-} from "@/features/assistants/types"
+import { AiAssistantOutput, AiPromptInput } from "@/features/assistants/types"
 import { Logger } from "@/features/telemetry"
 
 const logger = Logger.create("assistants")
 
 /**
- * Processes a user prompt by sending it to the LLM API or using a mock response.
+ * Processes an AI prompt by sending it to the AI assistant API.
  *
- * @param userInput - The user's input
+ * @param aiPromptInput - The prompt input to send
  * @param sessionToken - The session token for authentication
- * @returns A promise that resolves to the AI-generated response
+ * @returns A promise that resolves to the AI assistant output
  * @throws Error if the prompt is empty or if there's an issue with the API call
  */
-export async function sendUserInputToAssistant(
-  userInput: AssistantUserInput,
+export async function sendAiPromptInputToAssistant(
+  aiPromptInput: AiPromptInput,
   sessionToken: string
-): Promise<AssistantOutput> {
-  if (!userInput) {
-    throw new Error("User input is required")
-  }
-
-  logger.info("Processing user input")
+): Promise<AiAssistantOutput> {
+  logger.info("Processing prompt input")
 
   // Use mock response if API configuration is missing
   if (!commonConfig.PRIVATE_DATA_API_BASE_URL) {
-    logger.warn("Using mock response due to missing API configuration")
+    logger.warn(
+      "Unable to process prompt input due to missing API configuration"
+    )
     throw new Error("API configuration is missing")
   }
 
   try {
-    logger.debug("Sending request to LLM API")
+    logger.debug("Sending request to AI assistant API")
     const response = await fetch(
       `${commonConfig.PRIVATE_DATA_API_BASE_URL}/api/rest/v1/llm/personal`,
       {
@@ -46,9 +41,11 @@ export async function sendUserInputToAssistant(
           "X-API-Key": sessionToken,
         },
         body: JSON.stringify({
-          prompt: userInput.prompt,
+          // TODO: When and if passing the assistantId is supported, add it here but handle when using the default non-existing assistant
+          prompt: aiPromptInput.prompt,
           provider: commonConfig.DEFAULT_AI_PROVIDER,
           model: commonConfig.DEFAULT_AI_MODEL, // Could come from the user input
+          // TODO: Add further configuration options (LLM model, data type, filters, etc.) when endpoint supports it
         }),
       }
     )
@@ -58,13 +55,15 @@ export async function sendUserInputToAssistant(
     }
 
     const data = await response.json()
-    logger.debug("Received response from LLM API")
+    logger.debug("Received response from AI assistant API")
 
     // Validate the API response against the expected schema
     const validatedData = PrivateDataApiV1LLMPersonalResponseSchema.parse(data)
-    logger.info("Successfully processed user prompt")
+    logger.info("Successfully processed prompt input")
 
-    const output: AssistantOutput = {
+    const output: AiAssistantOutput = {
+      assistantId: aiPromptInput.assistantId,
+      status: "processed",
       result: validatedData.result,
       processedAt: new Date(),
       processingTime: validatedData.duration,
@@ -73,7 +72,7 @@ export async function sendUserInputToAssistant(
 
     return output
   } catch (error) {
-    throw new Error("Error calling LLM API", { cause: error })
+    throw new Error("Error calling AI assistant API", { cause: error })
   }
 }
 
@@ -89,12 +88,13 @@ export function hotloadAPI(
   progressCallback?: (progress: number) => void
 ): Promise<void> {
   return new Promise((resolve, reject) => {
+    logger.info("Starting AI assistant hotload")
+
     if (!commonConfig.PRIVATE_DATA_API_BASE_URL) {
-      reject(new Error("PRIVATE_DATA_API_BASE_URL is not set"))
+      logger.warn("Unable to hotload AI assistant due to missing configuration")
+      reject(new Error("API configuration is missing"))
       return
     }
-
-    logger.info("Starting API hotload")
 
     // Create an EventSource to receive progress updates
     const url = new URL(
@@ -116,7 +116,9 @@ export function hotloadAPI(
 
       const { data } = validatedData
 
-      logger.debug(`API hotload progress: ${data.totalProgress * 100}%`)
+      logger.debug(
+        `AI assistant hotload progress: ${data.totalProgress * 100}%`
+      )
       if (progressCallback) {
         progressCallback(data.totalProgress)
       }
@@ -124,14 +126,14 @@ export function hotloadAPI(
       // Check if hotloading is complete (using a threshold close to 1 to account for potential rounding issues)
       if (data.totalProgress >= 0.99999) {
         eventSource.close()
-        logger.info("API hotload completed")
+        logger.info("AI assistant hotload completed")
         resolve()
       }
     }
 
     eventSource.onerror = (error) => {
       eventSource.close()
-      reject(new Error("Error hot loading LLM API", { cause: error }))
+      reject(new Error("Error hotloading AI assistant", { cause: error }))
     }
   })
 }

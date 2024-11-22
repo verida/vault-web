@@ -14,6 +14,8 @@ export const featureFlags = {
     record: {
       delete: commonConfig.FEATURE_FLAG_DATA_DELETE_RECORD_ENABLED,
     },
+    displayTechnicalDatabases:
+      commonConfig.FEATURE_FLAG_DATA_DISPLAY_TECHNICAL_DATABASES,
   },
   commandDialog: {
     enabled: commonConfig.FEATURE_FLAG_COMMAND_DIALOG_ENABLED,

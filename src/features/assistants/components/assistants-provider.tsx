@@ -2,17 +2,22 @@
 
 import { useQueryClient } from "@tanstack/react-query"
 import React, { useCallback, useEffect, useMemo, useState } from "react"
+import { useLocalStorage } from "usehooks-ts"
 
+import { DEFAULT_ASSISTANT } from "@/features/assistants/constants"
 import {
   AssistantsContext,
   AssistantsContextType,
 } from "@/features/assistants/contexts/assistants-context"
-import { prefetchSavedAssistantPrompts } from "@/features/assistants/hooks/use-saved-assistant-prompts"
-import { AssistantUserInput, HotloadResult } from "@/features/assistants/types"
-import { AssistantOutput } from "@/features/assistants/types"
+import { prefetchGetAiPrompts } from "@/features/assistants/hooks/use-get-ai-prompts"
+import {
+  AiAssistantHotloadResult,
+  AiPromptInput,
+} from "@/features/assistants/types"
+import { AiAssistantOutput } from "@/features/assistants/types"
 import {
   hotloadAPI,
-  sendUserInputToAssistant,
+  sendAiPromptInputToAssistant,
 } from "@/features/assistants/utils"
 import { Logger } from "@/features/telemetry"
 import { useVerida } from "@/features/verida/hooks/use-verida"
@@ -35,12 +40,18 @@ export function AssistantsProvider(props: AssistantsProviderProps) {
 
   const queryClient = useQueryClient()
 
-  const [userInput, setUserInput] = useState<AssistantUserInput | null>(null)
-  const [assistantOutput, setAssistantOutput] =
-    useState<AssistantOutput | null>(null)
-  const [isProcessing, setIsProcessing] = useState(false)
+  const [selectedAiAssistant, setSelectedAiAssistant] = useLocalStorage(
+    "verida-vault-selectedAiAssistant",
+    DEFAULT_ASSISTANT._id,
+    {
+      initializeWithValue: true,
+    }
+  )
+  const [aiPromptInput, setAiPromptInput] = useState<AiPromptInput | null>(null)
+  const [aiAssistantOutput, setAiAssistantOutput] =
+    useState<AiAssistantOutput | null>(null)
   const [error, setError] = useState<string | null>(null)
-  const [hotload, setHotload] = useState<HotloadResult>({
+  const [hotload, setHotload] = useState<AiAssistantHotloadResult>({
     status: "idle",
     progress: 0,
   })
@@ -74,10 +85,11 @@ export function AssistantsProvider(props: AssistantsProviderProps) {
 
     getAccountSessionToken()
       .then((sessionToken) => {
-        prefetchSavedAssistantPrompts({
+        prefetchGetAiPrompts({
           queryClient,
           did,
           sessionToken,
+          assistantId: selectedAiAssistant,
         })
       })
       .catch((error) => {
@@ -87,89 +99,91 @@ export function AssistantsProvider(props: AssistantsProviderProps) {
           })
         )
       })
-  }, [getAccountSessionToken, queryClient, did])
+  }, [getAccountSessionToken, selectedAiAssistant, queryClient, did])
 
-  const _processUserInput = useCallback(
-    async (userInput: AssistantUserInput) => {
-      if (isProcessing) {
+  const processInput = useCallback(
+    async (input: AiPromptInput) => {
+      if (aiAssistantOutput?.status === "processing") {
         return
       }
 
       logger.info("Sending user input to assistant")
-      setIsProcessing(true)
       setError(null)
-      setAssistantOutput(null)
+      setAiAssistantOutput({
+        assistantId: input.assistantId,
+        status: "processing",
+      })
 
       try {
         const sessionToken = await getAccountSessionToken()
-        const result = await sendUserInputToAssistant(userInput, sessionToken)
-        setAssistantOutput(result)
-        logger.info("Received response from assistant")
+        const result = await sendAiPromptInputToAssistant(input, sessionToken)
+        setAiAssistantOutput(result)
       } catch (error) {
         logger.error(error)
         // TODO: Analyse error and set appropriate error message
         setError("Something went wrong with the assistant")
-      } finally {
-        setIsProcessing(false)
+        setAiAssistantOutput(null)
       }
     },
-    [getAccountSessionToken, isProcessing]
+    [getAccountSessionToken, aiAssistantOutput]
   )
 
-  const processUserInput = useCallback(async () => {
-    if (!userInput?.prompt) {
+  const processAiPromptInput = useCallback(async () => {
+    if (!aiPromptInput?.prompt) {
       return
     }
-    await _processUserInput(userInput)
-  }, [userInput, _processUserInput])
+    await processInput(aiPromptInput)
+  }, [aiPromptInput, processInput])
 
-  const setAndProcessUserInput = useCallback(
-    async (userInput: AssistantUserInput) => {
-      setUserInput(userInput)
-      await _processUserInput(userInput)
+  const setAndProcessAiPromptInput = useCallback(
+    async (input: AiPromptInput) => {
+      setAiPromptInput(input)
+      await processInput(input)
     },
-    [_processUserInput]
+    [processInput]
   )
 
-  const updateUserPrompt = useCallback((userPrompt: string) => {
-    setUserInput((prev) => ({
+  const updateAiPromptInput = useCallback((aiPromptInput: AiPromptInput) => {
+    setAiPromptInput((prev) => ({
       ...prev,
-      prompt: userPrompt,
+      ...aiPromptInput,
     }))
   }, [])
 
-  const clearUserInput = useCallback(() => {
-    setUserInput(null)
+  const clearAiPromptInput = useCallback(() => {
+    setAiPromptInput(null)
   }, [])
 
-  const clearAssistantOutput = useCallback(() => {
-    setAssistantOutput(null)
+  const clearAiAssistantOutput = useCallback(() => {
+    setAiAssistantOutput(null)
   }, [])
 
   const value = useMemo<AssistantsContextType>(
     () => ({
-      userInput,
-      assistantOutput,
-      processUserInput,
-      setAndProcessUserInput,
-      updateUserPrompt,
-      clearUserInput,
-      clearAssistantOutput,
-      isProcessing,
+      selectedAiAssistant,
+      setSelectedAiAssistant,
+      aiPromptInput,
+      aiAssistantOutput,
+      processAiPromptInput,
+      setAndProcessAiPromptInput,
+      updateAiPromptInput,
+      clearAiPromptInput,
+      clearAiAssistantOutput,
       error,
       hotload,
       promptSearchValue,
       setPromptSearchValue,
     }),
     [
-      userInput,
-      assistantOutput,
-      processUserInput,
-      setAndProcessUserInput,
-      updateUserPrompt,
-      clearUserInput,
-      clearAssistantOutput,
-      isProcessing,
+      selectedAiAssistant,
+      setSelectedAiAssistant,
+      aiPromptInput,
+      aiAssistantOutput,
+      processAiPromptInput,
+      setAndProcessAiPromptInput,
+      updateAiPromptInput,
+      clearAiPromptInput,
+      clearAiAssistantOutput,
       error,
       hotload,
       promptSearchValue,

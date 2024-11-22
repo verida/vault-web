@@ -10,7 +10,7 @@ import React, {
 } from "react"
 import { useMediaQuery } from "usehooks-ts"
 
-import { AssistantPromptsCombobox } from "@/app/(connected)/assistant/_components/assistant-prompts-combobox"
+import { AiPromptsCombobox } from "@/app/(connected)/assistants/[assistantId]/_components/ai-prompts-combobox"
 import { SendIcon } from "@/components/icons/send-icon"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
@@ -21,7 +21,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { featureFlags } from "@/config/features"
-import { useAssistantPromptDialog } from "@/features/assistants/hooks/use-assistant-prompt-dialog"
+import { useAiPromptDialog } from "@/features/assistants/hooks/use-ai-prompt-dialog"
 import { useAssistants } from "@/features/assistants/hooks/use-assistants"
 import { cn, getMediaQuery } from "@/styles/utils"
 
@@ -34,33 +34,37 @@ export function AssistantUserInput(props: AssistantUserInputProps) {
   const { ...divProps } = props
 
   const {
-    userInput,
-    processUserInput,
-    updateUserPrompt,
-    clearUserInput,
-    isProcessing,
+    selectedAiAssistant,
+    aiPromptInput,
+    aiAssistantOutput,
+    processAiPromptInput,
+    updateAiPromptInput,
+    clearAiPromptInput,
   } = useAssistants()
 
-  const { openSaveDialog } = useAssistantPromptDialog()
+  const { openSaveDialog } = useAiPromptDialog()
 
   const inputRef = useRef<HTMLTextAreaElement>(null)
 
   const handleUserPromptChange: ChangeEventHandler<HTMLTextAreaElement> =
     useCallback(
       (event) => {
-        updateUserPrompt(event.target.value)
+        updateAiPromptInput({
+          assistantId: selectedAiAssistant,
+          prompt: event.target.value,
+        })
       },
-      [updateUserPrompt]
+      [updateAiPromptInput, selectedAiAssistant]
     )
 
   const handleKeyDown: KeyboardEventHandler<HTMLTextAreaElement> = useCallback(
     (event) => {
       if (event.key === "Enter" && !event.shiftKey) {
         event.preventDefault()
-        processUserInput()
+        processAiPromptInput()
       }
     },
-    [processUserInput]
+    [processAiPromptInput]
   )
 
   useLayoutEffect(() => {
@@ -80,12 +84,12 @@ export function AssistantUserInput(props: AssistantUserInputProps) {
           <Textarea
             ref={inputRef}
             placeholder="Ask your assistant"
-            value={userInput?.prompt ?? ""}
+            value={aiPromptInput?.prompt ?? ""}
             onChange={handleUserPromptChange}
             onKeyDown={handleKeyDown}
             className={cn(
               "max-h-32 rounded-none border-none py-1 pl-0 focus-visible:ring-0",
-              userInput?.prompt ? "pr-8 sm:pr-10" : "pr-1"
+              aiPromptInput?.prompt ? "pr-8 sm:pr-10" : "pr-1"
             )}
             autoComplete="off"
             autoCapitalize="off"
@@ -93,12 +97,12 @@ export function AssistantUserInput(props: AssistantUserInputProps) {
             spellCheck="false"
             endAdornmentContainerClassName="top-0 pt-1 pr-1.5 sm:pr-2.5 flex flex-row gap-1"
             endAdornment={
-              userInput?.prompt ? (
+              aiPromptInput?.prompt ? (
                 <Button
                   variant="ghost"
                   size="icon"
                   className="size-5"
-                  onClick={clearUserInput}
+                  onClick={clearAiPromptInput}
                 >
                   <XIcon className="size-5 opacity-50 sm:size-6" />
                   <span className="sr-only">Clear user input</span>
@@ -110,7 +114,7 @@ export function AssistantUserInput(props: AssistantUserInputProps) {
         <CardFooter className="flex-row justify-between p-0">
           <div className="flex flex-row items-center justify-start gap-2">
             {!isXL ? (
-              <AssistantPromptsCombobox
+              <AiPromptsCombobox
                 onClickEdit={handleEditPrompt}
                 className="size-8 sm:size-10"
               />
@@ -122,10 +126,10 @@ export function AssistantUserInput(props: AssistantUserInputProps) {
                     variant="outline"
                     size="icon"
                     className="size-8 sm:size-10"
-                    disabled={!userInput?.prompt}
+                    disabled={!aiPromptInput?.prompt}
                     onClick={() => {
                       openSaveDialog({
-                        prompt: userInput?.prompt,
+                        prompt: aiPromptInput?.prompt,
                       })
                     }}
                   >
@@ -142,8 +146,11 @@ export function AssistantUserInput(props: AssistantUserInputProps) {
               variant="primary"
               size="icon"
               className="size-8 sm:size-10"
-              onClick={processUserInput}
-              disabled={!userInput?.prompt || isProcessing}
+              onClick={processAiPromptInput}
+              disabled={
+                !aiPromptInput?.prompt ||
+                aiAssistantOutput?.status === "processing"
+              }
             >
               <SendIcon className="size-5 sm:size-6" />
               <span className="sr-only">Send to assistant for processing</span>
