@@ -10,11 +10,36 @@ import { UnsavedVeridaRecord } from "@/features/verida-database/types"
 export function useCreateAiPrompt() {
   const { toast } = useToast()
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { createRecordAsync, createRecord, ...mutation } =
     useCreateVeridaRecord(AiPromptBaseSchema)
 
   const createAiPrompt = useCallback(
+    (promptToSave: UnsavedVeridaRecord<AiPromptBase>) => {
+      return createRecord(
+        {
+          databaseName: AI_PROMPTS_DB_DEF.databaseVaultName,
+          record: promptToSave,
+        },
+        {
+          onSuccess: () => {
+            toast({
+              variant: "success",
+              description: "Prompt saved successfully",
+            })
+          },
+          onError: () => {
+            toast({
+              variant: "error",
+              description: "Saving prompt failed",
+            })
+          },
+        }
+      )
+    },
+    [createRecord, toast]
+  )
+
+  const createAiPromptAsync = useCallback(
     (promptToSave: UnsavedVeridaRecord<AiPromptBase>) => {
       return createRecordAsync(
         {
@@ -25,13 +50,13 @@ export function useCreateAiPrompt() {
           onSuccess: () => {
             toast({
               variant: "success",
-              description: "Saved successfully",
+              description: "Prompt saved successfully",
             })
           },
           onError: () => {
             toast({
               variant: "error",
-              description: "Saving failed",
+              description: "Saving prompt failed",
             })
           },
         }
@@ -42,6 +67,7 @@ export function useCreateAiPrompt() {
 
   return {
     createAiPrompt,
+    createAiPromptAsync,
     ...mutation,
   }
 }

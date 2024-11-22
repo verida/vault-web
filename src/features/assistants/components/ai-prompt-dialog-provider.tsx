@@ -1,19 +1,24 @@
 "use client"
 
+import { useRouter } from "next/navigation"
 import { useCallback, useMemo, useState } from "react"
 
 import { featureFlags } from "@/config/features"
 import { ManageAiPromptDialog } from "@/features/assistants/components/manage-ai-prompt-dialog"
+import { DEFAULT_ASSISTANT } from "@/features/assistants/constants"
 import {
   AiPromptDialogContext,
   AiPromptDialogContextType,
   AiPromptDialogState,
 } from "@/features/assistants/contexts/ai-prompt-dialog-context"
 import { useAssistants } from "@/features/assistants/hooks/use-assistants"
+import { useCreateAiAssistant } from "@/features/assistants/hooks/use-create-ai-assistant"
 import { useCreateAiPrompt } from "@/features/assistants/hooks/use-create-ai-prompt"
 import { useDeleteAiPrompt } from "@/features/assistants/hooks/use-delete-ai-prompt"
+import { useGetAiAssistants } from "@/features/assistants/hooks/use-get-ai-assistants"
 import { useUpdateAiPrompt } from "@/features/assistants/hooks/use-update-ai-prompt"
 import { AiPromptFormData, AiPromptRecord } from "@/features/assistants/types"
+import { getAssistantPageRoute } from "@/features/routes/utils"
 
 type AiPromptDialogProviderProps = {
   children: React.ReactNode
@@ -22,15 +27,20 @@ type AiPromptDialogProviderProps = {
 export function AiPromptDialogProvider(props: AiPromptDialogProviderProps) {
   const { children } = props
 
+  const router = useRouter()
+
   const [dialogState, setDialogState] = useState<AiPromptDialogState>({
     type: "create",
     isOpen: false,
   })
 
+  const { aiAssistants } = useGetAiAssistants()
+
   const { selectedAiAssistant } = useAssistants()
-  const { createAiPrompt } = useCreateAiPrompt()
-  const { updateAiPrompt } = useUpdateAiPrompt()
-  const { deleteAiPrompt } = useDeleteAiPrompt()
+  const { createAiAssistantAsync } = useCreateAiAssistant()
+  const { createAiPromptAsync } = useCreateAiPrompt()
+  const { updateAiPromptAsync } = useUpdateAiPrompt()
+  const { deleteAiPromptAsync } = useDeleteAiPrompt()
 
   const openSaveDialog = useCallback(
     (initialData?: Partial<AiPromptFormData>) => {
@@ -48,8 +58,7 @@ export function AiPromptDialogProvider(props: AiPromptDialogProviderProps) {
       type: "edit",
       isOpen: true,
       initialData: {
-        name: aiPromptRecord.name,
-        prompt: aiPromptRecord.prompt,
+        ...aiPromptRecord,
       },
       aiPromptRecord,
     })
@@ -62,27 +71,47 @@ export function AiPromptDialogProvider(props: AiPromptDialogProviderProps) {
   const handleSubmit = useCallback(
     async (data: AiPromptFormData) => {
       if (dialogState.type === "create") {
-        await createAiPrompt({
-          assistantId: selectedAiAssistant,
-          name: data.name,
-          prompt: data.prompt,
+        let assistantId = selectedAiAssistant
+        let creatingAssistant = false
+
+        if (
+          !aiAssistants ||
+          !aiAssistants.find((assistant) => {
+            return assistant._id === assistantId
+          })
+        ) {
+          creatingAssistant = true
+          const newAssistantRecord = await createAiAssistantAsync({
+            name: DEFAULT_ASSISTANT.name,
+          })
+          assistantId = newAssistantRecord._id
+        }
+
+        await createAiPromptAsync({
+          assistantId,
+          ...data,
         })
+
+        router.replace(
+          getAssistantPageRoute({
+            assistantId,
+          })
+        )
       } else if (dialogState.aiPromptRecord) {
-        await updateAiPrompt({
+        await updateAiPromptAsync({
           ...dialogState.aiPromptRecord,
-          name: data.name,
-          prompt: data.prompt,
+          ...data,
         })
       }
     },
-    [createAiPrompt, updateAiPrompt, selectedAiAssistant, dialogState]
+    [createAiPromptAsync, updateAiPromptAsync, selectedAiAssistant, dialogState]
   )
 
   const handleDelete = useCallback(async () => {
     if (dialogState.aiPromptRecord) {
-      await deleteAiPrompt(dialogState.aiPromptRecord._id)
+      await deleteAiPromptAsync(dialogState.aiPromptRecord._id)
     }
-  }, [deleteAiPrompt, dialogState])
+  }, [deleteAiPromptAsync, dialogState])
 
   const value: AiPromptDialogContextType = useMemo(
     () => ({

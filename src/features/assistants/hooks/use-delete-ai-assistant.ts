@@ -21,13 +21,13 @@ export function useDeleteAiAssistant() {
           onSuccess: () => {
             toast({
               variant: "success",
-              description: "Deleted successfully",
+              description: "Assistant deleted successfully",
             })
           },
           onError: () => {
             toast({
               variant: "error",
-              description: "Deleting failed",
+              description: "Deleting assistant failed",
             })
           },
         }
@@ -47,13 +47,13 @@ export function useDeleteAiAssistant() {
           onSuccess: () => {
             toast({
               variant: "success",
-              description: "Deleted successfully",
+              description: "Assistant deleted successfully",
             })
           },
           onError: () => {
             toast({
               variant: "error",
-              description: "Deleting failed",
+              description: "Deleting assistant failed",
             })
           },
         }

@@ -7,11 +7,36 @@ import { useDeleteVeridaRecord } from "@/features/verida-database/hooks/use-dele
 export function useDeleteAiPrompt() {
   const { toast } = useToast()
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { deleteRecord, deleteRecordAsync, ...mutation } =
     useDeleteVeridaRecord()
 
   const deleteAiPrompt = useCallback(
+    (promptId: string) => {
+      return deleteRecord(
+        {
+          databaseName: AI_PROMPTS_DB_DEF.databaseVaultName,
+          recordId: promptId,
+        },
+        {
+          onSuccess: () => {
+            toast({
+              variant: "success",
+              description: "Prompt deleted successfully",
+            })
+          },
+          onError: () => {
+            toast({
+              variant: "error",
+              description: "Deleting prompt failed",
+            })
+          },
+        }
+      )
+    },
+    [deleteRecord, toast]
+  )
+
+  const deleteAiPromptAsync = useCallback(
     (promptId: string) => {
       return deleteRecordAsync(
         {
@@ -22,13 +47,13 @@ export function useDeleteAiPrompt() {
           onSuccess: () => {
             toast({
               variant: "success",
-              description: "Deleted successfully",
+              description: "Prompt deleted successfully",
             })
           },
           onError: () => {
             toast({
               variant: "error",
-              description: "Deleting failed",
+              description: "Deleting prompt failed",
             })
           },
         }
@@ -39,6 +64,7 @@ export function useDeleteAiPrompt() {
 
   return {
     deleteAiPrompt,
+    deleteAiPromptAsync,
     ...mutation,
   }
 }

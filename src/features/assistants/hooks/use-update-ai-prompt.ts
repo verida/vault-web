@@ -9,11 +9,36 @@ import { useUpdateVeridaRecord } from "@/features/verida-database/hooks/use-upda
 export function useUpdateAiPrompt() {
   const { toast } = useToast()
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { updateRecordAsync, updateRecord, ...mutation } =
     useUpdateVeridaRecord(AiPromptBaseSchema)
 
   const updateAiPrompt = useCallback(
+    (promptToUpdate: AiPromptRecord) => {
+      return updateRecord(
+        {
+          databaseName: AI_PROMPTS_DB_DEF.databaseVaultName,
+          record: promptToUpdate,
+        },
+        {
+          onSuccess: () => {
+            toast({
+              variant: "success",
+              description: "Prompt updated successfully",
+            })
+          },
+          onError: () => {
+            toast({
+              variant: "error",
+              description: "Updating prompt failed",
+            })
+          },
+        }
+      )
+    },
+    [updateRecord, toast]
+  )
+
+  const updateAiPromptAsync = useCallback(
     (promptToUpdate: AiPromptRecord) => {
       return updateRecordAsync(
         {
@@ -24,13 +49,13 @@ export function useUpdateAiPrompt() {
           onSuccess: () => {
             toast({
               variant: "success",
-              description: "Saved successfully",
+              description: "Prompt updated successfully",
             })
           },
           onError: () => {
             toast({
               variant: "error",
-              description: "Saving failed",
+              description: "Updating prompt failed",
             })
           },
         }
@@ -41,6 +66,7 @@ export function useUpdateAiPrompt() {
 
   return {
     updateAiPrompt,
+    updateAiPromptAsync,
     ...mutation,
   }
 }

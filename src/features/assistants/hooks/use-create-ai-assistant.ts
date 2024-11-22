@@ -24,13 +24,13 @@ export function useCreateAiAssistant() {
           onSuccess: () => {
             toast({
               variant: "success",
-              description: "Saved successfully",
+              description: "Assistant created successfully",
             })
           },
           onError: () => {
             toast({
               variant: "error",
-              description: "Saving failed",
+              description: "Creating assistant failed",
             })
           },
         }
@@ -50,13 +50,13 @@ export function useCreateAiAssistant() {
           onSuccess: () => {
             toast({
               variant: "success",
-              description: "Saved successfully",
+              description: "Assistant created successfully",
             })
           },
           onError: () => {
             toast({
               variant: "error",
-              description: "Saving failed",
+              description: "Creating assistant failed",
             })
           },
         }
