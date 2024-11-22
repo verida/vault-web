@@ -9,6 +9,7 @@ import {
   AiPromptDialogContextType,
   AiPromptDialogState,
 } from "@/features/assistants/contexts/ai-prompt-dialog-context"
+import { useAssistants } from "@/features/assistants/hooks/use-assistants"
 import { useCreateAiPrompt } from "@/features/assistants/hooks/use-create-ai-prompt"
 import { useDeleteAiPrompt } from "@/features/assistants/hooks/use-delete-ai-prompt"
 import { useUpdateAiPrompt } from "@/features/assistants/hooks/use-update-ai-prompt"
@@ -26,9 +27,10 @@ export function AiPromptDialogProvider(props: AiPromptDialogProviderProps) {
     isOpen: false,
   })
 
-  const { createAiPrompt: createAssistantPrompt } = useCreateAiPrompt()
-  const { updateAiPrompt: updateAssistantPrompt } = useUpdateAiPrompt()
-  const { deleteAiPrompt: deleteAssistantPrompt } = useDeleteAiPrompt()
+  const { selectedAiAssistant } = useAssistants()
+  const { createAiPrompt } = useCreateAiPrompt()
+  const { updateAiPrompt } = useUpdateAiPrompt()
+  const { deleteAiPrompt } = useDeleteAiPrompt()
 
   const openSaveDialog = useCallback(
     (initialData?: Partial<AiPromptFormData>) => {
@@ -60,27 +62,27 @@ export function AiPromptDialogProvider(props: AiPromptDialogProviderProps) {
   const handleSubmit = useCallback(
     async (data: AiPromptFormData) => {
       if (dialogState.type === "create") {
-        await createAssistantPrompt({
-          assistantId: "", // TODO: Get from form data
+        await createAiPrompt({
+          assistantId: selectedAiAssistant,
           name: data.name,
           prompt: data.prompt,
         })
       } else if (dialogState.aiPromptRecord) {
-        await updateAssistantPrompt({
+        await updateAiPrompt({
           ...dialogState.aiPromptRecord,
           name: data.name,
           prompt: data.prompt,
         })
       }
     },
-    [createAssistantPrompt, updateAssistantPrompt, dialogState]
+    [createAiPrompt, updateAiPrompt, selectedAiAssistant, dialogState]
   )
 
   const handleDelete = useCallback(async () => {
     if (dialogState.aiPromptRecord) {
-      await deleteAssistantPrompt(dialogState.aiPromptRecord._id)
+      await deleteAiPrompt(dialogState.aiPromptRecord._id)
     }
-  }, [deleteAssistantPrompt, dialogState])
+  }, [deleteAiPrompt, dialogState])
 
   const value: AiPromptDialogContextType = useMemo(
     () => ({

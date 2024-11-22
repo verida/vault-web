@@ -26,8 +26,8 @@ export const AiAssistantFormDataSchema = z.object({
     .min(1, "Name is required")
     .max(32, "Name must be less than 32 characters")
     .regex(
-      /^[a-zA-Z0-9-_]+$/,
-      "Name can only contain letters, numbers, hyphens and underscores"
+      /^[a-zA-Z0-9-_\s]+$/,
+      "Name can only contain letters, numbers, hyphens, underscores and spaces"
     ),
 })
 

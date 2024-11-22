@@ -90,6 +90,7 @@ export function AssistantsProvider(props: AssistantsProviderProps) {
           queryClient,
           did,
           sessionToken,
+          assistantId: selectedAiAssistant,
         })
       })
       .catch((error) => {
@@ -99,7 +100,7 @@ export function AssistantsProvider(props: AssistantsProviderProps) {
           })
         )
       })
-  }, [getAccountSessionToken, queryClient, did])
+  }, [getAccountSessionToken, selectedAiAssistant, queryClient, did])
 
   const processInput = useCallback(
     async (input: AiPromptInput) => {

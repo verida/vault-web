@@ -29,7 +29,7 @@ export const AI_PROMPTS_DB_DEF: DatabaseDefinition = {
 }
 
 export const DEFAULT_ASSISTANT: AiAssistantRecord = {
-  _id: "kyra",
+  _id: "new",
   name: "Kyra",
 }
 

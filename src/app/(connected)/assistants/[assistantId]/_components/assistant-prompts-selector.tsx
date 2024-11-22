@@ -36,6 +36,7 @@ export function AssistantPromptsSelector(props: AssistantPromptsSelectorProps) {
   const { className, onClickSetPrompt, onItemClick, ...divProps } = props
 
   const {
+    selectedAiAssistant,
     setAndProcessAiPromptInput: setAndProcessUserInput,
     updateAiPrompt: updateUserPrompt,
     promptSearchValue,
@@ -46,7 +47,7 @@ export function AssistantPromptsSelector(props: AssistantPromptsSelectorProps) {
 
   // TODO: Handle pagination, filter and sort. Link this to the value in the
   // CommandInput and turn the whole Command to a controlled component
-  const { savedAiPrompts: savedPrompts } = useGetAiPrompts()
+  const { savedAiPrompts } = useGetAiPrompts(selectedAiAssistant)
 
   const handleItemClick = useCallback(
     async (input: AiPromptInput) => {
@@ -83,22 +84,22 @@ export function AssistantPromptsSelector(props: AssistantPromptsSelectorProps) {
         <CommandList>
           <CommandEmpty>No results found</CommandEmpty>
           {featureFlags.assistant.userPrompts.enabled &&
-          savedPrompts &&
-          savedPrompts.length > 0 ? (
+          savedAiPrompts &&
+          savedAiPrompts.length > 0 ? (
             <CommandGroup heading="Saved">
-              {savedPrompts.map((savedPrompt) => (
+              {savedAiPrompts.map((savedAiPrompt) => (
                 <PromptItem
-                  key={savedPrompt._id}
-                  label={savedPrompt.name ?? savedPrompt.prompt}
-                  prompt={savedPrompt.prompt}
+                  key={savedAiPrompt._id}
+                  label={savedAiPrompt.name ?? savedAiPrompt.prompt}
+                  prompt={savedAiPrompt.prompt}
                   onSelect={() => {
                     handleItemClick({
-                      prompt: savedPrompt.prompt,
+                      prompt: savedAiPrompt.prompt,
                     })
                   }}
                   onClickSetPrompt={() => {
                     handleSetPromptClick({
-                      prompt: savedPrompt.prompt,
+                      prompt: savedAiPrompt.prompt,
                     })
                   }}
                   additionalActions={
@@ -110,7 +111,7 @@ export function AssistantPromptsSelector(props: AssistantPromptsSelectorProps) {
                             size="icon"
                             onClick={(e) => {
                               e.stopPropagation()
-                              openEditDialog(savedPrompt)
+                              openEditDialog(savedAiPrompt)
                             }}
                           >
                             <EditIcon className="size-5 sm:size-6" />

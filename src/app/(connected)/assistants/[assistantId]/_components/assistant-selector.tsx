@@ -23,7 +23,10 @@ import { DEFAULT_ASSISTANT } from "@/features/assistants/constants"
 import { useAiAssistantDialog } from "@/features/assistants/hooks/use-ai-assistant-dialog"
 import { useAssistants } from "@/features/assistants/hooks/use-assistants"
 import { useGetAiAssistants } from "@/features/assistants/hooks/use-get-ai-assistants"
-import { AiAssistantRecord } from "@/features/assistants/types"
+import {
+  AiAssistantFormData,
+  AiAssistantRecord,
+} from "@/features/assistants/types"
 import { getAssistantPageRoute } from "@/features/routes/utils"
 import { cn } from "@/styles/utils"
 
@@ -53,10 +56,13 @@ export function AssistantSelector(props: AssistantSelectorProps) {
     setSelectedAiAssistant(assistantId)
   }, [assistantId, setSelectedAiAssistant])
 
-  const handleCreateClick = useCallback(() => {
-    openCreateDialog()
-    setOpen(false)
-  }, [openCreateDialog])
+  const handleCreateClick = useCallback(
+    (data?: Partial<AiAssistantFormData>) => {
+      openCreateDialog(data)
+      setOpen(false)
+    },
+    [openCreateDialog]
+  )
 
   const handleItemSelect = useCallback(
     (assistant: AiAssistantRecord) => {
@@ -84,12 +90,21 @@ export function AssistantSelector(props: AssistantSelectorProps) {
         <PopoverTrigger asChild>
           <Button
             variant="outline"
-            className="gap-2 px-2 text-foreground"
+            className={cn(
+              "gap-2 px-2",
+              currentAssistant ? "text-foreground" : "text-muted-foreground"
+            )}
             aria-expanded={open}
           >
-            <Typography variant="heading-3">
-              {currentAssistant?.name ?? "-"}
-            </Typography>
+            {currentAssistant ? (
+              <Typography variant="heading-3">
+                {currentAssistant.name}
+              </Typography>
+            ) : (
+              <Typography variant="heading-5" className="italic">
+                Choose Assistant
+              </Typography>
+            )}
             <ChevronDownIcon className="size-5 text-muted-foreground" />
             <span className="sr-only">Select AI Assistant</span>
           </Button>
@@ -127,7 +142,7 @@ export function AssistantSelector(props: AssistantSelectorProps) {
                       handleItemSelect(DEFAULT_ASSISTANT)
                     }}
                     onEditClick={() => {
-                      handleEditClick(DEFAULT_ASSISTANT)
+                      handleCreateClick(DEFAULT_ASSISTANT)
                     }}
                   />
                 )}
@@ -135,7 +150,7 @@ export function AssistantSelector(props: AssistantSelectorProps) {
               <CommandSeparator />
               <CommandGroup className="p-2">
                 <CommandItem
-                  onSelect={handleCreateClick}
+                  onSelect={() => handleCreateClick()}
                   className="flex h-12 cursor-pointer flex-row items-center py-1 pl-2 pr-1"
                 >
                   <Typography
