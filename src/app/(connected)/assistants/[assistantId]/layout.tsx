@@ -1,12 +1,7 @@
-import { Metadata } from "next"
 import React from "react"
 
 import { AssistantSelector } from "@/app/(connected)/assistants/[assistantId]/_components/assistant-selector"
 import { PageWrapper } from "@/components/page-wrapper"
-
-export const metadata: Metadata = {
-  title: "AI Assistant",
-}
 
 type AssistantLayoutProps = {
   children: React.ReactNode
