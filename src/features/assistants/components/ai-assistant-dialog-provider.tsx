@@ -1,5 +1,6 @@
 "use client"
 
+import { useRouter } from "next/navigation"
 import { useCallback, useMemo, useState } from "react"
 
 import { ManageAiAssistantDialog } from "@/features/assistants/components/manage-ai-assistant-dialog"
@@ -15,6 +16,8 @@ import {
   AiAssistantFormData,
   AiAssistantRecord,
 } from "@/features/assistants/types"
+import { getAssistantPageRoute } from "@/features/routes/utils"
+import { wait } from "@/utils/misc"
 
 type AiAssistantDialogProviderProps = {
   children: React.ReactNode
@@ -24,6 +27,8 @@ export function AiAssistantDialogProvider(
   props: AiAssistantDialogProviderProps
 ) {
   const { children } = props
+
+  const router = useRouter()
 
   const [dialogState, setDialogState] = useState<AiAssistantDialogState>({
     type: "create",
@@ -63,7 +68,13 @@ export function AiAssistantDialogProvider(
   const handleSubmit = useCallback(
     async (data: AiAssistantFormData) => {
       if (dialogState.type === "create") {
-        await createAiAssistantAsync(data)
+        const newAssistantRecord = await createAiAssistantAsync(data)
+
+        await wait(2000)
+
+        router.push(
+          getAssistantPageRoute({ assistantId: newAssistantRecord._id })
+        )
       } else if (dialogState.aiAssistantRecord) {
         await updateAiAssistantAsync({
           ...dialogState.aiAssistantRecord,
