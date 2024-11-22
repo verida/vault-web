@@ -35,7 +35,7 @@ import { getAssistantPageRoute } from "@/features/routes/utils"
 import { cn } from "@/styles/utils"
 
 export type AiAssistantSelectorProps = {
-  currentAssistantId: string
+  currentAssistantId?: string
   onCreateClick?: () => void
   onItemSelect?: (assistant: AiAssistantRecord) => void
   onEditClick?: (assistant: AiAssistantRecord) => void
@@ -93,7 +93,7 @@ export function AiAssistantSelector(props: AiAssistantSelectorProps) {
   }, [aiAssistants])
 
   return (
-    <div {...divProps} className={cn(className)}>
+    <div {...divProps} className={cn("rounded-[0.875rem]", className)}>
       <Command loop className="rounded-[0.875rem]">
         {!hideSearch ? (
           <div className="p-2">

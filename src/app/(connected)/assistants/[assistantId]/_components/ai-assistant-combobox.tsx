@@ -43,6 +43,10 @@ export function AiAssistantCombobox(props: AiAssistantComboboxProps) {
     setOpen(false)
   }, [])
 
+  if (!currentAssistant) {
+    return null
+  }
+
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
