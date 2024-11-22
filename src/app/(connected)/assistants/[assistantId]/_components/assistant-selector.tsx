@@ -1,8 +1,8 @@
 "use client"
 
-import { ChevronDownIcon } from "lucide-react"
+import { CheckIcon, ChevronDownIcon } from "lucide-react"
 import { useRouter } from "next/navigation"
-import React, { useCallback, useMemo, useState } from "react"
+import React, { useCallback, useEffect, useMemo, useState } from "react"
 
 import { EditIcon } from "@/components/icons/edit-icon"
 import { Typography } from "@/components/typography"
@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/popover"
 import { DEFAULT_ASSISTANT } from "@/features/assistants/constants"
 import { useAiAssistantDialog } from "@/features/assistants/hooks/use-ai-assistant-dialog"
+import { useAssistants } from "@/features/assistants/hooks/use-assistants"
 import { useGetAiAssistants } from "@/features/assistants/hooks/use-get-ai-assistants"
 import { AiAssistantRecord } from "@/features/assistants/types"
 import { getAssistantPageRoute } from "@/features/routes/utils"
@@ -37,16 +38,20 @@ export function AssistantSelector(props: AssistantSelectorProps) {
 
   const [open, setOpen] = useState(false)
 
+  const { setSelectedAiAssistant } = useAssistants()
   const { openCreateDialog, openEditDialog } = useAiAssistantDialog()
   const { aiAssistants } = useGetAiAssistants()
 
   const currentAssistant = useMemo(() => {
-    return (aiAssistants?.find(
-      (aiAssistant) => aiAssistant._id === assistantId
-    ) ?? assistantId === DEFAULT_ASSISTANT._id)
-      ? DEFAULT_ASSISTANT
-      : null
+    return (
+      aiAssistants?.find((aiAssistant) => aiAssistant._id === assistantId) ??
+      (assistantId === DEFAULT_ASSISTANT._id ? DEFAULT_ASSISTANT : null)
+    )
   }, [aiAssistants, assistantId])
+
+  useEffect(() => {
+    setSelectedAiAssistant(assistantId)
+  }, [assistantId, setSelectedAiAssistant])
 
   const handleCreateClick = useCallback(() => {
     openCreateDialog()
@@ -104,6 +109,7 @@ export function AssistantSelector(props: AssistantSelectorProps) {
                       <AssistantSelectorItem
                         key={aiAssistant._id}
                         assistant={aiAssistant}
+                        isCurrentAssistant={assistantId === aiAssistant._id}
                         onSelect={() => {
                           handleItemSelect(aiAssistant)
                         }}
@@ -116,7 +122,7 @@ export function AssistantSelector(props: AssistantSelectorProps) {
                 ) : (
                   <AssistantSelectorItem
                     assistant={DEFAULT_ASSISTANT}
-                    selected
+                    isCurrentAssistant={assistantId === DEFAULT_ASSISTANT._id}
                     onSelect={() => {
                       handleItemSelect(DEFAULT_ASSISTANT)
                     }}
@@ -151,13 +157,13 @@ AssistantSelector.displayName = "AssistantSelector"
 
 type AssistantSelectorItemProps = {
   assistant: AiAssistantRecord
-  selected?: boolean
+  isCurrentAssistant?: boolean
   onSelect?: () => void
   onEditClick?: () => void
 }
 
 function AssistantSelectorItem(props: AssistantSelectorItemProps) {
-  const { assistant, onSelect, onEditClick } = props
+  const { assistant, isCurrentAssistant, onSelect, onEditClick } = props
 
   return (
     <CommandItem
@@ -166,7 +172,13 @@ function AssistantSelectorItem(props: AssistantSelectorItemProps) {
       className="cursor-pointer py-1 pl-2 pr-1"
     >
       <div className="flex flex-row items-center gap-2">
-        <div className="min-w-0 flex-1">
+        <div className="flex min-w-0 flex-1 flex-row items-center gap-1">
+          <CheckIcon
+            className={cn(
+              "size-4 shrink-0",
+              isCurrentAssistant ? "opacity-100" : "opacity-0"
+            )}
+          />
           <Typography variant="base-regular" className="truncate">
             {assistant.name}
           </Typography>
