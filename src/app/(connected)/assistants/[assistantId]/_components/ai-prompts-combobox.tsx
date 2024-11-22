@@ -18,11 +18,11 @@ import {
 import { AiPromptInput } from "@/features/assistants/types"
 import { cn } from "@/styles/utils"
 
-export type AssistantPromptsComboboxProps = {
+export type AiPromptsComboboxProps = {
   onClickEdit?: (input: AiPromptInput) => void
 } & React.ComponentProps<typeof Button>
 
-export function AssistantPromptsCombobox(props: AssistantPromptsComboboxProps) {
+export function AiPromptsCombobox(props: AiPromptsComboboxProps) {
   const { className, onClickEdit, ...buttonProps } = props
 
   const [open, setOpen] = useState(false)
@@ -72,4 +72,4 @@ export function AssistantPromptsCombobox(props: AssistantPromptsComboboxProps) {
     </Popover>
   )
 }
-AssistantPromptsCombobox.displayName = "AssistantPromptsCombobox"
+AiPromptsCombobox.displayName = "AiPromptsCombobox"
