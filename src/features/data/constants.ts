@@ -1,3 +1,4 @@
+import { featureFlags } from "@/config/features"
 import {
   AI_ASSISTANTS_DB_DEF,
   AI_PROMPTS_DB_DEF,
@@ -142,6 +143,6 @@ export const ALL_DATABASE_DEFS: DatabaseDefinition[] = [
 /**
  * Sorted and excluding databases definitions that are not included in the UI
  */
-export const USER_DATABASE_DEFS = ALL_DATABASE_DEFS.filter(
-  (db) => db.type === "user"
+export const USER_DATABASE_DEFS = ALL_DATABASE_DEFS.filter((db) =>
+  featureFlags.data.displayTechnicalDatabases ? true : db.type === "user"
 ).sort((a, b) => a.id.localeCompare(b.id))
