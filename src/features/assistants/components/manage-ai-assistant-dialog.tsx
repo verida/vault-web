@@ -112,8 +112,8 @@ export function ManageAiAssistantDialog(props: ManageAiAssistantDialogProps) {
                 {type === "create" ? "Create Assistant" : "Edit Assistant"}
               </DialogTitle>
               <DialogDescription>
-                An AI assistant lets you organise your prompts and fine-tune the
-                results
+                An AI assistant lets you organise your prompts and fine-tune
+                your requests
               </DialogDescription>
             </DialogHeader>
             <DialogBody className="flex flex-col gap-6 px-0.5">
