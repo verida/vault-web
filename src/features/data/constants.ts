@@ -3,6 +3,7 @@ import {
   AI_ASSISTANTS_DB_DEF,
   AI_PROMPTS_DB_DEF,
 } from "@/features/assistants/constants"
+import { DATA_CONNECTIONS_LOGS_DB_DEF } from "@/features/data-connections/constants"
 import { DatabaseDefinition } from "@/features/data/types"
 
 /**
@@ -138,6 +139,7 @@ export const ALL_DATABASE_DEFS: DatabaseDefinition[] = [
   },
   AI_PROMPTS_DB_DEF,
   AI_ASSISTANTS_DB_DEF,
+  DATA_CONNECTIONS_LOGS_DB_DEF,
 ]
 
 /**

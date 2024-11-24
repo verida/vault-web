@@ -1,4 +1,4 @@
-import { DATA_CONNECTIONS_SYNC_LOGS_DATABASE_NAME } from "@/features/data-connections/constants"
+import { DATA_CONNECTIONS_LOGS_DB_DEF } from "@/features/data-connections/constants"
 import { DataConnectionSyncLogBaseSchema } from "@/features/data-connections/schemas"
 import { DataConnectionSyncLog } from "@/features/data-connections/types"
 import { useVeridaDataRecords } from "@/features/verida-database/hooks/use-verida-data-records"
@@ -18,7 +18,7 @@ export function useDataConnectionsLogs({
   options,
 }: UseDataConnectionsLogsArgs) {
   const { records, pagination, ...query } = useVeridaDataRecords({
-    databaseName: DATA_CONNECTIONS_SYNC_LOGS_DATABASE_NAME,
+    databaseName: DATA_CONNECTIONS_LOGS_DB_DEF.databaseVaultName,
     filter,
     options: {
       ...options,
