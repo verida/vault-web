@@ -60,13 +60,13 @@ export function AppHeaderNavBar(props: AppHeaderNavBarProps) {
               className={cn(
                 navigationMenuTriggerStyle({
                   className:
-                    "h-full rounded-none border-b-2 font-semibold data-[active]:text-violet-600",
+                    "group h-full rounded-none border-b-2 font-semibold data-[active]:text-violet-600",
                 })
               )}
             >
               <div className="flex items-center gap-2">
                 <AiAssistantIcon className="text-ai-assistant-gradient" />
-                <span className="sr-only bg-ai-assistant-gradient bg-clip-text text-transparent lg:not-sr-only">
+                <span className="sr-only group-data-[active]:bg-ai-assistant-gradient group-data-[active]:bg-clip-text group-data-[active]:text-transparent lg:not-sr-only">
                   AI Assistant
                 </span>
               </div>
@@ -184,13 +184,13 @@ export function AppHeaderNavMenu(props: AppHeaderNavMenuProps) {
                   className={cn(
                     navigationMenuTriggerStyle({
                       className:
-                        "h-auto w-full justify-start py-4 font-semibold data-[active]:bg-surface-active data-[active]:text-violet-600 data-[active]:hover:bg-surface-hover data-[active]:focus:bg-surface-hover",
+                        "group h-auto w-full justify-start py-4 font-semibold data-[active]:bg-surface-active data-[active]:text-violet-600 data-[active]:hover:bg-surface-hover data-[active]:focus:bg-surface-hover",
                     })
                   )}
                 >
                   <div className="flex items-center gap-2">
                     <AiAssistantIcon />
-                    <span className="bg-ai-assistant-gradient bg-clip-text text-transparent">
+                    <span className="group-data-[active]:bg-ai-assistant-gradient group-data-[active]:bg-clip-text group-data-[active]:text-transparent">
                       AI Assistant
                     </span>
                   </div>
