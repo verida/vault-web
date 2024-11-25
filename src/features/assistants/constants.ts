@@ -1,8 +1,58 @@
 import {
   AiAssistantRecord,
+  LLMModelDefinition,
+  LlmModel,
   SuggestedAiPromptInput,
 } from "@/features/assistants/types"
 import { DatabaseDefinition } from "@/features/data/types"
+
+export const LLM_MODEL_DEFS: Record<LlmModel, LLMModelDefinition> = {
+  "LLAMA3.2_3B": {
+    provider: "bedrock",
+    model: "LLAMA3.2_3B",
+    label: "Llama 3.2 3B",
+  },
+  "LLAMA3.2_1B": {
+    provider: "bedrock",
+    model: "LLAMA3.2_1B",
+    label: "Llama 3.2 1B",
+  },
+  "LLAMA3.1_70B": {
+    provider: "bedrock",
+    model: "LLAMA3.1_70B",
+    label: "Llama 3.1 70B",
+  },
+  "LLAMA3.1_8B": {
+    provider: "bedrock",
+    model: "LLAMA3.1_8B",
+    label: "Llama 3.1 8B",
+  },
+  "LLAMA3_70B": {
+    provider: "bedrock",
+    model: "LLAMA3_70B",
+    label: "Llama 3 70B",
+  },
+  "LLAMA3_8B": {
+    provider: "bedrock",
+    model: "LLAMA3_8B",
+    label: "Llama 3 8B",
+  },
+  "MIXTRAL_8_7B": {
+    provider: "bedrock",
+    model: "MIXTRAL_8_7B",
+    label: "Mixtral 8 7B",
+  },
+  "MIXTRAL_SMALL": {
+    provider: "bedrock",
+    model: "MIXTRAL_SMALL",
+    label: "Mixtral Small",
+  },
+  "MIXTRAL_LARGE": {
+    provider: "bedrock",
+    model: "MIXTRAL_LARGE",
+    label: "Mixtral Large",
+  },
+}
 
 export const MAX_NB_ASSISTANTS = 5
 
