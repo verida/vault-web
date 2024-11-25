@@ -5,6 +5,8 @@ import {
   AiAssistantFormDataSchema,
   AiPromptBaseSchema,
   AiPromptFormDataSchema,
+  LlmModelSchema,
+  LlmProviderSchema,
   PrivateDataApiV1LLMPersonalResponseSchema,
   PrivateDataApiV1LlmHotloadResponseSchema,
 } from "@/features/assistants/schemas"
@@ -15,6 +17,15 @@ export type AiAssistantHotloadStatus = "idle" | "loading" | "success" | "error"
 export type AiAssistantHotloadResult = {
   status: AiAssistantHotloadStatus
   progress: number
+}
+
+export type LlmProvider = z.infer<typeof LlmProviderSchema>
+export type LlmModel = z.infer<typeof LlmModelSchema>
+
+export type LLMModelDefinition = {
+  provider: LlmProvider
+  model: LlmModel
+  label: string
 }
 
 export type AiAssistantBase = z.infer<typeof AiAssistantBaseSchema>

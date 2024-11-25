@@ -1,5 +1,23 @@
 import { z } from "zod"
 
+export const LLM_PROVIDERS = ["bedrock"] as const
+export const LlmProviderSchema = z.enum(LLM_PROVIDERS)
+
+export const LLM_MODELS = [
+  "LLAMA3.2_3B",
+  "LLAMA3.2_1B",
+  "LLAMA3.1_70B",
+  "LLAMA3.1_8B",
+  "LLAMA3_70B",
+  "LLAMA3_8B",
+  "MIXTRAL_8_7B",
+  "MIXTRAL_SMALL",
+  "MIXTRAL_LARGE",
+] as const
+export const LlmModelSchema = z.enum(LLM_MODELS)
+
+// TODO: Handle the mapping LLM models to providers
+
 export const PrivateDataApiV1LlmHotloadResponseSchema = z.object({
   schema: z.string(),
   status: z.string(),
