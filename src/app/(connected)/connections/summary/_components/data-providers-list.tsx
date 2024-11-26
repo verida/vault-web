@@ -10,15 +10,17 @@ import {
   ErrorBlockDescription,
   ErrorBlockImage,
 } from "@/components/ui/error"
-import { useDataProviders } from "@/features/data-connections/hooks/use-data-providers"
+import { DataProvider } from "@/features/data-connections/types"
 import { cn } from "@/styles/utils"
 
-export type DataProvidersListProps = React.ComponentProps<"div">
+export type DataProvidersListProps = {
+  providers: DataProvider[] | undefined
+  isLoading: boolean
+  isError: boolean
+} & React.ComponentProps<"div">
 
 export function DataProvidersList(props: DataProvidersListProps) {
-  const { className, ...divProps } = props
-
-  const { providers, isLoading, isError } = useDataProviders()
+  const { providers, isLoading, isError, className, ...divProps } = props
 
   if (providers) {
     if (providers.length === 0) {
@@ -26,7 +28,7 @@ export function DataProvidersList(props: DataProvidersListProps) {
         <div className={className} {...divProps}>
           <EmptyState>
             <EmptyStateDescription>
-              There are no available platform at the moment. Come back later.
+              There are no platform at the moment. Come back later.
             </EmptyStateDescription>
           </EmptyState>
         </div>
