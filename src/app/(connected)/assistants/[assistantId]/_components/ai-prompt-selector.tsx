@@ -47,7 +47,7 @@ export function AiPromptSelector(props: AiPromptSelectorProps) {
 
   // TODO: Handle pagination, filter and sort. Link this to the value in the
   // CommandInput and turn the whole Command to a controlled component
-  const { savedAiPrompts } = useGetAiPrompts({
+  const { aiPrompts } = useGetAiPrompts({
     filter: {
       assistantId: selectedAiAssistant,
     },
@@ -88,10 +88,10 @@ export function AiPromptSelector(props: AiPromptSelectorProps) {
         <CommandList>
           <CommandEmpty>No results found</CommandEmpty>
           {featureFlags.assistant.userPrompts.enabled &&
-          savedAiPrompts &&
-          savedAiPrompts.length > 0 ? (
+          aiPrompts &&
+          aiPrompts.length > 0 ? (
             <CommandGroup heading="Saved">
-              {savedAiPrompts.map((savedAiPrompt) => (
+              {aiPrompts.map((savedAiPrompt) => (
                 <AiPromptSelectorItem
                   key={savedAiPrompt._id}
                   label={savedAiPrompt.name ?? savedAiPrompt.prompt}

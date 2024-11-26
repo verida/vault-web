@@ -6,6 +6,7 @@ import React, {
   KeyboardEventHandler,
   useCallback,
   useLayoutEffect,
+  useMemo,
   useRef,
 } from "react"
 import { useMediaQuery } from "usehooks-ts"
@@ -21,8 +22,10 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { featureFlags } from "@/config/features"
+import { MAX_NB_PROMPTS_PER_ASSISTANT } from "@/features/assistants/constants"
 import { useAiPromptDialog } from "@/features/assistants/hooks/use-ai-prompt-dialog"
 import { useAssistants } from "@/features/assistants/hooks/use-assistants"
+import { useGetAiPrompts } from "@/features/assistants/hooks/use-get-ai-prompts"
 import { cn, getMediaQuery } from "@/styles/utils"
 
 export type AssistantUserInputProps = Omit<
@@ -43,6 +46,17 @@ export function AssistantUserInput(props: AssistantUserInputProps) {
   } = useAssistants()
 
   const { openSaveDialog } = useAiPromptDialog()
+  const { aiPrompts } = useGetAiPrompts({
+    filter: {
+      assistantId: selectedAiAssistant,
+    },
+  })
+
+  const isMaxNbPromptsReached = useMemo(
+    () =>
+      aiPrompts ? aiPrompts.length >= MAX_NB_PROMPTS_PER_ASSISTANT : false,
+    [aiPrompts]
+  )
 
   const inputRef = useRef<HTMLTextAreaElement>(null)
 
@@ -126,7 +140,7 @@ export function AssistantUserInput(props: AssistantUserInputProps) {
                     variant="outline"
                     size="icon"
                     className="size-8 sm:size-10"
-                    disabled={!aiPromptInput?.prompt}
+                    disabled={!aiPromptInput?.prompt || isMaxNbPromptsReached}
                     onClick={() => {
                       openSaveDialog({
                         prompt: aiPromptInput?.prompt,
@@ -137,7 +151,11 @@ export function AssistantUserInput(props: AssistantUserInputProps) {
                     <span className="sr-only">Save this prompt</span>
                   </Button>
                 </TooltipTrigger>
-                <TooltipContent>Save this prompt</TooltipContent>
+                <TooltipContent>
+                  {isMaxNbPromptsReached
+                    ? "Maximum number of saved prompts reached"
+                    : "Save this prompt"}
+                </TooltipContent>
               </Tooltip>
             ) : null}
           </div>

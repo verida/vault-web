@@ -1,4 +1,7 @@
-import { AI_PROMPTS_DB_DEF } from "@/features/assistants/constants"
+import {
+  AI_PROMPTS_DB_DEF,
+  MAX_NB_PROMPTS_PER_ASSISTANT,
+} from "@/features/assistants/constants"
 import { AiPromptBaseSchema } from "@/features/assistants/schemas"
 import {
   PrefetchVeridaDataRecordsArgs,
@@ -17,11 +20,14 @@ export function useGetAiPrompts({ filter, options }: UseGetAiPromptsArgs = {}) {
     databaseName: AI_PROMPTS_DB_DEF.databaseVaultName,
     baseSchema: AiPromptBaseSchema,
     filter,
-    options,
+    options: {
+      ...options,
+      limit: options?.limit ?? MAX_NB_PROMPTS_PER_ASSISTANT,
+    },
   })
 
   return {
-    savedAiPrompts: records,
+    aiPrompts: records,
     ...query,
   }
 }

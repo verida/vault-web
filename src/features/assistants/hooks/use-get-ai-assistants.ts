@@ -1,4 +1,7 @@
-import { AI_ASSISTANTS_DB_DEF } from "@/features/assistants/constants"
+import {
+  AI_ASSISTANTS_DB_DEF,
+  MAX_NB_ASSISTANTS,
+} from "@/features/assistants/constants"
 import { AiAssistantBaseSchema } from "@/features/assistants/schemas"
 import {
   PrefetchVeridaDataRecordsArgs,
@@ -20,8 +23,10 @@ export function useGetAiAssistants({
     databaseName: AI_ASSISTANTS_DB_DEF.databaseVaultName,
     baseSchema: AiAssistantBaseSchema,
     filter,
-
-    options,
+    options: {
+      ...options,
+      limit: options?.limit ?? MAX_NB_ASSISTANTS,
+    },
   })
 
   return {
