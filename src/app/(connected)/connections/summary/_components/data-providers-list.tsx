@@ -4,7 +4,11 @@ import {
   DataProviderCard,
   DataProviderSkeletonCard,
 } from "@/app/(connected)/connections/summary/_components/data-provider-card"
-import { EmptyState, EmptyStateDescription } from "@/components/ui/empty-state"
+import {
+  EmptyState,
+  EmptyStateDescription,
+  EmptyStateImage,
+} from "@/components/ui/empty-state"
 import {
   ErrorBlock,
   ErrorBlockDescription,
@@ -27,6 +31,7 @@ export function DataProvidersList(props: DataProvidersListProps) {
       return (
         <div className={className} {...divProps}>
           <EmptyState>
+            <EmptyStateImage />
             <EmptyStateDescription>
               There are no platform at the moment. Come back later.
             </EmptyStateDescription>

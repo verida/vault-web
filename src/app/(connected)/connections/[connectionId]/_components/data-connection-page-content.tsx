@@ -22,7 +22,7 @@ export function DataConnectionPageContent(
 ) {
   const { connection } = props
 
-  const { provider } = useDataProvider(connection.providerId)
+  const { provider, isLoading } = useDataProvider(connection.providerId)
 
   return (
     <PageWrapper
@@ -35,13 +35,15 @@ export function DataConnectionPageContent(
                 {provider.label?.[0]?.toUpperCase()}
               </AvatarFallback>
             </Avatar>
-          ) : (
+          ) : isLoading ? (
             <Skeleton className="size-12 rounded-full" />
-          )}
+          ) : null}
           {provider ? (
             <PageTitle>{provider.label}</PageTitle>
-          ) : (
+          ) : isLoading ? (
             <Skeleton className="h-6 w-32" />
+          ) : (
+            <PageTitle>-</PageTitle>
           )}
         </div>
       }

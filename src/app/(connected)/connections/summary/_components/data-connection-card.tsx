@@ -26,7 +26,9 @@ export type DataConnectionCardProps = {
 export function DataConnectionCard(props: DataConnectionCardProps) {
   const { connection, className, ...cardProps } = props
 
-  const { provider } = useDataProvider(connection.providerId)
+  const { provider, isLoading: isProviderLoading } = useDataProvider(
+    connection.providerId
+  )
 
   const latestSyncEnd = useMemo(() => {
     return getDataConnectionLatestSyncEnd(connection)
@@ -51,8 +53,10 @@ export function DataConnectionCard(props: DataConnectionCardProps) {
           <div className="flex flex-col gap-2">
             {provider?.label ? (
               <Typography variant="heading-4">{provider.label}</Typography>
-            ) : (
+            ) : isProviderLoading ? (
               <Skeleton className="h-6 w-32" />
+            ) : (
+              <Typography variant="heading-4">-</Typography>
             )}
             <Typography variant="base-regular">
               {connection.profile.readableId}
