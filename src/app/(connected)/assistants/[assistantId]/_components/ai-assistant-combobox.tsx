@@ -1,7 +1,7 @@
 "use client"
 
 import { ChevronDownIcon } from "lucide-react"
-import { useCallback, useEffect, useMemo, useState } from "react"
+import { useCallback, useMemo, useState } from "react"
 
 import { AiAssistantSelector } from "@/app/(connected)/assistants/[assistantId]/_components/ai-assistant-selector"
 import { Typography } from "@/components/typography"
@@ -12,7 +12,6 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 import { DEFAULT_ASSISTANT } from "@/features/assistants/constants"
-import { useAssistants } from "@/features/assistants/hooks/use-assistants"
 import { useGetAiAssistants } from "@/features/assistants/hooks/use-get-ai-assistants"
 import { cn } from "@/styles/utils"
 
@@ -25,12 +24,7 @@ export function AiAssistantCombobox(props: AiAssistantComboboxProps) {
 
   const [open, setOpen] = useState(false)
 
-  const { setSelectedAiAssistant } = useAssistants()
   const { aiAssistants } = useGetAiAssistants()
-
-  useEffect(() => {
-    setSelectedAiAssistant(assistantId)
-  }, [assistantId, setSelectedAiAssistant])
 
   const currentAssistant = useMemo(() => {
     return (

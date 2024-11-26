@@ -13,6 +13,7 @@ import AssistantLoadingPage from "@/app/(connected)/assistants/[assistantId]/loa
 import { Typography } from "@/components/typography"
 import { Card } from "@/components/ui/card"
 import { DEFAULT_ASSISTANT } from "@/features/assistants/constants"
+import { useAssistants } from "@/features/assistants/hooks/use-assistants"
 import { useGetAiAssistant } from "@/features/assistants/hooks/use-get-ai-assistant"
 import { useGetAiAssistants } from "@/features/assistants/hooks/use-get-ai-assistants"
 import { getAssistantPageRoute } from "@/features/routes/utils"
@@ -33,6 +34,12 @@ export default function AssistantPage(props: AssistantPageProps) {
   const fromDeletion = searchParams.get("fromDeletion") === "true"
 
   const router = useRouter()
+
+  const { setSelectedAiAssistant } = useAssistants()
+
+  useEffect(() => {
+    setSelectedAiAssistant(assistantId)
+  }, [assistantId, setSelectedAiAssistant])
 
   const { aiAssistant, isLoading: isLoadingAiAssistant } = useGetAiAssistant(
     {
