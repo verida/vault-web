@@ -1965,10 +1965,15 @@
     "@sentry/utils" "8.38.0"
     hoist-non-react-statics "^3.3.2"
 
-"@sentry/types@8.38.0", "@sentry/types@^8.37.1":
+"@sentry/types@8.38.0":
   version "8.38.0"
   resolved "https://registry.yarnpkg.com/@sentry/types/-/types-8.38.0.tgz#9c48734a8b4055bfd553a0141efec78e9680ed09"
   integrity sha512-fP5H9ZX01W4Z/EYctk3mkSHi7d06cLcX2/UWqwdWbyPWI+pL2QpUPICeO/C+8SnmYx//wFj3qWDhyPCh1PdFAA==
+
+"@sentry/types@^8.40.0":
+  version "8.40.0"
+  resolved "https://registry.yarnpkg.com/@sentry/types/-/types-8.40.0.tgz#a98d2bcc48adbc066b403713688ded3ac5eb1cec"
+  integrity sha512-nuCf3U3deolPM9BjNnwCc33UtFl9ec15/r74ngAkNccn+A2JXdIAsDkGJMO/9mgSFykLe1QyeJ0pQFRisCGOiA==
 
 "@sentry/utils@8.38.0":
   version "8.38.0"
@@ -2160,10 +2165,10 @@
   resolved "https://registry.yarnpkg.com/@tanstack/query-core/-/query-core-5.60.5.tgz#37b7c5ab7e6894cea9ef341299a7a3febc2ea361"
   integrity sha512-jiS1aC3XI3BJp83ZiTuDLerTmn9P3U95r6p+6/SNauLJaYxfIC4dMuWygwnBHIZxjn2zJqEpj3nysmPieoxfPQ==
 
-"@tanstack/query-devtools@5.59.20":
-  version "5.59.20"
-  resolved "https://registry.yarnpkg.com/@tanstack/query-devtools/-/query-devtools-5.59.20.tgz#a827ac682ec1268fc9c99e7b6eb739f35b5606aa"
-  integrity sha512-vxhuQ+8VV4YWQSFxQLsuM+dnEKRY7VeRzpNabFXdhEwsBYLrjXlF1pM38A8WyKNLqZy8JjyRO8oP4Wd/oKHwuQ==
+"@tanstack/query-devtools@5.61.3":
+  version "5.61.3"
+  resolved "https://registry.yarnpkg.com/@tanstack/query-devtools/-/query-devtools-5.61.3.tgz#56d4fd00692323ad6977ad5874fad6f7b27d3928"
+  integrity sha512-AoRco+DMw7Xy9fFs+5BxBop82YPKs1/tWpTPoO1iYVwPLmAU+znnLfWyZ8Qr5OiEqoS0dCyEe6F5V11/JkCK/A==
 
 "@tanstack/query-persist-client-core@5.60.5":
   version "5.60.5"
@@ -2180,12 +2185,12 @@
     "@tanstack/query-core" "5.60.5"
     "@tanstack/query-persist-client-core" "5.60.5"
 
-"@tanstack/react-query-devtools@^5.60.5":
-  version "5.60.5"
-  resolved "https://registry.yarnpkg.com/@tanstack/react-query-devtools/-/react-query-devtools-5.60.5.tgz#fe398b4896a292fbe835d3fd4799e929de94c25a"
-  integrity sha512-lzANl0ih3CNKBGUoXhhkAAHI1Y4Yqs9Jf3iuTUsGiPpmF0RWXTeYFaQxc+h1PhJz3VwYrIYCwmPoNts0mSjSuA==
+"@tanstack/react-query-devtools@^5.61.3":
+  version "5.61.3"
+  resolved "https://registry.yarnpkg.com/@tanstack/react-query-devtools/-/react-query-devtools-5.61.3.tgz#a748e2eae43441a44723b444dc9623ba58385a27"
+  integrity sha512-bR/TaiOSqTq0M5dmYY+pJeSnl5QAuCaRRmJg+Q5hEqt6uTHgKz5WO4jdi8BywRJiZhpXLirlUAIOXJsZ8ukqSA==
   dependencies:
-    "@tanstack/query-devtools" "5.59.20"
+    "@tanstack/query-devtools" "5.61.3"
 
 "@tanstack/react-query-persist-client@^5.60.5":
   version "5.60.5"
@@ -2294,10 +2299,10 @@
   dependencies:
     undici-types "~6.19.2"
 
-"@types/node@^18.15.11", "@types/node@^18.19.64":
-  version "18.19.64"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.19.64.tgz#122897fb79f2a9ec9c979bded01c11461b2b1478"
-  integrity sha512-955mDqvO2vFf/oL7V3WiUtiz+BugyX8uVbaT2H8oj3+8dRyH2FLiNdowe7eNqRM7IOIZvzDH76EoAT+gwm6aIQ==
+"@types/node@^18.15.11", "@types/node@^18.19.66":
+  version "18.19.66"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.19.66.tgz#0937a47904ceba5994eedf5cf4b6d503d8d6136c"
+  integrity sha512-14HmtUdGxFUalGRfLLn9Gc1oNWvWh5zNbsyOLo5JV6WARSeN1QcEBKRnZm9QqNfrutgsl/hY4eJW63aZ44aBCg==
   dependencies:
     undici-types "~5.26.4"
 
@@ -6766,10 +6771,10 @@ prettier-linter-helpers@^1.0.0:
   dependencies:
     fast-diff "^1.1.2"
 
-prettier-plugin-tailwindcss@^0.6.8:
-  version "0.6.8"
-  resolved "https://registry.yarnpkg.com/prettier-plugin-tailwindcss/-/prettier-plugin-tailwindcss-0.6.8.tgz#8a178e1679e3f941cc9de396f109c6cffea676d8"
-  integrity sha512-dGu3kdm7SXPkiW4nzeWKCl3uoImdd5CTZEJGxyypEPL37Wj0HT2pLqjrvSei1nTeuQfO4PUfjeW5cTUNRLZ4sA==
+prettier-plugin-tailwindcss@^0.6.9:
+  version "0.6.9"
+  resolved "https://registry.yarnpkg.com/prettier-plugin-tailwindcss/-/prettier-plugin-tailwindcss-0.6.9.tgz#db84c32918eae9b44e5a5f0aa4d1249cc39fa739"
+  integrity sha512-r0i3uhaZAXYP0At5xGfJH876W3HHGHDp+LCRUJrs57PBeQ6mYHMwr25KH8NPX44F2yGTvdnH7OqCshlQx183Eg==
 
 prettier@^3.3.3:
   version "3.3.3"
@@ -7773,10 +7778,10 @@ typed-array-length@^1.0.6:
     is-typed-array "^1.1.13"
     possible-typed-array-names "^1.0.0"
 
-typescript@^5.6.3:
-  version "5.6.3"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.6.3.tgz#5f3449e31c9d94febb17de03cc081dd56d81db5b"
-  integrity sha512-hjcS1mhfuyi4WW8IWtjP7brDrG2cuDZukyrYrSauoXGNgx0S7zceP07adYkJycEr56BOUTNPzbInooiN3fn1qw==
+typescript@^5.7.2:
+  version "5.7.2"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.7.2.tgz#3169cf8c4c8a828cde53ba9ecb3d2b1d5dd67be6"
+  integrity sha512-i5t66RHxDvVN40HfDd1PsEThGNnlMCMT3jMUuoh9/0TaqWevNontacunWyN02LA9/fIbEWlcHZcgTKb9QoaLfg==
 
 uint8arrays@^3.0.0:
   version "3.1.1"
