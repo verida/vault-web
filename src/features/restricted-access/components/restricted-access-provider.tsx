@@ -1,7 +1,7 @@
 "use client"
 
 import { useQuery } from "@tanstack/react-query"
-import { useMemo } from "react"
+import { useEffect, useMemo, useState } from "react"
 
 import {
   RestrictedAccessContext,
@@ -20,6 +20,8 @@ export function RestrictedAccessProvider(props: RestrictedAccessProviderProps) {
 
   const { did } = useVerida()
 
+  const [persist, setPersist] = useState(false)
+
   const { data, isLoading } = useQuery({
     queryKey: ["restricted-access", "status", did],
     queryFn: async (): Promise<RestrictedAccessStatus> => {
@@ -31,10 +33,15 @@ export function RestrictedAccessProvider(props: RestrictedAccessProviderProps) {
     enabled: !!did,
     staleTime: 1000 * 60 * 10, // 10 minutes
     meta: {
+      persist,
       logCategory: "restricted-access",
       errorMessage: "Failed to get user access",
     },
   })
+
+  useEffect(() => {
+    setPersist(data === "allowed")
+  }, [data])
 
   const value: RestrictedAccessContextValue = useMemo(
     () => ({
