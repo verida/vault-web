@@ -66,11 +66,11 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@sentry/types": "^8.37.1",
+    "@sentry/types": "^8.40.0",
     "@tailwindcss/typography": "^0.5.15",
-    "@tanstack/react-query-devtools": "^5.60.5",
+    "@tanstack/react-query-devtools": "^5.61.3",
     "@trivago/prettier-plugin-sort-imports": "^4.3.0",
-    "@types/node": "^18.19.64",
+    "@types/node": "^18.19.66",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
     "@types/react-transition-group": "^4.4.11",
@@ -85,10 +85,10 @@
     "genversion": "^3.2.0",
     "postcss": "^8.4.49",
     "prettier": "^3.3.3",
-    "prettier-plugin-tailwindcss": "^0.6.8",
+    "prettier-plugin-tailwindcss": "^0.6.9",
     "tailwindcss": "^3.4.15",
     "tailwindcss-animate": "^1.0.7",
-    "typescript": "^5.6.3"
+    "typescript": "^5.7.2"
   },
   "resolutions": {
     "qrcode-with-logos": "1.0.3",
