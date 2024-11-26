@@ -6,6 +6,7 @@ import { Toaster } from "@/components/ui/toaster"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import { DataConnectionsBroadcastProvider } from "@/features/data-connections/components/data-connections-broadcast-provider"
 import { QueriesProvider } from "@/features/queries/queries-provider"
+import { RestrictedAccessProvider } from "@/features/restricted-access/components/restricted-access-provider"
 import { ThemesProvider } from "@/features/themes/themes-provider"
 import { VeridaProvider } from "@/features/verida/components/verida-provider"
 
@@ -24,9 +25,11 @@ export function RootProviders(props: RootProvidersProps) {
         <TooltipProvider>
           <QueriesProvider>
             <VeridaProvider>
-              <DataConnectionsBroadcastProvider>
-                {children}
-              </DataConnectionsBroadcastProvider>
+              <RestrictedAccessProvider>
+                <DataConnectionsBroadcastProvider>
+                  {children}
+                </DataConnectionsBroadcastProvider>
+              </RestrictedAccessProvider>
             </VeridaProvider>
           </QueriesProvider>
           <Toaster />

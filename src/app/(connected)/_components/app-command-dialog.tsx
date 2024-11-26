@@ -42,7 +42,7 @@ import { DEFAULT_SELECTED_SEARCH_TYPES } from "@/features/data-search/constants"
 import { SearchDataResult, SearchType } from "@/features/data-search/types"
 import { useSearchData } from "@/features/data-search/use-search-data"
 import { USER_DATABASE_DEFS } from "@/features/data/constants"
-import { useRestrictedAccess } from "@/features/restricted-access/use-restricted-access"
+import { useRestrictedAccess } from "@/features/restricted-access/hooks/use-restricted-access"
 import { getDatabaseItemPageRoute } from "@/features/routes/utils"
 import { cn } from "@/styles/utils"
 
