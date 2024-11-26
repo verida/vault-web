@@ -1,22 +1,23 @@
-import { QueryClient } from "@tanstack/react-query"
-
 import { AI_PROMPTS_DB_DEF } from "@/features/assistants/constants"
 import { AiPromptBaseSchema } from "@/features/assistants/schemas"
 import {
+  PrefetchVeridaDataRecordsArgs,
+  UseVeridaDataRecordsArgs,
   prefetchVeridaDataRecords,
   useVeridaDataRecords,
 } from "@/features/verida-database/hooks/use-verida-data-records"
 
-export function useGetAiPrompts(assistantId?: string) {
+type UseGetAiPromptsArgs = Pick<
+  UseVeridaDataRecordsArgs<typeof AiPromptBaseSchema>,
+  "filter" | "options"
+>
+
+export function useGetAiPrompts({ filter, options }: UseGetAiPromptsArgs = {}) {
   const { records, ...query } = useVeridaDataRecords({
     databaseName: AI_PROMPTS_DB_DEF.databaseVaultName,
     baseSchema: AiPromptBaseSchema,
-    filter: assistantId
-      ? {
-          assistantId,
-        }
-      : undefined,
-    // TODO: Handle pagination
+    filter,
+    options,
   })
 
   return {
@@ -25,18 +26,17 @@ export function useGetAiPrompts(assistantId?: string) {
   }
 }
 
-type PrefetchGetAiPromptsArgs = {
-  queryClient: QueryClient
-  did: string
-  sessionToken: string
-  assistantId?: string
-}
+type PrefetchGetAiPromptsArgs = Omit<
+  PrefetchVeridaDataRecordsArgs<typeof AiPromptBaseSchema>,
+  "databaseName" | "baseSchema"
+>
 
 export async function prefetchGetAiPrompts({
   queryClient,
   did,
   sessionToken,
-  assistantId,
+  filter,
+  options,
 }: PrefetchGetAiPromptsArgs) {
   await prefetchVeridaDataRecords({
     queryClient,
@@ -44,11 +44,7 @@ export async function prefetchGetAiPrompts({
     sessionToken,
     databaseName: AI_PROMPTS_DB_DEF.databaseVaultName,
     baseSchema: AiPromptBaseSchema,
-    filter: assistantId
-      ? {
-          assistantId,
-        }
-      : undefined,
-    // TODO: Set pagination
+    filter,
+    options,
   })
 }

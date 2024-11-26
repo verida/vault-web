@@ -1,17 +1,27 @@
-import { QueryClient } from "@tanstack/react-query"
-
 import { AI_ASSISTANTS_DB_DEF } from "@/features/assistants/constants"
 import { AiAssistantBaseSchema } from "@/features/assistants/schemas"
 import {
+  PrefetchVeridaDataRecordsArgs,
+  UseVeridaDataRecordsArgs,
   prefetchVeridaDataRecords,
   useVeridaDataRecords,
 } from "@/features/verida-database/hooks/use-verida-data-records"
 
-export function useGetAiAssistants() {
+type UseGetAiAssistantsArgs = Pick<
+  UseVeridaDataRecordsArgs<typeof AiAssistantBaseSchema>,
+  "filter" | "options"
+>
+
+export function useGetAiAssistants({
+  filter,
+  options,
+}: UseGetAiAssistantsArgs = {}) {
   const { records, ...query } = useVeridaDataRecords({
     databaseName: AI_ASSISTANTS_DB_DEF.databaseVaultName,
-    // TODO: Handle pagination
     baseSchema: AiAssistantBaseSchema,
+    filter,
+
+    options,
   })
 
   return {
@@ -20,23 +30,25 @@ export function useGetAiAssistants() {
   }
 }
 
-type PrefetchAiAssistantsArgs = {
-  queryClient: QueryClient
-  did: string
-  sessionToken: string
-}
+type PrefetchAiAssistantsArgs = Omit<
+  PrefetchVeridaDataRecordsArgs<typeof AiAssistantBaseSchema>,
+  "databaseName" | "baseSchema"
+>
 
 export async function prefetchAiAssistants({
   queryClient,
   did,
   sessionToken,
+  filter,
+  options,
 }: PrefetchAiAssistantsArgs) {
   await prefetchVeridaDataRecords({
     queryClient,
     did,
     sessionToken,
     databaseName: AI_ASSISTANTS_DB_DEF.databaseVaultName,
-    // TODO: Set pagination
     baseSchema: AiAssistantBaseSchema,
+    filter,
+    options,
   })
 }

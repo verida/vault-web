@@ -47,7 +47,11 @@ export function AiPromptSelector(props: AiPromptSelectorProps) {
 
   // TODO: Handle pagination, filter and sort. Link this to the value in the
   // CommandInput and turn the whole Command to a controlled component
-  const { savedAiPrompts } = useGetAiPrompts(selectedAiAssistant)
+  const { savedAiPrompts } = useGetAiPrompts({
+    filter: {
+      assistantId: selectedAiAssistant,
+    },
+  })
 
   const handleItemClick = useCallback(
     async (input: AiPromptInput) => {
