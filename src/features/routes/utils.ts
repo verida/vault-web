@@ -12,10 +12,12 @@ export function getAssistantsPageRoute() {
 
 export function getAssistantPageRoute({
   assistantId,
+  fromDeletion,
 }: {
   assistantId: string
+  fromDeletion?: boolean
 }) {
-  return `/assistants/${assistantId}`
+  return `/assistants/${assistantId}${fromDeletion ? "?fromDeletion=true" : ""}`
 }
 
 export function getInboxPageRoute() {
