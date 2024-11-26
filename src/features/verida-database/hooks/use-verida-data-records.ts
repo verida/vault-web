@@ -1,6 +1,7 @@
 import { QueryClient, useQuery, useQueryClient } from "@tanstack/react-query"
 import { z } from "zod"
 
+import { UseQueryOptions } from "@/features/queries/types"
 import { Logger } from "@/features/telemetry"
 import { VeridaDatabaseQueryKeys } from "@/features/verida-database/queries"
 import {
@@ -12,7 +13,7 @@ import { useVerida } from "@/features/verida/hooks/use-verida"
 
 const logger = Logger.create("verida-database")
 
-type UseVeridaDataRecordsArgs<T extends z.ZodObject<any>> = {
+export type UseVeridaDataRecordsArgs<T extends z.ZodObject<any>> = {
   databaseName: string
   filter?: VeridaDatabaseQueryFilter<z.infer<T>>
   options?: VeridaDatabaseQueryOptions<z.infer<T>>
@@ -27,14 +28,13 @@ type UseVeridaDataRecordsArgs<T extends z.ZodObject<any>> = {
  * @param params.filter - Optional query filter to apply to the records
  * @param params.options - Optional query parameters (sort, limit, skip)
  * @param params.baseSchema - Optional base schema to extend the records with
+ * @param queryOptions - Query options
  * @returns Query result object containing data, loading state, and error state
  */
-export function useVeridaDataRecords<T extends z.ZodObject<any>>({
-  databaseName,
-  filter,
-  options,
-  baseSchema,
-}: UseVeridaDataRecordsArgs<T>) {
+export function useVeridaDataRecords<T extends z.ZodObject<any>>(
+  { databaseName, filter, options, baseSchema }: UseVeridaDataRecordsArgs<T>,
+  queryOptions?: UseQueryOptions
+) {
   const { did, getAccountSessionToken } = useVerida()
 
   const queryClient = useQueryClient()
@@ -70,8 +70,9 @@ export function useVeridaDataRecords<T extends z.ZodObject<any>>({
 
       return result
     },
-    staleTime: 1000 * 60 * 1, // 1 minute
-    gcTime: 1000 * 60 * 30, // 30 minutes
+    enabled: queryOptions?.enabled,
+    staleTime: queryOptions?.staleTime ?? 1000 * 60 * 1, // 1 minute
+    gcTime: queryOptions?.gcTime ?? 1000 * 60 * 30, // 30 minutes
     meta: {
       logCategory: "verida-database",
       errorMessage: "Error fetching Verida data records",
