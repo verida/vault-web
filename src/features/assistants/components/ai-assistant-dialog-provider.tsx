@@ -106,6 +106,7 @@ export function AiAssistantDialogProvider(
     router.push(
       getAssistantPageRoute({
         assistantId: nextAssistantId,
+        fromDeletion: true,
       })
     )
   }, [
