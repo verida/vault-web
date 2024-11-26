@@ -76,6 +76,7 @@ function ProviderSelectionItem(props: ProviderSelectionItemProps) {
         "h-auto w-full whitespace-normal rounded-lg p-4 pr-3",
         className
       )}
+      disabled={provider.status !== "active"}
       {...buttonProps}
     >
       <div className="flex w-full flex-row items-center gap-3">
@@ -93,7 +94,12 @@ function ProviderSelectionItem(props: ProviderSelectionItemProps) {
             </Typography>
           </div>
         </div>
-        <ChevronRight className="shrink-0 text-muted-foreground" />
+        <ChevronRight
+          className={cn(
+            "shrink-0 text-muted-foreground",
+            provider.status !== "active" ? "opacity-0" : "opacity-100"
+          )}
+        />
       </div>
     </Button>
   )
