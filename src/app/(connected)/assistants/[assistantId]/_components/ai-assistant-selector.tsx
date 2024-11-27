@@ -223,6 +223,7 @@ export function AiAssistantSelector(props: AiAssistantSelectorProps) {
                     <AiAssistantSelectorItem
                       key={aiAssistant._id}
                       assistant={aiAssistant}
+                      sortable={aiAssistants.length > 1}
                       isCurrentAssistant={
                         currentAssistantId === aiAssistant._id
                       }
@@ -275,6 +276,7 @@ export function AiAssistantSelector(props: AiAssistantSelectorProps) {
 AiAssistantSelector.displayName = "AiAssistantSelector"
 
 type AiAssistantSelectorItemProps = {
+  sortable?: boolean
   assistant: AiAssistantRecord
   isCurrentAssistant?: boolean
   onSelect?: () => void
@@ -282,7 +284,8 @@ type AiAssistantSelectorItemProps = {
 }
 
 function AiAssistantSelectorItem(props: AiAssistantSelectorItemProps) {
-  const { assistant, isCurrentAssistant, onSelect, onEditClick } = props
+  const { assistant, isCurrentAssistant, onSelect, onEditClick, sortable } =
+    props
 
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id: assistant._id })
@@ -303,18 +306,17 @@ function AiAssistantSelectorItem(props: AiAssistantSelectorItemProps) {
     >
       <div className="flex flex-row items-center gap-2">
         <div className="flex min-w-0 flex-1 flex-row items-center gap-2">
-          <div {...listeners} className="cursor-grab">
-            <GripVertical className="mr-0 size-4 text-muted-foreground" />
-          </div>
+          {sortable ? (
+            <div {...listeners} className="shrink-0 cursor-grab">
+              <GripVertical className="size-4 text-muted-foreground" />
+            </div>
+          ) : null}
           <Typography variant="base-regular" className="truncate">
             {assistant.name}
           </Typography>
-          <CheckIcon
-            className={cn(
-              "size-4 shrink-0 text-muted-foreground",
-              isCurrentAssistant ? "opacity-100" : "opacity-0"
-            )}
-          />
+          {isCurrentAssistant ? (
+            <CheckIcon className="size-4 shrink-0 text-muted-foreground" />
+          ) : null}
         </div>
         {onEditClick ? (
           <div className="flex shrink-0 flex-row items-center gap-1">
