@@ -1,3 +1,5 @@
+import { useMemo } from "react"
+
 import {
   AI_PROMPTS_DB_DEF,
   MAX_NB_PROMPTS_PER_ASSISTANT,
@@ -26,8 +28,32 @@ export function useGetAiPrompts({ filter, options }: UseGetAiPromptsArgs = {}) {
     },
   })
 
+  const sortedRecords = useMemo(() => {
+    return records?.sort((a, b) => {
+      // Sort by order first if both have order defined
+      if (a.order !== undefined && b.order !== undefined) {
+        return a.order - b.order
+      }
+      // Put records with order before those without
+      if (a.order !== undefined) return -1
+      if (b.order !== undefined) return 1
+
+      // Fall back to insertedAt if both exist
+      if (a.insertedAt && b.insertedAt) {
+        return (
+          new Date(b.insertedAt).getTime() - new Date(a.insertedAt).getTime()
+        )
+      }
+      // Put records with insertedAt before those without
+      if (a.insertedAt) return -1
+      if (b.insertedAt) return 1
+
+      return 0
+    })
+  }, [records])
+
   return {
-    aiPrompts: records,
+    aiPrompts: sortedRecords,
     ...query,
   }
 }
