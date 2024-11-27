@@ -39,6 +39,7 @@ import {
 } from "@/components/ui/tooltip"
 import {
   DEFAULT_ASSISTANT,
+  DEFAULT_ASSISTANT_ORDER,
   MAX_NB_ASSISTANTS,
 } from "@/features/assistants/constants"
 import { useAiAssistantDialog } from "@/features/assistants/hooks/use-ai-assistant-dialog"
@@ -163,14 +164,14 @@ export function AiAssistantSelector(props: AiAssistantSelectorProps) {
         // Both neighbors have order - set as average
         newOrder = (prevAssistant.order + nextAssistant.order) / 2
       } else if (prevAssistant?.order !== undefined) {
-        // Only previous has order - add 100
-        newOrder = prevAssistant.order + 100
+        // Only previous has order - add DEFAULT_ASSISTANT_ORDER
+        newOrder = prevAssistant.order + DEFAULT_ASSISTANT_ORDER
       } else if (nextAssistant?.order !== undefined) {
-        // Only next has order - subtract 100
-        newOrder = nextAssistant.order - 100
+        // Only next has order - subtract DEFAULT_ASSISTANT_ORDER
+        newOrder = nextAssistant.order - DEFAULT_ASSISTANT_ORDER
       } else {
-        // Neither has order - start at 100 * position
-        newOrder = (newIndex + 1) * 100
+        // Neither has order - start at DEFAULT_ASSISTANT_ORDER * position
+        newOrder = (newIndex + 1) * DEFAULT_ASSISTANT_ORDER
       }
 
       try {

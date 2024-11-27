@@ -57,6 +57,9 @@ export const LLM_MODEL_DEFS: Record<LlmModel, LLMModelDefinition> = {
 export const MAX_NB_ASSISTANTS = 5
 export const MAX_NB_PROMPTS_PER_ASSISTANT = 20
 
+export const DEFAULT_ASSISTANT_ORDER = 100
+export const DEFAULT_PROMPT_ORDER = 100
+
 export const AI_ASSISTANTS_DB_DEF: DatabaseDefinition = {
   id: "ai-assistants",
   type: "technical",

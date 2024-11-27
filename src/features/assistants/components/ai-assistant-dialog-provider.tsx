@@ -4,7 +4,10 @@ import { useRouter } from "next/navigation"
 import { useCallback, useMemo, useState } from "react"
 
 import { ManageAiAssistantDialog } from "@/features/assistants/components/manage-ai-assistant-dialog"
-import { DEFAULT_ASSISTANT } from "@/features/assistants/constants"
+import {
+  DEFAULT_ASSISTANT,
+  DEFAULT_ASSISTANT_ORDER,
+} from "@/features/assistants/constants"
 import {
   AiAssistantDialogContext,
   AiAssistantDialogContextType,
@@ -74,7 +77,10 @@ export function AiAssistantDialogProvider(
       if (dialogState.type === "create") {
         const newAssistantRecord = await createAiAssistantAsync({
           ...data,
-          order: aiAssistants ? aiAssistants.length * 100 : 100,
+          order: aiAssistants
+            ? Math.max(...aiAssistants.map((a) => a.order ?? 0), 0) +
+              DEFAULT_ASSISTANT_ORDER
+            : DEFAULT_ASSISTANT_ORDER,
         })
         router.push(
           getAssistantPageRoute({ assistantId: newAssistantRecord._id })

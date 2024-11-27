@@ -36,7 +36,10 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { featureFlags } from "@/config/features"
-import { SUGGESTED_PROMPTS } from "@/features/assistants/constants"
+import {
+  DEFAULT_PROMPT_ORDER,
+  SUGGESTED_PROMPTS,
+} from "@/features/assistants/constants"
 import { useAiPromptDialog } from "@/features/assistants/hooks/use-ai-prompt-dialog"
 import { useAssistants } from "@/features/assistants/hooks/use-assistants"
 import { useGetAiPrompts } from "@/features/assistants/hooks/use-get-ai-prompts"
@@ -143,14 +146,14 @@ export function AiPromptSelector(props: AiPromptSelectorProps) {
         // Both neighbors have order - set as average
         newOrder = (prevPrompt.order + nextPrompt.order) / 2
       } else if (prevPrompt?.order !== undefined) {
-        // Only previous has order - add 100
-        newOrder = prevPrompt.order + 100
+        // Only previous has order - add DEFAULT_PROMPT_ORDER
+        newOrder = prevPrompt.order + DEFAULT_PROMPT_ORDER
       } else if (nextPrompt?.order !== undefined) {
-        // Only next has order - subtract 100
-        newOrder = nextPrompt.order - 100
+        // Only next has order - subtract DEFAULT_PROMPT_ORDER
+        newOrder = nextPrompt.order - DEFAULT_PROMPT_ORDER
       } else {
-        // Neither has order - start at 100 * position
-        newOrder = (newIndex + 1) * 100
+        // Neither has order - start at DEFAULT_PROMPT_ORDER * position
+        newOrder = (newIndex + 1) * DEFAULT_PROMPT_ORDER
       }
 
       try {
