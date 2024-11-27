@@ -1,8 +1,8 @@
 import {
   AiAssistantRecord,
+  AiPromptRecord,
   LLMModelDefinition,
   LlmModel,
-  SuggestedAiPromptInput,
 } from "@/features/assistants/types"
 import { DatabaseDefinition } from "@/features/data/types"
 
@@ -86,24 +86,32 @@ export const DEFAULT_ASSISTANT: AiAssistantRecord = {
   name: "Kyra",
 }
 
-export const SUGGESTED_PROMPTS: SuggestedAiPromptInput[] = [
+export const SUGGESTED_PROMPTS: AiPromptRecord[] = [
   {
-    label: "What do I have to focus on today?",
+    _id: "1",
+    assistantId: "new",
+    name: "What do I have to focus on today?",
     prompt:
       "You are a personal assistant. Create an agenda of what I need to focus on today by looking at my emails, calendar and messages.",
   },
   {
-    label: "Summarize my latest emails",
+    _id: "2",
+    assistantId: "new",
+    name: "Summarize my latest emails",
     prompt:
       "Summarize the last 24 hours of emails and messages I have received",
   },
   {
-    label: "Create an agenda for my upcoming meeting",
+    _id: "3",
+    assistantId: "new",
+    name: "Create an agenda for my upcoming meeting",
     prompt:
       "Summarize recent conversations and prepare a draft agenda for my upcoming meeting with from",
   },
   {
-    label: "How much have I spent on amazon last month?",
+    _id: "4",
+    assistantId: "new",
+    name: "How much have I spent on amazon last month?",
     prompt: "How much have I spent on amazon last month?",
   },
 ]

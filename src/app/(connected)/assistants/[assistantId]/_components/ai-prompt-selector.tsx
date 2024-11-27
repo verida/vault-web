@@ -24,7 +24,7 @@ import { SUGGESTED_PROMPTS } from "@/features/assistants/constants"
 import { useAiPromptDialog } from "@/features/assistants/hooks/use-ai-prompt-dialog"
 import { useAssistants } from "@/features/assistants/hooks/use-assistants"
 import { useGetAiPrompts } from "@/features/assistants/hooks/use-get-ai-prompts"
-import { AiPromptInput } from "@/features/assistants/types"
+import { AiPromptInput, AiPromptRecord } from "@/features/assistants/types"
 import { cn } from "@/styles/utils"
 
 export type AiPromptSelectorProps = {
@@ -94,8 +94,7 @@ export function AiPromptSelector(props: AiPromptSelectorProps) {
               {aiPrompts.map((savedAiPrompt) => (
                 <AiPromptSelectorItem
                   key={savedAiPrompt._id}
-                  label={savedAiPrompt.name ?? savedAiPrompt.prompt}
-                  prompt={savedAiPrompt.prompt}
+                  aiPrompt={savedAiPrompt}
                   onSelect={() => {
                     handleItemClick({
                       assistantId: selectedAiAssistant,
@@ -133,21 +132,20 @@ export function AiPromptSelector(props: AiPromptSelectorProps) {
             </CommandGroup>
           ) : null}
           <CommandGroup heading="Suggested by Verida">
-            {SUGGESTED_PROMPTS.map((suggestedInput, index) => (
+            {SUGGESTED_PROMPTS.map((suggestedPrompt, index) => (
               <AiPromptSelectorItem
                 key={index}
-                label={suggestedInput.label}
-                prompt={suggestedInput.prompt}
+                aiPrompt={suggestedPrompt}
                 onSelect={() => {
                   handleItemClick({
                     assistantId: selectedAiAssistant,
-                    prompt: suggestedInput.prompt,
+                    prompt: suggestedPrompt.prompt,
                   })
                 }}
                 onClickSetPrompt={() => {
                   handleSetPromptClick({
                     assistantId: selectedAiAssistant,
-                    prompt: suggestedInput.prompt,
+                    prompt: suggestedPrompt.prompt,
                   })
                 }}
               />
@@ -161,26 +159,25 @@ export function AiPromptSelector(props: AiPromptSelectorProps) {
 AiPromptSelector.displayName = "AiPromptSelector"
 
 type AiPromptSelectorItemProps = {
-  label: string
-  prompt: string
+  aiPrompt: AiPromptRecord
   onSelect: () => void
   onClickSetPrompt: () => void
   additionalActions?: React.ReactNode
 }
 
 function AiPromptSelectorItem(props: AiPromptSelectorItemProps) {
-  const { label, prompt, onSelect, onClickSetPrompt, additionalActions } = props
+  const { aiPrompt, onSelect, onClickSetPrompt, additionalActions } = props
 
   return (
     <CommandItem
-      value={prompt}
+      value={aiPrompt.prompt}
       onSelect={onSelect}
       className="cursor-pointer py-1 pl-2 pr-1"
     >
       <div className="flex flex-row items-center gap-2">
-        <div className="min-w-0 flex-1">
+        <div className="flex min-w-0 flex-1 flex-row items-center gap-2">
           <Typography variant="base-regular" className="truncate">
-            {label}
+            {aiPrompt.name}
           </Typography>
         </div>
         <div className="flex shrink-0 flex-row items-center gap-1">
