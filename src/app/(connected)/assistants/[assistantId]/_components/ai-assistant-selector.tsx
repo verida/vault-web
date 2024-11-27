@@ -1,6 +1,22 @@
 "use client"
 
-import { CheckIcon } from "lucide-react"
+import {
+  DndContext,
+  DragEndEvent,
+  KeyboardSensor,
+  PointerSensor,
+  closestCenter,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core"
+import {
+  SortableContext,
+  sortableKeyboardCoordinates,
+  useSortable,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable"
+import { CSS } from "@dnd-kit/utilities"
+import { CheckIcon, GripVertical } from "lucide-react"
 import { useRouter } from "next/navigation"
 import React, { useCallback, useMemo, useState } from "react"
 
@@ -33,6 +49,7 @@ import {
 } from "@/features/assistants/types"
 import { getAssistantPageRoute } from "@/features/routes/utils"
 import { cn } from "@/styles/utils"
+import { moveItemInArray } from "@/utils/misc"
 
 export type AiAssistantSelectorProps = {
   currentAssistantId?: string
@@ -52,6 +69,13 @@ export function AiAssistantSelector(props: AiAssistantSelectorProps) {
     hideSearch = false,
     ...divProps
   } = props
+
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  )
 
   const router = useRouter()
 
@@ -88,6 +112,41 @@ export function AiAssistantSelector(props: AiAssistantSelectorProps) {
     setSearchValue("")
   }, [setSearchValue])
 
+  const sortedAiAssistantIds = useMemo(() => {
+    return aiAssistants
+      ? aiAssistants.map((aiAssistant) => ({
+          id: aiAssistant._id,
+        }))
+      : []
+  }, [aiAssistants])
+
+  const handleDragEnd = useCallback(
+    (event: DragEndEvent) => {
+      if (!aiAssistants) {
+        return
+      }
+
+      const { active, over } = event
+      console.debug("drag end", { active, over })
+
+      if (active.id === over?.id) {
+        return
+      }
+
+      const oldIndex = aiAssistants.findIndex(
+        (aiAssistant) => aiAssistant._id === active.id
+      )
+      const newIndex = aiAssistants.findIndex(
+        (aiAssistant) => aiAssistant._id === over?.id
+      )
+
+      const newAiAssistants = moveItemInArray(aiAssistants, oldIndex, newIndex)
+
+      // TODO: Update order in DB
+    },
+    [aiAssistants]
+  )
+
   const isMaxNbAssistantsReached = useMemo(() => {
     return aiAssistants ? aiAssistants?.length >= MAX_NB_ASSISTANTS : false
   }, [aiAssistants])
@@ -110,19 +169,32 @@ export function AiAssistantSelector(props: AiAssistantSelectorProps) {
           <CommandEmpty>No results found</CommandEmpty>
           {aiAssistants && aiAssistants.length > 0 ? (
             <CommandGroup heading="Your assistants" className="p-2">
-              {aiAssistants?.map((aiAssistant) => (
-                <AiAssistantSelectorItem
-                  key={aiAssistant._id}
-                  assistant={aiAssistant}
-                  isCurrentAssistant={currentAssistantId === aiAssistant._id}
-                  onSelect={() => {
-                    handleItemSelect(aiAssistant)
-                  }}
-                  onEditClick={() => {
-                    handleEditClick(aiAssistant)
-                  }}
-                />
-              ))}
+              <DndContext
+                sensors={sensors}
+                collisionDetection={closestCenter}
+                onDragEnd={handleDragEnd}
+              >
+                <SortableContext
+                  items={sortedAiAssistantIds}
+                  strategy={verticalListSortingStrategy}
+                >
+                  {aiAssistants?.map((aiAssistant) => (
+                    <AiAssistantSelectorItem
+                      key={aiAssistant._id}
+                      assistant={aiAssistant}
+                      isCurrentAssistant={
+                        currentAssistantId === aiAssistant._id
+                      }
+                      onSelect={() => {
+                        handleItemSelect(aiAssistant)
+                      }}
+                      onEditClick={() => {
+                        handleEditClick(aiAssistant)
+                      }}
+                    />
+                  ))}
+                </SortableContext>
+              </DndContext>
             </CommandGroup>
           ) : (
             <CommandGroup heading="Suggested by Verida" className="p-2">
@@ -171,20 +243,34 @@ type AiAssistantSelectorItemProps = {
 function AiAssistantSelectorItem(props: AiAssistantSelectorItemProps) {
   const { assistant, isCurrentAssistant, onSelect, onEditClick } = props
 
+  const { attributes, listeners, setNodeRef, transform, transition } =
+    useSortable({ id: assistant._id })
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+  }
+
   return (
     <CommandItem
+      ref={setNodeRef}
+      style={style}
+      {...attributes}
       value={assistant.name}
       onSelect={onSelect}
       className="cursor-pointer py-1 pl-2 pr-1"
     >
       <div className="flex flex-row items-center gap-2">
         <div className="flex min-w-0 flex-1 flex-row items-center gap-1">
-          <CheckIcon
+          <div {...listeners} className="cursor-grab">
+            <GripVertical className="mr-2 size-4" />
+          </div>
+          {/* <CheckIcon
             className={cn(
               "size-4 shrink-0",
               isCurrentAssistant ? "opacity-100" : "opacity-0"
             )}
-          />
+          /> */}
           <Typography variant="base-regular" className="truncate">
             {assistant.name}
           </Typography>
