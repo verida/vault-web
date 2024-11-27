@@ -43,13 +43,17 @@ import {
 } from "@/features/assistants/constants"
 import { useAiAssistantDialog } from "@/features/assistants/hooks/use-ai-assistant-dialog"
 import { useGetAiAssistants } from "@/features/assistants/hooks/use-get-ai-assistants"
+import { useUpdateAiAssistant } from "@/features/assistants/hooks/use-update-ai-assistant"
 import {
   AiAssistantFormData,
   AiAssistantRecord,
 } from "@/features/assistants/types"
 import { getAssistantPageRoute } from "@/features/routes/utils"
+import { Logger } from "@/features/telemetry/logger"
 import { cn } from "@/styles/utils"
 import { moveItemInArray } from "@/utils/misc"
+
+const logger = Logger.create("assistants")
 
 export type AiAssistantSelectorProps = {
   currentAssistantId?: string
@@ -83,6 +87,7 @@ export function AiAssistantSelector(props: AiAssistantSelectorProps) {
 
   const { openCreateDialog, openEditDialog } = useAiAssistantDialog()
   const { aiAssistants } = useGetAiAssistants()
+  const { updateAiAssistantAsync } = useUpdateAiAssistant()
 
   const handleCreateClick = useCallback(
     (data?: Partial<AiAssistantFormData>) => {
@@ -121,13 +126,12 @@ export function AiAssistantSelector(props: AiAssistantSelectorProps) {
   }, [aiAssistants])
 
   const handleDragEnd = useCallback(
-    (event: DragEndEvent) => {
+    async (event: DragEndEvent) => {
       if (!aiAssistants) {
         return
       }
 
       const { active, over } = event
-      console.debug("drag end", { active, over })
 
       if (active.id === over?.id) {
         return
@@ -140,11 +144,48 @@ export function AiAssistantSelector(props: AiAssistantSelectorProps) {
         (aiAssistant) => aiAssistant._id === over?.id
       )
 
+      const movedAssistant = aiAssistants[oldIndex]
       const newAiAssistants = moveItemInArray(aiAssistants, oldIndex, newIndex)
 
-      // TODO: Update order in DB
+      // Get previous and next assistants for order calculation
+      const prevAssistant = newIndex > 0 ? newAiAssistants[newIndex - 1] : null
+      const nextAssistant =
+        newIndex < newAiAssistants.length - 1
+          ? newAiAssistants[newIndex + 1]
+          : null
+
+      let newOrder: number
+
+      if (
+        prevAssistant?.order !== undefined &&
+        nextAssistant?.order !== undefined
+      ) {
+        // Both neighbors have order - set as average
+        newOrder = (prevAssistant.order + nextAssistant.order) / 2
+      } else if (prevAssistant?.order !== undefined) {
+        // Only previous has order - add 100
+        newOrder = prevAssistant.order + 100
+      } else if (nextAssistant?.order !== undefined) {
+        // Only next has order - subtract 100
+        newOrder = nextAssistant.order - 100
+      } else {
+        // Neither has order - start at 100 * position
+        newOrder = (newIndex + 1) * 100
+      }
+
+      try {
+        // Update the moved assistant with new order
+        await updateAiAssistantAsync({
+          ...movedAssistant,
+          order: newOrder,
+        })
+      } catch (error) {
+        logger.error(
+          new Error("Failed to update assistant order", { cause: error })
+        )
+      }
     },
-    [aiAssistants]
+    [aiAssistants, updateAiAssistantAsync]
   )
 
   const isMaxNbAssistantsReached = useMemo(() => {

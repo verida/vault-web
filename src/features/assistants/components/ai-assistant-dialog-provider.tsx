@@ -72,7 +72,10 @@ export function AiAssistantDialogProvider(
   const handleSubmit = useCallback(
     async (data: AiAssistantFormData) => {
       if (dialogState.type === "create") {
-        const newAssistantRecord = await createAiAssistantAsync(data)
+        const newAssistantRecord = await createAiAssistantAsync({
+          ...data,
+          order: aiAssistants ? aiAssistants.length * 100 : 100,
+        })
         router.push(
           getAssistantPageRoute({ assistantId: newAssistantRecord._id })
         )
@@ -83,7 +86,13 @@ export function AiAssistantDialogProvider(
         })
       }
     },
-    [createAiAssistantAsync, updateAiAssistantAsync, dialogState, router]
+    [
+      createAiAssistantAsync,
+      updateAiAssistantAsync,
+      dialogState,
+      router,
+      aiAssistants,
+    ]
   )
 
   const handleDelete = useCallback(async () => {

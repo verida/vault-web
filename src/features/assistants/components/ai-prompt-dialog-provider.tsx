@@ -82,6 +82,7 @@ export function AiPromptDialogProvider(props: AiPromptDialogProviderProps) {
         ) {
           const newAssistantRecord = await createAiAssistantAsync({
             name: DEFAULT_ASSISTANT.name,
+            order: 100,
           })
           assistantId = newAssistantRecord._id
           createdAssistant = true
