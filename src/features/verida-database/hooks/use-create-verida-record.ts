@@ -20,6 +20,8 @@ export function useCreateVeridaRecord<T extends z.ZodObject<any>>(
   const { did, getAccountSessionToken } = useVerida()
   const queryClient = useQueryClient()
 
+  // TODO: Add optimistic update
+
   const { mutate, mutateAsync, ...mutation } = useMutation<
     VeridaRecord<z.infer<T>>,
     Error,
