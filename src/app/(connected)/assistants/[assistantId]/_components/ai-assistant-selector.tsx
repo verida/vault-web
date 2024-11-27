@@ -302,19 +302,19 @@ function AiAssistantSelectorItem(props: AiAssistantSelectorItemProps) {
       className="cursor-pointer py-1 pl-2 pr-1"
     >
       <div className="flex flex-row items-center gap-2">
-        <div className="flex min-w-0 flex-1 flex-row items-center gap-1">
+        <div className="flex min-w-0 flex-1 flex-row items-center gap-2">
           <div {...listeners} className="cursor-grab">
-            <GripVertical className="mr-2 size-4" />
+            <GripVertical className="mr-0 size-4 text-muted-foreground" />
           </div>
-          {/* <CheckIcon
-            className={cn(
-              "size-4 shrink-0",
-              isCurrentAssistant ? "opacity-100" : "opacity-0"
-            )}
-          /> */}
           <Typography variant="base-regular" className="truncate">
             {assistant.name}
           </Typography>
+          <CheckIcon
+            className={cn(
+              "size-4 shrink-0 text-muted-foreground",
+              isCurrentAssistant ? "opacity-100" : "opacity-0"
+            )}
+          />
         </div>
         {onEditClick ? (
           <div className="flex shrink-0 flex-row items-center gap-1">
