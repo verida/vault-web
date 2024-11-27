@@ -1,7 +1,8 @@
 "use client"
 
 import { MessageSquareMoreIcon } from "lucide-react"
-import { notFound } from "next/navigation"
+import { notFound, useRouter, useSearchParams } from "next/navigation"
+import { useEffect } from "react"
 import { useMediaQuery } from "usehooks-ts"
 
 import { AiPromptSelector } from "@/app/(connected)/assistants/[assistantId]/_components/ai-prompt-selector"
@@ -12,7 +13,10 @@ import AssistantLoadingPage from "@/app/(connected)/assistants/[assistantId]/loa
 import { Typography } from "@/components/typography"
 import { Card } from "@/components/ui/card"
 import { DEFAULT_ASSISTANT } from "@/features/assistants/constants"
+import { useAssistants } from "@/features/assistants/hooks/use-assistants"
 import { useGetAiAssistant } from "@/features/assistants/hooks/use-get-ai-assistant"
+import { useGetAiAssistants } from "@/features/assistants/hooks/use-get-ai-assistants"
+import { getAssistantPageRoute } from "@/features/routes/utils"
 import { getMediaQuery } from "@/styles/utils"
 
 type AssistantPageProps = {
@@ -26,12 +30,46 @@ export default function AssistantPage(props: AssistantPageProps) {
     params: { assistantId: encodedAssistantId },
   } = props
   const assistantId = decodeURIComponent(encodedAssistantId)
+  const searchParams = useSearchParams()
+  const fromDeletion = searchParams.get("fromDeletion") === "true"
 
-  const { aiAssistant, isLoading } = useGetAiAssistant({
-    assistantId,
-  })
+  const router = useRouter()
+
+  const { setSelectedAiAssistant } = useAssistants()
+
+  useEffect(() => {
+    setSelectedAiAssistant(assistantId)
+  }, [assistantId, setSelectedAiAssistant])
+
+  const { aiAssistant, isLoading: isLoadingAiAssistant } = useGetAiAssistant(
+    {
+      assistantId,
+    },
+    {
+      enabled: assistantId !== DEFAULT_ASSISTANT._id,
+    }
+  )
+
+  const { aiAssistants, isLoading: isLoadingAiAssistants } =
+    useGetAiAssistants()
+
+  useEffect(() => {
+    if (
+      !fromDeletion && // Only redirect if not from deletion
+      aiAssistants &&
+      aiAssistants.length > 0 &&
+      assistantId === DEFAULT_ASSISTANT._id
+    ) {
+      const firstAssistantId = aiAssistants[0]._id
+      router.replace(getAssistantPageRoute({ assistantId: firstAssistantId }))
+    }
+  }, [aiAssistants, assistantId, router, fromDeletion])
 
   const isXL = useMediaQuery(getMediaQuery("xl"))
+
+  if (isLoadingAiAssistant || isLoadingAiAssistants) {
+    return <AssistantLoadingPage />
+  }
 
   if (aiAssistant || assistantId === DEFAULT_ASSISTANT._id) {
     return (
@@ -60,10 +98,6 @@ export default function AssistantPage(props: AssistantPageProps) {
         </div>
       </div>
     )
-  }
-
-  if (isLoading) {
-    return <AssistantLoadingPage />
   }
 
   notFound()

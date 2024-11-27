@@ -46,10 +46,6 @@ export type AiPromptInput = {
   // TODO: add further configuration options (LLM model, data type, filters, etc.)
 }
 
-export type SuggestedAiPromptInput = {
-  label: string
-} & AiPromptInput
-
 export type AiAssistantOutput = {
   assistantId?: string
 } & (

@@ -53,20 +53,20 @@ export function AssistantEmptyContent(props: AssistantEmptyContentProps) {
         </div>
         {isLoadingDataConnections ? null : connections?.length ? (
           <div className="flex flex-row flex-wrap items-center justify-center gap-2">
-            {SUGGESTED_PROMPTS.map((recommendations, index) => (
+            {SUGGESTED_PROMPTS.map((suggestedPrompt) => (
               <Button
-                key={index}
+                key={suggestedPrompt._id}
                 variant="outline"
                 className="h-auto rounded-full px-4 py-2.5"
                 onClick={() => {
                   handleSuggestedPromptClick({
                     assistantId: selectedAiAssistant,
-                    prompt: recommendations.prompt,
+                    prompt: suggestedPrompt.prompt,
                   })
                 }}
               >
-                <Typography key={index} variant="base-s-regular">
-                  {recommendations.label}
+                <Typography variant="base-s-regular">
+                  {suggestedPrompt.name}
                 </Typography>
               </Button>
             ))}

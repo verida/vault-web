@@ -28,8 +28,8 @@ const defaultVeridaDataRecordsQueryOptions: VeridaDatabaseQueryOptions = {
 export type GetVeridaDataRecordsArgs<T extends z.ZodObject<any>> = {
   sessionToken: string
   databaseName: string
-  filter?: VeridaDatabaseQueryFilter<z.infer<T>>
-  options?: VeridaDatabaseQueryOptions<z.infer<T>>
+  filter?: VeridaDatabaseQueryFilter<VeridaRecord<z.infer<T>>>
+  options?: VeridaDatabaseQueryOptions<VeridaRecord<z.infer<T>>>
   baseSchema?: T
 }
 

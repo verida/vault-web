@@ -5,7 +5,11 @@ import { useCallback, useMemo, useState } from "react"
 
 import { featureFlags } from "@/config/features"
 import { ManageAiPromptDialog } from "@/features/assistants/components/manage-ai-prompt-dialog"
-import { DEFAULT_ASSISTANT } from "@/features/assistants/constants"
+import {
+  DEFAULT_ASSISTANT,
+  DEFAULT_ASSISTANT_ORDER,
+  DEFAULT_PROMPT_ORDER,
+} from "@/features/assistants/constants"
 import {
   AiPromptDialogContext,
   AiPromptDialogContextType,
@@ -16,6 +20,7 @@ import { useCreateAiAssistant } from "@/features/assistants/hooks/use-create-ai-
 import { useCreateAiPrompt } from "@/features/assistants/hooks/use-create-ai-prompt"
 import { useDeleteAiPrompt } from "@/features/assistants/hooks/use-delete-ai-prompt"
 import { useGetAiAssistants } from "@/features/assistants/hooks/use-get-ai-assistants"
+import { useGetAiPrompts } from "@/features/assistants/hooks/use-get-ai-prompts"
 import { useUpdateAiPrompt } from "@/features/assistants/hooks/use-update-ai-prompt"
 import { AiPromptFormData, AiPromptRecord } from "@/features/assistants/types"
 import { getAssistantPageRoute } from "@/features/routes/utils"
@@ -38,6 +43,11 @@ export function AiPromptDialogProvider(props: AiPromptDialogProviderProps) {
 
   const { selectedAiAssistant } = useAssistants()
   const { createAiAssistantAsync } = useCreateAiAssistant()
+  const { aiPrompts } = useGetAiPrompts({
+    filter: {
+      assistantId: selectedAiAssistant,
+    },
+  })
   const { createAiPromptAsync } = useCreateAiPrompt()
   const { updateAiPromptAsync } = useUpdateAiPrompt()
   const { deleteAiPromptAsync } = useDeleteAiPrompt()
@@ -82,14 +92,19 @@ export function AiPromptDialogProvider(props: AiPromptDialogProviderProps) {
         ) {
           const newAssistantRecord = await createAiAssistantAsync({
             name: DEFAULT_ASSISTANT.name,
+            order: DEFAULT_ASSISTANT_ORDER,
           })
           assistantId = newAssistantRecord._id
           createdAssistant = true
         }
 
         await createAiPromptAsync({
-          assistantId,
           ...data,
+          assistantId,
+          order: aiPrompts
+            ? Math.max(...aiPrompts.map((p) => p.order ?? 0), 0) +
+              DEFAULT_PROMPT_ORDER
+            : DEFAULT_PROMPT_ORDER,
         })
 
         if (createdAssistant) {
@@ -114,6 +129,7 @@ export function AiPromptDialogProvider(props: AiPromptDialogProviderProps) {
       dialogState,
       router,
       aiAssistants,
+      aiPrompts,
     ]
   )
 

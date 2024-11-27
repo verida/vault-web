@@ -4,7 +4,10 @@ import { useRouter } from "next/navigation"
 import { useCallback, useMemo, useState } from "react"
 
 import { ManageAiAssistantDialog } from "@/features/assistants/components/manage-ai-assistant-dialog"
-import { DEFAULT_ASSISTANT } from "@/features/assistants/constants"
+import {
+  DEFAULT_ASSISTANT,
+  DEFAULT_ASSISTANT_ORDER,
+} from "@/features/assistants/constants"
 import {
   AiAssistantDialogContext,
   AiAssistantDialogContextType,
@@ -72,7 +75,13 @@ export function AiAssistantDialogProvider(
   const handleSubmit = useCallback(
     async (data: AiAssistantFormData) => {
       if (dialogState.type === "create") {
-        const newAssistantRecord = await createAiAssistantAsync(data)
+        const newAssistantRecord = await createAiAssistantAsync({
+          ...data,
+          order: aiAssistants
+            ? Math.max(...aiAssistants.map((a) => a.order ?? 0), 0) +
+              DEFAULT_ASSISTANT_ORDER
+            : DEFAULT_ASSISTANT_ORDER,
+        })
         router.push(
           getAssistantPageRoute({ assistantId: newAssistantRecord._id })
         )
@@ -83,7 +92,13 @@ export function AiAssistantDialogProvider(
         })
       }
     },
-    [createAiAssistantAsync, updateAiAssistantAsync, dialogState, router]
+    [
+      createAiAssistantAsync,
+      updateAiAssistantAsync,
+      dialogState,
+      router,
+      aiAssistants,
+    ]
   )
 
   const handleDelete = useCallback(async () => {
@@ -106,6 +121,7 @@ export function AiAssistantDialogProvider(
     router.push(
       getAssistantPageRoute({
         assistantId: nextAssistantId,
+        fromDeletion: true,
       })
     )
   }, [
