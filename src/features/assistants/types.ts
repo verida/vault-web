@@ -9,7 +9,17 @@ import {
   LlmProviderSchema,
   PrivateDataApiV1LLMPersonalResponseSchema,
   PrivateDataApiV1LlmHotloadResponseSchema,
+  PromptConfigCommonDataTypeSchema,
+  PromptConfigDataTypesSchema,
+  PromptConfigEmailDataTypeSchema,
+  PromptConfigSchema,
+  PromptSearchConfigSchema,
+  PromptSearchOutputTypeSchema,
+  PromptSearchProfileInformationTypeSchema,
+  PromptSearchSortSchema,
+  PromptSearchTimeframeSchema,
 } from "@/features/assistants/schemas"
+import { SearchType } from "@/features/data-search/types"
 import { VeridaRecord } from "@/features/verida-database/types"
 
 export type AiAssistantHotloadStatus = "idle" | "loading" | "success" | "error"
@@ -42,8 +52,13 @@ export type AiPromptFormData = z.infer<typeof AiPromptFormDataSchema>
 
 export type AiPromptInput = {
   assistantId?: string
-  prompt: string
-  // TODO: add further configuration options (LLM model, data type, filters, etc.)
+  prompt?: string
+  config?: {
+    llmProvider?: LlmProvider
+    llmModel?: LlmModel
+    promptConfig?: PromptConfig
+    // TODO: add further configuration options (data type, filters, etc.)
+  }
 }
 
 export type AiAssistantOutput = {
@@ -57,9 +72,17 @@ export type AiAssistantOutput = {
       result: string
       processedAt: Date
       processingTime?: number
-      databases?: string[]
+      databases?: SearchType[]
     }
 )
+
+export type PrivateDataApiV1LLMPersonalRequestBody = {
+  // TODO: When and if passing the assistantId is supported, add it here but handle when using the default non-existing assistant
+  prompt: string
+  provider: LlmProvider
+  model: LlmModel
+  promptConfig?: PromptConfig
+}
 
 export type PrivateDataApiV1LLMPersonalResponse = z.infer<
   typeof PrivateDataApiV1LLMPersonalResponseSchema
@@ -68,3 +91,29 @@ export type PrivateDataApiV1LLMPersonalResponse = z.infer<
 export type PrivateDataApiV1LlmHotloadResponse = z.infer<
   typeof PrivateDataApiV1LlmHotloadResponseSchema
 >
+
+export type PromptSearchTimeframe = z.infer<typeof PromptSearchTimeframeSchema>
+
+export type PromptSearchSort = z.infer<typeof PromptSearchSortSchema>
+
+export type PromptSearchOutputType = z.infer<
+  typeof PromptSearchOutputTypeSchema
+>
+
+export type PromptSearchProfileInformationType = z.infer<
+  typeof PromptSearchProfileInformationTypeSchema
+>
+
+export type PromptSearchConfig = z.infer<typeof PromptSearchConfigSchema>
+
+export type PromptConfigCommonDataType = z.infer<
+  typeof PromptConfigCommonDataTypeSchema
+>
+
+export type PromptConfigEmailDataType = z.infer<
+  typeof PromptConfigEmailDataTypeSchema
+>
+
+export type PromptConfigDataTypes = z.infer<typeof PromptConfigDataTypesSchema>
+
+export type PromptConfig = z.infer<typeof PromptConfigSchema>

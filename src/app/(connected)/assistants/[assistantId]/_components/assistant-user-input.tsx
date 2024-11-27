@@ -63,12 +63,12 @@ export function AssistantUserInput(props: AssistantUserInputProps) {
   const handleUserPromptChange: ChangeEventHandler<HTMLTextAreaElement> =
     useCallback(
       (event) => {
-        updateAiPromptInput({
-          assistantId: selectedAiAssistant,
+        updateAiPromptInput((prevInput) => ({
+          ...prevInput,
           prompt: event.target.value,
-        })
+        }))
       },
-      [updateAiPromptInput, selectedAiAssistant]
+      [updateAiPromptInput]
     )
 
   const handleKeyDown: KeyboardEventHandler<HTMLTextAreaElement> = useCallback(
@@ -85,7 +85,7 @@ export function AssistantUserInput(props: AssistantUserInputProps) {
     inputRef.current?.focus()
   }, [])
 
-  const handleEditPrompt = useCallback(() => {
+  const handleSetPrompt = useCallback(() => {
     inputRef.current?.focus()
   }, [])
 
@@ -129,7 +129,7 @@ export function AssistantUserInput(props: AssistantUserInputProps) {
           <div className="flex flex-row items-center justify-start gap-2">
             {!isXL ? (
               <AiPromptsCombobox
-                onClickEdit={handleEditPrompt}
+                onSetPrompt={handleSetPrompt}
                 className="size-8 sm:size-10"
               />
             ) : null}

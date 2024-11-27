@@ -109,6 +109,10 @@ export function AssistantsProvider(props: AssistantsProviderProps) {
         return
       }
 
+      if (!input.prompt) {
+        return
+      }
+
       logger.info("Sending user input to assistant")
       setError(null)
       setAiAssistantOutput({
@@ -118,7 +122,13 @@ export function AssistantsProvider(props: AssistantsProviderProps) {
 
       try {
         const sessionToken = await getAccountSessionToken()
-        const result = await sendAiPromptInputToAssistant(input, sessionToken)
+        const result = await sendAiPromptInputToAssistant(
+          {
+            ...input,
+            assistantId: selectedAiAssistant,
+          },
+          sessionToken
+        )
         setAiAssistantOutput(result)
       } catch (error) {
         logger.error(error)
@@ -127,11 +137,11 @@ export function AssistantsProvider(props: AssistantsProviderProps) {
         setAiAssistantOutput(null)
       }
     },
-    [getAccountSessionToken, aiAssistantOutput]
+    [getAccountSessionToken, aiAssistantOutput, selectedAiAssistant]
   )
 
   const processAiPromptInput = useCallback(async () => {
-    if (!aiPromptInput?.prompt) {
+    if (!aiPromptInput) {
       return
     }
     await processInput(aiPromptInput)
@@ -144,13 +154,6 @@ export function AssistantsProvider(props: AssistantsProviderProps) {
     },
     [processInput]
   )
-
-  const updateAiPromptInput = useCallback((aiPromptInput: AiPromptInput) => {
-    setAiPromptInput((prev) => ({
-      ...prev,
-      ...aiPromptInput,
-    }))
-  }, [])
 
   const clearAiPromptInput = useCallback(() => {
     setAiPromptInput(null)
@@ -168,7 +171,7 @@ export function AssistantsProvider(props: AssistantsProviderProps) {
       aiAssistantOutput,
       processAiPromptInput,
       setAndProcessAiPromptInput,
-      updateAiPromptInput,
+      updateAiPromptInput: setAiPromptInput,
       clearAiPromptInput,
       clearAiAssistantOutput,
       error,
@@ -183,7 +186,7 @@ export function AssistantsProvider(props: AssistantsProviderProps) {
       aiAssistantOutput,
       processAiPromptInput,
       setAndProcessAiPromptInput,
-      updateAiPromptInput,
+      setAiPromptInput,
       clearAiPromptInput,
       clearAiAssistantOutput,
       error,
