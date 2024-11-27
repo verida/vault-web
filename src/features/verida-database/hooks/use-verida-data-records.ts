@@ -1,4 +1,5 @@
 import { QueryClient, useQuery, useQueryClient } from "@tanstack/react-query"
+import { useMemo } from "react"
 import { z } from "zod"
 
 import { UseQueryOptions } from "@/features/queries/types"
@@ -7,6 +8,7 @@ import { VeridaDatabaseQueryKeys } from "@/features/verida-database/queries"
 import {
   VeridaDatabaseQueryFilter,
   VeridaDatabaseQueryOptions,
+  VeridaRecord,
 } from "@/features/verida-database/types"
 import { getVeridaDataRecords } from "@/features/verida-database/utils"
 import { useVerida } from "@/features/verida/hooks/use-verida"
@@ -15,8 +17,8 @@ const logger = Logger.create("verida-database")
 
 export type UseVeridaDataRecordsArgs<T extends z.ZodObject<any>> = {
   databaseName: string
-  filter?: VeridaDatabaseQueryFilter<z.infer<T>>
-  options?: VeridaDatabaseQueryOptions<z.infer<T>>
+  filter?: VeridaDatabaseQueryFilter<VeridaRecord<z.infer<T>>>
+  options?: VeridaDatabaseQueryOptions<VeridaRecord<z.infer<T>>>
   baseSchema?: T
 }
 
@@ -39,13 +41,19 @@ export function useVeridaDataRecords<T extends z.ZodObject<any>>(
 
   const queryClient = useQueryClient()
 
+  const queryKey = useMemo(
+    () =>
+      VeridaDatabaseQueryKeys.dataRecords({
+        databaseName,
+        did,
+        filter,
+        options,
+      }),
+    [databaseName, did, filter, options]
+  )
+
   const { data, ...query } = useQuery({
-    queryKey: VeridaDatabaseQueryKeys.dataRecords({
-      databaseName,
-      did,
-      filter,
-      options,
-    }),
+    queryKey,
     queryFn: async () => {
       const token = await getAccountSessionToken()
 
@@ -82,17 +90,18 @@ export function useVeridaDataRecords<T extends z.ZodObject<any>>(
   return {
     records: data?.records,
     pagination: data?.pagination,
+    queryKey,
     ...query,
   }
 }
 
-type PrefetchVeridaDataRecordsArgs<T extends z.ZodObject<any>> = {
+export type PrefetchVeridaDataRecordsArgs<T extends z.ZodObject<any>> = {
   queryClient: QueryClient
   did: string
   sessionToken: string
   databaseName: string
-  filter?: VeridaDatabaseQueryFilter<z.infer<T>>
-  options?: VeridaDatabaseQueryOptions<z.infer<T>>
+  filter?: VeridaDatabaseQueryFilter<VeridaRecord<z.infer<T>>>
+  options?: VeridaDatabaseQueryOptions<VeridaRecord<z.infer<T>>>
   baseSchema?: T
 }
 

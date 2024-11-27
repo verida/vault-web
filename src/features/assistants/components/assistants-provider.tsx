@@ -89,7 +89,9 @@ export function AssistantsProvider(props: AssistantsProviderProps) {
           queryClient,
           did,
           sessionToken,
-          assistantId: selectedAiAssistant,
+          filter: {
+            assistantId: selectedAiAssistant,
+          },
         })
       })
       .catch((error) => {
