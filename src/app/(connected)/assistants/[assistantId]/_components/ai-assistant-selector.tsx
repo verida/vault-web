@@ -16,7 +16,7 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable"
 import { CSS } from "@dnd-kit/utilities"
-import { CheckIcon, GripVertical } from "lucide-react"
+import { CheckIcon, GripVerticalIcon } from "lucide-react"
 import { useRouter } from "next/navigation"
 import React, { useCallback, useMemo, useState } from "react"
 
@@ -308,7 +308,7 @@ function AiAssistantSelectorItem(props: AiAssistantSelectorItemProps) {
         <div className="flex min-w-0 flex-1 flex-row items-center gap-2">
           {sortable ? (
             <div {...listeners} className="shrink-0 cursor-grab">
-              <GripVertical className="size-4 text-muted-foreground" />
+              <GripVerticalIcon className="size-4 text-muted-foreground" />
             </div>
           ) : null}
           <Typography variant="base-regular" className="truncate">
