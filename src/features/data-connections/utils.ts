@@ -131,7 +131,6 @@ export async function getDataConnections(
 ): Promise<DataConnection[]> {
   logger.info("Fetching data connections")
 
-  // Use mock response if API configuration is missing
   if (!commonConfig.PRIVATE_DATA_API_BASE_URL) {
     logger.warn(
       "Cannot get data connections due to incorrect API configuration"

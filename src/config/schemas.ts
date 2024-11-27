@@ -1,6 +1,8 @@
 import { Network } from "@verida/types"
 import { z } from "zod"
 
+import { LLM_MODELS, LLM_PROVIDERS } from "@/features/assistants/schemas"
+
 export const CommonConfigSchema = z.object({
   BASE_URL: z.string().url(),
   DEV_MODE: z
@@ -29,10 +31,12 @@ export const CommonConfigSchema = z.object({
     .string()
     .optional()
     .transform((value) => value === "true"),
-  DEFAULT_AI_PROVIDER: z.enum(["bedrock", "groq"]).default("groq"),
-  DEFAULT_AI_MODEL: z
-    .enum(["LLAMA3_70B", "LLAMA31_70B", "LLAMA3_8B", "MIXTRAL_8_7B"])
-    .default("LLAMA31_70B"),
+  FEATURE_FLAG_AI_ASSISTANT_USER_PROMPTS_ENABLED: z
+    .string()
+    .optional()
+    .transform((value) => value === "true"),
+  DEFAULT_AI_PROVIDER: z.enum(LLM_PROVIDERS).default("bedrock"),
+  DEFAULT_AI_MODEL: z.enum(LLM_MODELS).default("LLAMA3.1_70B"),
   FEATURE_FLAG_INBOX_ENABLED: z
     .string()
     .optional()
@@ -46,6 +50,10 @@ export const CommonConfigSchema = z.object({
     .optional()
     .transform((value) => value === "true"),
   FEATURE_FLAG_DATA_DELETE_RECORD_ENABLED: z
+    .string()
+    .optional()
+    .transform((value) => value === "true"),
+  FEATURE_FLAG_DATA_DISPLAY_TECHNICAL_DATABASES: z
     .string()
     .optional()
     .transform((value) => value === "true"),

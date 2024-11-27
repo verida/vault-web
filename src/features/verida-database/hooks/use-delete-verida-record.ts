@@ -13,6 +13,8 @@ export function useDeleteVeridaRecord() {
   const { did, getAccountSessionToken } = useVerida()
   const queryClient = useQueryClient()
 
+  // TODO: Add optimistic update
+
   const { mutate, mutateAsync, ...mutation } = useMutation({
     mutationFn: async ({ databaseName, recordId }: DeleteVeridaRecordArgs) => {
       const sessionToken = await getAccountSessionToken()

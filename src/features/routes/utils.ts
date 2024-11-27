@@ -7,7 +7,17 @@ export function getDefaultRedirectPathAfterConnection() {
 }
 
 export function getAssistantsPageRoute() {
-  return `/assistant`
+  return `/assistants`
+}
+
+export function getAssistantPageRoute({
+  assistantId,
+  fromDeletion,
+}: {
+  assistantId: string
+  fromDeletion?: boolean
+}) {
+  return `/assistants/${assistantId}${fromDeletion ? "?fromDeletion=true" : ""}`
 }
 
 export function getInboxPageRoute() {

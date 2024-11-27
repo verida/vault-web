@@ -49,6 +49,7 @@ export function ErrorPageContent(props: ErrorPageContentProps) {
     navigationButtonHref = getRootPageRoute(),
     hideNavigationButton = false,
     className,
+    children,
     ...divProps
   } = props
 
@@ -72,7 +73,7 @@ export function ErrorPageContent(props: ErrorPageContentProps) {
     <div
       // TODO: Use container query?
       className={cn(
-        "flex h-full flex-1 flex-col items-center justify-center p-4",
+        "flex h-full flex-1 flex-col items-center justify-center gap-4 p-4",
         className
       )}
       {...divProps}
@@ -99,6 +100,7 @@ export function ErrorPageContent(props: ErrorPageContentProps) {
           ) : null}
         </div>
       </ErrorBlock>
+      {children}
     </div>
   )
 }

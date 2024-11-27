@@ -1,21 +1,32 @@
 "use client"
 
-import { MessageSquareMoreIcon, XIcon } from "lucide-react"
+import { BookmarkIcon, XIcon } from "lucide-react"
 import React, {
   ChangeEventHandler,
   KeyboardEventHandler,
   useCallback,
   useLayoutEffect,
+  useMemo,
   useRef,
 } from "react"
+import { useMediaQuery } from "usehooks-ts"
 
-import { AssistantUserInputPromptsMenu } from "@/app/(connected)/assistant/_components/assistant-user-input-prompts-menu"
+import { AiPromptsCombobox } from "@/app/(connected)/assistants/[assistantId]/_components/ai-prompts-combobox"
 import { SendIcon } from "@/components/icons/send-icon"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { Textarea } from "@/components/ui/textarea"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
+import { featureFlags } from "@/config/features"
+import { MAX_NB_PROMPTS_PER_ASSISTANT } from "@/features/assistants/constants"
+import { useAiPromptDialog } from "@/features/assistants/hooks/use-ai-prompt-dialog"
 import { useAssistants } from "@/features/assistants/hooks/use-assistants"
-import { cn } from "@/styles/utils"
+import { useGetAiPrompts } from "@/features/assistants/hooks/use-get-ai-prompts"
+import { cn, getMediaQuery } from "@/styles/utils"
 
 export type AssistantUserInputProps = Omit<
   React.ComponentProps<"div">,
@@ -26,36 +37,59 @@ export function AssistantUserInput(props: AssistantUserInputProps) {
   const { ...divProps } = props
 
   const {
-    userInput,
-    processUserInput,
-    updateUserPrompt,
-    clearUserInput,
-    isProcessing,
+    selectedAiAssistant,
+    aiPromptInput,
+    aiAssistantOutput,
+    processAiPromptInput,
+    updateAiPromptInput,
+    clearAiPromptInput,
   } = useAssistants()
+
+  const { openSaveDialog } = useAiPromptDialog()
+  const { aiPrompts } = useGetAiPrompts({
+    filter: {
+      assistantId: selectedAiAssistant,
+    },
+  })
+
+  const isMaxNbPromptsReached = useMemo(
+    () =>
+      aiPrompts ? aiPrompts.length >= MAX_NB_PROMPTS_PER_ASSISTANT : false,
+    [aiPrompts]
+  )
 
   const inputRef = useRef<HTMLTextAreaElement>(null)
 
   const handleUserPromptChange: ChangeEventHandler<HTMLTextAreaElement> =
     useCallback(
       (event) => {
-        updateUserPrompt(event.target.value)
+        updateAiPromptInput({
+          assistantId: selectedAiAssistant,
+          prompt: event.target.value,
+        })
       },
-      [updateUserPrompt]
+      [updateAiPromptInput, selectedAiAssistant]
     )
 
   const handleKeyDown: KeyboardEventHandler<HTMLTextAreaElement> = useCallback(
     (event) => {
       if (event.key === "Enter" && !event.shiftKey) {
         event.preventDefault()
-        processUserInput()
+        processAiPromptInput()
       }
     },
-    [processUserInput]
+    [processAiPromptInput]
   )
 
   useLayoutEffect(() => {
     inputRef.current?.focus()
   }, [])
+
+  const handleEditPrompt = useCallback(() => {
+    inputRef.current?.focus()
+  }, [])
+
+  const isXL = useMediaQuery(getMediaQuery("xl"))
 
   return (
     <div {...divProps}>
@@ -64,12 +98,12 @@ export function AssistantUserInput(props: AssistantUserInputProps) {
           <Textarea
             ref={inputRef}
             placeholder="Ask your assistant"
-            value={userInput?.prompt ?? ""}
+            value={aiPromptInput?.prompt ?? ""}
             onChange={handleUserPromptChange}
             onKeyDown={handleKeyDown}
             className={cn(
               "max-h-32 rounded-none border-none py-1 pl-0 focus-visible:ring-0",
-              userInput?.prompt ? "pr-8 sm:pr-10" : "pr-1"
+              aiPromptInput?.prompt ? "pr-8 sm:pr-10" : "pr-1"
             )}
             autoComplete="off"
             autoCapitalize="off"
@@ -77,12 +111,12 @@ export function AssistantUserInput(props: AssistantUserInputProps) {
             spellCheck="false"
             endAdornmentContainerClassName="top-0 pt-1 pr-1.5 sm:pr-2.5 flex flex-row gap-1"
             endAdornment={
-              userInput?.prompt ? (
+              aiPromptInput?.prompt ? (
                 <Button
                   variant="ghost"
                   size="icon"
                   className="size-5"
-                  onClick={clearUserInput}
+                  onClick={clearAiPromptInput}
                 >
                   <XIcon className="size-5 opacity-50 sm:size-6" />
                   <span className="sr-only">Clear user input</span>
@@ -93,24 +127,48 @@ export function AssistantUserInput(props: AssistantUserInputProps) {
         </CardContent>
         <CardFooter className="flex-row justify-between p-0">
           <div className="flex flex-row items-center justify-start gap-2">
-            <AssistantUserInputPromptsMenu>
-              <Button
-                variant="outline"
-                size="icon"
+            {!isXL ? (
+              <AiPromptsCombobox
+                onClickEdit={handleEditPrompt}
                 className="size-8 sm:size-10"
-              >
-                <MessageSquareMoreIcon className="size-5 sm:size-6" />
-                <span className="sr-only">Open prompts menu</span>
-              </Button>
-            </AssistantUserInputPromptsMenu>
+              />
+            ) : null}
+            {featureFlags.assistant.userPrompts.enabled ? (
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    className="size-8 sm:size-10"
+                    disabled={!aiPromptInput?.prompt || isMaxNbPromptsReached}
+                    onClick={() => {
+                      openSaveDialog({
+                        prompt: aiPromptInput?.prompt,
+                      })
+                    }}
+                  >
+                    <BookmarkIcon className="size-5 sm:size-6" />
+                    <span className="sr-only">Save this prompt</span>
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  {isMaxNbPromptsReached
+                    ? "Maximum number of saved prompts reached"
+                    : "Save this prompt"}
+                </TooltipContent>
+              </Tooltip>
+            ) : null}
           </div>
           <div className="flex flex-row items-center justify-end gap-2">
             <Button
               variant="primary"
               size="icon"
               className="size-8 sm:size-10"
-              onClick={processUserInput}
-              disabled={!userInput?.prompt || isProcessing}
+              onClick={processAiPromptInput}
+              disabled={
+                !aiPromptInput?.prompt ||
+                aiAssistantOutput?.status === "processing"
+              }
             >
               <SendIcon className="size-5 sm:size-6" />
               <span className="sr-only">Send to assistant for processing</span>

@@ -3,7 +3,7 @@
 import { formatDistanceToNow } from "date-fns"
 import { useCallback, useEffect, useMemo, useState } from "react"
 
-import { AssistantDataStatusPopover } from "@/app/(connected)/assistant/_components/assistant-data-status-popover"
+import { AssistantDataStatusPopover } from "@/app/(connected)/assistants/[assistantId]/_components/assistant-data-status-popover"
 import { Typography } from "@/components/typography"
 import { useAssistants } from "@/features/assistants/hooks/use-assistants"
 import { useDataConnections } from "@/features/data-connections/hooks/use-data-connections"

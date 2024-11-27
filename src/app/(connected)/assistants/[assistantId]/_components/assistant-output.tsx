@@ -1,7 +1,7 @@
 "use client"
 
-import { AssistantEmptyContent } from "@/app/(connected)/assistant/_components/assistant-empty-content"
-import { AssistantOutputCard } from "@/app/(connected)/assistant/_components/assistant-output-card"
+import { AssistantEmptyContent } from "@/app/(connected)/assistants/[assistantId]/_components/assistant-empty-content"
+import { AssistantOutputCard } from "@/app/(connected)/assistants/[assistantId]/_components/assistant-output-card"
 import {
   ErrorBlock,
   ErrorBlockDescription,
@@ -11,12 +11,12 @@ import {
 import { useAssistants } from "@/features/assistants/hooks/use-assistants"
 
 export function AssistantOutput() {
-  const { assistantOutput, isProcessing, error } = useAssistants()
+  const { aiAssistantOutput, error } = useAssistants()
 
   return (
     // TODO: Manage when the hotloading had an error
     <>
-      {assistantOutput || isProcessing ? (
+      {aiAssistantOutput ? (
         <AssistantOutputCard />
       ) : error ? (
         <ErrorBlock className="mt-2">
