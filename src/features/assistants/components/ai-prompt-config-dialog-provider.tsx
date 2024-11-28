@@ -2,6 +2,7 @@
 
 import { useCallback, useMemo, useState } from "react"
 
+import { featureFlags } from "@/config/features"
 import { ManageAiPromptConfigDialog } from "@/features/assistants/components/manage-ai-prompt-config-dialog"
 import {
   AiPromptConfigDialogContext,
@@ -41,10 +42,12 @@ export function AiPromptConfigDialogProvider(
   return (
     <AiPromptConfigDialogContext.Provider value={value}>
       {children}
-      <ManageAiPromptConfigDialog
-        open={dialogState.isOpen}
-        onOpenChange={(open) => !open && closeDialog()}
-      />
+      {featureFlags.assistant.config.enabled ? (
+        <ManageAiPromptConfigDialog
+          open={dialogState.isOpen}
+          onOpenChange={(open) => !open && closeDialog()}
+        />
+      ) : null}
     </AiPromptConfigDialogContext.Provider>
   )
 }
