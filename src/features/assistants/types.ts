@@ -12,6 +12,7 @@ import {
   PromptConfigCommonDataTypeSchema,
   PromptConfigDataTypesSchema,
   PromptConfigEmailDataTypeSchema,
+  PromptConfigFormDataSchema,
   PromptConfigSchema,
   PromptSearchConfigSchema,
   PromptSearchOutputTypeSchema,
@@ -120,3 +121,5 @@ export type PrivateDataApiV1LLMPersonalResponse = z.infer<
 export type PrivateDataApiV1LlmHotloadResponse = z.infer<
   typeof PrivateDataApiV1LlmHotloadResponseSchema
 >
+
+export type PromptConfigFormData = z.infer<typeof PromptConfigFormDataSchema>

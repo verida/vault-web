@@ -163,15 +163,22 @@ export function AssistantUserInput(props: AssistantUserInputProps) {
           </div>
           <div className="flex flex-row items-center justify-end gap-2">
             {featureFlags.assistant.config.enabled ? (
-              <Button
-                variant="outline"
-                size="icon"
-                className="size-8 sm:size-10"
-                onClick={openConfigDialog}
-              >
-                <Settings2Icon className="size-5 sm:size-6" />
-                <span className="sr-only">Manage prompt configurations</span>
-              </Button>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    className="size-8 sm:size-10"
+                    onClick={openConfigDialog}
+                  >
+                    <Settings2Icon className="size-5 sm:size-6" />
+                    <span className="sr-only">
+                      Manage prompt configurations
+                    </span>
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>Configure</TooltipContent>
+              </Tooltip>
             ) : null}
             <Button
               variant="primary"

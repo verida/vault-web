@@ -149,3 +149,7 @@ export const PromptConfigSchema = z.object({
   dataTypes: PromptConfigDataTypesSchema.optional(),
   promptSearchConfig: PromptSearchConfigSchema.optional(),
 })
+
+export const PromptConfigFormDataSchema = z.object({
+  llmModel: LlmModelSchema,
+})
