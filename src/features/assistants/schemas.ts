@@ -151,5 +151,6 @@ export const PromptConfigSchema = z.object({
 })
 
 export const PromptConfigFormDataSchema = z.object({
-  llmModel: LlmModelSchema,
+  llmModel: LlmModelSchema.optional(),
+  rawPromptConfig: z.string().optional(),
 })

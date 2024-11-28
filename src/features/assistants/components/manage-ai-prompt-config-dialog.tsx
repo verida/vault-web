@@ -1,6 +1,7 @@
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
+import Link from "next/link"
 import { useCallback, useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 
@@ -30,10 +31,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { Textarea } from "@/components/ui/textarea"
 import { commonConfig } from "@/config/common"
 import { LLM_MODEL_DEFS } from "@/features/assistants/constants"
 import { useAssistants } from "@/features/assistants/hooks/use-assistants"
-import { PromptConfigFormDataSchema } from "@/features/assistants/schemas"
+import {
+  PromptConfigFormDataSchema,
+  PromptConfigSchema,
+} from "@/features/assistants/schemas"
 import { PromptConfigFormData } from "@/features/assistants/types"
 import { Logger } from "@/features/telemetry/logger"
 
@@ -58,6 +63,9 @@ export function ManageAiPromptConfigDialog(
     defaultValues: {
       llmModel:
         aiPromptInput?.config?.llmModel ?? commonConfig.DEFAULT_AI_MODEL,
+      rawPromptConfig: aiPromptInput?.config?.promptConfig
+        ? JSON.stringify(aiPromptInput.config.promptConfig)
+        : undefined,
     },
   })
 
@@ -65,18 +73,33 @@ export function ManageAiPromptConfigDialog(
     async (data: PromptConfigFormData) => {
       setIsSubmitting(true)
       try {
+        // TODO: Try to include the parsing of the string and the validation in the form schema
+        const promptConfigValidateResult = PromptConfigSchema.safeParse(
+          JSON.parse(data.rawPromptConfig ?? "{}")
+        )
+
+        if (!promptConfigValidateResult.success) {
+          logger.warn("Invalid prompt configuration", {
+            validationError: promptConfigValidateResult.error,
+          })
+          throw new Error("Invalid prompt configuration")
+        }
+
         updateAiPromptInput((prevInput) => ({
           ...prevInput,
           config: {
             ...prevInput?.config,
             llmModel: data.llmModel,
+            promptConfig: data.rawPromptConfig
+              ? promptConfigValidateResult.data
+              : undefined,
           },
         }))
         onOpenChange(false)
 
         // TODO: Display a toast notification
       } catch (error) {
-        logger.error(error)
+        // TODO: Display an error toast notification
       } finally {
         setIsSubmitting(false)
       }
@@ -88,6 +111,12 @@ export function ManageAiPromptConfigDialog(
     form.setValue(
       "llmModel",
       aiPromptInput?.config?.llmModel ?? commonConfig.DEFAULT_AI_MODEL
+    )
+    form.setValue(
+      "rawPromptConfig",
+      aiPromptInput?.config?.promptConfig
+        ? JSON.stringify(aiPromptInput.config.promptConfig)
+        : undefined
     )
   }, [form, aiPromptInput])
 
@@ -136,29 +165,37 @@ export function ManageAiPromptConfigDialog(
                   </FormItem>
                 )}
               />
-              {/* <FormField
+              <FormField
                 control={form.control}
-                name="promptConfigString"
+                name="rawPromptConfig"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Prompt</FormLabel>
+                    <FormLabel>Advanced configuration</FormLabel>
                     <FormControl>
                       <Textarea
                         autoComplete="off"
                         autoCapitalize="off"
                         autoCorrect="off"
                         spellCheck="true"
-                        className="max-h-32 min-h-24"
+                        // FIXME: Fix height of the textarea overflowing the dialog when resized
+                        className="max-h-96 min-h-32 resize-y"
                         {...field}
                       />
                     </FormControl>
                     <FormDescription>
-                      Your message sent to the assistant
+                      Refer to the documentation of{" "}
+                      <Link
+                        href="https://user-apis.verida.network/#61bf5cf2-cb2e-43af-b592-f89d0b0d291a"
+                        target="_blank"
+                        className="text-primary underline"
+                      >
+                        Prompt Config
+                      </Link>
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
-              /> */}
+              />
             </DialogBody>
             <DialogFooter>
               <Button variant="primary" type="submit" disabled={isSubmitting}>
