@@ -12,9 +12,9 @@ import {
 import { prefetchGetAiPrompts } from "@/features/assistants/hooks/use-get-ai-prompts"
 import {
   AiAssistantHotloadResult,
+  AiAssistantOutput,
   AiPromptInput,
 } from "@/features/assistants/types"
-import { AiAssistantOutput } from "@/features/assistants/types"
 import {
   hotloadAPI,
   sendAiPromptInputToAssistant,

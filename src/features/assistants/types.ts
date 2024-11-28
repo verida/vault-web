@@ -19,8 +19,36 @@ import {
   PromptSearchSortSchema,
   PromptSearchTimeframeSchema,
 } from "@/features/assistants/schemas"
-import { SearchType } from "@/features/data-search/types"
 import { VeridaRecord } from "@/features/verida-database/types"
+
+// FIXME: Fix the supposedly circular dependency of importing SearchTypeSchema
+// import { SearchType } from "@/features/data-search/types"
+
+export type PromptSearchTimeframe = z.infer<typeof PromptSearchTimeframeSchema>
+
+export type PromptSearchSort = z.infer<typeof PromptSearchSortSchema>
+
+export type PromptSearchOutputType = z.infer<
+  typeof PromptSearchOutputTypeSchema
+>
+
+export type PromptSearchProfileInformationType = z.infer<
+  typeof PromptSearchProfileInformationTypeSchema
+>
+
+export type PromptSearchConfig = z.infer<typeof PromptSearchConfigSchema>
+
+export type PromptConfigCommonDataType = z.infer<
+  typeof PromptConfigCommonDataTypeSchema
+>
+
+export type PromptConfigEmailDataType = z.infer<
+  typeof PromptConfigEmailDataTypeSchema
+>
+
+export type PromptConfigDataTypes = z.infer<typeof PromptConfigDataTypesSchema>
+
+export type PromptConfig = z.infer<typeof PromptConfigSchema>
 
 export type AiAssistantHotloadStatus = "idle" | "loading" | "success" | "error"
 
@@ -72,7 +100,8 @@ export type AiAssistantOutput = {
       result: string
       processedAt: Date
       processingTime?: number
-      databases?: SearchType[]
+      // databases?: SearchType[]
+      databases?: string[]
     }
 )
 
@@ -91,29 +120,3 @@ export type PrivateDataApiV1LLMPersonalResponse = z.infer<
 export type PrivateDataApiV1LlmHotloadResponse = z.infer<
   typeof PrivateDataApiV1LlmHotloadResponseSchema
 >
-
-export type PromptSearchTimeframe = z.infer<typeof PromptSearchTimeframeSchema>
-
-export type PromptSearchSort = z.infer<typeof PromptSearchSortSchema>
-
-export type PromptSearchOutputType = z.infer<
-  typeof PromptSearchOutputTypeSchema
->
-
-export type PromptSearchProfileInformationType = z.infer<
-  typeof PromptSearchProfileInformationTypeSchema
->
-
-export type PromptSearchConfig = z.infer<typeof PromptSearchConfigSchema>
-
-export type PromptConfigCommonDataType = z.infer<
-  typeof PromptConfigCommonDataTypeSchema
->
-
-export type PromptConfigEmailDataType = z.infer<
-  typeof PromptConfigEmailDataTypeSchema
->
-
-export type PromptConfigDataTypes = z.infer<typeof PromptConfigDataTypesSchema>
-
-export type PromptConfig = z.infer<typeof PromptConfigSchema>

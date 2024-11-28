@@ -1,6 +1,7 @@
 import { z } from "zod"
 
-import { SearchTypeSchema } from "@/features/data-search/schemas"
+// FIXME: Fix the supposedly circular dependency of importing SearchTypeSchema
+// import { SearchTypeSchema } from "@/features/data-search/schemas"
 
 export const LLM_PROVIDERS = ["bedrock"] as const
 export const LlmProviderSchema = z.enum(LLM_PROVIDERS)
@@ -31,7 +32,8 @@ export const PrivateDataApiV1LLMPersonalResponseSchema = z.object({
   result: z.string().min(1, "LLM response is empty"),
   duration: z.number(),
   process: z.object({
-    databases: z.array(SearchTypeSchema).optional(),
+    // databases: z.array(SearchTypeSchema).optional(),
+    databases: z.array(z.string()).optional(),
   }),
 })
 
@@ -114,7 +116,8 @@ export const PromptSearchConfigSchema = z.intersection(
   ]),
   z.object({
     timeframe: PromptSearchTimeframeSchema,
-    databases: z.array(SearchTypeSchema),
+    databases: z.array(z.string()),
+    // databases: z.array(SearchTypeSchema),
     sort: PromptSearchSortSchema,
     output_type: PromptSearchOutputTypeSchema,
     profile_information: z.array(PromptSearchProfileInformationTypeSchema),
