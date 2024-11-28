@@ -1,6 +1,6 @@
 "use client"
 
-import { BookmarkIcon, XIcon } from "lucide-react"
+import { BookmarkIcon, Settings2Icon, XIcon } from "lucide-react"
 import React, {
   ChangeEventHandler,
   KeyboardEventHandler,
@@ -23,6 +23,7 @@ import {
 } from "@/components/ui/tooltip"
 import { featureFlags } from "@/config/features"
 import { MAX_NB_PROMPTS_PER_ASSISTANT } from "@/features/assistants/constants"
+import { useAiPromptConfigDialog } from "@/features/assistants/hooks/use-ai-prompt-config-dialog"
 import { useAiPromptDialog } from "@/features/assistants/hooks/use-ai-prompt-dialog"
 import { useAssistants } from "@/features/assistants/hooks/use-assistants"
 import { useGetAiPrompts } from "@/features/assistants/hooks/use-get-ai-prompts"
@@ -51,6 +52,7 @@ export function AssistantUserInput(props: AssistantUserInputProps) {
       assistantId: selectedAiAssistant,
     },
   })
+  const { openDialog: openConfigDialog } = useAiPromptConfigDialog()
 
   const isMaxNbPromptsReached = useMemo(
     () =>
@@ -160,6 +162,15 @@ export function AssistantUserInput(props: AssistantUserInputProps) {
             ) : null}
           </div>
           <div className="flex flex-row items-center justify-end gap-2">
+            <Button
+              variant="outline"
+              size="icon"
+              className="size-8 sm:size-10"
+              onClick={openConfigDialog}
+            >
+              <Settings2Icon className="size-5 sm:size-6" />
+              <span className="sr-only">Manage prompt configurations</span>
+            </Button>
             <Button
               variant="primary"
               size="icon"

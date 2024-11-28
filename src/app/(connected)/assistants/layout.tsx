@@ -4,6 +4,7 @@ import React from "react"
 
 import { featureFlags } from "@/config/features"
 import { AiAssistantDialogProvider } from "@/features/assistants/components/ai-assistant-dialog-provider"
+import { AiPromptConfigDialogProvider } from "@/features/assistants/components/ai-prompt-config-dialog-provider"
 import { AiPromptDialogProvider } from "@/features/assistants/components/ai-prompt-dialog-provider"
 
 export const metadata: Metadata = {
@@ -23,7 +24,9 @@ export default function AssistantsLayout(props: AssistantsLayoutProps) {
 
   return (
     <AiAssistantDialogProvider>
-      <AiPromptDialogProvider>{children}</AiPromptDialogProvider>
+      <AiPromptDialogProvider>
+        <AiPromptConfigDialogProvider>{children}</AiPromptConfigDialogProvider>
+      </AiPromptDialogProvider>
     </AiAssistantDialogProvider>
   )
 }
