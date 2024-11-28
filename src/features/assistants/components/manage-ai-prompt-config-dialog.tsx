@@ -41,6 +41,7 @@ import {
 } from "@/features/assistants/schemas"
 import { PromptConfigFormData } from "@/features/assistants/types"
 import { Logger } from "@/features/telemetry/logger"
+import { useToast } from "@/features/toasts/use-toast"
 
 const logger = Logger.create("assistants")
 
@@ -55,6 +56,8 @@ export function ManageAiPromptConfigDialog(
   const { open, onOpenChange } = props
 
   const [isSubmitting, setIsSubmitting] = useState(false)
+
+  const { toast } = useToast()
 
   const { aiPromptInput, updateAiPromptInput } = useAssistants()
 
@@ -97,14 +100,20 @@ export function ManageAiPromptConfigDialog(
         }))
         onOpenChange(false)
 
-        // TODO: Display a toast notification
+        toast({
+          variant: "success",
+          title: "Prompt configuration saved",
+        })
       } catch (error) {
-        // TODO: Display an error toast notification
+        toast({
+          variant: "error",
+          title: "Failed to save prompt configuration",
+        })
       } finally {
         setIsSubmitting(false)
       }
     },
-    [updateAiPromptInput, onOpenChange]
+    [updateAiPromptInput, onOpenChange, toast]
   )
 
   useEffect(() => {
