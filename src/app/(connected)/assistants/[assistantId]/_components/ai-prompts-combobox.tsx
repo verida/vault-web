@@ -15,29 +15,25 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
-import { AiPromptInput } from "@/features/assistants/types"
 import { cn } from "@/styles/utils"
 
 export type AiPromptsComboboxProps = {
-  onClickEdit?: (input: AiPromptInput) => void
+  onSetPrompt?: () => void
 } & React.ComponentProps<typeof Button>
 
 export function AiPromptsCombobox(props: AiPromptsComboboxProps) {
-  const { className, onClickEdit, ...buttonProps } = props
+  const { className, onSetPrompt, ...buttonProps } = props
 
   const [open, setOpen] = useState(false)
 
-  const handleItemClick = useCallback(async () => {
+  const handleSelect = useCallback(async () => {
     setOpen(false)
   }, [])
 
-  const handleSetPromptClick = useCallback(
-    async (input: AiPromptInput) => {
-      onClickEdit?.(input)
-      setOpen(false)
-    },
-    [onClickEdit]
-  )
+  const handleSetPrompt = useCallback(() => {
+    onSetPrompt?.()
+    setOpen(false)
+  }, [onSetPrompt])
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -65,8 +61,8 @@ export function AiPromptsCombobox(props: AiPromptsComboboxProps) {
         className="w-[calc(100vw-1rem)] max-w-sm rounded-[0.875rem] p-1"
       >
         <AiPromptSelector
-          onItemClick={handleItemClick}
-          onClickSetPrompt={handleSetPromptClick}
+          onSelect={handleSelect}
+          onSetPrompt={handleSetPrompt}
         />
       </PopoverContent>
     </Popover>

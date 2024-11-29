@@ -1,6 +1,6 @@
 "use client"
 
-import { BookmarkIcon, XIcon } from "lucide-react"
+import { BookmarkIcon, Settings2Icon, XIcon } from "lucide-react"
 import React, {
   ChangeEventHandler,
   KeyboardEventHandler,
@@ -23,6 +23,7 @@ import {
 } from "@/components/ui/tooltip"
 import { featureFlags } from "@/config/features"
 import { MAX_NB_PROMPTS_PER_ASSISTANT } from "@/features/assistants/constants"
+import { useAiPromptConfigDialog } from "@/features/assistants/hooks/use-ai-prompt-config-dialog"
 import { useAiPromptDialog } from "@/features/assistants/hooks/use-ai-prompt-dialog"
 import { useAssistants } from "@/features/assistants/hooks/use-assistants"
 import { useGetAiPrompts } from "@/features/assistants/hooks/use-get-ai-prompts"
@@ -51,6 +52,7 @@ export function AssistantUserInput(props: AssistantUserInputProps) {
       assistantId: selectedAiAssistant,
     },
   })
+  const { openDialog: openConfigDialog } = useAiPromptConfigDialog()
 
   const isMaxNbPromptsReached = useMemo(
     () =>
@@ -63,12 +65,12 @@ export function AssistantUserInput(props: AssistantUserInputProps) {
   const handleUserPromptChange: ChangeEventHandler<HTMLTextAreaElement> =
     useCallback(
       (event) => {
-        updateAiPromptInput({
-          assistantId: selectedAiAssistant,
+        updateAiPromptInput((prevInput) => ({
+          ...prevInput,
           prompt: event.target.value,
-        })
+        }))
       },
-      [updateAiPromptInput, selectedAiAssistant]
+      [updateAiPromptInput]
     )
 
   const handleKeyDown: KeyboardEventHandler<HTMLTextAreaElement> = useCallback(
@@ -85,7 +87,7 @@ export function AssistantUserInput(props: AssistantUserInputProps) {
     inputRef.current?.focus()
   }, [])
 
-  const handleEditPrompt = useCallback(() => {
+  const handleSetPrompt = useCallback(() => {
     inputRef.current?.focus()
   }, [])
 
@@ -129,7 +131,7 @@ export function AssistantUserInput(props: AssistantUserInputProps) {
           <div className="flex flex-row items-center justify-start gap-2">
             {!isXL ? (
               <AiPromptsCombobox
-                onClickEdit={handleEditPrompt}
+                onSetPrompt={handleSetPrompt}
                 className="size-8 sm:size-10"
               />
             ) : null}
@@ -160,6 +162,24 @@ export function AssistantUserInput(props: AssistantUserInputProps) {
             ) : null}
           </div>
           <div className="flex flex-row items-center justify-end gap-2">
+            {featureFlags.assistant.config.enabled ? (
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    className="size-8 sm:size-10"
+                    onClick={openConfigDialog}
+                  >
+                    <Settings2Icon className="size-5 sm:size-6" />
+                    <span className="sr-only">
+                      Manage prompt configurations
+                    </span>
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>Configure</TooltipContent>
+              </Tooltip>
+            ) : null}
             <Button
               variant="primary"
               size="icon"

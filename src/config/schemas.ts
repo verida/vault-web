@@ -35,6 +35,10 @@ export const CommonConfigSchema = z.object({
     .string()
     .optional()
     .transform((value) => value === "true"),
+  FEATURE_FLAG_AI_ASSISTANT_PROMPT_CONFIG_ENABLED: z
+    .string()
+    .optional()
+    .transform((value) => value === "true"),
   DEFAULT_AI_PROVIDER: z.enum(LLM_PROVIDERS).default("bedrock"),
   DEFAULT_AI_MODEL: z.enum(LLM_MODELS).default("LLAMA3.1_70B"),
   FEATURE_FLAG_INBOX_ENABLED: z

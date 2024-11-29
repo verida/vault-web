@@ -52,12 +52,12 @@ import { moveItemInArray } from "@/utils/misc"
 const logger = Logger.create("assistants")
 
 export type AiPromptSelectorProps = {
-  onClickSetPrompt?: (input: AiPromptInput) => void
-  onItemClick?: (input: AiPromptInput) => void
+  onSelect?: () => void
+  onSetPrompt?: () => void
 } & Omit<React.ComponentProps<"div">, "children">
 
 export function AiPromptSelector(props: AiPromptSelectorProps) {
-  const { className, onClickSetPrompt, onItemClick, ...divProps } = props
+  const { className, onSelect, onSetPrompt, ...divProps } = props
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -85,20 +85,20 @@ export function AiPromptSelector(props: AiPromptSelectorProps) {
   })
   const { updateAiPromptAsync } = useUpdateAiPrompt()
 
-  const handleItemClick = useCallback(
+  const handleSelect = useCallback(
     async (input: AiPromptInput) => {
       setAndProcessAiPromptInput(input)
-      onItemClick?.(input)
+      onSelect?.()
     },
-    [setAndProcessAiPromptInput, onItemClick]
+    [setAndProcessAiPromptInput, onSelect]
   )
 
-  const handleSetPromptClick = useCallback(
+  const handleSetPrompt = useCallback(
     async (input: AiPromptInput) => {
       updateAiPromptInput(input)
-      onClickSetPrompt?.(input)
+      onSetPrompt?.()
     },
-    [updateAiPromptInput, onClickSetPrompt]
+    [updateAiPromptInput, onSetPrompt]
   )
 
   const handleClearSearch = useCallback(() => {
@@ -204,16 +204,10 @@ export function AiPromptSelector(props: AiPromptSelectorProps) {
                       aiPrompt={savedAiPrompt}
                       sortable={aiPrompts.length > 1}
                       onSelect={() => {
-                        handleItemClick({
-                          assistantId: selectedAiAssistant,
-                          prompt: savedAiPrompt.prompt,
-                        })
+                        handleSelect(savedAiPrompt)
                       }}
-                      onClickSetPrompt={() => {
-                        handleSetPromptClick({
-                          assistantId: selectedAiAssistant,
-                          prompt: savedAiPrompt.prompt,
-                        })
+                      onSetPrompt={() => {
+                        handleSetPrompt(savedAiPrompt)
                       }}
                       additionalActions={
                         <>
@@ -247,16 +241,10 @@ export function AiPromptSelector(props: AiPromptSelectorProps) {
                 key={index}
                 aiPrompt={suggestedPrompt}
                 onSelect={() => {
-                  handleItemClick({
-                    assistantId: selectedAiAssistant,
-                    prompt: suggestedPrompt.prompt,
-                  })
+                  handleSelect(suggestedPrompt)
                 }}
-                onClickSetPrompt={() => {
-                  handleSetPromptClick({
-                    assistantId: selectedAiAssistant,
-                    prompt: suggestedPrompt.prompt,
-                  })
+                onSetPrompt={() => {
+                  handleSetPrompt(suggestedPrompt)
                 }}
               />
             ))}
@@ -271,14 +259,13 @@ AiPromptSelector.displayName = "AiPromptSelector"
 type AiPromptSelectorItemProps = {
   aiPrompt: AiPromptRecord
   onSelect: () => void
-  onClickSetPrompt: () => void
+  onSetPrompt: () => void
   sortable?: boolean
   additionalActions?: React.ReactNode
 }
 
 function AiPromptSelectorItem(props: AiPromptSelectorItemProps) {
-  const { aiPrompt, onSelect, onClickSetPrompt, sortable, additionalActions } =
-    props
+  const { aiPrompt, onSelect, onSetPrompt, sortable, additionalActions } = props
 
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id: aiPrompt._id })
@@ -316,7 +303,7 @@ function AiPromptSelectorItem(props: AiPromptSelectorItemProps) {
                 size="icon"
                 onClick={(e) => {
                   e.stopPropagation()
-                  onClickSetPrompt()
+                  onSetPrompt()
                 }}
               >
                 <ArrowUpRightIcon className="size-4 sm:size-5" />

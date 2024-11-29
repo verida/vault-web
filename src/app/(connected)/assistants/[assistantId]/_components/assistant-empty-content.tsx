@@ -18,7 +18,7 @@ export type AssistantEmptyContentProps = React.ComponentProps<"div">
 export function AssistantEmptyContent(props: AssistantEmptyContentProps) {
   const { className, ...divProps } = props
 
-  const { selectedAiAssistant, setAndProcessAiPromptInput } = useAssistants()
+  const { setAndProcessAiPromptInput } = useAssistants()
 
   const { connections, isLoading: isLoadingDataConnections } =
     useDataConnections()
@@ -59,10 +59,7 @@ export function AssistantEmptyContent(props: AssistantEmptyContentProps) {
                 variant="outline"
                 className="h-auto rounded-full px-4 py-2.5"
                 onClick={() => {
-                  handleSuggestedPromptClick({
-                    assistantId: selectedAiAssistant,
-                    prompt: suggestedPrompt.prompt,
-                  })
+                  handleSuggestedPromptClick(suggestedPrompt)
                 }}
               >
                 <Typography variant="base-s-regular">
