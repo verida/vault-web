@@ -12,6 +12,7 @@ import { Avatar } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton"
+import { EMPTY_VALUE_FALLBACK } from "@/constants/misc"
 import { DEFAULT_ASSISTANT } from "@/features/assistants/constants"
 import { useAssistants } from "@/features/assistants/hooks/use-assistants"
 import { useGetAiAssistants } from "@/features/assistants/hooks/use-get-ai-assistants"
@@ -50,7 +51,7 @@ export function AssistantOutputCard(props: AssistantOutputCardProps) {
 
   const processedAt = useMemo(() => {
     if (aiAssistantOutput?.status !== "processed") {
-      return "-"
+      return EMPTY_VALUE_FALLBACK
     }
 
     return intlFormat(aiAssistantOutput.processedAt, SHORT_TIME_FORMAT_OPTIONS)

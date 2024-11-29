@@ -5,6 +5,7 @@ import { DataConnectionStatusBadge } from "@/components/data-connections/data-co
 import { Typography } from "@/components/typography"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton"
+import { EMPTY_VALUE_FALLBACK } from "@/constants/misc"
 import {
   DataConnectionHandler,
   DataProviderHandler,
@@ -57,7 +58,7 @@ export function DataConnectionHandlerCard(
                   new Date(connectionHandler.latestSyncEnd),
                   LONG_DATE_TIME_FORMAT_OPTIONS
                 )
-              : "-"}
+              : EMPTY_VALUE_FALLBACK}
           </Typography>
         </div>
         <div className="flex flex-wrap items-start justify-between gap-4">
@@ -68,7 +69,7 @@ export function DataConnectionHandlerCard(
             className="line-clamp-4 flex-1 text-end"
             variant="base-regular"
           >
-            {connectionHandler?.syncMessage || "-"}
+            {connectionHandler?.syncMessage || EMPTY_VALUE_FALLBACK}
           </Typography>
         </div>
         {handlerDefinition?.options?.map((option) => (
