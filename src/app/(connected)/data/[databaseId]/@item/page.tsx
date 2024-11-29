@@ -1,18 +1,17 @@
 "use client"
 
-import { useRouter } from "next/navigation"
 import { useCallback, useMemo } from "react"
 
 import { DataItemPageContent } from "@/app/(connected)/data/[databaseId]/@item/_components/data-item-page-content"
 import { USER_DATABASE_DEFS } from "@/features/data/constants"
+import { useItemIdState } from "@/features/data/hooks/use-itemd-id-state"
 
 type DataItemPageProps = {
   params: { databaseId: string }
-  searchParams: { itemId: string }
 }
 
 export default function DataItemPage(props: DataItemPageProps) {
-  const { params, searchParams } = props
+  const { params } = props
 
   const { databaseId: encodedDatabaseId } = params
   const databaseId = decodeURIComponent(encodedDatabaseId)
@@ -23,16 +22,11 @@ export default function DataItemPage(props: DataItemPageProps) {
     [databaseId]
   )
 
-  const { itemId: encodedItemId } = searchParams
-  const itemId = encodedItemId ? decodeURIComponent(encodedItemId) : undefined
-
-  const router = useRouter()
+  const { itemId, setItemId } = useItemIdState()
 
   const handleClose = useCallback(() => {
-    const url = new URL(window.location.href)
-    url.searchParams.delete("itemId")
-    router.push(url.toString())
-  }, [router])
+    setItemId(null, { history: "push" })
+  }, [setItemId])
 
   const itemPage = useMemo(() => {
     if (!itemId || !databaseDefinition) {

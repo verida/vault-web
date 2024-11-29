@@ -1,20 +1,17 @@
 "use client"
 
-import {
-  PaginationState,
-  getCoreRowModel,
-  useReactTable,
-} from "@tanstack/react-table"
+import { getCoreRowModel, useReactTable } from "@tanstack/react-table"
 import Link from "next/link"
-import { useMemo, useState } from "react"
+import { useMemo } from "react"
 
 import { getDataRecordsTableColumns } from "@/app/(connected)/data/[databaseId]/_components/data-records-table-columns"
 import { DataTable } from "@/components/data-table/data-table"
 import { DataTableGenericRow } from "@/components/data-table/data-table-generic-row"
 import { EMPTY_VALUE_FALLBACK } from "@/constants/misc"
-import { DATA_TABLE_PAGINATION_SIZE_DEFAULT } from "@/features/data-table/constants"
 import { DataTableColumnAlignFeature } from "@/features/data-table/data-table-column-align-feature"
 import { DataTableColumnClassNameFeature } from "@/features/data-table/data-table-column-classname-feature"
+import { useDataTableState } from "@/features/data-table/hooks/use-data-table-state"
+import { useItemIdState } from "@/features/data/hooks/use-itemd-id-state"
 import { DatabaseDefinition } from "@/features/data/types"
 import { useVeridaDataRecords } from "@/features/verida-database/hooks/use-verida-data-records"
 import { VeridaRecord } from "@/features/verida-database/types"
@@ -30,10 +27,7 @@ export type DataRecordsTableProps = {
 export function DataRecordsTable(props: DataRecordsTableProps) {
   const { databaseDefinition, className } = props
 
-  const [pagination, setPagination] = useState<PaginationState>({
-    pageIndex: 0,
-    pageSize: DATA_TABLE_PAGINATION_SIZE_DEFAULT,
-  })
+  const { pagination, setPagination } = useDataTableState()
 
   const {
     records,
@@ -66,12 +60,14 @@ export function DataRecordsTable(props: DataRecordsTableProps) {
     },
   })
 
+  const { serializeItemId } = useItemIdState()
+
   return (
     <DataTable
       table={table}
       rowComponent={(row) => (
         <Link
-          href={`?itemId=${encodeURIComponent(row.original._id)}`}
+          href={serializeItemId({ itemId: row.original._id })}
           className="rounded-lg"
         >
           <DataTableGenericRow

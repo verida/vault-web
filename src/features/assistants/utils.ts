@@ -2,8 +2,13 @@ import { commonConfig } from "@/config/common"
 import {
   PrivateDataApiV1LLMPersonalResponseSchema,
   PrivateDataApiV1LlmHotloadResponseSchema,
+  PromptConfigSchema,
 } from "@/features/assistants/schemas"
-import { AiAssistantOutput, AiPromptInput } from "@/features/assistants/types"
+import {
+  AiAssistantOutput,
+  AiPromptInput,
+  PrivateDataApiV1LLMPersonalRequestBody,
+} from "@/features/assistants/types"
 import { Logger } from "@/features/telemetry"
 
 const logger = Logger.create("assistants")
@@ -30,6 +35,27 @@ export async function sendAiPromptInputToAssistant(
     throw new Error("API configuration is missing")
   }
 
+  if (!aiPromptInput.prompt) {
+    throw new Error("Prompt is required")
+  }
+
+  const promptConfigValidationResult = PromptConfigSchema.safeParse(
+    aiPromptInput.config?.promptConfig
+  )
+
+  // Explicitly building the body to ensure that the request is correct
+  // Mostly because the structures are not the same
+  // But also because aiPromptInput may have additional fields
+  const body: PrivateDataApiV1LLMPersonalRequestBody = {
+    prompt: aiPromptInput.prompt,
+    provider:
+      aiPromptInput.config?.llmProvider ?? commonConfig.DEFAULT_AI_PROVIDER,
+    model: aiPromptInput.config?.llmModel ?? commonConfig.DEFAULT_AI_MODEL,
+    promptConfig: promptConfigValidationResult.success
+      ? aiPromptInput.config?.promptConfig
+      : undefined,
+  }
+
   try {
     logger.debug("Sending request to AI assistant API")
     const response = await fetch(
@@ -40,13 +66,7 @@ export async function sendAiPromptInputToAssistant(
           "Content-Type": "application/json",
           "X-API-Key": sessionToken,
         },
-        body: JSON.stringify({
-          // TODO: When and if passing the assistantId is supported, add it here but handle when using the default non-existing assistant
-          prompt: aiPromptInput.prompt,
-          provider: commonConfig.DEFAULT_AI_PROVIDER,
-          model: commonConfig.DEFAULT_AI_MODEL, // Could come from the user input
-          // TODO: Add further configuration options (LLM model, data type, filters, etc.) when endpoint supports it
-        }),
+        body: JSON.stringify(body),
       }
     )
 

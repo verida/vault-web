@@ -13,7 +13,9 @@ export type AssistantsContextType = {
   aiAssistantOutput: AiAssistantOutput | null
   processAiPromptInput: () => Promise<void>
   setAndProcessAiPromptInput: (aiPromptInput: AiPromptInput) => Promise<void>
-  updateAiPromptInput: (aiPromptInput: AiPromptInput) => void
+  updateAiPromptInput: React.Dispatch<
+    React.SetStateAction<AiPromptInput | null>
+  >
   clearAiPromptInput: () => void
   clearAiAssistantOutput: () => void
   error: string | null
