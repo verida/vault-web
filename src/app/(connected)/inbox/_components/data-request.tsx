@@ -44,6 +44,9 @@ const logger = Logger.create("inbox")
 // TODO: Use custom logger and remove this eslint by-pass
 /* eslint-disable no-console */
 
+/**
+ * @deprecated
+ */
 export function DataRequestDetails(props: InboxDetailsProps) {
   const { message, onClose } = props
   const { message: title, data, type } = message

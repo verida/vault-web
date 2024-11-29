@@ -17,6 +17,9 @@ import { Button } from "@/components/ui/button"
 import { InboxType } from "@/features/inbox/types"
 import { useInboxAction } from "@/features/inbox/use-inbox-action"
 
+/**
+ * @deprecated
+ */
 export function InboxIncomingData(props: InboxDetailsProps) {
   const { message: inboxItem, onClose } = props
   const { message, data, sentAt, sentBy, type } = inboxItem

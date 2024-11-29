@@ -7,6 +7,9 @@ import {
   EmptyStateTitle,
 } from "@/components/ui/empty-state"
 
+/**
+ * @deprecated
+ */
 export function NoInbox() {
   return (
     <EmptyState>

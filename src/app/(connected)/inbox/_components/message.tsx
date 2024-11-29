@@ -12,6 +12,9 @@ import { Button } from "@/components/ui/button"
 import { InboxType } from "@/features/inbox/types"
 import { useInboxAction } from "@/features/inbox/use-inbox-action"
 
+/**
+ * @deprecated
+ */
 export function InboxMessageDetails(props: InboxDetailsProps) {
   const { message: inboxItem, onClose } = props
   const { message, data } = inboxItem
