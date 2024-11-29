@@ -25,6 +25,9 @@ export const featureFlags = {
     userPrompts: {
       enabled: commonConfig.FEATURE_FLAG_AI_ASSISTANT_USER_PROMPTS_ENABLED,
     },
+    config: {
+      enabled: commonConfig.FEATURE_FLAG_AI_ASSISTANT_PROMPT_CONFIG_ENABLED,
+    },
   },
   dataConnections: {
     enabled: commonConfig.FEATURE_FLAG_DATA_CONNECTIONS_ENABLED,

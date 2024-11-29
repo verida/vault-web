@@ -1,11 +1,6 @@
 "use client"
 
-import {
-  PaginationState,
-  getCoreRowModel,
-  useReactTable,
-} from "@tanstack/react-table"
-import { useState } from "react"
+import { getCoreRowModel, useReactTable } from "@tanstack/react-table"
 
 import { dataConnectionLogsTableColumns } from "@/components/data-connections/logs-table/data-connection-logs-table-columns"
 import { DataConnectionLogsTableRow } from "@/components/data-connections/logs-table/data-connection-logs-table-row"
@@ -13,9 +8,9 @@ import { DataTable } from "@/components/data-table/data-table"
 import { EMPTY_VALUE_FALLBACK } from "@/constants/misc"
 import { useDataConnectionsLogs } from "@/features/data-connections/hooks/use-data-connections-logs"
 import { DataConnectionSyncLog } from "@/features/data-connections/types"
-import { DATA_TABLE_PAGINATION_SIZE_DEFAULT } from "@/features/data-table/constants"
 import { DataTableColumnAlignFeature } from "@/features/data-table/data-table-column-align-feature"
 import { DataTableColumnClassNameFeature } from "@/features/data-table/data-table-column-classname-feature"
+import { useDataTableState } from "@/features/data-table/hooks/use-data-table-state"
 import { VeridaRecord } from "@/features/verida-database/types"
 
 const fallbackData: VeridaRecord<DataConnectionSyncLog>[] = []
@@ -23,10 +18,7 @@ const fallbackData: VeridaRecord<DataConnectionSyncLog>[] = []
 const getRowId = (record: VeridaRecord<DataConnectionSyncLog>) => record._id
 
 export default function ConnectionsLogsPage() {
-  const [pagination, setPagination] = useState<PaginationState>({
-    pageIndex: 0,
-    pageSize: DATA_TABLE_PAGINATION_SIZE_DEFAULT,
-  })
+  const { pagination, setPagination } = useDataTableState()
 
   const {
     logs,
