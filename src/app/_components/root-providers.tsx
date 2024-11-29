@@ -1,5 +1,6 @@
 "use client"
 
+import { NuqsAdapter } from "nuqs/adapters/next/app"
 import { Suspense } from "react"
 
 import { Toaster } from "@/components/ui/toaster"
@@ -21,20 +22,22 @@ export function RootProviders(props: RootProvidersProps) {
   // For providers requiring the user to be connected and/or authorised to use the app, use the AppRestrictedProviders or AppUnrestrictedProviders components instead.
   return (
     <Suspense>
-      <ThemesProvider>
-        <TooltipProvider>
-          <QueriesProvider>
-            <VeridaProvider>
-              <RestrictedAccessProvider>
-                <DataConnectionsBroadcastProvider>
-                  {children}
-                </DataConnectionsBroadcastProvider>
-              </RestrictedAccessProvider>
-            </VeridaProvider>
-          </QueriesProvider>
-          <Toaster />
-        </TooltipProvider>
-      </ThemesProvider>
+      <NuqsAdapter>
+        <ThemesProvider>
+          <TooltipProvider>
+            <QueriesProvider>
+              <VeridaProvider>
+                <RestrictedAccessProvider>
+                  <DataConnectionsBroadcastProvider>
+                    {children}
+                  </DataConnectionsBroadcastProvider>
+                </RestrictedAccessProvider>
+              </VeridaProvider>
+            </QueriesProvider>
+            <Toaster />
+          </TooltipProvider>
+        </ThemesProvider>
+      </NuqsAdapter>
     </Suspense>
   )
 }
