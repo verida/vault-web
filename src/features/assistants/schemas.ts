@@ -152,5 +152,35 @@ export const PromptConfigSchema = z.object({
 
 export const PromptConfigFormDataSchema = z.object({
   llmModel: LlmModelSchema.optional(),
-  rawPromptConfig: z.string().optional(),
+  rawPromptConfig: z
+    .string()
+    .optional()
+    .superRefine((value, context) => {
+      if (!value) {
+        return
+      }
+
+      // Try to parse JSON
+      let parsed
+      try {
+        parsed = JSON.parse(value)
+      } catch (error) {
+        context.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "Invalid JSON format",
+          fatal: true,
+        })
+        return z.NEVER
+      }
+
+      // Validate against PromptConfigSchema
+      const result = PromptConfigSchema.safeParse(parsed)
+      if (!result.success) {
+        context.addIssue({
+          code: z.ZodIssueCode.custom,
+          message:
+            "Configuration format is invalid. Please check the documentation.",
+        })
+      }
+    }),
 })

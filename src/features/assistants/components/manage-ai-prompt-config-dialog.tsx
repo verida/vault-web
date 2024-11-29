@@ -35,15 +35,9 @@ import { Textarea } from "@/components/ui/textarea"
 import { commonConfig } from "@/config/common"
 import { LLM_MODEL_DEFS } from "@/features/assistants/constants"
 import { useAssistants } from "@/features/assistants/hooks/use-assistants"
-import {
-  PromptConfigFormDataSchema,
-  PromptConfigSchema,
-} from "@/features/assistants/schemas"
+import { PromptConfigFormDataSchema } from "@/features/assistants/schemas"
 import { PromptConfigFormData } from "@/features/assistants/types"
-import { Logger } from "@/features/telemetry/logger"
 import { useToast } from "@/features/toasts/use-toast"
-
-const logger = Logger.create("assistants")
 
 export type ManageAiPromptConfigDialogProps = {
   open: boolean
@@ -67,7 +61,7 @@ export function ManageAiPromptConfigDialog(
       llmModel:
         aiPromptInput?.config?.llmModel ?? commonConfig.DEFAULT_AI_MODEL,
       rawPromptConfig: aiPromptInput?.config?.promptConfig
-        ? JSON.stringify(aiPromptInput.config.promptConfig)
+        ? JSON.stringify(aiPromptInput.config.promptConfig, null, 2)
         : undefined,
     },
   })
@@ -76,26 +70,16 @@ export function ManageAiPromptConfigDialog(
     async (data: PromptConfigFormData) => {
       setIsSubmitting(true)
       try {
-        // TODO: Try to include the parsing of the string and the validation in the form schema
-        const promptConfigValidateResult = PromptConfigSchema.safeParse(
-          JSON.parse(data.rawPromptConfig ?? "{}")
-        )
-
-        if (!promptConfigValidateResult.success) {
-          logger.warn("Invalid prompt configuration", {
-            validationError: promptConfigValidateResult.error,
-          })
-          throw new Error("Invalid prompt configuration")
-        }
+        const promptConfig = data.rawPromptConfig
+          ? JSON.parse(data.rawPromptConfig)
+          : undefined
 
         updateAiPromptInput((prevInput) => ({
           ...prevInput,
           config: {
             ...prevInput?.config,
             llmModel: data.llmModel,
-            promptConfig: data.rawPromptConfig
-              ? promptConfigValidateResult.data
-              : undefined,
+            promptConfig,
           },
         }))
         onOpenChange(false)
@@ -124,7 +108,7 @@ export function ManageAiPromptConfigDialog(
     form.setValue(
       "rawPromptConfig",
       aiPromptInput?.config?.promptConfig
-        ? JSON.stringify(aiPromptInput.config.promptConfig)
+        ? JSON.stringify(aiPromptInput.config.promptConfig, null, 2)
         : undefined
     )
   }, [form, aiPromptInput])
@@ -192,14 +176,15 @@ export function ManageAiPromptConfigDialog(
                       />
                     </FormControl>
                     <FormDescription>
-                      Refer to the documentation of{" "}
+                      Refer to the{" "}
                       <Link
                         href="https://user-apis.verida.network/#61bf5cf2-cb2e-43af-b592-f89d0b0d291a"
                         target="_blank"
                         className="text-primary underline"
                       >
                         Prompt Config
-                      </Link>
+                      </Link>{" "}
+                      documentation
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
