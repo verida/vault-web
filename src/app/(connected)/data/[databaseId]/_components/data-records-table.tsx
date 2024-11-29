@@ -15,6 +15,7 @@ import { EMPTY_VALUE_FALLBACK } from "@/constants/misc"
 import { DATA_TABLE_PAGINATION_SIZE_DEFAULT } from "@/features/data-table/constants"
 import { DataTableColumnAlignFeature } from "@/features/data-table/data-table-column-align-feature"
 import { DataTableColumnClassNameFeature } from "@/features/data-table/data-table-column-classname-feature"
+import { useItemIdState } from "@/features/data/hooks/use-itemd-id-state"
 import { DatabaseDefinition } from "@/features/data/types"
 import { useVeridaDataRecords } from "@/features/verida-database/hooks/use-verida-data-records"
 import { VeridaRecord } from "@/features/verida-database/types"
@@ -66,12 +67,14 @@ export function DataRecordsTable(props: DataRecordsTableProps) {
     },
   })
 
+  const { serializeItemId } = useItemIdState()
+
   return (
     <DataTable
       table={table}
       rowComponent={(row) => (
         <Link
-          href={`?itemId=${encodeURIComponent(row.original._id)}`}
+          href={serializeItemId({ itemId: row.original._id })}
           className="rounded-lg"
         >
           <DataTableGenericRow
