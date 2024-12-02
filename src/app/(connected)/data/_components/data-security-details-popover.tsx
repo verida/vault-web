@@ -52,8 +52,8 @@ export function DataSecurityDetailsPopover(
               </Typography>
               <div className="text-muted-foreground">
                 <Typography variant="base-regular">
-                  Your data is specificaly encrypted with your own decentralized
-                  identity.
+                  Your data is specifically encrypted with your own
+                  decentralized identity.
                 </Typography>
               </div>
             </div>
@@ -88,8 +88,8 @@ export function DataSecurityDetailsPopover(
               </Typography>
               <div className="text-muted-foreground">
                 <Typography variant="base-regular">
-                  Your data is completely isolated from other users on the
-                  Verida Network.
+                  Your data is fully isolated from other users on the Verida
+                  Network.
                 </Typography>
               </div>
             </div>

@@ -35,7 +35,7 @@ export function AssistantSecurityDetailsPopover(
             </SecurityDetailsPopoverTitle>
           </div>
           <SecurityDetailsPopoverDescription>
-            Verida Vault ensures your data remains private and secure.
+            The Verida Vault ensures your data remains private and secure.
           </SecurityDetailsPopoverDescription>
         </SecurityDetailsPopoverHeader>
         <SecurityDetailsPopoverBody className="gap-4">
@@ -72,8 +72,8 @@ export function AssistantSecurityDetailsPopover(
               </Typography>
               <div className="text-muted-foreground">
                 <Typography variant="base-regular">
-                  The security and privacy of your data is respected when
-                  processed by our AI models.
+                  Our AI models process your data in a secure environment that
+                  preserves your privacy.
                 </Typography>
               </div>
             </div>
