@@ -5,6 +5,9 @@ export type IncomingDataItemProps = {
   item: Record<string, any>
 }
 
+/**
+ * @deprecated
+ */
 export function IncomingDataItem(props: IncomingDataItemProps) {
   const { item } = props
 

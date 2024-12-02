@@ -19,6 +19,7 @@ import {
 import { Skeleton } from "@/components/ui/skeleton"
 import { version } from "@/config/version"
 import { APP_NAME } from "@/constants/app"
+import { EMPTY_VALUE_FALLBACK } from "@/constants/misc"
 import { useUserFeedback } from "@/features/telemetry/use-user-feedback"
 import { useToast } from "@/features/toasts/use-toast"
 import { EMPTY_PROFILE_NAME_FALLBACK } from "@/features/verida-profile/constants"
@@ -68,7 +69,7 @@ export function IdentityDropdownMenu(props: IdentityDropdownMenuProps) {
                 <Avatar className="size-8">
                   <AvatarImage alt="User Avatar" src={profile.avatar?.uri} />
                   <AvatarFallback>
-                    {profile.name?.at(0)?.toUpperCase() || "-"}
+                    {profile.name?.at(0)?.toUpperCase() || EMPTY_VALUE_FALLBACK}
                   </AvatarFallback>
                 </Avatar>
                 <p
@@ -100,7 +101,7 @@ export function IdentityDropdownMenu(props: IdentityDropdownMenuProps) {
               <Avatar className="size-12">
                 <AvatarImage alt="User Avatar" src={profile.avatar?.uri} />
                 <AvatarFallback>
-                  {profile.name?.at(0)?.toUpperCase() || "-"}
+                  {profile.name?.at(0)?.toUpperCase() || EMPTY_VALUE_FALLBACK}
                 </AvatarFallback>
               </Avatar>
             ) : (

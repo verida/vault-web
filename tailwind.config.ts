@@ -70,6 +70,10 @@ const config = {
             DEFAULT: "hsl(var(--status-approved))",
             foreground: "hsl(var(--status-approved-foreground))",
           },
+          secured: {
+            DEFAULT: "hsl(var(--status-secured))",
+            foreground: "hsl(var(--status-secured-foreground))",
+          },
           connected: {
             DEFAULT: "hsl(var(--status-connected))",
             foreground: "hsl(var(--status-connected-foreground))",

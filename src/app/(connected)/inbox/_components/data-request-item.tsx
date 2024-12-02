@@ -19,6 +19,9 @@ export type DataRequestItemProps = {
   disabled?: boolean
 }
 
+/**
+ * @deprecated
+ */
 export function DataRequestItem(props: DataRequestItemProps) {
   const {
     disabled = false,

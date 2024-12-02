@@ -2,12 +2,14 @@ import {
   ConnectDataProviderDialog,
   ConnectDataProviderDialogTrigger,
 } from "@/app/(connected)/connections/summary/_components/connect-data-provider-dialog"
+import { ConnectionsSecurityDetailsPopover } from "@/app/(connected)/connections/summary/_components/connections-security-details-popover"
 import { DataConnectionsList } from "@/app/(connected)/connections/summary/_components/data-connections-list"
 import { DataProvidersSection } from "@/app/(connected)/connections/summary/_components/data-providers-section"
 import { SummarySectionWrapper } from "@/app/(connected)/connections/summary/_components/summary-section-wrapper"
 import { SyncAllConnectionsButton } from "@/app/(connected)/connections/summary/_components/sync-all-connections-button"
 import { PlusIcon } from "@/components/icons/plus-icon"
 import { PageWrapper } from "@/components/page-wrapper"
+import { Typography } from "@/components/typography"
 import { Button } from "@/components/ui/button"
 
 export default function ConnectionsSummaryPage() {
@@ -32,16 +34,23 @@ export default function ConnectionsSummaryPage() {
       }
     >
       <div className="flex flex-col gap-8 sm:gap-10">
-        <SummarySectionWrapper title="Connected Accounts">
+        <SummarySectionWrapper
+          sectionTitle={
+            <div className="flex flex-row items-center gap-4">
+              <Typography variant="heading-4">Connected Accounts</Typography>
+              <ConnectionsSecurityDetailsPopover />
+            </div>
+          }
+        >
           <DataConnectionsList />
         </SummarySectionWrapper>
         <DataProvidersSection
           filteredStatus="active"
-          title="Available Platforms"
+          sectionTitle="Available Platforms"
         />
         <DataProvidersSection
           filteredStatus="upcoming"
-          title="Upcoming Platforms"
+          sectionTitle="Upcoming Platforms"
           hideIfEmpty
           hideIfError
           hideIfLoading
