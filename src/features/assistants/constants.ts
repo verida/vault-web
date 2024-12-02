@@ -7,6 +7,11 @@ import {
 import { DatabaseDefinition } from "@/features/data/types"
 
 export const LLM_MODEL_DEFS: Record<LlmModel, LLMModelDefinition> = {
+  "CLAUDE_HAIKU_3.5": {
+    provider: "bedrock",
+    model: "CLAUDE_HAIKU_3.5",
+    label: "Claude 3.5 Haiku",
+  },
   "LLAMA3.2_3B": {
     provider: "bedrock",
     model: "LLAMA3.2_3B",

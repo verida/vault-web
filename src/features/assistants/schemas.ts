@@ -7,6 +7,7 @@ export const LLM_PROVIDERS = ["bedrock"] as const
 export const LlmProviderSchema = z.enum(LLM_PROVIDERS)
 
 export const LLM_MODELS = [
+  "CLAUDE_HAIKU_3.5",
   "LLAMA3.2_3B",
   "LLAMA3.2_1B",
   "LLAMA3.1_70B",
