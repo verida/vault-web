@@ -8,6 +8,7 @@ import { useMediaQuery } from "usehooks-ts"
 import { AiPromptSelector } from "@/app/(connected)/assistants/[assistantId]/_components/ai-prompt-selector"
 import { AssistantDataStatus } from "@/app/(connected)/assistants/[assistantId]/_components/assistant-data-status"
 import { AssistantOutput } from "@/app/(connected)/assistants/[assistantId]/_components/assistant-output"
+import { AssistantSecurityDetailsPopover } from "@/app/(connected)/assistants/[assistantId]/_components/assistant-security-details-popover"
 import { AssistantUserInput } from "@/app/(connected)/assistants/[assistantId]/_components/assistant-user-input"
 import AssistantLoadingPage from "@/app/(connected)/assistants/[assistantId]/loading"
 import { Typography } from "@/components/typography"
@@ -91,7 +92,10 @@ export default function AssistantPage(props: AssistantPageProps) {
           <AssistantUserInput className="z-10 -mb-5" />
           <div className="flex-1 overflow-y-auto">
             <div className="flex flex-1 flex-col gap-4 pb-4 pt-9 md:pb-6 xl:pb-8">
-              <AssistantDataStatus className="pl-3 md:pl-4" />
+              <div className="flex flex-row items-center justify-between gap-4 pl-3 md:pl-4">
+                <AssistantDataStatus />
+                <AssistantSecurityDetailsPopover />
+              </div>
               <AssistantOutput />
             </div>
           </div>
