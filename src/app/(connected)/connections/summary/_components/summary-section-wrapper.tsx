@@ -2,7 +2,7 @@ import { Typography } from "@/components/typography"
 import { cn } from "@/styles/utils"
 
 export type SummarySectionWrapperProps = {
-  title: string
+  title: string | React.ReactNode
 } & React.ComponentProps<"section">
 
 export function SummarySectionWrapper(props: SummarySectionWrapperProps) {
@@ -13,7 +13,11 @@ export function SummarySectionWrapper(props: SummarySectionWrapperProps) {
       className={cn("flex flex-col gap-4 sm:gap-6", className)}
       {...sectionProps}
     >
-      <Typography variant="heading-4">{title}</Typography>
+      {typeof title === "string" ? (
+        <Typography variant="heading-4">{title}</Typography>
+      ) : (
+        title
+      )}
       {children}
     </section>
   )
