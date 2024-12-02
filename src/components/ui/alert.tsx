@@ -1,11 +1,11 @@
 import { type VariantProps, cva } from "class-variance-authority"
-import { ShieldCheckIcon } from "lucide-react"
 import * as React from "react"
 
 import { StatusErrorIcon } from "@/components/icons/status-error-icon"
 import { StatusInfoIcon } from "@/components/icons/status-info-icon"
 import { StatusSuccessIcon } from "@/components/icons/status-success-icon"
 import { StatusWarningIcon } from "@/components/icons/status-warning-icon"
+import { SecurityIcon } from "@/components/ui/secured"
 import { cn } from "@/styles/utils"
 
 const alertVariants = cva(
@@ -15,7 +15,8 @@ const alertVariants = cva(
       variant: {
         info: "border-l-status-info text-status-info",
         success: "border-l-status-success text-status-success",
-        secured: "border-l-status-secured text-status-secured",
+        secured:
+          "border-l-status-secured-foreground text-status-secured-foreground",
         warning: "border-l-status-warning text-status-warning",
         error: "border-l-status-error text-status-error",
       },
@@ -39,7 +40,7 @@ const Alert = React.forwardRef<
     <div className="absolute left-3 top-2">
       {variant === "info" ? <StatusInfoIcon className="size-5" /> : null}
       {variant === "success" ? <StatusSuccessIcon className="size-5" /> : null}
-      {variant === "secured" ? <ShieldCheckIcon className="size-5" /> : null}
+      {variant === "secured" ? <SecurityIcon className="size-5" /> : null}
       {variant === "warning" ? <StatusWarningIcon className="size-5" /> : null}
       {variant === "error" ? <StatusErrorIcon className="size-5" /> : null}
     </div>

@@ -1,12 +1,9 @@
-import { LockIcon, ServerIcon, ShieldCheckIcon, ShieldIcon } from "lucide-react"
+import { ShieldCheckIcon } from "lucide-react"
+import React from "react"
 
+import { Typography } from "@/components/typography"
 import { Badge } from "@/components/ui/badge"
-import {
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
 import {
   Popover,
   PopoverContent,
@@ -14,74 +11,155 @@ import {
 } from "@/components/ui/popover"
 import { cn } from "@/styles/utils"
 
+export type SecurityIconProps = React.ComponentProps<typeof ShieldCheckIcon>
+
+export function SecurityIcon(props: SecurityIconProps) {
+  const { className, ...iconProps } = props
+
+  return (
+    <ShieldCheckIcon
+      className={cn(
+        "size-4 shrink-0 text-status-secured-foreground",
+        className
+      )}
+      {...iconProps}
+    />
+  )
+}
+
 export type SecuredBadgeProps = Omit<
   React.ComponentProps<typeof Badge>,
   "children" | "variant"
 >
 
-export function SecuredBadge(props: SecuredBadgeProps) {
+export function SecurityBadge(props: SecuredBadgeProps) {
   const { className, ...divProps } = props
 
   return (
     <Badge
-      variant="success-reverse"
-      className={cn("gap-1 px-1 py-1 sm:px-2 sm:py-1", className)}
+      className={cn(
+        "gap-1 border-status-secured-foreground/50 bg-status-secured/50 px-1 py-1 text-status-secured-foreground hover:bg-status-secured/50 sm:px-2 sm:py-1",
+        className
+      )}
       {...divProps}
     >
-      <ShieldCheckIcon className="size-4" />
-      <span className="sr-only sm:not-sr-only">Secured</span>
+      <SecurityIcon className="size-4" />
+      <span className="hidden sm:block">Secured</span>
     </Badge>
   )
 }
-SecuredBadge.displayName = "SecuredBadge"
+SecurityBadge.displayName = "SecurityBadge"
 
-export function SecuredPopover() {
+export const SecurityDetailsPopover = Popover
+
+export type SecurityDetailsPopoverContentProps = React.ComponentProps<
+  typeof PopoverContent
+>
+
+export function SecurityDetailsPopoverContent(
+  props: SecurityDetailsPopoverContentProps
+) {
+  const {
+    className,
+    align = "start",
+    alignOffset = -20,
+    collisionPadding = 8,
+    ...popoverContentProps
+  } = props
+
   return (
-    <Popover>
-      <PopoverTrigger>
-        <SecuredBadge />
-      </PopoverTrigger>
-      <PopoverContent
-        align="start"
-        alignOffset={-20}
-        collisionPadding={8}
-        className="w-[calc(100vw-1rem)] max-w-sm"
-      >
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-emerald-700">
-            <ShieldCheckIcon className="size-5" />
-            Your Data is Protected
-          </CardTitle>
-          <CardDescription>
-            Verida Vault ensures your data remains private and secure
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="grid gap-4">
-          <div className="flex items-start gap-3">
-            <LockIcon className="mt-0.5 size-5 text-emerald-600" />
-            <div>
-              <h4 className="mb-1 font-medium leading-none">
-                End-to-End Encryption
-              </h4>
-              <p className="text-sm text-muted-foreground">
-                Your data is encrypted before leaving your device
-              </p>
-            </div>
-          </div>
-          <div className="flex items-start gap-3">
-            <ServerIcon className="mt-0.5 size-5 text-emerald-600" />
-            <div>
-              <h4 className="mb-1 font-medium leading-none">
-                Secure Processing
-              </h4>
-              <p className="text-sm text-muted-foreground">
-                AI processing occurs in isolated, secure environments
-              </p>
-            </div>
-          </div>
-        </CardContent>
-      </PopoverContent>
-    </Popover>
+    <PopoverContent
+      className={cn("w-[calc(100vw-1rem)] max-w-sm p-0", className)}
+      align={align}
+      alignOffset={alignOffset}
+      collisionPadding={collisionPadding}
+      {...popoverContentProps}
+    />
   )
 }
-SecuredPopover.displayName = "SecuredPopover"
+SecurityDetailsPopoverContent.displayName = "SecurityDetailsPopoverContent"
+
+export const SecurityDetailsPopoverHeader = React.forwardRef<
+  HTMLDivElement,
+  React.ComponentProps<"header">
+>(({ className, ...props }, ref) => (
+  <header
+    ref={ref}
+    className={cn("flex flex-col gap-1 p-6", className)}
+    {...props}
+  />
+))
+SecurityDetailsPopoverHeader.displayName = "SecurityDetailsPopoverHeader"
+
+export const SecurityDetailsPopoverTitle = React.forwardRef<
+  HTMLParagraphElement,
+  React.ComponentProps<typeof Typography>
+>(({ className, ...props }, ref) => (
+  <div className={cn("text-status-secured-foreground", className)}>
+    <Typography ref={ref} variant="heading-4" className="truncate" {...props} />
+  </div>
+))
+SecurityDetailsPopoverTitle.displayName = "SecurityDetailsPopoverTitle"
+
+export const SecurityDetailsPopoverDescription = React.forwardRef<
+  HTMLParagraphElement,
+  React.ComponentProps<typeof Typography>
+>(({ className, ...props }, ref) => (
+  <div className={cn("text-muted-foreground", className)}>
+    <Typography ref={ref} variant="base-regular" {...props} />
+  </div>
+))
+SecurityDetailsPopoverDescription.displayName =
+  "SecurityDetailsPopoverDescription"
+
+export const SecurityDetailsPopoverBody = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    className={cn("flex flex-col p-6 pt-0", className)}
+    {...props}
+  />
+))
+SecurityDetailsPopoverBody.displayName = "SecurityDetailsPopoverBody"
+
+export const SecurityDetailsPopoverFooter = React.forwardRef<
+  HTMLDivElement,
+  React.ComponentProps<"footer">
+>(({ className, ...props }, ref) => (
+  <footer
+    ref={ref}
+    className={cn("flex items-center p-6 pt-0", className)}
+    {...props}
+  />
+))
+SecurityDetailsPopoverFooter.displayName = "SecurityDetailsPopoverFooter"
+
+export type SecurityDetailsPopoverTriggerProps = Pick<
+  React.ComponentProps<typeof Button>,
+  "className"
+>
+
+export function SecurityDetailsPopoverTrigger(
+  props: SecurityDetailsPopoverTriggerProps
+) {
+  const { className } = props
+
+  return (
+    <PopoverTrigger asChild>
+      <Button
+        variant="outline"
+        className={cn(
+          "h-auto w-fit gap-1 rounded-full border border-status-secured-foreground/50 bg-status-secured/50 px-1 py-1 text-xs font-semibold text-status-secured-foreground hover:border-status-secured-foreground hover:bg-status-secured focus-visible:ring-status-secured-foreground focus-visible:ring-offset-2 sm:px-2 sm:py-1",
+          className
+        )}
+      >
+        <SecurityIcon className="size-4" />
+        <span className="hidden sm:block">Secured</span>
+        <span className="sr-only">Open security details</span>
+      </Button>
+    </PopoverTrigger>
+  )
+}
+SecurityDetailsPopoverTrigger.displayName = "SecurityDetailsPopoverTrigger"
