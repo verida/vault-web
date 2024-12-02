@@ -1,4 +1,5 @@
-import { ShieldCheckIcon } from "lucide-react"
+import { VariantProps, cva } from "class-variance-authority"
+import { ShieldAlertIcon, ShieldCheckIcon } from "lucide-react"
 import React from "react"
 
 import { Typography } from "@/components/typography"
@@ -27,24 +28,46 @@ export function SecurityIcon(props: SecurityIconProps) {
   )
 }
 
+const securityBadgeVariants = cva("", {
+  variants: {
+    variant: {
+      default:
+        "border-status-secured-foreground/50 bg-status-secured/50 text-status-secured-foreground hover:bg-status-secured/50",
+      warning:
+        "border-status-warning/50 bg-status-warning/5 text-status-warning hover:bg-status-warning/5",
+    },
+  },
+  defaultVariants: {
+    variant: "default",
+  },
+})
+
 export type SecuredBadgeProps = Omit<
   React.ComponentProps<typeof Badge>,
   "children" | "variant"
->
+> &
+  VariantProps<typeof securityBadgeVariants>
 
 export function SecurityBadge(props: SecuredBadgeProps) {
-  const { className, ...divProps } = props
+  const { variant, className, ...divProps } = props
 
   return (
     <Badge
       className={cn(
-        "gap-1 border-status-secured-foreground/50 bg-status-secured/50 px-1 py-1 text-status-secured-foreground hover:bg-status-secured/50 sm:px-2 sm:py-1",
+        "gap-1 px-1 py-1 sm:px-2 sm:py-1",
+        securityBadgeVariants({ variant }),
         className
       )}
       {...divProps}
     >
-      <SecurityIcon className="size-4" />
-      <span className="hidden sm:block">Secured</span>
+      {variant === "warning" ? (
+        <ShieldAlertIcon className="size-4 text-inherit" />
+      ) : (
+        <SecurityIcon className="size-4 text-inherit" />
+      )}
+      <span className="hidden sm:block">
+        {variant === "warning" ? "Security" : "Secured"}
+      </span>
     </Badge>
   )
 }
@@ -136,27 +159,49 @@ export const SecurityDetailsPopoverFooter = React.forwardRef<
 ))
 SecurityDetailsPopoverFooter.displayName = "SecurityDetailsPopoverFooter"
 
+const securityDetailsPopoverTriggerVariants = cva("", {
+  variants: {
+    variant: {
+      default:
+        "border-status-secured-foreground/50 bg-status-secured/50 text-status-secured-foreground hover:border-status-secured-foreground hover:bg-status-secured focus-visible:ring-status-secured-foreground",
+      warning:
+        "border-status-warning/50 bg-status-warning/5 text-status-warning hover:border-status-warning hover:bg-status-warning/10 focus-visible:ring-status-warning",
+    },
+  },
+  defaultVariants: {
+    variant: "default",
+  },
+})
+
 export type SecurityDetailsPopoverTriggerProps = Pick<
   React.ComponentProps<typeof Button>,
   "className"
->
+> &
+  VariantProps<typeof securityDetailsPopoverTriggerVariants>
 
 export function SecurityDetailsPopoverTrigger(
   props: SecurityDetailsPopoverTriggerProps
 ) {
-  const { className } = props
+  const { variant, className } = props
 
   return (
     <PopoverTrigger asChild>
       <Button
         variant="outline"
         className={cn(
-          "h-auto w-fit gap-1 rounded-full border border-status-secured-foreground/50 bg-status-secured/50 px-1 py-1 text-xs font-semibold text-status-secured-foreground hover:border-status-secured-foreground hover:bg-status-secured focus-visible:ring-status-secured-foreground focus-visible:ring-offset-2 sm:px-2 sm:py-1",
+          "h-auto w-fit gap-1 rounded-full border px-1 py-1 text-xs font-semibold focus-visible:ring-offset-2 sm:px-2 sm:py-1",
+          securityDetailsPopoverTriggerVariants({ variant }),
           className
         )}
       >
-        <SecurityIcon className="size-4" />
-        <span className="hidden sm:block">Secured</span>
+        {variant === "warning" ? (
+          <ShieldAlertIcon className="size-4 text-inherit" />
+        ) : (
+          <SecurityIcon className="size-4 text-inherit" />
+        )}
+        <span className="hidden sm:block">
+          {variant === "warning" ? "Security" : "Secured"}
+        </span>
         <span className="sr-only">Open security details</span>
       </Button>
     </PopoverTrigger>

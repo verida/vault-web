@@ -92,7 +92,7 @@ export default function AssistantPage(props: AssistantPageProps) {
           <AssistantUserInput className="z-10 -mb-5" />
           <div className="flex-1 overflow-y-auto">
             <div className="flex flex-1 flex-col gap-4 pb-4 pt-9 md:pb-6 xl:pb-8">
-              <div className="flex flex-row items-center justify-between gap-4 pl-3 md:pl-4">
+              <div className="flex flex-row items-center justify-between gap-4 px-3 md:px-4">
                 <AssistantDataStatus />
                 <AssistantSecurityDetailsPopover />
               </div>
