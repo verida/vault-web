@@ -5,7 +5,7 @@ import { StatusErrorIcon } from "@/components/icons/status-error-icon"
 import { StatusInfoIcon } from "@/components/icons/status-info-icon"
 import { StatusSuccessIcon } from "@/components/icons/status-success-icon"
 import { StatusWarningIcon } from "@/components/icons/status-warning-icon"
-import { SecurityIcon } from "@/components/ui/secured"
+import { SecurityIcon } from "@/components/ui/security"
 import { cn } from "@/styles/utils"
 
 const alertVariants = cva(

@@ -195,7 +195,8 @@ export function ConnectDataProviderDialog(
                 <Alert variant="secured">
                   <AlertTitle>Secured</AlertTitle>
                   <AlertDescription>
-                    Connection and sync are performed in a secured environment
+                    The connection and synchronization of your data is performed
+                    in a secure and isolated environment
                   </AlertDescription>
                 </Alert>
               </>

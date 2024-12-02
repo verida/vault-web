@@ -95,7 +95,7 @@ export const SecurityDetailsPopoverTitle = React.forwardRef<
   HTMLParagraphElement,
   React.ComponentProps<typeof Typography>
 >(({ className, ...props }, ref) => (
-  <div className={cn("text-status-secured-foreground", className)}>
+  <div className={cn("min-w-0 text-status-secured-foreground", className)}>
     <Typography ref={ref} variant="heading-4" className="truncate" {...props} />
   </div>
 ))
