@@ -7,6 +7,7 @@ import { ConnectDataProviderDialogProviderSelection } from "@/app/(connected)/co
 import { VLogo } from "@/components/icons/logo"
 import { Switch } from "@/components/icons/switch"
 import { Typography } from "@/components/typography"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import {
@@ -191,6 +192,13 @@ export function ConnectDataProviderDialog(
                     {provider.description}
                   </Typography>
                 </div>
+                <Alert variant="secured">
+                  <AlertTitle>Secured</AlertTitle>
+                  <AlertDescription>
+                    The connection and synchronization of your data is performed
+                    in a secure and isolated environment
+                  </AlertDescription>
+                </Alert>
               </>
             )}
           </DialogBody>

@@ -2,6 +2,7 @@ import {
   ConnectDataProviderDialog,
   ConnectDataProviderDialogTrigger,
 } from "@/app/(connected)/connections/summary/_components/connect-data-provider-dialog"
+import { ConnectionsSecurityDetailsPopover } from "@/app/(connected)/connections/summary/_components/connections-security-details-popover"
 import { DataConnectionsList } from "@/app/(connected)/connections/summary/_components/data-connections-list"
 import { DataProvidersList } from "@/app/(connected)/connections/summary/_components/data-providers-list"
 import { SyncAllConnectionsButton } from "@/app/(connected)/connections/summary/_components/sync-all-connections-button"
@@ -33,7 +34,10 @@ export default function ConnectionsSummaryPage() {
     >
       <div className="flex flex-col gap-8 sm:gap-10">
         <div className="flex flex-col gap-4 sm:gap-6">
-          <Typography variant="heading-4">Connected Accounts</Typography>
+          <div className="flex flex-row items-center gap-4">
+            <Typography variant="heading-4">Connected Accounts</Typography>
+            <ConnectionsSecurityDetailsPopover />
+          </div>
           <DataConnectionsList />
         </div>
         <div className="flex flex-col gap-4 sm:gap-6">
