@@ -1,6 +1,6 @@
 "use client"
 
-import { useMemo } from "react"
+import { useCallback, useMemo } from "react"
 
 import {
   DataDeleteRecordDialog,
@@ -15,6 +15,7 @@ import { DeleteIcon } from "@/components/icons/delete-icon"
 import {
   ItemSheet,
   ItemSheetBody,
+  ItemSheetContent,
   ItemSheetFooter,
   ItemSheetHeader,
   ItemSheetTitle,
@@ -44,14 +45,18 @@ import { useVeridaDataRecord } from "@/features/verida-database/hooks/use-verida
 
 export type DataItemPageContentProps = {
   open: boolean
-  onClose: () => void
+  onOpenChange: (open: boolean) => void
   databaseDefinition: DatabaseDefinition
   itemId: string
 }
 
 // TODO: Transform this component into a handler that can be used for all data types, rendering the loading, error and not found states as needed, then fetching the record and rendering the content based on the data type
 export function DataItemPageContent(props: DataItemPageContentProps) {
-  const { open, onClose, databaseDefinition, itemId } = props
+  const { open, onOpenChange, databaseDefinition, itemId } = props
+
+  const handleClose = useCallback(() => {
+    onOpenChange(false)
+  }, [onOpenChange])
 
   const { record, isLoading, isError } = useVeridaDataRecord({
     databaseName: databaseDefinition.databaseVaultName,
@@ -117,45 +122,46 @@ export function DataItemPageContent(props: DataItemPageContentProps) {
   const footer = useMemo(() => {
     if (record) {
       // TODO: Add switch to render the footer based on the data type
-      return <GenericDataItemPageFooter record={record} onClose={onClose} />
+      return <GenericDataItemPageFooter record={record} onClose={handleClose} />
     }
 
     return (
-      <Button variant="outline" className="w-full" onClick={onClose}>
+      <Button variant="outline" className="w-full" onClick={handleClose}>
         Close
       </Button>
     )
-  }, [record, onClose])
+  }, [record, handleClose])
 
   return (
-    <ItemSheet open={open} onClose={onClose}>
-      <ItemSheetHeader
-        onClose={onClose}
-        right={
-          record && featureFlags.data.record.delete ? (
-            <Tooltip>
-              <DataDeleteRecordDialog
-                databaseDefinition={databaseDefinition}
-                recordId={itemId}
-              >
-                <DataDeleteRecordDialogTrigger asChild>
-                  <TooltipTrigger asChild>
-                    <Button variant="outline-destructive" size="icon">
-                      <DeleteIcon className="size-5 shrink-0" />
-                      <span className="sr-only">Delete</span>
-                    </Button>
-                  </TooltipTrigger>
-                </DataDeleteRecordDialogTrigger>
-              </DataDeleteRecordDialog>
-              <TooltipContent>Delete</TooltipContent>
-            </Tooltip>
-          ) : undefined
-        }
-      >
-        <ItemSheetTitle description="Data item">{title}</ItemSheetTitle>
-      </ItemSheetHeader>
-      <ItemSheetBody>{body}</ItemSheetBody>
-      <ItemSheetFooter>{footer}</ItemSheetFooter>
+    <ItemSheet open={open} onOpenChange={onOpenChange}>
+      <ItemSheetContent>
+        <ItemSheetHeader
+          right={
+            record && featureFlags.data.record.delete ? (
+              <Tooltip>
+                <DataDeleteRecordDialog
+                  databaseDefinition={databaseDefinition}
+                  recordId={itemId}
+                >
+                  <DataDeleteRecordDialogTrigger asChild>
+                    <TooltipTrigger asChild>
+                      <Button variant="outline-destructive" size="icon">
+                        <DeleteIcon className="size-5 shrink-0" />
+                        <span className="sr-only">Delete</span>
+                      </Button>
+                    </TooltipTrigger>
+                  </DataDeleteRecordDialogTrigger>
+                </DataDeleteRecordDialog>
+                <TooltipContent>Delete</TooltipContent>
+              </Tooltip>
+            ) : undefined
+          }
+        >
+          <ItemSheetTitle description="Data item">{title}</ItemSheetTitle>
+        </ItemSheetHeader>
+        <ItemSheetBody>{body}</ItemSheetBody>
+        <ItemSheetFooter>{footer}</ItemSheetFooter>
+      </ItemSheetContent>
     </ItemSheet>
   )
 }
