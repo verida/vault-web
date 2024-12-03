@@ -25,11 +25,16 @@ export default function InboxItemPage(props: InboxItemPageProps) {
 
   const router = useRouter()
 
-  const handleClose = useCallback(() => {
-    const url = new URL(window.location.href)
-    url.searchParams.delete("itemId")
-    router.push(url.toString())
-  }, [router])
+  const handleOpenChange = useCallback(
+    (open: boolean) => {
+      if (!open) {
+        const url = new URL(window.location.href)
+        url.searchParams.delete("itemId")
+        router.push(url.toString())
+      }
+    },
+    [router]
+  )
 
   // TODO: fetch item
   // TODO: Need to create a hook useInboxEntry to get the item data
@@ -46,15 +51,21 @@ export default function InboxItemPage(props: InboxItemPageProps) {
     // TODO: Get the type from the inbox entry
     switch (testType) {
       case InboxType.DATA_REQUEST:
-        return <DataRequestItemPageContent open onClose={handleClose} />
+        return (
+          <DataRequestItemPageContent open onOpenChange={handleOpenChange} />
+        )
       case InboxType.DATA_SEND:
-        return <IncomingDataItemPageContent open onClose={handleClose} />
+        return (
+          <IncomingDataItemPageContent open onOpenChange={handleOpenChange} />
+        )
       case InboxType.MESSAGE:
-        return <MessageItemPageContent open onClose={handleClose} />
+        return <MessageItemPageContent open onOpenChange={handleOpenChange} />
       default:
-        return <UnsupportedItemPageContent open onClose={handleClose} />
+        return (
+          <UnsupportedItemPageContent open onOpenChange={handleOpenChange} />
+        )
     }
-  }, [handleClose, itemId])
+  }, [handleOpenChange, itemId])
 
   if (itemPage) {
     return <>{itemPage}</>

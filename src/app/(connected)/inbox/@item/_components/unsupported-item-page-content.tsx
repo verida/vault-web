@@ -1,6 +1,8 @@
 import {
   ItemSheet,
   ItemSheetBody,
+  ItemSheetClose,
+  ItemSheetContent,
   ItemSheetFooter,
   ItemSheetHeader,
   ItemSheetTitle,
@@ -9,30 +11,32 @@ import { Button } from "@/components/ui/button"
 
 export type UnsupportedItemPageContentProps = {
   open: boolean
-  onClose: () => void
+  onOpenChange: (open: boolean) => void
   // TODO: Add inbox entry
 }
 
 export function UnsupportedItemPageContent(
   props: UnsupportedItemPageContentProps
 ) {
-  const { open, onClose } = props
+  const { open, onOpenChange } = props
 
   return (
-    <ItemSheet open={open} onClose={onClose}>
-      <ItemSheetHeader onClose={onClose}>
-        <ItemSheetTitle description="Unsupported inbox entry">
-          Inbox entry
-        </ItemSheetTitle>
-      </ItemSheetHeader>
-      <ItemSheetBody>TODO: Unsupported inbox entry content</ItemSheetBody>
-      <ItemSheetFooter className="flex flex-col gap-3">
-        <div className="flex flex-row gap-4">
-          <Button variant="outline" className="w-full" onClick={onClose}>
-            Close
-          </Button>
-        </div>
-      </ItemSheetFooter>
+    <ItemSheet open={open} onOpenChange={onOpenChange}>
+      <ItemSheetContent>
+        <ItemSheetHeader>
+          <ItemSheetTitle description="Unsupported inbox entry">
+            Inbox entry
+          </ItemSheetTitle>
+        </ItemSheetHeader>
+        <ItemSheetBody>TODO: Unsupported inbox entry content</ItemSheetBody>
+        <ItemSheetFooter className="flex flex-col gap-3">
+          <div className="flex flex-row gap-4">
+            <Button variant="outline" className="w-full" asChild>
+              <ItemSheetClose>Close</ItemSheetClose>
+            </Button>
+          </div>
+        </ItemSheetFooter>
+      </ItemSheetContent>
     </ItemSheet>
   )
 }

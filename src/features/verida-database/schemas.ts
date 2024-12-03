@@ -14,6 +14,7 @@ export const VeridaBaseRecordSchema = z.object({
   schema: z.string().optional(),
   insertedAt: z.string().optional(),
   modifiedAt: z.string().optional(),
+  signatures: z.record(z.any()).optional(),
 })
 
 /**
