@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/tooltip"
 import { cn } from "@/styles/utils"
 
-export type ItemSheetProps = {
+type ItemSheetProps = {
   open: boolean
   onClose: () => void
   children: React.ReactNode
@@ -39,7 +39,7 @@ export function ItemSheet(props: ItemSheetProps) {
 }
 ItemSheet.displayName = "ItemSheet"
 
-export type ItemSheetHeaderProps = {
+type ItemSheetHeaderProps = {
   onClose: () => void
   right?: React.ReactNode
   hideCloseButton?: boolean
@@ -84,13 +84,13 @@ export function ItemSheetHeader(props: ItemSheetHeaderProps) {
 }
 ItemSheetHeader.displayName = "ItemSheetHeader"
 
-export type ItemSheetTitleProps = {
+type ItemSheetTitleProps = {
   /** Used for accessibility reason, not displayed in the UI */
   description?: string
 } & Omit<React.ComponentProps<typeof Typography>, "variant">
 
 export function ItemSheetTitle(props: ItemSheetTitleProps) {
-  const { className, description = "item sheet", ...typographyProps } = props
+  const { className, description = "Item sheet", ...typographyProps } = props
 
   return (
     <>
@@ -108,7 +108,7 @@ export function ItemSheetTitle(props: ItemSheetTitleProps) {
 }
 ItemSheetTitle.displayName = "ItemSheetTitle"
 
-export type ItemSheetBodyProps = React.ComponentProps<typeof DrawerBody>
+type ItemSheetBodyProps = React.ComponentProps<typeof DrawerBody>
 
 export function ItemSheetBody(props: ItemSheetBodyProps) {
   const { className, ...drawerBodyProps } = props
@@ -121,7 +121,7 @@ export function ItemSheetBody(props: ItemSheetBodyProps) {
 }
 ItemSheetBody.displayName = "ItemSheetBody"
 
-export type ItemSheetFooterProps = React.ComponentProps<typeof DrawerFooter>
+type ItemSheetFooterProps = React.ComponentProps<typeof DrawerFooter>
 
 export function ItemSheetFooter(props: ItemSheetFooterProps) {
   const { className, ...drawerFooterProps } = props
