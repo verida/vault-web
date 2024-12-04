@@ -5,7 +5,6 @@ import { useCallback, useEffect, useMemo, useState } from "react"
 
 import { AssistantDataStatusPopover } from "@/app/(connected)/assistants/[assistantId]/_components/assistant-data-status-popover"
 import { Typography } from "@/components/typography"
-import { useAssistants } from "@/features/assistants/hooks/use-assistants"
 import { useDataConnections } from "@/features/data-connections/hooks/use-data-connections"
 import { cn } from "@/styles/utils"
 
@@ -17,7 +16,6 @@ export type AssistantDataStatusProps = Omit<
 export function AssistantDataStatus(props: AssistantDataStatusProps) {
   const { className, ...divProps } = props
 
-  const { hotload } = useAssistants()
   const { connections, isAnySyncing, latestSync } = useDataConnections()
 
   const [formattedLatestSync, setFormattedLatestSync] = useState<string>("")
@@ -37,10 +35,6 @@ export function AssistantDataStatus(props: AssistantDataStatusProps) {
   }, [updateFormattedLatestSync])
 
   const statusMessage = useMemo(() => {
-    if (hotload.status === "loading") {
-      return `Data loading in assistant... ${Math.round(hotload.progress * 100)}%`
-    }
-
     if (isAnySyncing) {
       return "Data currently syncing..."
     }
@@ -58,14 +52,7 @@ export function AssistantDataStatus(props: AssistantDataStatusProps) {
     }
 
     return `Data synced ${formattedLatestSync}`
-  }, [
-    hotload.status,
-    hotload.progress,
-    isAnySyncing,
-    connections,
-    latestSync,
-    formattedLatestSync,
-  ])
+  }, [isAnySyncing, connections, latestSync, formattedLatestSync])
 
   return (
     <div
