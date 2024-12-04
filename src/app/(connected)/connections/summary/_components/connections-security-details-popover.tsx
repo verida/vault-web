@@ -54,7 +54,7 @@ export function ConnectionsSecurityDetailsPopover(
               <div className="text-muted-foreground">
                 <Typography variant="base-regular">
                   The connection and synchronization of your data is performed
-                  in a secure and isolated environment.
+                  in a secure and isolated environment (TEE).
                 </Typography>
               </div>
             </div>

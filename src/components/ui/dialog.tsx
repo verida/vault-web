@@ -50,11 +50,8 @@ const DialogContent = React.forwardRef<
 ))
 DialogContent.displayName = "DialogContent"
 
-const DialogHeader = ({
-  className,
-  ...props
-}: React.HTMLAttributes<HTMLDivElement>) => (
-  <div className="flex flex-row items-start justify-between gap-3 pb-4">
+const DialogHeader = ({ className, ...props }: React.ComponentProps<"div">) => (
+  <header className="flex flex-row items-start justify-between gap-3 pb-4">
     <div
       className={cn("flex flex-1 flex-col gap-2 text-left", className)}
       {...props}
@@ -70,14 +67,11 @@ const DialogHeader = ({
         <span className="sr-only">Close</span>
       </DialogPrimitive.Close>
     </Button>
-  </div>
+  </header>
 )
 DialogHeader.displayName = "DialogHeader"
 
-const DialogBody = ({
-  className,
-  ...props
-}: React.HTMLAttributes<HTMLDivElement>) => (
+const DialogBody = ({ className, ...props }: React.ComponentProps<"div">) => (
   <div className={cn("flex-1 overflow-y-auto py-4", className)} {...props} />
 )
 DialogBody.displayName = "DialogBody"
@@ -85,8 +79,8 @@ DialogBody.displayName = "DialogBody"
 const DialogFooter = ({
   className,
   ...props
-}: React.HTMLAttributes<HTMLDivElement>) => (
-  <div
+}: React.ComponentProps<"footer">) => (
+  <footer
     className={cn(
       "flex flex-col-reverse gap-3 pt-4 sm:flex-row sm:justify-end",
       className
@@ -101,7 +95,7 @@ const DialogTitle = React.forwardRef<
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Title>
 >(({ className, ...props }, ref) => (
   <DialogPrimitive.Title
-    // TODO: Use Typography
+    // TODO: Use Typography?
     ref={ref}
     className={cn(
       "text-lg font-semibold leading-none tracking-tight",
@@ -117,7 +111,7 @@ const DialogDescription = React.forwardRef<
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Description>
 >(({ className, ...props }, ref) => (
   <DialogPrimitive.Description
-    // TODO: Use Typography
+    // TODO: Use Typography?
     ref={ref}
     className={cn("text-sm text-muted-foreground", className)}
     {...props}

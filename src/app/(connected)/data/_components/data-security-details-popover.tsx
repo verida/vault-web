@@ -36,7 +36,7 @@ export function DataSecurityDetailsPopover(
           </div>
           <SecurityDetailsPopoverDescription>
             Your data is securely stored in your private space (Vault) on the
-            Verida Network.
+            Verida Network Confidential Storage.
           </SecurityDetailsPopoverDescription>
         </SecurityDetailsPopoverHeader>
         <SecurityDetailsPopoverBody className="gap-4">
@@ -71,7 +71,7 @@ export function DataSecurityDetailsPopover(
               <div className="text-muted-foreground">
                 <Typography variant="base-regular">
                   You are the owner of your data, you control who has access to
-                  it.
+                  it, if any.
                 </Typography>
               </div>
             </div>
