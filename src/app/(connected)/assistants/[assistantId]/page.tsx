@@ -76,7 +76,7 @@ export default function AssistantPage(props: AssistantPageProps) {
     return (
       <div className="flex h-full w-full flex-row justify-center gap-6">
         {isXL ? (
-          <aside className="pb-4 md:pb-6 xl:pb-8">
+          <aside>
             <Card className="flex w-[26.5rem] flex-col gap-3 rounded-xl p-3">
               <div className="flex flex-row items-center gap-2 px-1 pt-1 text-muted-foreground">
                 <MessageSquareMoreIcon className="size-5 sm:size-6" />
@@ -88,16 +88,16 @@ export default function AssistantPage(props: AssistantPageProps) {
             </Card>
           </aside>
         ) : null}
-        <div className="flex h-full w-full max-w-screen-md flex-1 flex-col xl:max-w-none">
-          <AssistantUserInput className="z-10 -mb-5" />
-          <div className="flex-1 overflow-y-auto">
-            <div className="flex flex-1 flex-col gap-4 pb-4 pt-9 md:pb-6 xl:pb-8">
-              <div className="flex flex-row items-center justify-between gap-4 px-3 md:px-4">
-                <AssistantDataStatus />
-                <AssistantSecurityDetailsPopover />
-              </div>
-              <AssistantOutput />
+        <div className="flex h-full w-full max-w-screen-md flex-1 flex-col gap-4 xl:max-w-none">
+          <div className="sticky top-2 z-10 sm:top-3 md:top-6">
+            <AssistantUserInput />
+          </div>
+          <div className="flex flex-1 flex-col gap-4">
+            <div className="flex flex-row items-center justify-between gap-4 px-3 md:px-4">
+              <AssistantDataStatus />
+              <AssistantSecurityDetailsPopover />
             </div>
+            <AssistantOutput />
           </div>
         </div>
       </div>
