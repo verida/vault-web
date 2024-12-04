@@ -76,6 +76,8 @@ export default function AssistantPage(props: AssistantPageProps) {
     return <AssistantLoadingPage hotload={hotload} />
   }
 
+  // TODO: Display alert if hotloading failed
+
   if (aiAssistant || assistantId === DEFAULT_ASSISTANT._id) {
     return (
       <div className="flex h-full w-full flex-row justify-center gap-6">
