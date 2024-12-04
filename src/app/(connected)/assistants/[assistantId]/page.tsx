@@ -36,7 +36,7 @@ export default function AssistantPage(props: AssistantPageProps) {
 
   const router = useRouter()
 
-  const { setSelectedAiAssistant } = useAssistants()
+  const { setSelectedAiAssistant, hotload } = useAssistants()
 
   useEffect(() => {
     setSelectedAiAssistant(assistantId)
@@ -68,8 +68,12 @@ export default function AssistantPage(props: AssistantPageProps) {
 
   const isXL = useMediaQuery(getMediaQuery("xl"))
 
-  if (isLoadingAiAssistant || isLoadingAiAssistants) {
-    return <AssistantLoadingPage />
+  if (
+    isLoadingAiAssistant ||
+    isLoadingAiAssistants ||
+    hotload.status === "loading"
+  ) {
+    return <AssistantLoadingPage hotload={hotload} />
   }
 
   if (aiAssistant || assistantId === DEFAULT_ASSISTANT._id) {
