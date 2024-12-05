@@ -39,9 +39,13 @@ export function AssistantSecurityDetailsPopover(
             security and privacy.
           </SecurityDetailsPopoverDescription>
           <SecurityDetailsPopoverDescription>
-            During the Alpha phase, temporary solutions have been implemented
-            for the AI processing using a third party platform. While not
-            perfect, these solutions provide adequate protections for your data.
+            During the{" "}
+            <Typography variant="base-semibold" component="span">
+              Alpha phase
+            </Typography>
+            , temporary solutions have been implemented for the AI processing
+            using a third party platform. While not perfect, these solutions
+            provide adequate protections for your data.
           </SecurityDetailsPopoverDescription>
         </SecurityDetailsPopoverHeader>
         <SecurityDetailsPopoverBody className="gap-4">
