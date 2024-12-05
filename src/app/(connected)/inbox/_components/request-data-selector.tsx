@@ -32,6 +32,9 @@ export type RequestDataSelectorProps = {
   onConfirm: (items: any[]) => void
 }
 
+/**
+ * @deprecated
+ */
 export function RequestDataSelector(props: RequestDataSelectorProps) {
   const { schemaUrl, filter, onClose, onConfirm, defaultItems } = props
 

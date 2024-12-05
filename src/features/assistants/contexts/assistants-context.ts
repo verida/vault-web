@@ -1,22 +1,27 @@
 import { createContext } from "react"
 
 import {
-  AssistantOutput,
-  AssistantUserInput,
-  HotloadResult,
+  AiAssistantHotloadResult,
+  AiAssistantOutput,
+  AiPromptInput,
 } from "@/features/assistants/types"
 
 export type AssistantsContextType = {
-  userInput: AssistantUserInput | null
-  assistantOutput: AssistantOutput | null
-  processUserInput: () => Promise<void>
-  setAndProcessUserInput: (userInput: AssistantUserInput) => Promise<void>
-  updateUserPrompt: (userPrompt: string) => void
-  clearUserInput: () => void
-  clearAssistantOutput: () => void
-  isProcessing: boolean
+  selectedAiAssistant: string
+  setSelectedAiAssistant: (assistantId: string) => void
+  aiPromptInput: AiPromptInput | null
+  aiAssistantOutput: AiAssistantOutput | null
+  processAiPromptInput: () => Promise<void>
+  setAndProcessAiPromptInput: (aiPromptInput: AiPromptInput) => Promise<void>
+  updateAiPromptInput: React.Dispatch<
+    React.SetStateAction<AiPromptInput | null>
+  >
+  clearAiPromptInput: () => void
+  clearAiAssistantOutput: () => void
   error: string | null
-  hotload: HotloadResult
+  hotload: AiAssistantHotloadResult
+  promptSearchValue: string
+  setPromptSearchValue: (value: string) => void
 }
 
 export const AssistantsContext = createContext<AssistantsContextType | null>(

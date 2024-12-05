@@ -14,12 +14,20 @@ export const featureFlags = {
     record: {
       delete: commonConfig.FEATURE_FLAG_DATA_DELETE_RECORD_ENABLED,
     },
+    displayTechnicalDatabases:
+      commonConfig.FEATURE_FLAG_DATA_DISPLAY_TECHNICAL_DATABASES,
   },
   commandDialog: {
     enabled: commonConfig.FEATURE_FLAG_COMMAND_DIALOG_ENABLED,
   },
   assistant: {
     enabled: commonConfig.FEATURE_FLAG_AI_ASSISTANT_ENABLED,
+    userPrompts: {
+      enabled: commonConfig.FEATURE_FLAG_AI_ASSISTANT_USER_PROMPTS_ENABLED,
+    },
+    config: {
+      enabled: commonConfig.FEATURE_FLAG_AI_ASSISTANT_PROMPT_CONFIG_ENABLED,
+    },
   },
   dataConnections: {
     enabled: commonConfig.FEATURE_FLAG_DATA_CONNECTIONS_ENABLED,

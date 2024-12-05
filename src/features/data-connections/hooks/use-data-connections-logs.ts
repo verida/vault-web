@@ -1,35 +1,32 @@
-import { DATA_CONNECTIONS_SYNC_LOGS_DATABASE_NAME } from "@/features/data-connections/constants"
-import { DataConnectionSyncLog } from "@/features/data-connections/types"
-import { useVeridaDataRecords } from "@/features/verida-database/hooks/use-verida-data-records"
+import { DATA_CONNECTIONS_LOGS_DB_DEF } from "@/features/data-connections/constants"
+import { DataConnectionSyncLogBaseSchema } from "@/features/data-connections/schemas"
 import {
-  VeridaDatabaseQueryFilter,
-  VeridaDatabaseQueryOptions,
-} from "@/features/verida-database/types"
-import { VeridaRecord } from "@/features/verida-database/types"
+  UseVeridaDataRecordsArgs,
+  useVeridaDataRecords,
+} from "@/features/verida-database/hooks/use-verida-data-records"
 
-type UseDataConnectionsLogsArgs = {
-  filter?: VeridaDatabaseQueryFilter<VeridaRecord<DataConnectionSyncLog>>
-  options?: VeridaDatabaseQueryOptions<VeridaRecord<DataConnectionSyncLog>>
-}
+type UseDataConnectionsLogsArgs = Pick<
+  UseVeridaDataRecordsArgs<typeof DataConnectionSyncLogBaseSchema>,
+  "filter" | "options"
+>
 
 export function useDataConnectionsLogs({
   filter,
   options,
-}: UseDataConnectionsLogsArgs) {
-  // TODO: Use a proper schema of the logs once supported by useVeridaDataRecords
-  const { records, pagination, ...query } =
-    useVeridaDataRecords<DataConnectionSyncLog>({
-      databaseName: DATA_CONNECTIONS_SYNC_LOGS_DATABASE_NAME,
-      filter,
-      options: {
-        ...options,
-        sort: options?.sort ?? [
-          {
-            insertedAt: "desc",
-          },
-        ],
-      },
-    })
+}: UseDataConnectionsLogsArgs = {}) {
+  const { records, pagination, ...query } = useVeridaDataRecords({
+    databaseName: DATA_CONNECTIONS_LOGS_DB_DEF.databaseVaultName,
+    filter,
+    options: {
+      ...options,
+      sort: options?.sort ?? [
+        {
+          insertedAt: "desc",
+        },
+      ],
+    },
+    baseSchema: DataConnectionSyncLogBaseSchema,
+  })
 
   return { logs: records, pagination, ...query }
 }

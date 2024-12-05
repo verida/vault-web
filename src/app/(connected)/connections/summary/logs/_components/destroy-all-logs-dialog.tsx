@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button"
 import { featureFlags } from "@/config/features"
-import { DATA_CONNECTIONS_SYNC_LOGS_DATABASE_NAME } from "@/features/data-connections/constants"
+import { DATA_CONNECTIONS_LOGS_DB_DEF } from "@/features/data-connections/constants"
 import { useToast } from "@/features/toasts/use-toast"
 import { useDestroyVeridaDatabase } from "@/features/verida-database/hooks/use-destroy-verida-database"
 
@@ -37,7 +37,7 @@ export function DestroyAllLogsDialog(props: DestroyAllLogsDialogProps) {
     setStatus("processing")
     destroyDatabase(
       {
-        databaseName: DATA_CONNECTIONS_SYNC_LOGS_DATABASE_NAME,
+        databaseName: DATA_CONNECTIONS_LOGS_DB_DEF.databaseVaultName,
       },
       {
         onSuccess: () => {

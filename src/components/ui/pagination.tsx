@@ -15,6 +15,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { EMPTY_VALUE_FALLBACK } from "@/constants/misc"
 import { DataTablePaginationSizeValue } from "@/features/data-table/types"
 import { cn } from "@/styles/utils"
 
@@ -66,8 +67,8 @@ const PaginationCurrent = React.forwardRef<
     {...divProps}
   >
     <span className="sr-only">Page</span>
-    <span>{pageCount ? pageIndex : "-"}</span>
-    <span className="text-muted-foreground">{`/ ${pageCount || "-"}`}</span>
+    <span>{pageCount ? pageIndex : EMPTY_VALUE_FALLBACK}</span>
+    <span className="text-muted-foreground">{`/ ${pageCount || EMPTY_VALUE_FALLBACK}`}</span>
     <span className="sr-only">total pages</span>
   </div>
 ))

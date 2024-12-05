@@ -15,4 +15,4 @@ export const DATA_TABLE_PAGINATION_SIZES: DataTablePaginationSizeValue[] = [
     value: 50,
     label: "50",
   },
-]
+] as const

@@ -2,41 +2,62 @@ import { commonConfig } from "@/config/common"
 import {
   PrivateDataApiV1LLMPersonalResponseSchema,
   PrivateDataApiV1LlmHotloadResponseSchema,
+  PromptConfigSchema,
 } from "@/features/assistants/schemas"
 import {
-  AssistantOutput,
-  AssistantUserInput,
+  AiAssistantOutput,
+  AiPromptInput,
+  PrivateDataApiV1LLMPersonalRequestBody,
 } from "@/features/assistants/types"
 import { Logger } from "@/features/telemetry"
 
 const logger = Logger.create("assistants")
 
 /**
- * Processes a user prompt by sending it to the LLM API or using a mock response.
+ * Processes an AI prompt by sending it to the AI assistant API.
  *
- * @param userInput - The user's input
+ * @param aiPromptInput - The prompt input to send
  * @param sessionToken - The session token for authentication
- * @returns A promise that resolves to the AI-generated response
+ * @returns A promise that resolves to the AI assistant output
  * @throws Error if the prompt is empty or if there's an issue with the API call
  */
-export async function sendUserInputToAssistant(
-  userInput: AssistantUserInput,
+export async function sendAiPromptInputToAssistant(
+  aiPromptInput: AiPromptInput,
   sessionToken: string
-): Promise<AssistantOutput> {
-  if (!userInput) {
-    throw new Error("User input is required")
-  }
-
-  logger.info("Processing user input")
+): Promise<AiAssistantOutput> {
+  logger.info("Processing prompt input")
 
   // Use mock response if API configuration is missing
   if (!commonConfig.PRIVATE_DATA_API_BASE_URL) {
-    logger.warn("Using mock response due to missing API configuration")
+    logger.warn(
+      "Unable to process prompt input due to missing API configuration"
+    )
     throw new Error("API configuration is missing")
   }
 
+  if (!aiPromptInput.prompt) {
+    throw new Error("Prompt is required")
+  }
+
+  const promptConfigValidationResult = PromptConfigSchema.safeParse(
+    aiPromptInput.config?.promptConfig
+  )
+
+  // Explicitly building the body to ensure that the request is correct
+  // Mostly because the structures are not the same
+  // But also because aiPromptInput may have additional fields
+  const body: PrivateDataApiV1LLMPersonalRequestBody = {
+    prompt: aiPromptInput.prompt,
+    provider:
+      aiPromptInput.config?.llmProvider ?? commonConfig.DEFAULT_AI_PROVIDER,
+    model: aiPromptInput.config?.llmModel ?? commonConfig.DEFAULT_AI_MODEL,
+    promptConfig: promptConfigValidationResult.success
+      ? aiPromptInput.config?.promptConfig
+      : undefined,
+  }
+
   try {
-    logger.debug("Sending request to LLM API")
+    logger.debug("Sending request to AI assistant API")
     const response = await fetch(
       `${commonConfig.PRIVATE_DATA_API_BASE_URL}/api/rest/v1/llm/personal`,
       {
@@ -45,11 +66,7 @@ export async function sendUserInputToAssistant(
           "Content-Type": "application/json",
           "X-API-Key": sessionToken,
         },
-        body: JSON.stringify({
-          prompt: userInput.prompt,
-          provider: commonConfig.DEFAULT_AI_PROVIDER,
-          model: commonConfig.DEFAULT_AI_MODEL, // Could come from the user input
-        }),
+        body: JSON.stringify(body),
       }
     )
 
@@ -58,13 +75,15 @@ export async function sendUserInputToAssistant(
     }
 
     const data = await response.json()
-    logger.debug("Received response from LLM API")
+    logger.debug("Received response from AI assistant API")
 
     // Validate the API response against the expected schema
     const validatedData = PrivateDataApiV1LLMPersonalResponseSchema.parse(data)
-    logger.info("Successfully processed user prompt")
+    logger.info("Successfully processed prompt input")
 
-    const output: AssistantOutput = {
+    const output: AiAssistantOutput = {
+      assistantId: aiPromptInput.assistantId,
+      status: "processed",
       result: validatedData.result,
       processedAt: new Date(),
       processingTime: validatedData.duration,
@@ -73,7 +92,7 @@ export async function sendUserInputToAssistant(
 
     return output
   } catch (error) {
-    throw new Error("Error calling LLM API", { cause: error })
+    throw new Error("Error calling AI assistant API", { cause: error })
   }
 }
 
@@ -86,15 +105,16 @@ export async function sendUserInputToAssistant(
  */
 export function hotloadAPI(
   sessionToken: string,
-  progressCallback?: (progress: number) => void
+  progressCallback?: (progress: number, dataCurrentlyLoading?: string) => void
 ): Promise<void> {
   return new Promise((resolve, reject) => {
+    logger.info("Starting AI assistant hotload")
+
     if (!commonConfig.PRIVATE_DATA_API_BASE_URL) {
-      reject(new Error("PRIVATE_DATA_API_BASE_URL is not set"))
+      logger.warn("Unable to hotload AI assistant due to missing configuration")
+      reject(new Error("API configuration is missing"))
       return
     }
-
-    logger.info("Starting API hotload")
 
     // Create an EventSource to receive progress updates
     const url = new URL(
@@ -116,22 +136,24 @@ export function hotloadAPI(
 
       const { data } = validatedData
 
-      logger.debug(`API hotload progress: ${data.totalProgress * 100}%`)
+      logger.debug(
+        `AI assistant hotload progress: ${data.totalProgress * 100}%`
+      )
       if (progressCallback) {
-        progressCallback(data.totalProgress)
+        progressCallback(data.totalProgress, data.schema)
       }
 
       // Check if hotloading is complete (using a threshold close to 1 to account for potential rounding issues)
       if (data.totalProgress >= 0.99999) {
         eventSource.close()
-        logger.info("API hotload completed")
+        logger.info("AI assistant hotload completed")
         resolve()
       }
     }
 
     eventSource.onerror = (error) => {
       eventSource.close()
-      reject(new Error("Error hot loading LLM API", { cause: error }))
+      reject(new Error("Error hotloading AI assistant", { cause: error }))
     }
   })
 }

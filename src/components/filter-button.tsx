@@ -8,6 +8,9 @@ export type FilterButtonProps = Omit<
   "variant" | "size"
 > & { applied?: boolean }
 
+/**
+ * @deprecated
+ */
 export function FilterButton(props: FilterButtonProps) {
   const { className, applied = false } = props
 

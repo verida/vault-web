@@ -1,37 +1,37 @@
 "use client"
 
-import { useRouter } from "next/navigation"
 import { useCallback, useMemo } from "react"
 
 import { DataItemPageContent } from "@/app/(connected)/data/[databaseId]/@item/_components/data-item-page-content"
-import { DATABASE_DEFS } from "@/features/data/constants"
+import { USER_DATABASE_DEFS } from "@/features/data/constants"
+import { useItemIdState } from "@/features/data/hooks/use-itemd-id-state"
 
 type DataItemPageProps = {
   params: { databaseId: string }
-  searchParams: { itemId: string }
 }
 
 export default function DataItemPage(props: DataItemPageProps) {
-  const { params, searchParams } = props
+  const { params } = props
 
   const { databaseId: encodedDatabaseId } = params
   const databaseId = decodeURIComponent(encodedDatabaseId)
 
   const databaseDefinition = useMemo(
-    () => DATABASE_DEFS.find((databaseDef) => databaseDef.id === databaseId),
+    () =>
+      USER_DATABASE_DEFS.find((databaseDef) => databaseDef.id === databaseId),
     [databaseId]
   )
 
-  const { itemId: encodedItemId } = searchParams
-  const itemId = encodedItemId ? decodeURIComponent(encodedItemId) : undefined
+  const { itemId, setItemId } = useItemIdState()
 
-  const router = useRouter()
-
-  const handleClose = useCallback(() => {
-    const url = new URL(window.location.href)
-    url.searchParams.delete("itemId")
-    router.push(url.toString())
-  }, [router])
+  const handleOpenChange = useCallback(
+    (open: boolean) => {
+      if (!open) {
+        setItemId(null, { history: "push" })
+      }
+    },
+    [setItemId]
+  )
 
   const itemPage = useMemo(() => {
     if (!itemId || !databaseDefinition) {
@@ -41,12 +41,12 @@ export default function DataItemPage(props: DataItemPageProps) {
     return (
       <DataItemPageContent
         open
-        onClose={handleClose}
+        onOpenChange={handleOpenChange}
         databaseDefinition={databaseDefinition}
         itemId={itemId}
       />
     )
-  }, [itemId, handleClose, databaseDefinition])
+  }, [itemId, handleOpenChange, databaseDefinition])
 
   if (itemPage) {
     return <>{itemPage}</>

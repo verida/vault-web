@@ -2,6 +2,7 @@ import React from "react"
 
 import { Spinner } from "@/components/spinner"
 import { Typography } from "@/components/typography"
+import { Progress } from "@/components/ui/progress"
 import { cn } from "@/styles/utils"
 
 export type LoadingBlockProps = React.ComponentProps<"div">
@@ -48,3 +49,10 @@ export function LoadingBlockDescription(props: LoadingBlockDescriptionProps) {
   )
 }
 LoadingBlockDescription.displayName = "LoadingBlockDescription"
+
+type LoadingProgressProps = React.ComponentProps<typeof Progress>
+
+export function LoadingProgress(props: LoadingProgressProps) {
+  return <Progress {...props} />
+}
+LoadingProgress.displayName = "LoadingProgress"

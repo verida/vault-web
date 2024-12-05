@@ -6,6 +6,8 @@ import {
   DataConnectionHandlerStatusSchema,
   DataConnectionSchema,
   DataConnectionStatusSchema,
+  DataConnectionSyncLogBaseSchema,
+  DataConnectionSyncLogLevelSchema,
   DataConnectionsApiV1DisconnectConnectionResponseSchema,
   DataConnectionsApiV1SyncAllConnectionsResponseSchema,
   DataConnectionsApiV1SyncConnectionResponseSchema,
@@ -47,18 +49,13 @@ export type DataConnectionsApiV1DisconnectConnectionResponse = z.infer<
   typeof DataConnectionsApiV1DisconnectConnectionResponseSchema
 >
 
-// TODO: Infer from a zod schema
-export type DataConnectionSyncLogLevel = "debug" | "info" | "error" | "warning"
+export type DataConnectionSyncLogLevel = z.infer<
+  typeof DataConnectionSyncLogLevelSchema
+>
 
-// TODO: Infer from a zod schema
-export type DataConnectionSyncLog = {
-  providerId: string
-  accountId: string
-  handlerId?: string
-  level: DataConnectionSyncLogLevel
-  message: string
-  insertedAt: string
-}
+export type DataConnectionSyncLog = z.infer<
+  typeof DataConnectionSyncLogBaseSchema
+>
 
 // BroadcastChannel types
 

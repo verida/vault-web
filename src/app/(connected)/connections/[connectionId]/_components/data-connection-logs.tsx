@@ -1,8 +1,6 @@
 "use client"
 
 import { getCoreRowModel, useReactTable } from "@tanstack/react-table"
-import { PaginationState } from "@tanstack/react-table"
-import { useState } from "react"
 
 import { dataConnectionLogsTableColumns } from "@/components/data-connections/logs-table/data-connection-logs-table-columns"
 import { DataConnectionLogsTableRow } from "@/components/data-connections/logs-table/data-connection-logs-table-row"
@@ -15,6 +13,7 @@ import {
 } from "@/features/data-connections/types"
 import { DataTableColumnAlignFeature } from "@/features/data-table/data-table-column-align-feature"
 import { DataTableColumnClassNameFeature } from "@/features/data-table/data-table-column-classname-feature"
+import { useDataTableState } from "@/features/data-table/hooks/use-data-table-state"
 import { DataTablePaginationSizeValue } from "@/features/data-table/types"
 import { VeridaRecord } from "@/features/verida-database/types"
 
@@ -46,9 +45,18 @@ export type DataConnectionLogsProps = {
 export function DataConnectionLogs(props: DataConnectionLogsProps) {
   const { connection, className } = props
 
-  const [pagination, setPagination] = useState<PaginationState>({
-    pageIndex: 0,
-    pageSize: PAGINATION_SIZE_DEFAULT,
+  const { pagination, setPagination } = useDataTableState({
+    paginationUrlKeys: {
+      pageIndex: "logsPage",
+      pageSize: "logsPageSize",
+    },
+    paginationDefaults: {
+      pageIndex: 0,
+      pageSize: PAGINATION_SIZE_DEFAULT,
+    },
+    paginationSizeOptions: PAGINATION_SIZES.map((size) => size.value),
+    paginationHistory: "replace",
+    paginationScroll: false,
   })
 
   const {

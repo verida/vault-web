@@ -87,6 +87,7 @@ const DrawerTitle = React.forwardRef<
   React.ElementRef<typeof DrawerPrimitive.Title>,
   React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Title>
 >(({ className, ...props }, ref) => (
+  // TODO: Use Typography?
   <DrawerPrimitive.Title ref={ref} className={cn(className)} {...props} />
 ))
 DrawerTitle.displayName = DrawerPrimitive.Title.displayName
@@ -95,6 +96,7 @@ const DrawerDescription = React.forwardRef<
   React.ElementRef<typeof DrawerPrimitive.Description>,
   React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Description>
 >(({ className, ...props }, ref) => (
+  // TODO: Use Typography?
   <DrawerPrimitive.Description ref={ref} className={cn(className)} {...props} />
 ))
 DrawerDescription.displayName = DrawerPrimitive.Description.displayName
