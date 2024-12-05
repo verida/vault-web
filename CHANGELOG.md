@@ -1,3 +1,28 @@
+# 0.10.0 (2024-12-05)
+
+## Enhancements
+
+- Implement multi AI assistants support
+- Implement user-saved AI assistant prompts
+- Allow user to order their saved prompts
+- Allow configuring a prompt before sending it (dev only for now)
+- Prevent using AI assistant before data pre-loading is completed
+- Add security details on AI assistant, data and connectors page
+- Improve data rendering in item panel
+- Update SEO meta image
+
+## Bug fixes
+
+- Fix layout and scroll on assistant page
+- Hide inbox when access is limited
+
+## Misc
+
+- Cache the restricted access result if allowed
+- Implement reusable foundations for standard sheets
+- Use nuqs library for type-safe search params
+- Update dependencies
+
 # 0.9.0 (2024-11-19)
 
 ## Enhancements
