@@ -1,3 +1,5 @@
+"use client"
+
 import Image from "next/image"
 import Link from "next/link"
 import { useCallback } from "react"
@@ -15,21 +17,19 @@ import {
 } from "@/components/ui/card"
 import { VeridaIdentityDropdownMenu } from "@/components/verida/verida-identity-dropdown-menu"
 import { ALL_DATABASE_DEFS } from "@/features/data/constants"
-import {
-  VeridaOauthPayload,
-  VeridaOauthScope,
-} from "@/features/verida-oauth/types"
+import { useVeridaOauth } from "@/features/verida-oauth/hooks/use-verida-oauth"
+import { VeridaOauthScope } from "@/features/verida-oauth/types"
 
-type OAuthConsentCardProps = {
-  oauthPayload: VeridaOauthPayload
-  onAllow: () => void
-  onDeny: () => void
-} & React.ComponentProps<"div">
+type OAuthConsentCardProps = React.ComponentProps<"div">
 
 export function OAuthConsentCard(props: OAuthConsentCardProps) {
-  const { oauthPayload, onAllow, onDeny, ...divProps } = props
+  const { ...divProps } = props
 
-  const { name, url, scopes } = oauthPayload
+  const { payload, handleAllow, handleDeny } = useVeridaOauth()
+
+  // TODO: Handle case where no payload is available
+
+  const { name, url, scopes } = payload
 
   const formatScope = useCallback((scope: VeridaOauthScope) => {
     const databaseDef = ALL_DATABASE_DEFS.find(
@@ -139,10 +139,10 @@ export function OAuthConsentCard(props: OAuthConsentCardProps) {
             </div>
           </CardBody>
           <CardFooter className="shrink-0 justify-between p-0">
-            <Button variant="outline" onClick={onDeny}>
+            <Button variant="outline" onClick={handleDeny}>
               Deny
             </Button>
-            <Button variant="primary" onClick={onAllow}>
+            <Button variant="primary" onClick={handleAllow}>
               Allow
             </Button>
           </CardFooter>
