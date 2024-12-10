@@ -1,10 +1,10 @@
 import React from "react"
 
-import { ConnectionButton } from "@/app/_components/connection-button"
 import { LandingPageFeatureSlider } from "@/app/_components/landing-page-feature-slider"
 import { LandingPageFooter } from "@/app/_components/landing-page-footer"
 import { LandingPageHeader } from "@/app/_components/landing-page-header"
 import { Typography } from "@/components/typography"
+import { VeridaConnectButton } from "@/components/verida/verida-connect-button"
 import { cn } from "@/styles/utils"
 
 export type LandingPageContentProps = Omit<
@@ -36,7 +36,7 @@ export function LandingPageContent(props: LandingPageContentProps) {
                 credentials with the Verida Vault App.
               </Typography>
             </div>
-            <ConnectionButton />
+            <VeridaConnectButton label="Connect to the Verida Vault App" />
             <LandingPageFeatureSlider className="h-full flex-1 rounded-[32px] lg:hidden" />
           </div>
           <LandingPageFooter />
