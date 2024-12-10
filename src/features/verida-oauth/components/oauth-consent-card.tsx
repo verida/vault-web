@@ -13,6 +13,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import { VeridaIdentityDropdownMenu } from "@/components/verida/verida-identity-dropdown-menu"
 import { ALL_DATABASE_DEFS } from "@/features/data/constants"
 import { VeridaOauthScope } from "@/features/verida-oauth/types"
 
@@ -53,6 +54,11 @@ export function OAuthConsentCard(props: OAuthConsentCardProps) {
               width={95}
             />
           </div>
+          <VeridaIdentityDropdownMenu
+            keepExpanded
+            hideDisconnect={false}
+            hideFeedback={false}
+          />
         </div>
         <Card className="flex h-full flex-col gap-6 p-6">
           <CardHeader className="shrink-0 p-0">
