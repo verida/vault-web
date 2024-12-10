@@ -14,7 +14,7 @@ import { useMediaQuery } from "usehooks-ts"
 import { AiPromptsCombobox } from "@/app/(connected)/assistants/[assistantId]/_components/ai-prompts-combobox"
 import { SendIcon } from "@/components/icons/send-icon"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardFooter } from "@/components/ui/card"
+import { Card, CardBody, CardFooter } from "@/components/ui/card"
 import { Textarea } from "@/components/ui/textarea"
 import {
   Tooltip,
@@ -96,7 +96,7 @@ export function AssistantUserInput(props: AssistantUserInputProps) {
   return (
     <div {...divProps}>
       <Card className="flex flex-col gap-1 rounded-xl p-3 shadow-md ring-offset-surface focus-within:outline-none focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-0 hover:border-border-hover md:gap-2 md:p-4">
-        <CardContent className="p-0">
+        <CardBody className="p-0">
           <Textarea
             ref={inputRef}
             placeholder="Ask your assistant"
@@ -126,7 +126,7 @@ export function AssistantUserInput(props: AssistantUserInputProps) {
               ) : null
             }
           />
-        </CardContent>
+        </CardBody>
         <CardFooter className="flex-row justify-between p-0">
           <div className="flex flex-row items-center justify-start gap-2">
             {!isXL ? (
