@@ -15,16 +15,21 @@ import {
 } from "@/components/ui/card"
 import { VeridaIdentityDropdownMenu } from "@/components/verida/verida-identity-dropdown-menu"
 import { ALL_DATABASE_DEFS } from "@/features/data/constants"
-import { VeridaOauthScope } from "@/features/verida-oauth/types"
+import {
+  VeridaOauthPayload,
+  VeridaOauthScope,
+} from "@/features/verida-oauth/types"
 
 type OAuthConsentCardProps = {
-  requesterName: string
-  requesterUrl: string
-  requestedScopes: VeridaOauthScope[]
+  oauthPayload: VeridaOauthPayload
+  onAllow: () => void
+  onDeny: () => void
 } & React.ComponentProps<"div">
 
 export function OAuthConsentCard(props: OAuthConsentCardProps) {
-  const { requesterName, requesterUrl, requestedScopes, ...divProps } = props
+  const { oauthPayload, onAllow, onDeny, ...divProps } = props
+
+  const { name, url, scopes } = oauthPayload
 
   const formatScope = useCallback((scope: VeridaOauthScope) => {
     const databaseDef = ALL_DATABASE_DEFS.find(
@@ -64,45 +69,48 @@ export function OAuthConsentCard(props: OAuthConsentCardProps) {
           <CardHeader className="shrink-0 p-0">
             <CardTitle>
               <Link
-                href={requesterUrl}
+                href={url}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="underline"
               >
-                {requesterName}
+                {name}
               </Link>{" "}
               wants to access your Verida Vault
             </CardTitle>
             <CardDescription>
               <Link
-                href={requesterUrl}
+                href={url}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="underline"
               >
                 <Typography variant="base-regular">
-                  https://app.example.com
+                  {
+                    // TODO: Display punnycode of the URL
+                    url
+                  }
                 </Typography>
               </Link>
             </CardDescription>
           </CardHeader>
           <CardBody className="flex flex-1 flex-col gap-4 overflow-y-auto p-0">
-            {requestedScopes.length > 0 ? (
+            {scopes.length > 0 ? (
               <>
                 <Typography variant="base-regular">
                   By allowing it,{" "}
                   <Link
-                    href={requesterUrl}
+                    href={url}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="underline"
                   >
-                    {requesterName}
+                    {name}
                   </Link>{" "}
                   will be able to:
                 </Typography>
                 <ul>
-                  {requestedScopes.map((scope, index) => (
+                  {scopes.map((scope, index) => (
                     <li key={index}>
                       <Typography>{formatScope(scope)}</Typography>
                     </li>
@@ -121,7 +129,7 @@ export function OAuthConsentCard(props: OAuthConsentCardProps) {
               <Alert variant="warning">
                 <AlertTitle>Privacy Notice</AlertTitle>
                 <AlertDescription className="text-xs text-muted-foreground">
-                  {requesterName} will have access to your personal data.
+                  {name} will have access to your personal data.
                 </AlertDescription>
                 <AlertDescription className="text-xs text-muted-foreground">
                   Make sure you trust the application before allowing the
@@ -131,8 +139,12 @@ export function OAuthConsentCard(props: OAuthConsentCardProps) {
             </div>
           </CardBody>
           <CardFooter className="shrink-0 justify-between p-0">
-            <Button variant="outline">Deny</Button>
-            <Button variant="primary">Allow</Button>
+            <Button variant="outline" onClick={onDeny}>
+              Deny
+            </Button>
+            <Button variant="primary" onClick={onAllow}>
+              Allow
+            </Button>
           </CardFooter>
         </Card>
       </div>

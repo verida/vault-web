@@ -3,20 +3,20 @@
 import { VeridaConnectionLoading } from "@/components/verida/verida-connection-loading"
 import { OAuthConsentCard } from "@/features/verida-oauth/components/oauth-consent-card"
 import { OAuthVeridaNotConnected } from "@/features/verida-oauth/components/oauth-verida-not-connected"
-import { MOCK_OAUTH_PAYLOAD } from "@/features/verida-oauth/mock"
-import { useVerida } from "@/features/verida/hooks/use-verida"
+import { useVeridaOauth } from "@/features/verida-oauth/hooks/use-verida-oauth"
 
 export default function OAuthPage() {
-  const { isConnected, isConnecting } = useVerida()
+  const { isConnected, isConnecting, payload, handleAllow, handleDeny } =
+    useVeridaOauth()
 
-  if (isConnected) {
+  if (payload && isConnected) {
     return (
       <div className="flex h-full w-full flex-col items-center justify-center gap-8 p-4">
         <OAuthConsentCard
-          requesterName={MOCK_OAUTH_PAYLOAD.name}
-          requesterUrl={MOCK_OAUTH_PAYLOAD.url}
-          requestedScopes={MOCK_OAUTH_PAYLOAD.scopes}
+          oauthPayload={payload}
           className="max-h-full"
+          onAllow={handleAllow}
+          onDeny={handleDeny}
         />
       </div>
     )
@@ -29,6 +29,8 @@ export default function OAuthPage() {
       </div>
     )
   }
+
+  // TODO: Handle case where no payload is available)
 
   return (
     <div className="flex h-full w-full flex-col items-center justify-center gap-8 p-4">
