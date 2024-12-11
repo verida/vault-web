@@ -1,30 +1,94 @@
+"use client"
+
+import Link from "next/link"
+
+import { Typography } from "@/components/typography"
+import {
+  Card,
+  CardBody,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
 import {
   ErrorBlock,
   ErrorBlockDescription,
-  ErrorBlockImage,
   ErrorBlockTitle,
 } from "@/components/ui/error"
 import { VeridaConnectButton } from "@/components/verida/verida-connect-button"
+import { useVeridaOauth } from "@/features/verida-oauth/hooks/use-verida-oauth"
+import { cn } from "@/styles/utils"
 
-type OAuthVeridaNotConnectedProps = {
-  title?: string
-  description?: string
-} & React.ComponentProps<typeof ErrorBlock>
+type OAuthVeridaNotConnectedProps = React.ComponentProps<typeof Card>
 
 export function OAuthVeridaNotConnected(props: OAuthVeridaNotConnectedProps) {
-  const {
-    title = "Not Connected",
-    description = "Connect with Verida to continue",
-    ...errorBlockProps
-  } = props
+  const { className, ...cardProps } = props
+
+  const { payload } = useVeridaOauth()
+
+  // TODO: Handle case where no payload is available
+
+  const { name, url } = payload
 
   return (
-    <ErrorBlock {...errorBlockProps}>
-      <ErrorBlockImage />
-      <ErrorBlockTitle>{title}</ErrorBlockTitle>
-      <ErrorBlockDescription>{description}</ErrorBlockDescription>
-      <VeridaConnectButton />
-    </ErrorBlock>
+    <Card
+      className={cn("flex h-full flex-col gap-6 p-6", className)}
+      {...cardProps}
+    >
+      <CardHeader className="shrink-0 p-0">
+        <CardTitle>
+          <Link
+            href={url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline"
+          >
+            {name}
+          </Link>{" "}
+          wants to access your Verida Vault
+        </CardTitle>
+        <CardDescription>
+          <Link
+            href={url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline"
+          >
+            <Typography variant="base-regular">
+              {
+                // TODO: Display punnycode of the URL
+                url
+              }
+            </Typography>
+          </Link>
+        </CardDescription>
+      </CardHeader>
+      <CardBody className="flex flex-1 flex-col gap-4 overflow-y-auto p-0">
+        <div className="flex flex-col gap-4">
+          <ErrorBlock>
+            <ErrorBlockTitle variant="heading-5">
+              You are not connected
+            </ErrorBlockTitle>
+            <ErrorBlockDescription>
+              Learn more about how the Verida Network helps you take back
+              control of your personal data.
+            </ErrorBlockDescription>
+            <ErrorBlockDescription>
+              Check{" "}
+              <Link
+                href="https://www.verida.network/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary underline"
+              >
+                verida.network
+              </Link>
+            </ErrorBlockDescription>
+            <VeridaConnectButton label="Connect with Verida" />
+          </ErrorBlock>
+        </div>
+      </CardBody>
+    </Card>
   )
 }
 OAuthVeridaNotConnected.displayName = "OAuthVeridaNotConnected"

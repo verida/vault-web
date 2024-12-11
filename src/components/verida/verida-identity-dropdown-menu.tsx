@@ -61,6 +61,10 @@ export function VeridaIdentityDropdownMenu(
     }
   }, [did, toast])
 
+  if (!isConnected) {
+    return null
+  }
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
