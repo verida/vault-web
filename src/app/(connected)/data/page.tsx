@@ -1,7 +1,7 @@
 import Link from "next/link"
 import React from "react"
 
-import { DataSecurityDetailsPopover } from "@/app/(connected)/data/_components/data-security-details-popover"
+import { DataSecurityDetailsDialog } from "@/app/(connected)/data/_components/data-security-details-dialog"
 import { DatabaseCard } from "@/app/(connected)/data/_components/database-card"
 import { PageWrapper } from "@/components/page-wrapper"
 import { Typography } from "@/components/typography"
@@ -14,7 +14,7 @@ export default function DataPage() {
       pageTitle={
         <div className="flex flex-row items-center gap-4">
           <Typography variant="heading-3">Data</Typography>
-          <DataSecurityDetailsPopover />
+          <DataSecurityDetailsDialog />
         </div>
       }
     >

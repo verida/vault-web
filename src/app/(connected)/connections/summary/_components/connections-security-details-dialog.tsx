@@ -3,44 +3,44 @@ import Link from "next/link"
 
 import { Typography } from "@/components/typography"
 import {
-  SecurityDetailsPopover,
-  SecurityDetailsPopoverBody,
-  SecurityDetailsPopoverContent,
-  SecurityDetailsPopoverDescription,
-  SecurityDetailsPopoverFooter,
-  SecurityDetailsPopoverHeader,
-  SecurityDetailsPopoverTitle,
-  SecurityDetailsPopoverTrigger,
+  SecurityDetailsDialog,
+  SecurityDetailsDialogBody,
+  SecurityDetailsDialogContent,
+  SecurityDetailsDialogDescription,
+  SecurityDetailsDialogFooter,
+  SecurityDetailsDialogHeader,
+  SecurityDetailsDialogTitle,
+  SecurityDetailsDialogTrigger,
   SecurityIcon,
 } from "@/components/ui/security"
 import { getDataPageRoute } from "@/features/routes/utils"
 
-export type ConnectionsSecurityDetailsPopoverProps = React.ComponentProps<
-  typeof SecurityDetailsPopoverTrigger
+type ConnectionsSecurityDetailsDialogProps = React.ComponentProps<
+  typeof SecurityDetailsDialogTrigger
 >
 
-export function ConnectionsSecurityDetailsPopover(
-  props: ConnectionsSecurityDetailsPopoverProps
+export function ConnectionsSecurityDetailsDialog(
+  props: ConnectionsSecurityDetailsDialogProps
 ) {
   const { ...triggerProps } = props
 
   return (
-    <SecurityDetailsPopover>
-      <SecurityDetailsPopoverTrigger {...triggerProps} />
-      <SecurityDetailsPopoverContent>
-        <SecurityDetailsPopoverHeader>
+    <SecurityDetailsDialog>
+      <SecurityDetailsDialogTrigger {...triggerProps} />
+      <SecurityDetailsDialogContent>
+        <SecurityDetailsDialogHeader>
           <div className="flex min-w-0 flex-row items-center gap-2">
             <SecurityIcon className="size-5" />
-            <SecurityDetailsPopoverTitle className="flex-1">
+            <SecurityDetailsDialogTitle className="flex-1">
               Your connections are secured
-            </SecurityDetailsPopoverTitle>
+            </SecurityDetailsDialogTitle>
           </div>
-          <SecurityDetailsPopoverDescription>
+          <SecurityDetailsDialogDescription>
             The Verida Private Data Bridge ensures your data is securely
             extracted from your platforms.
-          </SecurityDetailsPopoverDescription>
-        </SecurityDetailsPopoverHeader>
-        <SecurityDetailsPopoverBody className="gap-4">
+          </SecurityDetailsDialogDescription>
+        </SecurityDetailsDialogHeader>
+        <SecurityDetailsDialogBody className="gap-4">
           <div className="flex items-start gap-3">
             <CpuIcon className="size-4 shrink-0 text-status-secured-foreground" />
             <div className="flex flex-col gap-1">
@@ -80,8 +80,8 @@ export function ConnectionsSecurityDetailsPopover(
               </div>
             </div>
           </div>
-        </SecurityDetailsPopoverBody>
-        <SecurityDetailsPopoverFooter>
+        </SecurityDetailsDialogBody>
+        <SecurityDetailsDialogFooter>
           <Link
             href="https://developers.verida.network/private-data-bridge/introduction"
             target="_blank"
@@ -91,10 +91,10 @@ export function ConnectionsSecurityDetailsPopover(
               Learn more about Verida Private Data Bridge
             </Typography>
           </Link>
-        </SecurityDetailsPopoverFooter>
-      </SecurityDetailsPopoverContent>
-    </SecurityDetailsPopover>
+        </SecurityDetailsDialogFooter>
+      </SecurityDetailsDialogContent>
+    </SecurityDetailsDialog>
   )
 }
-ConnectionsSecurityDetailsPopover.displayName =
-  "ConnectionsSecurityDetailsPopover"
+ConnectionsSecurityDetailsDialog.displayName =
+  "ConnectionsSecurityDetailsDialog"
