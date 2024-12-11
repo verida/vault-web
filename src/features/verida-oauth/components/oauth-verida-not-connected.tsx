@@ -2,7 +2,6 @@
 
 import Link from "next/link"
 
-import { Typography } from "@/components/typography"
 import {
   Card,
   CardBody,
@@ -54,7 +53,7 @@ export function OAuthVeridaNotConnected(props: OAuthVeridaNotConnectedProps) {
             rel="noopener noreferrer"
             className="underline"
           >
-            <Typography variant="base-regular">{`${url.protocol}//${url.hostname}`}</Typography>
+            {`${url.protocol}//${url.hostname}`}
           </Link>
         </CardDescription>
       </CardHeader>
