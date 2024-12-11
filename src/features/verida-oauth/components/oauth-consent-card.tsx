@@ -70,12 +70,7 @@ export function OAuthConsentCard(props: OAuthConsentCardProps) {
             rel="noopener noreferrer"
             className="underline"
           >
-            <Typography variant="base-regular">
-              {
-                // TODO: Display punnycode of the URL
-                url
-              }
-            </Typography>
+            <Typography variant="base-regular">{`${url.protocol}//${url.hostname}`}</Typography>
           </Link>
         </CardDescription>
       </CardHeader>

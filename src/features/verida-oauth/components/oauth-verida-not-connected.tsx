@@ -47,19 +47,14 @@ export function OAuthVeridaNotConnected(props: OAuthVeridaNotConnectedProps) {
           </Link>{" "}
           wants to access your Verida Vault
         </CardTitle>
-        <CardDescription>
+        <CardDescription className="flex flex-row items-center gap-2">
           <Link
             href={url}
             target="_blank"
             rel="noopener noreferrer"
             className="underline"
           >
-            <Typography variant="base-regular">
-              {
-                // TODO: Display punnycode of the URL
-                url
-              }
-            </Typography>
+            <Typography variant="base-regular">{`${url.protocol}//${url.hostname}`}</Typography>
           </Link>
         </CardDescription>
       </CardHeader>

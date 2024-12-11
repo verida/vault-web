@@ -5,6 +5,6 @@ export type VeridaOauthScope = {
 
 export type VeridaOauthPayload = {
   name: string
-  url: string
+  url: URL
   scopes: VeridaOauthScope[]
 }

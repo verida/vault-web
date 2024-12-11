@@ -2,7 +2,7 @@ import { VeridaOauthPayload } from "@/features/verida-oauth/types"
 
 export const MOCK_OAUTH_PAYLOAD: VeridaOauthPayload = {
   name: "ACME",
-  url: "https://verida.network",
+  url: new URL("https://verida.network"),
   scopes: [
     {
       database: "social_email",
