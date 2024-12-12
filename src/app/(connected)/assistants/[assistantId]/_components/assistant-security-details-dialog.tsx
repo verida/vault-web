@@ -3,42 +3,42 @@ import Link from "next/link"
 
 import { Typography } from "@/components/typography"
 import {
-  SecurityDetailsPopover,
-  SecurityDetailsPopoverBody,
-  SecurityDetailsPopoverContent,
-  SecurityDetailsPopoverDescription,
-  SecurityDetailsPopoverFooter,
-  SecurityDetailsPopoverHeader,
-  SecurityDetailsPopoverTitle,
-  SecurityDetailsPopoverTrigger,
+  SecurityDetailsDialog,
+  SecurityDetailsDialogBody,
+  SecurityDetailsDialogContent,
+  SecurityDetailsDialogDescription,
+  SecurityDetailsDialogFooter,
+  SecurityDetailsDialogHeader,
+  SecurityDetailsDialogTitle,
+  SecurityDetailsDialogTrigger,
   SecurityIcon,
 } from "@/components/ui/security"
 
-export type AssistantSecurityDetailsPopoverProps = React.ComponentProps<
-  typeof SecurityDetailsPopoverTrigger
+type AssistantSecurityDetailsDialogProps = React.ComponentProps<
+  typeof SecurityDetailsDialogTrigger
 >
 
-export function AssistantSecurityDetailsPopover(
-  props: AssistantSecurityDetailsPopoverProps
+export function AssistantSecurityDetailsDialog(
+  props: AssistantSecurityDetailsDialogProps
 ) {
   const { ...triggerProps } = props
 
   return (
-    <SecurityDetailsPopover>
-      <SecurityDetailsPopoverTrigger variant="warning" {...triggerProps} />
-      <SecurityDetailsPopoverContent align="end">
-        <SecurityDetailsPopoverHeader>
+    <SecurityDetailsDialog>
+      <SecurityDetailsDialogTrigger variant="warning" {...triggerProps} />
+      <SecurityDetailsDialogContent>
+        <SecurityDetailsDialogHeader>
           <div className="flex min-w-0 flex-row items-center gap-2">
             <SecurityIcon className="size-5 text-status-warning" />
-            <SecurityDetailsPopoverTitle className="flex-1 text-foreground">
+            <SecurityDetailsDialogTitle className="flex-1 text-foreground">
               Privacy notice
-            </SecurityDetailsPopoverTitle>
+            </SecurityDetailsDialogTitle>
           </div>
-          <SecurityDetailsPopoverDescription>
+          <SecurityDetailsDialogDescription>
             We are actively building Verida Confidential Compute focused on
             security and privacy.
-          </SecurityDetailsPopoverDescription>
-          <SecurityDetailsPopoverDescription>
+          </SecurityDetailsDialogDescription>
+          <SecurityDetailsDialogDescription>
             During the{" "}
             <Typography variant="base-semibold" component="span">
               Alpha phase
@@ -46,9 +46,9 @@ export function AssistantSecurityDetailsPopover(
             , temporary solutions have been implemented for the AI processing
             using a third party platform. While not perfect, these solutions
             provide adequate protections for your data.
-          </SecurityDetailsPopoverDescription>
-        </SecurityDetailsPopoverHeader>
-        <SecurityDetailsPopoverBody className="gap-4">
+          </SecurityDetailsDialogDescription>
+        </SecurityDetailsDialogHeader>
+        <SecurityDetailsDialogBody className="gap-4">
           <div className="flex items-start gap-3">
             <BrainCircuitIcon className="size-4 shrink-0 text-status-warning" />
             <div className="flex flex-col gap-1">
@@ -93,8 +93,8 @@ export function AssistantSecurityDetailsPopover(
               </div>
             </div>
           </div>
-        </SecurityDetailsPopoverBody>
-        <SecurityDetailsPopoverFooter>
+        </SecurityDetailsDialogBody>
+        <SecurityDetailsDialogFooter>
           <Link
             href="https://developers.verida.network/apis/privacy-and-security#llm-privacy-alpha"
             target="_blank"
@@ -104,9 +104,9 @@ export function AssistantSecurityDetailsPopover(
               Learn more about the AI privacy and security
             </Typography>
           </Link>
-        </SecurityDetailsPopoverFooter>
-      </SecurityDetailsPopoverContent>
-    </SecurityDetailsPopover>
+        </SecurityDetailsDialogFooter>
+      </SecurityDetailsDialogContent>
+    </SecurityDetailsDialog>
   )
 }
-AssistantSecurityDetailsPopover.displayName = "AssistantSecurityDetailsPopover"
+AssistantSecurityDetailsDialog.displayName = "AssistantSecurityDetailsDialog"
