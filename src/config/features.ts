@@ -3,6 +3,9 @@ import { commonConfig } from "@/config/common"
 // Basic feature flags for now
 // But likely to stay as a separate global variable like this
 export const featureFlags = {
+  veridaOauth: {
+    enabled: commonConfig.FEATURE_FLAG_VERIDA_OAUTH_ENABLED,
+  },
   inbox: {
     enabled: commonConfig.FEATURE_FLAG_INBOX_ENABLED,
   },

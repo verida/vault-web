@@ -27,6 +27,10 @@ export const CommonConfigSchema = z.object({
             : Network.BANKSIA
     }),
   VERIDA_RPC_URL: z.string().url().optional(),
+  FEATURE_FLAG_VERIDA_OAUTH_ENABLED: z
+    .string()
+    .optional()
+    .transform((value) => value === "true"),
   FEATURE_FLAG_AI_ASSISTANT_ENABLED: z
     .string()
     .optional()

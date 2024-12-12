@@ -1,9 +1,4 @@
-import {
-  LoadingBlock,
-  LoadingBlockDescription,
-  LoadingBlockSpinner,
-  LoadingBlockTitle,
-} from "@/components/ui/loading"
+import { VeridaConnectionLoading } from "@/components/verida/verida-connection-loading"
 import { cn } from "@/styles/utils"
 
 type ConnectionLoadingProps = Omit<
@@ -22,16 +17,7 @@ export function ConnectionLoading(props: ConnectionLoadingProps) {
       )}
       {...divProps}
     >
-      <LoadingBlock>
-        <LoadingBlockSpinner />
-        <LoadingBlockTitle variant="heading-1">
-          Connecting to Verida...
-        </LoadingBlockTitle>
-        <LoadingBlockDescription variant="base-l">
-          Please wait while we establish a secure connection. This might take a
-          moment.
-        </LoadingBlockDescription>
-      </LoadingBlock>
+      <VeridaConnectionLoading />
     </div>
   )
 }

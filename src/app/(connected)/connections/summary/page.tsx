@@ -2,7 +2,7 @@ import {
   ConnectDataProviderDialog,
   ConnectDataProviderDialogTrigger,
 } from "@/app/(connected)/connections/summary/_components/connect-data-provider-dialog"
-import { ConnectionsSecurityDetailsPopover } from "@/app/(connected)/connections/summary/_components/connections-security-details-popover"
+import { ConnectionsSecurityDetailsDialog } from "@/app/(connected)/connections/summary/_components/connections-security-details-dialog"
 import { DataConnectionsList } from "@/app/(connected)/connections/summary/_components/data-connections-list"
 import { DataProvidersSection } from "@/app/(connected)/connections/summary/_components/data-providers-section"
 import { SummarySectionWrapper } from "@/app/(connected)/connections/summary/_components/summary-section-wrapper"
@@ -38,7 +38,7 @@ export default function ConnectionsSummaryPage() {
           sectionTitle={
             <div className="flex flex-row items-center gap-4">
               <Typography variant="heading-4">Connected Accounts</Typography>
-              <ConnectionsSecurityDetailsPopover />
+              <ConnectionsSecurityDetailsDialog />
             </div>
           }
         >
