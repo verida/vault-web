@@ -93,14 +93,20 @@ export function ManageAiAssistantDialog(props: ManageAiAssistantDialogProps) {
 
   useEffect(() => {
     form.setValue("name", initialData?.name ?? "")
-  }, [form, initialData])
+    // HACK: On version 7.54.0 `form` is causing an infinite re-render loop
+    // so had to remove it from the dependency array which is not a big deal.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initialData])
 
   useEffect(() => {
     if (!open) {
       form.clearErrors()
       form.reset()
     }
-  }, [form, open])
+    // HACK: On version 7.54.0 `form` is causing an infinite re-render loop
+    // so had to remove it from the dependency array which is not a big deal.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open])
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
