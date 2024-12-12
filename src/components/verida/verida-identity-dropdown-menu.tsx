@@ -1,10 +1,8 @@
 "use client"
 
 import { MessageCircle } from "lucide-react"
-import { useRouter } from "next/navigation"
 import React, { useCallback } from "react"
 
-import { ApiKeyIcon } from "@/components/icons/api-key-icon"
 import { Copy } from "@/components/icons/copy"
 import { Logout } from "@/components/icons/logout"
 import { SimpleDown } from "@/components/icons/simple-down"
@@ -19,10 +17,9 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Skeleton } from "@/components/ui/skeleton"
-import { featureFlags } from "@/config/features"
 import { version } from "@/config/version"
 import { APP_NAME } from "@/constants/app"
-import { getApiKeysPageRoute } from "@/features/routes/utils"
+import { EMPTY_VALUE_FALLBACK } from "@/constants/misc"
 import { useUserFeedback } from "@/features/telemetry/use-user-feedback"
 import { useToast } from "@/features/toasts/use-toast"
 import { EMPTY_PROFILE_NAME_FALLBACK } from "@/features/verida-profile/constants"
@@ -30,15 +27,21 @@ import { useUserProfile } from "@/features/verida-profile/hooks/use-user-profile
 import { useVerida } from "@/features/verida/hooks/use-verida"
 import { cn } from "@/styles/utils"
 
-export type IdentityDropdownMenuProps = Pick<
-  React.ComponentProps<typeof Button>,
-  "className"
->
+type VeridaIdentityDropdownMenuProps = {
+  keepExpanded?: boolean
+  hideDisconnect?: boolean
+  hideFeedback?: boolean
+} & Pick<React.ComponentProps<typeof Button>, "className">
 
-export function IdentityDropdownMenu(props: IdentityDropdownMenuProps) {
-  const { className } = props
-
-  const router = useRouter()
+export function VeridaIdentityDropdownMenu(
+  props: VeridaIdentityDropdownMenuProps
+) {
+  const {
+    keepExpanded = false,
+    hideDisconnect = false,
+    hideFeedback = false,
+    className,
+  } = props
 
   const { isConnected, did, disconnect } = useVerida()
   const { profile } = useUserProfile()
@@ -58,9 +61,9 @@ export function IdentityDropdownMenu(props: IdentityDropdownMenuProps) {
     }
   }, [did, toast])
 
-  const handleApiKeysClick = useCallback(() => {
-    router.push(getApiKeysPageRoute())
-  }, [router])
+  if (!isConnected) {
+    return null
+  }
 
   return (
     <DropdownMenu>
@@ -68,7 +71,10 @@ export function IdentityDropdownMenu(props: IdentityDropdownMenuProps) {
         <Button
           variant="outline"
           className={cn(
-            "h-auto max-w-56 rounded-full border-0 p-0 md:rounded-lg md:border md:py-2 md:pl-3 md:pr-2",
+            "h-auto max-w-56 border-0",
+            keepExpanded
+              ? "rounded-lg border py-2 pl-3 pr-2"
+              : "rounded-full p-0 md:rounded-lg md:border md:py-2 md:pl-3 md:pr-2",
             className
           )}
         >
@@ -78,12 +84,13 @@ export function IdentityDropdownMenu(props: IdentityDropdownMenuProps) {
                 <Avatar className="size-8">
                   <AvatarImage alt="User Avatar" src={profile.avatar?.uri} />
                   <AvatarFallback>
-                    {profile.name?.at(0)?.toUpperCase() || "-"}
+                    {profile.name?.at(0)?.toUpperCase() || EMPTY_VALUE_FALLBACK}
                   </AvatarFallback>
                 </Avatar>
                 <p
                   className={cn(
-                    "hidden flex-1 truncate text-base font-semibold leading-5 text-muted-foreground md:block",
+                    "flex-1 truncate text-base font-semibold leading-5 text-muted-foreground",
+                    keepExpanded ? "" : "hidden md:block",
                     profile.name ? "" : "italic"
                   )}
                 >
@@ -93,10 +100,20 @@ export function IdentityDropdownMenu(props: IdentityDropdownMenuProps) {
             ) : (
               <>
                 <Skeleton className="size-8 shrink-0 rounded-full border" />
-                <Skeleton className="my-0.5 hidden h-4 w-24 md:block" />
+                <Skeleton
+                  className={cn(
+                    "my-0.5 h-4 w-24",
+                    keepExpanded ? "" : "hidden md:block"
+                  )}
+                />
               </>
             )}
-            <SimpleDown className="hidden shrink-0 text-muted-foreground md:block" />
+            <SimpleDown
+              className={cn(
+                "shrink-0 text-muted-foreground",
+                keepExpanded ? "" : "hidden md:block"
+              )}
+            />
           </div>
         </Button>
       </DropdownMenuTrigger>
@@ -110,7 +127,7 @@ export function IdentityDropdownMenu(props: IdentityDropdownMenuProps) {
               <Avatar className="size-12">
                 <AvatarImage alt="User Avatar" src={profile.avatar?.uri} />
                 <AvatarFallback>
-                  {profile.name?.at(0)?.toUpperCase() || "-"}
+                  {profile.name?.at(0)?.toUpperCase() || EMPTY_VALUE_FALLBACK}
                 </AvatarFallback>
               </Avatar>
             ) : (
@@ -150,16 +167,7 @@ export function IdentityDropdownMenu(props: IdentityDropdownMenuProps) {
             ) : null}
           </div>
         </DropdownMenuItem>
-        {featureFlags.apiKeys.enabled ? (
-          <DropdownMenuItem
-            onClick={handleApiKeysClick}
-            className="cursor-pointer gap-3 px-4 py-4"
-          >
-            <ApiKeyIcon className="size-5" />
-            <Typography variant="base-semibold">API Keys</Typography>
-          </DropdownMenuItem>
-        ) : null}
-        {isUserFeedbackReady ? (
+        {!hideFeedback && isUserFeedbackReady ? (
           <DropdownMenuItem
             onClick={openUserFeedbackForm}
             className="cursor-pointer gap-3 px-4 py-4 text-muted-foreground"
@@ -168,14 +176,16 @@ export function IdentityDropdownMenu(props: IdentityDropdownMenuProps) {
             <Typography variant="base-semibold">Give your feedback</Typography>
           </DropdownMenuItem>
         ) : null}
-        <DropdownMenuItem
-          onClick={disconnect}
-          disabled={!isConnected}
-          className="cursor-pointer gap-3 px-4 py-4 text-destructive"
-        >
-          <Logout />
-          <Typography variant="base-semibold">Disconnect</Typography>
-        </DropdownMenuItem>
+        {!hideDisconnect ? (
+          <DropdownMenuItem
+            onClick={disconnect}
+            disabled={!isConnected}
+            className="cursor-pointer gap-3 px-4 py-4 text-destructive"
+          >
+            <Logout />
+            <Typography variant="base-semibold">Disconnect</Typography>
+          </DropdownMenuItem>
+        ) : null}
         <DropdownMenuLabel className="text-center text-xs font-normal">
           {`${APP_NAME} ${version}`}
         </DropdownMenuLabel>
@@ -183,4 +193,4 @@ export function IdentityDropdownMenu(props: IdentityDropdownMenuProps) {
     </DropdownMenu>
   )
 }
-IdentityDropdownMenu.displayName = "IdentityDropdownMenu"
+VeridaIdentityDropdownMenu.displayName = "VeridaIdentityDropdownMenu"

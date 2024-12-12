@@ -105,7 +105,7 @@ export async function sendAiPromptInputToAssistant(
  */
 export function hotloadAPI(
   sessionToken: string,
-  progressCallback?: (progress: number) => void
+  progressCallback?: (progress: number, dataCurrentlyLoading?: string) => void
 ): Promise<void> {
   return new Promise((resolve, reject) => {
     logger.info("Starting AI assistant hotload")
@@ -140,7 +140,7 @@ export function hotloadAPI(
         `AI assistant hotload progress: ${data.totalProgress * 100}%`
       )
       if (progressCallback) {
-        progressCallback(data.totalProgress)
+        progressCallback(data.totalProgress, data.schema)
       }
 
       // Check if hotloading is complete (using a threshold close to 1 to account for potential rounding issues)

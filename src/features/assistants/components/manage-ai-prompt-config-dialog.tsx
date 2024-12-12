@@ -111,7 +111,10 @@ export function ManageAiPromptConfigDialog(
         ? JSON.stringify(aiPromptInput.config.promptConfig, null, 2)
         : undefined
     )
-  }, [form, aiPromptInput])
+    // HACK: On version 7.54.0 `form` is causing an infinite re-render loop
+    // so had to remove it from the dependency array which is not a big deal.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [aiPromptInput])
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>

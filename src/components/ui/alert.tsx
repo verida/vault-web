@@ -5,17 +5,20 @@ import { StatusErrorIcon } from "@/components/icons/status-error-icon"
 import { StatusInfoIcon } from "@/components/icons/status-info-icon"
 import { StatusSuccessIcon } from "@/components/icons/status-success-icon"
 import { StatusWarningIcon } from "@/components/icons/status-warning-icon"
+import { SecurityIcon } from "@/components/ui/security"
 import { cn } from "@/styles/utils"
 
 const alertVariants = cva(
-  "relative w-full rounded border border-l-4 bg-surface-active px-3 py-2",
+  "relative w-full rounded border border-l-4 bg-surface-hover px-3 py-2",
   {
     variants: {
       variant: {
-        info: "border-l-status-info",
-        success: "border-l-status-success",
-        warning: "border-l-status-warning",
-        error: "border-l-status-error",
+        info: "border-l-status-info text-status-info",
+        success: "border-l-status-success text-status-success",
+        secured:
+          "border-l-status-secured-foreground text-status-secured-foreground",
+        warning: "border-l-status-warning text-status-warning",
+        error: "border-l-status-error text-status-error",
       },
     },
     defaultVariants: {
@@ -37,6 +40,7 @@ const Alert = React.forwardRef<
     <div className="absolute left-3 top-2">
       {variant === "info" ? <StatusInfoIcon className="size-5" /> : null}
       {variant === "success" ? <StatusSuccessIcon className="size-5" /> : null}
+      {variant === "secured" ? <SecurityIcon className="size-5" /> : null}
       {variant === "warning" ? <StatusWarningIcon className="size-5" /> : null}
       {variant === "error" ? <StatusErrorIcon className="size-5" /> : null}
     </div>
@@ -65,7 +69,7 @@ const AlertDescription = React.forwardRef<
   <div
     // TODO: Use Typography
     ref={ref}
-    className={cn("text-sm", className)}
+    className={cn("text-sm text-foreground", className)}
     {...props}
   />
 ))

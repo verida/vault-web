@@ -11,6 +11,9 @@ export type SearchInputProps = {
 } & React.InputHTMLAttributes<HTMLInputElement>
 
 // TODO: Rework the Input component with adornments
+/**
+ * @deprecated
+ */
 export function SearchInput(props: SearchInputProps) {
   const { onValueChange, className, ...inputProps } = props
 

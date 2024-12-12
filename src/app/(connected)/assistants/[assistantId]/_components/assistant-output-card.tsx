@@ -10,8 +10,9 @@ import { MarkdownRenderer } from "@/components/markdown-renderer"
 import { Typography } from "@/components/typography"
 import { Avatar } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
+import { Card, CardBody, CardFooter, CardHeader } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton"
+import { EMPTY_VALUE_FALLBACK } from "@/constants/misc"
 import { DEFAULT_ASSISTANT } from "@/features/assistants/constants"
 import { useAssistants } from "@/features/assistants/hooks/use-assistants"
 import { useGetAiAssistants } from "@/features/assistants/hooks/use-get-ai-assistants"
@@ -50,7 +51,7 @@ export function AssistantOutputCard(props: AssistantOutputCardProps) {
 
   const processedAt = useMemo(() => {
     if (aiAssistantOutput?.status !== "processed") {
-      return "-"
+      return EMPTY_VALUE_FALLBACK
     }
 
     return intlFormat(aiAssistantOutput.processedAt, SHORT_TIME_FORMAT_OPTIONS)
@@ -167,7 +168,7 @@ export function AssistantOutputCard(props: AssistantOutputCardProps) {
             </div>
           ) : null}
         </CardHeader>
-        <CardContent className="p-0">
+        <CardBody className="p-0">
           {!aiAssistantOutput || aiAssistantOutput?.status === "processing" ? (
             <AssistantOutputSkeleton className="w-full" />
           ) : (
@@ -175,7 +176,7 @@ export function AssistantOutputCard(props: AssistantOutputCardProps) {
               {aiAssistantOutput.result}
             </MarkdownRenderer>
           )}
-        </CardContent>
+        </CardBody>
         {displayFooterInfo ? (
           <CardFooter className="flex flex-row justify-end p-0 text-end text-muted-foreground">
             <div className="flex flex-col gap-0">

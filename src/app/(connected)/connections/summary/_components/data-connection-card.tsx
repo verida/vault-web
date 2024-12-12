@@ -12,6 +12,7 @@ import { Card } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 import { Skeleton } from "@/components/ui/skeleton"
 import { TooltipIndicator } from "@/components/ui/tooltip"
+import { EMPTY_VALUE_FALLBACK } from "@/constants/misc"
 import { useDataProvider } from "@/features/data-connections/hooks/use-data-provider"
 import { DataConnection } from "@/features/data-connections/types"
 import { getDataConnectionLatestSyncEnd } from "@/features/data-connections/utils"
@@ -75,7 +76,7 @@ export function DataConnectionCard(props: DataConnectionCardProps) {
                   <Typography variant="base-s-semibold">
                     {latestSyncEnd
                       ? intlFormat(latestSyncEnd, LONG_DATE_TIME_FORMAT_OPTIONS)
-                      : "-"}
+                      : EMPTY_VALUE_FALLBACK}
                   </Typography>
                   <TooltipIndicator content="Sync runs at most once per hour" />
                 </div>

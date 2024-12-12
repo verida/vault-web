@@ -5,18 +5,36 @@ import {
   LoadingBlockDescription,
   LoadingBlockSpinner,
   LoadingBlockTitle,
+  LoadingProgress,
 } from "@/components/ui/loading"
+import { AiAssistantHotloadResult } from "@/features/assistants/types"
 
-export default function AssistantLoadingPage() {
+type AssistantLoadingPageProps = {
+  hotload?: AiAssistantHotloadResult
+}
+
+export default function AssistantLoadingPage(props: AssistantLoadingPageProps) {
+  const { hotload } = props
+
   return (
-    <div className="flex h-full flex-1 flex-row items-center justify-center p-4">
-      <LoadingBlock>
-        <LoadingBlockSpinner />
-        <LoadingBlockTitle>Loading assistant...</LoadingBlockTitle>
-        <LoadingBlockDescription>
-          Please wait while we connect to your assistant
-        </LoadingBlockDescription>
-      </LoadingBlock>
+    <div className="flex h-full flex-1 flex-row items-center justify-center">
+      {hotload?.status === "loading" ? (
+        <LoadingBlock className="w-full">
+          <LoadingBlockTitle>Loading data...</LoadingBlockTitle>
+          <LoadingProgress value={hotload.progress} className="max-w-96" />
+          <LoadingBlockDescription>
+            {`Loading your ${hotload.dataCurrentlyLoading || "data"} for the assistant... ${Math.round((hotload.progress || 0) * 100)}%`}
+          </LoadingBlockDescription>
+        </LoadingBlock>
+      ) : (
+        <LoadingBlock>
+          <LoadingBlockSpinner />
+          <LoadingBlockTitle>Preparing assistant...</LoadingBlockTitle>
+          <LoadingBlockDescription>
+            Please wait while we prepare your assistant
+          </LoadingBlockDescription>
+        </LoadingBlock>
+      )}
     </div>
   )
 }

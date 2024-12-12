@@ -24,9 +24,14 @@ export default function DataItemPage(props: DataItemPageProps) {
 
   const { itemId, setItemId } = useItemIdState()
 
-  const handleClose = useCallback(() => {
-    setItemId(null, { history: "push" })
-  }, [setItemId])
+  const handleOpenChange = useCallback(
+    (open: boolean) => {
+      if (!open) {
+        setItemId(null, { history: "push" })
+      }
+    },
+    [setItemId]
+  )
 
   const itemPage = useMemo(() => {
     if (!itemId || !databaseDefinition) {
@@ -36,12 +41,12 @@ export default function DataItemPage(props: DataItemPageProps) {
     return (
       <DataItemPageContent
         open
-        onClose={handleClose}
+        onOpenChange={handleOpenChange}
         databaseDefinition={databaseDefinition}
         itemId={itemId}
       />
     )
-  }, [itemId, handleClose, databaseDefinition])
+  }, [itemId, handleOpenChange, databaseDefinition])
 
   if (itemPage) {
     return <>{itemPage}</>

@@ -9,6 +9,7 @@ import {
   PaginationPrevious,
   PaginationSize,
 } from "@/components/ui/pagination"
+import { EMPTY_VALUE_FALLBACK } from "@/constants/misc"
 import { DATA_TABLE_PAGINATION_SIZES } from "@/features/data-table/constants"
 import { DataTablePaginationSizeValue } from "@/features/data-table/types"
 
@@ -33,7 +34,7 @@ export function DataTablePagination<TData>(
           <p className="text-sm font-medium text-muted-foreground">Rows</p>
           <PaginationSize
             sizes={paginationSizes}
-            value={`${table.getState().pagination.pageSize || "-"}`}
+            value={`${table.getState().pagination.pageSize || EMPTY_VALUE_FALLBACK}`}
             onValueChange={(value) => {
               table.setPageSize(Number(value))
             }}
@@ -53,6 +54,9 @@ export function DataTablePagination<TData>(
             <PaginationItem>
               <PaginationCurrent
                 pageIndex={table.getState().pagination.pageIndex + 1}
+                // FIXME: when the pagination is controlled, pageCount can be
+                // unknown during page changes, try to find a way to avoid this
+                // as it displays the fallback value
                 pageCount={table.getPageCount()}
               />
             </PaginationItem>

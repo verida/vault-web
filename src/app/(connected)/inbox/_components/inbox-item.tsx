@@ -19,6 +19,9 @@ export type InboxRowItemProps = {
   href?: string
 }
 
+/**
+ * @deprecated
+ */
 export function InboxRowItem(props: InboxRowItemProps) {
   const { message, href } = props
 

@@ -63,8 +63,8 @@ export function AssistantsProvider(props: AssistantsProviderProps) {
 
     const sessionToken = await getAccountSessionToken()
 
-    await hotloadAPI(sessionToken, (progress) => {
-      setHotload({ status: "loading", progress })
+    await hotloadAPI(sessionToken, (progress, dataCurrentlyLoading) => {
+      setHotload({ status: "loading", progress, dataCurrentlyLoading })
     })
 
     setHotload({ status: "success", progress: 1 })

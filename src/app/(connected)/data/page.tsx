@@ -1,14 +1,23 @@
 import Link from "next/link"
 import React from "react"
 
+import { DataSecurityDetailsDialog } from "@/app/(connected)/data/_components/data-security-details-dialog"
 import { DatabaseCard } from "@/app/(connected)/data/_components/database-card"
 import { PageWrapper } from "@/components/page-wrapper"
+import { Typography } from "@/components/typography"
 import { USER_DATABASE_DEFS } from "@/features/data/constants"
 import { getDatabasePageRoute } from "@/features/routes/utils"
 
 export default function DataPage() {
   return (
-    <PageWrapper pageTitle="Data">
+    <PageWrapper
+      pageTitle={
+        <div className="flex flex-row items-center gap-4">
+          <Typography variant="heading-3">Data</Typography>
+          <DataSecurityDetailsDialog />
+        </div>
+      }
+    >
       <div className="grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-6 xl:grid-cols-4">
         {USER_DATABASE_DEFS.map((databaseDefinition) => {
           return (

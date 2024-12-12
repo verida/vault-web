@@ -8,6 +8,7 @@ import { useMediaQuery } from "usehooks-ts"
 import { AiPromptSelector } from "@/app/(connected)/assistants/[assistantId]/_components/ai-prompt-selector"
 import { AssistantDataStatus } from "@/app/(connected)/assistants/[assistantId]/_components/assistant-data-status"
 import { AssistantOutput } from "@/app/(connected)/assistants/[assistantId]/_components/assistant-output"
+import { AssistantSecurityDetailsDialog } from "@/app/(connected)/assistants/[assistantId]/_components/assistant-security-details-dialog"
 import { AssistantUserInput } from "@/app/(connected)/assistants/[assistantId]/_components/assistant-user-input"
 import AssistantLoadingPage from "@/app/(connected)/assistants/[assistantId]/loading"
 import { Typography } from "@/components/typography"
@@ -35,7 +36,7 @@ export default function AssistantPage(props: AssistantPageProps) {
 
   const router = useRouter()
 
-  const { setSelectedAiAssistant } = useAssistants()
+  const { setSelectedAiAssistant, hotload } = useAssistants()
 
   useEffect(() => {
     setSelectedAiAssistant(assistantId)
@@ -67,15 +68,21 @@ export default function AssistantPage(props: AssistantPageProps) {
 
   const isXL = useMediaQuery(getMediaQuery("xl"))
 
-  if (isLoadingAiAssistant || isLoadingAiAssistants) {
-    return <AssistantLoadingPage />
+  if (
+    isLoadingAiAssistant ||
+    isLoadingAiAssistants ||
+    hotload.status === "loading"
+  ) {
+    return <AssistantLoadingPage hotload={hotload} />
   }
+
+  // TODO: Display alert if hotloading failed
 
   if (aiAssistant || assistantId === DEFAULT_ASSISTANT._id) {
     return (
       <div className="flex h-full w-full flex-row justify-center gap-6">
         {isXL ? (
-          <aside className="pb-4 md:pb-6 xl:pb-8">
+          <aside>
             <Card className="flex w-[26.5rem] flex-col gap-3 rounded-xl p-3">
               <div className="flex flex-row items-center gap-2 px-1 pt-1 text-muted-foreground">
                 <MessageSquareMoreIcon className="size-5 sm:size-6" />
@@ -87,13 +94,16 @@ export default function AssistantPage(props: AssistantPageProps) {
             </Card>
           </aside>
         ) : null}
-        <div className="flex h-full w-full max-w-screen-md flex-1 flex-col xl:max-w-none">
-          <AssistantUserInput className="z-10 -mb-5" />
-          <div className="flex-1 overflow-y-auto">
-            <div className="flex flex-1 flex-col gap-4 pb-4 pt-9 md:pb-6 xl:pb-8">
-              <AssistantDataStatus className="pl-3 md:pl-4" />
-              <AssistantOutput />
+        <div className="flex h-full w-full max-w-screen-md flex-1 flex-col gap-4 xl:max-w-none">
+          <div className="sticky top-2 z-10 sm:top-3 md:top-6">
+            <AssistantUserInput />
+          </div>
+          <div className="flex flex-1 flex-col gap-4">
+            <div className="flex flex-row items-center justify-between gap-4 px-3 md:px-4">
+              <AssistantDataStatus />
+              <AssistantSecurityDetailsDialog />
             </div>
+            <AssistantOutput />
           </div>
         </div>
       </div>

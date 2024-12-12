@@ -3,8 +3,9 @@ import React from "react"
 
 import { DataConnectionStatusBadge } from "@/components/data-connections/data-connection-status-badge"
 import { Typography } from "@/components/typography"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardBody, CardHeader, CardTitle } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton"
+import { EMPTY_VALUE_FALLBACK } from "@/constants/misc"
 import {
   DataConnectionHandler,
   DataProviderHandler,
@@ -36,7 +37,7 @@ export function DataConnectionHandlerCard(
           <CardTitle variant="heading-5">{handlerDefinition?.label}</CardTitle>
         </div>
       </CardHeader>
-      <CardContent className="flex flex-1 flex-col gap-4 p-0 pb-3">
+      <CardBody className="flex flex-1 flex-col gap-4 p-0 pb-3">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div className="text-muted-foreground">
             <Typography variant="base-regular">Status</Typography>
@@ -57,7 +58,7 @@ export function DataConnectionHandlerCard(
                   new Date(connectionHandler.latestSyncEnd),
                   LONG_DATE_TIME_FORMAT_OPTIONS
                 )
-              : "-"}
+              : EMPTY_VALUE_FALLBACK}
           </Typography>
         </div>
         <div className="flex flex-wrap items-start justify-between gap-4">
@@ -68,7 +69,7 @@ export function DataConnectionHandlerCard(
             className="line-clamp-4 flex-1 text-end"
             variant="base-regular"
           >
-            {connectionHandler?.syncMessage || "-"}
+            {connectionHandler?.syncMessage || EMPTY_VALUE_FALLBACK}
           </Typography>
         </div>
         {handlerDefinition?.options?.map((option) => (
@@ -84,7 +85,7 @@ export function DataConnectionHandlerCard(
             </Typography>
           </div>
         ))}
-      </CardContent>
+      </CardBody>
       {/* <Separator />
       <CardFooter className="flex items-center justify-between p-0 pt-3">
         <Typography variant="base-semibold">Sync enabled</Typography>
@@ -117,14 +118,14 @@ export function DataConnectionHandlerCardSkeleton(
           <Skeleton className="h-6 w-40" />
         </div>
       </CardHeader>
-      <CardContent className="flex flex-1 flex-col gap-4 p-0 pb-3">
+      <CardBody className="flex flex-1 flex-col gap-4 p-0 pb-3">
         {[...Array(3)].map((_, index) => (
           <div key={index} className="flex items-center justify-between">
             <Skeleton className="h-4 w-24" />
             <Skeleton className="h-4 w-20" />
           </div>
         ))}
-      </CardContent>
+      </CardBody>
       {/* <Separator />
       <CardFooter className="flex items-center justify-between p-0 pt-3">
         <Skeleton className="h-4 w-32" />

@@ -13,6 +13,7 @@ import { Typography } from "@/components/typography"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { TooltipIndicator } from "@/components/ui/tooltip"
+import { EMPTY_VALUE_FALLBACK } from "@/constants/misc"
 import { useDataProvider } from "@/features/data-connections/hooks/use-data-provider"
 import { useSyncDataConnection } from "@/features/data-connections/hooks/use-sync-data-connection"
 import { DataConnection } from "@/features/data-connections/types"
@@ -115,7 +116,7 @@ export function DataConnectionDetails(props: DataConnectionDetailsProps) {
               <Typography variant="heading-5" component="p">
                 {latestSyncEnd
                   ? intlFormat(latestSyncEnd, LONG_DATE_TIME_FORMAT_OPTIONS)
-                  : "-"}
+                  : EMPTY_VALUE_FALLBACK}
               </Typography>
               <TooltipIndicator content="Sync runs at most once per hour" />
             </div>

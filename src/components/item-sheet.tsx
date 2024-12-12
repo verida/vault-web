@@ -2,75 +2,81 @@ import { CloseSideRight } from "@/components/icons/close-side-right"
 import { Typography } from "@/components/typography"
 import { Button } from "@/components/ui/button"
 import {
-  Drawer,
-  DrawerBody,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-} from "@/components/ui/drawer"
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip"
+  Sheet,
+  SheetBody,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet"
 import { cn } from "@/styles/utils"
 
-export type ItemSheetProps = {
-  open: boolean
-  onClose: () => void
-  children: React.ReactNode
-}
+export const ItemSheet = Sheet
 
-export function ItemSheet(props: ItemSheetProps) {
-  const { open, onClose, children } = props
+export const ItemSheetTrigger = SheetTrigger
+
+export const ItemSheetClose = SheetClose
+
+type ItemSheetContentProps = React.ComponentProps<typeof SheetContent>
+
+export function ItemSheetContent(props: ItemSheetContentProps) {
+  const {
+    hideOverlay = false,
+    side = "right",
+    className,
+    ...sheetContentProps
+  } = props
 
   return (
-    <Drawer direction="right" open={open} onClose={onClose}>
-      <DrawerContent
-        onClose={onClose}
-        className="flex w-screen flex-col sm:bottom-2 sm:right-2 sm:top-2 sm:w-[480px] sm:rounded-md sm:shadow-lg"
-      >
-        {children}
-      </DrawerContent>
-    </Drawer>
+    <SheetContent
+      hideOverlay={hideOverlay}
+      side={side}
+      className={cn(
+        "flex w-screen flex-col sm:bottom-2 sm:right-2 sm:top-2 sm:h-[calc(100dvh_-_1rem)] sm:max-w-[520px] sm:rounded-md sm:shadow-lg",
+        className
+      )}
+      {...sheetContentProps}
+    />
   )
 }
-ItemSheet.displayName = "ItemSheet"
+ItemSheetContent.displayName = "ItemSheetContent"
 
-export type ItemSheetHeaderProps = {
-  onClose: () => void
+type ItemSheetHeaderProps = {
   right?: React.ReactNode
   hideCloseButton?: boolean
-} & React.ComponentProps<typeof DrawerHeader>
+} & React.ComponentProps<typeof SheetHeader>
 
 export function ItemSheetHeader(props: ItemSheetHeaderProps) {
-  const { children, onClose, right, hideCloseButton, ...drawerHeaderProps } =
-    props
+  const { children, right, hideCloseButton, ...sheetHeaderProps } = props
 
   return (
-    <DrawerHeader
-      {...drawerHeaderProps}
+    <SheetHeader
+      {...sheetHeaderProps}
       className="flex flex-col gap-4 border-b px-6 py-4"
     >
       <div className="flex flex-row items-center justify-between gap-3">
         <div className="flex min-w-0 flex-1 flex-row items-center gap-3">
           {!hideCloseButton && (
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={onClose}
-                  className="-ml-2 shrink-0"
-                >
-                  <CloseSideRight />
-                  <span className="sr-only">Close</span>
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>Close</TooltipContent>
-            </Tooltip>
+            // FIXME: For some reasons the tooltip is display when opening the sheet
+            // <Tooltip>
+            //   <TooltipTrigger asChild>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="-ml-2 shrink-0"
+              asChild
+            >
+              <SheetClose>
+                <CloseSideRight />
+                <span className="sr-only">Close</span>
+              </SheetClose>
+            </Button>
+            //   </TooltipTrigger>
+            //   <TooltipContent>Close</TooltipContent>
+            // </Tooltip>
           )}
           <div className="hidden truncate sm:block">{children}</div>
         </div>
@@ -79,56 +85,56 @@ export function ItemSheetHeader(props: ItemSheetHeaderProps) {
         ) : null}
       </div>
       <div className="sm:hidden">{children}</div>
-    </DrawerHeader>
+    </SheetHeader>
   )
 }
 ItemSheetHeader.displayName = "ItemSheetHeader"
 
-export type ItemSheetTitleProps = {
+type ItemSheetTitleProps = {
   /** Used for accessibility reason, not displayed in the UI */
   description?: string
 } & Omit<React.ComponentProps<typeof Typography>, "variant">
 
 export function ItemSheetTitle(props: ItemSheetTitleProps) {
-  const { className, description = "item sheet", ...typographyProps } = props
+  const { description = "Item sheet", className, ...typographyProps } = props
 
   return (
     <>
-      <DrawerTitle className="truncate">
+      <SheetTitle className="truncate">
         <Typography
           variant="heading-4"
           component="span"
           className={cn("truncate", className)}
           {...typographyProps}
         />
-      </DrawerTitle>
-      <DrawerDescription className="sr-only">{description}</DrawerDescription>
+      </SheetTitle>
+      <SheetDescription className="sr-only">{description}</SheetDescription>
     </>
   )
 }
 ItemSheetTitle.displayName = "ItemSheetTitle"
 
-export type ItemSheetBodyProps = React.ComponentProps<typeof DrawerBody>
+type ItemSheetBodyProps = React.ComponentProps<typeof SheetBody>
 
 export function ItemSheetBody(props: ItemSheetBodyProps) {
-  const { className, ...drawerBodyProps } = props
+  const { className, ...sheetBodyProps } = props
   return (
-    <DrawerBody
+    <SheetBody
       className={cn("flex-1 overflow-y-auto overflow-x-hidden p-6", className)}
-      {...drawerBodyProps}
+      {...sheetBodyProps}
     />
   )
 }
 ItemSheetBody.displayName = "ItemSheetBody"
 
-export type ItemSheetFooterProps = React.ComponentProps<typeof DrawerFooter>
+type ItemSheetFooterProps = React.ComponentProps<typeof SheetFooter>
 
 export function ItemSheetFooter(props: ItemSheetFooterProps) {
-  const { className, ...drawerFooterProps } = props
+  const { className, ...sheetFooterProps } = props
   return (
-    <DrawerFooter
+    <SheetFooter
       className={cn("border-t p-6", className)}
-      {...drawerFooterProps}
+      {...sheetFooterProps}
     />
   )
 }

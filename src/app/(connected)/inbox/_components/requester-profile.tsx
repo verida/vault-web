@@ -15,6 +15,9 @@ export type RequesterProfileProps = {
   sentAt: string | Date
 }
 
+/**
+ * @deprecated
+ */
 export function RequesterProfile(props: RequesterProfileProps) {
   const { sentBy, sentAt } = props
 

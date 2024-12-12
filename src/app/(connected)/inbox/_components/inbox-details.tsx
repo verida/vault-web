@@ -10,6 +10,9 @@ export type InboxDetailsProps = {
   onClose: () => void
 }
 
+/**
+ * @deprecated
+ */
 export function InboxDetails(props: InboxDetailsProps) {
   const { message, onClose } = props
 

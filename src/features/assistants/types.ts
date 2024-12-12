@@ -56,6 +56,7 @@ export type AiAssistantHotloadStatus = "idle" | "loading" | "success" | "error"
 export type AiAssistantHotloadResult = {
   status: AiAssistantHotloadStatus
   progress: number
+  dataCurrentlyLoading?: string
 }
 
 export type LlmProvider = z.infer<typeof LlmProviderSchema>

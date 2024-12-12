@@ -8,6 +8,9 @@ export type InboxStatusProps = {
   inboxType?: InboxType
 }
 
+/**
+ * @deprecated
+ */
 export function InboxStatusText(props: InboxStatusProps) {
   const { status, inboxType } = props
 
