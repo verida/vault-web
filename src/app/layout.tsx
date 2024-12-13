@@ -1,9 +1,10 @@
 import type { Metadata, Viewport } from "next"
 
 import { RootProviders } from "@/app/_components/root-providers"
-import { BreakpointIndicator } from "@/components/breakpoint-indicator"
 import { commonConfig } from "@/config/common"
 import { APP_DESCRIPTION, APP_NAME, APP_TITLE } from "@/constants/app"
+import { BreakpointIndicator } from "@/features/dev/components/breakpoint-indicator"
+import { ReactScan } from "@/features/dev/components/react-scan"
 import { sora } from "@/styles/font"
 import "@/styles/globals.css"
 import { cn } from "@/styles/utils"
@@ -50,7 +51,12 @@ export default function RootLayout(props: RootLayoutProps) {
     <html lang="en" suppressHydrationWarning>
       <body className={cn("h-dvh", sora.variable)}>
         <RootProviders>{children}</RootProviders>
-        <BreakpointIndicator />
+        {commonConfig.DEV_MODE ? (
+          <>
+            <BreakpointIndicator />
+            <ReactScan />
+          </>
+        ) : null}
       </body>
     </html>
   )

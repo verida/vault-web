@@ -39,7 +39,7 @@ export function DataSecurityDetailsDialog(
             Verida Network Confidential Storage.
           </SecurityDetailsDialogDescription>
         </SecurityDetailsDialogHeader>
-        <SecurityDetailsDialogBody className="gap-4">
+        <SecurityDetailsDialogBody className="flex flex-col gap-4">
           <div className="flex items-start gap-3">
             <KeyRoundIcon className="size-4 shrink-0 text-status-secured-foreground" />
             <div className="flex flex-col gap-1">

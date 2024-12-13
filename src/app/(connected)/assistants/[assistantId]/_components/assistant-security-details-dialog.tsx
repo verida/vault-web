@@ -48,7 +48,7 @@ export function AssistantSecurityDetailsDialog(
             provide adequate protections for your data.
           </SecurityDetailsDialogDescription>
         </SecurityDetailsDialogHeader>
-        <SecurityDetailsDialogBody className="gap-4">
+        <SecurityDetailsDialogBody className="flex flex-col gap-4">
           <div className="flex items-start gap-3">
             <BrainCircuitIcon className="size-4 shrink-0 text-status-warning" />
             <div className="flex flex-col gap-1">

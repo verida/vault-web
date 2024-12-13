@@ -91,9 +91,7 @@ export function OAuthConsentCard(props: OAuthConsentCardProps) {
             </Typography>
             <ul>
               {scopes.map((scope, index) => (
-                <li key={index}>
-                  <Typography>{formatScope(scope)}</Typography>
-                </li>
+                <li key={index}>{formatScope(scope)}</li>
               ))}
             </ul>
           </>
