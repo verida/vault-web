@@ -6,6 +6,9 @@ import { z } from "zod"
 export const LLM_PROVIDERS = ["bedrock"] as const
 export const LlmProviderSchema = z.enum(LLM_PROVIDERS)
 
+/**
+ * @deprecated Temporarily deprecated for the new agent but may come back later
+ */
 export const LLM_MODELS = [
   "CLAUDE_HAIKU_3.5",
   "LLAMA3.2_3B",
@@ -27,6 +30,13 @@ export const PrivateDataApiV1LlmHotloadResponseSchema = z.object({
   status: z.string(),
   recordCount: z.number(),
   totalProgress: z.number(),
+})
+
+export const PrivateDataApiV1LLMAgentResponseSchema = z.object({
+  response: z.object({
+    output: z.string().min(1, "LLM response is empty"),
+  }),
+  duration: z.number(),
 })
 
 export const PrivateDataApiV1LLMPersonalResponseSchema = z.object({
@@ -65,6 +75,8 @@ export const AiPromptFormDataSchema = z.object({
   name: z.string().min(1, "Label is required"),
   prompt: z.string().min(1, "Prompt is required"),
 })
+
+// Prompt search and config below are temporarily deprecated for the new agent but may come back later
 
 export const PROMPT_SEARCH_TIMEFRAMES = [
   "day",
