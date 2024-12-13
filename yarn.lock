@@ -2529,47 +2529,47 @@
   resolved "https://registry.yarnpkg.com/@ungap/structured-clone/-/structured-clone-1.2.0.tgz#756641adb587851b5ccb3e095daf27ae581c8406"
   integrity sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==
 
-"@verida/account-web-vault@^4.3.0":
-  version "4.3.0"
-  resolved "https://registry.yarnpkg.com/@verida/account-web-vault/-/account-web-vault-4.3.0.tgz#f34644dc4d2d5030f679cdcc6b4a8ab43cf732c5"
-  integrity sha512-xx8cvx/hxnGaX9KQFJCm6b7s45d45rXVsUafj5t2ioi8nzFP0gOebin5w49H6EsE69YJS9KEuPesMz9ef4jQww==
+"@verida/account-web-vault@^4.4.0":
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/@verida/account-web-vault/-/account-web-vault-4.4.0.tgz#27a0765f889b41a5954bf7aae3c159bad949ec1c"
+  integrity sha512-NxoHpZbwtzBqU+R0KbN8rwb9H6V7DRBypWgt2ngrxtEcqyyB3V/eo5sEGjJbKX6rTG1Yd/Re05eIDPqfeipGpQ==
   dependencies:
-    "@verida/account" "^4.3.0"
+    "@verida/account" "^4.4.0"
     "@verida/encryption-utils" "^4.0.0"
-    "@verida/keyring" "^4.3.0"
-    "@verida/types" "^4.3.0"
+    "@verida/keyring" "^4.4.0"
+    "@verida/types" "^4.4.0"
     jsonwebtoken "^8.5.1"
     lodash "^4.17.21"
     qrcode-with-logos "^1.0.3"
     store "^2.0.12"
 
-"@verida/account@^4.3.0":
-  version "4.3.0"
-  resolved "https://registry.yarnpkg.com/@verida/account/-/account-4.3.0.tgz#f37370f7685e932811268c6909be0e1e99383937"
-  integrity sha512-smfUXTPtDDuYxlQSPY8RmLaO3K0v+m38NqHhStjkmI08qb11FPXMVpMUy0atng6uXxi2hRaEe5/zbGTBfdunvA==
+"@verida/account@^4.4.0":
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/@verida/account/-/account-4.4.0.tgz#f0d8d0ae4919775830cab7705b50e59074e6555a"
+  integrity sha512-Lg35VwPlDl8ItXK4FYvmXOPm/dM/taLa27Pi65dhfW5y9KWipWfsti1Bz+yGBYB0JLJBJ3DD9ZAjJ+TRe7/TFg==
   dependencies:
-    "@verida/keyring" "^4.3.0"
-    "@verida/storage-link" "^4.3.0"
-    "@verida/types" "^4.3.0"
+    "@verida/keyring" "^4.4.0"
+    "@verida/storage-link" "^4.4.0"
+    "@verida/types" "^4.4.0"
     did-jwt "^6.11.0"
     did-resolver "^4.0.1"
     lodash "^4.17.21"
     tweetnacl-util "^0.15.1"
 
-"@verida/client-ts@^4.3.0":
-  version "4.3.0"
-  resolved "https://registry.yarnpkg.com/@verida/client-ts/-/client-ts-4.3.0.tgz#b582fe55f3a9dfd9df5da2f16ee6f4c917ea34d2"
-  integrity sha512-5iRTNbLnqGdPNnCvpl89nPOFTvHI4AY44rR1+1lU21QX0D7emWCAa+bMNbBv/S+/b3gkTlkO8rP8OPeZTYv49g==
+"@verida/client-ts@^4.4.0":
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/@verida/client-ts/-/client-ts-4.4.0.tgz#9d3d1c84534de9139ae280e417698cfd48c8fb15"
+  integrity sha512-G9KSZcsv1DCkSuvdWljVUXUhI+cpNTuhuc35qzGmylgjSJrLXWVpyWFTd2k1UvMD1ASGI8ZeQEARZiLOhKVumw==
   dependencies:
-    "@verida/account" "^4.3.0"
-    "@verida/did-client" "^4.3.0"
-    "@verida/did-document" "^4.3.0"
+    "@verida/account" "^4.4.0"
+    "@verida/did-client" "^4.4.0"
+    "@verida/did-document" "^4.4.0"
     "@verida/encryption-utils" "^4.0.0"
-    "@verida/keyring" "^4.3.0"
-    "@verida/storage-link" "^4.3.0"
-    "@verida/types" "^4.3.0"
-    "@verida/vda-common" "^4.3.0"
-    "@verida/vda-name-client" "^4.3.0"
+    "@verida/keyring" "^4.4.0"
+    "@verida/storage-link" "^4.4.0"
+    "@verida/types" "^4.4.0"
+    "@verida/vda-common" "^4.4.0"
+    "@verida/vda-name-client" "^4.4.0"
     ajv "^8.6.3"
     ajv-formats "^2.1.1"
     axios "^0.21.2"
@@ -2580,37 +2580,37 @@
     json-schema-ref-parser "^9.0.9"
     json-schema-resolve-allof "^1.5.0"
     lodash "^4.17.21"
-    pouchdb "^7.2.2"
-    pouchdb-find "^7.2.2"
+    pouchdb "^9.0.0"
+    pouchdb-find "^9.0.0"
     uuid "^8.3.2"
 
-"@verida/did-client@^4.3.0":
-  version "4.3.0"
-  resolved "https://registry.yarnpkg.com/@verida/did-client/-/did-client-4.3.0.tgz#af63adab1bada0c71e96f43c4a73959e9df91793"
-  integrity sha512-yWV16NtkzjxqaM438/bluylDqN+omk6anztV+Ec0W79WweaTdMcuHPHs8pTmFFama2rNlrx7F+7K4ZcOUmaFTw==
+"@verida/did-client@^4.4.0":
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/@verida/did-client/-/did-client-4.4.0.tgz#6e4c34e073bd531c5901747079f1db5dc9254d47"
+  integrity sha512-s3Laq4uOxT0vYcMTeXPALrFyylSEczHaUeyloenqxxeVQKWeTCI4eAYlZPXb965BrDfs13ewV9B/7mynsv/olw==
   dependencies:
-    "@verida/did-document" "^4.3.0"
-    "@verida/types" "^4.3.0"
-    "@verida/vda-common" "^4.3.0"
-    "@verida/vda-did-resolver" "^4.3.0"
-    "@verida/web3" "^4.3.0"
+    "@verida/did-document" "^4.4.0"
+    "@verida/types" "^4.4.0"
+    "@verida/vda-common" "^4.4.0"
+    "@verida/vda-did-resolver" "^4.4.0"
+    "@verida/web3" "^4.4.0"
     axios "^0.23.0"
     deepcopy "^2.1.0"
     did-resolver "^4.0.1"
     ethers "^5.5.1"
 
-"@verida/did-document@^4.3.0":
-  version "4.3.0"
-  resolved "https://registry.yarnpkg.com/@verida/did-document/-/did-document-4.3.0.tgz#3cd428acc6d1e4e981525a0b7b959fe2a845dc80"
-  integrity sha512-OAR4xs1KGrWsDeoEgEy2KCnBygopMZ8/BhGqEHovjJOCpOAJuxPprumCGs0DuytdEAkHYAOjmd19NZhahgA4sg==
+"@verida/did-document@^4.4.0":
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/@verida/did-document/-/did-document-4.4.0.tgz#2552e1f502e3a9429508bf38863799f03a0316e6"
+  integrity sha512-XAXBdIvdh3LGqzDpSQxNTUBjw3j26+pYw/lS2KVRgY6Ht7Xoinen0Y/fwCBNMgMCO1Wi5ZcqwzLDJM+ipV/8qQ==
   dependencies:
     "@ethersproject/address" "^5.7.0"
     "@ethersproject/bignumber" "^5.7.0"
     "@ethersproject/transactions" "^5.7.0"
     "@verida/encryption-utils" "^4.0.0"
-    "@verida/keyring" "^4.3.0"
-    "@verida/types" "^4.3.0"
-    "@verida/vda-common" "^4.3.0"
+    "@verida/keyring" "^4.4.0"
+    "@verida/types" "^4.4.0"
+    "@verida/vda-common" "^4.4.0"
     did-resolver "^4.0.1"
     lodash "^4.17.21"
 
@@ -2624,44 +2624,44 @@
     tweetnacl "^1.0.3"
     tweetnacl-util "^0.15.1"
 
-"@verida/helpers@^4.3.0":
-  version "4.3.0"
-  resolved "https://registry.yarnpkg.com/@verida/helpers/-/helpers-4.3.0.tgz#c9c189e3b25f21af078a97a73c4b28cd136d9f73"
-  integrity sha512-BlJMxmFDey43uF3dInZwNujmVrC7pbVa7rFxFQ9zVhHcVo55NiL6pqnk4AXkOXkFWeox8XtP6svgIhu3ZE3ZuA==
+"@verida/helpers@^4.4.0":
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/@verida/helpers/-/helpers-4.4.0.tgz#2843f3ecf6171f9db51bed18f403ce832399d3c1"
+  integrity sha512-ddFQoq8yQBXNE3V7BfASET3mt0240szhDofOdXcpzod7H5EHPkCqv2pc0JNoRInMxIi8cOWCLzQ5oNgRJ/nGvA==
   dependencies:
     "@verida/encryption-utils" "^4.0.0"
-    "@verida/types" "^4.3.0"
+    "@verida/types" "^4.4.0"
     axios "^1.6.2"
     bs58 "^5.0.0"
     url "^0.11.0"
 
-"@verida/keyring@^4.3.0":
-  version "4.3.0"
-  resolved "https://registry.yarnpkg.com/@verida/keyring/-/keyring-4.3.0.tgz#b857ff8d1495d82147e97da86cc3fc57bab16022"
-  integrity sha512-qp2eDzRo7wxgSvGDugYigwa2s+8Z882l6a+4FPd7OJ0vt/DX9XsH4IY9IA5oejT4bFoEL/ooLW2X44Y6kptGvA==
+"@verida/keyring@^4.4.0":
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/@verida/keyring/-/keyring-4.4.0.tgz#113efecfcdcbc02d029a0650ec537eadb6dc8276"
+  integrity sha512-kiMuLRHQavcQw/wgFmWybC9KzYdp1iedvtveODbP3JxnZsZjwwIdczOFGvhBM1Yluq2Lt5uUsCDt01C7ynBYIA==
   dependencies:
     "@verida/encryption-utils" "^4.0.0"
-    "@verida/types" "^4.3.0"
+    "@verida/types" "^4.4.0"
     ethers "^5.5.1"
     tweetnacl "^1.0.3"
     uuid "^8.3.2"
 
-"@verida/storage-link@^4.3.0":
-  version "4.3.0"
-  resolved "https://registry.yarnpkg.com/@verida/storage-link/-/storage-link-4.3.0.tgz#e73bff63a93b9982ccac431057c0cd714f8d8262"
-  integrity sha512-PJnjdPiE5Cv8fiu12Kv2zDBZjwcDuyervnmaKnocV2WezSqE87g/B1baAvT7CSXJYREm944pemlbeW4TvZkPdA==
+"@verida/storage-link@^4.4.0":
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/@verida/storage-link/-/storage-link-4.4.0.tgz#389d669f0afbe3f238ac07f8233597e976cea406"
+  integrity sha512-Zk5WK/47jNZpuv6uh1xNg2nOAeb3Rv5gfMubYJsbrJBIp8rG9bjZTT9cT7sByA0g3mS6uoifALQriTT7WWl4DA==
   dependencies:
-    "@verida/did-client" "^4.3.0"
-    "@verida/did-document" "^4.3.0"
+    "@verida/did-client" "^4.4.0"
+    "@verida/did-document" "^4.4.0"
     "@verida/encryption-utils" "^4.0.0"
-    "@verida/keyring" "^4.3.0"
+    "@verida/keyring" "^4.4.0"
     did-resolver "^4.0.0"
     url-parse "^1.5.3"
 
-"@verida/types@^4.3.0":
-  version "4.3.0"
-  resolved "https://registry.yarnpkg.com/@verida/types/-/types-4.3.0.tgz#0944404b3194f7624ec5208b420f9833c6968e29"
-  integrity sha512-z4uPRPTdfsIVJOUQfX7KOnzt+efb6hDn/LQ0gXkgd0K6qecerTgG1oN3/63zRK0VmfhcNMZCP/x5M4Wh8iFY3g==
+"@verida/types@^4.4.0":
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/@verida/types/-/types-4.4.0.tgz#ce6b8f7265034d29c897f5e23c4d36a6ca8fabf1"
+  integrity sha512-amsFu7Bs2ByphePlA+az5GgvG9IbWm0ZDs2I4GZslsJAErhWB7uRzN3GSiPDsoQVo0XlFaq41J4xSrfiec7cxw==
   dependencies:
     "@ethersproject/abstract-signer" "^5.7.0"
     "@ethersproject/bignumber" "^5.7.0"
@@ -2671,96 +2671,89 @@
     did-resolver "^4.0.1"
     tweetnacl "^1.0.3"
 
-"@verida/vda-client-base@^4.3.0":
-  version "4.3.0"
-  resolved "https://registry.yarnpkg.com/@verida/vda-client-base/-/vda-client-base-4.3.0.tgz#bd2853a3f5f859aaa70f32e3c21d042117e68333"
-  integrity sha512-hVaZRsgRPD06t88wu7/IcnH8tMz8H93d2ffljbtLP/Qy0cZyT5InFWXcQk/M1ebaiGR7k8Y3VU4945aT7n9Lmw==
+"@verida/vda-client-base@^4.4.0":
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/@verida/vda-client-base/-/vda-client-base-4.4.0.tgz#3f147df37ebb2c88bb9065b060d2b6c653a2f303"
+  integrity sha512-zJpdVmFb77Z4MtpVru9clY+hR/T7QgJzyjICITlTZiTYyqV5D6yctIeI5XNEObKN6iNePHuoOSBf2C/XZCJ1PA==
   dependencies:
     "@ethersproject/providers" "^5.7.2"
-    "@verida/helpers" "^4.3.0"
-    "@verida/types" "^4.3.0"
-    "@verida/web3" "^4.3.0"
+    "@verida/helpers" "^4.4.0"
+    "@verida/types" "^4.4.0"
+    "@verida/web3" "^4.4.0"
     axios "^0.27.2"
     ethers "^5.7.0"
 
-"@verida/vda-common@^4.3.0":
-  version "4.3.0"
-  resolved "https://registry.yarnpkg.com/@verida/vda-common/-/vda-common-4.3.0.tgz#31d84bedf707722e68f992859c4da7831fdfade6"
-  integrity sha512-Hv7szv/bApTDLVMRs+ckF1T9YC8cNzzsL8qRd2tphZs7uEQXm1WB2sMGekHChMt3mFQWnLi/B0lWXMJikp5jvw==
+"@verida/vda-common@^4.4.0":
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/@verida/vda-common/-/vda-common-4.4.0.tgz#b95e07c90563533319331eaf8cc3016dbe5398c9"
+  integrity sha512-VLQg/ukgNSdsC+2jyqyRSrDIv3hb5dLIdzVvN8/KNkJVqgc915Er2fIPLPB31khsuNMw+z1kS8BPkFZAVy/KMQ==
   dependencies:
     "@verida/encryption-utils" "^4.0.0"
-    "@verida/types" "^4.3.0"
+    "@verida/types" "^4.4.0"
     copyfiles "^2.4.1"
     ethers "5.7.2"
 
-"@verida/vda-did-resolver@^4.3.0":
-  version "4.3.0"
-  resolved "https://registry.yarnpkg.com/@verida/vda-did-resolver/-/vda-did-resolver-4.3.0.tgz#f97468f0d7b0c18a1370ef5653ae968194e491ca"
-  integrity sha512-e4zcLz7XdsLPU++hxzbPVG43p9p64+JIexg7SNrx4c7O39tYZjJ1CRvGK19F2c7Wx47AseUs0OLzOmD+kJVp5w==
+"@verida/vda-did-resolver@^4.4.0":
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/@verida/vda-did-resolver/-/vda-did-resolver-4.4.0.tgz#a59540b16e2018d7796cc8ff2d01b9f5984d3ee3"
+  integrity sha512-CghZpYd+bQLeqFpc7YQdTjx2Dn/TIj8WQsqb1bjz8e99CSMi0AYa7DzOJqtMSppzhaJPPsK994HLqLcdzdY1rg==
   dependencies:
     "@ethersproject/providers" "^5.7.2"
-    "@verida/did-document" "^4.3.0"
+    "@verida/did-document" "^4.4.0"
     "@verida/encryption-utils" "^4.0.0"
-    "@verida/types" "^4.3.0"
-    "@verida/vda-common" "^4.3.0"
-    "@verida/vda-did" "^4.3.0"
+    "@verida/types" "^4.4.0"
+    "@verida/vda-common" "^4.4.0"
+    "@verida/vda-did" "^4.4.0"
     axios "1.2.0-alpha.1"
     lodash "^4.17.21"
 
-"@verida/vda-did@^4.3.0":
-  version "4.3.0"
-  resolved "https://registry.yarnpkg.com/@verida/vda-did/-/vda-did-4.3.0.tgz#705bf4c732115ddad5e4bc417c7e96183b45e39c"
-  integrity sha512-zndg/z8wWG3xDlj04qvhUeUDt1JLHiikAVKCVqFjEa6V5Z9g4NOoGiFXaQzviyihO1VvcTTPeWYgqEX+K2IKVw==
+"@verida/vda-did@^4.4.0":
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/@verida/vda-did/-/vda-did-4.4.0.tgz#2f322a9a0879566bff60883f949c96fc0321c4d8"
+  integrity sha512-oAdN81NaSanGuFiaV6aYBd3Svpg669xngWqAPn+B561TB6oMFi9vd8RIz7dlDiZKvHd9U7oNg0sooSEoaWlpqQ==
   dependencies:
-    "@verida/did-document" "^4.3.0"
-    "@verida/types" "^4.3.0"
-    "@verida/vda-common" "^4.3.0"
-    "@verida/web3" "^4.3.0"
+    "@verida/did-document" "^4.4.0"
+    "@verida/types" "^4.4.0"
+    "@verida/vda-common" "^4.4.0"
+    "@verida/web3" "^4.4.0"
     axios "1.2.0-alpha.1"
     ethers "^5.7.2"
     lodash "^4.17.21"
 
-"@verida/vda-name-client@^4.3.0":
-  version "4.3.0"
-  resolved "https://registry.yarnpkg.com/@verida/vda-name-client/-/vda-name-client-4.3.0.tgz#6ca7d3479c2b00ba6af7450ce6e21e9739c20eec"
-  integrity sha512-/65aHV/z1oA/86aGxgYP4bxx/qUrjdufembOh/2WvCgV+1PNTHqE2nRIQ6WkgkR8ipRPLFJTgRUIQLRSKqeZfQ==
+"@verida/vda-name-client@^4.4.0":
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/@verida/vda-name-client/-/vda-name-client-4.4.0.tgz#e7ed57adf6b1b3e7f98bbe75970166c4be7b07f4"
+  integrity sha512-RNN/Nu9cpS7FUSVI5NZ4hzN4wk/jfBrGvggHZBHSBYxpbZWJN4boapKNUgfIWm0NA9qnhtS03laspF4wwEWcyg==
   dependencies:
     "@ethersproject/providers" "^5.7.2"
-    "@verida/helpers" "^4.3.0"
-    "@verida/types" "^4.3.0"
-    "@verida/vda-client-base" "^4.3.0"
-    "@verida/web3" "^4.3.0"
+    "@verida/helpers" "^4.4.0"
+    "@verida/types" "^4.4.0"
+    "@verida/vda-client-base" "^4.4.0"
+    "@verida/web3" "^4.4.0"
     axios "^0.27.2"
     ethers "^5.7.0"
 
-"@verida/web-helpers@^4.3.0":
-  version "4.3.0"
-  resolved "https://registry.yarnpkg.com/@verida/web-helpers/-/web-helpers-4.3.0.tgz#9e23a49125d9af466f82632ae6ee00ccd4049690"
-  integrity sha512-l48Ldib3kf7RPF1PcPKeaPDrgF3PpV8a3U5VsB91GbUQ+thPE0LBD11fbRzZ7pBvjo2RRFEoiKO4yh/V2qi/uA==
+"@verida/web-helpers@^4.4.0":
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/@verida/web-helpers/-/web-helpers-4.4.0.tgz#879a169b01277fe8a6f5071436fba80b29bcb1c1"
+  integrity sha512-fjLoDbjpBAFIavCO4jruqmPTFWF14RfTx86mCaoiDW2sQInqXOFRjB6aL85aN8jYwQxOkbCp297YNUozbQkfRQ==
   dependencies:
-    "@verida/account-web-vault" "^4.3.0"
-    "@verida/client-ts" "^4.3.0"
-    "@verida/types" "^4.3.0"
+    "@verida/account-web-vault" "^4.4.0"
+    "@verida/client-ts" "^4.4.0"
+    "@verida/types" "^4.4.0"
 
-"@verida/web3@^4.3.0":
-  version "4.3.0"
-  resolved "https://registry.yarnpkg.com/@verida/web3/-/web3-4.3.0.tgz#2c4db250e579a02b07a713d96e8436b09ba15aa4"
-  integrity sha512-LqmqhwUs+3uSzp1JCGJwtg4GHcrUbzW8lVwRhNm5iQGp5tDmRterBDvXRRDowr9rVUed9ud1gw7kRwCvLa7x/w==
+"@verida/web3@^4.4.0":
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/@verida/web3/-/web3-4.4.0.tgz#876a871697240e8c031b118af8c2c8560413e941"
+  integrity sha512-JLC0y11YGWyWngyD5YxwqV5xI0o9p2dEu8BfMnaKvjrMgwBii46OgPqhPVqxMCOHS9yQ2hfvbkBUEsMRwWWnfQ==
   dependencies:
     "@ethersproject/bignumber" "^5.7.0"
     "@ethersproject/contracts" "^5.7.0"
     "@ethersproject/providers" "^5.7.2"
-    "@verida/types" "^4.3.0"
-    "@verida/vda-common" "^4.3.0"
+    "@verida/types" "^4.4.0"
+    "@verida/vda-common" "^4.4.0"
     axios "^1.2.3"
     ethers "^5.7.2"
-
-abort-controller@3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/abort-controller/-/abort-controller-3.0.0.tgz#eaf54d53b62bae4138e809ca225c8439a6efb392"
-  integrity sha512-h8lQ8tacZYnR3vNQTgibj+tODHI5/+l06Au2Pcriv/Gmet0eaj4TwWH41sO9wnHDiQsEj19q0drzdWdeAHtweg==
-  dependencies:
-    event-target-shim "^5.0.0"
 
 abstract-leveldown@^6.2.1:
   version "6.3.0"
@@ -2772,6 +2765,18 @@ abstract-leveldown@^6.2.1:
     level-concat-iterator "~2.0.0"
     level-supports "~1.0.0"
     xtend "~4.0.0"
+
+abstract-leveldown@^7.2.0:
+  version "7.2.0"
+  resolved "https://registry.yarnpkg.com/abstract-leveldown/-/abstract-leveldown-7.2.0.tgz#08d19d4e26fb5be426f7a57004851b39e1795a2e"
+  integrity sha512-DnhQwcFEaYsvYDnACLZhMmCWd3rkOeEvglpa4q5i/5Jlm3UIsWaxVzuXvDLFCSCWRO3yy2/+V/G7FusFgejnfQ==
+  dependencies:
+    buffer "^6.0.3"
+    catering "^2.0.0"
+    is-buffer "^2.0.5"
+    level-concat-iterator "^3.0.0"
+    level-supports "^2.0.1"
+    queue-microtask "^1.2.3"
 
 abstract-leveldown@~6.2.1, abstract-leveldown@~6.2.3:
   version "6.2.3"
@@ -2894,11 +2899,6 @@ argparse@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/argparse/-/argparse-2.0.1.tgz#246f50f3ca78a3240f6c997e8a9bd1eac49e4b38"
   integrity sha512-8+9WqebbFzpX9OR+Wa6O29asIogeRMzcGtAINdpMHHyAg10f05aSFVBbcEqGf/PXw1EjAZ+q2/bEBg3DvurK3Q==
-
-argsarray@0.0.1:
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/argsarray/-/argsarray-0.0.1.tgz#6e7207b4ecdb39b0af88303fa5ae22bda8df61cb"
-  integrity sha512-u96dg2GcAKtpTrBdDoFIM7PjcBA+6rSP0OR94MOReNRyUECL6MtQt5XXmRr4qrftYaef9+l5hcpO5te7sML1Cg==
 
 aria-hidden@^1.1.1:
   version "1.2.4"
@@ -3203,11 +3203,6 @@ buffer-equal-constant-time@1.0.1:
   resolved "https://registry.yarnpkg.com/buffer-equal-constant-time/-/buffer-equal-constant-time-1.0.1.tgz#f8e71132f7ffe6e01a5c9697a4c6f3e48d5cc819"
   integrity sha512-zRpUiDwd/xk6ADqPMATG8vc9VPrkck7T07OIx0gnjmJAnHnTVXNQG3vfvWNuiZIkwu9KrKdA1iJKfsfTVxE6NA==
 
-buffer-from@1.1.2:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/buffer-from/-/buffer-from-1.1.2.tgz#2b146a6fd72e80b4f55d255f35ed59a3a9a41bd5"
-  integrity sha512-E+XQCRwSbaaiChtv6k6Dwgc+bx+Bs6vuKJHHl5kox/BaKbhiXzqQOwK4cO22yElGp2OCmjwVhT3HmxgyPGnJfQ==
-
 buffer@^5.5.0, buffer@^5.6.0:
   version "5.7.1"
   resolved "https://registry.yarnpkg.com/buffer/-/buffer-5.7.1.tgz#ba62e7c13133053582197160851a8f648e99eed0"
@@ -3215,6 +3210,14 @@ buffer@^5.5.0, buffer@^5.6.0:
   dependencies:
     base64-js "^1.3.1"
     ieee754 "^1.1.13"
+
+buffer@^6.0.3:
+  version "6.0.3"
+  resolved "https://registry.yarnpkg.com/buffer/-/buffer-6.0.3.tgz#2ace578459cc8fbe2a70aaa8f52ee63b6a74c6c6"
+  integrity sha512-FTiCpNxtwiZZHEZbcbTIcZjERVICn9yq/pDFkTl95/AxzD1naBctN7YO68riM/gLSDY7sdrMby8hofADYuuqOA==
+  dependencies:
+    base64-js "^1.3.1"
+    ieee754 "^1.2.1"
 
 busboy@1.6.0:
   version "1.6.0"
@@ -3268,6 +3271,11 @@ canonicalize@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/canonicalize/-/canonicalize-2.0.0.tgz#32be2cef4446d67fd5348027a384cae28f17226a"
   integrity sha512-ulDEYPv7asdKvqahuAY35c1selLdzDwHqugK92hfkzvlDCwXRRelDkR+Er33md/PtnpqHemgkuDPanZ4fiYZ8w==
+
+catering@^2.0.0, catering@^2.1.0:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/catering/-/catering-2.1.1.tgz#66acba06ed5ee28d5286133982a927de9a04b510"
+  integrity sha512-K7Qy8O9p76sL3/3m7/zLKbRkyOlSZAgzEaLhyj2mXS8PsCud2Eo4hAb8aLtZqHh0QGqLcb9dlJSu6lHRVENm1w==
 
 ccount@^2.0.0:
   version "2.0.1"
@@ -3376,11 +3384,6 @@ cliui@^7.0.2:
     string-width "^4.2.0"
     strip-ansi "^6.0.0"
     wrap-ansi "^7.0.0"
-
-clone-buffer@1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/clone-buffer/-/clone-buffer-1.0.0.tgz#e3e25b207ac4e701af721e2cb5a16792cac3dc58"
-  integrity sha512-KLLTJWrvwIP+OPfMn0x2PheDEP20RPUcGXj/ERegTgdmPEZylALQldygiqrPPu8P45uNuPs7ckmReLY6v/iA5g==
 
 clsx@^2.1.0, clsx@^2.1.1:
   version "2.1.1"
@@ -4271,11 +4274,6 @@ ethers@5.7.2, ethers@^5.5.1, ethers@^5.7.0, ethers@^5.7.2:
     "@ethersproject/web" "5.7.1"
     "@ethersproject/wordlists" "5.7.0"
 
-event-target-shim@^5.0.0:
-  version "5.0.1"
-  resolved "https://registry.yarnpkg.com/event-target-shim/-/event-target-shim-5.0.1.tgz#5d4d3ebdf9583d63a5333ce2deb7480ab2b05789"
-  integrity sha512-i/2XbnSz/uxRCU6+NdVJgKWDTM427+MqYbkQzD321DuCQJUqOuJKIA0IM2+W2xtYHdKOmZ4dR6fExsd4SXL+WQ==
-
 extend@^3.0.0:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/extend/-/extend-3.0.2.tgz#f8b1136b4071fbd8eb140aff858b1019ec2915fa"
@@ -4335,12 +4333,13 @@ fdir@^6.2.0:
   resolved "https://registry.yarnpkg.com/fdir/-/fdir-6.4.2.tgz#ddaa7ce1831b161bc3657bb99cb36e1622702689"
   integrity sha512-KnhMXsKSPZlAhp7+IjUkRZKPb4fUyccpDrdFXbi4QL1qkmFh9kVY09Yox+n4MaOb3lHZ1Tv829C3oaaXoMYPDQ==
 
-fetch-cookie@0.11.0:
-  version "0.11.0"
-  resolved "https://registry.yarnpkg.com/fetch-cookie/-/fetch-cookie-0.11.0.tgz#e046d2abadd0ded5804ce7e2cae06d4331c15407"
-  integrity sha512-BQm7iZLFhMWFy5CZ/162sAGjBfdNWb7a8LEqqnzsHFhxT/X/SVj/z2t2nu3aJvjlbQkrAlTUApplPRjWyH4mhA==
+fetch-cookie@2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/fetch-cookie/-/fetch-cookie-2.2.0.tgz#01086b6b5b1c3e08f15ffd8647b02ca100377365"
+  integrity sha512-h9AgfjURuCgA2+2ISl8GbavpUdR+WGAM2McW/ovn4tVccegp8ZqCKWSBR8uRdM8dDNlx5WdKRWxBYUwteLDCNQ==
   dependencies:
-    tough-cookie "^2.3.3 || ^3.0.1 || ^4.0.0"
+    set-cookie-parser "^2.4.8"
+    tough-cookie "^4.0.0"
 
 file-entry-cache@^6.0.1:
   version "6.0.1"
@@ -4753,7 +4752,7 @@ https-proxy-agent@^5.0.0:
     agent-base "6"
     debug "4"
 
-ieee754@^1.1.13:
+ieee754@^1.1.13, ieee754@^1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/ieee754/-/ieee754-1.2.1.tgz#8eb7a10a63fff25d15a57b001586d177d1b0d352"
   integrity sha512-dcyqhDvX1C46lXZcVqCpK+FtMRQVdIMN6/Df5js2zouUsqG7I6sFxitIC+7KYK29KdXOLHdu9zL4sFnoVQnqaA==
@@ -4763,7 +4762,7 @@ ignore@^5.2.0, ignore@^5.3.1:
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-5.3.1.tgz#5073e554cd42c5b33b394375f538b8593e34d4ef"
   integrity sha512-5Fytz/IraMjqpwfd34ke28PTVMjZjJG2MPn5t7OE4eUCUNf8BAa7b5WUS9/Qvr6mwOQS7Mk6vdsMno5he+T8Xw==
 
-immediate@3.3.0, immediate@^3.2.3:
+immediate@^3.2.3:
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/immediate/-/immediate-3.3.0.tgz#1aef225517836bcdf7f2a2de2600c79ff0269266"
   integrity sha512-HR7EVodfFUdQCTIeySw+WDRFJlPcLOJbXfwwZ7Oom6tjsvZ3bOkCDJHehQC3nxJrv7+f9XecwazynjU8e4Vw3Q==
@@ -4809,7 +4808,7 @@ inflight@^1.0.4:
     once "^1.3.0"
     wrappy "1"
 
-inherits@2, inherits@2.0.4, inherits@^2.0.1, inherits@^2.0.3, inherits@^2.0.4, inherits@~2.0.1, inherits@~2.0.3:
+inherits@2, inherits@^2.0.1, inherits@^2.0.3, inherits@^2.0.4, inherits@~2.0.1, inherits@~2.0.3:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/inherits/-/inherits-2.0.4.tgz#0fa2c64f932917c3433a0ded55363aae37416b7c"
   integrity sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==
@@ -4884,6 +4883,11 @@ is-boolean-object@^1.1.0:
   dependencies:
     call-bind "^1.0.2"
     has-tostringtag "^1.0.0"
+
+is-buffer@^2.0.5:
+  version "2.0.5"
+  resolved "https://registry.yarnpkg.com/is-buffer/-/is-buffer-2.0.5.tgz#ebc252e400d22ff8d77fa09888821a24a658c191"
+  integrity sha512-i2R6zNFDwgEHJyQUtJEk0XFi1i0dPFn/oqjK3/vPCcDeJvW5NQ83V8QbicfF1SupOaB0h8ntgBC2YiE7dfyctQ==
 
 is-callable@^1.1.3, is-callable@^1.1.4, is-callable@^1.2.7:
   version "1.2.7"
@@ -5262,6 +5266,13 @@ level-codec@9.0.2, level-codec@^9.0.0:
   dependencies:
     buffer "^5.6.0"
 
+level-concat-iterator@^3.0.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/level-concat-iterator/-/level-concat-iterator-3.1.0.tgz#5235b1f744bc34847ed65a50548aa88d22e881cf"
+  integrity sha512-BWRCMHBxbIqPxJ8vHOvKUsaO0v1sLYZtjN3K2iZJsRBYtp+ONsY6Jfi6hy9K3+zolgQRryhIn2NRZjZnWJ9NmQ==
+  dependencies:
+    catering "^2.1.0"
+
 level-concat-iterator@~2.0.0:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/level-concat-iterator/-/level-concat-iterator-2.0.1.tgz#1d1009cf108340252cb38c51f9727311193e6263"
@@ -5301,6 +5312,11 @@ level-packager@^5.1.0:
     encoding-down "^6.3.0"
     levelup "^4.3.2"
 
+level-supports@^2.0.1:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/level-supports/-/level-supports-2.1.0.tgz#9af908d853597ecd592293b2fad124375be79c5f"
+  integrity sha512-E486g1NCjW5cF78KGPrMDRBYzPuueMZ6VBXHT6gC7A8UYWGiM14fGgp+s/L1oFfDWSPV/+SFkYCmZ0SiESkRKA==
+
 level-supports@~1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/level-supports/-/level-supports-1.0.1.tgz#2f530a596834c7301622521988e2c36bb77d122d"
@@ -5324,7 +5340,16 @@ level@6.0.1:
     level-packager "^5.1.0"
     leveldown "^5.4.0"
 
-leveldown@5.6.0, leveldown@^5.4.0:
+leveldown@6.1.1:
+  version "6.1.1"
+  resolved "https://registry.yarnpkg.com/leveldown/-/leveldown-6.1.1.tgz#0f0e480fa88fd807abf94c33cb7e40966ea4b5ce"
+  integrity sha512-88c+E+Eizn4CkQOBHwqlCJaTNEjGpaEIikn1S+cINc5E9HEvJ77bqY4JY/HxT5u0caWqsc3P3DcFIKBI1vHt+A==
+  dependencies:
+    abstract-leveldown "^7.2.0"
+    napi-macros "~2.0.0"
+    node-gyp-build "^4.3.0"
+
+leveldown@^5.4.0:
   version "5.6.0"
   resolved "https://registry.yarnpkg.com/leveldown/-/leveldown-5.6.0.tgz#16ba937bb2991c6094e13ac5a6898ee66d3eee98"
   integrity sha512-iB8O/7Db9lPaITU1aA2txU/cBEXAt4vWwKQRrrWuS6XDgbP4QZGj9BL2aNbwb002atoQ/lIotJkfyzz+ygQnUQ==
@@ -6110,10 +6135,10 @@ next@^14.2.20:
     "@next/swc-win32-ia32-msvc" "14.2.20"
     "@next/swc-win32-x64-msvc" "14.2.20"
 
-node-fetch@2.6.7:
-  version "2.6.7"
-  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.7.tgz#24de9fba827e3b4ae44dc8b20256a379160052ad"
-  integrity sha512-ZjMPFEfVx5j+y2yF35Kzx5sF7kDzxuDj6ziH4FFbOp87zKDZNx8yExJIb05OGF4Nlt9IHFIMBkRl41VdvcNdbQ==
+node-fetch@2.6.9:
+  version "2.6.9"
+  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.9.tgz#7c7f744b5cc6eb5fd404e0c7a9fec630a55657e6"
+  integrity sha512-DJm/CJkZkRjKKj4Zi4BsKVZh3ValV5IR5s7LVZnW+6YMh0W1BfNA8XSs6DLMGYlId5F3KnA70uu2qepcR08Qqg==
   dependencies:
     whatwg-url "^5.0.0"
 
@@ -6123,6 +6148,11 @@ node-fetch@^2.6.7:
   integrity sha512-c4FRfUm/dbcWZ7U+1Wq0AwCyFL+3nt2bEw05wfxSz+DWpWsitgmSgYmy2dQdWyKC1694ELPqMs/YzUSNozLt8A==
   dependencies:
     whatwg-url "^5.0.0"
+
+node-gyp-build@^4.3.0:
+  version "4.8.4"
+  resolved "https://registry.yarnpkg.com/node-gyp-build/-/node-gyp-build-4.8.4.tgz#8a70ee85464ae52327772a90d66c6077a900cfc8"
+  integrity sha512-LA4ZjwlnUblHVgq0oBF3Jl/6h/Nvs5fzBLwdEF4nuxnFdsfajde4WfxtJr3CaiH+F6ewcIB/q4jQ4UzPyid+CQ==
 
 node-gyp-build@~4.1.0:
   version "4.1.1"
@@ -6558,104 +6588,85 @@ postgres-range@^1.1.1:
   resolved "https://registry.yarnpkg.com/postgres-range/-/postgres-range-1.1.4.tgz#a59c5f9520909bcec5e63e8cf913a92e4c952863"
   integrity sha512-i/hbxIE9803Alj/6ytL7UHQxRvZkI9O4Sy+J3HGc4F4oo/2eQAjTSNJ0bfxyse3bH0nuVesCk+3IRLaMtG3H6w==
 
-pouchdb-abstract-mapreduce@7.3.1:
-  version "7.3.1"
-  resolved "https://registry.yarnpkg.com/pouchdb-abstract-mapreduce/-/pouchdb-abstract-mapreduce-7.3.1.tgz#96ff4a0f41cbe273f3f52fde003b719005a2093c"
-  integrity sha512-0zKXVFBvrfc1KnN0ggrB762JDmZnUpePHywo9Bq3Jy+L1FnoG7fXM5luFfvv5/T0gEw+ZTIwoocZECMnESBI9w==
+pouchdb-abstract-mapreduce@9.0.0:
+  version "9.0.0"
+  resolved "https://registry.yarnpkg.com/pouchdb-abstract-mapreduce/-/pouchdb-abstract-mapreduce-9.0.0.tgz#d5f189a6f8980931835c41ea1f0b692368ce4686"
+  integrity sha512-SnTtqwAEiAa3uxKbc1J7LfiBViwEkKe2xkK92zxyTXPqWBvMnh4UU3GXxx7GrXTM4L9llsQ3lSjpbH4CNqG1Mw==
   dependencies:
-    pouchdb-binary-utils "7.3.1"
-    pouchdb-collate "7.3.1"
-    pouchdb-collections "7.3.1"
-    pouchdb-errors "7.3.1"
-    pouchdb-fetch "7.3.1"
-    pouchdb-mapreduce-utils "7.3.1"
-    pouchdb-md5 "7.3.1"
-    pouchdb-utils "7.3.1"
+    pouchdb-binary-utils "9.0.0"
+    pouchdb-collate "9.0.0"
+    pouchdb-errors "9.0.0"
+    pouchdb-fetch "9.0.0"
+    pouchdb-mapreduce-utils "9.0.0"
+    pouchdb-md5 "9.0.0"
+    pouchdb-utils "9.0.0"
 
-pouchdb-binary-utils@7.3.1:
-  version "7.3.1"
-  resolved "https://registry.yarnpkg.com/pouchdb-binary-utils/-/pouchdb-binary-utils-7.3.1.tgz#eea22d9a5f880fcd95062476f4f5484cdf61496f"
-  integrity sha512-crZJNfAEOnUoRk977Qtmk4cxEv6sNKllQ6vDDKgQrQLFjMUXma35EHzNyIJr1s76J77Q4sqKQAmxz9Y40yHGtw==
+pouchdb-binary-utils@9.0.0:
+  version "9.0.0"
+  resolved "https://registry.yarnpkg.com/pouchdb-binary-utils/-/pouchdb-binary-utils-9.0.0.tgz#eafed32c21e92ef4b253456f9e53c4cf2cfd99fd"
+  integrity sha512-2OMtgDZi82vqs+zNDE0YiYjOaWkYCUcZJZKK3WkRr+XYRu+2B7umJrnygJFhUwoGedBbHSrlQBLhdNV3F1AX1A==
+
+pouchdb-collate@9.0.0:
+  version "9.0.0"
+  resolved "https://registry.yarnpkg.com/pouchdb-collate/-/pouchdb-collate-9.0.0.tgz#654f6766927ada60603ba25b6b2ae533564fa302"
+  integrity sha512-TrnEDNZEmIIl+W3xKUO8h+geqVLQ90oZe5ujPkl8myUzpREULWXWQBnV5EzPXVEKDBpJlb8T3I6oy/zdWGQpdA==
+
+pouchdb-errors@9.0.0:
+  version "9.0.0"
+  resolved "https://registry.yarnpkg.com/pouchdb-errors/-/pouchdb-errors-9.0.0.tgz#f84269ce3327abef9455c0a90a51c26d7dca20c6"
+  integrity sha512-961PSMLhW0UqqdJ566g+CdLZ5pkBJRd6l4WWpCDdD0USvE4xYfYGzv43w7nZZBw1k3Xdy092yqPge7yX/tfnyw==
+
+pouchdb-fetch@9.0.0:
+  version "9.0.0"
+  resolved "https://registry.yarnpkg.com/pouchdb-fetch/-/pouchdb-fetch-9.0.0.tgz#a2cf407c75c9fc68a1924b08c9b574d28e1be7dd"
+  integrity sha512-TbE3cUcAJQrwb9kr44tDP0X+NAbcqgjsTvcL30L4xzBNJeCPTIRjukYX80s154SHJUXBxcWRiPsMmNqpXsjfCA==
   dependencies:
-    buffer-from "1.1.2"
+    fetch-cookie "2.2.0"
+    node-fetch "2.6.9"
 
-pouchdb-collate@7.3.1:
-  version "7.3.1"
-  resolved "https://registry.yarnpkg.com/pouchdb-collate/-/pouchdb-collate-7.3.1.tgz#19d7b87dd173d1c765da8cc9987c5aa9eb24f11f"
-  integrity sha512-o4gyGqDMLMSNzf6EDTr3eHaH/JRMoqRhdc+eV+oA8u00nTBtr9wD+jypVe2LbgKLJ4NWqx2qVkXiTiQdUFtsLQ==
-
-pouchdb-collections@7.3.1:
-  version "7.3.1"
-  resolved "https://registry.yarnpkg.com/pouchdb-collections/-/pouchdb-collections-7.3.1.tgz#4f1819cf4dd6936a422c29f7fa26a9b5dca428f5"
-  integrity sha512-yUyDqR+OJmtwgExOSJegpBJXDLAEC84TWnbAYycyh+DZoA51Yw0+XVQF5Vh8Ii90/Ut2xo88fmrmp0t6kqom8w==
-
-pouchdb-errors@7.3.1:
-  version "7.3.1"
-  resolved "https://registry.yarnpkg.com/pouchdb-errors/-/pouchdb-errors-7.3.1.tgz#78be36721e2edc446fac158a236a9218c7bcdb14"
-  integrity sha512-Zktz4gnXEUcZcty8FmyvtYUYsHskoST05m6H5/E2gg/0mCfEXq/XeyyLkZHaZmqD0ZPS9yNmASB1VaFWEKEaDw==
+pouchdb-find@^9.0.0:
+  version "9.0.0"
+  resolved "https://registry.yarnpkg.com/pouchdb-find/-/pouchdb-find-9.0.0.tgz#3d1b80d2adc9f9fd86c2ad559cd0144e406cb539"
+  integrity sha512-vvVhq4eEOmSkwSRwf2NBYtdhURB7ryJ7sUI4WDN00GuLUj2g8jAXBJuZIryVgdYt/5S5cfn70iRL6Eow+LFhpA==
   dependencies:
-    inherits "2.0.4"
+    pouchdb-abstract-mapreduce "9.0.0"
+    pouchdb-collate "9.0.0"
+    pouchdb-errors "9.0.0"
+    pouchdb-fetch "9.0.0"
+    pouchdb-md5 "9.0.0"
+    pouchdb-selector-core "9.0.0"
+    pouchdb-utils "9.0.0"
 
-pouchdb-fetch@7.3.1:
-  version "7.3.1"
-  resolved "https://registry.yarnpkg.com/pouchdb-fetch/-/pouchdb-fetch-7.3.1.tgz#d54b1807be0f0a5d4b6d06e416c7d54952bbc348"
-  integrity sha512-205xAtvdHRPQ4fp1h9+RmT9oQabo9gafuPmWsS9aEl3ER54WbY8Vaj1JHZGbU4KtMTYvW7H5088zLS7Nrusuag==
+pouchdb-mapreduce-utils@9.0.0:
+  version "9.0.0"
+  resolved "https://registry.yarnpkg.com/pouchdb-mapreduce-utils/-/pouchdb-mapreduce-utils-9.0.0.tgz#8a2edf30ca0fa24d095eabcfbe8ebb8f3f1160e3"
+  integrity sha512-Bjh8W6QXqp1j7MKmHhYYp5cYlcQsm5drD8Jd/F+ZlfNt18uiD2SQXWzGM5797+tiW/LszFGb8ttw0uHWjxufCQ==
   dependencies:
-    abort-controller "3.0.0"
-    fetch-cookie "0.11.0"
-    node-fetch "2.6.7"
+    pouchdb-utils "9.0.0"
 
-pouchdb-find@^7.2.2:
-  version "7.3.1"
-  resolved "https://registry.yarnpkg.com/pouchdb-find/-/pouchdb-find-7.3.1.tgz#07a633d5ee2bd731dae9f991281cd25212088d29"
-  integrity sha512-AeqUfAVY1c7IFaY36BRT0vIz9r4VTKq/YOWTmiqndOZUQ/pDGxyO2fNFal6NN3PyYww0JijlD377cPvhnrhJVA==
+pouchdb-md5@9.0.0:
+  version "9.0.0"
+  resolved "https://registry.yarnpkg.com/pouchdb-md5/-/pouchdb-md5-9.0.0.tgz#f67a2ba627309e65f8d1ce4d4baf6a5f29164617"
+  integrity sha512-58xUYBvW3/s+aH0j4uOhhN8yCk0LQ254cxBzI/gbKA9PrfwHpe4zrr0L/ia5ml3A30oH1f8aTnuVMwWDkFcuww==
   dependencies:
-    pouchdb-abstract-mapreduce "7.3.1"
-    pouchdb-collate "7.3.1"
-    pouchdb-errors "7.3.1"
-    pouchdb-fetch "7.3.1"
-    pouchdb-md5 "7.3.1"
-    pouchdb-selector-core "7.3.1"
-    pouchdb-utils "7.3.1"
-
-pouchdb-mapreduce-utils@7.3.1:
-  version "7.3.1"
-  resolved "https://registry.yarnpkg.com/pouchdb-mapreduce-utils/-/pouchdb-mapreduce-utils-7.3.1.tgz#f0ac2c8400fbedb705e9226082453ac7d3f2a066"
-  integrity sha512-oUMcq82+4pTGQ6dtrhgORHOVHZSr6w/5tFIUGlv7RABIDvJarL4snMawADjlpiEwPdiQ/ESG8Fqt8cxqvqsIgg==
-  dependencies:
-    argsarray "0.0.1"
-    inherits "2.0.4"
-    pouchdb-collections "7.3.1"
-    pouchdb-utils "7.3.1"
-
-pouchdb-md5@7.3.1:
-  version "7.3.1"
-  resolved "https://registry.yarnpkg.com/pouchdb-md5/-/pouchdb-md5-7.3.1.tgz#70fae44f9d27eb4c6a8e7106156b4593d31c1762"
-  integrity sha512-aDV8ui/mprnL3xmt0gT/81DFtTtJiKyn+OxIAbwKPMfz/rDFdPYvF0BmDC9QxMMzGfkV+JJUjU6at0PPs2mRLg==
-  dependencies:
-    pouchdb-binary-utils "7.3.1"
+    pouchdb-binary-utils "9.0.0"
     spark-md5 "3.0.2"
 
-pouchdb-selector-core@7.3.1:
-  version "7.3.1"
-  resolved "https://registry.yarnpkg.com/pouchdb-selector-core/-/pouchdb-selector-core-7.3.1.tgz#08245662de3d61f16ab8dae2b56ef622935b3fb3"
-  integrity sha512-HBX+nNGXcaL9z0uNpwSMRq2GNZd3EZXW+fe9rJHS0hvJohjZL7aRJLoaXfEdHPRTNW+CpjM3Rny60eGekQdI/w==
+pouchdb-selector-core@9.0.0:
+  version "9.0.0"
+  resolved "https://registry.yarnpkg.com/pouchdb-selector-core/-/pouchdb-selector-core-9.0.0.tgz#6fee1df82cd5ecdbd0a034b38e6c604557d2e22a"
+  integrity sha512-ZYHYsdoedwm8j5tYofz+3+uUSK8i+7tRCBb01T0OuqDQb17+w5mzjHF8Ppi160xdPUPaWCo1Un+nLWGJzkmA3g==
   dependencies:
-    pouchdb-collate "7.3.1"
-    pouchdb-utils "7.3.1"
+    pouchdb-collate "9.0.0"
+    pouchdb-utils "9.0.0"
 
-pouchdb-utils@7.3.1:
-  version "7.3.1"
-  resolved "https://registry.yarnpkg.com/pouchdb-utils/-/pouchdb-utils-7.3.1.tgz#d25f0a034427f388ba5ae37d9ae3fbed210e8720"
-  integrity sha512-R3hHBo1zTdTu/NFs3iqkcaQAPwhIH0gMIdfVKd5lbDYlmP26rCG5pdS+v7NuoSSFLJ4xxnaGV+Gjf4duYsJ8wQ==
+pouchdb-utils@9.0.0:
+  version "9.0.0"
+  resolved "https://registry.yarnpkg.com/pouchdb-utils/-/pouchdb-utils-9.0.0.tgz#b68f3259add50163998201d1a6d16e6a35d5d57f"
+  integrity sha512-xWZE5c+nAslgmLC8JBZbky8AYgdz7pKtv7KTSi6CD2tuQD0WyNKib0YnhZndeE84dksTeZlqlg56RQHsHoB2LQ==
   dependencies:
-    argsarray "0.0.1"
-    clone-buffer "1.0.0"
-    immediate "3.3.0"
-    inherits "2.0.4"
-    pouchdb-collections "7.3.1"
-    pouchdb-errors "7.3.1"
-    pouchdb-md5 "7.3.1"
+    pouchdb-errors "9.0.0"
+    pouchdb-md5 "9.0.0"
     uuid "8.3.2"
 
 pouchdb-wrappers@^5.0.0:
@@ -6663,26 +6674,20 @@ pouchdb-wrappers@^5.0.0:
   resolved "https://registry.yarnpkg.com/pouchdb-wrappers/-/pouchdb-wrappers-5.0.0.tgz#1ae461f4cb4c02417c21e8dfeb1e6290918533ba"
   integrity sha512-fXqsVn+rmlPtxaAIGaQP5TkiaT39OMwvMk+ScLLtHrmfXD2KBO6fe/qBl38N/rpTn0h/A058dPN4fLAHt550zA==
 
-pouchdb@^7.2.2:
-  version "7.3.1"
-  resolved "https://registry.yarnpkg.com/pouchdb/-/pouchdb-7.3.1.tgz#b9393cca6fd752ba345aeb34e4d5d4e2acd805ff"
-  integrity sha512-oanSnM3SD9lPRuVRwEZWVbtWKYluw0q5phT5BXWi2b9Zqd5mJUPWKbKWJu03cDPM9wySmKKd7yfl9O9/eIQ5fg==
+pouchdb@^9.0.0:
+  version "9.0.0"
+  resolved "https://registry.yarnpkg.com/pouchdb/-/pouchdb-9.0.0.tgz#569ee3941f7b03dd34b4b4e53132a9772981a35e"
+  integrity sha512-6wjFc/PzwaWz86rmMXoqdBlR/fBSkNoWO1mEJO7RZNS6n3xf+fhhXWAWtws741KpLKx84IkmmJ48tp+fhFzj4A==
   dependencies:
-    abort-controller "3.0.0"
-    argsarray "0.0.1"
-    buffer-from "1.1.2"
-    clone-buffer "1.0.0"
     double-ended-queue "2.1.0-0"
-    fetch-cookie "0.11.0"
-    immediate "3.3.0"
-    inherits "2.0.4"
+    fetch-cookie "2.2.0"
     level "6.0.1"
     level-codec "9.0.2"
     level-write-stream "1.0.0"
-    leveldown "5.6.0"
+    leveldown "6.1.1"
     levelup "4.4.0"
     ltgt "2.2.1"
-    node-fetch "2.6.7"
+    node-fetch "2.6.9"
     readable-stream "1.1.14"
     spark-md5 "3.0.2"
     through2 "3.0.2"
@@ -6789,7 +6794,7 @@ querystringify@^2.1.1:
   resolved "https://registry.yarnpkg.com/querystringify/-/querystringify-2.2.0.tgz#3345941b4153cb9d082d8eee4cda2016a9aef7f6"
   integrity sha512-FIqgj2EUvTa7R50u0rGsyTftzjYmv/a3hO345bZNrqabNqjtgiDMgmo4mkUjd+nzU5oF3dClKqFIPUKybUyqoQ==
 
-queue-microtask@^1.2.2:
+queue-microtask@^1.2.2, queue-microtask@^1.2.3:
   version "1.2.3"
   resolved "https://registry.yarnpkg.com/queue-microtask/-/queue-microtask-1.2.3.tgz#4929228bbc724dfac43e0efb058caf7b6cfb6243"
   integrity sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==
@@ -7181,6 +7186,11 @@ set-blocking@^2.0.0:
   resolved "https://registry.yarnpkg.com/set-blocking/-/set-blocking-2.0.0.tgz#045f9782d011ae9a6803ddd382b24392b3d890f7"
   integrity sha512-KiKBS8AnWGEyLzofFfmvKwpdPzqiy16LvQfK3yv/fVH7Bj13/wl3JSR1J+rfgRE9q7xUJK4qvgS8raSOeLUehw==
 
+set-cookie-parser@^2.4.8:
+  version "2.7.1"
+  resolved "https://registry.yarnpkg.com/set-cookie-parser/-/set-cookie-parser-2.7.1.tgz#3016f150072202dfbe90fadee053573cc89d2943"
+  integrity sha512-IOc8uWeOZgnb3ptbCURJWNjWUPcO3ZnTTdzsurqERrP6nPyv+paC55vJM0LpOlT2ne+Ix+9+CRG1MNLlyZ4GjQ==
+
 set-function-length@^1.2.1:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/set-function-length/-/set-function-length-1.2.2.tgz#aac72314198eaed975cf77b2c3b6b880695e5449"
@@ -7567,7 +7577,7 @@ to-regex-range@^5.0.1:
   dependencies:
     is-number "^7.0.0"
 
-"tough-cookie@^2.3.3 || ^3.0.1 || ^4.0.0":
+tough-cookie@^4.0.0:
   version "4.1.4"
   resolved "https://registry.yarnpkg.com/tough-cookie/-/tough-cookie-4.1.4.tgz#945f1461b45b5a8c76821c33ea49c3ac192c1b36"
   integrity sha512-Loo5UUvLD9ScZ6jh8beX1T6sO1w2/MpCRpEP7V280GKMVUQ0Jzar2U3UJPsrdbziLEMMhu3Ujnq//rhiFuIeag==

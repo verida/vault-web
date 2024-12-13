@@ -40,7 +40,7 @@ export function ConnectionsSecurityDetailsDialog(
             extracted from your platforms.
           </SecurityDetailsDialogDescription>
         </SecurityDetailsDialogHeader>
-        <SecurityDetailsDialogBody className="gap-4">
+        <SecurityDetailsDialogBody className="flex flex-col gap-4">
           <div className="flex items-start gap-3">
             <CpuIcon className="size-4 shrink-0 text-status-secured-foreground" />
             <div className="flex flex-col gap-1">

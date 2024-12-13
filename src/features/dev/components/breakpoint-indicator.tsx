@@ -1,16 +1,11 @@
 import React from "react"
 
-import { commonConfig } from "@/config/common"
 import { cn } from "@/styles/utils"
 
 export type BreakpointIndicatorProps = React.ComponentProps<"div">
 
 export function BreakpointIndicator(props: BreakpointIndicatorProps) {
   const { className, ...divProps } = props
-
-  if (!commonConfig.DEV_MODE) {
-    return null
-  }
 
   return (
     <div
