@@ -5,6 +5,9 @@ import { commonConfig } from "@/config/common"
 export const featureFlags = {
   veridaOauth: {
     enabled: commonConfig.FEATURE_FLAG_VERIDA_OAUTH_ENABLED,
+    authorizedAppsUi: {
+      enabled: commonConfig.FEATURE_FLAG_AUTHORIZED_APPS_ENABLED,
+    },
   },
   inbox: {
     enabled: commonConfig.FEATURE_FLAG_INBOX_ENABLED,
@@ -38,8 +41,5 @@ export const featureFlags = {
       enabled: commonConfig.FEATURE_FLAG_DATA_CONNECTIONS_LOGS_ENABLED,
       destroy: commonConfig.FEATURE_FLAG_DATA_CONNECTIONS_LOGS_DESTROY_ENABLED,
     },
-  },
-  apiKeys: {
-    enabled: commonConfig.FEATURE_FLAG_API_KEYS_ENABLED,
   },
 }

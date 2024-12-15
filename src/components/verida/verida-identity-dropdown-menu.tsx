@@ -23,7 +23,7 @@ import { featureFlags } from "@/config/features"
 import { version } from "@/config/version"
 import { APP_NAME } from "@/constants/app"
 import { EMPTY_VALUE_FALLBACK } from "@/constants/misc"
-import { getApiKeysPageRoute } from "@/features/routes/utils"
+import { getAuthorizedAppsPageRoute } from "@/features/routes/utils"
 import { useUserFeedback } from "@/features/telemetry/use-user-feedback"
 import { useToast } from "@/features/toasts/use-toast"
 import { EMPTY_PROFILE_NAME_FALLBACK } from "@/features/verida-profile/constants"
@@ -69,8 +69,8 @@ export function VeridaIdentityDropdownMenu(
     }
   }, [did, toast])
 
-  const handleApiKeysClick = useCallback(() => {
-    router.push(getApiKeysPageRoute())
+  const handleAuthorizedAppsClick = useCallback(() => {
+    router.push(getAuthorizedAppsPageRoute())
   }, [router])
 
   if (!isConnected) {
@@ -179,13 +179,13 @@ export function VeridaIdentityDropdownMenu(
             ) : null}
           </div>
         </DropdownMenuItem>
-        {!hideApiKeys && featureFlags.apiKeys.enabled ? (
+        {!hideApiKeys && featureFlags.veridaOauth.authorizedAppsUi.enabled ? (
           <DropdownMenuItem
-            onClick={handleApiKeysClick}
+            onClick={handleAuthorizedAppsClick}
             className="cursor-pointer gap-3 px-4 py-4"
           >
             <ApiKeyIcon className="size-5" />
-            <Typography variant="base-semibold">API Keys</Typography>
+            <Typography variant="base-semibold">Authorized Apps</Typography>
           </DropdownMenuItem>
         ) : null}
         {!hideFeedback && isUserFeedbackReady ? (

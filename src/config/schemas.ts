@@ -31,6 +31,10 @@ export const CommonConfigSchema = z.object({
     .string()
     .optional()
     .transform((value) => value === "true"),
+  FEATURE_FLAG_AUTHORIZED_APPS_ENABLED: z
+    .string()
+    .optional()
+    .transform((value) => value === "true"),
   FEATURE_FLAG_AI_ASSISTANT_ENABLED: z
     .string()
     .optional()
@@ -78,10 +82,6 @@ export const CommonConfigSchema = z.object({
     .optional()
     .transform((value) => value === "true"),
   FEATURE_FLAG_DATA_CONNECTIONS_LOGS_DESTROY_ENABLED: z
-    .string()
-    .optional()
-    .transform((value) => value === "true"),
-  FEATURE_FLAG_API_KEYS_ENABLED: z
     .string()
     .optional()
     .transform((value) => value === "true"),

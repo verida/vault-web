@@ -7,15 +7,15 @@ import {
   ErrorPageProps,
 } from "@/components/error-page-content"
 
-export default function ApiKeysErrorPage(props: ErrorPageProps) {
+export default function AuthorizationsErrorPage(props: ErrorPageProps) {
   const { error, reset } = props
 
   return (
     <ErrorPageContent
-      mainMessage="There was an error loading the API Keys"
+      mainMessage="There was an error loading your authorized apps"
       error={error}
       reset={reset}
     />
   )
 }
-ApiKeysErrorPage.displayName = "ApiKeysErrorPage"
+AuthorizationsErrorPage.displayName = "AuthorizationsErrorPage"
