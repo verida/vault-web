@@ -1,10 +1,6 @@
 import { ServerConfigSchema } from "@/config/schemas"
 
-const serverConfigCheckResult = ServerConfigSchema.safeParse({
-  NOTION_API_KEY: process.env.NOTION_API_KEY,
-  NOTION_RESTRICTED_ACCESS_DATABASE_ID:
-    process.env.NOTION_RESTRICTED_ACCESS_DATABASE_ID,
-})
+const serverConfigCheckResult = ServerConfigSchema.safeParse({})
 
 if (!serverConfigCheckResult.success) {
   // eslint-disable-next-line no-console
