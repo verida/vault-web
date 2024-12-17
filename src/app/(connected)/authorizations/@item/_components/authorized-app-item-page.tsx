@@ -88,6 +88,7 @@ export function AuthorizedAppItemPageContent(
           <ItemFieldUrl url={authorizedApp.url} />
           <ItemFieldScopes scopes={authorizedApp.scopes} />
           <ItemFieldLastUsed lastUsed={authorizedApp.lastAccessedAt} />
+          <ItemFieldCreated createdAt={authorizedApp.insertedAt} />
         </div>
       )
     }
@@ -260,7 +261,17 @@ type ItemFieldLastUsedProps = {
 export function ItemFieldLastUsed(props: ItemFieldLastUsedProps) {
   const { lastUsed, ...itemFieldProps } = props
 
-  const date = new Date(lastUsed || "")
+  if (!lastUsed) {
+    return (
+      <ItemField propertyName="Last Used" {...itemFieldProps}>
+        <Typography variant="base-regular" className="truncate">
+          {EMPTY_VALUE_FALLBACK}
+        </Typography>
+      </ItemField>
+    )
+  }
+
+  const date = new Date(lastUsed)
 
   return (
     <ItemField propertyName="Last Used" {...itemFieldProps}>
@@ -273,6 +284,37 @@ export function ItemFieldLastUsed(props: ItemFieldLastUsedProps) {
   )
 }
 ItemFieldLastUsed.displayName = "ItemFieldLastUsed"
+
+type ItemFieldCreatedProps = {
+  createdAt?: string
+} & Omit<React.ComponentProps<typeof ItemField>, "propertyName" | "children">
+
+export function ItemFieldCreated(props: ItemFieldCreatedProps) {
+  const { createdAt, ...itemFieldProps } = props
+
+  if (!createdAt) {
+    return (
+      <ItemField propertyName="Created" {...itemFieldProps}>
+        <Typography variant="base-regular" className="truncate">
+          {EMPTY_VALUE_FALLBACK}
+        </Typography>
+      </ItemField>
+    )
+  }
+
+  const date = new Date(createdAt)
+
+  return (
+    <ItemField propertyName="Created" {...itemFieldProps}>
+      <Typography variant="base-regular" className="truncate">
+        {isDate(date)
+          ? intlFormat(date, SHORT_DATE_TIME_FORMAT_OPTIONS)
+          : EMPTY_VALUE_FALLBACK}
+      </Typography>
+    </ItemField>
+  )
+}
+ItemFieldCreated.displayName = "ItemFieldCreated"
 
 export type ItemFieldProps = {
   propertyName: string

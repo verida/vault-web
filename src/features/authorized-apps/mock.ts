@@ -6,6 +6,7 @@ export const MOCK_AUTHORIZED_APPS: AuthorizedAppRecord[] = [
     name: "TaskFlow Pro",
     url: "https://taskflow-pro.example.com",
     lastAccessedAt: "2024-02-01T12:00:00Z",
+    insertedAt: "2023-11-15T09:23:14Z",
     scopes: [
       { database: "calendar_data", operation: "read" },
       { database: "social_event", operation: "write" },
@@ -17,6 +18,7 @@ export const MOCK_AUTHORIZED_APPS: AuthorizedAppRecord[] = [
     name: "ConnectMail Plus",
     url: "https://connectmail.example.com",
     lastAccessedAt: "2024-02-10T15:30:00Z",
+    insertedAt: "2023-12-01T14:45:22Z",
     scopes: [
       { database: "social_email", operation: "read" },
       { database: "social_contact", operation: "read" },
@@ -27,6 +29,7 @@ export const MOCK_AUTHORIZED_APPS: AuthorizedAppRecord[] = [
     name: "SecureVault Manager",
     url: "https://securevault.example.com",
     lastAccessedAt: "2024-02-12T09:15:00Z",
+    insertedAt: "2023-10-28T11:12:33Z",
     scopes: [
       { database: "credential", operation: "write" },
       { database: "social_contact", operation: "read" },
@@ -38,6 +41,7 @@ export const MOCK_AUTHORIZED_APPS: AuthorizedAppRecord[] = [
     name: "TeamChat Hub",
     url: "https://teamchat.example.com",
     lastAccessedAt: "2024-02-13T18:45:00Z",
+    insertedAt: "2023-09-15T16:34:51Z",
     scopes: [
       { database: "social_chat_message", operation: "write" },
       { database: "social_chat_group", operation: "read" },
@@ -49,6 +53,7 @@ export const MOCK_AUTHORIZED_APPS: AuthorizedAppRecord[] = [
     name: "Web3 Identity Bridge",
     url: "https://identity-bridge.example.com",
     lastAccessedAt: "2024-02-14T11:20:00Z",
+    insertedAt: "2024-01-02T08:17:44Z",
     scopes: [
       { database: "social_contact", operation: "read" },
       { database: "credential", operation: "read" },
@@ -62,6 +67,7 @@ export const MOCK_AUTHORIZED_APPS: AuthorizedAppRecord[] = [
     name: "SocialSphere Connect",
     url: "https://socialsphere.example.com",
     lastAccessedAt: "2024-02-15T14:10:00Z",
+    insertedAt: "2023-11-30T13:56:19Z",
     scopes: [
       { database: "social_post", operation: "write" },
       { database: "social_following", operation: "read" },
@@ -72,6 +78,7 @@ export const MOCK_AUTHORIZED_APPS: AuthorizedAppRecord[] = [
     name: "EventSync Pro",
     url: "https://eventsync.example.com",
     lastAccessedAt: "2024-02-16T16:25:00Z",
+    insertedAt: "2023-12-12T15:23:41Z",
     scopes: [
       { database: "social_event", operation: "write" },
       { database: "calendar_data", operation: "read" },
@@ -84,6 +91,7 @@ export const MOCK_AUTHORIZED_APPS: AuthorizedAppRecord[] = [
     name: "CloudStore Sync",
     url: "https://cloudstore.example.com",
     lastAccessedAt: "2024-02-17T08:50:00Z",
+    insertedAt: "2023-10-05T09:44:12Z",
     scopes: [{ database: "file", operation: "write" }],
   },
   {
@@ -91,6 +99,7 @@ export const MOCK_AUTHORIZED_APPS: AuthorizedAppRecord[] = [
     name: "DeFi Portfolio Tracker",
     url: "https://defi-tracker.example.com",
     lastAccessedAt: "2024-02-18T13:40:00Z",
+    insertedAt: "2023-12-28T17:11:33Z",
     scopes: [
       { database: "credential", operation: "read" },
       { database: "favourite", operation: "write" },
@@ -105,6 +114,7 @@ export const MOCK_AUTHORIZED_APPS: AuthorizedAppRecord[] = [
     name: "ContentHub Studio",
     url: "https://contenthub.example.com",
     lastAccessedAt: "2024-02-19T20:15:00Z",
+    insertedAt: "2024-01-10T12:09:55Z",
     scopes: [{ database: "social_post", operation: "write" }],
   },
   {
@@ -112,6 +122,7 @@ export const MOCK_AUTHORIZED_APPS: AuthorizedAppRecord[] = [
     name: "NFT Collection Manager",
     url: "https://nft-manager.example.com",
     lastAccessedAt: "2024-02-20T10:30:00Z",
+    insertedAt: "2023-11-22T10:33:27Z",
     scopes: [
       { database: "file", operation: "read" },
       { database: "social_post", operation: "write" },
@@ -123,6 +134,7 @@ export const MOCK_AUTHORIZED_APPS: AuthorizedAppRecord[] = [
     name: "WorkFlow Organizer",
     url: "https://workflow.example.com",
     lastAccessedAt: "2024-02-21T17:05:00Z",
+    insertedAt: "2023-12-15T14:22:48Z",
     scopes: [
       { database: "social_event", operation: "write" },
       { database: "social_chat_group", operation: "read" },
