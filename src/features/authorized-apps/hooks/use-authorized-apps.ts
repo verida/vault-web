@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query"
+import { useQuery, useQueryClient } from "@tanstack/react-query"
 
 import { AuthorizedAppBaseSchema } from "@/features/authorized-apps/schemas"
 import { getAuthorizedApps } from "@/features/authorized-apps/utils"
@@ -16,15 +16,25 @@ export function useAuthorizedApps({
 }: UseAuthorizedAppsArgs = {}) {
   const { did, getAccountSessionToken } = useVerida()
 
+  const queryClient = useQueryClient()
+
   const { data, ...query } = useQuery({
     enabled: !!did,
+    // TODO: Extract query key in a key factory
     queryKey: ["authorized-apps", did, filter, options],
     queryFn: async () => {
       const sessionToken = await getAccountSessionToken()
 
       // TODO: Populate the cache for the authorized app query
 
-      return getAuthorizedApps({ sessionToken, filter, options })
+      const result = await getAuthorizedApps({ sessionToken, filter, options })
+
+      result.records.forEach((record) => {
+        // TODO: Extract query key in a key factory
+        queryClient.setQueryData(["authorized-apps", did, record._id], record)
+      })
+
+      return result
     },
     meta: {
       logCategory: "authorized-apps",

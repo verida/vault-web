@@ -14,6 +14,7 @@ export function useAuthorizedApp({
 
   const { data: authorizedApp, ...query } = useQuery({
     enabled: !!did,
+    // TODO: Extract query key in a key factory
     queryKey: ["authorized-apps", did, authorizedAppRecordId],
     queryFn: async () => {
       const sessionToken = await getAccountSessionToken()
