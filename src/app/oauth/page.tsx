@@ -30,6 +30,7 @@ export default function OAuthPage() {
           keepExpanded
           hideDisconnect={false}
           hideFeedback={false}
+          hideApiKeys={true}
         />
       </div>
       {isConnected ? (

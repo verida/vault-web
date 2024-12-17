@@ -8,7 +8,7 @@ import { useToast } from "@/features/toasts/use-toast"
 
 const logger = Logger.create("error-boundary")
 
-export default function DataItemErrorPage(props: ErrorPageProps) {
+export default function AuthorizationsItemErrorPage(props: ErrorPageProps) {
   const { error } = props
 
   const { toast } = useToast()
@@ -19,7 +19,7 @@ export default function DataItemErrorPage(props: ErrorPageProps) {
     toast({
       variant: "error",
       title: "Error",
-      description: "An error occurred while loading the data item",
+      description: "An error occurred while loading the authorized app item",
     })
   }, [error, toast])
 
@@ -28,4 +28,4 @@ export default function DataItemErrorPage(props: ErrorPageProps) {
   // displayed outside of the modal and cause layout shift in the parent page
   return null
 }
-DataItemErrorPage.displayName = "DataItemErrorPage"
+AuthorizationsItemErrorPage.displayName = "AuthorizationsItemErrorPage"

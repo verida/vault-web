@@ -1,10 +1,10 @@
-export type VeridaOauthScope = {
-  database: string
-  operation: "read" | "write"
-}
+import { z } from "zod"
 
-export type VeridaOauthPayload = {
-  name: string
-  url: URL
-  scopes: VeridaOauthScope[]
-}
+import {
+  VeridaOauthPayloadSchema,
+  VeridaOauthScopeSchema,
+} from "@/features/verida-oauth/schemas"
+
+export type VeridaOauthScope = z.infer<typeof VeridaOauthScopeSchema>
+
+export type VeridaOauthPayload = z.infer<typeof VeridaOauthPayloadSchema>
