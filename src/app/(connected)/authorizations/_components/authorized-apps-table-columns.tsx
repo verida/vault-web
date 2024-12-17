@@ -21,7 +21,7 @@ export const authorizedAppsTableColumns = [
     id: "name",
     header: "Application",
     meta: {
-      headerClassName: "w-52 shrink-0",
+      headerClassName: "w-64 shrink-0",
     },
     cell: (context) => (
       <Typography variant="base-semibold" className="truncate">
