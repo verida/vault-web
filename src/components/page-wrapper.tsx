@@ -54,7 +54,7 @@ export function PageWrapper(props: PageWrapperProps) {
         {pageTitle || rightContent ? (
           <div className="flex min-h-12 w-full flex-row items-center justify-between gap-6">
             {typeof pageTitle === "string" ? (
-              <Typography variant="heading-3">{pageTitle}</Typography>
+              <PageTitle>{pageTitle}</PageTitle>
             ) : (
               pageTitle
             )}
