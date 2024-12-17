@@ -20,18 +20,23 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
+import { AuthorizedAppRecord } from "@/features/authorized-apps/types"
 import { cn } from "@/styles/utils"
 import { wait } from "@/utils/misc"
 
-type RevokeAllAuthorizedAppsDialogProps = Pick<
-  React.ComponentProps<typeof Button>,
-  "className" | "size" | "variant"
->
+type RevokeAuthorizedAppDialogProps = {
+  authorizedApp: AuthorizedAppRecord
+} & Pick<React.ComponentProps<typeof Button>, "className" | "size" | "variant">
 
-export function RevokeAllAuthorizedAppsDialog(
-  props: RevokeAllAuthorizedAppsDialogProps
+export function RevokeAuthorizedAppDialog(
+  props: RevokeAuthorizedAppDialogProps
 ) {
-  const { variant = "outline-destructive", className } = props
+  const {
+    authorizedApp,
+    variant = "outline-destructive",
+    size = "icon",
+    className,
+  } = props
 
   // TODO: Implement a custom hook for deleting the authorized app
 
@@ -45,25 +50,19 @@ export function RevokeAllAuthorizedAppsDialog(
       <Tooltip>
         <TooltipTrigger asChild>
           <AlertDialogTrigger asChild>
-            <Button
-              variant={variant}
-              className={cn(
-                "h-12 w-12 p-0 sm:w-auto sm:px-6 sm:py-2",
-                className
-              )}
-            >
-              <DeleteIcon className="size-5 shrink-0 sm:hidden" />
-              <span className="sr-only sm:not-sr-only">Revoke All</span>
+            <Button variant={variant} size={size} className={cn(className)}>
+              <DeleteIcon className="size-5 shrink-0" />
+              <span className="sr-only">Revoke</span>
             </Button>
           </AlertDialogTrigger>
         </TooltipTrigger>
-        <TooltipContent>Revoke authorization for all apps</TooltipContent>
+        <TooltipContent>Revoke</TooltipContent>
       </Tooltip>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Revoke All Access</AlertDialogTitle>
+          <AlertDialogTitle>Revoke Access</AlertDialogTitle>
           <AlertDialogDescription>
-            Are you sure you want to revoke access for all authorized apps?
+            Are you sure you want to revoke access for {authorizedApp.name}?
           </AlertDialogDescription>
           <AlertDialogDescription>
             This action cannot be undone.
@@ -81,4 +80,4 @@ export function RevokeAllAuthorizedAppsDialog(
     </AlertDialog>
   )
 }
-RevokeAllAuthorizedAppsDialog.displayName = "RevokeAllAuthorizedAppsDialog"
+RevokeAuthorizedAppDialog.displayName = "RevokeAuthorizedAppDialog"

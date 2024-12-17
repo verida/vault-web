@@ -49,7 +49,7 @@ export default function DataItemPage(props: DataItemPageProps) {
   }, [itemId, handleOpenChange, databaseDefinition])
 
   if (itemPage) {
-    return <>{itemPage}</>
+    return itemPage
   }
 
   return null

@@ -38,7 +38,7 @@ export const authorizedAppsTableColumns = [
       if (!value) {
         return (
           <div className="text-muted-foreground">
-            <Typography variant="base-regular" className="truncate">
+            <Typography variant="base-s-regular" className="truncate">
               {EMPTY_VALUE_FALLBACK}
             </Typography>
           </div>
@@ -71,17 +71,6 @@ export const authorizedAppsTableColumns = [
     cell: (context) => {
       const value = context.getValue()
 
-      if (!value) {
-        return (
-          <div className="text-muted-foreground">
-            <Typography variant="base-regular" className="truncate">
-              {EMPTY_VALUE_FALLBACK}
-            </Typography>
-          </div>
-        )
-      }
-
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       const formatScope = useCallback((scope: VeridaOauthScope) => {
         const databaseDef = ALL_DATABASE_DEFS.find(
           (db) => db.databaseVaultName === scope.database
@@ -98,8 +87,18 @@ export const authorizedAppsTableColumns = [
         )
       }, [])
 
+      if (!value) {
+        return (
+          <div className="text-muted-foreground">
+            <Typography variant="base-regular" className="truncate">
+              {EMPTY_VALUE_FALLBACK}
+            </Typography>
+          </div>
+        )
+      }
+
       return (
-        <ul>
+        <ul className="flex flex-col gap-0">
           {value.map((scope, index) => (
             <li key={index}>{formatScope(scope)}</li>
           ))}
@@ -117,21 +116,13 @@ export const authorizedAppsTableColumns = [
     cell: (context) => {
       const value = context.getValue()
       const date = new Date(value || "")
-      if (!isDate(date)) {
-        return (
-          <div className="text-muted-foreground">
-            <Typography variant="base-regular" className="truncate">
-              {EMPTY_VALUE_FALLBACK}
-            </Typography>
-          </div>
-        )
-      }
 
-      const formattedDate = intlFormat(date, SHORT_DATE_TIME_FORMAT_OPTIONS)
       return (
         <div className="text-muted-foreground">
           <Typography variant="base-regular" className="truncate">
-            {formattedDate}
+            {isDate(date)
+              ? intlFormat(date, SHORT_DATE_TIME_FORMAT_OPTIONS)
+              : EMPTY_VALUE_FALLBACK}
           </Typography>
         </div>
       )

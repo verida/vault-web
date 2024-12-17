@@ -1,12 +1,14 @@
 "use client"
 
 import { getCoreRowModel, useReactTable } from "@tanstack/react-table"
+import Link from "next/link"
 import React from "react"
 
 import { authorizedAppsTableColumns } from "@/app/(connected)/authorizations/_components/authorized-apps-table-columns"
 import { AuthorizedAppsTableRow } from "@/app/(connected)/authorizations/_components/authorized-apps-table-row"
 import { DataTable } from "@/components/data-table/data-table"
 import { EMPTY_VALUE_FALLBACK } from "@/constants/misc"
+import { useAuthorizedAppItemIdState } from "@/features/authorized-apps/hooks/use-authorized-app-item-id-state"
 import { useAuthorizedApps } from "@/features/authorized-apps/hooks/use-authorized-apps"
 import { AuthorizedAppRecord } from "@/features/authorized-apps/types"
 import { DataTableColumnAlignFeature } from "@/features/data-table/data-table-column-align-feature"
@@ -55,10 +57,22 @@ export default function AuthorizationsPage() {
     },
   })
 
+  const { serializeItemId } = useAuthorizedAppItemIdState()
+
   return (
     <DataTable
       table={table}
-      rowComponent={(row) => <AuthorizedAppsTableRow row={row} />}
+      rowComponent={(row) => (
+        <Link
+          href={serializeItemId({ itemId: row.original._id })}
+          className="rounded-lg"
+        >
+          <AuthorizedAppsTableRow
+            row={row}
+            className="hover:border-border-hover hover:bg-surface-hover"
+          />
+        </Link>
+      )}
       className="flex-1"
       isLoading={isLoading}
       isRefreshing={isFetching}

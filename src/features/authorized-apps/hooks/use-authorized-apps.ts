@@ -21,6 +21,9 @@ export function useAuthorizedApps({
     queryKey: ["authorized-apps", did, filter, options],
     queryFn: async () => {
       const sessionToken = await getAccountSessionToken()
+
+      // TODO: Populate the cache for the authorized app query
+
       return getAuthorizedApps({ sessionToken, filter, options })
     },
     meta: {
