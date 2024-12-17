@@ -1,8 +1,10 @@
 "use client"
 
 import { MessageCircle } from "lucide-react"
+import { useRouter } from "next/navigation"
 import React, { useCallback } from "react"
 
+import { ApiKeyIcon } from "@/components/icons/api-key-icon"
 import { Copy } from "@/components/icons/copy"
 import { Logout } from "@/components/icons/logout"
 import { SimpleDown } from "@/components/icons/simple-down"
@@ -17,9 +19,11 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Skeleton } from "@/components/ui/skeleton"
+import { featureFlags } from "@/config/features"
 import { version } from "@/config/version"
 import { APP_NAME } from "@/constants/app"
 import { EMPTY_VALUE_FALLBACK } from "@/constants/misc"
+import { getAuthorizedAppsPageRoute } from "@/features/routes/utils"
 import { useUserFeedback } from "@/features/telemetry/use-user-feedback"
 import { useToast } from "@/features/toasts/use-toast"
 import { EMPTY_PROFILE_NAME_FALLBACK } from "@/features/verida-profile/constants"
@@ -30,6 +34,7 @@ import { cn } from "@/styles/utils"
 type VeridaIdentityDropdownMenuProps = {
   keepExpanded?: boolean
   hideDisconnect?: boolean
+  hideApiKeys?: boolean
   hideFeedback?: boolean
 } & Pick<React.ComponentProps<typeof Button>, "className">
 
@@ -39,9 +44,12 @@ export function VeridaIdentityDropdownMenu(
   const {
     keepExpanded = false,
     hideDisconnect = false,
+    hideApiKeys = false,
     hideFeedback = false,
     className,
   } = props
+
+  const router = useRouter()
 
   const { isConnected, did, disconnect } = useVerida()
   const { profile } = useUserProfile()
@@ -60,6 +68,10 @@ export function VeridaIdentityDropdownMenu(
       })
     }
   }, [did, toast])
+
+  const handleAuthorizedAppsClick = useCallback(() => {
+    router.push(getAuthorizedAppsPageRoute())
+  }, [router])
 
   if (!isConnected) {
     return null
@@ -167,6 +179,15 @@ export function VeridaIdentityDropdownMenu(
             ) : null}
           </div>
         </DropdownMenuItem>
+        {!hideApiKeys && featureFlags.veridaOauth.authorizedAppsUi.enabled ? (
+          <DropdownMenuItem
+            onClick={handleAuthorizedAppsClick}
+            className="cursor-pointer gap-3 px-4 py-4"
+          >
+            <ApiKeyIcon className="size-5" />
+            <Typography variant="base-semibold">Authorized Apps</Typography>
+          </DropdownMenuItem>
+        ) : null}
         {!hideFeedback && isUserFeedbackReady ? (
           <DropdownMenuItem
             onClick={openUserFeedbackForm}

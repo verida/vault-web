@@ -135,7 +135,7 @@ export async function getDataProviders(): Promise<DataProvider[]> {
 /**
  * Fetches data connections from the API or returns mock data if the API is not configured.
  *
- * @param key - The API key for authentication
+ * @param sessionToken - The session token for authentication
  * @returns A promise that resolves to an array of DataConnection
  * @throws Error if there's an issue fetching the data connections
  */
