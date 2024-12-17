@@ -2,7 +2,6 @@
 
 import { useCallback } from "react"
 
-import { DeleteIcon } from "@/components/icons/delete-icon"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -15,49 +14,31 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button"
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip"
 import { AuthorizedAppRecord } from "@/features/authorized-apps/types"
-import { cn } from "@/styles/utils"
 import { wait } from "@/utils/misc"
 
 type RevokeAuthorizedAppDialogProps = {
   authorizedApp: AuthorizedAppRecord
-} & Pick<React.ComponentProps<typeof Button>, "className" | "size" | "variant">
+  onRevoke?: () => void
+  children?: React.ReactNode
+}
 
 export function RevokeAuthorizedAppDialog(
   props: RevokeAuthorizedAppDialogProps
 ) {
-  const {
-    authorizedApp,
-    variant = "outline-destructive",
-    size = "icon",
-    className,
-  } = props
+  const { authorizedApp, onRevoke, children } = props
 
   // TODO: Implement a custom hook for deleting the authorized app
 
   const handleRevoke = useCallback(async () => {
     // TODO: Use the mutation function from the custom hook instead of this mock
     await wait(2000)
-  }, [])
+    onRevoke?.()
+  }, [onRevoke])
 
   return (
     <AlertDialog>
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <AlertDialogTrigger asChild>
-            <Button variant={variant} size={size} className={cn(className)}>
-              <DeleteIcon className="size-5 shrink-0" />
-              <span className="sr-only">Revoke</span>
-            </Button>
-          </AlertDialogTrigger>
-        </TooltipTrigger>
-        <TooltipContent>Revoke</TooltipContent>
-      </Tooltip>
+      <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Revoke Access</AlertDialogTitle>

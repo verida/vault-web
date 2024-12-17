@@ -2,7 +2,6 @@
 
 import { useCallback } from "react"
 
-import { DeleteIcon } from "@/components/icons/delete-icon"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -15,23 +14,16 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button"
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip"
-import { cn } from "@/styles/utils"
 import { wait } from "@/utils/misc"
 
-type RevokeAllAuthorizedAppsDialogProps = Pick<
-  React.ComponentProps<typeof Button>,
-  "className" | "size" | "variant"
->
+type RevokeAllAuthorizedAppsDialogProps = {
+  children?: React.ReactNode
+}
 
 export function RevokeAllAuthorizedAppsDialog(
   props: RevokeAllAuthorizedAppsDialogProps
 ) {
-  const { variant = "outline-destructive", className } = props
+  const { children } = props
 
   // TODO: Implement a custom hook for deleting the authorized app
 
@@ -42,23 +34,7 @@ export function RevokeAllAuthorizedAppsDialog(
 
   return (
     <AlertDialog>
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <AlertDialogTrigger asChild>
-            <Button
-              variant={variant}
-              className={cn(
-                "h-12 w-12 p-0 sm:w-auto sm:px-6 sm:py-2",
-                className
-              )}
-            >
-              <DeleteIcon className="size-5 shrink-0 sm:hidden" />
-              <span className="sr-only sm:not-sr-only">Revoke All</span>
-            </Button>
-          </AlertDialogTrigger>
-        </TooltipTrigger>
-        <TooltipContent>Revoke authorization for all apps</TooltipContent>
-      </Tooltip>
+      <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Revoke All Access</AlertDialogTitle>

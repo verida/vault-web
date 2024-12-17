@@ -4,6 +4,7 @@ import { intlFormat, isDate } from "date-fns"
 import Link from "next/link"
 import { useCallback, useMemo } from "react"
 
+import { DeleteIcon } from "@/components/icons/delete-icon"
 import {
   ItemSheet,
   ItemSheetBody,
@@ -27,6 +28,11 @@ import {
   LoadingBlockTitle,
 } from "@/components/ui/loading"
 import { Skeleton } from "@/components/ui/skeleton"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
 import { EMPTY_VALUE_FALLBACK } from "@/constants/misc"
 import { RevokeAuthorizedAppDialog } from "@/features/authorized-apps/components/revoke-authorized-app-dialog"
 import { useAuthorizedApp } from "@/features/authorized-apps/hooks/use-authorized-app"
@@ -53,6 +59,10 @@ export function AuthorizedAppItemPageContent(
   const handleClose = useCallback(() => {
     onOpenChange(false)
   }, [onOpenChange])
+
+  const handleRevoke = useCallback(() => {
+    handleClose()
+  }, [handleClose])
 
   const title = useMemo(() => {
     if (authorizedApp) {
@@ -123,7 +133,20 @@ export function AuthorizedAppItemPageContent(
         <ItemSheetHeader
           right={
             authorizedApp ? (
-              <RevokeAuthorizedAppDialog authorizedApp={authorizedApp} />
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <RevokeAuthorizedAppDialog
+                    authorizedApp={authorizedApp}
+                    onRevoke={handleRevoke}
+                  >
+                    <Button variant="outline-destructive" size="icon">
+                      <DeleteIcon className="size-5 shrink-0" />
+                      <span className="sr-only">Revoke</span>
+                    </Button>
+                  </RevokeAuthorizedAppDialog>
+                </TooltipTrigger>
+                <TooltipContent>Revoke</TooltipContent>
+              </Tooltip>
             ) : undefined
           }
         >

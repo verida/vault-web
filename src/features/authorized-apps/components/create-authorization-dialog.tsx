@@ -1,6 +1,5 @@
 "use client"
 
-import { PlusIcon } from "@/components/icons/plus-icon"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -13,45 +12,21 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip"
-import { cn } from "@/styles/utils"
 
-type CreateAuthorizationDialogProps = Omit<
-  React.ComponentProps<typeof Button>,
-  "children" | "onClick"
->
+type CreateAuthorizationDialogProps = {
+  children?: React.ReactNode
+}
 
 export function CreateAuthorizationDialog(
   props: CreateAuthorizationDialogProps
 ) {
-  const { className, variant = "primary", ...buttonProps } = props
+  const { children } = props
 
   // TODO: Implement the dialog
 
   return (
     <Dialog>
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <DialogTrigger asChild>
-            <Button
-              variant={variant}
-              {...buttonProps}
-              className={cn(
-                "h-12 w-12 p-0 sm:w-auto sm:px-6 sm:py-2",
-                className
-              )}
-            >
-              <PlusIcon className="size-5 sm:hidden" />
-              <span className="sr-only sm:not-sr-only">Create</span>
-            </Button>
-          </DialogTrigger>
-        </TooltipTrigger>
-        <TooltipContent>Create a new authorization</TooltipContent>
-      </Tooltip>
+      <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Create Authorization</DialogTitle>
