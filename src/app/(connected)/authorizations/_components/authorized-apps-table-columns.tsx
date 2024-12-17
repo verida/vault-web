@@ -71,6 +71,7 @@ export const authorizedAppsTableColumns = [
     cell: (context) => {
       const value = context.getValue()
 
+      // eslint-disable-next-line react-hooks/rules-of-hooks
       const formatScope = useCallback((scope: VeridaOauthScope) => {
         const databaseDef = ALL_DATABASE_DEFS.find(
           (db) => db.databaseVaultName === scope.database

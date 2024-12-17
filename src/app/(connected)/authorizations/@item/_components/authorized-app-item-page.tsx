@@ -4,7 +4,6 @@ import { intlFormat, isDate } from "date-fns"
 import Link from "next/link"
 import { useCallback, useMemo } from "react"
 
-import { GenericDataItemPageBody } from "@/app/(connected)/data/[databaseId]/@item/_components/generic-data-item-page"
 import {
   ItemSheet,
   ItemSheetBody,
@@ -147,11 +146,11 @@ type ItemFieldUrlProps = {
 } & Omit<React.ComponentProps<typeof ItemField>, "propertyName" | "children">
 
 export function ItemFieldUrl(props: ItemFieldUrlProps) {
-  const { url, className, ...divProps } = props
+  const { url, ...itemFieldProps } = props
 
   if (!url) {
     return (
-      <ItemField propertyName="URL" {...divProps}>
+      <ItemField propertyName="URL" {...itemFieldProps}>
         <Typography variant="base-regular" className="truncate">
           {EMPTY_VALUE_FALLBACK}
         </Typography>
@@ -162,7 +161,7 @@ export function ItemFieldUrl(props: ItemFieldUrlProps) {
   const urlObject = new URL(url)
 
   return (
-    <ItemField propertyName="URL" {...divProps}>
+    <ItemField propertyName="URL" {...itemFieldProps}>
       <Link
         href={urlObject.toString()}
         target="_blank"
@@ -183,7 +182,7 @@ type ItemFieldScopesProps = {
 } & Omit<React.ComponentProps<typeof ItemField>, "propertyName" | "children">
 
 export function ItemFieldScopes(props: ItemFieldScopesProps) {
-  const { scopes, className, ...divProps } = props
+  const { scopes, ...itemFieldProps } = props
 
   const formatScope = useCallback((scope: VeridaOauthScope) => {
     const databaseDef = ALL_DATABASE_DEFS.find(
@@ -203,7 +202,7 @@ export function ItemFieldScopes(props: ItemFieldScopesProps) {
 
   if (!scopes) {
     return (
-      <ItemField propertyName="Authorizations" {...divProps}>
+      <ItemField propertyName="Authorizations" {...itemFieldProps}>
         <Typography variant="base-regular" className="truncate">
           {EMPTY_VALUE_FALLBACK}
         </Typography>
@@ -212,7 +211,7 @@ export function ItemFieldScopes(props: ItemFieldScopesProps) {
   }
 
   return (
-    <ItemField propertyName="Authorizations" {...divProps}>
+    <ItemField propertyName="Authorizations" {...itemFieldProps}>
       <ul className="flex flex-col gap-1">
         {scopes.map((scope, index) => (
           <li key={index}>{formatScope(scope)}</li>
@@ -228,12 +227,12 @@ type ItemFieldLastUsedProps = {
 } & Omit<React.ComponentProps<typeof ItemField>, "propertyName" | "children">
 
 export function ItemFieldLastUsed(props: ItemFieldLastUsedProps) {
-  const { lastUsed, className, ...divProps } = props
+  const { lastUsed, ...itemFieldProps } = props
 
   const date = new Date(lastUsed || "")
 
   return (
-    <ItemField propertyName="Last Used" {...divProps}>
+    <ItemField propertyName="Last Used" {...itemFieldProps}>
       <Typography variant="base-regular" className="truncate">
         {isDate(date)
           ? intlFormat(date, SHORT_DATE_TIME_FORMAT_OPTIONS)
