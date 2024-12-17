@@ -5,6 +5,7 @@ import { DeleteIcon } from "@/components/icons/delete-icon"
 import { PlusIcon } from "@/components/icons/plus-icon"
 import { PageWrapper } from "@/components/page-wrapper"
 import { Typography } from "@/components/typography"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
 import {
   LoadingBlock,
@@ -72,7 +73,7 @@ export default function AuthorizationsLayout(props: AuthorizationsLayoutProps) {
       }
       contentClassName="gap-8"
     >
-      <div className="text-muted-foreground">
+      <div className="max-w-3xl text-muted-foreground">
         <Typography variant="base-regular">
           These applications have been authorized to access your personal data.
         </Typography>
@@ -80,6 +81,13 @@ export default function AuthorizationsLayout(props: AuthorizationsLayoutProps) {
           Consider reviewing the authorizations regularly and revoking any
           access that is no longer needed.
         </Typography>
+        <Alert variant="warning" className="mt-4">
+          <AlertTitle>Non-functional</AlertTitle>
+          <AlertDescription>
+            This Authorized Apps feature is not functional yet. Only the UI has
+            been (partially) implemented for the moment.
+          </AlertDescription>
+        </Alert>
       </div>
       <Suspense fallback={<AuthorizationsLoadingPage />}>{children}</Suspense>
       {item}

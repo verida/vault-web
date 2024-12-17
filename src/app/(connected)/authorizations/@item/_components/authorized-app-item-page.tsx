@@ -14,6 +14,7 @@ import {
   ItemSheetTitle,
 } from "@/components/item-sheet"
 import { Typography } from "@/components/typography"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
 import {
   ErrorBlock,
@@ -153,7 +154,14 @@ export function AuthorizedAppItemPageContent(
           <ItemSheetTitle description="Authorized app">{title}</ItemSheetTitle>
         </ItemSheetHeader>
         <ItemSheetBody>{body}</ItemSheetBody>
-        <ItemSheetFooter>
+        <ItemSheetFooter className="flex flex-col gap-4">
+          <Alert variant="warning">
+            <AlertTitle>Non-functional</AlertTitle>
+            <AlertDescription>
+              This Authorized Apps feature is not functional yet. Only the UI
+              has been (partially) implemented for the moment.
+            </AlertDescription>
+          </Alert>
           <Button variant="outline" className="w-full" onClick={handleClose}>
             Close
           </Button>

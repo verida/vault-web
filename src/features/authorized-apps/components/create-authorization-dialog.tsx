@@ -1,5 +1,6 @@
 "use client"
 
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -34,7 +35,15 @@ export function CreateAuthorizationDialog(
             Create a new authorization for an app
           </DialogDescription>
         </DialogHeader>
-        <DialogBody></DialogBody>
+        <DialogBody>
+          <Alert variant="warning">
+            <AlertTitle>Non-functional</AlertTitle>
+            <AlertDescription>
+              This Authorized Apps feature is not functional yet. Only the UI
+              has been (partially) implemented for the moment.
+            </AlertDescription>
+          </Alert>
+        </DialogBody>
         <DialogFooter>
           <DialogClose asChild>
             <Button variant="outline">Cancel</Button>
