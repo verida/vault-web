@@ -43,8 +43,8 @@ export default function AuthorizationsLayout(props: AuthorizationsLayoutProps) {
           These applications have been authorized to access your personal data.
         </Typography>
         <Typography variant="base-regular">
-          Consider reviewing the access regularly and revoking the authorization
-          if it is no longer needed.
+          Consider reviewing the authorizations regularly and revoking any
+          access that is no longer needed.
         </Typography>
       </div>
       <Suspense fallback={<AuthorizationsLoadingPage />}>{children}</Suspense>
