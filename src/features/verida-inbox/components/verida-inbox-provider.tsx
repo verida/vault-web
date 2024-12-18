@@ -1,5 +1,5 @@
 import { IMessaging } from "@verida/types"
-import { useCallback, useEffect, useMemo, useRef } from "react"
+import { useCallback, useEffect, useMemo, useState } from "react"
 
 import { Logger } from "@/features/telemetry/logger"
 import {
@@ -19,7 +19,9 @@ export function VeridaInboxProvider(props: VeridaInboxProviderProps) {
 
   const { webUserInstanceRef, isConnected } = useVerida()
 
-  const messagingEngineRef = useRef<IMessaging>()
+  const [messagingEngine, setMessagingEngine] = useState<IMessaging | null>(
+    null
+  )
 
   const newMessageHandler = useCallback(async () => {
     // TODO: Handle new message, invalidate the query cache related to the inbox
@@ -28,28 +30,30 @@ export function VeridaInboxProvider(props: VeridaInboxProviderProps) {
   useEffect(() => {
     const init = async () => {
       if (!isConnected) {
-        messagingEngineRef.current = undefined
+        setMessagingEngine(null)
         return
       }
 
       const veridaContext = webUserInstanceRef.current.getContext()
-      messagingEngineRef.current = await veridaContext.getMessaging()
+      const _messagingEngine = await veridaContext.getMessaging()
 
-      messagingEngineRef.current.onMessage(newMessageHandler)
+      setMessagingEngine(_messagingEngine)
+
+      _messagingEngine.onMessage(newMessageHandler)
     }
 
     init().catch(logger.error)
 
     return () => {
-      messagingEngineRef.current?.offMessage(newMessageHandler)
+      messagingEngine?.offMessage(newMessageHandler)
     }
-  }, [isConnected, webUserInstanceRef, newMessageHandler])
+  }, [isConnected, webUserInstanceRef, newMessageHandler, messagingEngine])
 
   const contextValue: VeridaInboxContextType = useMemo(
     () => ({
-      messagingEngineRef,
+      messagingEngine,
     }),
-    [messagingEngineRef]
+    [messagingEngine]
   )
 
   return (

@@ -1,5 +1,22 @@
 import { IMessaging } from "@verida/types"
 
+import {
+  FetchVeridaDataRecordsResult,
+  VeridaDatabaseQueryFilter,
+  VeridaDatabaseQueryOptions,
+} from "@/features/verida-database/types"
+import { VeridaInboxMessageRecordArraySchema } from "@/features/verida-inbox/schemas"
+import {
+  VeridaInboxMessage,
+  VeridaInboxMessageRecord,
+} from "@/features/verida-inbox/types"
+
+const defaultVeridaDataRecordsQueryOptions: VeridaDatabaseQueryOptions = {
+  skip: 0,
+  limit: 10,
+  sort: [{ sentAt: "desc" }],
+}
+
 /**
  * Get the count of unread messages from the messaging engine
  * @param messagingEngine - The Verida messaging engine instance
@@ -25,4 +42,54 @@ export async function getTotalMessagesCount(messagingEngine: IMessaging) {
     { limit: 100000000 }
   )) as unknown[]
   return totalMessages?.length ?? 0
+}
+
+export type GetVeridaInboxMessagesArgs = {
+  sessionToken: string
+  messagingEngine: IMessaging
+  filter?: VeridaDatabaseQueryFilter<VeridaInboxMessageRecord>
+  options?: VeridaDatabaseQueryOptions<VeridaInboxMessageRecord>
+}
+
+/**
+ * Get messages from the messaging engine
+ *
+ * @param args - The arguments to get the messages
+ * @param args.sessionToken - The session token to use for the request
+ * @param args.messagingEngine - The Verida messaging engine instance
+ * @param args.filter - The filter to apply to the messages
+ * @param args.options - The options to apply to the messages
+ * @returns The messages, or an empty array if no messages found
+ */
+export async function getVeridaInboxMessages({
+  messagingEngine,
+  filter,
+  options,
+}: GetVeridaInboxMessagesArgs): Promise<
+  FetchVeridaDataRecordsResult<VeridaInboxMessage>
+> {
+  const resolvedOptions = {
+    // A simple merge is enough as the default options are not in nested objects
+    ...defaultVeridaDataRecordsQueryOptions,
+    ...options,
+  }
+
+  const [rawMessages, totalMessagesCount] = await Promise.all([
+    messagingEngine.getMessages(filter, resolvedOptions),
+    getTotalMessagesCount(messagingEngine),
+  ])
+
+  // FIXME: Fix the type, for some reasons the parse returns any
+  const validatedMessages = VeridaInboxMessageRecordArraySchema.parse(
+    rawMessages as unknown[]
+  )
+
+  return {
+    records: validatedMessages,
+    pagination: {
+      limit: resolvedOptions.limit ?? null,
+      skipped: resolvedOptions.skip ?? null,
+      unfilteredTotalRecordsCount: totalMessagesCount,
+    },
+  }
 }

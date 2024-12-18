@@ -1,8 +1,8 @@
 import { IMessaging } from "@verida/types"
-import { MutableRefObject, createContext } from "react"
+import { createContext } from "react"
 
 export type VeridaInboxContextType = {
-  messagingEngineRef: MutableRefObject<IMessaging | undefined>
+  messagingEngine: IMessaging | null
 }
 
 export const VeridaInboxContext = createContext<VeridaInboxContextType | null>(

@@ -5,19 +5,19 @@ import { getUnreadMessagesCount } from "@/features/verida-inbox/utils"
 import { useVerida } from "@/features/verida/hooks/use-verida"
 
 export function useVeridaInboxUnreadMessagesCount() {
-  const { messagingEngineRef } = useVeridaInbox()
+  const { messagingEngine } = useVeridaInbox()
   const { did } = useVerida()
 
   const { data, ...query } = useQuery({
-    enabled: !!did && !!messagingEngineRef.current,
+    enabled: !!did && !!messagingEngine,
     // TODO: Extract query key in a query keys factory
     queryKey: ["inbox", did, "unreadMessageCount"],
     queryFn: () => {
-      if (!messagingEngineRef.current) {
+      if (!messagingEngine) {
         throw new Error("Messaging engine not found")
       }
 
-      return getUnreadMessagesCount(messagingEngineRef.current)
+      return getUnreadMessagesCount(messagingEngine)
     },
   })
 
