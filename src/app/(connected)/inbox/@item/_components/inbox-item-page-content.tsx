@@ -64,11 +64,12 @@ export function InboxItemPageContent(props: ItemPageContentProps) {
       }
     }
 
-    if (isLoading || messagingEngineStatus === "loading") {
-      return (
-        <>
-          <ItemSheetBody>
-            <div className="flex h-full flex-1 flex-row items-center justify-center p-4">
+    // If the inbox message record is not found, show a loading or error block
+    return (
+      <>
+        <ItemSheetBody>
+          <div className="flex h-full flex-1 flex-row items-center justify-center p-4">
+            {isLoading || messagingEngineStatus === "loading" ? (
               <LoadingBlock>
                 <LoadingBlockSpinner />
                 <LoadingBlockTitle>Loading message...</LoadingBlockTitle>
@@ -76,22 +77,7 @@ export function InboxItemPageContent(props: ItemPageContentProps) {
                   Please wait while we fetch your message details.
                 </LoadingBlockDescription>
               </LoadingBlock>
-            </div>
-          </ItemSheetBody>
-          <ItemSheetFooter>
-            <Button variant="outline" className="w-full" asChild>
-              <ItemSheetClose>Close</ItemSheetClose>
-            </Button>
-          </ItemSheetFooter>
-        </>
-      )
-    }
-
-    if (isError || messagingEngineStatus === "error") {
-      return (
-        <>
-          <ItemSheetBody>
-            <div className="flex h-full flex-1 flex-row items-center justify-center p-4">
+            ) : isError || messagingEngineStatus === "error" ? (
               <ErrorBlock>
                 <ErrorBlockImage />
                 <ErrorBlockTitle>Error loading message</ErrorBlockTitle>
@@ -100,28 +86,15 @@ export function InboxItemPageContent(props: ItemPageContentProps) {
                   later.
                 </ErrorBlockDescription>
               </ErrorBlock>
-            </div>
-          </ItemSheetBody>
-          <ItemSheetFooter>
-            <Button variant="outline" className="w-full" asChild>
-              <ItemSheetClose>Close</ItemSheetClose>
-            </Button>
-          </ItemSheetFooter>
-        </>
-      )
-    }
-
-    return (
-      <>
-        <ItemSheetBody>
-          <div className="flex h-full flex-1 flex-row items-center justify-center p-4">
-            <ErrorBlock>
-              <ErrorBlockImage />
-              <ErrorBlockTitle>Message not found</ErrorBlockTitle>
-              <ErrorBlockDescription>
-                This message could not be found.
-              </ErrorBlockDescription>
-            </ErrorBlock>
+            ) : (
+              <ErrorBlock>
+                <ErrorBlockImage />
+                <ErrorBlockTitle>Message not found</ErrorBlockTitle>
+                <ErrorBlockDescription>
+                  This message could not be found.
+                </ErrorBlockDescription>
+              </ErrorBlock>
+            )}
           </div>
         </ItemSheetBody>
         <ItemSheetFooter>
