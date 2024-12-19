@@ -12,6 +12,7 @@ import { DataTableColumnClassNameFeature } from "@/features/data-table/data-tabl
 import { useDataTableState } from "@/features/data-table/hooks/use-data-table-state"
 import { useGetVeridaInboxMessages } from "@/features/verida-inbox/hooks/use-get-verida-inbox-messages"
 import { useInboxMessageItemIdState } from "@/features/verida-inbox/hooks/use-inbox-message-item-id-state"
+import { useVeridaInbox } from "@/features/verida-inbox/hooks/use-verida-inbox"
 import { VeridaInboxMessageRecord } from "@/features/verida-inbox/types"
 
 const fallbackData: VeridaInboxMessageRecord[] = []
@@ -21,6 +22,7 @@ const getRowId = (record: VeridaInboxMessageRecord) => record._id
 export default function InboxPage() {
   const { pagination, setPagination } = useDataTableState()
 
+  const { messagingEngineStatus } = useVeridaInbox()
   const {
     inboxMessages,
     pagination: inboxMessagesPaginationInfo,
@@ -68,7 +70,7 @@ export default function InboxPage() {
         </Link>
       )}
       className="flex-1"
-      isLoading={isLoading}
+      isLoading={isLoading || messagingEngineStatus === "loading"}
       isRefreshing={isFetching}
       isError={isError}
       loadingTitle="Loading messages..."

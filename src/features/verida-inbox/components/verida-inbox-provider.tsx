@@ -6,6 +6,7 @@ import {
   VeridaInboxContext,
   VeridaInboxContextType,
 } from "@/features/verida-inbox/contexts/verida-inbox-context"
+import { VeridaMessagingEngineStatus } from "@/features/verida-inbox/types"
 import { useVerida } from "@/features/verida/hooks/use-verida"
 
 const logger = Logger.create("verida-inbox")
@@ -19,6 +20,8 @@ export function VeridaInboxProvider(props: VeridaInboxProviderProps) {
 
   const { webUserInstanceRef, isConnected } = useVerida()
 
+  const [messagingEngineStatus, setMessagingEngineStatus] =
+    useState<VeridaMessagingEngineStatus>("idle")
   const [messagingEngine, setMessagingEngine] = useState<IMessaging | null>(
     null
   )
@@ -30,16 +33,25 @@ export function VeridaInboxProvider(props: VeridaInboxProviderProps) {
   useEffect(() => {
     const init = async () => {
       if (!isConnected) {
+        setMessagingEngineStatus("idle")
         setMessagingEngine(null)
         return
       }
+      setMessagingEngineStatus("loading")
 
-      const veridaContext = webUserInstanceRef.current.getContext()
-      const _messagingEngine = await veridaContext.getMessaging()
+      try {
+        const veridaContext = webUserInstanceRef.current.getContext()
+        const _messagingEngine = await veridaContext.getMessaging()
 
-      setMessagingEngine(_messagingEngine)
+        setMessagingEngine(_messagingEngine)
+        setMessagingEngineStatus("ready")
 
-      _messagingEngine.onMessage(newMessageHandler)
+        _messagingEngine.onMessage(newMessageHandler)
+      } catch (error) {
+        setMessagingEngineStatus("error")
+        setMessagingEngine(null)
+        logger.error(error)
+      }
     }
 
     init().catch(logger.error)
@@ -51,9 +63,10 @@ export function VeridaInboxProvider(props: VeridaInboxProviderProps) {
 
   const contextValue: VeridaInboxContextType = useMemo(
     () => ({
+      messagingEngineStatus,
       messagingEngine,
     }),
-    [messagingEngine]
+    [messagingEngineStatus, messagingEngine]
   )
 
   return (
