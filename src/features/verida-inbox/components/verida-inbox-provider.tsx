@@ -1,3 +1,4 @@
+import { useQueryClient } from "@tanstack/react-query"
 import { IMessaging } from "@verida/types"
 import { useCallback, useEffect, useMemo, useState } from "react"
 
@@ -6,6 +7,7 @@ import {
   VeridaInboxContext,
   VeridaInboxContextType,
 } from "@/features/verida-inbox/contexts/verida-inbox-context"
+import { VeridaInboxQueryKeys } from "@/features/verida-inbox/queries"
 import { VeridaMessagingEngineStatus } from "@/features/verida-inbox/types"
 import { useVerida } from "@/features/verida/hooks/use-verida"
 
@@ -20,6 +22,8 @@ export function VeridaInboxProvider(props: VeridaInboxProviderProps) {
 
   const { webUserInstanceRef, isConnected } = useVerida()
 
+  const queryClient = useQueryClient()
+
   const [messagingEngineStatus, setMessagingEngineStatus] =
     useState<VeridaMessagingEngineStatus>("idle")
   const [messagingEngine, setMessagingEngine] = useState<IMessaging | null>(
@@ -27,8 +31,12 @@ export function VeridaInboxProvider(props: VeridaInboxProviderProps) {
   )
 
   const newMessageHandler = useCallback(async () => {
-    // TODO: Handle new message, invalidate the query cache related to the inbox
-  }, [])
+    queryClient.invalidateQueries({
+      queryKey: VeridaInboxQueryKeys.invalidateInbox(),
+    })
+
+    // TODO: Display a toast notification
+  }, [queryClient])
 
   useEffect(() => {
     const init = async () => {
