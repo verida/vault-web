@@ -1,11 +1,13 @@
 "use client"
 
 import { getCoreRowModel, useReactTable } from "@tanstack/react-table"
+import Image from "next/image"
 import Link from "next/link"
 import { useSearchParams } from "next/navigation"
 
 import { inboxMessagesTableColumns } from "@/app/(connected)/inbox/_components/inbox-messages-table-columns"
 import { InboxMessagesTableRow } from "@/app/(connected)/inbox/_components/inbox-messages-table-row"
+import EmptyInboxIllustration from "@/assets/empty-inbox-illustration.svg"
 import { DataTable } from "@/components/data-table/data-table"
 import { EMPTY_VALUE_FALLBACK } from "@/constants/misc"
 import { DataTableColumnAlignFeature } from "@/features/data-table/data-table-column-align-feature"
@@ -82,6 +84,15 @@ export default function InboxPage() {
       loadingDescription="Please wait while we load your messages."
       errorTitle="Error"
       errorDescription="There was an error getting your messages. Please try again later."
+      emptyStateImage={
+        <Image
+          src={EmptyInboxIllustration}
+          width={109}
+          height={140}
+          alt=""
+          className="h-[109px] md:h-[140px]"
+        />
+      }
       emptyStateTitle="No messages yet"
       emptyStateDescription="You haven't received any messages yet."
     />

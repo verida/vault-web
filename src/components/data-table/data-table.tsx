@@ -33,8 +33,10 @@ export type DataTableProps<TData> = {
   loadingTitle?: string
   loadingDescription?: string
   refreshingMessage?: string
+  errorImage?: React.ReactNode
   errorTitle?: string
   errorDescription?: string
+  emptyStateImage?: React.ReactNode
   emptyStateTitle?: string
   emptyStateDescription?: string
 } & Omit<React.ComponentProps<"div">, "children">
@@ -51,8 +53,10 @@ export function DataTable<TData>(props: DataTableProps<TData>) {
     loadingTitle = "Loading...",
     loadingDescription = "Please wait while we load the data.",
     refreshingMessage = "Refreshing...",
+    errorImage,
     errorTitle = "Error",
     errorDescription = "There was an error getting the data. Please try again later.",
+    emptyStateImage,
     emptyStateTitle = "No data",
     emptyStateDescription = "There is no data to display.",
     ...divProps
@@ -98,13 +102,13 @@ export function DataTable<TData>(props: DataTableProps<TData>) {
             </LoadingBlock>
           ) : isError ? (
             <ErrorBlock>
-              <ErrorBlockImage />
+              {errorImage ?? <ErrorBlockImage />}
               <ErrorBlockTitle>{errorTitle}</ErrorBlockTitle>
               <ErrorBlockDescription>{errorDescription}</ErrorBlockDescription>
             </ErrorBlock>
           ) : (
             <EmptyState>
-              <EmptyStateImage />
+              {emptyStateImage ?? <EmptyStateImage />}
               <EmptyStateTitle>{emptyStateTitle}</EmptyStateTitle>
               <EmptyStateDescription>
                 {emptyStateDescription}
