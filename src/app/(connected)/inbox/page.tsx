@@ -2,6 +2,7 @@
 
 import { getCoreRowModel, useReactTable } from "@tanstack/react-table"
 import Link from "next/link"
+import { useSearchParams } from "next/navigation"
 
 import { inboxMessagesTableColumns } from "@/app/(connected)/inbox/_components/inbox-messages-table-columns"
 import { InboxMessagesTableRow } from "@/app/(connected)/inbox/_components/inbox-messages-table-row"
@@ -20,6 +21,8 @@ const fallbackData: VeridaInboxMessageRecord[] = []
 const getRowId = (record: VeridaInboxMessageRecord) => record._id
 
 export default function InboxPage() {
+  const searchParams = useSearchParams()
+
   const { pagination, setPagination } = useDataTableState()
 
   const { messagingEngineStatus } = useVeridaInbox()
@@ -60,7 +63,9 @@ export default function InboxPage() {
       table={table}
       rowComponent={(row) => (
         <Link
-          href={serializeItemId({ itemId: row.original._id })}
+          href={serializeItemId(`?${searchParams.toString()}`, {
+            itemId: row.original._id,
+          })}
           className="rounded-lg"
         >
           <InboxMessagesTableRow

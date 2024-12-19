@@ -2,6 +2,7 @@
 
 import { getCoreRowModel, useReactTable } from "@tanstack/react-table"
 import Link from "next/link"
+import { useSearchParams } from "next/navigation"
 import React from "react"
 
 import { authorizedAppsTableColumns } from "@/app/(connected)/authorizations/_components/authorized-apps-table-columns"
@@ -57,6 +58,7 @@ export default function AuthorizationsPage() {
     },
   })
 
+  const searchParams = useSearchParams()
   const { serializeItemId } = useAuthorizedAppItemIdState()
 
   return (
@@ -64,7 +66,9 @@ export default function AuthorizationsPage() {
       table={table}
       rowComponent={(row) => (
         <Link
-          href={serializeItemId({ itemId: row.original._id })}
+          href={serializeItemId(`?${searchParams.toString()}`, {
+            itemId: row.original._id,
+          })}
           className="rounded-lg"
         >
           <AuthorizedAppsTableRow
