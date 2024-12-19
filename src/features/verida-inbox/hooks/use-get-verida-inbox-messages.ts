@@ -19,7 +19,7 @@ export function useGetVeridaInboxMessages({
   filter,
   options,
 }: UseGetVeridaInboxMessagesArgs = {}) {
-  const { did, getAccountSessionToken } = useVerida()
+  const { did } = useVerida()
   const { messagingEngine } = useVeridaInbox()
 
   const queryClient = useQueryClient()
@@ -32,10 +32,7 @@ export function useGetVeridaInboxMessages({
         throw new Error("Messaging engine not found")
       }
 
-      const sessionToken = await getAccountSessionToken()
-
       const result = await getVeridaInboxMessages({
-        sessionToken,
         messagingEngine,
         filter,
         options,
@@ -62,7 +59,7 @@ export function useGetVeridaInboxMessages({
   })
 
   return {
-    inboxMessages: data?.records,
+    inboxMessageRecords: data?.records,
     pagination: data?.pagination,
     ...query,
   }

@@ -29,7 +29,7 @@ export default function InboxPage() {
 
   const { messagingEngineStatus } = useVeridaInbox()
   const {
-    inboxMessages,
+    inboxMessageRecords,
     pagination: inboxMessagesPaginationInfo,
     isLoading,
     isFetching,
@@ -42,7 +42,7 @@ export default function InboxPage() {
   })
 
   const table = useReactTable({
-    data: inboxMessages ?? fallbackData,
+    data: inboxMessageRecords ?? fallbackData,
     renderFallbackValue: EMPTY_VALUE_FALLBACK,
     columns: inboxMessagesTableColumns,
     _features: [DataTableColumnAlignFeature, DataTableColumnClassNameFeature],

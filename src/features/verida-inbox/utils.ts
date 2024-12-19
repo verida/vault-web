@@ -45,7 +45,6 @@ export async function getTotalMessagesCount(messagingEngine: IMessaging) {
 }
 
 export type GetVeridaInboxMessagesArgs = {
-  sessionToken: string
   messagingEngine: IMessaging
   filter?: VeridaDatabaseQueryFilter<VeridaInboxMessageRecord>
   options?: VeridaDatabaseQueryOptions<VeridaInboxMessageRecord>
@@ -55,7 +54,6 @@ export type GetVeridaInboxMessagesArgs = {
  * Get messages from the messaging engine
  *
  * @param args - The arguments to get the messages
- * @param args.sessionToken - The session token to use for the request
  * @param args.messagingEngine - The Verida messaging engine instance
  * @param args.filter - The filter to apply to the messages
  * @param args.options - The options to apply to the messages
@@ -92,4 +90,35 @@ export async function getVeridaInboxMessages({
       unfilteredTotalRecordsCount: totalMessagesCount,
     },
   }
+}
+
+export type GetVeridaInboxMessageArgs = {
+  messagingEngine: IMessaging
+  messageRecordId: string
+}
+
+/**
+ * Get a single inbox message from the messaging engine
+ *
+ * @param args - The arguments to get the message
+ * @param args.messagingEngine - The Verida messaging engine instance
+ * @param args.messageRecordId - The ID of the message to fetch
+ * @returns The message, or null if no message found
+ */
+export async function getVeridaInboxMessage({
+  messagingEngine,
+  messageRecordId,
+}: GetVeridaInboxMessageArgs): Promise<VeridaInboxMessageRecord | null> {
+  const results = await getVeridaInboxMessages({
+    messagingEngine,
+    filter: {
+      _id: messageRecordId,
+    },
+  })
+
+  if (results.records.length === 0) {
+    return null
+  }
+
+  return results.records[0]
 }
