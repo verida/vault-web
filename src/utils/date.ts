@@ -11,7 +11,7 @@ export const SHORT_DATE_FORMAT_OPTIONS: Intl.DateTimeFormatOptions = {
 }
 
 export const SHORT_TIME_FORMAT_OPTIONS: Intl.DateTimeFormatOptions = {
-  hour: "2-digit",
+  hour: "numeric",
   minute: "2-digit",
   hour12: true,
 }
@@ -20,7 +20,7 @@ export const LONG_DATE_TIME_FORMAT_OPTIONS: Intl.DateTimeFormatOptions = {
   month: "short",
   day: "numeric",
   year: "numeric",
-  hour: "2-digit",
+  hour: "numeric",
   minute: "2-digit",
   hour12: true,
 }
@@ -29,7 +29,7 @@ export const SHORT_DATE_TIME_FORMAT_OPTIONS: Intl.DateTimeFormatOptions = {
   month: "2-digit",
   day: "2-digit",
   year: "numeric",
-  hour: "2-digit",
+  hour: "numeric",
   minute: "2-digit",
   hour12: true,
 }

@@ -3,16 +3,17 @@ import { useMemo } from "react"
 
 import { DataTableBaseRow } from "@/components/data-table/data-table-base-row"
 import { Typography } from "@/components/typography"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Skeleton } from "@/components/ui/skeleton"
 import { EMPTY_VALUE_FALLBACK } from "@/constants/misc"
 import { InboxMessageTypeIndicator } from "@/features/verida-inbox/components/inbox-message-type-indicator"
 import { InboxMessageUnreadIndicator } from "@/features/verida-inbox/components/inbox-message-unread-indicator"
 import { InboxMessageStatus } from "@/features/verida-inbox/components/inbox.message-status"
 import { VeridaInboxMessageRecord } from "@/features/verida-inbox/types"
+import { ProfileAvatar } from "@/features/verida-profile/components/profile-avatar"
+import { UserYourselfBadge } from "@/features/verida-profile/components/user-yourself-badge"
 import { EMPTY_PROFILE_NAME_FALLBACK } from "@/features/verida-profile/constants"
 import { useVeridaProfile } from "@/features/verida-profile/hooks/use-verida-profile"
 import { VERIDA_VAULT_CONTEXT_NAME } from "@/features/verida/constants"
+import { useVerida } from "@/features/verida/hooks/use-verida"
 import { cn } from "@/styles/utils"
 
 type InboxMessagesTableRowProps = {
@@ -23,6 +24,8 @@ export function InboxMessagesTableRow(props: InboxMessagesTableRowProps) {
   const { row, className, ...cardProps } = props
 
   const { read, sentBy, type } = row.original
+
+  const { did } = useVerida()
 
   const { profile, isLoading } = useVeridaProfile({
     did: sentBy.did,
@@ -40,34 +43,28 @@ export function InboxMessagesTableRow(props: InboxMessagesTableRowProps) {
     <DataTableBaseRow className={cn(className)} {...cardProps}>
       <div className="flex flex-col gap-4 md:hidden">
         <div className="flex flex-row items-start gap-3">
-          <Avatar className="size-10">
-            {profile ? (
-              <>
-                <AvatarImage alt="Sender Avatar" src={profile.avatar?.uri} />
-                <AvatarFallback>
-                  {profile.name?.at(0)?.toUpperCase() || EMPTY_VALUE_FALLBACK}
-                </AvatarFallback>
-              </>
-            ) : isLoading ? (
-              <Skeleton className="size-10 shrink-0 rounded-full border" />
-            ) : (
-              <AvatarFallback>{EMPTY_VALUE_FALLBACK}</AvatarFallback>
-            )}
-          </Avatar>
+          <ProfileAvatar
+            profile={profile}
+            isLoading={isLoading}
+            className="size-10"
+          />
           <div className="flex min-w-0 flex-1 flex-col gap-0.5">
             <div className="flex flex-row items-center justify-between gap-1">
-              <div
-                className={cn(
-                  "flex-1",
-                  profile?.name ? "" : "italic text-muted-foreground"
-                )}
-              >
-                <Typography
-                  variant={read ? "base-regular" : "base-semibold"}
-                  className="truncate"
+              <div className="flex min-w-0 flex-row items-baseline gap-1.5">
+                <div
+                  className={cn(
+                    "min-w-0 flex-1",
+                    profile?.name ? "" : "italic text-muted-foreground"
+                  )}
                 >
-                  {profile?.name || EMPTY_PROFILE_NAME_FALLBACK}
-                </Typography>
+                  <Typography
+                    variant={read ? "base-regular" : "base-semibold"}
+                    className="truncate"
+                  >
+                    {profile?.name || EMPTY_PROFILE_NAME_FALLBACK}
+                  </Typography>
+                </div>
+                {did === sentBy.did && <UserYourselfBadge className="" />}
               </div>
               <div className="text-muted-foreground">
                 <Typography
@@ -124,33 +121,27 @@ export function InboxMessagesTableRow(props: InboxMessagesTableRowProps) {
           <InboxMessageUnreadIndicator
             className={cn(read ? "opacity-0" : "opacity-100")}
           />
-          <Avatar className="size-10">
-            {profile ? (
-              <>
-                <AvatarImage alt="Sender Avatar" src={profile.avatar?.uri} />
-                <AvatarFallback>
-                  {profile.name?.at(0)?.toUpperCase() || EMPTY_VALUE_FALLBACK}
-                </AvatarFallback>
-              </>
-            ) : isLoading ? (
-              <Skeleton className="size-10 shrink-0 rounded-full border" />
-            ) : (
-              <AvatarFallback>{EMPTY_VALUE_FALLBACK}</AvatarFallback>
-            )}
-          </Avatar>
+          <ProfileAvatar
+            profile={profile}
+            isLoading={isLoading}
+            className="size-10"
+          />
           <div className="flex min-w-0 flex-1 flex-col gap-0.5">
-            <div
-              className={cn(
-                "flex-1",
-                profile?.name ? "" : "italic text-muted-foreground"
-              )}
-            >
-              <Typography
-                variant={read ? "base-regular" : "base-semibold"}
-                className="truncate"
+            <div className="flex min-w-0 flex-row items-baseline gap-1.5">
+              <div
+                className={cn(
+                  "min-w-0",
+                  profile?.name ? "" : "italic text-muted-foreground"
+                )}
               >
-                {profile?.name || EMPTY_PROFILE_NAME_FALLBACK}
-              </Typography>
+                <Typography
+                  variant={read ? "base-regular" : "base-semibold"}
+                  className="truncate"
+                >
+                  {profile?.name || EMPTY_PROFILE_NAME_FALLBACK}
+                </Typography>
+              </div>
+              {did === sentBy.did && <UserYourselfBadge />}
             </div>
             <div className="text-muted-foreground">
               <Typography variant={read ? "base-s-regular" : "base-s-semibold"}>

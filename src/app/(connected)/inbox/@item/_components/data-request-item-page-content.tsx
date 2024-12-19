@@ -1,3 +1,4 @@
+import { InboxMessageHeader } from "@/app/(connected)/inbox/@item/_components/inbox-message-header"
 import {
   ItemSheetBody,
   ItemSheetFooter,
@@ -13,9 +14,10 @@ export type DataRequestItemPageContentProps = {
 }
 
 export function DataRequestItemPageContent(
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  _props: DataRequestItemPageContentProps
+  props: DataRequestItemPageContentProps
 ) {
+  const { inboxMessage } = props
+
   return (
     <>
       <ItemSheetHeader>
@@ -23,7 +25,9 @@ export function DataRequestItemPageContent(
           Data Request
         </ItemSheetTitle>
       </ItemSheetHeader>
-      <ItemSheetBody>TODO: Data request content</ItemSheetBody>
+      <ItemSheetBody className="flex flex-col gap-4">
+        <InboxMessageHeader inboxMessage={inboxMessage} />
+      </ItemSheetBody>
       <ItemSheetFooter className="flex flex-col gap-3">
         <Alert variant="warning">
           <AlertDescription>

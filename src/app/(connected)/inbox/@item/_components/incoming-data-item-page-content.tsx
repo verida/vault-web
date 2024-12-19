@@ -1,3 +1,4 @@
+import { InboxMessageHeader } from "@/app/(connected)/inbox/@item/_components/inbox-message-header"
 import {
   ItemSheetBody,
   ItemSheetFooter,
@@ -13,9 +14,10 @@ export type IncomingDataItemPageContentProps = {
 }
 
 export function IncomingDataItemPageContent(
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  _props: IncomingDataItemPageContentProps
+  props: IncomingDataItemPageContentProps
 ) {
+  const { inboxMessage } = props
+
   return (
     <>
       <ItemSheetHeader>
@@ -23,7 +25,9 @@ export function IncomingDataItemPageContent(
           Incoming Data
         </ItemSheetTitle>
       </ItemSheetHeader>
-      <ItemSheetBody>TODO: Incoming data content</ItemSheetBody>
+      <ItemSheetBody className="flex flex-col gap-4">
+        <InboxMessageHeader inboxMessage={inboxMessage} />
+      </ItemSheetBody>
       <ItemSheetFooter className="flex flex-col gap-3">
         <Alert variant="warning">
           <AlertDescription>
