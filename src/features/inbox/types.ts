@@ -20,6 +20,8 @@ export type InboxSentBy = {
   context: string
 }
 
+// Below is unused =======================================
+
 export enum VeridaMessageType {
   SIMPLE_MESSAGE = "inbox/type/message",
   DATA_REQUEST = "inbox/type/dataRequest",
