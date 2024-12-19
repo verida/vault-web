@@ -6,22 +6,48 @@ import { filteredArraySchema } from "@/utils/schemas"
 
 const logger = Logger.create("verida-inbox")
 
-export const VeridaInboxMessageBaseSchema = z
-  .object({
-    type: z.string(), // Not using the enum from the SDK as it's more open than the set values
-    message: z.string(),
-    sentAt: z.string(),
-    sentBy: z.object({
-      did: z.string(),
-      context: z.string(),
-    }),
-    read: z.boolean(),
-    data: z.unknown(),
-  })
-  .passthrough()
+// Known message type schemas
+export const VeridaInboxMessageTypeMessageDataSchema = z.object({
+  subject: z.string(),
+  message: z.string(),
+  link: z
+    .object({
+      url: z.string().optional(),
+      text: z.string().optional(),
+    })
+    .optional(),
+  replyId: z.string().optional(),
+})
 
-export const VeridaInboxMessageRecordSchema = VeridaBaseRecordSchema.extend(
-  VeridaInboxMessageBaseSchema.shape
+export const VeridaInboxMessageTypeDataSendDataSchema = z.object({
+  status: z
+    .union([z.literal("accept"), z.literal("reject"), z.string()])
+    .optional(),
+  replyId: z.string().optional(),
+  data: z.array(z.unknown()),
+})
+
+export const VeridaInboxMessageTypeDataRequestDataSchema = z.object({
+  status: z
+    .union([z.literal("accept"), z.literal("reject"), z.string()])
+    .optional(),
+})
+
+// Combine into final schema that can be extended
+export const VeridaInboxMessageBaseSchema = z.object({
+  message: z.string(),
+  sentAt: z.string(),
+  sentBy: z.object({
+    did: z.string(),
+    context: z.string(),
+  }),
+  read: z.boolean(),
+  type: z.string(),
+  data: z.unknown(),
+})
+
+export const VeridaInboxMessageRecordSchema = VeridaBaseRecordSchema.merge(
+  VeridaInboxMessageBaseSchema
 )
 
 export const VeridaInboxMessageRecordArraySchema = filteredArraySchema(
