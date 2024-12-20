@@ -9,6 +9,7 @@ import {
   MessageBlock,
   MessageBlockTitle,
 } from "@/app/(connected)/inbox/@item/_components/message-block"
+import { MessageReadUnreadButton } from "@/app/(connected)/inbox/@item/_components/message-read-unread-button"
 import { InboxData } from "@/components/icons/inbox-data"
 import {
   ItemSheetBody,
@@ -101,7 +102,13 @@ export function DataRequestItemPageContent(
 
   return (
     <>
-      <ItemSheetHeader>
+      <ItemSheetHeader
+        right={
+          <div className="flex flex-row items-center gap-3">
+            <MessageReadUnreadButton messageRecord={inboxMessage} />
+          </div>
+        }
+      >
         <div className="flex flex-row items-center justify-between gap-2">
           <ItemSheetTitle description="Data request inbox message">
             <span className="flex flex-row items-center gap-2">

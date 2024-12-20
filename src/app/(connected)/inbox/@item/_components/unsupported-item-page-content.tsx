@@ -3,6 +3,7 @@ import {
   MessageBlock,
   MessageBlockTitle,
 } from "@/app/(connected)/inbox/@item/_components/message-block"
+import { MessageReadUnreadButton } from "@/app/(connected)/inbox/@item/_components/message-read-unread-button"
 import {
   ItemSheetBody,
   ItemSheetHeader,
@@ -22,7 +23,13 @@ export function UnsupportedItemPageContent(
 
   return (
     <>
-      <ItemSheetHeader>
+      <ItemSheetHeader
+        right={
+          <div className="flex flex-row items-center gap-3">
+            <MessageReadUnreadButton messageRecord={inboxMessage} />
+          </div>
+        }
+      >
         <ItemSheetTitle description="Unsupported inbox entry">
           Message
         </ItemSheetTitle>

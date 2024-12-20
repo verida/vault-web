@@ -1,3 +1,5 @@
+"use client"
+
 import { useCallback, useMemo } from "react"
 
 import { DataRequestItemPageContent } from "@/app/(connected)/inbox/@item/_components/data-request-item-page-content"

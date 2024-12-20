@@ -10,6 +10,7 @@ import {
   MessageBlockBody,
   MessageBlockTitle,
 } from "@/app/(connected)/inbox/@item/_components/message-block"
+import { MessageReadUnreadButton } from "@/app/(connected)/inbox/@item/_components/message-read-unread-button"
 import { InboxMessage } from "@/components/icons/inbox-message"
 import {
   ItemSheetBody,
@@ -64,7 +65,13 @@ export function MessageItemPageContent(props: MessageItemPageContentProps) {
 
   return (
     <>
-      <ItemSheetHeader>
+      <ItemSheetHeader
+        right={
+          <div className="flex flex-row items-center gap-3">
+            <MessageReadUnreadButton messageRecord={inboxMessage} />
+          </div>
+        }
+      >
         <ItemSheetTitle description="Inbox message">
           <span className="flex flex-row items-center gap-2">
             <InboxMessage className="size-5" />

@@ -1,5 +1,6 @@
 import { IMessaging } from "@verida/types"
 
+import { Logger } from "@/features/telemetry/logger"
 import {
   FetchVeridaDataRecordsResult,
   VeridaDatabaseQueryFilter,
@@ -17,6 +18,8 @@ import {
   VeridaMessageStatus,
 } from "@/features/verida-inbox/types"
 
+const logger = Logger.create("verida-inbox")
+
 const defaultVeridaDataRecordsQueryOptions: VeridaDatabaseQueryOptions = {
   skip: 0,
   limit: 10,
@@ -25,28 +28,39 @@ const defaultVeridaDataRecordsQueryOptions: VeridaDatabaseQueryOptions = {
 
 /**
  * Get the count of unread messages from the messaging engine
+ *
  * @param messagingEngine - The Verida messaging engine instance
  * @returns The number of unread messages, or 0 if no messages found
  */
 export async function getUnreadMessagesCount(messagingEngine: IMessaging) {
+  logger.info(`Getting unread messages count`)
+
   const unreadMessages = (await messagingEngine.getMessages({
     read: false,
   })) as unknown[]
+
+  logger.debug(`Unread messages count fetched`)
 
   return unreadMessages?.length ?? 0
 }
 
 /**
  * Get the total count of all messages from the messaging engine
+ *
  * @param messagingEngine - The Verida messaging engine instance
  * @returns The total number of messages, or 0 if no messages found
  * @remarks Uses a large limit to ensure all messages are retrieved
  */
 export async function getTotalMessagesCount(messagingEngine: IMessaging) {
+  logger.info(`Getting total messages count`)
+
   const totalMessages = (await messagingEngine.getMessages(
     {},
     { limit: 100000000 }
   )) as unknown[]
+
+  logger.debug(`Total messages count fetched`)
+
   return totalMessages?.length ?? 0
 }
 
@@ -72,6 +86,8 @@ export async function getVeridaInboxMessages({
 }: GetVeridaInboxMessagesArgs): Promise<
   FetchVeridaDataRecordsResult<VeridaInboxMessage>
 > {
+  logger.info(`Getting inbox messages`)
+
   const resolvedOptions = {
     // A simple merge is enough as the default options are not in nested objects
     ...defaultVeridaDataRecordsQueryOptions,
@@ -83,10 +99,16 @@ export async function getVeridaInboxMessages({
     getTotalMessagesCount(messagingEngine),
   ])
 
+  logger.debug(`Inbox messages fetched`)
+
+  logger.debug("Validating inbox messages")
+
   // FIXME: Fix the type, for some reasons the parse returns any
   const validatedMessages = VeridaInboxMessageRecordArraySchema.parse(
     rawMessages as unknown[]
   )
+
+  logger.debug("Inbox messages validated")
 
   return {
     records: validatedMessages,
@@ -115,6 +137,8 @@ export async function getVeridaInboxMessage({
   messagingEngine,
   messageRecordId,
 }: GetVeridaInboxMessageArgs): Promise<VeridaInboxMessageRecord | null> {
+  logger.info(`Getting a single inbox message`)
+
   const results = await getVeridaInboxMessages({
     messagingEngine,
     filter: {
@@ -123,11 +147,91 @@ export async function getVeridaInboxMessage({
   })
 
   if (results.records.length === 0) {
+    logger.info(`Single inbox message not found`)
     return null
   }
 
+  logger.info(`Single inbox message found`)
+
   return results.records[0]
 }
+
+/**
+ * Mark a Verida inbox message as read
+ *
+ * @param messagingEngine - The Verida messaging engine instance
+ * @param messageRecord - The message record to mark as read
+ * @returns A promise that resolves when the message is marked as read
+ * @throws {Error} If message record ID is missing
+ * @throws {Error} If message is already marked as read
+ * @throws {Error} If saving the updated message fails
+ */
+export function markMessageAsRead(
+  messagingEngine: IMessaging,
+  messageRecord: VeridaInboxMessageRecord
+) {
+  return updateMessageReadStatus(messagingEngine, messageRecord, "read")
+}
+
+/**
+ * Mark a Verida inbox message as unread
+ *
+ * @param messagingEngine - The Verida messaging engine instance
+ * @param messageRecord - The message record to mark as unread
+ * @returns A promise that resolves when the message is marked as unread
+ * @throws {Error} If message record ID is missing
+ * @throws {Error} If message is already marked as unread
+ * @throws {Error} If saving the updated message fails
+ */
+export function markMessageAsUnread(
+  messagingEngine: IMessaging,
+  messageRecord: VeridaInboxMessageRecord
+) {
+  return updateMessageReadStatus(messagingEngine, messageRecord, "unread")
+}
+
+/**
+ * Update the read status of a Verida inbox message
+ *
+ * @param messagingEngine - The Verida messaging engine instance
+ * @param messageRecord - The message record to update
+ * @param readStatus - The desired read status ("read" or "unread")
+ * @throws {Error} If message record ID is missing
+ * @throws {Error} If message is already in the desired read status
+ * @throws {Error} If saving the updated message fails
+ */
+async function updateMessageReadStatus(
+  messagingEngine: IMessaging,
+  messageRecord: VeridaInboxMessageRecord,
+  readStatus: "read" | "unread"
+): Promise<void> {
+  logger.info(`Marking message as ${readStatus}`)
+
+  if (!messageRecord._id) {
+    throw new Error("Message record ID is required")
+  }
+
+  const updatedMessageRecord = {
+    ...messageRecord,
+    read: readStatus === "read",
+  }
+
+  if (!!updatedMessageRecord.read === !!messageRecord.read) {
+    throw new Error(`Message already marked as ${readStatus}`)
+  }
+
+  try {
+    const inbox = await messagingEngine?.getInbox()
+    await inbox.privateInbox.save(updatedMessageRecord)
+
+    logger.info(`Message marked as ${readStatus}`)
+  } catch (error) {
+    throw new Error(`Failed to mark message as ${readStatus}`, {
+      cause: error,
+    })
+  }
+}
+
 /**
  * Get the status of a Verida inbox message based on its type and data
  *

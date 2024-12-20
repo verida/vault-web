@@ -11,6 +11,7 @@ export const VeridaInboxQueryKeys = {
     "unreadMessageCount",
     did,
   ],
+  invalidateUnreadMessagesCount: () => ["inbox", "unreadMessageCount"],
   inboxMessages: ({
     did,
     filter,
