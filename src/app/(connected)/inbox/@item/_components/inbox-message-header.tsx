@@ -10,7 +10,6 @@ import { ProfileAvatar } from "@/features/verida-profile/components/profile-avat
 import { UserYourselfBadge } from "@/features/verida-profile/components/user-yourself-badge"
 import { EMPTY_PROFILE_NAME_FALLBACK } from "@/features/verida-profile/constants"
 import { useVeridaProfile } from "@/features/verida-profile/hooks/use-verida-profile"
-import { VERIDA_VAULT_CONTEXT_NAME } from "@/features/verida/constants"
 import { useVerida } from "@/features/verida/hooks/use-verida"
 import { cn } from "@/styles/utils"
 import {
@@ -59,7 +58,7 @@ export function InboxMessageHeader(props: InboxMessageHeaderProps) {
     return `${dateStr} at ${time}`
   }, [sentAt])
 
-  // TODO: Add the additional information as a collapsible section (DID)
+  // TODO: Add the additional information as a collapsible section (DID, via context, etc.)
 
   return (
     <div
@@ -82,13 +81,6 @@ export function InboxMessageHeader(props: InboxMessageHeaderProps) {
             {profile?.name || EMPTY_PROFILE_NAME_FALLBACK}
           </Typography>
           {did === sentBy.did && <UserYourselfBadge className="self-start" />}
-          <div className="text-muted-foreground">
-            <Typography variant="base-s-regular" className="truncate">
-              {sentBy.context && sentBy.context !== VERIDA_VAULT_CONTEXT_NAME
-                ? `(via ${sentBy.context})`
-                : ""}
-            </Typography>
-          </div>
         </div>
         <div className="text-muted-foreground">
           <Typography variant="base-s-regular" className="truncate">
