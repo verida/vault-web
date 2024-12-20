@@ -9,12 +9,13 @@ import { cn } from "@/styles/utils"
 
 type InboxMessageTypeIndicatorProps = {
   type: string
+  isMessageUnread?: boolean
 } & Omit<React.ComponentProps<"div">, "children">
 
 export function InboxMessageTypeIndicator(
   props: InboxMessageTypeIndicatorProps
 ) {
-  const { type, className, ...divProps } = props
+  const { type, isMessageUnread, className, ...divProps } = props
 
   const label = useMemo(() => {
     switch (type) {
@@ -48,7 +49,11 @@ export function InboxMessageTypeIndicator(
       {...divProps}
     >
       {Icon ? <Icon className="size-4" /> : null}
-      <Typography variant="base-s-regular">{label}</Typography>
+      <Typography
+        variant={isMessageUnread ? "base-s-semibold" : "base-s-regular"}
+      >
+        {label}
+      </Typography>
     </div>
   )
 }

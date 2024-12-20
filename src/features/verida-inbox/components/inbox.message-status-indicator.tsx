@@ -1,7 +1,6 @@
+import { CheckIcon, CircleDashedIcon, XIcon } from "lucide-react"
 import { useMemo } from "react"
 
-import { Failed } from "@/components/icons/failed"
-import { Success } from "@/components/icons/success"
 import { Typography } from "@/components/typography"
 import {
   VeridaInboxMessageTypeDataRequestDataSchema,
@@ -12,13 +11,17 @@ import { cn } from "@/styles/utils"
 
 type Status = "accepted" | "rejected" | "pending" | null
 
-export type InboxMessageStatusProps = {
+export type InboxMessageStatusIndicatorProps = {
   messageType?: string
   messageData?: unknown
+  isMessageUnread?: boolean
 } & Omit<React.ComponentProps<"div">, "children">
 
-export function InboxMessageStatus(props: InboxMessageStatusProps) {
-  const { messageType, messageData, className, ...divProps } = props
+export function InboxMessageStatusIndicator(
+  props: InboxMessageStatusIndicatorProps
+) {
+  const { messageType, messageData, isMessageUnread, className, ...divProps } =
+    props
 
   const status = useMemo(
     () => getMessageStatus(messageType, messageData),
@@ -34,15 +37,25 @@ export function InboxMessageStatus(props: InboxMessageStatusProps) {
       className={cn("flex flex-row items-center gap-2", className)}
       {...divProps}
     >
-      {status === "rejected" ? <Failed className="size-4" /> : null}
-      {status === "accepted" ? <Success className="size-4" /> : null}
-      <Typography variant="base-s-regular" className="capitalize">
+      {status === "rejected" ? (
+        <XIcon className="size-4 text-status-error" />
+      ) : null}
+      {status === "pending" ? (
+        <CircleDashedIcon className="size-4 animate-spin-slow text-status-warning" />
+      ) : null}
+      {status === "accepted" ? (
+        <CheckIcon className="size-4 text-status-success" />
+      ) : null}
+      <Typography
+        variant={isMessageUnread ? "base-s-semibold" : "base-s-regular"}
+        className="capitalize"
+      >
         {status}
       </Typography>
     </div>
   )
 }
-InboxMessageStatus.displayName = "InboxMessageStatus"
+InboxMessageStatusIndicator.displayName = "InboxMessageStatus"
 
 function getMessageStatus(messageType?: string, messageData?: unknown): Status {
   switch (messageType) {
@@ -87,3 +100,4 @@ function getMessageStatus(messageType?: string, messageData?: unknown): Status {
       return null
   }
 }
+InboxMessageStatusIndicator.displayName = "InboxMessageStatusIndicator"

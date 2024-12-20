@@ -6,7 +6,7 @@ import { Typography } from "@/components/typography"
 import { EMPTY_VALUE_FALLBACK } from "@/constants/misc"
 import { InboxMessageTypeIndicator } from "@/features/verida-inbox/components/inbox-message-type-indicator"
 import { InboxMessageUnreadIndicator } from "@/features/verida-inbox/components/inbox-message-unread-indicator"
-import { InboxMessageStatus } from "@/features/verida-inbox/components/inbox.message-status"
+import { InboxMessageStatusIndicator } from "@/features/verida-inbox/components/inbox.message-status-indicator"
 import { VeridaInboxMessageRecord } from "@/features/verida-inbox/types"
 import { ProfileAvatar } from "@/features/verida-profile/components/profile-avatar"
 import { UserYourselfBadge } from "@/features/verida-profile/components/user-yourself-badge"
@@ -108,10 +108,11 @@ export function InboxMessagesTableRow(props: InboxMessagesTableRowProps) {
               : EMPTY_VALUE_FALLBACK}
           </Typography>
           <div className="flex flex-row items-center gap-2">
-            <InboxMessageTypeIndicator type={type} />
-            <InboxMessageStatus
+            <InboxMessageTypeIndicator type={type} isMessageUnread={!read} />
+            <InboxMessageStatusIndicator
               messageType={type}
               messageData={row.original.data}
+              isMessageUnread={!read}
             />
           </div>
         </div>
@@ -154,10 +155,11 @@ export function InboxMessagesTableRow(props: InboxMessagesTableRowProps) {
         </div>
         <div className="w-32 shrink-0">
           <div className="flex flex-col gap-2">
-            <InboxMessageTypeIndicator type={type} />
-            <InboxMessageStatus
+            <InboxMessageTypeIndicator type={type} isMessageUnread={!read} />
+            <InboxMessageStatusIndicator
               messageType={type}
               messageData={row.original.data}
+              isMessageUnread={!read}
             />
           </div>
         </div>
