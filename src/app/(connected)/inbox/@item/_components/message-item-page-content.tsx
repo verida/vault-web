@@ -4,13 +4,16 @@ import { useMemo } from "react"
 import { InboxMessageHeader } from "@/app/(connected)/inbox/@item/_components/inbox-message-header"
 import { InvalidItemPageContent } from "@/app/(connected)/inbox/@item/_components/invalid-item-page-content"
 import {
+  MessageBlock,
+  MessageBlockBody,
+  MessageBlockTitle,
+} from "@/app/(connected)/inbox/@item/_components/message-block"
+import {
   ItemSheetBody,
   ItemSheetFooter,
   ItemSheetHeader,
   ItemSheetTitle,
 } from "@/components/item-sheet"
-import { Typography } from "@/components/typography"
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
 import { Logger } from "@/features/telemetry/logger"
 import { VeridaInboxMessageTypeMessageDataSchema } from "@/features/verida-inbox/schemas"
@@ -63,10 +66,10 @@ export function MessageItemPageContent(props: MessageItemPageContentProps) {
       </ItemSheetHeader>
       <ItemSheetBody className="flex flex-col gap-4">
         <InboxMessageHeader inboxMessage={inboxMessage} />
-        <div className="flex flex-col gap-0 rounded-lg bg-primary/5 p-4">
-          <Typography variant="base-semibold">{data.subject}</Typography>
-          <Typography variant="base-regular">{data.message}</Typography>
-        </div>
+        <MessageBlock>
+          <MessageBlockTitle>{data.subject}</MessageBlockTitle>
+          <MessageBlockBody>{data.message}</MessageBlockBody>
+        </MessageBlock>
       </ItemSheetBody>
       {parsedLink ? (
         <ItemSheetFooter className="flex flex-col gap-3">

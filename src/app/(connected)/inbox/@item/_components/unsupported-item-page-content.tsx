@@ -1,10 +1,13 @@
 import { InboxMessageHeader } from "@/app/(connected)/inbox/@item/_components/inbox-message-header"
 import {
+  MessageBlock,
+  MessageBlockTitle,
+} from "@/app/(connected)/inbox/@item/_components/message-block"
+import {
   ItemSheetBody,
   ItemSheetHeader,
   ItemSheetTitle,
 } from "@/components/item-sheet"
-import { Typography } from "@/components/typography"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { VeridaInboxMessageRecord } from "@/features/verida-inbox/types"
 
@@ -26,11 +29,9 @@ export function UnsupportedItemPageContent(
       </ItemSheetHeader>
       <ItemSheetBody className="flex flex-col gap-4">
         <InboxMessageHeader inboxMessage={inboxMessage} />
-        <div className="rounded-lg bg-primary/5 p-4">
-          <Typography variant="base-semibold">
-            {inboxMessage.message}
-          </Typography>
-        </div>
+        <MessageBlock>
+          <MessageBlockTitle>{inboxMessage.message}</MessageBlockTitle>
+        </MessageBlock>
         <Alert variant="warning">
           <AlertTitle>Unsupported message type</AlertTitle>
           <AlertDescription>
