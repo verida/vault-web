@@ -120,6 +120,7 @@ export function ItemSheetBody(props: ItemSheetBodyProps) {
   const { className, ...sheetBodyProps } = props
   return (
     <SheetBody
+      // TODO: Consider removing the bottom padding, so that the content overflow nicely and not with a padding. But it means the consumer of this component needs to handle the padding themselves. Could consider adding an intermediary div with the bottom padding.
       className={cn("flex-1 overflow-y-auto overflow-x-hidden p-6", className)}
       {...sheetBodyProps}
     />

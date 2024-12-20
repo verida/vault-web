@@ -70,14 +70,14 @@ export function InboxMessageHeader(props: InboxMessageHeaderProps) {
         isLoading={isLoading}
         className="size-12"
       />
-      <div className="flex min-w-0 flex-col gap-1">
+      <div className="flex min-w-0 flex-1 flex-col gap-1">
         <div
           className={cn(
             "flex flex-row items-baseline gap-1.5",
             profile?.name ? "" : "italic text-muted-foreground"
           )}
         >
-          <Typography variant="heading-5" className="flex-1 truncate">
+          <Typography variant="heading-5" className="truncate">
             {profile?.name || EMPTY_PROFILE_NAME_FALLBACK}
           </Typography>
           {did === sentBy.did && <UserYourselfBadge className="self-start" />}

@@ -8,19 +8,17 @@ import { Typography } from "@/components/typography"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { VeridaInboxMessageRecord } from "@/features/verida-inbox/types"
 
-export type UnsupportedItemPageContentProps = {
+export type InvalidItemPageContentProps = {
   inboxMessage: VeridaInboxMessageRecord
 }
 
-export function UnsupportedItemPageContent(
-  props: UnsupportedItemPageContentProps
-) {
+export function InvalidItemPageContent(props: InvalidItemPageContentProps) {
   const { inboxMessage } = props
 
   return (
     <>
       <ItemSheetHeader>
-        <ItemSheetTitle description="Unsupported inbox entry">
+        <ItemSheetTitle description="Invalid inbox entry">
           Message
         </ItemSheetTitle>
       </ItemSheetHeader>
@@ -32,14 +30,14 @@ export function UnsupportedItemPageContent(
           </Typography>
         </div>
         <Alert variant="warning">
-          <AlertTitle>Unsupported message type</AlertTitle>
+          <AlertTitle>Invalid message</AlertTitle>
           <AlertDescription>
-            This type of message is not supported by the Verida Vault web
-            application.
+            The content of this message is invalid and cannot be displayed
+            properly.
           </AlertDescription>
         </Alert>
       </ItemSheetBody>
     </>
   )
 }
-UnsupportedItemPageContent.displayName = "UnsupportedItemPageContent"
+InvalidItemPageContent.displayName = "InvalidItemPageContent"
