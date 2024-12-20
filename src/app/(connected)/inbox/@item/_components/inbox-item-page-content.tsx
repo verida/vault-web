@@ -1,4 +1,4 @@
-import { useMemo } from "react"
+import { useCallback, useMemo } from "react"
 
 import { DataRequestItemPageContent } from "@/app/(connected)/inbox/@item/_components/data-request-item-page-content"
 import { IncomingDataItemPageContent } from "@/app/(connected)/inbox/@item/_components/incoming-data-item-page-content"
@@ -42,6 +42,10 @@ export function InboxItemPageContent(props: ItemPageContentProps) {
     messageRecordId: itemId,
   })
 
+  const closeSheet = useCallback(() => {
+    onOpenChange(false)
+  }, [onOpenChange])
+
   // TODO: Set the `read` property to true when the message is opened
 
   const content = useMemo(() => {
@@ -55,7 +59,11 @@ export function InboxItemPageContent(props: ItemPageContentProps) {
           )
         case VeridaInboxMessageSupportedType.DATA_SEND:
           return (
-            <IncomingDataItemPageContent inboxMessage={inboxMessageRecord} />
+            <IncomingDataItemPageContent
+              inboxMessage={inboxMessageRecord}
+              onAccept={closeSheet}
+              onDecline={closeSheet}
+            />
           )
         default:
           return (
@@ -104,7 +112,13 @@ export function InboxItemPageContent(props: ItemPageContentProps) {
         </ItemSheetFooter>
       </>
     )
-  }, [inboxMessageRecord, isLoading, isError, messagingEngineStatus])
+  }, [
+    inboxMessageRecord,
+    isLoading,
+    isError,
+    messagingEngineStatus,
+    closeSheet,
+  ])
 
   return (
     <ItemSheet open={open} onOpenChange={onOpenChange}>

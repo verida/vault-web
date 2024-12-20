@@ -5,10 +5,16 @@ import {
   VeridaDatabaseQueryFilter,
   VeridaDatabaseQueryOptions,
 } from "@/features/verida-database/types"
-import { VeridaInboxMessageRecordArraySchema } from "@/features/verida-inbox/schemas"
+import {
+  VeridaInboxMessageRecordArraySchema,
+  VeridaInboxMessageTypeDataRequestDataSchema,
+  VeridaInboxMessageTypeDataSendDataSchema,
+} from "@/features/verida-inbox/schemas"
 import {
   VeridaInboxMessage,
   VeridaInboxMessageRecord,
+  VeridaInboxMessageSupportedType,
+  VeridaMessageStatus,
 } from "@/features/verida-inbox/types"
 
 const defaultVeridaDataRecordsQueryOptions: VeridaDatabaseQueryOptions = {
@@ -121,4 +127,61 @@ export async function getVeridaInboxMessage({
   }
 
   return results.records[0]
+}
+/**
+ * Get the status of a Verida inbox message based on its type and data
+ *
+ * @param messageType - The type of the Verida inbox message (MESSAGE, DATA_SEND, DATA_REQUEST)
+ * @param messageData - The data payload of the message to check the status from
+ * @returns The status of the message:
+ *  - "accepted" if the message was accepted
+ *  - "rejected" if the message was rejected
+ *  - "pending" if the message is waiting for a response
+ *  - null if the message type doesn't support status or if the data is invalid
+ */
+export function getVeridaMessageStatus(
+  messageType?: string,
+  messageData?: unknown
+): VeridaMessageStatus {
+  switch (messageType) {
+    case VeridaInboxMessageSupportedType.MESSAGE:
+      // no status in a plain message
+      return null
+    case VeridaInboxMessageSupportedType.DATA_SEND: {
+      const dataValidationResult =
+        VeridaInboxMessageTypeDataSendDataSchema.safeParse(messageData)
+
+      if (!dataValidationResult.success) {
+        return null
+      }
+
+      switch (dataValidationResult.data.status) {
+        case "accept":
+          return "accepted"
+        case "reject":
+          return "rejected"
+        default:
+          return "pending"
+      }
+    }
+    case VeridaInboxMessageSupportedType.DATA_REQUEST: {
+      const dataValidationResult =
+        VeridaInboxMessageTypeDataRequestDataSchema.safeParse(messageData)
+
+      if (!dataValidationResult.success) {
+        return null
+      }
+
+      switch (dataValidationResult.data.status) {
+        case "accept":
+          return "accepted"
+        case "reject":
+          return "rejected"
+        default:
+          return "pending"
+      }
+    }
+    default:
+      return null
+  }
 }

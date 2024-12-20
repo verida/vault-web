@@ -1,3 +1,5 @@
+"use client"
+
 import Link from "next/link"
 import { useMemo } from "react"
 
@@ -8,6 +10,7 @@ import {
   MessageBlockBody,
   MessageBlockTitle,
 } from "@/app/(connected)/inbox/@item/_components/message-block"
+import { InboxMessage } from "@/components/icons/inbox-message"
 import {
   ItemSheetBody,
   ItemSheetFooter,
@@ -62,7 +65,12 @@ export function MessageItemPageContent(props: MessageItemPageContentProps) {
   return (
     <>
       <ItemSheetHeader>
-        <ItemSheetTitle description="Inbox message">Message</ItemSheetTitle>
+        <ItemSheetTitle description="Inbox message">
+          <span className="flex flex-row items-center gap-2">
+            <InboxMessage className="size-5" />
+            Message
+          </span>
+        </ItemSheetTitle>
       </ItemSheetHeader>
       <ItemSheetBody className="flex flex-col gap-4">
         <InboxMessageHeader inboxMessage={inboxMessage} />

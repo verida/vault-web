@@ -12,6 +12,8 @@ export enum VeridaInboxMessageSupportedType {
 
 export type VeridaMessagingEngineStatus = "idle" | "loading" | "ready" | "error"
 
+export type VeridaMessageStatus = "accepted" | "rejected" | "pending" | null
+
 export type VeridaInboxMessage = z.infer<typeof VeridaInboxMessageBaseSchema>
 
 export type VeridaInboxMessageRecord = VeridaRecord<VeridaInboxMessage>

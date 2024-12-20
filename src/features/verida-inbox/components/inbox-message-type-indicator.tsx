@@ -48,7 +48,7 @@ export function InboxMessageTypeIndicator(
       className={cn("flex flex-row items-center gap-2", className)}
       {...divProps}
     >
-      {Icon ? <Icon className="size-4" /> : null}
+      {Icon ? <Icon className="size-4 shrink-0" /> : null}
       <Typography
         variant={isMessageUnread ? "base-s-semibold" : "base-s-regular"}
       >

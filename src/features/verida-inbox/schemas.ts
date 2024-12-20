@@ -1,7 +1,10 @@
 import { z } from "zod"
 
 import { Logger } from "@/features/telemetry/logger"
-import { VeridaBaseRecordSchema } from "@/features/verida-database/schemas"
+import {
+  VeridaBaseRecordSchema,
+  VeridaBaseUnsavedRecordSchema,
+} from "@/features/verida-database/schemas"
 import { filteredArraySchema } from "@/utils/schemas"
 
 const logger = Logger.create("verida-inbox")
@@ -24,7 +27,7 @@ export const VeridaInboxMessageTypeDataSendDataSchema = z.object({
     .union([z.literal("accept"), z.literal("reject"), z.string()])
     .optional(),
   replyId: z.string().optional(),
-  data: z.array(z.unknown()),
+  data: z.array(VeridaBaseUnsavedRecordSchema.passthrough()).optional(),
 })
 
 export const VeridaInboxMessageTypeDataRequestDataSchema = z.object({

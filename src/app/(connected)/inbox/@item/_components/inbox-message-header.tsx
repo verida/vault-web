@@ -1,6 +1,6 @@
 "use client"
 
-import { intlFormat, isDate, isToday } from "date-fns"
+import { intlFormat, isDate } from "date-fns"
 import { useCallback, useEffect, useState } from "react"
 
 import { Typography } from "@/components/typography"
@@ -46,7 +46,10 @@ export function InboxMessageHeader(props: InboxMessageHeaderProps) {
     const formattedTime = intlFormat(date, SHORT_TIME_FORMAT_OPTIONS)
     let formattedString = `${formattedDate} at ${formattedTime}`
 
-    if (isToday(date)) {
+    const timeDiffInMinutes = Math.floor(
+      (Date.now() - date.getTime()) / (1000 * 60)
+    )
+    if (timeDiffInMinutes < 60) {
       const timeDistance = formatTimeDistanceFromNow(date, { compact: true })
       formattedString += ` (${timeDistance})`
     }
