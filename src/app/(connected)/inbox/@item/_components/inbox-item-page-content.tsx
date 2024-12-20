@@ -55,7 +55,11 @@ export function InboxItemPageContent(props: ItemPageContentProps) {
           return <MessageItemPageContent inboxMessage={inboxMessageRecord} />
         case VeridaInboxMessageSupportedType.DATA_REQUEST:
           return (
-            <DataRequestItemPageContent inboxMessage={inboxMessageRecord} />
+            <DataRequestItemPageContent
+              inboxMessage={inboxMessageRecord}
+              onAccept={closeSheet}
+              onDecline={closeSheet}
+            />
           )
         case VeridaInboxMessageSupportedType.DATA_SEND:
           return (

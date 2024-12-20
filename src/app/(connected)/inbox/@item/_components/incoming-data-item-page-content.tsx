@@ -138,7 +138,7 @@ export function IncomingDataItemPageContent(
               {NOT_IMPLEMENTED_YET === true ? (
                 <Alert variant="warning">
                   <AlertDescription>
-                    {`Receiving incoming data is not implemented yet`}
+                    {`Receiving incoming data is not implemented yet. Use your Verida Wallet in the meantime.`}
                   </AlertDescription>
                 </Alert>
               ) : (
