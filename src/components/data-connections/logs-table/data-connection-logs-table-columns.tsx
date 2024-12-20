@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { createColumnHelper } from "@tanstack/react-table"
 import { intlFormat, isDate } from "date-fns"
 import Link from "next/link"
@@ -26,12 +27,10 @@ export const dataConnectionLogsTableColumns = [
     },
     header: "Connection",
     cell: (context) => {
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       const { provider, isLoading: isLoadingProvider } = useDataProvider(
         context.row.original.providerId
       )
 
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       const { connection, isLoading: isConnectionLoading } = useDataConnection(
         buildConnectionId({
           providerId: context.row.original.providerId,
@@ -80,12 +79,10 @@ export const dataConnectionLogsTableColumns = [
     cell: (context) => {
       const handlerId = context.getValue()
 
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       const { provider, isLoading: isLoadingProvider } = useDataProvider(
         context.row.original.providerId
       )
 
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       const handlerDefinition = useMemo(() => {
         return provider?.handlers?.find((handler) => handler.id === handlerId)
       }, [provider?.handlers, handlerId])

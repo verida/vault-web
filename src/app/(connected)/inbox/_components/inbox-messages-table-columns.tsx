@@ -1,12 +1,13 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { createColumnHelper } from "@tanstack/react-table"
-import { formatDistanceToNow, intlFormat, isDate } from "date-fns"
-import { useMemo } from "react"
+import { isDate, isToday } from "date-fns"
+import { useCallback, useEffect, useState } from "react"
 
 import { EMPTY_VALUE_FALLBACK } from "@/constants/misc"
 import { VeridaInboxMessageRecord } from "@/features/verida-inbox/types"
 import {
-  SHORT_DATE_FORMAT_OPTIONS,
-  SHORT_TIME_FORMAT_OPTIONS,
+  formatDateDistanceFromNow,
+  formatTimeDistanceFromNow,
 } from "@/utils/date"
 
 const columnHelper = createColumnHelper<VeridaInboxMessageRecord>()
@@ -43,33 +44,29 @@ export const inboxMessagesTableColumns = [
     cell: (context) => {
       const value = context.getValue()
 
-      // eslint-disable-next-line react-hooks/rules-of-hooks
-      const formatedValue = useMemo(() => {
+      const [formattedValue, setFormattedValue] =
+        useState<string>(EMPTY_VALUE_FALLBACK)
+
+      const updateFormatedValue = useCallback(() => {
         const date = new Date(value || "")
         if (!isDate(date)) {
           return EMPTY_VALUE_FALLBACK
         }
 
-        const now = new Date()
-        const diffInMinutes = Math.floor(
-          (now.getTime() - date.getTime()) / 1000 / 60
-        )
-
-        // If less than 1 hour ago, show relative time
-        if (diffInMinutes < 60) {
-          return formatDistanceToNow(date, { addSuffix: true })
+        if (isToday(date)) {
+          setFormattedValue(formatTimeDistanceFromNow(date, { compact: true }))
+        } else {
+          setFormattedValue(formatDateDistanceFromNow(date))
         }
-
-        // If same day, show time only
-        if (date.toDateString() === now.toDateString()) {
-          return intlFormat(date, SHORT_TIME_FORMAT_OPTIONS)
-        }
-
-        // Otherwise show date only
-        return intlFormat(date, SHORT_DATE_FORMAT_OPTIONS)
       }, [value])
 
-      return formatedValue
+      useEffect(() => {
+        updateFormatedValue()
+        const intervalId = setInterval(updateFormatedValue, 60000) // Update every minute
+        return () => clearInterval(intervalId)
+      }, [updateFormatedValue])
+
+      return formattedValue
     },
   }),
 ]

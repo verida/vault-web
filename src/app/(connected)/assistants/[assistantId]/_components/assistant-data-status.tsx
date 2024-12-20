@@ -23,6 +23,7 @@ export function AssistantDataStatus(props: AssistantDataStatusProps) {
   const updateFormattedLatestSync = useCallback(() => {
     if (latestSync) {
       setFormattedLatestSync(
+        // TODO: If relevant, use the functions in utils instead of date-fns
         formatDistanceToNow(latestSync, { addSuffix: true })
       )
     }

@@ -1,7 +1,7 @@
 "use client"
 
-import { intlFormat, isDate } from "date-fns"
-import { useMemo } from "react"
+import { intlFormat, isDate, isToday } from "date-fns"
+import { useCallback, useEffect, useState } from "react"
 
 import { Typography } from "@/components/typography"
 import { EMPTY_VALUE_FALLBACK } from "@/constants/misc"
@@ -13,8 +13,9 @@ import { useVeridaProfile } from "@/features/verida-profile/hooks/use-verida-pro
 import { useVerida } from "@/features/verida/hooks/use-verida"
 import { cn } from "@/styles/utils"
 import {
-  SHORT_DATE_FORMAT_OPTIONS,
   SHORT_TIME_FORMAT_OPTIONS,
+  formatDateDistanceFromNow,
+  formatTimeDistanceFromNow,
 } from "@/utils/date"
 
 type InboxMessageHeaderProps = {
@@ -32,31 +33,32 @@ export function InboxMessageHeader(props: InboxMessageHeaderProps) {
     did: sentBy.did,
   })
 
-  const formatedSentAt = useMemo(() => {
+  const [formattedSentAt, setFormattedSentAt] =
+    useState<string>(EMPTY_VALUE_FALLBACK)
+
+  const updateFormattedSentAt = useCallback(() => {
     const date = new Date(sentAt || "")
     if (!isDate(date)) {
       return EMPTY_VALUE_FALLBACK
     }
 
-    const now = new Date()
-    const isToday = date.toDateString() === now.toDateString()
-    const isYesterday =
-      date.toDateString() ===
-      new Date(now.setDate(now.getDate() - 1)).toDateString()
+    const formattedDate = formatDateDistanceFromNow(date)
+    const formattedTime = intlFormat(date, SHORT_TIME_FORMAT_OPTIONS)
+    let formattedString = `${formattedDate} at ${formattedTime}`
 
-    const time = intlFormat(date, SHORT_TIME_FORMAT_OPTIONS)
-
-    if (isToday) {
-      return `Today at ${time}`
+    if (isToday(date)) {
+      const timeDistance = formatTimeDistanceFromNow(date, { compact: true })
+      formattedString += ` (${timeDistance})`
     }
 
-    if (isYesterday) {
-      return `Yesterday at ${time}`
-    }
-
-    const dateStr = intlFormat(date, SHORT_DATE_FORMAT_OPTIONS)
-    return `${dateStr} at ${time}`
+    setFormattedSentAt(formattedString)
   }, [sentAt])
+
+  useEffect(() => {
+    updateFormattedSentAt()
+    const intervalId = setInterval(updateFormattedSentAt, 60000) // Update every minute
+    return () => clearInterval(intervalId)
+  }, [updateFormattedSentAt])
 
   // TODO: Add the additional information as a collapsible section (DID, via context, etc.)
 
@@ -84,7 +86,7 @@ export function InboxMessageHeader(props: InboxMessageHeaderProps) {
         </div>
         <div className="text-muted-foreground">
           <Typography variant="base-s-regular" className="truncate">
-            {formatedSentAt}
+            {formattedSentAt}
           </Typography>
         </div>
       </div>
