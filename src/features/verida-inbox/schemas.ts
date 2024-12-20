@@ -34,6 +34,16 @@ export const VeridaInboxMessageTypeDataRequestDataSchema = z.object({
   status: z
     .union([z.literal("accept"), z.literal("reject"), z.string()])
     .optional(),
+  requestSchema: z.string().url(),
+  userSelect: z.boolean().default(false),
+  userSelectLimit: z.number().optional(),
+  filter: z.record(z.string(), z.unknown()).optional(),
+  fallbackAction: z
+    .object({
+      url: z.string().optional(),
+      label: z.string().optional(),
+    })
+    .optional(),
 })
 
 // Combine into final schema that can be extended
