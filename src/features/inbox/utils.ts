@@ -14,11 +14,17 @@ import { VERIDA_VAULT_CONTEXT_NAME } from "@/features/verida/constants"
 
 const logger = Logger.create("verida-inbox")
 
+/**
+ * @deprecated
+ */
 export function getMessaging(veridaWebUser: WebUser) {
   const context = veridaWebUser.getContext()
   return context.getMessaging()
 }
 
+/**
+ * @deprecated
+ */
 export async function sendDataRequest(
   veridaWebUser: WebUser,
   options: SendDataRequestOptions
@@ -64,6 +70,9 @@ export async function sendDataRequest(
   return sentMessage as SentMessage | null
 }
 
+/**
+ * @deprecated
+ */
 export async function sendMessage(
   veridaWebUser: WebUser,
   options: SendSimpleMessageOptions

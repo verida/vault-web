@@ -3,8 +3,13 @@
 import * as React from "react"
 import { Drawer as DrawerPrimitive } from "vaul"
 
+// TODO: When deleting this file, also remove the dependency `vaul`
+
 import { cn } from "@/styles/utils"
 
+/**
+ * @deprecated
+ */
 const Drawer = ({
   shouldScaleBackground = false,
   ...props
@@ -18,12 +23,24 @@ const Drawer = ({
 )
 Drawer.displayName = "Drawer"
 
+/**
+ * @deprecated
+ */
 const DrawerTrigger = DrawerPrimitive.Trigger
 
+/**
+ * @deprecated
+ */
 const DrawerPortal = DrawerPrimitive.Portal
 
+/**
+ * @deprecated
+ */
 const DrawerClose = DrawerPrimitive.Close
 
+/**
+ * @deprecated
+ */
 const DrawerOverlay = React.forwardRef<
   React.ElementRef<typeof DrawerPrimitive.Overlay>,
   React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Overlay>
@@ -36,6 +53,9 @@ const DrawerOverlay = React.forwardRef<
 ))
 DrawerOverlay.displayName = DrawerPrimitive.Overlay.displayName
 
+/**
+ * @deprecated
+ */
 const DrawerContent = React.forwardRef<
   React.ElementRef<typeof DrawerPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Content> & {
@@ -59,6 +79,9 @@ const DrawerContent = React.forwardRef<
 ))
 DrawerContent.displayName = "DrawerContent"
 
+/**
+ * @deprecated
+ */
 const DrawerHeader = ({
   className,
   ...props
@@ -67,6 +90,9 @@ const DrawerHeader = ({
 )
 DrawerHeader.displayName = "DrawerHeader"
 
+/**
+ * @deprecated
+ */
 const DrawerBody = ({
   className,
   ...props
@@ -75,6 +101,9 @@ const DrawerBody = ({
 )
 DrawerBody.displayName = "DrawerBody"
 
+/**
+ * @deprecated
+ */
 const DrawerFooter = ({
   className,
   ...props
@@ -83,6 +112,9 @@ const DrawerFooter = ({
 )
 DrawerFooter.displayName = "DrawerFooter"
 
+/**
+ * @deprecated
+ */
 const DrawerTitle = React.forwardRef<
   React.ElementRef<typeof DrawerPrimitive.Title>,
   React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Title>
@@ -92,6 +124,9 @@ const DrawerTitle = React.forwardRef<
 ))
 DrawerTitle.displayName = DrawerPrimitive.Title.displayName
 
+/**
+ * @deprecated
+ */
 const DrawerDescription = React.forwardRef<
   React.ElementRef<typeof DrawerPrimitive.Description>,
   React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Description>

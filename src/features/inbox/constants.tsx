@@ -4,6 +4,9 @@ import { InboxMessage } from "@/components/icons/inbox-message"
 import { InboxProof } from "@/components/icons/inbox-proof"
 import { InboxType } from "@/features/inbox/types"
 
+/**
+ * @deprecated
+ */
 export const INBOX_TYPE_DEFS = {
   [InboxType.MESSAGE]: {
     icon: InboxMessage,

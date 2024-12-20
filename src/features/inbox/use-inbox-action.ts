@@ -8,6 +8,9 @@ import { useVerida } from "@/features/verida/hooks/use-verida"
 
 const logger = Logger.create("inbox")
 
+/**
+ * @deprecated
+ */
 export const useInboxAction = () => {
   const { openDatastore } = useVerida()
   const { messagingEngine } = useInboxContext()
