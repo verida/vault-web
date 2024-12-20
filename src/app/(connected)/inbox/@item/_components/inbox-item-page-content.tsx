@@ -27,6 +27,7 @@ import {
   LoadingBlockTitle,
 } from "@/components/ui/loading"
 import { useGetVeridaInboxMessage } from "@/features/verida-inbox/hooks/use-get-verida-inbox-message"
+import { useInboxMessageAutoRead } from "@/features/verida-inbox/hooks/use-inbox-message-auto-read"
 import { useVeridaInbox } from "@/features/verida-inbox/hooks/use-verida-inbox"
 import { VeridaInboxMessageSupportedType } from "@/features/verida-inbox/types"
 
@@ -44,6 +45,11 @@ export function InboxItemPageContent(props: ItemPageContentProps) {
     messageRecordId: itemId,
   })
 
+  useInboxMessageAutoRead({
+    messageRecord: inboxMessageRecord,
+    disabled: !open,
+  })
+
   const closeSheet = useCallback(() => {
     onOpenChange(false)
   }, [onOpenChange])
@@ -54,13 +60,19 @@ export function InboxItemPageContent(props: ItemPageContentProps) {
     if (inboxMessageRecord) {
       switch (inboxMessageRecord.type) {
         case VeridaInboxMessageSupportedType.MESSAGE:
-          return <MessageItemPageContent inboxMessage={inboxMessageRecord} />
+          return (
+            <MessageItemPageContent
+              inboxMessage={inboxMessageRecord}
+              onMarkAsUnread={closeSheet}
+            />
+          )
         case VeridaInboxMessageSupportedType.DATA_REQUEST:
           return (
             <DataRequestItemPageContent
               inboxMessage={inboxMessageRecord}
               onAccept={closeSheet}
               onDecline={closeSheet}
+              onMarkAsUnread={closeSheet}
             />
           )
         case VeridaInboxMessageSupportedType.DATA_SEND:
@@ -69,11 +81,15 @@ export function InboxItemPageContent(props: ItemPageContentProps) {
               inboxMessage={inboxMessageRecord}
               onAccept={closeSheet}
               onDecline={closeSheet}
+              onMarkAsUnread={closeSheet}
             />
           )
         default:
           return (
-            <UnsupportedItemPageContent inboxMessage={inboxMessageRecord} />
+            <UnsupportedItemPageContent
+              inboxMessage={inboxMessageRecord}
+              onMarkAsUnread={closeSheet}
+            />
           )
       }
     }

@@ -1,6 +1,6 @@
 "use client"
 
-import { MailIcon, MailOpenIcon } from "lucide-react"
+import { MailIcon } from "lucide-react"
 import { useCallback, useState } from "react"
 
 import { Button } from "@/components/ui/button"
@@ -16,13 +16,17 @@ import { cn } from "@/styles/utils"
 
 const logger = Logger.create("verida-inbox")
 
-type MessageReadUnreadButtonProps = {
+type MarkMessageAsUnreadButtonProps = {
   messageRecord: VeridaInboxMessageRecord
+  onMarkAsUnread?: () => void
 } & Omit<React.ComponentProps<typeof Button>, "onClick" | "children">
 
-export function MessageReadUnreadButton(props: MessageReadUnreadButtonProps) {
+export function MarkMessageAsUnreadButton(
+  props: MarkMessageAsUnreadButtonProps
+) {
   const {
     messageRecord,
+    onMarkAsUnread,
     variant = "outline",
     size = "icon",
     className,
@@ -31,25 +35,26 @@ export function MessageReadUnreadButton(props: MessageReadUnreadButtonProps) {
 
   const [isProcessing, setIsProcessing] = useState(false)
 
-  const { markAsReadAsync, markAsUnreadAsync } = useInboxMessageReadHandler()
+  const { markAsUnreadAsync } = useInboxMessageReadHandler()
 
   const handleClick = useCallback(async () => {
-    if (isProcessing) {
+    if (isProcessing || !messageRecord.read) {
       return
     }
     setIsProcessing(true)
     try {
-      if (messageRecord.read) {
-        await markAsUnreadAsync({ messageRecord })
-      } else {
-        await markAsReadAsync({ messageRecord })
-      }
+      await markAsUnreadAsync({ messageRecord })
+      onMarkAsUnread?.()
     } catch (error) {
       logger.error(error)
     } finally {
       setIsProcessing(false)
     }
-  }, [isProcessing, markAsUnreadAsync, markAsReadAsync, messageRecord])
+  }, [isProcessing, markAsUnreadAsync, messageRecord, onMarkAsUnread])
+
+  if (!messageRecord.read) {
+    return null
+  }
 
   return (
     <Tooltip>
@@ -62,20 +67,12 @@ export function MessageReadUnreadButton(props: MessageReadUnreadButtonProps) {
           disabled={isProcessing}
           {...buttonProps}
         >
-          {messageRecord.read ? (
-            <MailIcon className="size-5 shrink-0" />
-          ) : (
-            <MailOpenIcon className="size-5 shrink-0" />
-          )}
-          <span className="sr-only">
-            {messageRecord.read ? "Mark as unread" : "Mark as read"}
-          </span>
+          <MailIcon className="size-5 shrink-0" />
+          <span className="sr-only">Mark as unread</span>
         </Button>
       </TooltipTrigger>
-      <TooltipContent>
-        {messageRecord.read ? "Mark as unread" : "Mark as read"}
-      </TooltipContent>
+      <TooltipContent>Mark as unread</TooltipContent>
     </Tooltip>
   )
 }
-MessageReadUnreadButton.displayName = "MessageReadUnreadButton"
+MarkMessageAsUnreadButton.displayName = "MarkMessageAsUnreadButton"

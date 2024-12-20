@@ -4,11 +4,11 @@ import { useCallback, useMemo } from "react"
 
 import { InboxMessageHeader } from "@/app/(connected)/inbox/@item/_components/inbox-message-header"
 import { InvalidItemPageContent } from "@/app/(connected)/inbox/@item/_components/invalid-item-page-content"
+import { MarkMessageAsUnreadButton } from "@/app/(connected)/inbox/@item/_components/mark-message-as-unread-button"
 import {
   MessageBlock,
   MessageBlockTitle,
 } from "@/app/(connected)/inbox/@item/_components/message-block"
-import { MessageReadUnreadButton } from "@/app/(connected)/inbox/@item/_components/message-read-unread-button"
 import { InboxIncoming } from "@/components/icons/inbox-incoming"
 import {
   ItemSheetBody,
@@ -41,12 +41,13 @@ export type IncomingDataItemPageContentProps = {
   inboxMessage: VeridaInboxMessageRecord
   onDecline: () => void
   onAccept: () => void
+  onMarkAsUnread?: () => void
 }
 
 export function IncomingDataItemPageContent(
   props: IncomingDataItemPageContentProps
 ) {
-  const { inboxMessage, onDecline, onAccept } = props
+  const { inboxMessage, onDecline, onAccept, onMarkAsUnread } = props
 
   const handleDecline = useCallback(() => {
     // TODO: Implement accept
@@ -77,7 +78,12 @@ export function IncomingDataItemPageContent(
   }, [inboxMessage])
 
   if (!data) {
-    return <InvalidItemPageContent inboxMessage={inboxMessage} />
+    return (
+      <InvalidItemPageContent
+        inboxMessage={inboxMessage}
+        onMarkAsUnread={onMarkAsUnread}
+      />
+    )
   }
 
   return (
@@ -85,7 +91,10 @@ export function IncomingDataItemPageContent(
       <ItemSheetHeader
         right={
           <div className="flex flex-row items-center gap-3">
-            <MessageReadUnreadButton messageRecord={inboxMessage} />
+            <MarkMessageAsUnreadButton
+              messageRecord={inboxMessage}
+              onMarkAsUnread={onMarkAsUnread}
+            />
           </div>
         }
       >

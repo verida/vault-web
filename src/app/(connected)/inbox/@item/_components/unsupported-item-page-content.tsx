@@ -1,9 +1,9 @@
 import { InboxMessageHeader } from "@/app/(connected)/inbox/@item/_components/inbox-message-header"
+import { MarkMessageAsUnreadButton } from "@/app/(connected)/inbox/@item/_components/mark-message-as-unread-button"
 import {
   MessageBlock,
   MessageBlockTitle,
 } from "@/app/(connected)/inbox/@item/_components/message-block"
-import { MessageReadUnreadButton } from "@/app/(connected)/inbox/@item/_components/message-read-unread-button"
 import {
   ItemSheetBody,
   ItemSheetHeader,
@@ -14,19 +14,23 @@ import { VeridaInboxMessageRecord } from "@/features/verida-inbox/types"
 
 export type UnsupportedItemPageContentProps = {
   inboxMessage: VeridaInboxMessageRecord
+  onMarkAsUnread?: () => void
 }
 
 export function UnsupportedItemPageContent(
   props: UnsupportedItemPageContentProps
 ) {
-  const { inboxMessage } = props
+  const { inboxMessage, onMarkAsUnread } = props
 
   return (
     <>
       <ItemSheetHeader
         right={
           <div className="flex flex-row items-center gap-3">
-            <MessageReadUnreadButton messageRecord={inboxMessage} />
+            <MarkMessageAsUnreadButton
+              messageRecord={inboxMessage}
+              onMarkAsUnread={onMarkAsUnread}
+            />
           </div>
         }
       >
