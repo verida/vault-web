@@ -25,7 +25,7 @@ export function InvalidItemPageContent(props: InvalidItemPageContentProps) {
           Message
         </ItemSheetTitle>
       </ItemSheetHeader>
-      <ItemSheetBody className="flex flex-col gap-4">
+      <ItemSheetBody className="flex flex-col gap-6">
         <InboxMessageHeader inboxMessage={inboxMessage} />
         <MessageBlock>
           <MessageBlockTitle>{inboxMessage.message}</MessageBlockTitle>

@@ -126,43 +126,49 @@ export function IncomingDataItemPageContent(
           </Alert>
         )}
       </ItemSheetBody>
-      <ItemSheetFooter className="flex flex-col gap-3">
-        {status === "pending" ? (
-          <>
-            <Alert variant="warning">
-              <AlertDescription>
-                {`Decline if you don't recognize this message`}
-              </AlertDescription>
-            </Alert>
-            <div className="flex flex-row gap-4">
-              <Button
-                variant="outline"
-                className="w-full"
-                onClick={handleDecline}
-                disabled={NOT_IMPLEMENTED_YET}
-              >
-                Decline
-              </Button>
-              <Button
-                variant="primary"
-                className="w-full"
-                onClick={handleAccept}
-                disabled={NOT_IMPLEMENTED_YET}
-              >
-                Accept
-              </Button>
-            </div>
-          </>
-        ) : (
-          <>
+      {status ? (
+        <ItemSheetFooter className="flex flex-col gap-3">
+          {status === "pending" ? (
+            <>
+              <Alert variant="warning">
+                <AlertDescription>
+                  {`Decline if you don't recognize this message`}
+                </AlertDescription>
+              </Alert>
+              <div className="flex flex-row gap-4">
+                <Button
+                  variant="outline"
+                  className="w-full"
+                  onClick={handleDecline}
+                  disabled={NOT_IMPLEMENTED_YET}
+                >
+                  Decline
+                </Button>
+                <Button
+                  variant="primary"
+                  className="w-full"
+                  onClick={handleAccept}
+                  disabled={NOT_IMPLEMENTED_YET}
+                >
+                  Accept
+                </Button>
+              </div>
+            </>
+          ) : status === "accepted" ? (
             <Alert variant="success">
               <AlertDescription>
                 You accepted the data in this message
               </AlertDescription>
             </Alert>
-          </>
-        )}
-      </ItemSheetFooter>
+          ) : status === "rejected" ? (
+            <Alert variant="error">
+              <AlertDescription>
+                You declined the data in this message
+              </AlertDescription>
+            </Alert>
+          ) : null}
+        </ItemSheetFooter>
+      ) : null}
     </>
   )
 }

@@ -72,7 +72,7 @@ export function MessageItemPageContent(props: MessageItemPageContentProps) {
           </span>
         </ItemSheetTitle>
       </ItemSheetHeader>
-      <ItemSheetBody className="flex flex-col gap-4">
+      <ItemSheetBody className="flex flex-col gap-6">
         <InboxMessageHeader inboxMessage={inboxMessage} />
         <MessageBlock>
           <MessageBlockTitle>{data.subject}</MessageBlockTitle>
