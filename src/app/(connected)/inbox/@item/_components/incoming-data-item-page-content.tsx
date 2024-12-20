@@ -19,6 +19,7 @@ import { Typography } from "@/components/typography"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
+import { Card, CardDescription, CardTitle } from "@/components/ui/card"
 import { EMPTY_VALUE_FALLBACK } from "@/constants/misc"
 import { Logger } from "@/features/telemetry/logger"
 import { UnsavedVeridaRecord } from "@/features/verida-database/types"
@@ -93,7 +94,7 @@ export function IncomingDataItemPageContent(
           </ItemSheetTitle>
           <InboxMessageStatusIndicator
             messageType={inboxMessage.type}
-            messageData={inboxMessage.data}
+            messageData={data}
           />
         </div>
       </ItemSheetHeader>
@@ -112,7 +113,11 @@ export function IncomingDataItemPageContent(
             <ul className="flex flex-col gap-3">
               {data.data.map((item, index) => (
                 <li key={index}>
-                  <DataItem item={item} />
+                  <IncomingDataItemCard
+                    item={item}
+                    // TODO: Allow displaying the whole incoming record
+                    // TODO: If accepted, allow navigating to that record (if still available). This requires storing the record id in the inbox message when accepting.
+                  />
                 </li>
               ))}
             </ul>
@@ -130,29 +135,37 @@ export function IncomingDataItemPageContent(
         <ItemSheetFooter className="flex flex-col gap-3">
           {status === "pending" ? (
             <>
-              <Alert variant="warning">
-                <AlertDescription>
-                  {`Decline if you don't recognize this message`}
-                </AlertDescription>
-              </Alert>
-              <div className="flex flex-row gap-4">
-                <Button
-                  variant="outline"
-                  className="w-full"
-                  onClick={handleDecline}
-                  disabled={NOT_IMPLEMENTED_YET}
-                >
-                  Decline
-                </Button>
-                <Button
-                  variant="primary"
-                  className="w-full"
-                  onClick={handleAccept}
-                  disabled={NOT_IMPLEMENTED_YET}
-                >
-                  Accept
-                </Button>
-              </div>
+              {NOT_IMPLEMENTED_YET === true ? (
+                <Alert variant="warning">
+                  <AlertDescription>
+                    {`Receiving incoming data is not implemented yet`}
+                  </AlertDescription>
+                </Alert>
+              ) : (
+                <>
+                  <Alert variant="warning">
+                    <AlertDescription>
+                      {`Decline if you don't recognize this message`}
+                    </AlertDescription>
+                  </Alert>
+                  <div className="flex flex-row gap-4">
+                    <Button
+                      variant="outline"
+                      className="w-full"
+                      onClick={handleDecline}
+                    >
+                      Decline
+                    </Button>
+                    <Button
+                      variant="primary"
+                      className="w-full"
+                      onClick={handleAccept}
+                    >
+                      Accept
+                    </Button>
+                  </div>
+                </>
+              )}
             </>
           ) : status === "accepted" ? (
             <Alert variant="success">
@@ -174,20 +187,17 @@ export function IncomingDataItemPageContent(
 }
 IncomingDataItemPageContent.displayName = "IncomingDataItemPageContent"
 
-type DataItemProps = {
+type IncomingDataItemCardProps = {
   item: UnsavedVeridaRecord
-} & Omit<React.ComponentProps<"div">, "children">
+} & Omit<React.ComponentProps<typeof Card>, "children">
 
-function DataItem(props: DataItemProps) {
-  const { item, className, ...divProps } = props
+function IncomingDataItemCard(props: IncomingDataItemCardProps) {
+  const { item, className, ...cardProps } = props
 
   return (
-    <div
-      className={cn(
-        "flex flex-col gap-2 rounded-lg bg-surface-active p-4",
-        className
-      )}
-      {...divProps}
+    <Card
+      className={cn("flex flex-col gap-2 bg-surface-active p-4", className)}
+      {...cardProps}
     >
       <div className="flex flex-row items-center gap-2">
         {item.icon ? (
@@ -204,20 +214,20 @@ function DataItem(props: DataItemProps) {
             item.name ? "" : "italic text-muted-foreground"
           )}
         >
-          <Typography variant="heading-5" component="p" className="truncate">
+          <CardTitle variant="heading-5" component="p" className="truncate">
             {item.name || "No title"}
-          </Typography>
+          </CardTitle>
         </div>
       </div>
-      <div
-        className={cn("text-muted-foreground", item.summary ? "" : "italic")}
-      >
-        <Typography variant="base-s-regular" className="truncate">
-          {item.summary ||
-            "No description but a very long fallback just to check the truncate"}
-        </Typography>
+      <div>
+        <CardDescription
+          variant="base-regular"
+          className={cn("line-clamp-2", item.summary ? "" : "italic")}
+        >
+          {item.summary || "No description"}
+        </CardDescription>
       </div>
-    </div>
+    </Card>
   )
 }
-DataItem.displayName = "DataItem"
+IncomingDataItemCard.displayName = "IncomingDataItemCard"

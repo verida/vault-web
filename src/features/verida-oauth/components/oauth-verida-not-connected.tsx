@@ -46,7 +46,7 @@ export function OAuthVeridaNotConnected(props: OAuthVeridaNotConnectedProps) {
           </Link>{" "}
           wants to access your Verida Vault
         </CardTitle>
-        <CardDescription className="flex flex-row items-center gap-2">
+        <CardDescription>
           <Link
             href={url}
             target="_blank"

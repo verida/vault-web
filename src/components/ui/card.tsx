@@ -30,10 +30,10 @@ CardHeader.displayName = "CardHeader"
 export const CardTitle = React.forwardRef<
   HTMLParagraphElement,
   React.ComponentProps<typeof Typography>
->(({ className, ...props }, ref) => (
+>(({ variant = "heading-3", className, ...props }, ref) => (
   <Typography
     ref={ref}
-    variant="heading-3"
+    variant={variant}
     className={cn(className)}
     {...props}
   />
@@ -42,15 +42,22 @@ CardTitle.displayName = "CardTitle"
 
 export const CardDescription = React.forwardRef<
   HTMLParagraphElement,
-  React.ComponentProps<typeof Typography>
->(({ className, ...props }, ref) => (
-  <Typography
-    ref={ref}
-    variant="base-s-regular"
-    className={cn("text-muted-foreground", className)}
-    {...props}
-  />
-))
+  React.ComponentProps<typeof Typography> & { wrapperClassName?: string }
+>(
+  (
+    { variant = "base-regular", className, wrapperClassName, ...props },
+    ref
+  ) => (
+    <div className={cn("text-muted-foreground", wrapperClassName)}>
+      <Typography
+        ref={ref}
+        variant={variant}
+        className={cn(className)}
+        {...props}
+      />
+    </div>
+  )
+)
 CardDescription.displayName = "CardDescription"
 
 export const CardBody = React.forwardRef<
