@@ -7,6 +7,7 @@ import {
   AiPromptFormDataSchema,
   LlmModelSchema,
   LlmProviderSchema,
+  PrivateDataApiV1LLMAgentResponseSchema,
   PrivateDataApiV1LLMPersonalResponseSchema,
   PrivateDataApiV1LlmHotloadResponseSchema,
   PromptConfigCommonDataTypeSchema,
@@ -106,6 +107,15 @@ export type AiAssistantOutput = {
       databases?: string[]
     }
 )
+
+export type PrivateDataApiV1LLMAgentRequestBody = {
+  prompt: string
+  temperature?: number
+}
+
+export type PrivateDataApiV1LLMAgentResponse = z.infer<
+  typeof PrivateDataApiV1LLMAgentResponseSchema
+>
 
 export type PrivateDataApiV1LLMPersonalRequestBody = {
   // TODO: When and if passing the assistantId is supported, add it here but handle when using the default non-existing assistant

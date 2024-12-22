@@ -65,10 +65,10 @@ export function AssistantOutputCard(props: AssistantOutputCardProps) {
       return undefined
     }
 
-    const totalSeconds = aiAssistantOutput.processingTime
+    const milliseconds = aiAssistantOutput.processingTime
+    const totalSeconds = milliseconds / 1000
     let minutes = Math.floor(totalSeconds / 60)
     const remainingSeconds = totalSeconds % 60
-    const milliseconds = Math.floor((totalSeconds % 1) * 1000)
 
     // If less than a second, show milliseconds
     if (minutes === 0 && remainingSeconds < 1) {

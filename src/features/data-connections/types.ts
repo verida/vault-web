@@ -13,9 +13,12 @@ import {
   DataConnectionsApiV1SyncConnectionResponseSchema,
   DataProviderHandlerSchema,
   DataProviderSchema,
+  DataProviderStatusSchema,
 } from "@/features/data-connections/schemas"
 
 // Data Connections and Providers definitions
+
+export type DataProviderStatus = z.infer<typeof DataProviderStatusSchema>
 
 export type DataProvider = z.infer<typeof DataProviderSchema>
 
