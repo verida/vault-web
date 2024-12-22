@@ -20,8 +20,13 @@ export const DataProviderHandlerSchema = z.object({
   options: z.array(DataConnectionConfigOptionSchema).optional(),
 })
 
+export const DataProviderStatusSchema = z
+  .enum(["active", "upcoming", "inactive"])
+  .default("inactive")
+
 export const DataProviderSchema = z.object({
   id: z.string(),
+  status: DataProviderStatusSchema,
   label: z.string(),
   icon: z.string().url(),
   description: z.string().optional(),
