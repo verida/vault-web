@@ -23,6 +23,7 @@ import { featureFlags } from "@/config/features"
 import { version } from "@/config/version"
 import { APP_NAME } from "@/constants/app"
 import { EMPTY_VALUE_FALLBACK } from "@/constants/misc"
+import { useRestrictedAccess } from "@/features/restricted-access/hooks/use-restricted-access"
 import { getAuthorizedAppsPageRoute } from "@/features/routes/utils"
 import { useUserFeedback } from "@/features/telemetry/use-user-feedback"
 import { useToast } from "@/features/toasts/use-toast"
@@ -51,6 +52,7 @@ export function VeridaIdentityDropdownMenu(
 
   const router = useRouter()
 
+  const { access } = useRestrictedAccess()
   const { isConnected, did, disconnect } = useVerida()
   const { profile } = useUserProfile()
 
@@ -179,7 +181,9 @@ export function VeridaIdentityDropdownMenu(
             ) : null}
           </div>
         </DropdownMenuItem>
-        {!hideApiKeys && featureFlags.veridaOauth.authorizedAppsUi.enabled ? (
+        {access === "allowed" &&
+        !hideApiKeys &&
+        featureFlags.veridaOauth.authorizedAppsUi.enabled ? (
           <DropdownMenuItem
             onClick={handleAuthorizedAppsClick}
             className="cursor-pointer gap-3 px-4 py-4"

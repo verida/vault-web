@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import {
   ErrorBlock,
   ErrorBlockDescription,
+  ErrorBlockImage,
   ErrorBlockTitle,
 } from "@/components/ui/error"
 import {
@@ -19,12 +20,13 @@ import { cn } from "@/styles/utils"
 
 export type RestrictedAccessPageContentProps = {
   isLoading: boolean
+  isError: boolean
 } & Omit<React.ComponentPropsWithoutRef<"div">, "children">
 
 export function RestrictedAccessPageContent(
   props: RestrictedAccessPageContentProps
 ) {
-  const { isLoading, className, ...divProps } = props
+  const { isLoading, isError, className, ...divProps } = props
 
   return (
     <div
@@ -45,6 +47,17 @@ export function RestrictedAccessPageContent(
             are checking your access to the application.
           </LoadingBlockDescription>
         </LoadingBlock>
+      ) : isError ? (
+        <ErrorBlock>
+          <ErrorBlockImage />
+          <ErrorBlockTitle variant="heading-1">
+            Something went wrong!
+          </ErrorBlockTitle>
+          <ErrorBlockDescription variant="base-l">
+            The application currently experiences an error. Please check again
+            later.
+          </ErrorBlockDescription>
+        </ErrorBlock>
       ) : (
         <ErrorBlock>
           <LockIcon className="text-accent" />
