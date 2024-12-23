@@ -1,7 +1,6 @@
 "use client"
 
 import { CommandProvider } from "@/features/command/command-provider"
-import { InboxProvider } from "@/features/inbox/inbox-context"
 import { VeridaInboxProvider } from "@/features/verida-inbox/components/verida-inbox-provider"
 
 export type AppUnrestrictedProvidersProps = {
@@ -18,9 +17,7 @@ export function AppUnrestrictedProviders(props: AppUnrestrictedProvidersProps) {
   // For global providers required in any cases, use the RootProviders component.
   return (
     <VeridaInboxProvider>
-      <InboxProvider>
-        <CommandProvider>{children}</CommandProvider>
-      </InboxProvider>
+      <CommandProvider>{children}</CommandProvider>
     </VeridaInboxProvider>
   )
 }
