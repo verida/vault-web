@@ -17,6 +17,8 @@ export const VeridaBaseRecordSchema = z.object({
   signatures: z.record(z.any()).optional(),
 })
 
+export const VeridaBaseUnsavedRecordSchema = VeridaBaseRecordSchema.partial()
+
 /**
  * Creates a Zod schema for validating Verida database query API responses.
  *

@@ -9,12 +9,18 @@ type InboxContextType = {
   messagingEngine: IMessaging | undefined
 }
 
+/**
+ * @deprecated
+ */
 export const InboxContext = React.createContext<InboxContextType | null>(null)
 
 type InboxProviderProps = {
   children: React.ReactNode
 }
 
+/**
+ * @deprecated
+ */
 export const InboxProvider: React.FunctionComponent<InboxProviderProps> = ({
   children,
 }) => {

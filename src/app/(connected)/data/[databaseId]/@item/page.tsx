@@ -33,25 +33,17 @@ export default function DataItemPage(props: DataItemPageProps) {
     [setItemId]
   )
 
-  const itemPage = useMemo(() => {
-    if (!itemId || !databaseDefinition) {
-      return null
-    }
-
-    return (
-      <DataItemPageContent
-        open
-        onOpenChange={handleOpenChange}
-        databaseDefinition={databaseDefinition}
-        itemId={itemId}
-      />
-    )
-  }, [itemId, handleOpenChange, databaseDefinition])
-
-  if (itemPage) {
-    return itemPage
+  if (!itemId || !databaseDefinition) {
+    return null
   }
 
-  return null
+  return (
+    <DataItemPageContent
+      open
+      onOpenChange={handleOpenChange}
+      databaseDefinition={databaseDefinition}
+      itemId={itemId}
+    />
+  )
 }
 DataItemPage.displayName = "DataItemPage"

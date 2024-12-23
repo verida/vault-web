@@ -3,6 +3,9 @@ import { useCallback } from "react"
 
 import { useVerida } from "@/features/verida/hooks/use-verida"
 
+/**
+ * @deprecated
+ */
 export const useMessages = (
   messagingEngine: any,
   filters: Record<string, any> = {},

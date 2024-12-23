@@ -31,16 +31,16 @@ export function Toaster() {
           <Toast key={id} {...props}>
             <div className="flex flex-row items-center gap-3">
               {variant === "info" ? (
-                <StatusInfoIcon className="size-6 shrink-0" />
+                <StatusInfoIcon className="size-6 shrink-0 self-start" />
               ) : null}
               {variant === "success" ? (
-                <StatusSuccessIcon className="size-6 shrink-0" />
+                <StatusSuccessIcon className="size-6 shrink-0 self-start" />
               ) : null}
               {variant === "warning" ? (
-                <StatusWarningIcon className="size-6 shrink-0" />
+                <StatusWarningIcon className="size-6 shrink-0 self-start" />
               ) : null}
               {variant === "error" ? (
-                <StatusErrorIcon className="size-6 shrink-0" />
+                <StatusErrorIcon className="size-6 shrink-0 self-start" />
               ) : null}
               <div className="flex flex-1 flex-col gap-1">
                 {title ? <ToastTitle>{title}</ToastTitle> : null}
@@ -48,8 +48,8 @@ export function Toaster() {
                   <ToastDescription>{description}</ToastDescription>
                 ) : null}
               </div>
+              {action}
             </div>
-            {action}
             <ToastClose />
           </Toast>
         )

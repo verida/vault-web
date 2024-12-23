@@ -1,13 +1,20 @@
 import { z } from "zod"
 
-import { VeridaBaseRecordSchema } from "@/features/verida-database/schemas"
+import {
+  VeridaBaseRecordSchema,
+  VeridaBaseUnsavedRecordSchema,
+} from "@/features/verida-database/schemas"
 
 export type VeridaBaseRecord = z.infer<typeof VeridaBaseRecordSchema>
 
 export type VeridaRecord<T = Record<string, unknown>> = VeridaBaseRecord & T
 
+export type VeridaBaseUnsavedRecord = z.infer<
+  typeof VeridaBaseUnsavedRecordSchema
+>
+
 export type UnsavedVeridaRecord<T = Record<string, unknown>> =
-  Partial<VeridaBaseRecord> & T
+  VeridaBaseUnsavedRecord & T
 
 export type VeridaDatabaseQueryFilter<T = Record<string, unknown>> = {
   [K in keyof T | `${string}.${string}`]?:

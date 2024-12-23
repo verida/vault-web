@@ -2,6 +2,7 @@
 
 import { getCoreRowModel, useReactTable } from "@tanstack/react-table"
 import Link from "next/link"
+import { useSearchParams } from "next/navigation"
 import { useMemo } from "react"
 
 import { getDataRecordsTableColumns } from "@/app/(connected)/data/[databaseId]/_components/data-records-table-columns"
@@ -60,6 +61,7 @@ export function DataRecordsTable(props: DataRecordsTableProps) {
     },
   })
 
+  const searchParams = useSearchParams()
   const { serializeItemId } = useItemIdState()
 
   return (
@@ -67,7 +69,9 @@ export function DataRecordsTable(props: DataRecordsTableProps) {
       table={table}
       rowComponent={(row) => (
         <Link
-          href={serializeItemId({ itemId: row.original._id })}
+          href={serializeItemId(`?${searchParams.toString()}`, {
+            itemId: row.original._id,
+          })}
           className="rounded-lg"
         >
           <DataTableGenericRow

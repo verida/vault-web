@@ -2,6 +2,7 @@ import { Metadata } from "next"
 import { notFound } from "next/navigation"
 import { Suspense } from "react"
 
+import { PageWrapper } from "@/components/page-wrapper"
 import {
   LoadingBlock,
   LoadingBlockDescription,
@@ -29,10 +30,10 @@ export default function InboxLayout(props: InboxLayoutProps) {
   // Have to use a custom loading page because the item page is a modal for
   // which we don't want the conventional loading file to be displayed
   return (
-    <>
+    <PageWrapper pageTitle="Inbox">
       <Suspense fallback={<InboxLoadingPage />}>{children}</Suspense>
       {item}
-    </>
+    </PageWrapper>
   )
 }
 InboxLayout.displayName = "InboxLayout"

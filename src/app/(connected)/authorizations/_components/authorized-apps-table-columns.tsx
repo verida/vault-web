@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { createColumnHelper } from "@tanstack/react-table"
 import { intlFormat, isDate } from "date-fns"
 import Link from "next/link"
@@ -71,7 +72,6 @@ export const authorizedAppsTableColumns = [
     cell: (context) => {
       const value = context.getValue()
 
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       const formatScope = useCallback((scope: VeridaOauthScope) => {
         const databaseDef = ALL_DATABASE_DEFS.find(
           (db) => db.databaseVaultName === scope.database

@@ -3,6 +3,11 @@
 import { intlFormat, isDate } from "date-fns"
 import { useCallback } from "react"
 
+import {
+  ItemSheetBody,
+  ItemSheetClose,
+  ItemSheetFooter,
+} from "@/components/item-sheet"
 import { Typography } from "@/components/typography"
 import {
   Accordion,
@@ -49,41 +54,43 @@ export function GenericDataItemPageBody(props: GenericDataItemPageBodyProps) {
   } = record
 
   return (
-    <div className="flex flex-col gap-4">
-      <GenericDataItemField propertyName={"name"} value={name} />
-      <GenericDataItemField propertyName={"summary"} value={summary} />
-      {Object.entries(otherProperties).map(([key, value]) => (
-        <GenericDataItemField key={key} propertyName={key} value={value} />
-      ))}
-      <Accordion type="single" collapsible>
-        <AccordionItem value="item-1" className="border-b-0">
-          <AccordionTrigger>
-            <div className="text-muted-foreground">
-              <Typography variant="base-semibold">
-                Additional Properties
-              </Typography>
-            </div>
-          </AccordionTrigger>
-          <AccordionContent className="flex flex-col gap-4">
-            <GenericDataItemField propertyName={"_id"} value={_id} />
-            <GenericDataItemField propertyName={"_rev"} value={_rev} />
-            <GenericDataItemField
-              propertyName={"insertedAt"}
-              value={insertedAt}
-            />
-            <GenericDataItemField
-              propertyName={"modifiedAt"}
-              value={modifiedAt}
-            />
-            <GenericDataItemField propertyName={"schema"} value={schema} />
-            <GenericDataItemField
-              propertyName={"signatures"}
-              value={signatures}
-            />
-          </AccordionContent>
-        </AccordionItem>
-      </Accordion>
-    </div>
+    <ItemSheetBody>
+      <div className="flex flex-col gap-4">
+        <GenericDataItemField propertyName={"name"} value={name} />
+        <GenericDataItemField propertyName={"summary"} value={summary} />
+        {Object.entries(otherProperties).map(([key, value]) => (
+          <GenericDataItemField key={key} propertyName={key} value={value} />
+        ))}
+        <Accordion type="single" collapsible>
+          <AccordionItem value="item-1" className="border-b-0">
+            <AccordionTrigger>
+              <div className="text-muted-foreground">
+                <Typography variant="base-semibold">
+                  Additional Properties
+                </Typography>
+              </div>
+            </AccordionTrigger>
+            <AccordionContent className="flex flex-col gap-4">
+              <GenericDataItemField propertyName={"_id"} value={_id} />
+              <GenericDataItemField propertyName={"_rev"} value={_rev} />
+              <GenericDataItemField
+                propertyName={"insertedAt"}
+                value={insertedAt}
+              />
+              <GenericDataItemField
+                propertyName={"modifiedAt"}
+                value={modifiedAt}
+              />
+              <GenericDataItemField propertyName={"schema"} value={schema} />
+              <GenericDataItemField
+                propertyName={"signatures"}
+                value={signatures}
+              />
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
+      </div>
+    </ItemSheetBody>
   )
 }
 GenericDataItemPageBody.displayName = "GenericDataItemPageBody"
@@ -135,19 +142,19 @@ export function GenericDataItemField(props: GenericDataItemFieldProps) {
 
 export type GenericDataItemPageFooterProps = {
   record: VeridaRecord
-  // TODO: Add schema to the props to use it to render the footer
-  onClose: () => void
+  // TODO: Add schema to the props to use it to render the footer if needed
 }
 
 export function GenericDataItemPageFooter(
-  props: GenericDataItemPageFooterProps
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  _props: GenericDataItemPageFooterProps
 ) {
-  const { onClose } = props
-
   return (
-    <Button variant="outline" className="w-full" onClick={onClose}>
-      Close
-    </Button>
+    <ItemSheetFooter>
+      <Button variant="outline" className="w-full" asChild>
+        <ItemSheetClose>Close</ItemSheetClose>
+      </Button>
+    </ItemSheetFooter>
   )
 }
 GenericDataItemPageFooter.displayName = "GenericDataItemPageFooter"
