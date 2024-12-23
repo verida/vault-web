@@ -729,10 +729,10 @@
   resolved "https://registry.yarnpkg.com/@next/env/-/env-14.2.20.tgz#0be2cc955f4eb837516e7d7382284cd5bc1d5a02"
   integrity sha512-JfDpuOCB0UBKlEgEy/H6qcBSzHimn/YWjUHzKl1jMeUO+QVRdzmTTl8gFJaNO87c8DXmVKhFCtwxQ9acqB3+Pw==
 
-"@next/eslint-plugin-next@15.1.0":
-  version "15.1.0"
-  resolved "https://registry.yarnpkg.com/@next/eslint-plugin-next/-/eslint-plugin-next-15.1.0.tgz#421b47ad0772e11b2d67416054675cd32f95b8b7"
-  integrity sha512-+jPT0h+nelBT6HC9ZCHGc7DgGVy04cv4shYdAe6tKlEbjQUtwU3LzQhzbDHQyY2m6g39m6B0kOFVuLGBrxxbGg==
+"@next/eslint-plugin-next@15.1.2":
+  version "15.1.2"
+  resolved "https://registry.yarnpkg.com/@next/eslint-plugin-next/-/eslint-plugin-next-15.1.2.tgz#75cf49c0d96b9132d895b3c853dc3ecd70db77ee"
+  integrity sha512-sgfw3+WdaYOGPKCvM1L+UucBmRfh8V2Ygefp7ELON0+0vY7uohQwXXnVWg3rY7mXDKharQR3o7uedpfvnU2hlQ==
   dependencies:
     fast-glob "3.3.1"
 
@@ -1873,6 +1873,11 @@
   resolved "https://registry.yarnpkg.com/@sentry/core/-/core-8.45.1.tgz#da3b13a8fd2276e8a1d4f5a38f9b8a0ed6647b49"
   integrity sha512-1fGmkr0paZshh38mD29c4CfkRkgFoYDaAGyDLoGYfTbEph/lU8RHB2HWzN93McqNdMEhl1DRRyqIasUZoPlqSA==
 
+"@sentry/core@8.47.0":
+  version "8.47.0"
+  resolved "https://registry.yarnpkg.com/@sentry/core/-/core-8.47.0.tgz#e811444552f7a91b5de573875a318a6cd4e802f8"
+  integrity sha512-iSEJZMe3DOcqBFZQAqgA3NB2lCWBc4Gv5x/SCri/TVg96wAlss4VrUunSI2Mp0J4jJ5nJcJ2ChqHSBAU48k3FA==
+
 "@sentry/nextjs@^8.45.1":
   version "8.45.1"
   resolved "https://registry.yarnpkg.com/@sentry/nextjs/-/nextjs-8.45.1.tgz#4bad8fe78709c8efe63f34d5b4ed86bfa086efd6"
@@ -1950,12 +1955,12 @@
     "@sentry/core" "8.45.1"
     hoist-non-react-statics "^3.3.2"
 
-"@sentry/types@^8.45.1":
-  version "8.45.1"
-  resolved "https://registry.yarnpkg.com/@sentry/types/-/types-8.45.1.tgz#6abc8b48cf5bd153bc5e4ed4eb4cdd98af112cbd"
-  integrity sha512-6AStsX4J/2pWLKwN1CLgh0U2NagZQ5W1L00w596brg+9HMiwOfIIhI2sPuZvTl37E6Rjzc6JUljXhJWftDBJ5g==
+"@sentry/types@^8.47.0":
+  version "8.47.0"
+  resolved "https://registry.yarnpkg.com/@sentry/types/-/types-8.47.0.tgz#b04b2c7af51c2ffa25d38cd2f924ee95eeced910"
+  integrity sha512-ruiowlIBQUPDwNcO0KTudKP9T2QYF3S2TLhDdoJb+0ZGJduH4PsgGAojUSpGR+idKfrlOSlUpcdg9+WxsoOckg==
   dependencies:
-    "@sentry/core" "8.45.1"
+    "@sentry/core" "8.47.0"
 
 "@sentry/vercel-edge@8.45.1":
   version "8.45.1"
@@ -2158,10 +2163,10 @@
     "@tanstack/query-core" "5.62.7"
     "@tanstack/query-persist-client-core" "5.62.7"
 
-"@tanstack/react-query-devtools@^5.62.7":
-  version "5.62.7"
-  resolved "https://registry.yarnpkg.com/@tanstack/react-query-devtools/-/react-query-devtools-5.62.7.tgz#8f3f82822f3d5cb326026e96519dff3141d18533"
-  integrity sha512-wxXsdTZJRs//hMtJMU5aNlUaTclRFPqLvDNeWbRj8YpGD3aoo4zyu53W55W2DY16+ycg3fti21uCW4N9oyj91w==
+"@tanstack/react-query-devtools@^5.62.8":
+  version "5.62.8"
+  resolved "https://registry.yarnpkg.com/@tanstack/react-query-devtools/-/react-query-devtools-5.62.8.tgz#b635b18d747c28ab7b8e0dcbcd4c16932d6e6ab1"
+  integrity sha512-SwjXjQTRONd9WPeKVQQ9framG7YNqPV8PS+EGNVNXAyz2XThulMRCvZnh2+3DggnjcYM7YcpnuoZ4RH7q13p0g==
   dependencies:
     "@tanstack/query-devtools" "5.61.4"
 
@@ -3997,12 +4002,12 @@ escape-string-regexp@^5.0.0:
   resolved "https://registry.yarnpkg.com/escape-string-regexp/-/escape-string-regexp-5.0.0.tgz#4683126b500b61762f2dbebace1806e8be31b1c8"
   integrity sha512-/veY75JbMK4j1yjvuUxuVsiS/hr/4iHs9FTT6cgTexxdE0Ly/glccBAkloH/DofkjRbZU3bnoj38mOmhkZ0lHw==
 
-eslint-config-next@15.1.0:
-  version "15.1.0"
-  resolved "https://registry.yarnpkg.com/eslint-config-next/-/eslint-config-next-15.1.0.tgz#25a9a076b059905fd0cf3f6f832771724dfcbbdf"
-  integrity sha512-gADO+nKVseGso3DtOrYX9H7TxB/MuX7AUYhMlvQMqLYvUWu4HrOQuU7cC1HW74tHIqkAvXdwgAz3TCbczzSEXw==
+eslint-config-next@15.1.2:
+  version "15.1.2"
+  resolved "https://registry.yarnpkg.com/eslint-config-next/-/eslint-config-next-15.1.2.tgz#203f771d77a0b4be3088fce5c954bfc9bebf7783"
+  integrity sha512-PrMm1/4zWSJ689wd/ypWIR5ZF1uvmp3EkgpgBV1Yu6PhEobBjXMGgT8bVNelwl17LXojO8D5ePFRiI4qXjsPRA==
   dependencies:
-    "@next/eslint-plugin-next" "15.1.0"
+    "@next/eslint-plugin-next" "15.1.2"
     "@rushstack/eslint-patch" "^1.10.3"
     "@typescript-eslint/eslint-plugin" "^5.4.2 || ^6.0.0 || ^7.0.0 || ^8.0.0"
     "@typescript-eslint/parser" "^5.4.2 || ^6.0.0 || ^7.0.0 || ^8.0.0"
@@ -7527,10 +7532,10 @@ tailwindcss-animate@^1.0.7:
   resolved "https://registry.yarnpkg.com/tailwindcss-animate/-/tailwindcss-animate-1.0.7.tgz#318b692c4c42676cc9e67b19b78775742388bef4"
   integrity sha512-bl6mpH3T7I3UFxuvDEXLxy/VuFxBk5bbzplh7tXI68mwMokNYd1t9qPBHlnyTwfa4JGC4zP516I1hYYtQ/vspA==
 
-tailwindcss@^3.4.16:
-  version "3.4.16"
-  resolved "https://registry.yarnpkg.com/tailwindcss/-/tailwindcss-3.4.16.tgz#35a7c3030844d6000fc271878db4096b6a8d2ec9"
-  integrity sha512-TI4Cyx7gDiZ6r44ewaJmt0o6BrMCT5aK5e0rmJ/G9Xq3w7CX/5VXl/zIPEJZFUK5VEqwByyhqNPycPlvcK4ZNw==
+tailwindcss@^3.4.17:
+  version "3.4.17"
+  resolved "https://registry.yarnpkg.com/tailwindcss/-/tailwindcss-3.4.17.tgz#ae8406c0f96696a631c790768ff319d46d5e5a63"
+  integrity sha512-w33E2aCvSDP0tW9RZuNXadXlkHXqFzSkQew/aIa2i/Sj8fThxwovwlXHSPXTbAHwEIhBFXAedUhP2tueAKP8Og==
   dependencies:
     "@alloc/quick-lru" "^5.2.0"
     arg "^5.0.2"
