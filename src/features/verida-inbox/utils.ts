@@ -205,10 +205,10 @@ async function updateMessageReadStatus(
   messageRecord: VeridaInboxMessageRecord,
   readStatus: "read" | "unread"
 ): Promise<void> {
-  logger.info(`Marking message as ${readStatus}`)
+  logger.info(`Marking inbox message as ${readStatus}`)
 
   if (!messageRecord._id) {
-    throw new Error("Message record ID is required")
+    throw new Error("Inbox message record ID is required")
   }
 
   const updatedMessageRecord = {
@@ -217,16 +217,16 @@ async function updateMessageReadStatus(
   }
 
   if (!!updatedMessageRecord.read === !!messageRecord.read) {
-    throw new Error(`Message already marked as ${readStatus}`)
+    throw new Error(`Inbox message already marked as ${readStatus}`)
   }
 
   try {
     const inbox = await messagingEngine?.getInbox()
     await inbox.privateInbox.save(updatedMessageRecord)
 
-    logger.info(`Message marked as ${readStatus}`)
+    logger.info(`Inbox message marked as ${readStatus}`)
   } catch (error) {
-    throw new Error(`Failed to mark message as ${readStatus}`, {
+    throw new Error(`Failed to mark inbox message as ${readStatus}`, {
       cause: error,
     })
   }
