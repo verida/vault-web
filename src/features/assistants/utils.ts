@@ -1,13 +1,12 @@
 import { commonConfig } from "@/config/common"
 import {
-  PrivateDataApiV1LLMPersonalResponseSchema,
+  PrivateDataApiV1LLMAgentResponseSchema,
   PrivateDataApiV1LlmHotloadResponseSchema,
-  PromptConfigSchema,
 } from "@/features/assistants/schemas"
 import {
   AiAssistantOutput,
   AiPromptInput,
-  PrivateDataApiV1LLMPersonalRequestBody,
+  PrivateDataApiV1LLMAgentRequestBody,
 } from "@/features/assistants/types"
 import { Logger } from "@/features/telemetry"
 
@@ -39,27 +38,30 @@ export async function sendAiPromptInputToAssistant(
     throw new Error("Prompt is required")
   }
 
-  const promptConfigValidationResult = PromptConfigSchema.safeParse(
-    aiPromptInput.config?.promptConfig
-  )
+  // Temporarily deprecated as unused by the new agent but may come back later
+  // const promptConfigValidationResult = PromptConfigSchema.safeParse(
+  //   aiPromptInput.config?.promptConfig
+  // )
 
   // Explicitly building the body to ensure that the request is correct
   // Mostly because the structures are not the same
   // But also because aiPromptInput may have additional fields
-  const body: PrivateDataApiV1LLMPersonalRequestBody = {
+  const body: PrivateDataApiV1LLMAgentRequestBody = {
     prompt: aiPromptInput.prompt,
-    provider:
-      aiPromptInput.config?.llmProvider ?? commonConfig.DEFAULT_AI_PROVIDER,
-    model: aiPromptInput.config?.llmModel ?? commonConfig.DEFAULT_AI_MODEL,
-    promptConfig: promptConfigValidationResult.success
-      ? aiPromptInput.config?.promptConfig
-      : undefined,
+
+    // Temporarily deprecated as unused by the new agent but may come back later
+    // provider:
+    //   aiPromptInput.config?.llmProvider ?? commonConfig.DEFAULT_AI_PROVIDER,
+    // model: aiPromptInput.config?.llmModel ?? commonConfig.DEFAULT_AI_MODEL,
+    // promptConfig: promptConfigValidationResult.success
+    //   ? aiPromptInput.config?.promptConfig
+    //   : undefined,
   }
 
   try {
     logger.debug("Sending request to AI assistant API")
     const response = await fetch(
-      `${commonConfig.PRIVATE_DATA_API_BASE_URL}/api/rest/v1/llm/personal`,
+      `${commonConfig.PRIVATE_DATA_API_BASE_URL}/api/rest/v1/llm/agent`,
       {
         method: "POST",
         headers: {
@@ -78,16 +80,16 @@ export async function sendAiPromptInputToAssistant(
     logger.debug("Received response from AI assistant API")
 
     // Validate the API response against the expected schema
-    const validatedData = PrivateDataApiV1LLMPersonalResponseSchema.parse(data)
+    const validatedData = PrivateDataApiV1LLMAgentResponseSchema.parse(data)
     logger.info("Successfully processed prompt input")
 
     const output: AiAssistantOutput = {
       assistantId: aiPromptInput.assistantId,
       status: "processed",
-      result: validatedData.result,
+      result: validatedData.response.output,
       processedAt: new Date(),
       processingTime: validatedData.duration,
-      databases: validatedData.process.databases,
+      // databases: validatedData.process.databases,
     }
 
     return output

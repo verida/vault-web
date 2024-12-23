@@ -32,7 +32,9 @@ export const featureFlags = {
       enabled: commonConfig.FEATURE_FLAG_AI_ASSISTANT_USER_PROMPTS_ENABLED,
     },
     config: {
-      enabled: commonConfig.FEATURE_FLAG_AI_ASSISTANT_PROMPT_CONFIG_ENABLED,
+      // Temporaily deprecated for the new agent but may come back later
+      enabled: false,
+      // enabled: commonConfig.FEATURE_FLAG_AI_ASSISTANT_PROMPT_CONFIG_ENABLED,
     },
   },
   dataConnections: {
