@@ -20,7 +20,10 @@ import {
 } from "@/components/item-sheet"
 import { Button } from "@/components/ui/button"
 import { Logger } from "@/features/telemetry/logger"
-import { VeridaInboxMessageTypeMessageDataSchema } from "@/features/verida-inbox/schemas"
+import {
+  VeridaInboxMessageTypeDataSendDataSchema,
+  VeridaInboxMessageTypeMessageDataSchema,
+} from "@/features/verida-inbox/schemas"
 import {
   VeridaInboxMessageRecord,
   VeridaInboxMessageSupportedType,
@@ -41,12 +44,36 @@ export function MessageItemPageContent(props: MessageItemPageContentProps) {
       return null
     }
 
-    try {
-      return VeridaInboxMessageTypeMessageDataSchema.parse(inboxMessage.data)
-    } catch (error) {
+    logger.debug("inboxMessage", { inboxMessage })
+
+    const validationResult = VeridaInboxMessageTypeMessageDataSchema.safeParse(
+      inboxMessage.data
+    )
+
+    if (validationResult.success) {
+      return validationResult.data
+    }
+
+    const legacyDataValidationResult =
+      VeridaInboxMessageTypeDataSendDataSchema.safeParse(inboxMessage.data)
+
+    if (!legacyDataValidationResult.success) {
       logger.warn("Failed to parse data of message inbox message")
       return null
     }
+
+    const legacyData = legacyDataValidationResult.data.data
+    const dataItem = legacyData && legacyData.length > 0 ? legacyData[0] : null
+
+    const legacyDataItemValidationResult =
+      VeridaInboxMessageTypeMessageDataSchema.safeParse(dataItem)
+
+    if (!legacyDataItemValidationResult.success) {
+      logger.warn("Failed to parse data of message inbox message")
+      return null
+    }
+
+    return legacyDataItemValidationResult.data
   }, [inboxMessage])
 
   const parsedLink = useMemo(() => {
@@ -106,7 +133,7 @@ export function MessageItemPageContent(props: MessageItemPageContentProps) {
               >
                 <div className="flex flex-col items-center gap-0">
                   <span>{parsedLink.text}</span>
-                  <span className="text-normal text-xs opacity-70">
+                  <span className="text-xs font-normal opacity-80">
                     {`${parsedLink.url.protocol}//${parsedLink.url.hostname}`}
                   </span>
                 </div>
