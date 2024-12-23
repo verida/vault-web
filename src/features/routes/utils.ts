@@ -24,6 +24,10 @@ export function getInboxPageRoute() {
   return `/inbox`
 }
 
+export function getInboxItemPageRoute({ messageId }: { messageId: string }) {
+  return `/inbox?itemId=${messageId}`
+}
+
 export function getDataPageRoute() {
   return `/data`
 }
