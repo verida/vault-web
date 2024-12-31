@@ -1,3 +1,19 @@
+# 0.11.0 (2024-12-31)
+
+## Enhancements
+
+- Use new agent-based AI assistant
+- Display upcoming data connections
+- Display security details in a dialog rather than a popover
+- Display error message if access check fails
+
+## Misc
+
+- Rework inbox feature implementation (dev only for now)
+- Prepare OAuth integration and authorized apps management (dev only for now)
+- Upgrade Verida SDK
+- Update other dependencies
+
 # 0.10.0 (2024-12-05)
 
 ## Enhancements

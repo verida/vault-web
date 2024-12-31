@@ -55,7 +55,7 @@ export function DataConnectionsList(props: DataConnectionsListProps) {
       >
         {connections.map((connection) => (
           <article key={connection._id}>
-            <DataConnectionCard connection={connection} />
+            <DataConnectionCard connection={connection} className="h-full" />
           </article>
         ))}
       </div>

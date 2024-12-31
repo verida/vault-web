@@ -9,7 +9,7 @@ export function MessageBlock(props: MessageBlockProps) {
   return (
     <div
       className={cn(
-        "flex flex-col gap-0 rounded-lg bg-primary/5 p-4",
+        "flex flex-col gap-2 rounded-lg bg-primary/5 p-4",
         className
       )}
       {...divProps}

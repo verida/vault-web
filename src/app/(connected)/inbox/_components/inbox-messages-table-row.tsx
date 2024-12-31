@@ -3,6 +3,7 @@ import { useMemo } from "react"
 
 import { DataTableBaseRow } from "@/components/data-table/data-table-base-row"
 import { Typography } from "@/components/typography"
+import { Skeleton } from "@/components/ui/skeleton"
 import { EMPTY_VALUE_FALLBACK } from "@/constants/misc"
 import { InboxMessageTypeIndicator } from "@/features/verida-inbox/components/inbox-message-type-indicator"
 import { InboxMessageUnreadIndicator } from "@/features/verida-inbox/components/inbox-message-unread-indicator"
@@ -50,21 +51,29 @@ export function InboxMessagesTableRow(props: InboxMessagesTableRowProps) {
           />
           <div className="flex min-w-0 flex-1 flex-col gap-0.5">
             <div className="flex flex-row items-center justify-between gap-1">
-              <div className="flex min-w-0 flex-row items-baseline gap-1.5">
-                <div
-                  className={cn(
-                    "min-w-0 flex-1",
-                    profile?.name ? "" : "italic text-muted-foreground"
-                  )}
-                >
-                  <Typography
-                    variant={read ? "base-regular" : "base-semibold"}
-                    className="truncate"
-                  >
-                    {profile?.name || EMPTY_PROFILE_NAME_FALLBACK}
-                  </Typography>
-                </div>
-                {did === sentBy.did && <UserYourselfBadge className="" />}
+              <div className="flex flex-row gap-1.5">
+                {profile ? (
+                  <>
+                    <div
+                      className={cn(
+                        "min-w-0",
+                        profile?.name ? "" : "italic text-muted-foreground"
+                      )}
+                    >
+                      <Typography
+                        variant={read ? "base-regular" : "base-semibold"}
+                        className="h-5 truncate"
+                      >
+                        {profile?.name || EMPTY_PROFILE_NAME_FALLBACK}
+                      </Typography>
+                    </div>
+                  </>
+                ) : (
+                  <Skeleton className="my-[0.1875rem] h-3.5 w-32" />
+                )}
+                {did === sentBy.did && (
+                  <UserYourselfBadge className="self-start" />
+                )}
               </div>
               <div className="text-muted-foreground">
                 <Typography
@@ -128,21 +137,29 @@ export function InboxMessagesTableRow(props: InboxMessagesTableRowProps) {
             className="size-10"
           />
           <div className="flex min-w-0 flex-1 flex-col gap-0.5">
-            <div className="flex min-w-0 flex-row items-baseline gap-1.5">
-              <div
-                className={cn(
-                  "min-w-0",
-                  profile?.name ? "" : "italic text-muted-foreground"
-                )}
-              >
-                <Typography
-                  variant={read ? "base-regular" : "base-semibold"}
-                  className="truncate"
-                >
-                  {profile?.name || EMPTY_PROFILE_NAME_FALLBACK}
-                </Typography>
-              </div>
-              {did === sentBy.did && <UserYourselfBadge />}
+            <div className="flex flex-row gap-1.5">
+              {profile ? (
+                <>
+                  <div
+                    className={cn(
+                      "min-w-0",
+                      profile?.name ? "" : "italic text-muted-foreground"
+                    )}
+                  >
+                    <Typography
+                      variant={read ? "base-regular" : "base-semibold"}
+                      className="h-5 truncate"
+                    >
+                      {profile?.name || EMPTY_PROFILE_NAME_FALLBACK}
+                    </Typography>
+                  </div>
+                </>
+              ) : (
+                <Skeleton className="my-[0.1875rem] h-3.5 w-32" />
+              )}
+              {did === sentBy.did && (
+                <UserYourselfBadge className="self-start" />
+              )}
             </div>
             <div className="text-muted-foreground">
               <Typography variant={read ? "base-s-regular" : "base-s-semibold"}>

@@ -4,6 +4,7 @@ import { intlFormat, isDate } from "date-fns"
 import { useCallback, useEffect, useState } from "react"
 
 import { Typography } from "@/components/typography"
+import { Skeleton } from "@/components/ui/skeleton"
 import { EMPTY_VALUE_FALLBACK } from "@/constants/misc"
 import { VeridaInboxMessageRecord } from "@/features/verida-inbox/types"
 import { ProfileAvatar } from "@/features/verida-profile/components/profile-avatar"
@@ -76,15 +77,23 @@ export function InboxMessageHeader(props: InboxMessageHeaderProps) {
         className="size-12"
       />
       <div className="flex min-w-0 flex-1 flex-col gap-1">
-        <div
-          className={cn(
-            "flex flex-row items-baseline gap-1.5",
-            profile?.name ? "" : "italic text-muted-foreground"
+        <div className="flex flex-row gap-1.5">
+          {profile ? (
+            <>
+              <div
+                className={cn(
+                  "min-w-0",
+                  profile?.name ? "" : "italic text-muted-foreground"
+                )}
+              >
+                <Typography variant="heading-5" className="h-6 truncate">
+                  {profile?.name || EMPTY_PROFILE_NAME_FALLBACK}
+                </Typography>
+              </div>
+            </>
+          ) : (
+            <Skeleton className="my-1 h-4 w-36" />
           )}
-        >
-          <Typography variant="heading-5" className="truncate">
-            {profile?.name || EMPTY_PROFILE_NAME_FALLBACK}
-          </Typography>
           {did === sentBy.did && <UserYourselfBadge className="self-start" />}
         </div>
         <div className="text-muted-foreground">
