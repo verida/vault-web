@@ -24,6 +24,10 @@ export function getInboxPageRoute() {
   return `/inbox`
 }
 
+export function getInboxItemPageRoute({ messageId }: { messageId: string }) {
+  return `/inbox?itemId=${messageId}`
+}
+
 export function getDataPageRoute() {
   return `/data`
 }
@@ -64,4 +68,8 @@ export function getConnectionsSummaryLogsPageRoute() {
 
 export function getNewDataConnectionCallbackPageRoute() {
   return `/callback/new-data-connection`
+}
+
+export function getAuthorizedAppsPageRoute() {
+  return `/authorizations`
 }

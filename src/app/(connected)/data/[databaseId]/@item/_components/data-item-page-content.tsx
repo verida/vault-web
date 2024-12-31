@@ -1,6 +1,6 @@
 "use client"
 
-import { useCallback, useMemo } from "react"
+import { useMemo } from "react"
 
 import {
   DataDeleteRecordDialog,
@@ -15,6 +15,7 @@ import { DeleteIcon } from "@/components/icons/delete-icon"
 import {
   ItemSheet,
   ItemSheetBody,
+  ItemSheetClose,
   ItemSheetContent,
   ItemSheetFooter,
   ItemSheetHeader,
@@ -54,10 +55,6 @@ export type DataItemPageContentProps = {
 export function DataItemPageContent(props: DataItemPageContentProps) {
   const { open, onOpenChange, databaseDefinition, itemId } = props
 
-  const handleClose = useCallback(() => {
-    onOpenChange(false)
-  }, [onOpenChange])
-
   const { record, isLoading, isError } = useVeridaDataRecord({
     databaseName: databaseDefinition.databaseVaultName,
     recordId: itemId,
@@ -86,51 +83,65 @@ export function DataItemPageContent(props: DataItemPageContentProps) {
 
     if (isLoading) {
       return (
-        <LoadingBlock>
-          <LoadingBlockSpinner />
-          <LoadingBlockTitle>Loading data item...</LoadingBlockTitle>
-          <LoadingBlockDescription>
-            Please wait while we fetch the item details.
-          </LoadingBlockDescription>
-        </LoadingBlock>
+        <ItemSheetBody>
+          <div className="flex h-full flex-1 flex-row items-center justify-center p-4">
+            <LoadingBlock>
+              <LoadingBlockSpinner />
+              <LoadingBlockTitle>Loading data item...</LoadingBlockTitle>
+              <LoadingBlockDescription>
+                Please wait while we fetch the item details.
+              </LoadingBlockDescription>
+            </LoadingBlock>
+          </div>
+        </ItemSheetBody>
       )
     }
 
     if (isError) {
       return (
-        <ErrorBlock>
-          <ErrorBlockImage />
-          <ErrorBlockTitle>Error fetching data</ErrorBlockTitle>
-          <ErrorBlockDescription>
-            There was an error retrieving the item. Please try again later.
-          </ErrorBlockDescription>
-        </ErrorBlock>
+        <ItemSheetBody>
+          <div className="flex h-full flex-1 flex-row items-center justify-center p-4">
+            <ErrorBlock>
+              <ErrorBlockImage />
+              <ErrorBlockTitle>Error fetching data</ErrorBlockTitle>
+              <ErrorBlockDescription>
+                There was an error retrieving the item. Please try again later.
+              </ErrorBlockDescription>
+            </ErrorBlock>
+          </div>
+        </ItemSheetBody>
       )
     }
 
     return (
-      <ErrorBlock>
-        <ErrorBlockImage />
-        <ErrorBlockTitle>Item not found</ErrorBlockTitle>
-        <ErrorBlockDescription>
-          The requested item could not be found.
-        </ErrorBlockDescription>
-      </ErrorBlock>
+      <ItemSheetBody>
+        <div className="flex h-full flex-1 flex-row items-center justify-center p-4">
+          <ErrorBlock>
+            <ErrorBlockImage />
+            <ErrorBlockTitle>Item not found</ErrorBlockTitle>
+            <ErrorBlockDescription>
+              The requested item could not be found.
+            </ErrorBlockDescription>
+          </ErrorBlock>
+        </div>
+      </ItemSheetBody>
     )
   }, [record, isLoading, isError])
 
   const footer = useMemo(() => {
     if (record) {
       // TODO: Add switch to render the footer based on the data type
-      return <GenericDataItemPageFooter record={record} onClose={handleClose} />
+      return <GenericDataItemPageFooter record={record} />
     }
 
     return (
-      <Button variant="outline" className="w-full" onClick={handleClose}>
-        Close
-      </Button>
+      <ItemSheetFooter>
+        <Button variant="outline" className="w-full" asChild>
+          <ItemSheetClose>Close</ItemSheetClose>
+        </Button>
+      </ItemSheetFooter>
     )
-  }, [record, handleClose])
+  }, [record])
 
   return (
     <ItemSheet open={open} onOpenChange={onOpenChange}>
@@ -159,8 +170,8 @@ export function DataItemPageContent(props: DataItemPageContentProps) {
         >
           <ItemSheetTitle description="Data item">{title}</ItemSheetTitle>
         </ItemSheetHeader>
-        <ItemSheetBody>{body}</ItemSheetBody>
-        <ItemSheetFooter>{footer}</ItemSheetFooter>
+        {body}
+        {footer}
       </ItemSheetContent>
     </ItemSheet>
   )

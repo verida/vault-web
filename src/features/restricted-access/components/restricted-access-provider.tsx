@@ -22,7 +22,7 @@ export function RestrictedAccessProvider(props: RestrictedAccessProviderProps) {
 
   const [persist, setPersist] = useState(false)
 
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, isError } = useQuery({
     queryKey: ["restricted-access", "status", did],
     queryFn: async (): Promise<RestrictedAccessStatus> => {
       if (!did) {
@@ -45,10 +45,11 @@ export function RestrictedAccessProvider(props: RestrictedAccessProviderProps) {
 
   const value: RestrictedAccessContextValue = useMemo(
     () => ({
-      isLoading,
       access: data ?? "denied",
+      isLoading,
+      isError,
     }),
-    [isLoading, data]
+    [isLoading, data, isError]
   )
 
   return (

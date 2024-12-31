@@ -6,7 +6,7 @@ import {
   AppHeaderNavBar,
   AppHeaderNavMenu,
 } from "@/app/(connected)/_components/app-header-nav"
-import { IdentityDropdownMenu } from "@/app/(connected)/_components/identity-dropdown-menu"
+import { VeridaIdentityDropdownMenu } from "@/components/verida/verida-identity-dropdown-menu"
 import { featureFlags } from "@/config/features"
 import { cn } from "@/styles/utils"
 
@@ -44,7 +44,7 @@ export function AppHeader(props: AppHeaderProps) {
             {featureFlags.inbox.enabled ? (
               <AppHeaderInboxLink className="h-8 w-8 md:h-12 md:w-auto" />
             ) : null}
-            <IdentityDropdownMenu />
+            <VeridaIdentityDropdownMenu />
           </div>
         </div>
       </div>

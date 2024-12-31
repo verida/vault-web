@@ -10,7 +10,7 @@ import { MarkdownRenderer } from "@/components/markdown-renderer"
 import { Typography } from "@/components/typography"
 import { Avatar } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
+import { Card, CardBody, CardFooter, CardHeader } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton"
 import { EMPTY_VALUE_FALLBACK } from "@/constants/misc"
 import { DEFAULT_ASSISTANT } from "@/features/assistants/constants"
@@ -65,10 +65,10 @@ export function AssistantOutputCard(props: AssistantOutputCardProps) {
       return undefined
     }
 
-    const totalSeconds = aiAssistantOutput.processingTime
+    const milliseconds = aiAssistantOutput.processingTime
+    const totalSeconds = milliseconds / 1000
     let minutes = Math.floor(totalSeconds / 60)
     const remainingSeconds = totalSeconds % 60
-    const milliseconds = Math.floor((totalSeconds % 1) * 1000)
 
     // If less than a second, show milliseconds
     if (minutes === 0 && remainingSeconds < 1) {
@@ -168,7 +168,7 @@ export function AssistantOutputCard(props: AssistantOutputCardProps) {
             </div>
           ) : null}
         </CardHeader>
-        <CardContent className="p-0">
+        <CardBody className="p-0">
           {!aiAssistantOutput || aiAssistantOutput?.status === "processing" ? (
             <AssistantOutputSkeleton className="w-full" />
           ) : (
@@ -176,7 +176,7 @@ export function AssistantOutputCard(props: AssistantOutputCardProps) {
               {aiAssistantOutput.result}
             </MarkdownRenderer>
           )}
-        </CardContent>
+        </CardBody>
         {displayFooterInfo ? (
           <CardFooter className="flex flex-row justify-end p-0 text-end text-muted-foreground">
             <div className="flex flex-col gap-0">

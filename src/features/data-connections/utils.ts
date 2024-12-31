@@ -113,7 +113,20 @@ export async function getDataProviders(): Promise<DataProvider[]> {
     // Sort the providers by label
     return providers
       .filter((provider) => provider.id !== "mock")
-      .sort((a, b) => a.label.localeCompare(b.label))
+      .filter(
+        (provider) =>
+          // For now, explicitely accepting active and upcoming providers
+          // But we'll need to update in case of additional statuses
+          provider.status === "active" || provider.status === "upcoming"
+      )
+      .sort((a, b) => {
+        // Sort by status first (active before upcoming)
+        if (a.status !== b.status) {
+          return a.status === "active" ? -1 : 1
+        }
+        // Then sort by label
+        return a.label.localeCompare(b.label)
+      })
   } catch (error) {
     throw new Error("Error fetching data providers", { cause: error })
   }
@@ -122,7 +135,7 @@ export async function getDataProviders(): Promise<DataProvider[]> {
 /**
  * Fetches data connections from the API or returns mock data if the API is not configured.
  *
- * @param key - The API key for authentication
+ * @param sessionToken - The session token for authentication
  * @returns A promise that resolves to an array of DataConnection
  * @throws Error if there's an issue fetching the data connections
  */

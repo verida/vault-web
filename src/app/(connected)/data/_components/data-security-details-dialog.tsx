@@ -3,43 +3,43 @@ import Link from "next/link"
 
 import { Typography } from "@/components/typography"
 import {
-  SecurityDetailsPopover,
-  SecurityDetailsPopoverBody,
-  SecurityDetailsPopoverContent,
-  SecurityDetailsPopoverDescription,
-  SecurityDetailsPopoverFooter,
-  SecurityDetailsPopoverHeader,
-  SecurityDetailsPopoverTitle,
-  SecurityDetailsPopoverTrigger,
+  SecurityDetailsDialog,
+  SecurityDetailsDialogBody,
+  SecurityDetailsDialogContent,
+  SecurityDetailsDialogDescription,
+  SecurityDetailsDialogFooter,
+  SecurityDetailsDialogHeader,
+  SecurityDetailsDialogTitle,
+  SecurityDetailsDialogTrigger,
   SecurityIcon,
 } from "@/components/ui/security"
 
-export type DataSecurityDetailsPopoverProps = React.ComponentProps<
-  typeof SecurityDetailsPopoverTrigger
+type DataSecurityDetailsDialogProps = React.ComponentProps<
+  typeof SecurityDetailsDialogTrigger
 >
 
-export function DataSecurityDetailsPopover(
-  props: DataSecurityDetailsPopoverProps
+export function DataSecurityDetailsDialog(
+  props: DataSecurityDetailsDialogProps
 ) {
   const { ...triggerProps } = props
 
   return (
-    <SecurityDetailsPopover>
-      <SecurityDetailsPopoverTrigger {...triggerProps} />
-      <SecurityDetailsPopoverContent>
-        <SecurityDetailsPopoverHeader>
+    <SecurityDetailsDialog>
+      <SecurityDetailsDialogTrigger {...triggerProps} />
+      <SecurityDetailsDialogContent>
+        <SecurityDetailsDialogHeader>
           <div className="flex min-w-0 flex-row items-center gap-2">
             <SecurityIcon className="size-5" />
-            <SecurityDetailsPopoverTitle className="flex-1">
+            <SecurityDetailsDialogTitle className="flex-1">
               Your data is protected
-            </SecurityDetailsPopoverTitle>
+            </SecurityDetailsDialogTitle>
           </div>
-          <SecurityDetailsPopoverDescription>
+          <SecurityDetailsDialogDescription>
             Your data is securely stored in your private space (Vault) on the
             Verida Network Confidential Storage.
-          </SecurityDetailsPopoverDescription>
-        </SecurityDetailsPopoverHeader>
-        <SecurityDetailsPopoverBody className="gap-4">
+          </SecurityDetailsDialogDescription>
+        </SecurityDetailsDialogHeader>
+        <SecurityDetailsDialogBody className="flex flex-col gap-4">
           <div className="flex items-start gap-3">
             <KeyRoundIcon className="size-4 shrink-0 text-status-secured-foreground" />
             <div className="flex flex-col gap-1">
@@ -94,8 +94,8 @@ export function DataSecurityDetailsPopover(
               </div>
             </div>
           </div>
-        </SecurityDetailsPopoverBody>
-        <SecurityDetailsPopoverFooter>
+        </SecurityDetailsDialogBody>
+        <SecurityDetailsDialogFooter>
           <Link
             href="https://www.verida.network/data-security"
             target="_blank"
@@ -105,9 +105,9 @@ export function DataSecurityDetailsPopover(
               Learn more about data security
             </Typography>
           </Link>
-        </SecurityDetailsPopoverFooter>
-      </SecurityDetailsPopoverContent>
-    </SecurityDetailsPopover>
+        </SecurityDetailsDialogFooter>
+      </SecurityDetailsDialogContent>
+    </SecurityDetailsDialog>
   )
 }
-DataSecurityDetailsPopover.displayName = "DataSecurityDetailsPopover"
+DataSecurityDetailsDialog.displayName = "DataSecurityDetailsDialog"

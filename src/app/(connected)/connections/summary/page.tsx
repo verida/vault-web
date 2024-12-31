@@ -2,9 +2,10 @@ import {
   ConnectDataProviderDialog,
   ConnectDataProviderDialogTrigger,
 } from "@/app/(connected)/connections/summary/_components/connect-data-provider-dialog"
-import { ConnectionsSecurityDetailsPopover } from "@/app/(connected)/connections/summary/_components/connections-security-details-popover"
+import { ConnectionsSecurityDetailsDialog } from "@/app/(connected)/connections/summary/_components/connections-security-details-dialog"
 import { DataConnectionsList } from "@/app/(connected)/connections/summary/_components/data-connections-list"
-import { DataProvidersList } from "@/app/(connected)/connections/summary/_components/data-providers-list"
+import { DataProvidersSection } from "@/app/(connected)/connections/summary/_components/data-providers-section"
+import { SummarySectionWrapper } from "@/app/(connected)/connections/summary/_components/summary-section-wrapper"
 import { SyncAllConnectionsButton } from "@/app/(connected)/connections/summary/_components/sync-all-connections-button"
 import { PlusIcon } from "@/components/icons/plus-icon"
 import { PageWrapper } from "@/components/page-wrapper"
@@ -33,17 +34,27 @@ export default function ConnectionsSummaryPage() {
       }
     >
       <div className="flex flex-col gap-8 sm:gap-10">
-        <div className="flex flex-col gap-4 sm:gap-6">
-          <div className="flex flex-row items-center gap-4">
-            <Typography variant="heading-4">Connected Accounts</Typography>
-            <ConnectionsSecurityDetailsPopover />
-          </div>
+        <SummarySectionWrapper
+          sectionTitle={
+            <div className="flex flex-row items-center gap-4">
+              <Typography variant="heading-4">Connected Accounts</Typography>
+              <ConnectionsSecurityDetailsDialog />
+            </div>
+          }
+        >
           <DataConnectionsList />
-        </div>
-        <div className="flex flex-col gap-4 sm:gap-6">
-          <Typography variant="heading-4">Available Platforms</Typography>
-          <DataProvidersList />
-        </div>
+        </SummarySectionWrapper>
+        <DataProvidersSection
+          filteredStatus="active"
+          sectionTitle="Available Platforms"
+        />
+        <DataProvidersSection
+          filteredStatus="upcoming"
+          sectionTitle="Upcoming Platforms"
+          hideIfEmpty
+          hideIfError
+          hideIfLoading
+        />
       </div>
     </PageWrapper>
   )

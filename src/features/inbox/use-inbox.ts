@@ -4,6 +4,9 @@ import { useCallback } from "react"
 import { useInboxContext } from "@/features/inbox/use-inbox-context"
 import { useVerida } from "@/features/verida/hooks/use-verida"
 
+/**
+ * @deprecated
+ */
 export const useInbox = () => {
   const { messagingEngine } = useInboxContext()
   const { did } = useVerida()

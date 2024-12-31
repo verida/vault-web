@@ -21,12 +21,26 @@ export const CommonConfigSchema = z.object({
       return value === "myrtle"
         ? Network.MYRTLE
         : value === "banksia"
-          ? Network.DEVNET
-          : value === "local"
-            ? Network.LOCAL
-            : Network.BANKSIA
+          ? Network.BANKSIA
+          : value === "devnet"
+            ? Network.DEVNET
+            : value === "local"
+              ? Network.LOCAL
+              : Network.BANKSIA
     }),
-  VERIDA_RPC_URL: z.string().url().optional(),
+  VERIDA_RPC_URL: z
+    .union([z.string().url(), z.literal("")])
+    .optional()
+    .transform((value) => (value === "" ? undefined : value)),
+  PRIVATE_DATA_API_BASE_URL: z.string().url(),
+  FEATURE_FLAG_VERIDA_OAUTH_ENABLED: z
+    .string()
+    .optional()
+    .transform((value) => value === "true"),
+  FEATURE_FLAG_AUTHORIZED_APPS_ENABLED: z
+    .string()
+    .optional()
+    .transform((value) => value === "true"),
   FEATURE_FLAG_AI_ASSISTANT_ENABLED: z
     .string()
     .optional()
@@ -77,13 +91,10 @@ export const CommonConfigSchema = z.object({
     .string()
     .optional()
     .transform((value) => value === "true"),
-  PRIVATE_DATA_API_BASE_URL: z.string().url().optional(), // Temporary solution until the endpoints are fetched from the DID Document
   isClient: z.boolean(),
   appVersion: z.string(),
 })
 
 export const ServerConfigSchema = z.object({
-  NOTION_API_KEY: z.string(),
-  NOTION_RESTRICTED_ACCESS_DATABASE_ID: z.string(),
   // ... any other server-specific properties
 })

@@ -2,14 +2,18 @@ import { VariantProps, cva } from "class-variance-authority"
 import { ShieldAlertIcon, ShieldCheckIcon } from "lucide-react"
 import React from "react"
 
-import { Typography } from "@/components/typography"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover"
+  Dialog,
+  DialogBody,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
 import { cn } from "@/styles/utils"
 
 export type SecurityIconProps = React.ComponentProps<typeof ShieldCheckIcon>
@@ -73,93 +77,31 @@ export function SecurityBadge(props: SecuredBadgeProps) {
 }
 SecurityBadge.displayName = "SecurityBadge"
 
-export const SecurityDetailsPopover = Popover
+export const SecurityDetailsDialog = Dialog
 
-export type SecurityDetailsPopoverContentProps = React.ComponentProps<
-  typeof PopoverContent
->
+export const SecurityDetailsDialogContent = DialogContent
 
-export function SecurityDetailsPopoverContent(
-  props: SecurityDetailsPopoverContentProps
-) {
-  const {
-    className,
-    align = "start",
-    alignOffset = -20,
-    collisionPadding = 8,
-    ...popoverContentProps
-  } = props
+export const SecurityDetailsDialogHeader = DialogHeader
 
-  return (
-    <PopoverContent
-      className={cn("w-[calc(100vw-1rem)] max-w-sm p-0", className)}
-      align={align}
-      alignOffset={alignOffset}
-      collisionPadding={collisionPadding}
-      {...popoverContentProps}
-    />
-  )
-}
-SecurityDetailsPopoverContent.displayName = "SecurityDetailsPopoverContent"
-
-export const SecurityDetailsPopoverHeader = React.forwardRef<
-  HTMLDivElement,
-  React.ComponentProps<"header">
+export const SecurityDetailsDialogTitle = React.forwardRef<
+  React.ElementRef<typeof DialogTitle>,
+  React.ComponentProps<typeof DialogTitle>
 >(({ className, ...props }, ref) => (
-  <header
+  <DialogTitle
     ref={ref}
-    className={cn("flex flex-col gap-1 p-6", className)}
+    className={cn("text-status-secured-foreground", className)}
     {...props}
   />
 ))
-SecurityDetailsPopoverHeader.displayName = "SecurityDetailsPopoverHeader"
+SecurityDetailsDialogTitle.displayName = "SecurityDetailsDialogTitle"
 
-export const SecurityDetailsPopoverTitle = React.forwardRef<
-  HTMLParagraphElement,
-  React.ComponentProps<typeof Typography>
->(({ className, ...props }, ref) => (
-  <div className={cn("min-w-0 text-status-secured-foreground", className)}>
-    <Typography ref={ref} variant="heading-4" className="truncate" {...props} />
-  </div>
-))
-SecurityDetailsPopoverTitle.displayName = "SecurityDetailsPopoverTitle"
+export const SecurityDetailsDialogDescription = DialogDescription
 
-export const SecurityDetailsPopoverDescription = React.forwardRef<
-  HTMLParagraphElement,
-  React.ComponentProps<typeof Typography>
->(({ className, ...props }, ref) => (
-  <div className={cn("text-muted-foreground", className)}>
-    <Typography ref={ref} variant="base-regular" {...props} />
-  </div>
-))
-SecurityDetailsPopoverDescription.displayName =
-  "SecurityDetailsPopoverDescription"
+export const SecurityDetailsDialogBody = DialogBody
 
-export const SecurityDetailsPopoverBody = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
-  <div
-    ref={ref}
-    className={cn("flex flex-col p-6 pt-0", className)}
-    {...props}
-  />
-))
-SecurityDetailsPopoverBody.displayName = "SecurityDetailsPopoverBody"
+export const SecurityDetailsDialogFooter = DialogFooter
 
-export const SecurityDetailsPopoverFooter = React.forwardRef<
-  HTMLDivElement,
-  React.ComponentProps<"footer">
->(({ className, ...props }, ref) => (
-  <footer
-    ref={ref}
-    className={cn("flex items-center p-6 pt-0", className)}
-    {...props}
-  />
-))
-SecurityDetailsPopoverFooter.displayName = "SecurityDetailsPopoverFooter"
-
-const securityDetailsPopoverTriggerVariants = cva("", {
+const securityDetailsDialogTriggerVariants = cva("", {
   variants: {
     variant: {
       default:
@@ -173,24 +115,24 @@ const securityDetailsPopoverTriggerVariants = cva("", {
   },
 })
 
-export type SecurityDetailsPopoverTriggerProps = Pick<
+export type SecurityDetailsDialogTriggerProps = Pick<
   React.ComponentProps<typeof Button>,
   "className"
 > &
-  VariantProps<typeof securityDetailsPopoverTriggerVariants>
+  VariantProps<typeof securityDetailsDialogTriggerVariants>
 
-export function SecurityDetailsPopoverTrigger(
-  props: SecurityDetailsPopoverTriggerProps
+export function SecurityDetailsDialogTrigger(
+  props: SecurityDetailsDialogTriggerProps
 ) {
   const { variant, className } = props
 
   return (
-    <PopoverTrigger asChild>
+    <DialogTrigger asChild>
       <Button
         variant="outline"
         className={cn(
           "h-auto w-fit gap-1 rounded-full border px-1 py-1 text-xs font-semibold focus-visible:ring-offset-2 sm:px-2 sm:py-1",
-          securityDetailsPopoverTriggerVariants({ variant }),
+          securityDetailsDialogTriggerVariants({ variant }),
           className
         )}
       >
@@ -204,7 +146,7 @@ export function SecurityDetailsPopoverTrigger(
         </span>
         <span className="sr-only">Open security details</span>
       </Button>
-    </PopoverTrigger>
+    </DialogTrigger>
   )
 }
-SecurityDetailsPopoverTrigger.displayName = "SecurityDetailsPopoverTrigger"
+SecurityDetailsDialogTrigger.displayName = "SecurityDetailsDialogTrigger"

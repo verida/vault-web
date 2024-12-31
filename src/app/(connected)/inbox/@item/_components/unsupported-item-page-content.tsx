@@ -1,43 +1,57 @@
+import { InboxMessageHeader } from "@/app/(connected)/inbox/@item/_components/inbox-message-header"
+import { MarkMessageAsUnreadButton } from "@/app/(connected)/inbox/@item/_components/mark-message-as-unread-button"
 import {
-  ItemSheet,
+  MessageBlock,
+  MessageBlockTitle,
+} from "@/app/(connected)/inbox/@item/_components/message-block"
+import {
   ItemSheetBody,
-  ItemSheetClose,
-  ItemSheetContent,
-  ItemSheetFooter,
   ItemSheetHeader,
   ItemSheetTitle,
 } from "@/components/item-sheet"
-import { Button } from "@/components/ui/button"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { VeridaInboxMessageRecord } from "@/features/verida-inbox/types"
 
 export type UnsupportedItemPageContentProps = {
-  open: boolean
-  onOpenChange: (open: boolean) => void
-  // TODO: Add inbox entry
+  inboxMessage: VeridaInboxMessageRecord
+  onMarkAsUnread?: () => void
 }
 
 export function UnsupportedItemPageContent(
   props: UnsupportedItemPageContentProps
 ) {
-  const { open, onOpenChange } = props
+  const { inboxMessage, onMarkAsUnread } = props
 
   return (
-    <ItemSheet open={open} onOpenChange={onOpenChange}>
-      <ItemSheetContent>
-        <ItemSheetHeader>
-          <ItemSheetTitle description="Unsupported inbox entry">
-            Inbox entry
-          </ItemSheetTitle>
-        </ItemSheetHeader>
-        <ItemSheetBody>TODO: Unsupported inbox entry content</ItemSheetBody>
-        <ItemSheetFooter className="flex flex-col gap-3">
-          <div className="flex flex-row gap-4">
-            <Button variant="outline" className="w-full" asChild>
-              <ItemSheetClose>Close</ItemSheetClose>
-            </Button>
+    <>
+      <ItemSheetHeader
+        right={
+          <div className="flex flex-row items-center gap-3">
+            <MarkMessageAsUnreadButton
+              messageRecord={inboxMessage}
+              onMarkAsUnread={onMarkAsUnread}
+            />
           </div>
-        </ItemSheetFooter>
-      </ItemSheetContent>
-    </ItemSheet>
+        }
+      >
+        <ItemSheetTitle description="Unsupported inbox entry">
+          Message
+        </ItemSheetTitle>
+      </ItemSheetHeader>
+      <ItemSheetBody className="flex flex-col gap-6">
+        <InboxMessageHeader inboxMessage={inboxMessage} />
+        <MessageBlock>
+          <MessageBlockTitle>{inboxMessage.message}</MessageBlockTitle>
+        </MessageBlock>
+        <Alert variant="warning">
+          <AlertTitle>Unsupported message type</AlertTitle>
+          <AlertDescription>
+            This type of message is not supported by the Verida Vault web
+            application.
+          </AlertDescription>
+        </Alert>
+      </ItemSheetBody>
+    </>
   )
 }
 UnsupportedItemPageContent.displayName = "UnsupportedItemPageContent"

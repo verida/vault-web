@@ -27,13 +27,19 @@ export function DataProviderCard(props: DataProviderCardProps) {
               {provider.label?.[0]?.toUpperCase()}
             </AvatarFallback>
           </Avatar>
-          <ConnectDataProviderDialog providerId={provider.id}>
-            <ConnectDataProviderDialogTrigger asChild>
-              <Button size="lg" variant="outline">
-                Connect
-              </Button>
-            </ConnectDataProviderDialogTrigger>
-          </ConnectDataProviderDialog>
+          {provider.status === "active" ? (
+            <ConnectDataProviderDialog providerId={provider.id}>
+              <ConnectDataProviderDialogTrigger asChild>
+                <Button size="lg" variant="outline">
+                  Connect
+                </Button>
+              </ConnectDataProviderDialogTrigger>
+            </ConnectDataProviderDialog>
+          ) : provider.status === "upcoming" ? (
+            <div className="flex h-10 flex-row items-center text-muted-foreground">
+              <Typography variant="base-semibold">Upcoming</Typography>
+            </div>
+          ) : null}
         </div>
         <div className="flex flex-col gap-2">
           <Typography variant="heading-4">{provider.label}</Typography>

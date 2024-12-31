@@ -6,13 +6,22 @@ import { Button } from "@/components/ui/button"
 import { useVerida } from "@/features/verida/hooks/use-verida"
 import { cn } from "@/styles/utils"
 
-export type ConnectionButtonProps = Omit<
+type VeridaConnectButtonProps = {
+  label?: string | React.ReactNode
+  connectingLabel?: string | React.ReactNode
+} & Omit<
   React.ComponentProps<typeof Button>,
   "children" | "disabled" | "onClick"
 >
 
-export function ConnectionButton(props: ConnectionButtonProps) {
-  const { variant = "primary", className, ...buttonProps } = props
+export function VeridaConnectButton(props: VeridaConnectButtonProps) {
+  const {
+    label = "Connect with Verida",
+    connectingLabel = "Connecting...",
+    variant = "primary",
+    className,
+    ...buttonProps
+  } = props
 
   const { connect, isConnecting, isConnected } = useVerida()
 
@@ -31,7 +40,8 @@ export function ConnectionButton(props: ConnectionButtonProps) {
       disabled={isConnecting}
       {...buttonProps}
     >
-      {isConnecting ? "Connecting..." : "Connect to the Verida Vault App"}
+      {isConnecting ? connectingLabel : label}
     </Button>
   )
 }
+VeridaConnectButton.displayName = "VeridaConnectButton"

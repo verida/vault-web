@@ -1,3 +1,6 @@
+/**
+ * @deprecated
+ */
 export enum InboxType {
   DATA_SEND = "inbox/type/dataSend",
   DATA_REQUEST = "inbox/type/dataRequest",
@@ -5,6 +8,9 @@ export enum InboxType {
   MESSAGE = "inbox/type/message",
 }
 
+/**
+ * @deprecated
+ */
 export type InboxEntry = {
   _id: string
   data: any
@@ -15,10 +21,15 @@ export type InboxEntry = {
   type: InboxType
 }
 
+/**
+ * @deprecated
+ */
 export type InboxSentBy = {
   did: string
   context: string
 }
+
+// Below is unused =======================================
 
 export enum VeridaMessageType {
   SIMPLE_MESSAGE = "inbox/type/message",
