@@ -29,18 +29,14 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { EMPTY_VALUE_FALLBACK } from "@/constants/misc"
-import { Logger } from "@/features/telemetry/logger"
 import { useDataSchema_legacy } from "@/features/verida-data-schemas/hooks/use-data-schema-legacy"
 import { InboxMessageStatusIndicator } from "@/features/verida-inbox/components/inbox.message-status-indicator"
-import { VeridaInboxMessageTypeDataRequestDataSchema } from "@/features/verida-inbox/schemas"
+import { VeridaInboxMessageRecord } from "@/features/verida-inbox/types"
 import {
-  VeridaInboxMessageRecord,
-  VeridaInboxMessageSupportedType,
-} from "@/features/verida-inbox/types"
-import { getVeridaMessageStatus } from "@/features/verida-inbox/utils"
+  getDataFromDataRequestMessage,
+  getVeridaMessageStatus,
+} from "@/features/verida-inbox/utils"
 import { cn } from "@/styles/utils"
-
-const logger = Logger.create("verida-inbox")
 
 const NOT_IMPLEMENTED_YET = true
 
@@ -71,20 +67,10 @@ export function DataRequestItemPageContent(
     [inboxMessage]
   )
 
-  const data = useMemo(() => {
-    if (inboxMessage.type !== VeridaInboxMessageSupportedType.DATA_REQUEST) {
-      return null
-    }
-
-    try {
-      return VeridaInboxMessageTypeDataRequestDataSchema.parse(
-        inboxMessage.data
-      )
-    } catch (error) {
-      logger.warn("Failed to parse data of data request inbox message")
-      return null
-    }
-  }, [inboxMessage])
+  const data = useMemo(
+    () => getDataFromDataRequestMessage(inboxMessage),
+    [inboxMessage]
+  )
 
   const parsedFallbackLink = useMemo(() => {
     if (!data?.fallbackAction?.url) {

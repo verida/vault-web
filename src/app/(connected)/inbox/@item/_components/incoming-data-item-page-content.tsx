@@ -22,18 +22,14 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { Card, CardDescription, CardTitle } from "@/components/ui/card"
 import { EMPTY_VALUE_FALLBACK } from "@/constants/misc"
-import { Logger } from "@/features/telemetry/logger"
 import { UnsavedVeridaRecord } from "@/features/verida-database/types"
 import { InboxMessageStatusIndicator } from "@/features/verida-inbox/components/inbox.message-status-indicator"
-import { VeridaInboxMessageTypeDataSendDataSchema } from "@/features/verida-inbox/schemas"
+import { VeridaInboxMessageRecord } from "@/features/verida-inbox/types"
 import {
-  VeridaInboxMessageRecord,
-  VeridaInboxMessageSupportedType,
-} from "@/features/verida-inbox/types"
-import { getVeridaMessageStatus } from "@/features/verida-inbox/utils"
+  getDataFromIncomingDataMessage,
+  getVeridaMessageStatus,
+} from "@/features/verida-inbox/utils"
 import { cn } from "@/styles/utils"
-
-const logger = Logger.create("verida-inbox")
 
 const NOT_IMPLEMENTED_YET = true
 
@@ -64,18 +60,10 @@ export function IncomingDataItemPageContent(
     [inboxMessage]
   )
 
-  const data = useMemo(() => {
-    if (inboxMessage.type !== VeridaInboxMessageSupportedType.DATA_SEND) {
-      return null
-    }
-
-    try {
-      return VeridaInboxMessageTypeDataSendDataSchema.parse(inboxMessage.data)
-    } catch (error) {
-      logger.warn("Failed to parse data of incoming data inbox message")
-      return null
-    }
-  }, [inboxMessage])
+  const data = useMemo(
+    () => getDataFromIncomingDataMessage(inboxMessage),
+    [inboxMessage]
+  )
 
   if (!data) {
     return (

@@ -10,6 +10,7 @@ import {
   VeridaInboxMessageRecordArraySchema,
   VeridaInboxMessageTypeDataRequestDataSchema,
   VeridaInboxMessageTypeDataSendDataSchema,
+  VeridaInboxMessageTypeMessageDataSchema,
 } from "@/features/verida-inbox/schemas"
 import {
   VeridaInboxMessage,
@@ -287,5 +288,98 @@ export function getVeridaMessageStatus(
     }
     default:
       return null
+  }
+}
+
+/**
+ * Extracts and validates the data from a message inbox message.
+ * Handles both current and legacy message data formats.
+ *
+ * @param message - The inbox message record to extract data from
+ * @returns The parsed and validated message data if successful, null if:
+ *  - The message is not of type MESSAGE
+ *  - The message data fails schema validation for both current and legacy formats
+ *  - The legacy data array is empty or contains invalid data
+ */
+export function getDataFromMessage(message: VeridaInboxMessageRecord) {
+  if (message.type !== VeridaInboxMessageSupportedType.MESSAGE) {
+    return null
+  }
+
+  logger.debug("inboxMessage", { message })
+
+  const validationResult = VeridaInboxMessageTypeMessageDataSchema.safeParse(
+    message.data
+  )
+
+  if (validationResult.success) {
+    return validationResult.data
+  }
+
+  const legacyDataValidationResult =
+    VeridaInboxMessageTypeDataSendDataSchema.safeParse(message.data)
+
+  if (!legacyDataValidationResult.success) {
+    logger.warn("Failed to parse data of message inbox message")
+    return null
+  }
+
+  const legacyData = legacyDataValidationResult.data.data
+  const dataItem = legacyData && legacyData.length > 0 ? legacyData[0] : null
+
+  const legacyDataItemValidationResult =
+    VeridaInboxMessageTypeMessageDataSchema.safeParse(dataItem)
+
+  if (!legacyDataItemValidationResult.success) {
+    logger.warn("Failed to parse data of message inbox message")
+    return null
+  }
+
+  return legacyDataItemValidationResult.data
+}
+
+/**
+ * Extracts and validates the data from an incoming data message.
+ *
+ * @param message - The inbox message record to extract data from
+ * @returns The parsed and validated data if successful, null if:
+ *  - The message is not of type DATA_SEND
+ *  - The message data fails schema validation
+ */
+export function getDataFromIncomingDataMessage(
+  message: VeridaInboxMessageRecord
+) {
+  if (message.type !== VeridaInboxMessageSupportedType.DATA_SEND) {
+    return null
+  }
+
+  try {
+    return VeridaInboxMessageTypeDataSendDataSchema.parse(message.data)
+  } catch (error) {
+    logger.warn("Failed to parse data of incoming data inbox message")
+    return null
+  }
+}
+
+/**
+ * Extracts and validates the data from a data request message.
+ *
+ * @param message - The inbox message record to extract data from
+ * @returns The parsed and validated data if successful, null if:
+ *  - The message is not of type DATA_REQUEST
+ *  - The message data fails schema validation against VeridaInboxMessageTypeDataRequestDataSchema
+ */
+export function getDataFromDataRequestMessage(
+  message: VeridaInboxMessageRecord
+) {
+  if (message.type !== VeridaInboxMessageSupportedType.DATA_REQUEST) {
+    return null
+  }
+
+  try {
+    return VeridaInboxMessageTypeDataRequestDataSchema.parse(message.data)
+  } catch (error) {
+    logger.warn("Failed to parse data of data request inbox message")
+    return null
   }
 }

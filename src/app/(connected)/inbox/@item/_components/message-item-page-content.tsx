@@ -19,17 +19,8 @@ import {
   ItemSheetTitle,
 } from "@/components/item-sheet"
 import { Button } from "@/components/ui/button"
-import { Logger } from "@/features/telemetry/logger"
-import {
-  VeridaInboxMessageTypeDataSendDataSchema,
-  VeridaInboxMessageTypeMessageDataSchema,
-} from "@/features/verida-inbox/schemas"
-import {
-  VeridaInboxMessageRecord,
-  VeridaInboxMessageSupportedType,
-} from "@/features/verida-inbox/types"
-
-const logger = Logger.create("verida-inbox")
+import { VeridaInboxMessageRecord } from "@/features/verida-inbox/types"
+import { getDataFromMessage } from "@/features/verida-inbox/utils"
 
 export type MessageItemPageContentProps = {
   inboxMessage: VeridaInboxMessageRecord
@@ -39,42 +30,7 @@ export type MessageItemPageContentProps = {
 export function MessageItemPageContent(props: MessageItemPageContentProps) {
   const { inboxMessage, onMarkAsUnread } = props
 
-  const data = useMemo(() => {
-    if (inboxMessage.type !== VeridaInboxMessageSupportedType.MESSAGE) {
-      return null
-    }
-
-    logger.debug("inboxMessage", { inboxMessage })
-
-    const validationResult = VeridaInboxMessageTypeMessageDataSchema.safeParse(
-      inboxMessage.data
-    )
-
-    if (validationResult.success) {
-      return validationResult.data
-    }
-
-    const legacyDataValidationResult =
-      VeridaInboxMessageTypeDataSendDataSchema.safeParse(inboxMessage.data)
-
-    if (!legacyDataValidationResult.success) {
-      logger.warn("Failed to parse data of message inbox message")
-      return null
-    }
-
-    const legacyData = legacyDataValidationResult.data.data
-    const dataItem = legacyData && legacyData.length > 0 ? legacyData[0] : null
-
-    const legacyDataItemValidationResult =
-      VeridaInboxMessageTypeMessageDataSchema.safeParse(dataItem)
-
-    if (!legacyDataItemValidationResult.success) {
-      logger.warn("Failed to parse data of message inbox message")
-      return null
-    }
-
-    return legacyDataItemValidationResult.data
-  }, [inboxMessage])
+  const data = useMemo(() => getDataFromMessage(inboxMessage), [inboxMessage])
 
   const parsedLink = useMemo(() => {
     if (!data?.link?.url) {
