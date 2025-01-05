@@ -4,7 +4,6 @@ import Link from "next/link"
 import { useCallback, useEffect, useState } from "react"
 
 import { DataRequestItem } from "@/app/(connected)/inbox/_components/data-request-item"
-import { InboxDetailsProps } from "@/app/(connected)/inbox/_components/inbox-details"
 import { InboxStatusText } from "@/app/(connected)/inbox/_components/inbox-status-text"
 import { RequestDataSelector } from "@/app/(connected)/inbox/_components/request-data-selector"
 import { RequesterProfile } from "@/app/(connected)/inbox/_components/requester-profile"
@@ -33,13 +32,18 @@ import {
   SuccessBlockImage,
   SuccessBlockTitle,
 } from "@/components/ui/success"
-import { InboxType } from "@/features/inbox/types"
+import { InboxEntry, InboxType } from "@/features/inbox/types"
 import { useInboxAction } from "@/features/inbox/use-inbox-action"
 import { Logger } from "@/features/telemetry"
 import { EMPTY_PROFILE_NAME_FALLBACK } from "@/features/verida-profile/constants"
 import { useVeridaProfile } from "@/features/verida-profile/hooks/use-verida-profile"
 
 const logger = Logger.create("inbox")
+
+export type InboxDetailsProps = {
+  message: InboxEntry
+  onClose: () => void
+}
 
 // TODO: Use custom logger and remove this eslint by-pass
 /* eslint-disable no-console */

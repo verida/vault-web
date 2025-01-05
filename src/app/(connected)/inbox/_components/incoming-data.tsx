@@ -2,7 +2,6 @@
 
 import React from "react"
 
-import { InboxDetailsProps } from "@/app/(connected)/inbox/_components/inbox-details"
 import { InboxStatusText } from "@/app/(connected)/inbox/_components/inbox-status-text"
 import { IncomingDataItem } from "@/app/(connected)/inbox/_components/incoming-data-item"
 import { RequesterProfile } from "@/app/(connected)/inbox/_components/requester-profile"
@@ -14,8 +13,13 @@ import {
 import { Typography } from "@/components/typography"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
-import { InboxType } from "@/features/inbox/types"
+import { InboxEntry, InboxType } from "@/features/inbox/types"
 import { useInboxAction } from "@/features/inbox/use-inbox-action"
+
+export type InboxDetailsProps = {
+  message: InboxEntry
+  onClose: () => void
+}
 
 /**
  * @deprecated

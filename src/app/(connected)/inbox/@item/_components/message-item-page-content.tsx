@@ -11,7 +11,7 @@ import {
   MessageBlockBody,
   MessageBlockTitle,
 } from "@/app/(connected)/inbox/@item/_components/message-block"
-import { InboxMessage } from "@/components/icons/inbox-message"
+import { InboxMessageTypeIcon } from "@/components/icons/inbox-message"
 import {
   ItemSheetBody,
   ItemSheetFooter,
@@ -110,7 +110,7 @@ export function MessageItemPageContent(props: MessageItemPageContentProps) {
       >
         <ItemSheetTitle description="Inbox message">
           <span className="flex flex-row items-center gap-2">
-            <InboxMessage className="size-5" />
+            <InboxMessageTypeIcon className="size-5" />
             Message
           </span>
         </ItemSheetTitle>

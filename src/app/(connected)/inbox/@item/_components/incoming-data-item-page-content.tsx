@@ -9,7 +9,7 @@ import {
   MessageBlock,
   MessageBlockTitle,
 } from "@/app/(connected)/inbox/@item/_components/message-block"
-import { InboxIncoming } from "@/components/icons/inbox-incoming"
+import { InboxIncomingDataTypeIcon } from "@/components/icons/inbox-incoming"
 import {
   ItemSheetBody,
   ItemSheetFooter,
@@ -104,7 +104,7 @@ export function IncomingDataItemPageContent(
             className="flex-1 truncate"
           >
             <span className="flex flex-row items-center gap-2">
-              <InboxIncoming className="size-5 shrink-0" />
+              <InboxIncomingDataTypeIcon className="size-5 shrink-0" />
               <span className="truncate">Incoming Data</span>
             </span>
           </ItemSheetTitle>

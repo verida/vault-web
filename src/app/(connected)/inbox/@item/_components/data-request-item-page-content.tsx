@@ -10,7 +10,7 @@ import {
   MessageBlock,
   MessageBlockTitle,
 } from "@/app/(connected)/inbox/@item/_components/message-block"
-import { InboxData } from "@/components/icons/inbox-data"
+import { InboxDataRequestTypeIcon } from "@/components/icons/inbox-data"
 import {
   ItemSheetBody,
   ItemSheetFooter,
@@ -121,7 +121,7 @@ export function DataRequestItemPageContent(
         <div className="flex flex-row items-center justify-between gap-2">
           <ItemSheetTitle description="Data request inbox message">
             <span className="flex flex-row items-center gap-2">
-              <InboxData className="size-5 shrink-0" />
+              <InboxDataRequestTypeIcon className="size-5 shrink-0" />
               <span className="truncate">Data Request</span>
             </span>
           </ItemSheetTitle>
