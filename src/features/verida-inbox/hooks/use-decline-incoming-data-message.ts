@@ -1,6 +1,7 @@
 import { QueryKey, useMutation, useQueryClient } from "@tanstack/react-query"
 
 import { FetchVeridaDataRecordsResult } from "@/features/verida-database/types"
+import { useUpdateInboxQueryCache } from "@/features/verida-inbox/hooks/use-update-inbox-query-cache"
 import { useVeridaInbox } from "@/features/verida-inbox/hooks/use-verida-inbox"
 import { VeridaInboxQueryKeys } from "@/features/verida-inbox/queries"
 import { VeridaInboxMessageRecord } from "@/features/verida-inbox/types"
@@ -29,6 +30,12 @@ export function useDeclineIncomingDataMessage(
   const { did } = useVerida()
   const { messagingEngine } = useVeridaInbox()
   const queryClient = useQueryClient()
+  const {
+    cancelInboxQueries,
+    invalidateInboxMessage,
+    invalidateInboxMessages,
+    invalidateUnreadMessagesCount,
+  } = useUpdateInboxQueryCache()
 
   const {
     mutate: decline,
@@ -52,9 +59,9 @@ export function useDeclineIncomingDataMessage(
         }
 
         // Cancel any outgoing refetches
-        await queryClient.cancelQueries({
-          queryKey: VeridaInboxQueryKeys.invalidateInbox(),
-        })
+        await cancelInboxQueries()
+
+        // TODO: Try to factorise the following code with the other mutation hooks
 
         // Snapshot previous messages data
         const previousMessagesData = queryClient.getQueriesData<
@@ -69,7 +76,16 @@ export function useDeclineIncomingDataMessage(
             queryClient.setQueryData(queryKey, {
               ...queryData,
               records: queryData.records.map((r) =>
-                r._id === messageRecord._id ? { ...r, read: true } : r
+                r._id === messageRecord._id
+                  ? {
+                      ...r,
+                      data: {
+                        ...(r.data as any),
+                        status: "reject",
+                      },
+                      read: true,
+                    }
+                  : r
               ),
             })
           }
@@ -91,13 +107,22 @@ export function useDeclineIncomingDataMessage(
               did,
               messageRecordId: messageRecord._id,
             }),
-            { ...previousMessageData, read: true }
+            {
+              ...previousMessageData,
+              data: {
+                ...(previousMessageData.data as any),
+                status: "reject",
+              },
+              read: true,
+            }
           )
         }
 
         return { previousMessagesData, previousMessageData }
       },
       onError: (_error, { messageRecord }, context) => {
+        // TODO: Try to factorise the following code with the other mutation hooks
+
         if (context?.previousMessagesData) {
           context.previousMessagesData.forEach(([queryKey, queryData]) => {
             queryClient.setQueryData(queryKey, queryData)
@@ -115,16 +140,9 @@ export function useDeclineIncomingDataMessage(
         }
       },
       onSuccess: (_data, { messageRecord }) => {
-        queryClient.invalidateQueries({
-          queryKey: VeridaInboxQueryKeys.invalidateInboxMessages(),
-        })
-
-        queryClient.invalidateQueries({
-          queryKey: VeridaInboxQueryKeys.invalidateInboxMessage({
-            did,
-            messageRecordId: messageRecord._id,
-          }),
-        })
+        invalidateInboxMessages()
+        invalidateInboxMessage(messageRecord._id)
+        invalidateUnreadMessagesCount()
       },
       meta: {
         logCategory: "verida-inbox",

@@ -1,6 +1,7 @@
 import { QueryKey, useMutation, useQueryClient } from "@tanstack/react-query"
 
 import { FetchVeridaDataRecordsResult } from "@/features/verida-database/types"
+import { useUpdateInboxQueryCache } from "@/features/verida-inbox/hooks/use-update-inbox-query-cache"
 import { useVeridaInbox } from "@/features/verida-inbox/hooks/use-verida-inbox"
 import { VeridaInboxQueryKeys } from "@/features/verida-inbox/queries"
 import { VeridaInboxMessageRecord } from "@/features/verida-inbox/types"
@@ -30,6 +31,12 @@ export function useInboxMessageMarkAsUnread(
   const { did } = useVerida()
   const { messagingEngine } = useVeridaInbox()
   const queryClient = useQueryClient()
+  const {
+    cancelInboxQueries,
+    invalidateInboxMessage,
+    invalidateInboxMessages,
+    invalidateUnreadMessagesCount,
+  } = useUpdateInboxQueryCache()
 
   const {
     mutate: markAsUnread,
@@ -58,9 +65,9 @@ export function useInboxMessageMarkAsUnread(
       }
 
       // Cancel any outgoing refetches
-      await queryClient.cancelQueries({
-        queryKey: VeridaInboxQueryKeys.invalidateInbox(),
-      })
+      await cancelInboxQueries()
+
+      // TODO: Try to factorise the following code with the other mutation hooks
 
       // Snapshot previous messages data
       const previousMessagesData = queryClient.getQueriesData<
@@ -117,6 +124,8 @@ export function useInboxMessageMarkAsUnread(
       return { previousMessagesData, previousMessageData, previousUnreadCount }
     },
     onError: (_error, { messageRecord }, context) => {
+      // TODO: Try to factorise the following code with the other mutation hooks
+
       if (context?.previousMessagesData) {
         context.previousMessagesData.forEach(([queryKey, queryData]) => {
           queryClient.setQueryData(queryKey, queryData)
@@ -141,20 +150,9 @@ export function useInboxMessageMarkAsUnread(
       }
     },
     onSuccess: (_data, { messageRecord }) => {
-      queryClient.invalidateQueries({
-        queryKey: VeridaInboxQueryKeys.invalidateInboxMessages(),
-      })
-
-      queryClient.invalidateQueries({
-        queryKey: VeridaInboxQueryKeys.invalidateInboxMessage({
-          did,
-          messageRecordId: messageRecord._id,
-        }),
-      })
-
-      queryClient.invalidateQueries({
-        queryKey: VeridaInboxQueryKeys.invalidateUnreadMessagesCount(),
-      })
+      invalidateInboxMessages()
+      invalidateInboxMessage(messageRecord._id)
+      invalidateUnreadMessagesCount()
     },
     meta: {
       logCategory: "verida-inbox",

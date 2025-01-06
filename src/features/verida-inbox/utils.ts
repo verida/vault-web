@@ -409,16 +409,6 @@ export async function declineIncomingDataMessage(
 ): Promise<void> {
   logger.info("Declining incoming data message")
 
-  const data = getDataFromIncomingDataMessage(messageRecord)
-
-  if (!data) {
-    throw new Error("Failed to parse data of incoming data inbox message")
-  }
-
-  if (data.status) {
-    throw new Error(`Incoming data message already ${data.status}`)
-  }
-
   const latestMessageRecord = await getVeridaInboxMessage({
     messagingEngine,
     messageRecordId: messageRecord._id,
@@ -426,6 +416,16 @@ export async function declineIncomingDataMessage(
 
   if (!latestMessageRecord) {
     throw new Error("Inbox message record not found")
+  }
+
+  const data = getDataFromIncomingDataMessage(latestMessageRecord)
+
+  if (!data) {
+    throw new Error("Failed to parse data of incoming data inbox message")
+  }
+
+  if (data.status) {
+    throw new Error(`Incoming data message already ${data.status}`)
   }
 
   const updatedMessageRecord: VeridaInboxMessageRecord = {
@@ -465,16 +465,6 @@ export async function declineDataRequestMessage(
 ): Promise<void> {
   logger.info("Declining data request message")
 
-  const data = getDataFromDataRequestMessage(messageRecord)
-
-  if (!data) {
-    throw new Error("Failed to parse data of data request inbox message")
-  }
-
-  if (data.status) {
-    throw new Error(`Data request message already ${data.status}`)
-  }
-
   const latestMessageRecord = await getVeridaInboxMessage({
     messagingEngine,
     messageRecordId: messageRecord._id,
@@ -482,6 +472,16 @@ export async function declineDataRequestMessage(
 
   if (!latestMessageRecord) {
     throw new Error("Inbox message record not found")
+  }
+
+  const data = getDataFromDataRequestMessage(latestMessageRecord)
+
+  if (!data) {
+    throw new Error("Failed to parse data of data request inbox message")
+  }
+
+  if (data.status) {
+    throw new Error(`Data request message already ${data.status}`)
   }
 
   const updatedMessageRecord: VeridaInboxMessageRecord = {
