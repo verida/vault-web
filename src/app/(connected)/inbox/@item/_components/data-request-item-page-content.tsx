@@ -210,7 +210,7 @@ export function DataRequestItemPageContent(
             <Alert variant="success">
               <AlertDescription>You responded to this request</AlertDescription>
             </Alert>
-          ) : status === "rejected" ? (
+          ) : status === "declined" ? (
             <Alert variant="error">
               <AlertDescription>You declined this request</AlertDescription>
             </Alert>

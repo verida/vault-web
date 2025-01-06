@@ -273,7 +273,7 @@ export function getVeridaMessageStatus(
         case "accept":
           return "accepted"
         case "reject":
-          return "rejected"
+          return "declined"
         default:
           return "pending"
       }
@@ -290,7 +290,7 @@ export function getVeridaMessageStatus(
         case "accept":
           return "accepted"
         case "reject":
-          return "rejected"
+          return "declined"
         default:
           return "pending"
       }

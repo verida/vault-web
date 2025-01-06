@@ -187,7 +187,7 @@ export function IncomingDataItemPageContent(
                 You accepted the data in this message
               </AlertDescription>
             </Alert>
-          ) : status === "rejected" ? (
+          ) : status === "declined" ? (
             <Alert variant="error">
               <AlertDescription>
                 You declined the data in this message
