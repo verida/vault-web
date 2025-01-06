@@ -110,7 +110,7 @@ export function IncomingDataItemPageContent(
           </div>
         }
       >
-        <div className="flex flex-row items-baseline justify-between gap-2">
+        <div className="flex flex-row items-baseline justify-between gap-2 sm:justify-start">
           <ItemSheetTitle
             description="Incoming data inbox message"
             className="flex-1 truncate"

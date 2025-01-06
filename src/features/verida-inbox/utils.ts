@@ -644,6 +644,54 @@ export async function acceptIncomingDataMessage(
   return
 }
 
+export async function acceptDataRequestMessage(
+  messagingEngine: IMessaging,
+  messageRecord: VeridaInboxMessageRecord
+): Promise<void> {
+  logger.info("Accepting data request message")
+
+  const latestMessageRecord = await getVeridaInboxMessage({
+    messagingEngine,
+    messageRecordId: messageRecord._id,
+  })
+
+  if (!latestMessageRecord) {
+    throw new Error("Inbox message record not found")
+  }
+
+  const data = getDataFromDataRequestMessage(latestMessageRecord)
+
+  if (!data) {
+    throw new Error("Failed to parse data of data request inbox message")
+  }
+
+  if (data.status) {
+    throw new Error(`Data request message already ${data.status}`)
+  }
+
+  // TODO: Implement the logic to accept the data request message
+
+  try {
+    const updatedMessageRecord: VeridaInboxMessageRecord = {
+      ...latestMessageRecord,
+      data: {
+        ...data,
+        status: "accept",
+      },
+      read: true,
+    }
+
+    const inbox = await messagingEngine.getInbox()
+    await inbox.privateInbox.save(updatedMessageRecord)
+
+    logger.info("Data request message accepted")
+  } catch (error) {
+    throw new Error("Failed to accept data request message", {
+      cause: error,
+    })
+  }
+}
+
 /**
  * Resets the status of a message back to pending by removing the status field.
  * This allows a previously accepted or declined message to be actioned again.
