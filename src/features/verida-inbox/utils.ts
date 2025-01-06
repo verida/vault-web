@@ -516,6 +516,135 @@ export async function declineDataRequestMessage(
 }
 
 /**
+ * Accepts an incoming data message and saves the data records contained within it.
+ *
+ * This function:
+ * 1. Retrieves the latest version of the message record
+ * 2. Validates the message data and status
+ * 3. Attempts to save each data record to the appropriate datastore
+ * 4. Updates the message status to "accept" if at least one record was saved
+ * 5. Marks the message as read
+ *
+ * @param messagingEngine - The Verida messaging engine instance
+ * @param messageRecord - The inbox message record to accept
+ * @param webUserInstance - The web user instance used to open datastores
+ *
+ * @returns A promise that resolves when the message is accepted and data is saved
+ *
+ * @throws {Error} If the message record is not found
+ * @throws {Error} If the message data fails validation
+ * @throws {Error} If the message has already been processed (has a status)
+ * @throws {Error} If all data records fail to save
+ * @throws {Error} If updating the message status fails
+ */
+export async function acceptIncomingDataMessage(
+  messagingEngine: IMessaging,
+  messageRecord: VeridaInboxMessageRecord,
+  webUserInstance: WebUser
+): Promise<void> {
+  logger.info("Accepting incoming data message")
+
+  const latestMessageRecord = await getVeridaInboxMessage({
+    messagingEngine,
+    messageRecordId: messageRecord._id,
+  })
+
+  if (!latestMessageRecord) {
+    throw new Error("Inbox message record not found")
+  }
+
+  const data = getDataFromIncomingDataMessage(latestMessageRecord)
+
+  if (!data) {
+    throw new Error("Failed to parse data of incoming data inbox message")
+  }
+
+  if (data.status) {
+    throw new Error(`Incoming data message already ${data.status}`)
+  }
+
+  try {
+    const dataRecordsToSave = data.data ?? []
+
+    const saveResults = await Promise.allSettled(
+      dataRecordsToSave.map(async (dataRecord) => {
+        // Remove metadata fields
+        const {
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          _id,
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          _rev,
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          signatures,
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          insertedAt,
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          modifiedAt,
+          ...dataRecordToSave
+        } = dataRecord
+        if (!dataRecordToSave.schema) {
+          throw new Error("Data record schema is required")
+        }
+
+        const store = await webUserInstance.openDatastore(
+          dataRecordToSave.schema
+        )
+        const saveResult = await store.save(dataRecordToSave, {
+          forceUpdate: true,
+        })
+
+        if (!saveResult) {
+          throw new Error(
+            `Failed to save data record on ${dataRecordToSave.schema}`
+          )
+        }
+
+        return saveResult
+      })
+    )
+
+    saveResults.forEach((result) => {
+      if (result.status === "rejected") {
+        // TODO: Maybe log an error instead of a warning
+        logger.warn("Failed to save data record", {
+          reason: result.reason,
+        })
+      }
+    })
+
+    if (saveResults.every((result) => result.status === "rejected")) {
+      throw new Error("Failed to save all data records")
+    }
+
+    // TODO: We could benefit from the saveResult of each record to know which record ids were saved
+  } catch (error) {
+    throw new Error("Failed to save incoming data from message", {
+      cause: error,
+    })
+  }
+
+  try {
+    const updatedMessageRecord: VeridaInboxMessageRecord = {
+      ...latestMessageRecord,
+      data: {
+        ...data,
+        status: "accept",
+      },
+      read: true,
+    }
+
+    const inbox = await messagingEngine.getInbox()
+    await inbox.privateInbox.save(updatedMessageRecord)
+  } catch (error) {
+    throw new Error("Failed to accept incoming data message", {
+      cause: error,
+    })
+  }
+
+  return
+}
+
+/**
  * Resets the status of a message back to pending by removing the status field.
  * This allows a previously accepted or declined message to be actioned again.
  *

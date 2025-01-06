@@ -26,6 +26,7 @@ import { commonConfig } from "@/config/common"
 import { EMPTY_VALUE_FALLBACK } from "@/constants/misc"
 import { UnsavedVeridaRecord } from "@/features/verida-database/types"
 import { InboxMessageStatusIndicator } from "@/features/verida-inbox/components/inbox.message-status-indicator"
+import { useAcceptIncomingDataMessage } from "@/features/verida-inbox/hooks/use-accept-incoming-data-message"
 import { useDeclineIncomingDataMessage } from "@/features/verida-inbox/hooks/use-decline-incoming-data-message"
 import { VeridaInboxMessageRecord } from "@/features/verida-inbox/types"
 import {
@@ -33,8 +34,6 @@ import {
   getVeridaMessageStatus,
 } from "@/features/verida-inbox/utils"
 import { cn } from "@/styles/utils"
-
-const NOT_IMPLEMENTED_YET = true
 
 export type IncomingDataItemPageContentProps = {
   inboxMessage: VeridaInboxMessageRecord
@@ -49,6 +48,7 @@ export function IncomingDataItemPageContent(
   const { inboxMessage, onDecline, onAccept, onMarkAsUnread } = props
 
   const [processing, setProcessing] = useState(false)
+  const { acceptAsync } = useAcceptIncomingDataMessage()
   const { declineAsync } = useDeclineIncomingDataMessage()
 
   const handleDecline = useCallback(async () => {
@@ -63,10 +63,17 @@ export function IncomingDataItemPageContent(
     }
   }, [inboxMessage, declineAsync, onDecline])
 
-  const handleAccept = useCallback(() => {
-    // TODO: Implement accept
-    onAccept?.()
-  }, [onAccept])
+  const handleAccept = useCallback(async () => {
+    setProcessing(true)
+    try {
+      await acceptAsync({ messageRecord: inboxMessage })
+      onAccept?.()
+    } catch (error) {
+      // Error handled by the mutation hook
+    } finally {
+      setProcessing(false)
+    }
+  }, [acceptAsync, onAccept, inboxMessage])
 
   const status = useMemo(
     () => getVeridaMessageStatus(inboxMessage.type, inboxMessage.data),
@@ -156,13 +163,6 @@ export function IncomingDataItemPageContent(
         <ItemSheetFooter className="flex flex-col gap-3">
           {status === "pending" ? (
             <>
-              {NOT_IMPLEMENTED_YET === true ? (
-                <Alert variant="warning">
-                  <AlertDescription>
-                    {`Receiving incoming data is not implemented yet. Use your Verida Wallet in the meantime.`}
-                  </AlertDescription>
-                </Alert>
-              ) : null}
               <Alert variant="warning">
                 <AlertDescription>
                   {`Decline if you don't recognize this message`}
@@ -181,7 +181,7 @@ export function IncomingDataItemPageContent(
                   variant="primary"
                   className="w-full"
                   onClick={handleAccept}
-                  disabled={processing || NOT_IMPLEMENTED_YET}
+                  disabled={processing}
                 >
                   Accept
                 </Button>
