@@ -212,8 +212,17 @@ async function updateMessageReadStatus(
     throw new Error("Inbox message record ID is required")
   }
 
+  const latestMessageRecord = await getVeridaInboxMessage({
+    messagingEngine,
+    messageRecordId: messageRecord._id,
+  })
+
+  if (!latestMessageRecord) {
+    throw new Error("Inbox message record not found")
+  }
+
   const updatedMessageRecord = {
-    ...messageRecord,
+    ...latestMessageRecord,
     read: readStatus === "read",
   }
 
@@ -222,7 +231,7 @@ async function updateMessageReadStatus(
   }
 
   try {
-    const inbox = await messagingEngine?.getInbox()
+    const inbox = await messagingEngine.getInbox()
     await inbox.privateInbox.save(updatedMessageRecord)
 
     logger.info(`Inbox message marked as ${readStatus}`)
@@ -381,5 +390,117 @@ export function getDataFromDataRequestMessage(
   } catch (error) {
     logger.warn("Failed to parse data of data request inbox message")
     return null
+  }
+}
+
+/**
+ * Decline an incoming data message
+ *
+ * @param messagingEngine - The Verida messaging engine instance
+ * @param messageRecord - The message record to decline
+ * @returns A promise that resolves when the message is declined
+ * @throws {Error} If the message is already declined
+ * @throws {Error} If the message data fails schema validation
+ * @throws {Error} If saving the updated message fails
+ */
+export async function declineIncomingDataMessage(
+  messagingEngine: IMessaging,
+  messageRecord: VeridaInboxMessageRecord
+): Promise<void> {
+  logger.info("Declining incoming data message")
+
+  const data = getDataFromIncomingDataMessage(messageRecord)
+
+  if (!data) {
+    throw new Error("Failed to parse data of incoming data inbox message")
+  }
+
+  if (data.status) {
+    throw new Error(`Incoming data message already ${data.status}`)
+  }
+
+  const latestMessageRecord = await getVeridaInboxMessage({
+    messagingEngine,
+    messageRecordId: messageRecord._id,
+  })
+
+  if (!latestMessageRecord) {
+    throw new Error("Inbox message record not found")
+  }
+
+  const updatedMessageRecord: VeridaInboxMessageRecord = {
+    ...latestMessageRecord,
+    data: {
+      ...data,
+      status: "reject",
+    },
+    read: true,
+  }
+
+  try {
+    const inbox = await messagingEngine.getInbox()
+    await inbox.privateInbox.save(updatedMessageRecord)
+
+    logger.info("Incoming data message declined")
+  } catch (error) {
+    throw new Error("Failed to decline incoming data message", {
+      cause: error,
+    })
+  }
+}
+
+/**
+ * Decline a data request message
+ *
+ * @param messagingEngine - The Verida messaging engine instance
+ * @param messageRecord - The message record to decline
+ * @returns A promise that resolves when the message is declined
+ * @throws {Error} If the message is already declined
+ * @throws {Error} If the message data fails schema validation
+ * @throws {Error} If saving the updated message fails
+ */
+export async function declineDataRequestMessage(
+  messagingEngine: IMessaging,
+  messageRecord: VeridaInboxMessageRecord
+): Promise<void> {
+  logger.info("Declining data request message")
+
+  const data = getDataFromDataRequestMessage(messageRecord)
+
+  if (!data) {
+    throw new Error("Failed to parse data of data request inbox message")
+  }
+
+  if (data.status) {
+    throw new Error(`Data request message already ${data.status}`)
+  }
+
+  const latestMessageRecord = await getVeridaInboxMessage({
+    messagingEngine,
+    messageRecordId: messageRecord._id,
+  })
+
+  if (!latestMessageRecord) {
+    throw new Error("Inbox message record not found")
+  }
+
+  const updatedMessageRecord: VeridaInboxMessageRecord = {
+    ...latestMessageRecord,
+    data: {
+      ...data,
+      status: "reject",
+    },
+    read: true,
+  }
+
+  try {
+    const inbox = await messagingEngine.getInbox()
+    await inbox.privateInbox.save(updatedMessageRecord)
+
+    logger.info("Data request message declined")
+  } catch (error) {
+    throw new Error("Failed to decline data request message", {
+      cause: error,
+    })
   }
 }

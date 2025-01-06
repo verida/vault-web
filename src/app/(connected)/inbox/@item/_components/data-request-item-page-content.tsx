@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { useCallback, useMemo } from "react"
+import { useCallback, useMemo, useState } from "react"
 
 import { InboxMessageHeader } from "@/app/(connected)/inbox/@item/_components/inbox-message-header"
 import { InvalidItemPageContent } from "@/app/(connected)/inbox/@item/_components/invalid-item-page-content"
@@ -31,6 +31,7 @@ import {
 import { EMPTY_VALUE_FALLBACK } from "@/constants/misc"
 import { useDataSchema_legacy } from "@/features/verida-data-schemas/hooks/use-data-schema-legacy"
 import { InboxMessageStatusIndicator } from "@/features/verida-inbox/components/inbox.message-status-indicator"
+import { useDeclineDataRequestMessage } from "@/features/verida-inbox/hooks/use-decline-data-request-message"
 import { VeridaInboxMessageRecord } from "@/features/verida-inbox/types"
 import {
   getDataFromDataRequestMessage,
@@ -52,10 +53,20 @@ export function DataRequestItemPageContent(
 ) {
   const { inboxMessage, onDecline, onAccept, onMarkAsUnread } = props
 
-  const handleDecline = useCallback(() => {
-    // TODO: Implement accept
-    onDecline?.()
-  }, [onDecline])
+  const [processing, setProcessing] = useState(false)
+  const { declineAsync } = useDeclineDataRequestMessage()
+
+  const handleDecline = useCallback(async () => {
+    setProcessing(true)
+    try {
+      await declineAsync({ messageRecord: inboxMessage })
+      onDecline?.()
+    } catch (error) {
+      // Error handled by the mutation hook
+    } finally {
+      setProcessing(false)
+    }
+  }, [inboxMessage, declineAsync, onDecline])
 
   const handleAccept = useCallback(() => {
     // TODO: Implement accept
@@ -164,38 +175,36 @@ export function DataRequestItemPageContent(
         <ItemSheetFooter className="flex flex-col gap-3">
           {status === "pending" ? (
             <>
-              {" "}
               {NOT_IMPLEMENTED_YET === true ? (
                 <Alert variant="warning">
                   <AlertDescription>
                     {`Responding to data request is not implemented yet. Use your Verida Wallet in the meantime.`}
                   </AlertDescription>
                 </Alert>
-              ) : (
-                <>
-                  <Alert variant="warning">
-                    <AlertDescription>
-                      {`Decline if you don't recognize this request`}
-                    </AlertDescription>
-                  </Alert>
-                  <div className="flex flex-row gap-4">
-                    <Button
-                      variant="outline"
-                      className="w-full"
-                      onClick={handleDecline}
-                    >
-                      Decline
-                    </Button>
-                    <Button
-                      variant="primary"
-                      className="w-full"
-                      onClick={handleAccept}
-                    >
-                      Share
-                    </Button>
-                  </div>
-                </>
-              )}
+              ) : null}
+              <Alert variant="warning">
+                <AlertDescription>
+                  {`Decline if you don't recognize this request`}
+                </AlertDescription>
+              </Alert>
+              <div className="flex flex-row gap-4">
+                <Button
+                  variant="outline"
+                  className="w-full"
+                  onClick={handleDecline}
+                  disabled={processing}
+                >
+                  Decline
+                </Button>
+                <Button
+                  variant="primary"
+                  className="w-full"
+                  onClick={handleAccept}
+                  disabled={processing || NOT_IMPLEMENTED_YET}
+                >
+                  Share
+                </Button>
+              </div>
             </>
           ) : status === "accepted" ? (
             <Alert variant="success">
