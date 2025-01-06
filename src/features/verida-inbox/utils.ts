@@ -1,4 +1,5 @@
 import { IMessaging } from "@verida/types"
+import { WebUser } from "@verida/web-helpers"
 
 import { Logger } from "@/features/telemetry/logger"
 import {
@@ -304,21 +305,19 @@ export function getVeridaMessageStatus(
  * Extracts and validates the data from a message inbox message.
  * Handles both current and legacy message data formats.
  *
- * @param message - The inbox message record to extract data from
+ * @param messageRecord - The inbox message record to extract data from
  * @returns The parsed and validated message data if successful, null if:
  *  - The message is not of type MESSAGE
  *  - The message data fails schema validation for both current and legacy formats
  *  - The legacy data array is empty or contains invalid data
  */
-export function getDataFromMessage(message: VeridaInboxMessageRecord) {
-  if (message.type !== VeridaInboxMessageSupportedType.MESSAGE) {
+export function getDataFromMessage(messageRecord: VeridaInboxMessageRecord) {
+  if (messageRecord.type !== VeridaInboxMessageSupportedType.MESSAGE) {
     return null
   }
 
-  logger.debug("inboxMessage", { message })
-
   const validationResult = VeridaInboxMessageTypeMessageDataSchema.safeParse(
-    message.data
+    messageRecord.data
   )
 
   if (validationResult.success) {
@@ -326,7 +325,7 @@ export function getDataFromMessage(message: VeridaInboxMessageRecord) {
   }
 
   const legacyDataValidationResult =
-    VeridaInboxMessageTypeDataSendDataSchema.safeParse(message.data)
+    VeridaInboxMessageTypeDataSendDataSchema.safeParse(messageRecord.data)
 
   if (!legacyDataValidationResult.success) {
     logger.warn("Failed to parse data of message inbox message")
@@ -350,20 +349,20 @@ export function getDataFromMessage(message: VeridaInboxMessageRecord) {
 /**
  * Extracts and validates the data from an incoming data message.
  *
- * @param message - The inbox message record to extract data from
+ * @param messageRecord - The inbox message record to extract data from
  * @returns The parsed and validated data if successful, null if:
  *  - The message is not of type DATA_SEND
  *  - The message data fails schema validation
  */
 export function getDataFromIncomingDataMessage(
-  message: VeridaInboxMessageRecord
+  messageRecord: VeridaInboxMessageRecord
 ) {
-  if (message.type !== VeridaInboxMessageSupportedType.DATA_SEND) {
+  if (messageRecord.type !== VeridaInboxMessageSupportedType.DATA_SEND) {
     return null
   }
 
   try {
-    return VeridaInboxMessageTypeDataSendDataSchema.parse(message.data)
+    return VeridaInboxMessageTypeDataSendDataSchema.parse(messageRecord.data)
   } catch (error) {
     logger.warn("Failed to parse data of incoming data inbox message")
     return null
@@ -373,23 +372,34 @@ export function getDataFromIncomingDataMessage(
 /**
  * Extracts and validates the data from a data request message.
  *
- * @param message - The inbox message record to extract data from
+ * @param messageRecord - The inbox message record to extract data from
  * @returns The parsed and validated data if successful, null if:
  *  - The message is not of type DATA_REQUEST
  *  - The message data fails schema validation against VeridaInboxMessageTypeDataRequestDataSchema
  */
 export function getDataFromDataRequestMessage(
-  message: VeridaInboxMessageRecord
+  messageRecord: VeridaInboxMessageRecord
 ) {
-  if (message.type !== VeridaInboxMessageSupportedType.DATA_REQUEST) {
+  if (messageRecord.type !== VeridaInboxMessageSupportedType.DATA_REQUEST) {
     return null
   }
 
   try {
-    return VeridaInboxMessageTypeDataRequestDataSchema.parse(message.data)
+    return VeridaInboxMessageTypeDataRequestDataSchema.parse(messageRecord.data)
   } catch (error) {
     logger.warn("Failed to parse data of data request inbox message")
     return null
+  }
+}
+
+export function getDataFromAnyMessage(messageRecord: VeridaInboxMessageRecord) {
+  switch (messageRecord.type) {
+    case VeridaInboxMessageSupportedType.DATA_SEND:
+      return getDataFromIncomingDataMessage(messageRecord)
+    case VeridaInboxMessageSupportedType.DATA_REQUEST:
+      return getDataFromDataRequestMessage(messageRecord)
+    default:
+      return null
   }
 }
 
@@ -500,6 +510,62 @@ export async function declineDataRequestMessage(
     logger.info("Data request message declined")
   } catch (error) {
     throw new Error("Failed to decline data request message", {
+      cause: error,
+    })
+  }
+}
+
+/**
+ * Resets the status of a message back to pending by removing the status field.
+ * This allows a previously accepted or declined message to be actioned again.
+ *
+ * @param messagingEngine - The Verida messaging engine instance
+ * @param messageRecord - The message record to reset the status for
+ * @returns A promise that resolves when the message status is reset
+ * @throws {Error} If the message record is not found
+ * @throws {Error} If the message data fails schema validation
+ * @throws {Error} If saving the updated message fails
+ */
+export async function resetMessageStatus(
+  messagingEngine: IMessaging,
+  messageRecord: VeridaInboxMessageRecord
+): Promise<void> {
+  logger.info("Resetting message status")
+
+  const latestMessageRecord = await getVeridaInboxMessage({
+    messagingEngine,
+    messageRecordId: messageRecord._id,
+  })
+
+  if (!latestMessageRecord) {
+    throw new Error("Inbox message record not found")
+  }
+
+  const data = getDataFromAnyMessage(latestMessageRecord)
+
+  if (!data) {
+    throw new Error("Failed to parse data of data request inbox message")
+  }
+
+  if (!data.status) {
+    return
+  }
+
+  const updatedMessageRecord: VeridaInboxMessageRecord = {
+    ...latestMessageRecord,
+    data: {
+      ...data,
+      status: undefined,
+    },
+  }
+
+  try {
+    const inbox = await messagingEngine.getInbox()
+    await inbox.privateInbox.save(updatedMessageRecord)
+
+    logger.info("Message status reset")
+  } catch (error) {
+    throw new Error("Failed to reset message status", {
       cause: error,
     })
   }

@@ -10,6 +10,7 @@ import {
   MessageBlock,
   MessageBlockTitle,
 } from "@/app/(connected)/inbox/@item/_components/message-block"
+import { ResetMessageStatusButton } from "@/app/(connected)/inbox/@item/_components/reset-message-status-button"
 import { InboxDataRequestTypeIcon } from "@/components/icons/inbox-data"
 import {
   ItemSheetBody,
@@ -28,6 +29,7 @@ import {
   CardFooter,
   CardTitle,
 } from "@/components/ui/card"
+import { commonConfig } from "@/config/common"
 import { EMPTY_VALUE_FALLBACK } from "@/constants/misc"
 import { useDataSchema_legacy } from "@/features/verida-data-schemas/hooks/use-data-schema-legacy"
 import { InboxMessageStatusIndicator } from "@/features/verida-inbox/components/inbox.message-status-indicator"
@@ -108,6 +110,10 @@ export function DataRequestItemPageContent(
       <ItemSheetHeader
         right={
           <div className="flex flex-row items-center gap-3">
+            {(status === "accepted" || status === "declined") &&
+            commonConfig.DEV_MODE ? (
+              <ResetMessageStatusButton messageRecord={inboxMessage} />
+            ) : null}
             <MarkMessageAsUnreadButton
               messageRecord={inboxMessage}
               onMarkAsUnread={onMarkAsUnread}
