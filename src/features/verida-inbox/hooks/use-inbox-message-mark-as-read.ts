@@ -4,17 +4,14 @@ import { FetchVeridaDataRecordsResult } from "@/features/verida-database/types"
 import { useVeridaInbox } from "@/features/verida-inbox/hooks/use-verida-inbox"
 import { VeridaInboxQueryKeys } from "@/features/verida-inbox/queries"
 import { VeridaInboxMessageRecord } from "@/features/verida-inbox/types"
-import {
-  markMessageAsRead,
-  markMessageAsUnread,
-} from "@/features/verida-inbox/utils"
+import { markMessageAsRead } from "@/features/verida-inbox/utils"
 import { useVerida } from "@/features/verida/hooks/use-verida"
 
-type MessageReadHandlerArgs = {
+interface InboxMessageMarkAsReadMutationArgs {
   messageRecord: VeridaInboxMessageRecord
 }
 
-type MutationContext = {
+interface MutationContext {
   previousMessageData: VeridaInboxMessageRecord | undefined
   previousMessagesData: [
     QueryKey,
@@ -23,12 +20,12 @@ type MutationContext = {
   previousUnreadCount: number | undefined
 }
 
-type UseInboxMessageReadHandlerOptions = {
+interface UseInboxMessageMarkAsReadOptions {
   disableOptimisticUpdate?: boolean
 }
 
-export function useInboxMessageReadHandler(
-  options?: UseInboxMessageReadHandlerOptions
+export function useInboxMessageMarkAsRead(
+  options?: UseInboxMessageMarkAsReadOptions
 ) {
   const { did } = useVerida()
   const { messagingEngine } = useVeridaInbox()
@@ -37,8 +34,13 @@ export function useInboxMessageReadHandler(
   const {
     mutate: markAsRead,
     mutateAsync: markAsReadAsync,
-    ...markAsReadMutation
-  } = useMutation<void, Error, MessageReadHandlerArgs, MutationContext>({
+    ...mutation
+  } = useMutation<
+    void,
+    Error,
+    InboxMessageMarkAsReadMutationArgs,
+    MutationContext
+  >({
     mutationFn: async ({ messageRecord }) => {
       if (!messagingEngine) {
         throw new Error("Messaging engine not initialized")
@@ -160,138 +162,9 @@ export function useInboxMessageReadHandler(
     },
   })
 
-  const {
-    mutate: markAsUnread,
-    mutateAsync: markAsUnreadAsync,
-    ...markAsUnreadMutation
-  } = useMutation<void, Error, MessageReadHandlerArgs, MutationContext>({
-    mutationFn: async ({ messageRecord }) => {
-      if (!messagingEngine) {
-        throw new Error("Messaging engine not initialized")
-      }
-
-      return markMessageAsUnread(messagingEngine, messageRecord)
-    },
-    onMutate: async ({ messageRecord }) => {
-      if (options?.disableOptimisticUpdate) {
-        return {
-          previousMessagesData: [],
-          previousMessageData: undefined,
-          previousUnreadCount: undefined,
-        }
-      }
-
-      // Cancel any outgoing refetches
-      await queryClient.cancelQueries({
-        queryKey: VeridaInboxQueryKeys.invalidateInbox(),
-      })
-
-      // Snapshot previous messages data
-      const previousMessagesData = queryClient.getQueriesData<
-        FetchVeridaDataRecordsResult<VeridaInboxMessageRecord>
-      >({
-        queryKey: VeridaInboxQueryKeys.invalidateInboxMessages(),
-      })
-
-      // Optimistically update messages data
-      previousMessagesData.forEach(([queryKey, queryData]) => {
-        if (queryData) {
-          queryClient.setQueryData(queryKey, {
-            ...queryData,
-            records: queryData.records.map((r) =>
-              r._id === messageRecord._id ? { ...r, read: false } : r
-            ),
-          })
-        }
-      })
-
-      // Snapshot previous message data
-      const previousMessageData =
-        queryClient.getQueryData<VeridaInboxMessageRecord>(
-          VeridaInboxQueryKeys.inboxMessage({
-            did,
-            messageRecordId: messageRecord._id,
-          })
-        )
-
-      // Optimistically update message data
-      if (previousMessageData) {
-        queryClient.setQueryData(
-          VeridaInboxQueryKeys.inboxMessage({
-            did,
-            messageRecordId: messageRecord._id,
-          }),
-          { ...previousMessageData, read: false }
-        )
-      }
-
-      // Snapshot previous unread count
-      const previousUnreadCount = queryClient.getQueryData<number>(
-        VeridaInboxQueryKeys.unreadMessagesCount({ did })
-      )
-
-      // Optimistically update unread count
-      if (previousUnreadCount !== undefined && messageRecord.read) {
-        queryClient.setQueryData(
-          VeridaInboxQueryKeys.unreadMessagesCount({ did }),
-          previousUnreadCount + 1
-        )
-      }
-
-      return { previousMessagesData, previousMessageData, previousUnreadCount }
-    },
-    onError: (_error, { messageRecord }, context) => {
-      if (context?.previousMessagesData) {
-        context.previousMessagesData.forEach(([queryKey, queryData]) => {
-          queryClient.setQueryData(queryKey, queryData)
-        })
-      }
-
-      if (context?.previousMessageData) {
-        queryClient.setQueryData(
-          VeridaInboxQueryKeys.inboxMessage({
-            did,
-            messageRecordId: messageRecord._id,
-          }),
-          context.previousMessageData
-        )
-      }
-
-      if (context?.previousUnreadCount !== undefined) {
-        queryClient.setQueryData(
-          VeridaInboxQueryKeys.unreadMessagesCount({ did }),
-          context.previousUnreadCount
-        )
-      }
-    },
-    onSuccess: (_data, { messageRecord }) => {
-      queryClient.invalidateQueries({
-        queryKey: VeridaInboxQueryKeys.invalidateInboxMessages(),
-      })
-
-      queryClient.invalidateQueries({
-        queryKey: VeridaInboxQueryKeys.invalidateInboxMessage({
-          did,
-          messageRecordId: messageRecord._id,
-        }),
-      })
-
-      queryClient.invalidateQueries({
-        queryKey: VeridaInboxQueryKeys.invalidateUnreadMessagesCount(),
-      })
-    },
-    meta: {
-      logCategory: "verida-inbox",
-      errorMessage: "Error marking message as unread",
-    },
-  })
-
   return {
     markAsRead,
     markAsReadAsync,
-    ...markAsReadMutation,
-    markAsUnread,
-    markAsUnreadAsync,
-    ...markAsUnreadMutation,
+    ...mutation,
   }
 }
