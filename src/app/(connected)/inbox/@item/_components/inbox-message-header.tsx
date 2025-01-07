@@ -72,8 +72,6 @@ export function InboxMessageHeader(props: InboxMessageHeaderProps) {
     return () => clearInterval(intervalId)
   }, [updateFormattedSentAt])
 
-  // TODO: Add the additional information as a collapsible section (DID, via context, etc.)
-
   return (
     <div className={cn("", className)} {...divProps}>
       <Accordion type="single" collapsible>
