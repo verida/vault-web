@@ -1,7 +1,10 @@
 import { QueryKey, useMutation, useQueryClient } from "@tanstack/react-query"
 
 import { VeridaDatabaseQueryKeys } from "@/features/verida-database/queries"
-import { FetchVeridaDataRecordsResult } from "@/features/verida-database/types"
+import {
+  FetchVeridaDataRecordsResult,
+  VeridaRecord,
+} from "@/features/verida-database/types"
 import { useUpdateInboxQueryCache } from "@/features/verida-inbox/hooks/use-update-inbox-query-cache"
 import { useVeridaInbox } from "@/features/verida-inbox/hooks/use-verida-inbox"
 import { VeridaInboxQueryKeys } from "@/features/verida-inbox/queries"
@@ -11,6 +14,7 @@ import { useVerida } from "@/features/verida/hooks/use-verida"
 
 interface AcceptDataRequestMessageArgs {
   messageRecord: VeridaInboxMessageRecord
+  selectedDataItems: VeridaRecord[]
 }
 
 interface MutationContext {
@@ -44,12 +48,16 @@ export function useAcceptDataRequestMessage(
     AcceptDataRequestMessageArgs,
     MutationContext
   >({
-    mutationFn: ({ messageRecord }) => {
+    mutationFn: ({ messageRecord, selectedDataItems }) => {
       if (!messagingEngine) {
         throw new Error("Messaging engine not initialized")
       }
 
-      return acceptDataRequestMessage(messagingEngine, messageRecord)
+      return acceptDataRequestMessage(
+        messagingEngine,
+        messageRecord,
+        selectedDataItems
+      )
     },
     onMutate: async ({ messageRecord }) => {
       if (options?.disableOptimisticUpdate) {

@@ -81,7 +81,7 @@ export function DataRequestItemPageContent(
     try {
       await acceptAsync({
         messageRecord: inboxMessage,
-        // TODO: Add selected data items
+        selectedDataItems,
       })
       onAccept?.()
     } catch (error) {
@@ -89,11 +89,11 @@ export function DataRequestItemPageContent(
     } finally {
       setProcessing(false)
     }
-  }, [acceptAsync, onAccept, inboxMessage])
+  }, [acceptAsync, onAccept, inboxMessage, selectedDataItems])
 
   const handleSelectClick = useCallback(() => {
     displaySelectionPage()
-  }, [])
+  }, [displaySelectionPage])
 
   const handleSelectDataItem = useCallback((dataItemRecord: VeridaRecord) => {
     setSelectedDataItems((prev) => [...prev, dataItemRecord])
@@ -136,7 +136,9 @@ export function DataRequestItemPageContent(
     }
   }, [data])
 
-  if (!data) {
+  if (!data || !data.userSelect) {
+    // TODO: Add support for the userSelect=false case, e.g. the user doesn't chose which data is shared, it is expected to be done automatically via a query
+
     return (
       <InvalidItemPageContent
         inboxMessage={inboxMessage}
@@ -261,7 +263,7 @@ export function DataRequestItemPageContent(
                       variant="primary"
                       className="w-full"
                       onClick={handleAccept}
-                      disabled={processing}
+                      disabled={processing || selectedDataItems.length === 0}
                     >
                       Share
                     </Button>

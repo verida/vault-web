@@ -6,6 +6,7 @@ import {
   FetchVeridaDataRecordsResult,
   VeridaDatabaseQueryFilter,
   VeridaDatabaseQueryOptions,
+  VeridaRecord,
 } from "@/features/verida-database/types"
 import {
   VeridaInboxMessageRecordArraySchema,
@@ -644,9 +645,30 @@ export async function acceptIncomingDataMessage(
   return
 }
 
+/**
+ * Accepts a data request message by sending the selected data items to the requester and updating the message status.
+ *
+ * The function performs the following steps:
+ * 1. Gets the latest version of the message record
+ * 2. Validates the message data and selected items
+ * 3. Sends the selected data items to the original requester
+ * 4. Updates the message record with the shared data and marks it as accepted
+ *
+ * @param messagingEngine - The Verida messaging engine instance
+ * @param messageRecord - The data request message record to accept
+ * @param selectedDataItems - Array of data items selected by the user to share
+ * @returns A promise that resolves when the data is shared and message is updated
+ * @throws {Error} If the message record is not found
+ * @throws {Error} If the message data fails validation
+ * @throws {Error} If the message was already actioned
+ * @throws {Error} If no data items were selected
+ * @throws {Error} If sending data to requester fails
+ * @throws {Error} If saving the updated message fails
+ */
 export async function acceptDataRequestMessage(
   messagingEngine: IMessaging,
-  messageRecord: VeridaInboxMessageRecord
+  messageRecord: VeridaInboxMessageRecord,
+  selectedDataItems: VeridaRecord[]
 ): Promise<void> {
   logger.info("Accepting data request message")
 
@@ -669,13 +691,36 @@ export async function acceptDataRequestMessage(
     throw new Error(`Data request message already ${data.status}`)
   }
 
-  // TODO: Implement the logic to accept the data request message
+  if (selectedDataItems.length === 0) {
+    throw new Error("No data items selected")
+  }
+
+  try {
+    await messagingEngine.send(
+      latestMessageRecord.sentBy.did,
+      VeridaInboxMessageSupportedType.DATA_SEND,
+      {
+        replyId: latestMessageRecord._id,
+        data: selectedDataItems,
+      },
+      "Here is the requested data",
+      {
+        did: latestMessageRecord.sentBy.did,
+        recipientContextName: latestMessageRecord.sentBy.context,
+      }
+    )
+  } catch (error) {
+    throw new Error("Failed to share the data to the requester", {
+      cause: error,
+    })
+  }
 
   try {
     const updatedMessageRecord: VeridaInboxMessageRecord = {
       ...latestMessageRecord,
       data: {
         ...data,
+        sharedData: selectedDataItems, // Used to be requestedData
         status: "accept",
       },
       read: true,
