@@ -32,7 +32,6 @@ export default function InboxPage() {
     inboxMessageRecords,
     pagination: inboxMessagesPaginationInfo,
     isLoading,
-    isFetching,
     isError,
   } = useGetVeridaInboxMessages({
     options: {
@@ -78,7 +77,6 @@ export default function InboxPage() {
       )}
       className="flex-1"
       isLoading={isLoading || messagingEngineStatus === "loading"}
-      isRefreshing={isFetching}
       isError={isError}
       loadingTitle="Loading messages..."
       loadingDescription="Please wait while we load your messages."

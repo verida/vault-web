@@ -1,6 +1,6 @@
 "use client"
 
-import { MailIcon } from "lucide-react"
+import { MailQuestionIcon } from "lucide-react"
 import { useCallback, useState } from "react"
 
 import { Button } from "@/components/ui/button"
@@ -10,23 +10,22 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { Logger } from "@/features/telemetry/logger"
-import { useInboxMessageMarkAsUnread } from "@/features/verida-inbox/hooks/use-inbox-message-mark-as-unread"
+import { useResetMessageStatus } from "@/features/verida-inbox/hooks/use-reset-message-status"
 import { VeridaInboxMessageRecord } from "@/features/verida-inbox/types"
 import { cn } from "@/styles/utils"
 
 const logger = Logger.create("verida-inbox")
 
-type MarkMessageAsUnreadButtonProps = {
+export interface ResetMessageStatusButtonProps
+  extends Omit<React.ComponentProps<typeof Button>, "onClick" | "children"> {
   messageRecord: VeridaInboxMessageRecord
-  onMarkAsUnread?: () => void
-} & Omit<React.ComponentProps<typeof Button>, "onClick" | "children">
+  onResetStatus?: () => void
+}
 
-export function MarkMessageAsUnreadButton(
-  props: MarkMessageAsUnreadButtonProps
-) {
+export function ResetMessageStatusButton(props: ResetMessageStatusButtonProps) {
   const {
     messageRecord,
-    onMarkAsUnread,
+    onResetStatus,
     variant = "outline",
     size = "icon",
     className,
@@ -35,22 +34,23 @@ export function MarkMessageAsUnreadButton(
 
   const [isProcessing, setIsProcessing] = useState(false)
 
-  const { markAsUnreadAsync } = useInboxMessageMarkAsUnread()
+  const { resetStatusAsync } = useResetMessageStatus()
 
   const handleClick = useCallback(async () => {
-    if (isProcessing || !messageRecord.read) {
+    if (isProcessing) {
       return
     }
+
     setIsProcessing(true)
     try {
-      await markAsUnreadAsync({ messageRecord })
-      onMarkAsUnread?.()
+      await resetStatusAsync({ messageRecord })
+      onResetStatus?.()
     } catch (error) {
       logger.error(error)
     } finally {
       setIsProcessing(false)
     }
-  }, [isProcessing, markAsUnreadAsync, messageRecord, onMarkAsUnread])
+  }, [isProcessing, resetStatusAsync, messageRecord, onResetStatus])
 
   if (!messageRecord.read) {
     return null
@@ -67,12 +67,12 @@ export function MarkMessageAsUnreadButton(
           disabled={isProcessing}
           {...buttonProps}
         >
-          <MailIcon className="size-5 shrink-0" />
-          <span className="sr-only">Mark as unread</span>
+          <MailQuestionIcon className="size-5 shrink-0" />
+          <span className="sr-only">Reset status</span>
         </Button>
       </TooltipTrigger>
-      <TooltipContent>Mark as unread</TooltipContent>
+      <TooltipContent>[DEV ONLY] Reset status</TooltipContent>
     </Tooltip>
   )
 }
-MarkMessageAsUnreadButton.displayName = "MarkMessageAsUnreadButton"
+ResetMessageStatusButton.displayName = "ResetMessageStatusButton"

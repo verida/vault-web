@@ -1,9 +1,16 @@
 "use client"
 
 import { intlFormat, isDate } from "date-fns"
-import { useCallback, useEffect, useState } from "react"
+import { ComponentProps, useCallback, useEffect, useState } from "react"
 
 import { Typography } from "@/components/typography"
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
+import { Card } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton"
 import { EMPTY_VALUE_FALLBACK } from "@/constants/misc"
 import { VeridaInboxMessageRecord } from "@/features/verida-inbox/types"
@@ -11,6 +18,7 @@ import { ProfileAvatar } from "@/features/verida-profile/components/profile-avat
 import { UserYourselfBadge } from "@/features/verida-profile/components/user-yourself-badge"
 import { EMPTY_PROFILE_NAME_FALLBACK } from "@/features/verida-profile/constants"
 import { useVeridaProfile } from "@/features/verida-profile/hooks/use-verida-profile"
+import { VERIDA_VAULT_CONTEXT_NAME } from "@/features/verida/constants"
 import { useVerida } from "@/features/verida/hooks/use-verida"
 import { cn } from "@/styles/utils"
 import {
@@ -21,7 +29,7 @@ import {
 
 type InboxMessageHeaderProps = {
   inboxMessage: VeridaInboxMessageRecord
-} & React.ComponentProps<"div">
+} & Omit<ComponentProps<"div">, "children">
 
 export function InboxMessageHeader(props: InboxMessageHeaderProps) {
   const { inboxMessage, className, ...divProps } = props
@@ -64,44 +72,74 @@ export function InboxMessageHeader(props: InboxMessageHeaderProps) {
     return () => clearInterval(intervalId)
   }, [updateFormattedSentAt])
 
-  // TODO: Add the additional information as a collapsible section (DID, via context, etc.)
-
   return (
-    <div
-      className={cn("flex flex-row items-start gap-2", className)}
-      {...divProps}
-    >
-      <ProfileAvatar
-        profile={profile}
-        isLoading={isLoading}
-        className="size-12"
-      />
-      <div className="flex min-w-0 flex-1 flex-col gap-1">
-        <div className="flex flex-row gap-1.5">
-          {profile ? (
-            <>
-              <div
-                className={cn(
-                  "min-w-0",
-                  profile?.name ? "" : "italic text-muted-foreground"
+    <div className={cn("", className)} {...divProps}>
+      <Accordion type="single" collapsible>
+        <AccordionItem
+          value="item-1"
+          className="flex flex-col gap-4 border-b-0"
+        >
+          <div className={cn("flex flex-row items-start gap-2")}>
+            <ProfileAvatar
+              profile={profile}
+              isLoading={isLoading}
+              className="size-12"
+            />
+            <div className="flex min-w-0 flex-1 flex-col gap-1">
+              <div className="flex flex-row gap-1.5">
+                {profile ? (
+                  <>
+                    <div
+                      className={cn(
+                        "min-w-0",
+                        profile?.name ? "" : "italic text-muted-foreground"
+                      )}
+                    >
+                      <Typography variant="heading-5" className="h-6 truncate">
+                        {profile?.name || EMPTY_PROFILE_NAME_FALLBACK}
+                      </Typography>
+                    </div>
+                  </>
+                ) : (
+                  <Skeleton className="my-1 h-4 w-36" />
                 )}
-              >
-                <Typography variant="heading-5" className="h-6 truncate">
-                  {profile?.name || EMPTY_PROFILE_NAME_FALLBACK}
+                {did === sentBy.did && (
+                  <UserYourselfBadge className="self-start" />
+                )}
+              </div>
+              <AccordionTrigger className="w-fit py-0 text-muted-foreground">
+                <Typography variant="base-s-regular" className="truncate">
+                  {formattedSentAt}
+                </Typography>
+              </AccordionTrigger>
+            </div>
+          </div>
+          <AccordionContent className="pb-0">
+            <Card className="flex flex-col gap-4 px-4 py-3 shadow-none">
+              {sentBy.context &&
+              sentBy.context !== VERIDA_VAULT_CONTEXT_NAME ? (
+                <div className="flex flex-col gap-1">
+                  <div className="text-muted-foreground">
+                    <Typography variant="base-semibold">Context</Typography>
+                  </div>
+                  <Typography variant="base-regular" className="break-words">
+                    {`Via ${sentBy.context}`}
+                  </Typography>
+                </div>
+              ) : null}
+              <div className="flex flex-col gap-1">
+                <div className="flex flex-row items-baseline gap-1.5 text-muted-foreground">
+                  <Typography variant="base-semibold">DID</Typography>
+                  {did === sentBy.did && <UserYourselfBadge className="" />}
+                </div>
+                <Typography variant="base-regular" className="break-words">
+                  {sentBy.did}
                 </Typography>
               </div>
-            </>
-          ) : (
-            <Skeleton className="my-1 h-4 w-36" />
-          )}
-          {did === sentBy.did && <UserYourselfBadge className="self-start" />}
-        </div>
-        <div className="text-muted-foreground">
-          <Typography variant="base-s-regular" className="truncate">
-            {formattedSentAt}
-          </Typography>
-        </div>
-      </div>
+            </Card>
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
     </div>
   )
 }

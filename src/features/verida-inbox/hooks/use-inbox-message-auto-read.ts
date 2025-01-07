@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 
-import { useInboxMessageReadHandler } from "@/features/verida-inbox/hooks/use-inbox-message-read-handler"
+import { useInboxMessageMarkAsRead } from "@/features/verida-inbox/hooks/use-inbox-message-mark-as-read"
 import { VeridaInboxMessageRecord } from "@/features/verida-inbox/types"
 
 type UseInboxMessageAutoReadOptions = {
@@ -14,7 +14,7 @@ export function useInboxMessageAutoRead({
   delay = 3000, // 3 seconds
   disabled = false,
 }: UseInboxMessageAutoReadOptions) {
-  const { markAsReadAsync } = useInboxMessageReadHandler()
+  const { markAsReadAsync } = useInboxMessageMarkAsRead()
 
   useEffect(() => {
     if (disabled || !messageRecord || messageRecord.read) {
