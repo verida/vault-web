@@ -2,9 +2,12 @@
 
 import { AvatarImage } from "@radix-ui/react-avatar"
 import { intlFormat, isDate } from "date-fns"
-import { ComponentProps, useMemo } from "react"
+import { XIcon } from "lucide-react"
+import { ComponentProps, useCallback, useId, useMemo, useState } from "react"
+import { useDebounce } from "use-debounce"
 
 import { ArrowLeftIcon } from "@/components/icons/arrow-left-icon"
+import { SearchIcon } from "@/components/icons/search-icon"
 import {
   ItemSheetBody,
   ItemSheetFooter,
@@ -29,6 +32,7 @@ import {
   ErrorBlockImage,
   ErrorBlockTitle,
 } from "@/components/ui/error"
+import { Input } from "@/components/ui/input"
 import {
   LoadingBlock,
   LoadingBlockDescription,
@@ -59,6 +63,7 @@ export function DataRequestItemPageDataSelection(
     requestedDataSchemaUrl,
     selectedDataItems,
     selectionLimit,
+    filter,
     onClickBack,
     onSelectDataItem,
     onUnselectDataItem,
@@ -72,14 +77,48 @@ export function DataRequestItemPageDataSelection(
     )
   }, [requestedDataSchemaUrl])
 
+  const [searchValue, setSearchValue] = useState("")
+  const [debouncedSearch] = useDebounce(searchValue, 500)
+
+  const resolvedFilter = useMemo(() => {
+    const requestFilter = filter && typeof filter === "object" ? filter : {}
+
+    const searchFilter =
+      debouncedSearch && debouncedSearch.length > 0
+        ? {
+            $or: [
+              {
+                name: {
+                  $regex: debouncedSearch,
+                },
+              },
+              {
+                summary: {
+                  $regex: debouncedSearch,
+                },
+              },
+            ],
+          }
+        : {}
+
+    return {
+      $and: [requestFilter, searchFilter],
+    }
+  }, [debouncedSearch, filter])
+
   const { records, isLoading } = useVeridaDataRecords(
     {
       databaseName,
+      filter: resolvedFilter,
     },
     {
       enabled: !!databaseName,
     }
   )
+
+  const handleClearSearch = useCallback(() => {
+    setSearchValue("")
+  }, [setSearchValue])
 
   const selectedDataItemsCount = useMemo(
     () => selectedDataItems.length,
@@ -104,6 +143,27 @@ export function DataRequestItemPageDataSelection(
               Select data to share
             </ItemSheetTitle>
           </div>
+          <Input
+            placeholder="Search your data..."
+            value={searchValue}
+            onChange={(e) => setSearchValue(e.target.value)}
+            startAdornment={
+              <SearchIcon className="ml-3 size-6 shrink-0 text-muted-foreground" />
+            }
+            endAdornmentContainerClassName="p-0"
+            endAdornment={
+              searchValue.length > 0 ? (
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="mr-1 mt-0.5 h-8 w-8"
+                  onClick={handleClearSearch}
+                >
+                  <XIcon className="size-6" />
+                </Button>
+              ) : null
+            }
+          />
         </div>
       </ItemSheetHeader>
       <ItemSheetBody className="flex flex-col gap-4">
@@ -120,7 +180,7 @@ export function DataRequestItemPageDataSelection(
                   <EmptyStateImage />
                   <EmptyStateTitle>No data found</EmptyStateTitle>
                   <EmptyStateDescription>
-                    You don't have data satisfying to the request
+                    There is no data satisfying the request
                   </EmptyStateDescription>
                 </EmptyState>
               </div>
@@ -203,6 +263,8 @@ function DataItem(props: DataItemProps) {
     ...cardProps
   } = props
 
+  const checkboxId = useId()
+
   const formattedDate = useMemo(() => {
     const date = new Date(record.insertedAt || "")
     if (!isDate(date)) {
@@ -212,38 +274,54 @@ function DataItem(props: DataItemProps) {
     return intlFormat(date, SHORT_DATE_TIME_FORMAT_OPTIONS)
   }, [record.insertedAt])
 
+  // TODO: Try to make the whole card clickable to select it, not just the checkbox. Check accessibility.
+
   return (
-    <Card
-      className={cn("flex flex-row items-center gap-2 px-4 py-3", className)}
-      {...cardProps}
+    <label
+      htmlFor={checkboxId}
+      className={cn(
+        "cursor-pointer",
+        !selected && selectionDisabled ? "cursor-not-allowed" : ""
+      )}
     >
-      <div className="flex min-w-0 flex-1 flex-row items-center gap-3">
-        <Avatar className="size-16">
-          <AvatarImage src={record.icon} />
-          <AvatarFallback>{EMPTY_VALUE_FALLBACK}</AvatarFallback>
-        </Avatar>
-        <div className="flex min-w-0 flex-1 flex-col gap-1">
-          <CardTitle variant="heading-5" className="line-clamp-2">
-            {record.name}
-          </CardTitle>
-          <CardDescription
-            className={cn("truncate", !record.summary ? "italic" : "")}
-          >
-            {record.summary || "No description available"}
-          </CardDescription>
-          {record.insertedAt ? (
-            <CardDescription className={cn("truncate")}>
-              {formattedDate}
+      <Card
+        className={cn("flex flex-row items-center gap-2 px-4 py-3", className)}
+        {...cardProps}
+      >
+        <div className="flex min-w-0 flex-1 flex-row items-center gap-3">
+          <Avatar className="size-16">
+            <AvatarImage src={record.icon} />
+            <AvatarFallback>{EMPTY_VALUE_FALLBACK}</AvatarFallback>
+          </Avatar>
+          <div className="flex min-w-0 flex-1 flex-col gap-1">
+            <CardTitle
+              variant="heading-5"
+              component="p"
+              className="line-clamp-2"
+            >
+              {record.name}
+            </CardTitle>
+            <CardDescription
+              className={cn("truncate", !record.summary ? "italic" : "")}
+            >
+              {record.summary || "No description available"}
             </CardDescription>
-          ) : null}
+            {record.insertedAt ? (
+              <CardDescription className={cn("truncate")}>
+                {formattedDate}
+              </CardDescription>
+            ) : null}
+          </div>
         </div>
-      </div>
-      <Checkbox
-        checked={selected}
-        disabled={!selected && selectionDisabled}
-        onCheckedChange={onSelectChange}
-      />
-    </Card>
+        <Checkbox
+          id={checkboxId}
+          checked={selected}
+          disabled={!selected && selectionDisabled}
+          onCheckedChange={onSelectChange}
+          className="shrink-0"
+        />
+      </Card>
+    </label>
   )
 }
 DataItem.displayName = "DataItem"
