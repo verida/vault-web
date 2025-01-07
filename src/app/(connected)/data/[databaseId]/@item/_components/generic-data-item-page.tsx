@@ -63,12 +63,10 @@ export function GenericDataItemPageBody(props: GenericDataItemPageBodyProps) {
         ))}
         <Accordion type="single" collapsible>
           <AccordionItem value="item-1" className="border-b-0">
-            <AccordionTrigger>
-              <div className="text-muted-foreground">
-                <Typography variant="base-semibold">
-                  Additional Properties
-                </Typography>
-              </div>
+            <AccordionTrigger className="text-muted-foreground">
+              <Typography variant="base-semibold">
+                Additional Properties
+              </Typography>
             </AccordionTrigger>
             <AccordionContent className="flex flex-col gap-4">
               <GenericDataItemField propertyName={"_id"} value={_id} />
