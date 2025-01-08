@@ -19,7 +19,7 @@ import {
   hotloadAPI,
   sendAiPromptInputToAssistant,
 } from "@/features/assistants/utils"
-import { Logger } from "@/features/telemetry"
+import { Logger } from "@/features/telemetry/logger"
 import { useVerida } from "@/features/verida/hooks/use-verida"
 
 const logger = Logger.create("assistants")

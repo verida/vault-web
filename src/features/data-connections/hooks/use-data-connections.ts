@@ -6,7 +6,7 @@ import {
   getDataConnections,
   getDataConnectionsLatestSyncEnd,
 } from "@/features/data-connections/utils"
-import { Logger } from "@/features/telemetry"
+import { Logger } from "@/features/telemetry/logger"
 import { useVerida } from "@/features/verida/hooks/use-verida"
 
 const logger = Logger.create("data-connections")

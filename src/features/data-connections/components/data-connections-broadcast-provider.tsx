@@ -7,10 +7,10 @@ import { DATA_CONNECTIONS_CHANNEL } from "@/features/data-connections/constants"
 import {
   DataConnectionsBroadcastContext,
   DataConnectionsBroadcastContextValue,
-} from "@/features/data-connections/data-connections-broadcast-context"
+} from "@/features/data-connections/contexts/data-connections-broadcast-context"
 import { DataConnectionsQueryKeys } from "@/features/data-connections/queries"
 import { DataConnectionsChannelEvent } from "@/features/data-connections/types"
-import { Logger } from "@/features/telemetry"
+import { Logger } from "@/features/telemetry/logger"
 import { StrictBroadcastChannel } from "@/types/strict-broadcast-channel"
 
 const logger = Logger.create("data-connections")

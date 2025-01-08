@@ -37,10 +37,10 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
-import { useCommand } from "@/features/command/use-command"
+import { useCommand } from "@/features/command/hooks/use-command"
 import { DEFAULT_SELECTED_SEARCH_TYPES } from "@/features/data-search/constants"
+import { useSearchData } from "@/features/data-search/hooks/use-search-data"
 import { SearchDataResult, SearchType } from "@/features/data-search/types"
-import { useSearchData } from "@/features/data-search/use-search-data"
 import { USER_DATABASE_DEFS } from "@/features/data/constants"
 import { useRestrictedAccess } from "@/features/restricted-access/hooks/use-restricted-access"
 import { getDatabaseItemPageRoute } from "@/features/routes/utils"

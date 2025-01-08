@@ -4,7 +4,7 @@ import { useSearchParams } from "next/navigation"
 import { useEffect } from "react"
 
 import { useDataConnectionsBroadcast } from "@/features/data-connections/hooks/use-data-connections-broadcast"
-import { Logger } from "@/features/telemetry"
+import { Logger } from "@/features/telemetry/logger"
 
 const logger = Logger.create("data-connections")
 

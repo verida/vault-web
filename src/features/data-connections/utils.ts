@@ -17,7 +17,7 @@ import {
   DataProvider,
 } from "@/features/data-connections/types"
 import { getNewDataConnectionCallbackPageRoute } from "@/features/routes/utils"
-import { Logger } from "@/features/telemetry"
+import { Logger } from "@/features/telemetry/logger"
 
 const logger = Logger.create("data-connections")
 

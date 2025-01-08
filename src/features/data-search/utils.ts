@@ -3,7 +3,7 @@ import { DEFAULT_SELECTED_SEARCH_TYPES } from "@/features/data-search/constants"
 import { UniversalSearchV1ApiResponseSchema } from "@/features/data-search/schemas"
 import { SearchDataArgs, SearchDataResult } from "@/features/data-search/types"
 import { USER_DATABASE_DEFS } from "@/features/data/constants"
-import { Logger } from "@/features/telemetry"
+import { Logger } from "@/features/telemetry/logger"
 
 const logger = Logger.create("search-data")
 

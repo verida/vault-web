@@ -3,7 +3,7 @@ import { useMemo } from "react"
 import { z } from "zod"
 
 import { UseQueryOptions } from "@/features/queries/types"
-import { Logger } from "@/features/telemetry"
+import { Logger } from "@/features/telemetry/logger"
 import { VeridaDatabaseQueryKeys } from "@/features/verida-database/queries"
 import {
   VeridaDatabaseQueryFilter,

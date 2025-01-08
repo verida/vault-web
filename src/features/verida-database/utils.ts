@@ -2,7 +2,7 @@ import { z } from "zod"
 
 import { commonConfig } from "@/config/common"
 import { ALL_DATABASE_DEFS } from "@/features/data/constants"
-import { Logger } from "@/features/telemetry"
+import { Logger } from "@/features/telemetry/logger"
 import {
   VeridaDatabaseDeleteApiV1ResponseSchema,
   getCreateVeridaRecordApiV1ResponseSchema,
