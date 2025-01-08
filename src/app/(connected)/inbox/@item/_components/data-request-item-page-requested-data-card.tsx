@@ -14,7 +14,7 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { EMPTY_VALUE_FALLBACK } from "@/constants/misc"
-import { useDataSchema_legacy } from "@/features/verida-data-schemas/hooks/use-data-schema-legacy"
+import { useDataSchema } from "@/features/verida-data-schemas/hooks/use-data-schema"
 import { VeridaRecord } from "@/features/verida-database/types"
 import { cn } from "@/styles/utils"
 
@@ -42,8 +42,8 @@ export function DataRequestItemPageRequestedDataCard(
     ...cardProps
   } = props
 
-  const { dataSchema } = useDataSchema_legacy(requestedItemSchemaUrl)
-  // TODO: Handle schema loading and error
+  const { dataSchema } = useDataSchema(requestedItemSchemaUrl)
+  // TODO: Use schema loading and error state
 
   return (
     <Card
