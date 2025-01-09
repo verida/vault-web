@@ -1,6 +1,6 @@
 import { z } from "zod"
 
-import { Logger } from "@/features/telemetry"
+import { Logger } from "@/features/telemetry/logger"
 import { VeridaDataSchemaSchema } from "@/features/verida-data-schemas/schemas"
 import { VeridaDataSchema } from "@/features/verida-data-schemas/types"
 
