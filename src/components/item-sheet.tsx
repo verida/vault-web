@@ -50,14 +50,20 @@ type ItemSheetHeaderProps = {
 } & React.ComponentProps<typeof SheetHeader>
 
 export function ItemSheetHeader(props: ItemSheetHeaderProps) {
-  const { children, right, hideCloseButton, ...sheetHeaderProps } = props
+  const { children, right, hideCloseButton, className, ...sheetHeaderProps } =
+    props
 
   return (
     <SheetHeader
       {...sheetHeaderProps}
-      className="flex flex-col gap-4 border-b px-6 py-4"
+      className={cn("flex flex-col gap-4 border-b px-6 py-4", className)}
     >
-      <div className="flex flex-row items-center justify-between gap-3">
+      <div
+        className={cn(
+          "flex flex-row items-center justify-between gap-3",
+          hideCloseButton && !right ? "hidden sm:block" : ""
+        )}
+      >
         <div className="flex min-w-0 flex-1 flex-row items-center gap-3">
           {!hideCloseButton && (
             // FIXME: For some reasons the tooltip is display when opening the sheet
@@ -78,7 +84,7 @@ export function ItemSheetHeader(props: ItemSheetHeaderProps) {
             //   <TooltipContent>Close</TooltipContent>
             // </Tooltip>
           )}
-          <div className="hidden truncate sm:block">{children}</div>
+          <div className="hidden flex-1 truncate sm:block">{children}</div>
         </div>
         {right ? (
           <div className="flex flex-row items-center gap-3">{right}</div>

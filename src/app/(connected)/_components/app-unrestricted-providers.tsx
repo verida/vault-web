@@ -1,6 +1,6 @@
 "use client"
 
-import { CommandProvider } from "@/features/command/command-provider"
+import { CommandProvider } from "@/features/command/components/command-provider"
 import { VeridaInboxProvider } from "@/features/verida-inbox/components/verida-inbox-provider"
 
 export type AppUnrestrictedProvidersProps = {

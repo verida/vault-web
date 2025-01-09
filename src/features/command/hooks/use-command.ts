@@ -1,6 +1,6 @@
 import { useContext } from "react"
 
-import { CommandContext } from "@/features/command/command-context"
+import { CommandContext } from "@/features/command/contexts/command-context"
 
 export function useCommand() {
   const contextValue = useContext(CommandContext)

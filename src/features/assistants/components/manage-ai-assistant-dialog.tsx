@@ -38,7 +38,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { AiAssistantFormDataSchema } from "@/features/assistants/schemas"
 import { AiAssistantFormData } from "@/features/assistants/types"
-import { Logger } from "@/features/telemetry"
+import { Logger } from "@/features/telemetry/logger"
 import { cn } from "@/styles/utils"
 
 const logger = Logger.create("assistants")

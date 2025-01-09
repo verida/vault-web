@@ -3,7 +3,7 @@
 import { useEffect } from "react"
 
 import { ErrorPageProps } from "@/components/error-page-content"
-import { Logger } from "@/features/telemetry"
+import { Logger } from "@/features/telemetry/logger"
 
 const logger = Logger.create("error-boundary")
 

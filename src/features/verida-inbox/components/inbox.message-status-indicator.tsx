@@ -31,7 +31,7 @@ export function InboxMessageStatusIndicator(
       className={cn("flex flex-row items-center gap-2", className)}
       {...divProps}
     >
-      {status === "rejected" ? (
+      {status === "declined" ? (
         <XIcon className="size-4 text-status-error" />
       ) : null}
       {status === "pending" ? (

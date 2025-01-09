@@ -1,6 +1,6 @@
 import { z } from "zod"
 
-import { Logger } from "@/features/telemetry"
+import { Logger } from "@/features/telemetry/logger"
 
 /**
  * Creates a Zod schema for an array that filters out invalid items based on the provided schema.

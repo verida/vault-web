@@ -2,7 +2,6 @@
 
 import Link from "next/link"
 
-import { InboxWithBadge } from "@/components/icons/inbox-with-badge"
 import { Button } from "@/components/ui/button"
 import {
   Tooltip,
@@ -12,6 +11,7 @@ import {
 import { featureFlags } from "@/config/features"
 import { useRestrictedAccess } from "@/features/restricted-access/hooks/use-restricted-access"
 import { getInboxPageRoute } from "@/features/routes/utils"
+import { InboxWithBadge } from "@/features/verida-inbox/components/inbox-with-badge"
 import { cn } from "@/styles/utils"
 
 export type AppHeaderInboxLinkProps = Pick<

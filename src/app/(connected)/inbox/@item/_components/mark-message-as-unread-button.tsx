@@ -10,7 +10,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { Logger } from "@/features/telemetry/logger"
-import { useInboxMessageReadHandler } from "@/features/verida-inbox/hooks/use-inbox-message-read-handler"
+import { useInboxMessageMarkAsUnread } from "@/features/verida-inbox/hooks/use-inbox-message-mark-as-unread"
 import { VeridaInboxMessageRecord } from "@/features/verida-inbox/types"
 import { cn } from "@/styles/utils"
 
@@ -35,7 +35,7 @@ export function MarkMessageAsUnreadButton(
 
   const [isProcessing, setIsProcessing] = useState(false)
 
-  const { markAsUnreadAsync } = useInboxMessageReadHandler()
+  const { markAsUnreadAsync } = useInboxMessageMarkAsUnread()
 
   const handleClick = useCallback(async () => {
     if (isProcessing || !messageRecord.read) {

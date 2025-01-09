@@ -3,9 +3,9 @@ import { useEffect, useMemo, useState } from "react"
 import {
   CommandContext,
   CommandContextType,
-} from "@/features/command/command-context"
+} from "@/features/command/contexts/command-context"
 
-export type CommandProviderProps = {
+export interface CommandProviderProps {
   children: React.ReactNode
 }
 

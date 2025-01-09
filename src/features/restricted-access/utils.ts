@@ -1,7 +1,7 @@
 import { commonConfig } from "@/config/common"
 import { GetAccessV1ResponseSchema } from "@/features/restricted-access/schemas"
 import { RestrictedAccessStatus } from "@/features/restricted-access/types"
-import { Logger } from "@/features/telemetry"
+import { Logger } from "@/features/telemetry/logger"
 
 const logger = Logger.create("restricted-access")
 

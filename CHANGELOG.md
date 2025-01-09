@@ -1,3 +1,14 @@
+# 0.12.0 (2025-01-09)
+
+## Enhancements
+
+- Support responding to inbox data request and incoming data messages
+- Improve internal support of JSON schemas
+
+## Misc
+
+- Update dependencies
+
 # 0.11.0 (2024-12-31)
 
 ## Enhancements

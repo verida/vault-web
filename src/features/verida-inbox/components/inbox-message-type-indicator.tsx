@@ -1,8 +1,8 @@
 import { useMemo } from "react"
 
-import { InboxData } from "@/components/icons/inbox-data"
-import { InboxIncoming } from "@/components/icons/inbox-incoming"
-import { InboxMessage } from "@/components/icons/inbox-message"
+import { InboxDataRequestTypeIcon } from "@/components/icons/inbox-data"
+import { InboxIncomingDataTypeIcon } from "@/components/icons/inbox-incoming"
+import { InboxMessageTypeIcon } from "@/components/icons/inbox-message"
 import { Typography } from "@/components/typography"
 import { VeridaInboxMessageSupportedType } from "@/features/verida-inbox/types"
 import { cn } from "@/styles/utils"
@@ -33,11 +33,11 @@ export function InboxMessageTypeIndicator(
   const Icon = useMemo(() => {
     switch (type) {
       case VeridaInboxMessageSupportedType.MESSAGE:
-        return InboxMessage
+        return InboxMessageTypeIcon
       case VeridaInboxMessageSupportedType.DATA_SEND:
-        return InboxIncoming
+        return InboxIncomingDataTypeIcon
       case VeridaInboxMessageSupportedType.DATA_REQUEST:
-        return InboxData
+        return InboxDataRequestTypeIcon
       default:
         return null
     }

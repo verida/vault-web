@@ -9,6 +9,28 @@ import { filteredArraySchema } from "@/utils/schemas"
 
 const logger = Logger.create("verida-inbox")
 
+// Combine into final schema that can be extended
+export const VeridaInboxMessageBaseSchema = z.object({
+  message: z.string(),
+  sentAt: z.string(),
+  sentBy: z.object({
+    did: z.string(),
+    context: z.string(),
+  }),
+  read: z.boolean(),
+  type: z.string(),
+  data: z.unknown(),
+})
+
+export const VeridaInboxMessageRecordSchema = VeridaBaseRecordSchema.merge(
+  VeridaInboxMessageBaseSchema
+)
+
+export const VeridaInboxMessageRecordArraySchema = filteredArraySchema(
+  VeridaInboxMessageRecordSchema,
+  logger
+)
+
 // Known message type schemas
 export const VeridaInboxMessageTypeMessageDataSchema = z.object({
   subject: z.string(),
@@ -35,6 +57,8 @@ export const VeridaInboxMessageTypeDataRequestDataSchema = z.object({
     .union([z.literal("accept"), z.literal("reject"), z.string()])
     .optional(),
   requestSchema: z.string().url(),
+  requestedData: filteredArraySchema(VeridaBaseRecordSchema, logger).optional(),
+  sharedData: filteredArraySchema(VeridaBaseRecordSchema, logger).optional(),
   userSelect: z.boolean().default(false),
   userSelectLimit: z.number().optional(),
   filter: z.record(z.string(), z.unknown()).optional(),
@@ -45,25 +69,3 @@ export const VeridaInboxMessageTypeDataRequestDataSchema = z.object({
     })
     .optional(),
 })
-
-// Combine into final schema that can be extended
-export const VeridaInboxMessageBaseSchema = z.object({
-  message: z.string(),
-  sentAt: z.string(),
-  sentBy: z.object({
-    did: z.string(),
-    context: z.string(),
-  }),
-  read: z.boolean(),
-  type: z.string(),
-  data: z.unknown(),
-})
-
-export const VeridaInboxMessageRecordSchema = VeridaBaseRecordSchema.merge(
-  VeridaInboxMessageBaseSchema
-)
-
-export const VeridaInboxMessageRecordArraySchema = filteredArraySchema(
-  VeridaInboxMessageRecordSchema,
-  logger
-)

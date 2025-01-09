@@ -40,7 +40,7 @@ import {
 } from "@/features/data-connections/types"
 import { buildConnectProviderUrl } from "@/features/data-connections/utils"
 import { getConnectionPageRoute } from "@/features/routes/utils"
-import { Logger } from "@/features/telemetry"
+import { Logger } from "@/features/telemetry/logger"
 import { useVerida } from "@/features/verida/hooks/use-verida"
 
 const logger = Logger.create("connect-data-provider-dialog")
