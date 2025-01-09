@@ -6,7 +6,8 @@ import { WebUser } from "@verida/web-helpers"
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"
 
 import { commonConfig } from "@/config/common"
-import { Logger, Sentry } from "@/features/telemetry"
+import { Logger } from "@/features/telemetry/logger"
+import { Sentry } from "@/features/telemetry/sentry"
 import { invalidateVeridaProfile } from "@/features/verida-profile/hooks/use-verida-profile"
 import { VERIDA_VAULT_CONTEXT_NAME } from "@/features/verida/constants"
 import {
@@ -36,13 +37,11 @@ const webUserInstance = new WebUser({
   },
 })
 
-type VeridaProviderProps = {
+export interface VeridaProviderProps {
   children?: React.ReactNode
 }
 
-export const VeridaProvider: React.FunctionComponent<VeridaProviderProps> = (
-  props
-) => {
+export function VeridaProvider(props: VeridaProviderProps) {
   const webUserInstanceRef = useRef(webUserInstance)
 
   const [isConnected, setIsConnected] = useState(false)
@@ -220,3 +219,4 @@ export const VeridaProvider: React.FunctionComponent<VeridaProviderProps> = (
     </VeridaContext.Provider>
   )
 }
+VeridaProvider.displayName = "VeridaProvider"

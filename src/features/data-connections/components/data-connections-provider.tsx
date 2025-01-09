@@ -6,7 +6,7 @@ import { useEffect } from "react"
 import { DATA_CONNECTIONS_SYNC_INTERVAL } from "@/features/data-connections/constants"
 import { prefetchDataProviders } from "@/features/data-connections/hooks/use-data-providers"
 import { useSyncAllDataConnections } from "@/features/data-connections/hooks/use-sync-all-data-connections"
-import { Logger } from "@/features/telemetry"
+import { Logger } from "@/features/telemetry/logger"
 
 const logger = Logger.create("data-connections")
 

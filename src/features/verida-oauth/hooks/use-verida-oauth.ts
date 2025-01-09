@@ -1,6 +1,6 @@
 import { useCallback } from "react"
 
-import { Logger } from "@/features/telemetry"
+import { Logger } from "@/features/telemetry/logger"
 import { MOCK_OAUTH_PAYLOAD } from "@/features/verida-oauth/mock"
 import { useVerida } from "@/features/verida/hooks/use-verida"
 

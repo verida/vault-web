@@ -2,7 +2,7 @@ import { QueryClient, useQuery } from "@tanstack/react-query"
 
 import { DataConnectionsQueryKeys } from "@/features/data-connections/queries"
 import { getDataProviders } from "@/features/data-connections/utils"
-import { Logger } from "@/features/telemetry"
+import { Logger } from "@/features/telemetry/logger"
 
 const logger = Logger.create("data-connections")
 

@@ -3,7 +3,7 @@ import { useCallback } from "react"
 
 import { DataConnectionsQueryKeys } from "@/features/data-connections/queries"
 import { syncDataConnection } from "@/features/data-connections/utils"
-import { Logger } from "@/features/telemetry"
+import { Logger } from "@/features/telemetry/logger"
 import { useVerida } from "@/features/verida/hooks/use-verida"
 import { wait } from "@/utils/misc"
 

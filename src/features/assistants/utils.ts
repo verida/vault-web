@@ -8,7 +8,7 @@ import {
   AiPromptInput,
   PrivateDataApiV1LLMAgentRequestBody,
 } from "@/features/assistants/types"
-import { Logger } from "@/features/telemetry"
+import { Logger } from "@/features/telemetry/logger"
 
 const logger = Logger.create("assistants")
 

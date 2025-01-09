@@ -12,7 +12,7 @@ import {
   ErrorBlockTitle,
 } from "@/components/ui/error"
 import { getRootPageRoute } from "@/features/routes/utils"
-import { Logger } from "@/features/telemetry"
+import { Logger } from "@/features/telemetry/logger"
 import { cn } from "@/styles/utils"
 
 const logger = Logger.create("error-boundary")

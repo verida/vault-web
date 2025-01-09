@@ -38,7 +38,7 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { AiPromptFormDataSchema } from "@/features/assistants/schemas"
 import { AiPromptFormData } from "@/features/assistants/types"
-import { Logger } from "@/features/telemetry"
+import { Logger } from "@/features/telemetry/logger"
 import { cn } from "@/styles/utils"
 
 const logger = Logger.create("assistants")

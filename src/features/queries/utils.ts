@@ -1,6 +1,6 @@
 import { QueryClient, QueryKey } from "@tanstack/react-query"
 
-import { Logger } from "@/features/telemetry"
+import { Logger } from "@/features/telemetry/logger"
 
 export function getLogger(logCategory?: string) {
   return Logger.create(logCategory || "queries")
