@@ -61,7 +61,10 @@ export interface JsonSchema {
   // Core schema definition
   type: "object"
   required?: string[]
-  properties: Record<string, JsonSchemaProperty>
+  properties?: Record<string, JsonSchemaProperty>
+  allOf?: JsonSchemaProperty[]
+  anyOf?: JsonSchemaProperty[]
+  oneOf?: JsonSchemaProperty[]
   $defs?: Record<string, JsonSchemaProperty>
 }
 
