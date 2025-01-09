@@ -61,7 +61,7 @@ export function GenericDataItemPageContent(
     <>
       <ItemSheetHeader
         right={
-          record && featureFlags.data.record.delete ? (
+          featureFlags.data.record.delete ? (
             <Tooltip>
               <DataDeleteRecordDialog
                 databaseDefinition={databaseDefinition}
