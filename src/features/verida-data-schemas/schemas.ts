@@ -74,7 +74,10 @@ export const JsonSchemaSchema = z.object({
   // Core schema definition
   type: z.enum(["object"]).default("object"),
   required: z.array(z.string()).optional(),
-  properties: z.record(JsonSchemaPropertySchema),
+  properties: z.record(JsonSchemaPropertySchema).optional(),
+  allOf: z.array(JsonSchemaPropertySchema).optional(),
+  anyOf: z.array(JsonSchemaPropertySchema).optional(),
+  oneOf: z.array(JsonSchemaPropertySchema).optional(),
   $defs: z.record(JsonSchemaPropertySchema).optional(),
 })
 
