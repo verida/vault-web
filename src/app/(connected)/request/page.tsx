@@ -15,24 +15,24 @@ import {
   ErrorBlockImage,
   ErrorBlockTitle,
 } from "@/components/ui/error"
-import { useEncodedRequestState } from "@/features/requests/hooks/use-encoded-request-state"
+import { useEncodedRequestPayloadState } from "@/features/requests/hooks/use-encoded-request-payload-state"
 import { decodeRequest } from "@/features/requests/utils"
 import { Logger } from "@/features/telemetry/logger"
 
 const logger = Logger.create("requests")
 
 export default function RequestPage() {
-  const { encodedRequest } = useEncodedRequestState()
+  const { encodedRequestPayload } = useEncodedRequestPayloadState()
 
   const { request } = useMemo(() => {
-    if (!encodedRequest) {
+    if (!encodedRequestPayload) {
       return {
         request: null,
       }
     }
 
     try {
-      const request = decodeRequest(encodedRequest)
+      const request = decodeRequest(encodedRequestPayload)
 
       return { request }
     } catch (error) {
@@ -41,7 +41,7 @@ export default function RequestPage() {
         request: null,
       }
     }
-  }, [encodedRequest])
+  }, [encodedRequestPayload])
 
   return (
     <>
@@ -49,7 +49,7 @@ export default function RequestPage() {
         <RequestPageContent request={request} />
       ) : (
         <div className="flex flex-1 flex-col items-center justify-center">
-          {encodedRequest ? (
+          {encodedRequestPayload ? (
             <ErrorBlock>
               <ErrorBlockImage />
               <ErrorBlockTitle>Invalid request</ErrorBlockTitle>
