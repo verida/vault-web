@@ -6,11 +6,6 @@ import { useMemo } from "react"
 import { InboxMessageHeader } from "@/app/(connected)/inbox/@item/_components/inbox-message-header"
 import { InvalidItemPageContent } from "@/app/(connected)/inbox/@item/_components/invalid-item-page-content"
 import { MarkMessageAsUnreadButton } from "@/app/(connected)/inbox/@item/_components/mark-message-as-unread-button"
-import {
-  MessageBlock,
-  MessageBlockBody,
-  MessageBlockTitle,
-} from "@/app/(connected)/inbox/@item/_components/message-block"
 import { InboxMessageTypeIcon } from "@/components/icons/inbox-message"
 import {
   ItemSheetBody,
@@ -19,6 +14,11 @@ import {
   ItemSheetTitle,
 } from "@/components/item-sheet"
 import { Button } from "@/components/ui/button"
+import {
+  MessageBlock,
+  MessageBlockBody,
+  MessageBlockTitle,
+} from "@/components/ui/message-block"
 import { VeridaInboxMessageRecord } from "@/features/verida-inbox/types"
 import { getDataFromMessage } from "@/features/verida-inbox/utils"
 
@@ -90,7 +90,7 @@ export function MessageItemPageContent(props: MessageItemPageContentProps) {
                 <div className="flex flex-col items-center gap-0">
                   <span>{parsedLink.text}</span>
                   <span className="text-xs font-normal opacity-80">
-                    {`${parsedLink.url.protocol}//${parsedLink.url.hostname}`}
+                    {parsedLink.url.origin}
                   </span>
                 </div>
               </Link>

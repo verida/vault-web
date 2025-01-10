@@ -1,15 +1,12 @@
 import { InboxMessageHeader } from "@/app/(connected)/inbox/@item/_components/inbox-message-header"
 import { MarkMessageAsUnreadButton } from "@/app/(connected)/inbox/@item/_components/mark-message-as-unread-button"
 import {
-  MessageBlock,
-  MessageBlockTitle,
-} from "@/app/(connected)/inbox/@item/_components/message-block"
-import {
   ItemSheetBody,
   ItemSheetHeader,
   ItemSheetTitle,
 } from "@/components/item-sheet"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { MessageBlock, MessageBlockTitle } from "@/components/ui/message-block"
 import { VeridaInboxMessageRecord } from "@/features/verida-inbox/types"
 
 export type InvalidItemPageContentProps = {
