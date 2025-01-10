@@ -55,6 +55,8 @@ type RequestProcessingStep =
   | "sharing-profile"
   | "profile-shared"
 
+// TODO: Factorise and split the component into smaller components
+
 export function UserProfileApiRequestContent(
   props: UserProfileApiRequestContentProps
 ) {
@@ -331,8 +333,8 @@ function RequestedInformationCard(props: RequestedInformationCardProps) {
         <AlertTitle>Privacy Notice</AlertTitle>
         <AlertDescription>
           {request.exposesUserData
-            ? "The requester has self-attested that user data will be exposed to third-parties."
-            : "The requester has self-attested that no user data will be exposed to third-parties."}
+            ? "The requester has self-attested that user data will be exposed to third-parties outside of the Verida secure environment."
+            : "The requester has self-attested that no user data will be exposed to third-parties outside of the Verida secure environment."}
         </AlertDescription>
       </Alert>
     </Card>
