@@ -4,6 +4,8 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { ComponentProps, useCallback, useMemo, useState } from "react"
 
+import { RequestHeader } from "@/app/(connected)/request/_components/request-header"
+import { RequestProcessingStepBreadcrumb } from "@/app/(connected)/request/_components/request-processing-step-breadcrumb"
 import { Typography } from "@/components/typography"
 import {
   Accordion,
@@ -12,13 +14,6 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -34,11 +29,7 @@ import { UserProfileApiRequest } from "@/features/requests/types"
 import { getRootPageRoute } from "@/features/routes/utils"
 import { Logger } from "@/features/telemetry/logger"
 import { getUserProfile } from "@/features/user-ai-profile/utils"
-import { getVeridaExplorerIdentityPageUrl } from "@/features/verida-explorer/utils"
-import { ProfileAvatar } from "@/features/verida-profile/components/profile-avatar"
-import { UserYourselfBadge } from "@/features/verida-profile/components/user-yourself-badge"
-import { EMPTY_PROFILE_NAME_FALLBACK } from "@/features/verida-profile/constants"
-import { useVeridaProfile } from "@/features/verida-profile/hooks/use-verida-profile"
+import { useDataSchema } from "@/features/verida-data-schemas/hooks/use-data-schema"
 import { useVerida } from "@/features/verida/hooks/use-verida"
 import { cn } from "@/styles/utils"
 
@@ -55,8 +46,6 @@ type RequestProcessingStep =
   | "sharing-profile"
   | "profile-shared"
 
-// TODO: Factorise and split the component into smaller components
-
 export function UserProfileApiRequestContent(
   props: UserProfileApiRequestContentProps
 ) {
@@ -69,10 +58,7 @@ export function UserProfileApiRequestContent(
   const [currentStep, setCurrentStep] =
     useState<RequestProcessingStep>("review-request")
 
-  const { did, getAccountSessionToken } = useVerida()
-  const { profile, isLoading } = useVeridaProfile({
-    did: request.did,
-  })
+  const { getAccountSessionToken } = useVerida()
 
   const [generatedProfile, setGeneratedProfile] = useState<Record<
     string,
@@ -121,89 +107,23 @@ export function UserProfileApiRequestContent(
             You can check the generated profile before sharing it with the
             requester.
           </CardDescription>
-          <Breadcrumb className="mt-3">
-            <BreadcrumbList>
-              <BreadcrumbItem>
-                <BreadcrumbPage
-                  className={cn(
-                    currentStep === "review-request"
-                      ? ""
-                      : "text-muted-foreground"
-                  )}
-                >
-                  Review request
-                </BreadcrumbPage>
-              </BreadcrumbItem>
-              <BreadcrumbSeparator />
-              <BreadcrumbItem>
-                <BreadcrumbPage
-                  className={cn(
-                    currentStep === "check-profile"
-                      ? ""
-                      : "text-muted-foreground"
-                  )}
-                >
-                  Check profile
-                </BreadcrumbPage>
-              </BreadcrumbItem>
-              <BreadcrumbSeparator />
-              <BreadcrumbItem>
-                <BreadcrumbPage
-                  className={cn(
-                    currentStep === "profile-shared"
-                      ? ""
-                      : "text-muted-foreground"
-                  )}
-                >
-                  Share
-                </BreadcrumbPage>
-              </BreadcrumbItem>
-            </BreadcrumbList>
-          </Breadcrumb>
+          <RequestProcessingStepBreadcrumb
+            className="mt-3"
+            steps={[
+              {
+                name: "Review request",
+                current: currentStep === "review-request",
+              },
+              {
+                name: "Check profile",
+                current: currentStep === "check-profile",
+              },
+              { name: "Share", current: currentStep === "profile-shared" },
+            ]}
+          />
         </CardHeader>
         <CardBody className="flex flex-col gap-6 p-6">
-          <div className="flex flex-row items-start gap-2">
-            <ProfileAvatar
-              profile={profile}
-              isLoading={isLoading}
-              className="size-12"
-            />
-            <div className="flex min-w-0 flex-1 flex-col gap-1">
-              <div className="flex flex-row gap-1.5">
-                {!request.did || profile ? (
-                  <>
-                    <div
-                      className={cn(
-                        "min-w-0",
-                        profile?.name ? "" : "italic text-muted-foreground"
-                      )}
-                    >
-                      <Typography variant="heading-5" className="h-6 truncate">
-                        {profile?.name || EMPTY_PROFILE_NAME_FALLBACK}
-                      </Typography>
-                    </div>
-                  </>
-                ) : (
-                  <Skeleton className="my-1 h-4 w-36" />
-                )}
-                {did === request.did && (
-                  <UserYourselfBadge className="self-start" />
-                )}
-              </div>
-              {request.did ? (
-                <Link
-                  href={getVeridaExplorerIdentityPageUrl(request.did)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="underline"
-                >
-                  <Typography variant="base-s-regular" className="truncate">
-                    {request.did}
-                  </Typography>
-                </Link>
-              ) : null}
-            </div>
-          </div>
+          <RequestHeader requesterDid={request.did} />
           <MessageBlock>
             <div
               className={cn(
@@ -310,6 +230,8 @@ interface RequestedInformationCardProps extends ComponentProps<typeof Card> {
 function RequestedInformationCard(props: RequestedInformationCardProps) {
   const { request, className, ...cardProps } = props
 
+  const { dataSchema, isLoading } = useDataSchema(request.profileJsonSchema)
+
   const parsedProfileSchemaUri = useMemo(() => {
     return new URL(request.profileJsonSchema)
   }, [request.profileJsonSchema])
@@ -319,6 +241,14 @@ function RequestedInformationCard(props: RequestedInformationCardProps) {
       className={cn("flex flex-col gap-6 bg-surface-active p-4", className)}
       {...cardProps}
     >
+      {dataSchema?.title ? (
+        <Typography variant="base-semibold">{dataSchema.title}</Typography>
+      ) : isLoading ? (
+        <Skeleton className="h-4 w-36" />
+      ) : null}
+      {dataSchema?.description ? (
+        <Typography variant="base-regular">{dataSchema.description}</Typography>
+      ) : null}
       <Link
         href={request.profileJsonSchema}
         target="_blank"
