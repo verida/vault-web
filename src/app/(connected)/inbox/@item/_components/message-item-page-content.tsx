@@ -75,7 +75,7 @@ export function MessageItemPageContent(props: MessageItemPageContentProps) {
         <InboxMessageHeader inboxMessage={inboxMessage} />
         <MessageBlock>
           <MessageBlockTitle>{data.subject}</MessageBlockTitle>
-          <MessageBlockBody>{data.message}</MessageBlockBody>
+          <MessageBlockBody>{`"${inboxMessage.message}"`}</MessageBlockBody>
         </MessageBlock>
       </ItemSheetBody>
       {parsedLink ? (

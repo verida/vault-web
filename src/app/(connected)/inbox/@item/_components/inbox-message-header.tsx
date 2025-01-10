@@ -1,6 +1,7 @@
 "use client"
 
 import { intlFormat, isDate } from "date-fns"
+import Link from "next/link"
 import { ComponentProps, useCallback, useEffect, useState } from "react"
 
 import { Typography } from "@/components/typography"
@@ -13,6 +14,7 @@ import {
 import { Card } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton"
 import { EMPTY_VALUE_FALLBACK } from "@/constants/misc"
+import { getVeridaExplorerIdentityPageUrl } from "@/features/verida-explorer/utils"
 import { VeridaInboxMessageRecord } from "@/features/verida-inbox/types"
 import { ProfileAvatar } from "@/features/verida-profile/components/profile-avatar"
 import { UserYourselfBadge } from "@/features/verida-profile/components/user-yourself-badge"
@@ -132,9 +134,16 @@ export function InboxMessageHeader(props: InboxMessageHeaderProps) {
                   <Typography variant="base-semibold">DID</Typography>
                   {did === sentBy.did && <UserYourselfBadge className="" />}
                 </div>
-                <Typography variant="base-regular" className="break-words">
-                  {sentBy.did}
-                </Typography>
+                <Link
+                  href={getVeridaExplorerIdentityPageUrl(sentBy.did)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline"
+                >
+                  <Typography variant="base-regular" className="break-words">
+                    {sentBy.did}
+                  </Typography>
+                </Link>
               </div>
             </Card>
           </AccordionContent>

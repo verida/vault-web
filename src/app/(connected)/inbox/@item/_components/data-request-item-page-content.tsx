@@ -19,7 +19,7 @@ import {
 import { Typography } from "@/components/typography"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
-import { MessageBlock, MessageBlockTitle } from "@/components/ui/message-block"
+import { MessageBlock, MessageBlockBody } from "@/components/ui/message-block"
 import { commonConfig } from "@/config/common"
 import { VeridaRecord } from "@/features/verida-database/types"
 import { InboxMessageStatusIndicator } from "@/features/verida-inbox/components/inbox.message-status-indicator"
@@ -188,7 +188,7 @@ export function DataRequestItemPageContent(
           <ItemSheetBody className="flex flex-col gap-6">
             <InboxMessageHeader inboxMessage={inboxMessage} />
             <MessageBlock>
-              <MessageBlockTitle>{inboxMessage.message}</MessageBlockTitle>
+              <MessageBlockBody>{`"${inboxMessage.message}"`}</MessageBlockBody>
             </MessageBlock>
             <div className="flex flex-col gap-3">
               <div className="text-muted-foreground">
