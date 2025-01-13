@@ -47,11 +47,8 @@ export function OAuthConsentCard(props: OAuthConsentCardProps) {
   }, [])
 
   return (
-    <Card
-      className={cn("flex h-full flex-col gap-6 p-6", className)}
-      {...cardProps}
-    >
-      <CardHeader className="shrink-0 p-0">
+    <Card className={cn("h-full", className)} {...cardProps}>
+      <CardHeader className="shrink-0">
         <CardTitle>
           <Link
             href={url}
@@ -74,7 +71,7 @@ export function OAuthConsentCard(props: OAuthConsentCardProps) {
           </Link>
         </CardDescription>
       </CardHeader>
-      <CardBody className="flex flex-1 flex-col gap-4 overflow-y-auto p-0">
+      <CardBody className="flex flex-1 flex-col gap-4 overflow-y-auto">
         {scopes.length > 0 ? (
           <>
             <Typography variant="base-regular">
@@ -112,7 +109,7 @@ export function OAuthConsentCard(props: OAuthConsentCardProps) {
           </Alert>
         </div>
       </CardBody>
-      <CardFooter className="shrink-0 justify-between p-0">
+      <CardFooter className="flex shrink-0 flex-row items-center justify-between">
         <Button variant="outline" onClick={handleDeny}>
           Deny
         </Button>

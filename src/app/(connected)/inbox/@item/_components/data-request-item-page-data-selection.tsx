@@ -274,8 +274,6 @@ function DataItem(props: DataItemProps) {
     return intlFormat(date, SHORT_DATE_TIME_FORMAT_OPTIONS)
   }, [record.insertedAt])
 
-  // TODO: Try to make the whole card clickable to select it, not just the checkbox. Check accessibility.
-
   return (
     <label
       htmlFor={checkboxId}

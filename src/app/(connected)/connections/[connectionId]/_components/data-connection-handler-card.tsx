@@ -26,18 +26,15 @@ export function DataConnectionHandlerCard(
 
   return (
     <Card
-      className={cn(
-        "flex flex-col gap-0 rounded-2xl px-4 py-6 md:px-6",
-        className
-      )}
+      className={cn("gap-4 rounded-2xl px-4 md:px-6", className)}
       {...cardProps}
     >
-      <CardHeader className="p-0 pb-4">
+      <CardHeader>
         <div className="flex items-center justify-between">
           <CardTitle variant="heading-5">{handlerDefinition?.label}</CardTitle>
         </div>
       </CardHeader>
-      <CardBody className="flex flex-1 flex-col gap-4 p-0 pb-3">
+      <CardBody className="flex flex-1 flex-col gap-4">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div className="text-muted-foreground">
             <Typography variant="base-regular">Status</Typography>
@@ -86,11 +83,6 @@ export function DataConnectionHandlerCard(
           </div>
         ))}
       </CardBody>
-      {/* <Separator />
-      <CardFooter className="flex items-center justify-between p-0 pt-3">
-        <Typography variant="base-semibold">Sync enabled</Typography>
-        <Switch />
-      </CardFooter> */}
     </Card>
   )
 }
@@ -107,18 +99,15 @@ export function DataConnectionHandlerCardSkeleton(
 
   return (
     <Card
-      className={cn(
-        "flex flex-col gap-0 rounded-2xl px-4 py-6 md:px-6",
-        className
-      )}
+      className={cn("gap-4 rounded-2xl px-4 md:px-6", className)}
       {...cardProps}
     >
-      <CardHeader className="p-0 pb-4">
+      <CardHeader>
         <div className="flex items-center justify-between">
           <Skeleton className="h-6 w-40" />
         </div>
       </CardHeader>
-      <CardBody className="flex flex-1 flex-col gap-4 p-0 pb-3">
+      <CardBody className="flex flex-1 flex-col gap-4">
         {[...Array(3)].map((_, index) => (
           <div key={index} className="flex items-center justify-between">
             <Skeleton className="h-4 w-24" />
@@ -126,11 +115,6 @@ export function DataConnectionHandlerCardSkeleton(
           </div>
         ))}
       </CardBody>
-      {/* <Separator />
-      <CardFooter className="flex items-center justify-between p-0 pt-3">
-        <Skeleton className="h-4 w-32" />
-        <Skeleton className="h-6 w-10" />
-      </CardFooter> */}
     </Card>
   )
 }

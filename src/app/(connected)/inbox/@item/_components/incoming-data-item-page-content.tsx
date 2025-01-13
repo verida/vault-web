@@ -216,7 +216,7 @@ function IncomingDataItemCard(props: IncomingDataItemCardProps) {
 
   return (
     <Card
-      className={cn("flex flex-col gap-2 bg-surface-active p-4", className)}
+      className={cn("gap-2 bg-surface-active p-4", className)}
       {...cardProps}
     >
       <div className="flex flex-row items-center gap-2">
@@ -239,14 +239,12 @@ function IncomingDataItemCard(props: IncomingDataItemCardProps) {
           </CardTitle>
         </div>
       </div>
-      <div>
-        <CardDescription
-          variant="base-regular"
-          className={cn("line-clamp-2", item.summary ? "" : "italic")}
-        >
-          {item.summary || "No description"}
-        </CardDescription>
-      </div>
+      <CardDescription
+        variant="base-regular"
+        className={cn("line-clamp-2", item.summary ? "" : "italic")}
+      >
+        {item.summary || "No description"}
+      </CardDescription>
     </Card>
   )
 }

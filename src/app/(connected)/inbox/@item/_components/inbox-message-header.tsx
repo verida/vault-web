@@ -115,7 +115,7 @@ export function InboxMessageHeader(props: InboxMessageHeaderProps) {
             </div>
           </div>
           <AccordionContent className="pb-0">
-            <Card className="flex flex-col gap-4 px-4 py-3 shadow-none">
+            <Card className="gap-4 px-4 py-3 shadow-none">
               {sentBy.context &&
               sentBy.context !== VERIDA_VAULT_CONTEXT_NAME ? (
                 <div className="flex flex-col gap-1">

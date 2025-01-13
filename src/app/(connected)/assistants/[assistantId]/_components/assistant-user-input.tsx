@@ -95,8 +95,8 @@ export function AssistantUserInput(props: AssistantUserInputProps) {
 
   return (
     <div {...divProps}>
-      <Card className="flex flex-col gap-1 rounded-xl p-3 shadow-md ring-offset-surface focus-within:outline-none focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-0 hover:border-border-hover md:gap-2 md:p-4">
-        <CardBody className="p-0">
+      <Card className="gap-1 rounded-xl p-3 shadow-md ring-offset-surface focus-within:outline-none focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-0 hover:border-border-hover md:gap-2 md:p-4">
+        <CardBody>
           <Textarea
             ref={inputRef}
             placeholder="Ask your assistant"
@@ -127,7 +127,7 @@ export function AssistantUserInput(props: AssistantUserInputProps) {
             }
           />
         </CardBody>
-        <CardFooter className="flex-row justify-between p-0">
+        <CardFooter className="flex flex-row items-center justify-between">
           <div className="flex flex-row items-center justify-start gap-2">
             {!isXL ? (
               <AiPromptsCombobox
