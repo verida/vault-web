@@ -2,6 +2,10 @@ import {
   BaseRequestSchema,
   UserProfileApiRequestSchema,
 } from "@/features/requests/schemas"
+import {
+  UserProfileApiRequest,
+  UserProfileApiRequestBody,
+} from "@/features/requests/types"
 import { Logger } from "@/features/telemetry/logger"
 
 const logger = Logger.create("requests")
@@ -46,5 +50,42 @@ export function decodeRequest(encodedRequest: string) {
     }
   } catch (error) {
     throw new Error("Error decoding request", { cause: error })
+  }
+}
+
+export async function acceptUserProfileApiRequest(
+  request: UserProfileApiRequest,
+  generatedProfile: Record<string, unknown>
+) {
+  logger.info("Accepting user profile API request")
+
+  if (!request.endpointUri) {
+    throw new Error("Endpoint URI is required")
+  }
+
+  try {
+    const requestBody: UserProfileApiRequestBody = {
+      jsonProfile: generatedProfile,
+      jsonSchema: request.profileJsonSchema,
+      integrationParams: request.integrationParams,
+    }
+
+    const response = await fetch(request.endpointUri, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(requestBody),
+    })
+
+    if (!response.ok) {
+      throw new Error(`HTTP error ${response.status}`)
+    }
+
+    logger.info("User profile API request accepted Successfully")
+  } catch (error) {
+    throw new Error("Error accepting user profile API request", {
+      cause: error,
+    })
   }
 }

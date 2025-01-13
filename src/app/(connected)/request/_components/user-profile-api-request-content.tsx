@@ -35,7 +35,13 @@ import {
 } from "@/components/ui/loading"
 import { MessageBlock, MessageBlockBody } from "@/components/ui/message-block"
 import { Skeleton } from "@/components/ui/skeleton"
+import {
+  SuccessBlock,
+  SuccessBlockDescription,
+  SuccessBlockImage,
+} from "@/components/ui/success"
 import { UserProfileApiRequest } from "@/features/requests/types"
+import { acceptUserProfileApiRequest } from "@/features/requests/utils"
 import { getRootPageRoute } from "@/features/routes/utils"
 import { Logger } from "@/features/telemetry/logger"
 import { getUserProfile } from "@/features/user-ai-profile/utils"
@@ -107,6 +113,27 @@ export function UserProfileApiRequestContent(
     }
   }, [getAccountSessionToken, request.profileParams, request.profileJsonSchema])
 
+  const handleShareProfileClick = useCallback(async () => {
+    if (!generatedProfile) {
+      return
+    }
+
+    setCurrentStep("sharing-profile")
+
+    try {
+      await acceptUserProfileApiRequest(request, generatedProfile)
+
+      setCurrentStep("profile-shared")
+    } catch (error) {
+      // Not logging the error because we do not control the endpoint
+      logger.warn("Error while sharing the profile", {
+        error,
+      })
+
+      setCurrentStep("error-sharing-profile")
+    }
+  }, [generatedProfile, request])
+
   return (
     <div className="flex flex-row justify-center">
       <Card className="w-full max-w-3xl px-0">
@@ -161,8 +188,8 @@ export function UserProfileApiRequestContent(
             </div>
           ) : null}
           {currentStep === "generating-profile" ||
-          currentStep === "check-profile" ||
-          currentStep === "sharing-profile" ? (
+          currentStep === "error-generating-profile" ||
+          currentStep === "check-profile" ? (
             <div className="flex flex-col gap-3">
               <div className="text-muted-foreground">
                 <Typography variant="base-semibold">Your profile</Typography>
@@ -173,6 +200,30 @@ export function UserProfileApiRequestContent(
                 isGenerating={currentStep === "generating-profile"}
               />
             </div>
+          ) : null}
+          {currentStep === "sharing-profile" ? (
+            <LoadingBlock className="my-4">
+              <LoadingBlockSpinner />
+              <LoadingBlockDescription>
+                Sharing your profile to the requester
+              </LoadingBlockDescription>
+            </LoadingBlock>
+          ) : null}
+          {currentStep === "error-sharing-profile" ? (
+            <ErrorBlock className="my-4">
+              <ErrorBlockImage />
+              <ErrorBlockDescription>
+                Something went wrong when sharing your profile
+              </ErrorBlockDescription>
+            </ErrorBlock>
+          ) : null}
+          {currentStep === "profile-shared" ? (
+            <SuccessBlock className="my-4">
+              <SuccessBlockImage />
+              <SuccessBlockDescription>
+                Your profile has been shared to the requester
+              </SuccessBlockDescription>
+            </SuccessBlock>
           ) : null}
           <div className="flex flex-col gap-1">
             <div className="text-muted-foreground">
@@ -218,7 +269,10 @@ export function UserProfileApiRequestContent(
                   currentStep === "sharing-profile"
                 }
               >
-                {currentStep === "profile-shared" ? "Close" : "Decline"}
+                {currentStep === "profile-shared" ||
+                currentStep === "error-sharing-profile"
+                  ? "Close"
+                  : "Decline"}
               </Button>
               {currentStep === "review-request" ||
               currentStep === "generating-profile" ? (
@@ -230,7 +284,12 @@ export function UserProfileApiRequestContent(
                 </Button>
               ) : currentStep === "check-profile" ||
                 currentStep === "sharing-profile" ? (
-                <Button disabled={true}>Share Profile</Button>
+                <Button
+                  onClick={handleShareProfileClick}
+                  disabled={currentStep === "sharing-profile"}
+                >
+                  Share Profile
+                </Button>
               ) : null}
             </div>
           </div>
