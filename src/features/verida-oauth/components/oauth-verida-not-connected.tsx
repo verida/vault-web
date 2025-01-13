@@ -30,11 +30,8 @@ export function OAuthVeridaNotConnected(props: OAuthVeridaNotConnectedProps) {
   const { name, url } = payload
 
   return (
-    <Card
-      className={cn("flex h-full flex-col gap-6 p-6", className)}
-      {...cardProps}
-    >
-      <CardHeader className="shrink-0 p-0">
+    <Card className={cn("h-full", className)} {...cardProps}>
+      <CardHeader className="shrink-0">
         <CardTitle>
           <Link
             href={url}
@@ -57,7 +54,7 @@ export function OAuthVeridaNotConnected(props: OAuthVeridaNotConnectedProps) {
           </Link>
         </CardDescription>
       </CardHeader>
-      <CardBody className="flex flex-1 flex-col gap-4 overflow-y-auto p-0">
+      <CardBody className="flex flex-1 flex-col gap-4 overflow-y-auto">
         <div className="flex flex-col gap-4">
           <ErrorBlock>
             <ErrorBlockTitle variant="heading-5">

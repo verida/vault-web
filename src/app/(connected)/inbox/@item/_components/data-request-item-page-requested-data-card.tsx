@@ -46,11 +46,8 @@ export function DataRequestItemPageRequestedDataCard(
   // TODO: Use schema loading and error state
 
   return (
-    <Card
-      className={cn("flex flex-col gap-6 bg-surface-active p-4", className)}
-      {...cardProps}
-    >
-      <CardHeader className="flex flex-row items-start gap-3 p-0">
+    <Card className={cn("bg-surface-active p-4", className)} {...cardProps}>
+      <CardHeader className="flex flex-row items-start gap-3">
         <Avatar className="size-12">
           <AvatarImage
             src={dataSchema?.appearance?.style?.icon}
@@ -82,7 +79,7 @@ export function DataRequestItemPageRequestedDataCard(
           </CardDescription>
         </div>
       </CardHeader>
-      <CardBody className="p-0">
+      <CardBody>
         {selectedDataItems.length > 0 ? (
           <ul className="flex flex-row flex-wrap items-center gap-2">
             {selectedDataItems.map((item) => (
@@ -96,13 +93,13 @@ export function DataRequestItemPageRequestedDataCard(
             ))}
           </ul>
         ) : (
-          <div className="text-muted-foreground">
+          <div className="italic text-muted-foreground">
             <Typography variant="base-regular">No data selected</Typography>
           </div>
         )}
       </CardBody>
       {disableSelection ? null : (
-        <CardFooter className="p-0">
+        <CardFooter>
           <Button
             variant="outline"
             className="w-full gap-2"

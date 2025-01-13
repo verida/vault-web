@@ -118,8 +118,8 @@ export function AssistantOutputCard(props: AssistantOutputCardProps) {
 
   return (
     <div className={className} {...divProps}>
-      <Card className="flex flex-col gap-2 rounded-xl p-3 md:gap-3 md:p-4">
-        <CardHeader className="flex flex-row items-center justify-between gap-2 p-0">
+      <Card className="gap-2 rounded-xl p-3 md:gap-3 md:p-4">
+        <CardHeader className="flex flex-row items-center justify-between gap-2">
           <div className="flex flex-row items-center justify-start gap-2">
             <Avatar className="relative size-8 shrink-0 p-1 text-white sm:size-10">
               <div
@@ -168,7 +168,7 @@ export function AssistantOutputCard(props: AssistantOutputCardProps) {
             </div>
           ) : null}
         </CardHeader>
-        <CardBody className="p-0">
+        <CardBody>
           {!aiAssistantOutput || aiAssistantOutput?.status === "processing" ? (
             <AssistantOutputSkeleton className="w-full" />
           ) : (
@@ -178,7 +178,7 @@ export function AssistantOutputCard(props: AssistantOutputCardProps) {
           )}
         </CardBody>
         {displayFooterInfo ? (
-          <CardFooter className="flex flex-row justify-end p-0 text-end text-muted-foreground">
+          <CardFooter className="flex flex-row items-center justify-end text-end text-muted-foreground">
             <div className="flex flex-col gap-0">
               {processingTimeInfo ? (
                 <Typography variant="base-s-regular">

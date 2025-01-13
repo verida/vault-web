@@ -96,8 +96,8 @@ export function UserProfileApiRequestContent(
 
   return (
     <div className="flex flex-row justify-center">
-      <Card className="flex w-full max-w-3xl flex-col">
-        <CardHeader className="border-b px-6 py-4">
+      <Card className="w-full max-w-3xl px-0">
+        <CardHeader className="border-b px-6 pb-4">
           <CardTitle>User Profile Request</CardTitle>
           <CardDescription>
             Verida will build a profile based on the requested information and
@@ -122,7 +122,7 @@ export function UserProfileApiRequestContent(
             ]}
           />
         </CardHeader>
-        <CardBody className="flex flex-col gap-6 p-6">
+        <CardBody className="flex flex-col gap-6 px-6">
           <RequestHeader requesterDid={request.did} />
           <MessageBlock>
             <div
@@ -184,7 +184,7 @@ export function UserProfileApiRequestContent(
             </AccordionItem>
           </Accordion>
         </CardBody>
-        <CardFooter className="border-t p-6">
+        <CardFooter className="border-t px-6 pt-6">
           <div className="flex w-full flex-col gap-3">
             <Alert variant="warning">
               <AlertDescription>
@@ -237,10 +237,7 @@ function RequestedInformationCard(props: RequestedInformationCardProps) {
   }, [request.profileJsonSchema])
 
   return (
-    <Card
-      className={cn("flex flex-col gap-6 bg-surface-active p-4", className)}
-      {...cardProps}
-    >
+    <Card className={cn("bg-surface-active p-4", className)} {...cardProps}>
       {dataSchema?.title ? (
         <Typography variant="base-semibold">{dataSchema.title}</Typography>
       ) : isLoading ? (

@@ -72,7 +72,7 @@ export function DataConnectionDetails(props: DataConnectionDetailsProps) {
   return (
     <div className={cn(className)} {...divProps}>
       <div className="rounded-2xl bg-foreground/5">
-        <Card className="flex flex-col justify-between gap-4 rounded-2xl px-4 py-6 md:flex-row md:items-center md:px-6">
+        <Card className="justify-between gap-4 rounded-2xl px-4 md:flex-row md:items-center md:px-6">
           <div className="flex min-w-0 flex-row items-center gap-4">
             <DataConnectionAvatar connection={connection} provider={provider} />
             <div className="flex min-w-0 flex-col gap-0">
