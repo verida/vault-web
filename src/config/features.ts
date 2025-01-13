@@ -44,4 +44,7 @@ export const featureFlags = {
       destroy: commonConfig.FEATURE_FLAG_DATA_CONNECTIONS_LOGS_DESTROY_ENABLED,
     },
   },
+  requests: {
+    enabled: commonConfig.FEATURE_FLAG_REQUESTS_ENABLED,
+  },
 }

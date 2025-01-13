@@ -5,10 +5,6 @@ import { useCallback, useMemo, useState } from "react"
 import { InboxMessageHeader } from "@/app/(connected)/inbox/@item/_components/inbox-message-header"
 import { InvalidItemPageContent } from "@/app/(connected)/inbox/@item/_components/invalid-item-page-content"
 import { MarkMessageAsUnreadButton } from "@/app/(connected)/inbox/@item/_components/mark-message-as-unread-button"
-import {
-  MessageBlock,
-  MessageBlockTitle,
-} from "@/app/(connected)/inbox/@item/_components/message-block"
 import { ResetMessageStatusButton } from "@/app/(connected)/inbox/@item/_components/reset-message-status-button"
 import { InboxIncomingDataTypeIcon } from "@/components/icons/inbox-incoming"
 import {
@@ -22,6 +18,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { Card, CardDescription, CardTitle } from "@/components/ui/card"
+import { MessageBlock, MessageBlockBody } from "@/components/ui/message-block"
 import { commonConfig } from "@/config/common"
 import { EMPTY_VALUE_FALLBACK } from "@/constants/misc"
 import { UnsavedVeridaRecord } from "@/features/verida-database/types"
@@ -129,7 +126,7 @@ export function IncomingDataItemPageContent(
       <ItemSheetBody className="flex flex-col gap-6">
         <InboxMessageHeader inboxMessage={inboxMessage} />
         <MessageBlock>
-          <MessageBlockTitle>{inboxMessage.message}</MessageBlockTitle>
+          <MessageBlockBody>{`"${inboxMessage.message}"`}</MessageBlockBody>
         </MessageBlock>
         {data.data && data.data.length > 0 ? (
           <div className="flex flex-col gap-3">

@@ -1,15 +1,12 @@
 import { InboxMessageHeader } from "@/app/(connected)/inbox/@item/_components/inbox-message-header"
 import { MarkMessageAsUnreadButton } from "@/app/(connected)/inbox/@item/_components/mark-message-as-unread-button"
 import {
-  MessageBlock,
-  MessageBlockTitle,
-} from "@/app/(connected)/inbox/@item/_components/message-block"
-import {
   ItemSheetBody,
   ItemSheetHeader,
   ItemSheetTitle,
 } from "@/components/item-sheet"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { MessageBlock, MessageBlockBody } from "@/components/ui/message-block"
 import { VeridaInboxMessageRecord } from "@/features/verida-inbox/types"
 
 export type UnsupportedItemPageContentProps = {
@@ -41,7 +38,7 @@ export function UnsupportedItemPageContent(
       <ItemSheetBody className="flex flex-col gap-6">
         <InboxMessageHeader inboxMessage={inboxMessage} />
         <MessageBlock>
-          <MessageBlockTitle>{inboxMessage.message}</MessageBlockTitle>
+          <MessageBlockBody>{`"${inboxMessage.message}"`}</MessageBlockBody>
         </MessageBlock>
         <Alert variant="warning">
           <AlertTitle>Unsupported message type</AlertTitle>
