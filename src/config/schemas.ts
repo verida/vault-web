@@ -91,6 +91,10 @@ export const CommonConfigSchema = z.object({
     .string()
     .optional()
     .transform((value) => value === "true"),
+  FEATURE_FLAG_REQUESTS_ENABLED: z
+    .string()
+    .optional()
+    .transform((value) => value === "true"),
   isClient: z.boolean(),
   appVersion: z.string(),
 })

@@ -8,10 +8,6 @@ import { DataRequestItemPageRequestedDataCard } from "@/app/(connected)/inbox/@i
 import { InboxMessageHeader } from "@/app/(connected)/inbox/@item/_components/inbox-message-header"
 import { InvalidItemPageContent } from "@/app/(connected)/inbox/@item/_components/invalid-item-page-content"
 import { MarkMessageAsUnreadButton } from "@/app/(connected)/inbox/@item/_components/mark-message-as-unread-button"
-import {
-  MessageBlock,
-  MessageBlockTitle,
-} from "@/app/(connected)/inbox/@item/_components/message-block"
 import { ResetMessageStatusButton } from "@/app/(connected)/inbox/@item/_components/reset-message-status-button"
 import { InboxDataRequestTypeIcon } from "@/components/icons/inbox-data"
 import {
@@ -23,6 +19,7 @@ import {
 import { Typography } from "@/components/typography"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
+import { MessageBlock, MessageBlockBody } from "@/components/ui/message-block"
 import { commonConfig } from "@/config/common"
 import { VeridaRecord } from "@/features/verida-database/types"
 import { InboxMessageStatusIndicator } from "@/features/verida-inbox/components/inbox.message-status-indicator"
@@ -191,7 +188,7 @@ export function DataRequestItemPageContent(
           <ItemSheetBody className="flex flex-col gap-6">
             <InboxMessageHeader inboxMessage={inboxMessage} />
             <MessageBlock>
-              <MessageBlockTitle>{inboxMessage.message}</MessageBlockTitle>
+              <MessageBlockBody>{`"${inboxMessage.message}"`}</MessageBlockBody>
             </MessageBlock>
             <div className="flex flex-col gap-3">
               <div className="text-muted-foreground">
@@ -233,7 +230,7 @@ export function DataRequestItemPageContent(
                     <div className="flex flex-col items-center gap-0">
                       <span>{parsedFallbackLink.label}</span>
                       <span className="text-normal text-xs opacity-70">
-                        {`${parsedFallbackLink.url.protocol}//${parsedFallbackLink.url.hostname}`}
+                        {parsedFallbackLink.url.origin}
                       </span>
                     </div>
                   </Link>
