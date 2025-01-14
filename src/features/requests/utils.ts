@@ -8,6 +8,45 @@ import {
 } from "@/features/requests/types"
 import { Logger } from "@/features/telemetry/logger"
 
+const FAKE_PROFILE = {
+  fullName: "Test",
+  occupation: "Founder in Decentralized Identity",
+  country: "Australia",
+  region: "Adelaide",
+  traits: {
+    visionary: {
+      value: true,
+      explanation:
+        "Active member of Decentralized Identity Foundation, consistently involved in cutting-edge identity technology initiatives, demonstrating forward-thinking approach to digital identity solutions",
+    },
+    resilience: {
+      value: 9,
+      explanation:
+        "Consistently engaged in multiple complex technology projects like Verida AI, DIF initiatives, and navigating challenging decentralized identity landscapes, showing high adaptability and persistence",
+    },
+    riskTolerance: {
+      value: 8,
+      explanation:
+        "Involved in innovative blockchain and Web3 technologies, participating in hackathons, and leading experimental projects in decentralized identity, indicating high willingness to take calculated risks",
+    },
+    adaptability: {
+      value: 9,
+      explanation:
+        "Demonstrates flexibility across multiple technology domains including AI, blockchain, decentralized identity, and confidential computing networks, showing exceptional ability to pivot and learn",
+    },
+    drive: {
+      value: 10,
+      explanation:
+        "Actively leads multiple technology initiatives, participates in global foundation working groups, consistently pushing boundaries of decentralized identity technology",
+    },
+    decisionMaking: {
+      value: 8,
+      explanation:
+        "Involved in strategic decision-making for Verida and DIF, showing ability to make prompt decisions in complex technological environments",
+    },
+  },
+}
+
 const logger = Logger.create("requests")
 
 /**
@@ -71,18 +110,18 @@ export async function acceptUserProfileApiRequest(
 ) {
   logger.info("Accepting user profile API request")
 
-  if (!request.endpointUri) {
-    throw new Error("Endpoint URI is required")
+  if (!request.endpointUrl) {
+    throw new Error("Endpoint URL is required")
   }
 
   try {
     const requestBody: UserProfileApiRequestBody = {
       jsonProfile: generatedProfile,
-      jsonSchema: request.profileJsonSchema,
-      integrationParams: request.integrationParams ?? {},
+      jsonSchemaUrl: request.profileJsonSchemaUrl,
+      params: request.endpointParams ?? {},
     }
 
-    const response = await fetch(request.endpointUri, {
+    const response = await fetch(request.endpointUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
