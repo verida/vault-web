@@ -234,7 +234,7 @@ export function UserProfileApiRequestContent(
             </Typography>
             <div className="text-muted-foreground">
               <Typography variant="base-s-regular">
-                Verify you trust where it is shared to before sharing
+                Verify you trust where your data is sent to before sharing
               </Typography>
             </div>
           </div>

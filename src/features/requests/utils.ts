@@ -53,6 +53,18 @@ export function decodeRequest(encodedRequest: string) {
   }
 }
 
+/**
+ * Accepts a user profile API request by sending the generated profile to the specified endpoint.
+ *
+ * This function takes a user profile API request and a generated profile,
+ * constructs the appropriate request body, and sends it to the endpoint
+ * specified in the request. The request body includes the generated profile,
+ * the JSON schema for validation, and any integration parameters.
+ *
+ * @param request - The user profile API request containing endpoint and schema information
+ * @param generatedProfile - The generated user profile data to be sent
+ * @throws {Error} If the endpoint URI is missing or if the request fails
+ */
 export async function acceptUserProfileApiRequest(
   request: UserProfileApiRequest,
   generatedProfile: Record<string, unknown>
