@@ -67,7 +67,7 @@ export async function acceptUserProfileApiRequest(
     const requestBody: UserProfileApiRequestBody = {
       jsonProfile: generatedProfile,
       jsonSchema: request.profileJsonSchema,
-      integrationParams: request.integrationParams,
+      integrationParams: request.integrationParams ?? {},
     }
 
     const response = await fetch(request.endpointUri, {

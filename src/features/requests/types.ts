@@ -10,5 +10,5 @@ export type SupportedRequest = UserProfileApiRequest
 export interface UserProfileApiRequestBody {
   jsonProfile: Record<string, unknown>
   jsonSchema: string
-  integrationParams?: Record<string, unknown>
+  integrationParams: Record<string, unknown>
 }
