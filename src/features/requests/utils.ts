@@ -71,18 +71,18 @@ export async function acceptUserProfileApiRequest(
 ) {
   logger.info("Accepting user profile API request")
 
-  if (!request.endpointUri) {
-    throw new Error("Endpoint URI is required")
+  if (!request.endpointUrl) {
+    throw new Error("Endpoint URL is required")
   }
 
   try {
     const requestBody: UserProfileApiRequestBody = {
       jsonProfile: generatedProfile,
-      jsonSchema: request.profileJsonSchema,
-      integrationParams: request.integrationParams ?? {},
+      jsonSchemaUrl: request.profileJsonSchemaUrl,
+      params: request.endpointParams ?? {},
     }
 
-    const response = await fetch(request.endpointUri, {
+    const response = await fetch(request.endpointUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
