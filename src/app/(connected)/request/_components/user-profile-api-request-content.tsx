@@ -69,9 +69,9 @@ export function UserProfileApiRequestContent(
 ) {
   const { request } = props
 
-  const parsedEndpointUri = useMemo(() => {
-    return new URL(request.endpointUri)
-  }, [request.endpointUri])
+  const parsedEndpointUrl = useMemo(() => {
+    return new URL(request.endpointUrl)
+  }, [request.endpointUrl])
 
   const [currentStep, setCurrentStep] =
     useState<RequestProcessingStep>("review-request")
@@ -99,7 +99,7 @@ export function UserProfileApiRequestContent(
         sessionToken: sessionToken,
         params: {
           ...request.profileParams,
-          schema: request.profileJsonSchema,
+          schema: request.profileJsonSchemaUrl,
         },
       })
       setGeneratedProfile(profileResult.response.output)
@@ -111,7 +111,11 @@ export function UserProfileApiRequestContent(
         new Error("Error generating user AI profile", { cause: error })
       )
     }
-  }, [getAccountSessionToken, request.profileParams, request.profileJsonSchema])
+  }, [
+    getAccountSessionToken,
+    request.profileParams,
+    request.profileJsonSchemaUrl,
+  ])
 
   const handleShareProfileClick = useCallback(async () => {
     if (!generatedProfile) {
@@ -230,7 +234,7 @@ export function UserProfileApiRequestContent(
               <Typography variant="base-semibold">Shared to</Typography>
             </div>
             <Typography variant="base-regular" className="break-words">
-              {parsedEndpointUri.origin}
+              {parsedEndpointUrl.origin}
             </Typography>
             <div className="text-muted-foreground">
               <Typography variant="base-s-regular">
@@ -307,11 +311,11 @@ interface RequestedInformationCardProps extends ComponentProps<typeof Card> {
 function RequestedInformationCard(props: RequestedInformationCardProps) {
   const { request, className, ...cardProps } = props
 
-  const { dataSchema, isLoading } = useDataSchema(request.profileJsonSchema)
+  const { dataSchema, isLoading } = useDataSchema(request.profileJsonSchemaUrl)
 
   const parsedProfileSchemaUri = useMemo(() => {
-    return new URL(request.profileJsonSchema)
-  }, [request.profileJsonSchema])
+    return new URL(request.profileJsonSchemaUrl)
+  }, [request.profileJsonSchemaUrl])
 
   return (
     <Card className={cn("bg-surface-active p-4", className)} {...cardProps}>
@@ -324,7 +328,7 @@ function RequestedInformationCard(props: RequestedInformationCardProps) {
         <Typography variant="base-regular">{dataSchema.description}</Typography>
       ) : null}
       <Link
-        href={request.profileJsonSchema}
+        href={request.profileJsonSchemaUrl}
         target="_blank"
         rel="noopener noreferrer"
         className="underline"

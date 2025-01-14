@@ -6,17 +6,15 @@ export const BaseRequestSchema = z.object({
   type: z.string(),
 })
 
-export const UserProfileApiRequestIntegrationParamsSchema = z.record(
-  z.unknown()
-)
+export const UserProfileApiRequestEndpointParamsSchema = z.record(z.unknown())
 
 export const UserProfileApiRequestSchema = BaseRequestSchema.extend({
   type: z.literal("userProfileApiRequest"),
   did: z.string().optional(),
   purpose: z.string().optional(),
-  profileJsonSchema: z.string(),
+  profileJsonSchemaUrl: z.string().url(),
   profileParams: UserAiProfileParamsSchema,
-  endpointUri: z.string().url(),
-  integrationParams: UserProfileApiRequestIntegrationParamsSchema.optional(),
+  endpointUrl: z.string().url(),
+  endpointParams: UserProfileApiRequestEndpointParamsSchema.optional(),
   exposesUserData: z.boolean().default(true),
 })
