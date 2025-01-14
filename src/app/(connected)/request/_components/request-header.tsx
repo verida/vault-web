@@ -25,7 +25,7 @@ export function RequestHeader(props: RequestHeaderProps) {
 
   return (
     <div
-      className={cn("flex flex-row items-start gap-2", className)}
+      className={cn("flex flex-row items-center gap-2", className)}
       {...divProps}
     >
       <ProfileAvatar
@@ -33,7 +33,7 @@ export function RequestHeader(props: RequestHeaderProps) {
         isLoading={isLoading}
         className="size-12"
       />
-      <div className="flex min-w-0 flex-1 flex-col gap-1">
+      <div className="flex min-w-0 flex-1 flex-col gap-0">
         <div className="flex flex-row gap-1.5">
           {!requesterDid || profile ? (
             <>
@@ -64,7 +64,13 @@ export function RequestHeader(props: RequestHeaderProps) {
               {requesterDid}
             </Typography>
           </Link>
-        ) : null}
+        ) : (
+          <div className="text-muted-foreground">
+            <Typography variant="base-s-regular">
+              Be careful with this unknown requester
+            </Typography>
+          </div>
+        )}
       </div>
     </div>
   )
