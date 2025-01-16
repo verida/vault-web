@@ -1,6 +1,6 @@
 import { z } from "zod"
 
-export const VeridaOauthGetScopeDefinitionsV1ResponseSchema = z.object({
+export const VeridaAuthGetScopeDefinitionsV1ResponseSchema = z.object({
   scopes: z.record(
     z.string(),
     z.object({
@@ -10,6 +10,6 @@ export const VeridaOauthGetScopeDefinitionsV1ResponseSchema = z.object({
   ),
 })
 
-export const VeridaOauthAuthV1ResponseSchema = z.object({
+export const VeridaAuthAuthV1ResponseSchema = z.object({
   redirectUrl: z.string().url(),
 })

@@ -1,16 +1,16 @@
 import { useCallback } from "react"
 
-import { VeridaOauthRequestPayload } from "@/features/verida-auth/types"
-import { allowVeridaOauthRequest } from "@/features/verida-auth/utils"
+import { VeridaAuthRequestPayload } from "@/features/verida-auth/types"
+import { allowVeridaAuthRequest } from "@/features/verida-auth/utils"
 import { useVerida } from "@/features/verida/hooks/use-verida"
 
-export interface UseAllowVeridaOauthRequestArgs {
-  payload: VeridaOauthRequestPayload
+export interface UseAllowVeridaAuthRequestArgs {
+  payload: VeridaAuthRequestPayload
 }
 
-export function useAllowVeridaOauthRequest({
+export function useAllowVeridaAuthRequest({
   payload,
-}: UseAllowVeridaOauthRequestArgs) {
+}: UseAllowVeridaAuthRequestArgs) {
   const { did, getAccountSessionToken, webUserInstanceRef } = useVerida()
 
   const allow = useCallback(async () => {
@@ -20,7 +20,7 @@ export function useAllowVeridaOauthRequest({
 
     const sessionToken = await getAccountSessionToken()
 
-    const { redirectUrl } = await allowVeridaOauthRequest({
+    const { redirectUrl } = await allowVeridaAuthRequest({
       payload,
       sessionToken,
       userDid: did,

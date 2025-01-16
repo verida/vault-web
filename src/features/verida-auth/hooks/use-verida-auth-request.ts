@@ -1,16 +1,16 @@
 import { useSearchParams } from "next/navigation"
 import { useMemo } from "react"
 
-import { VeridaOauthRequest } from "@/features/verida-auth/types"
+import { VeridaAuthRequest } from "@/features/verida-auth/types"
 
-export function useVeridaOauthRequest() {
+export function useVeridaAuthRequest() {
   const searchParams = useSearchParams()
 
   const scopes = searchParams.getAll("scopes")
   const appDID = searchParams.get("appDID")
   const redirectUrl = searchParams.get("redirectUrl")
 
-  const request: VeridaOauthRequest = useMemo(() => {
+  const request: VeridaAuthRequest = useMemo(() => {
     if (!redirectUrl || !scopes || scopes.length === 0) {
       return {
         status: "invalid",

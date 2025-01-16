@@ -30,7 +30,7 @@ type AuthorizationsLayoutProps = {
 export default function AuthorizationsLayout(props: AuthorizationsLayoutProps) {
   const { children, item } = props
 
-  if (!featureFlags.veridaOauth.authorizedAppsUi.enabled) {
+  if (!featureFlags.veridaAuth.authorizedAppsUi.enabled) {
     notFound()
   }
 

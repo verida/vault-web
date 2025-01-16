@@ -1,32 +1,32 @@
 import { z } from "zod"
 
-import { VeridaOauthAuthV1ResponseSchema } from "@/features/verida-auth/schemas"
+import { VeridaAuthAuthV1ResponseSchema } from "@/features/verida-auth/schemas"
 
-export type VeridaOauthScopeType = "data" | "api" | "unknown"
+export type VeridaAuthScopeType = "data" | "api" | "unknown"
 
-export type VeridaOauthScope = {
+export type VeridaAuthScope = {
   id: string
-  type: VeridaOauthScopeType
+  type: VeridaAuthScopeType
   description: string
 }
 
-export type VeridaOauthRequestPayload = {
+export type VeridaAuthRequestPayload = {
   appDID: string | null
   scopes: string[]
   redirectUrl: string
 }
 
-export type VeridaOauthRequest =
+export type VeridaAuthRequest =
   | {
       status: "valid"
-      payload: VeridaOauthRequestPayload
+      payload: VeridaAuthRequestPayload
     }
   | {
       status: "invalid"
       payload: null
     }
 
-export type VeridaAuthRequestPayload = {
+export type VeridaAuthAuthRequest = {
   appDID?: string
   userDID: string
   scopes: string[]
@@ -35,13 +35,12 @@ export type VeridaAuthRequestPayload = {
 
 export type VeridaAuthApiV1RequestBody = {
   client_id: string
-  // auth_request: VeridaAuthRequestPayload
-  auth_request: string
+  auth_request: string // Stringified version of VeridaAuthAuthRequest
   redirect_uri: string
   user_sig: string
   state: string
 }
 
-export type VeridaOauthAuthV1Response = z.infer<
-  typeof VeridaOauthAuthV1ResponseSchema
+export type VeridaAuthAuthV1Response = z.infer<
+  typeof VeridaAuthAuthV1ResponseSchema
 >

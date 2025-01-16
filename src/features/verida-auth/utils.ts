@@ -3,25 +3,25 @@ import { WebUser } from "@verida/web-helpers"
 import { commonConfig } from "@/config/common"
 import { Logger } from "@/features/telemetry/logger"
 import {
-  VeridaOauthAuthV1ResponseSchema,
-  VeridaOauthGetScopeDefinitionsV1ResponseSchema,
+  VeridaAuthAuthV1ResponseSchema,
+  VeridaAuthGetScopeDefinitionsV1ResponseSchema,
 } from "@/features/verida-auth/schemas"
 import {
   VeridaAuthApiV1RequestBody,
+  VeridaAuthAuthRequest,
+  VeridaAuthAuthV1Response,
   VeridaAuthRequestPayload,
-  VeridaOauthAuthV1Response,
-  VeridaOauthRequestPayload,
-  VeridaOauthScope,
-  VeridaOauthScopeType,
+  VeridaAuthScope,
+  VeridaAuthScopeType,
 } from "@/features/verida-auth/types"
 import { VERIDA_VAULT_CONTEXT_NAME } from "@/features/verida/constants"
 
-const logger = Logger.create("verida-oauth")
+const logger = Logger.create("verida-auth")
 
 /**
- * Fetches and validates OAuth scope definitions from the Verida API.
+ * Fetches and validates Auth scope definitions from the Verida API.
  *
- * This function retrieves the available OAuth scopes that can be requested by
+ * This function retrieves the available Auth scopes that can be requested by
  * applications, validates the response against a schema, and transforms the
  * data into a standardized format.
  *
@@ -29,16 +29,16 @@ const logger = Logger.create("verida-oauth")
  * @throws {Error} If the HTTP request fails
  * @throws {Error} If the response validation fails
  *
- * @returns Array of standardized OAuth scope definitions
+ * @returns Array of standardized Auth scope definitions
  */
-export async function getVeridaOauthScopeDefinitions(): Promise<
-  VeridaOauthScope[]
+export async function getVeridaAuthScopeDefinitions(): Promise<
+  VeridaAuthScope[]
 > {
-  logger.info("Getting Verida OAuth scope definitions")
+  logger.info("Getting Verida Auth scope definitions")
 
   if (!commonConfig.PRIVATE_DATA_API_BASE_URL) {
     logger.warn(
-      "Cannot get Verida OAuth scope definitions due to incorrect API configuration"
+      "Cannot get Verida Auth scope definitions due to incorrect API configuration"
     )
     throw new Error("Incorrect Private Data API configuration")
   }
@@ -55,29 +55,29 @@ export async function getVeridaOauthScopeDefinitions(): Promise<
     const data = await response.json()
 
     const validatedData =
-      VeridaOauthGetScopeDefinitionsV1ResponseSchema.parse(data)
+      VeridaAuthGetScopeDefinitionsV1ResponseSchema.parse(data)
 
-    logger.info("Successfully got Verida OAuth scope definitions")
+    logger.info("Successfully got Verida Auth scope definitions")
 
     return Object.entries(validatedData.scopes).map(([id, scope]) => ({
       id,
-      type: resolveVeridaOauthScopeType(scope.type),
+      type: resolveVeridaAuthScopeType(scope.type),
       description: scope.description,
     }))
   } catch (error) {
-    throw new Error("Error getting Verida OAuth scope definitions", {
+    throw new Error("Error getting Verida Auth scope definitions", {
       cause: error,
     })
   }
 }
 
 /**
- * Resolves a Verida OAuth scope type string to a standardized VeridaOauthScopeType.
+ * Resolves a Verida Auth scope type string to a standardized VeridaAuthScopeType.
  *
- * @param scopeType - The raw scope type string from the OAuth scope definition
- * @returns The resolved VeridaOauthScopeType ("api", "data", or "unknown")
+ * @param scopeType - The raw scope type string from the Auth scope definition
+ * @returns The resolved VeridaAuthScopeType ("api", "data", or "unknown")
  */
-function resolveVeridaOauthScopeType(scopeType: string): VeridaOauthScopeType {
+function resolveVeridaAuthScopeType(scopeType: string): VeridaAuthScopeType {
   switch (scopeType) {
     case "api":
       return "api"
@@ -89,30 +89,30 @@ function resolveVeridaOauthScopeType(scopeType: string): VeridaOauthScopeType {
   }
 }
 
-export function denyVeridaOauthRequest() {
-  logger.info("Denying OAuth request")
+export function denyVeridaAuthRequest() {
+  logger.info("Denying Auth request")
 
   // TODO: To implement, if anything to do
 }
 
-export interface AllowVeridaOauthRequestArgs {
-  payload: VeridaOauthRequestPayload
+export interface AllowVeridaAuthRequestArgs {
+  payload: VeridaAuthRequestPayload
   sessionToken: string
   userDid: string
   webUserInstance: WebUser
 }
 
-export async function allowVeridaOauthRequest({
+export async function allowVeridaAuthRequest({
   payload,
   sessionToken,
   userDid,
   webUserInstance,
-}: AllowVeridaOauthRequestArgs): Promise<VeridaOauthAuthV1Response> {
-  logger.info("Allowing OAuth request")
+}: AllowVeridaAuthRequestArgs): Promise<VeridaAuthAuthV1Response> {
+  logger.info("Allowing Auth request")
 
   if (!commonConfig.PRIVATE_DATA_API_BASE_URL) {
     logger.warn(
-      "Cannot get Verida OAuth scope definitions due to incorrect API configuration"
+      "Cannot get Verida Auth scope definitions due to incorrect API configuration"
     )
     throw new Error("Incorrect Private Data API configuration")
   }
@@ -127,7 +127,7 @@ export async function allowVeridaOauthRequest({
 
   const now = Math.floor(Date.now() / 1000)
 
-  const authRequest: VeridaAuthRequestPayload = {
+  const authRequest: VeridaAuthAuthRequest = {
     appDID: payload.appDID ?? undefined,
     userDID: userDid,
     scopes: payload.scopes,
@@ -138,7 +138,7 @@ export async function allowVeridaOauthRequest({
   const userKeyring = await userAccount.keyring(VERIDA_VAULT_CONTEXT_NAME)
   const user_sig = await userKeyring.sign(authRequest)
 
-  // TODO: Get the state from the oauth request
+  // TODO: Get the state from the auth request
   const state = {}
 
   const body: VeridaAuthApiV1RequestBody = {
@@ -164,13 +164,13 @@ export async function allowVeridaOauthRequest({
 
     const data = await response.json()
 
-    const validatedData = VeridaOauthAuthV1ResponseSchema.parse(data)
+    const validatedData = VeridaAuthAuthV1ResponseSchema.parse(data)
 
-    logger.info("Successfully allowed OAuth request")
+    logger.info("Successfully allowed Auth request")
 
     return validatedData
   } catch (error) {
-    throw new Error("Error allowing OAuth request", {
+    throw new Error("Error allowing Auth request", {
       cause: error,
     })
   }

@@ -11,14 +11,14 @@ import {
 } from "@/components/ui/error"
 import { VeridaConnectionLoading } from "@/components/verida/verida-connection-loading"
 import { VeridaIdentityDropdownMenu } from "@/components/verida/verida-identity-dropdown-menu"
-import { OAuthConsentCard } from "@/features/verida-auth/components/oauth-consent-card"
-import { OAuthVeridaNotConnected } from "@/features/verida-auth/components/oauth-verida-not-connected"
-import { useVeridaOauthRequest } from "@/features/verida-auth/hooks/use-verida-oauth-request"
+import { VeridaAuthConsentCard } from "@/features/verida-auth/components/verida-auth-consent-card"
+import { VeridaAuthVeridaNotConnected } from "@/features/verida-auth/components/verida-auth-verida-not-connected"
+import { useVeridaAuthRequest } from "@/features/verida-auth/hooks/use-verida-auth-request"
 import { useVerida } from "@/features/verida/hooks/use-verida"
 
-export default function OAuthPage() {
+export default function AuthPage() {
   const { isConnected, isConnecting } = useVerida()
-  const { status, payload } = useVeridaOauthRequest()
+  const { status, payload } = useVeridaAuthRequest()
 
   if (isConnecting) {
     return <VeridaConnectionLoading />
@@ -39,16 +39,16 @@ export default function OAuthPage() {
           keepExpanded
           hideDisconnect={false}
           hideFeedback={false}
-          hideApiKeys={true}
+          hideAuthorizedApps={true}
         />
       </div>
       {status === "invalid" ? (
         <Card>
           <ErrorBlock>
             <ErrorBlockImage />
-            <ErrorBlockTitle>Invalid OAuth Request</ErrorBlockTitle>
+            <ErrorBlockTitle>Invalid Request</ErrorBlockTitle>
             <ErrorBlockDescription>
-              The OAuth request is invalid or missing. Please try again or
+              The Verida Auth request is invalid or missing. Please try again or
               contact the requesting application.
             </ErrorBlockDescription>
           </ErrorBlock>
@@ -56,12 +56,16 @@ export default function OAuthPage() {
       ) : (
         <>
           {isConnected ? (
-            <OAuthConsentCard payload={payload} className="min-h-0" />
+            <VeridaAuthConsentCard payload={payload} className="min-h-0" />
           ) : (
-            <OAuthVeridaNotConnected payload={payload} className="min-h-0" />
+            <VeridaAuthVeridaNotConnected
+              payload={payload}
+              className="min-h-0"
+            />
           )}
         </>
       )}
     </div>
   )
 }
+AuthPage.displayName = "AuthPage"

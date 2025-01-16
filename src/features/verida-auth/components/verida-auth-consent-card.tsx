@@ -15,24 +15,24 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { Logger } from "@/features/telemetry/logger"
-import { useAllowVeridaOauthRequest } from "@/features/verida-auth/hooks/use-allow-verida-oauth-request"
-import { useDenyVeridaOauthRequest } from "@/features/verida-auth/hooks/use-deny-verida-oauth-request"
-import { useVeridaOauthScopeDefinitions } from "@/features/verida-auth/hooks/use-verida-oauth-scope-definitions"
-import { VeridaOauthRequestPayload } from "@/features/verida-auth/types"
+import { useAllowVeridaAuthRequest } from "@/features/verida-auth/hooks/use-allow-verida-auth-request"
+import { useDenyVeridaAuthRequest } from "@/features/verida-auth/hooks/use-deny-verida-auth-request"
+import { useVeridaAuthScopeDefinitions } from "@/features/verida-auth/hooks/use-verida-auth-scope-definitions"
+import { VeridaAuthRequestPayload } from "@/features/verida-auth/types"
 import { getVeridaExplorerIdentityPageUrl } from "@/features/verida-explorer/utils"
 import { ProfileAvatar } from "@/features/verida-profile/components/profile-avatar"
 import { EMPTY_PROFILE_NAME_FALLBACK } from "@/features/verida-profile/constants"
 import { useVeridaProfile } from "@/features/verida-profile/hooks/use-verida-profile"
 import { cn } from "@/styles/utils"
 
-const logger = Logger.create("verida-oauth")
+const logger = Logger.create("verida-auth")
 
-export interface OAuthConsentCardProps
+export interface VeridaAuthConsentCardProps
   extends React.ComponentProps<typeof Card> {
-  payload: VeridaOauthRequestPayload
+  payload: VeridaAuthRequestPayload
 }
 
-export function OAuthConsentCard(props: OAuthConsentCardProps) {
+export function VeridaAuthConsentCard(props: VeridaAuthConsentCardProps) {
   const { payload, className, ...cardProps } = props
 
   const { appDID, scopes, redirectUrl } = payload
@@ -53,7 +53,7 @@ export function OAuthConsentCard(props: OAuthConsentCardProps) {
     return null
   }, [profile])
 
-  const { scopeDefinitions } = useVeridaOauthScopeDefinitions()
+  const { scopeDefinitions } = useVeridaAuthScopeDefinitions()
 
   const resolvedScopes = useMemo(() => {
     return scopes.map((scope) => {
@@ -63,8 +63,8 @@ export function OAuthConsentCard(props: OAuthConsentCardProps) {
     })
   }, [scopes, scopeDefinitions])
 
-  const { deny } = useDenyVeridaOauthRequest({ payload })
-  const { allow } = useAllowVeridaOauthRequest({ payload })
+  const { deny } = useDenyVeridaAuthRequest({ payload })
+  const { allow } = useAllowVeridaAuthRequest({ payload })
 
   const [isAllowing, setIsAllowing] = useState(false)
 
@@ -194,4 +194,4 @@ export function OAuthConsentCard(props: OAuthConsentCardProps) {
     </Card>
   )
 }
-OAuthConsentCard.displayName = "OAuthConsentCard"
+VeridaAuthConsentCard.displayName = "VeridaAuthConsentCard"

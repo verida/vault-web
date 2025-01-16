@@ -16,19 +16,21 @@ import {
   ErrorBlockTitle,
 } from "@/components/ui/error"
 import { VeridaConnectButton } from "@/components/verida/verida-connect-button"
-import { VeridaOauthRequestPayload } from "@/features/verida-auth/types"
+import { VeridaAuthRequestPayload } from "@/features/verida-auth/types"
 import { getVeridaExplorerIdentityPageUrl } from "@/features/verida-explorer/utils"
 import { ProfileAvatar } from "@/features/verida-profile/components/profile-avatar"
 import { EMPTY_PROFILE_NAME_FALLBACK } from "@/features/verida-profile/constants"
 import { useVeridaProfile } from "@/features/verida-profile/hooks/use-verida-profile"
 import { cn } from "@/styles/utils"
 
-export interface OAuthVeridaNotConnectedProps
+export interface VeridaAuthVeridaNotConnectedProps
   extends React.ComponentProps<typeof Card> {
-  payload: VeridaOauthRequestPayload
+  payload: VeridaAuthRequestPayload
 }
 
-export function OAuthVeridaNotConnected(props: OAuthVeridaNotConnectedProps) {
+export function VeridaAuthVeridaNotConnected(
+  props: VeridaAuthVeridaNotConnectedProps
+) {
   const { payload, className, ...cardProps } = props
 
   const { appDID, redirectUrl } = payload
@@ -126,4 +128,4 @@ export function OAuthVeridaNotConnected(props: OAuthVeridaNotConnectedProps) {
     </Card>
   )
 }
-OAuthVeridaNotConnected.displayName = "OAuthVeridaNotConnected"
+VeridaAuthVeridaNotConnected.displayName = "VeridaAuthVeridaNotConnected"
