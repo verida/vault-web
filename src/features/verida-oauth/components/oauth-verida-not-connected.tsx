@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import { useMemo } from "react"
 
 import {
   Card,
@@ -15,49 +16,92 @@ import {
   ErrorBlockTitle,
 } from "@/components/ui/error"
 import { VeridaConnectButton } from "@/components/verida/verida-connect-button"
-import { useVeridaOauth } from "@/features/verida-oauth/hooks/use-verida-oauth"
+import { getVeridaExplorerIdentityPageUrl } from "@/features/verida-explorer/utils"
+import { VeridaOauthRequestPayload } from "@/features/verida-oauth/types"
+import { ProfileAvatar } from "@/features/verida-profile/components/profile-avatar"
+import { EMPTY_PROFILE_NAME_FALLBACK } from "@/features/verida-profile/constants"
+import { useVeridaProfile } from "@/features/verida-profile/hooks/use-verida-profile"
 import { cn } from "@/styles/utils"
 
-type OAuthVeridaNotConnectedProps = React.ComponentProps<typeof Card>
+export interface OAuthVeridaNotConnectedProps
+  extends React.ComponentProps<typeof Card> {
+  payload: VeridaOauthRequestPayload
+}
 
 export function OAuthVeridaNotConnected(props: OAuthVeridaNotConnectedProps) {
-  const { className, ...cardProps } = props
+  const { payload, className, ...cardProps } = props
 
-  const { payload } = useVeridaOauth()
+  const { appDID, redirectUrl } = payload
 
-  // TODO: Handle case where no payload is available
+  const resolvedRedirectUrl = useMemo(() => {
+    return new URL(redirectUrl)
+  }, [redirectUrl])
 
-  const { name, url } = payload
+  const { profile, isLoading } = useVeridaProfile({
+    did: appDID,
+  })
+
+  const profileWebsiteUrl = useMemo(() => {
+    if (profile?.website) {
+      return new URL(profile.website)
+    }
+
+    return null
+  }, [profile])
 
   return (
     <Card className={cn("h-full", className)} {...cardProps}>
-      <CardHeader className="shrink-0">
-        <CardTitle>
-          <Link
-            href={url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="underline"
-          >
-            {name}
-          </Link>{" "}
-          wants to access your Verida Vault
-        </CardTitle>
-        <CardDescription>
-          <Link
-            href={url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="underline"
-          >
-            {`${url.protocol}//${url.hostname}`}
-          </Link>
-        </CardDescription>
+      <CardHeader className="shrink-0 gap-3">
+        <div className="flex flex-row items-center gap-2">
+          <ProfileAvatar
+            profile={profile}
+            isLoading={isLoading}
+            className="size-12"
+          />
+          <CardTitle>
+            <span
+              className={profile?.name ? "" : "italic text-muted-foreground"}
+            >
+              {profile?.name || EMPTY_PROFILE_NAME_FALLBACK}
+            </span>{" "}
+            wants to access your Verida Vault
+          </CardTitle>
+        </div>
+        <div className="flex flex-col gap-1">
+          {appDID ? (
+            <CardDescription className="truncate">
+              <Link
+                href={getVeridaExplorerIdentityPageUrl(appDID)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline"
+              >
+                {appDID}
+              </Link>
+            </CardDescription>
+          ) : null}
+          <CardDescription className="truncate">
+            <Link
+              href={
+                profileWebsiteUrl
+                  ? profileWebsiteUrl.origin
+                  : resolvedRedirectUrl.origin
+              }
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline"
+            >
+              {profileWebsiteUrl
+                ? profileWebsiteUrl.origin
+                : resolvedRedirectUrl.origin}
+            </Link>
+          </CardDescription>
+        </div>
       </CardHeader>
       <CardBody className="flex flex-1 flex-col gap-4 overflow-y-auto">
         <div className="flex flex-col gap-4">
           <ErrorBlock>
-            <ErrorBlockTitle variant="heading-5">
+            <ErrorBlockTitle variant="heading-4" component="p">
               You are not connected
             </ErrorBlockTitle>
             <ErrorBlockDescription>

@@ -8,9 +8,9 @@ export const MOCK_AUTHORIZED_APPS: AuthorizedAppRecord[] = [
     lastAccessedAt: "2024-02-01T12:00:00Z",
     insertedAt: "2023-11-15T09:23:14Z",
     scopes: [
-      { database: "calendar_data", operation: "read" },
-      { database: "social_event", operation: "write" },
-      { database: "social_chat_message", operation: "read" },
+      { id: "calendar_read", type: "data", description: "Read calendar data" },
+      { id: "event_write", type: "data", description: "Write social events" },
+      { id: "chat_read", type: "data", description: "Read chat messages" },
     ],
   },
   {
@@ -20,8 +20,8 @@ export const MOCK_AUTHORIZED_APPS: AuthorizedAppRecord[] = [
     lastAccessedAt: "2024-02-10T15:30:00Z",
     insertedAt: "2023-12-01T14:45:22Z",
     scopes: [
-      { database: "social_email", operation: "read" },
-      { database: "social_contact", operation: "read" },
+      { id: "email_read", type: "data", description: "Read emails" },
+      { id: "contact_read", type: "data", description: "Read contacts" },
     ],
   },
   {
@@ -31,9 +31,13 @@ export const MOCK_AUTHORIZED_APPS: AuthorizedAppRecord[] = [
     lastAccessedAt: "2024-02-12T09:15:00Z",
     insertedAt: "2023-10-28T11:12:33Z",
     scopes: [
-      { database: "credential", operation: "write" },
-      { database: "social_contact", operation: "read" },
-      { database: "file", operation: "read" },
+      {
+        id: "credential_write",
+        type: "data",
+        description: "Write credentials",
+      },
+      { id: "contact_read", type: "data", description: "Read contacts" },
+      { id: "file_read", type: "data", description: "Read files" },
     ],
   },
   {
@@ -43,9 +47,9 @@ export const MOCK_AUTHORIZED_APPS: AuthorizedAppRecord[] = [
     lastAccessedAt: "2024-02-13T18:45:00Z",
     insertedAt: "2023-09-15T16:34:51Z",
     scopes: [
-      { database: "social_chat_message", operation: "write" },
-      { database: "social_chat_group", operation: "read" },
-      { database: "social_contact", operation: "read" },
+      { id: "chat_write", type: "data", description: "Write chat messages" },
+      { id: "group_read", type: "data", description: "Read chat groups" },
+      { id: "contact_read", type: "data", description: "Read contacts" },
     ],
   },
   {
@@ -55,11 +59,15 @@ export const MOCK_AUTHORIZED_APPS: AuthorizedAppRecord[] = [
     lastAccessedAt: "2024-02-14T11:20:00Z",
     insertedAt: "2024-01-02T08:17:44Z",
     scopes: [
-      { database: "social_contact", operation: "read" },
-      { database: "credential", operation: "read" },
-      { database: "social_following", operation: "read" },
-      { database: "favourite", operation: "read" },
-      { database: "file", operation: "read" },
+      { id: "contact_read", type: "data", description: "Read contacts" },
+      { id: "credential_read", type: "data", description: "Read credentials" },
+      {
+        id: "following_read",
+        type: "data",
+        description: "Read following data",
+      },
+      { id: "favourite_read", type: "data", description: "Read favorites" },
+      { id: "file_read", type: "data", description: "Read files" },
     ],
   },
   {
@@ -69,8 +77,12 @@ export const MOCK_AUTHORIZED_APPS: AuthorizedAppRecord[] = [
     lastAccessedAt: "2024-02-15T14:10:00Z",
     insertedAt: "2023-11-30T13:56:19Z",
     scopes: [
-      { database: "social_post", operation: "write" },
-      { database: "social_following", operation: "read" },
+      { id: "post_write", type: "data", description: "Write social posts" },
+      {
+        id: "following_read",
+        type: "data",
+        description: "Read following data",
+      },
     ],
   },
   {
@@ -80,10 +92,10 @@ export const MOCK_AUTHORIZED_APPS: AuthorizedAppRecord[] = [
     lastAccessedAt: "2024-02-16T16:25:00Z",
     insertedAt: "2023-12-12T15:23:41Z",
     scopes: [
-      { database: "social_event", operation: "write" },
-      { database: "calendar_data", operation: "read" },
-      { database: "social_chat_group", operation: "read" },
-      { database: "social_contact", operation: "read" },
+      { id: "event_write", type: "data", description: "Write social events" },
+      { id: "calendar_read", type: "data", description: "Read calendar data" },
+      { id: "group_read", type: "data", description: "Read chat groups" },
+      { id: "contact_read", type: "data", description: "Read contacts" },
     ],
   },
   {
@@ -92,7 +104,7 @@ export const MOCK_AUTHORIZED_APPS: AuthorizedAppRecord[] = [
     url: "https://cloudstore.example.com",
     lastAccessedAt: "2024-02-17T08:50:00Z",
     insertedAt: "2023-10-05T09:44:12Z",
-    scopes: [{ database: "file", operation: "write" }],
+    scopes: [{ id: "file_write", type: "data", description: "Write files" }],
   },
   {
     _id: "9",
@@ -101,12 +113,16 @@ export const MOCK_AUTHORIZED_APPS: AuthorizedAppRecord[] = [
     lastAccessedAt: "2024-02-18T13:40:00Z",
     insertedAt: "2023-12-28T17:11:33Z",
     scopes: [
-      { database: "credential", operation: "read" },
-      { database: "favourite", operation: "write" },
-      { database: "social_following", operation: "read" },
-      { database: "social_contact", operation: "read" },
-      { database: "file", operation: "read" },
-      { database: "social_post", operation: "read" },
+      { id: "credential_read", type: "data", description: "Read credentials" },
+      { id: "favourite_write", type: "data", description: "Write favorites" },
+      {
+        id: "following_read",
+        type: "data",
+        description: "Read following data",
+      },
+      { id: "contact_read", type: "data", description: "Read contacts" },
+      { id: "file_read", type: "data", description: "Read files" },
+      { id: "post_read", type: "data", description: "Read social posts" },
     ],
   },
   {
@@ -115,7 +131,9 @@ export const MOCK_AUTHORIZED_APPS: AuthorizedAppRecord[] = [
     url: "https://contenthub.example.com",
     lastAccessedAt: "2024-02-19T20:15:00Z",
     insertedAt: "2024-01-10T12:09:55Z",
-    scopes: [{ database: "social_post", operation: "write" }],
+    scopes: [
+      { id: "post_write", type: "data", description: "Write social posts" },
+    ],
   },
   {
     _id: "11",
@@ -124,9 +142,9 @@ export const MOCK_AUTHORIZED_APPS: AuthorizedAppRecord[] = [
     lastAccessedAt: "2024-02-20T10:30:00Z",
     insertedAt: "2023-11-22T10:33:27Z",
     scopes: [
-      { database: "file", operation: "read" },
-      { database: "social_post", operation: "write" },
-      { database: "credential", operation: "read" },
+      { id: "file_read", type: "data", description: "Read files" },
+      { id: "post_write", type: "data", description: "Write social posts" },
+      { id: "credential_read", type: "data", description: "Read credentials" },
     ],
   },
   {
@@ -136,10 +154,10 @@ export const MOCK_AUTHORIZED_APPS: AuthorizedAppRecord[] = [
     lastAccessedAt: "2024-02-21T17:05:00Z",
     insertedAt: "2023-12-15T14:22:48Z",
     scopes: [
-      { database: "social_event", operation: "write" },
-      { database: "social_chat_group", operation: "read" },
-      { database: "calendar_data", operation: "read" },
-      { database: "social_contact", operation: "read" },
+      { id: "event_write", type: "data", description: "Write social events" },
+      { id: "group_read", type: "data", description: "Read chat groups" },
+      { id: "calendar_read", type: "data", description: "Read calendar data" },
+      { id: "contact_read", type: "data", description: "Read contacts" },
     ],
   },
 ]

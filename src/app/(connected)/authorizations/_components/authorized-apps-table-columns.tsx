@@ -2,13 +2,10 @@
 import { createColumnHelper } from "@tanstack/react-table"
 import { intlFormat, isDate } from "date-fns"
 import Link from "next/link"
-import { useCallback } from "react"
 
 import { Typography } from "@/components/typography"
 import { EMPTY_VALUE_FALLBACK } from "@/constants/misc"
 import { AuthorizedAppRecord } from "@/features/authorized-apps/types"
-import { ALL_DATABASE_DEFS } from "@/features/data/constants"
-import { VeridaOauthScope } from "@/features/verida-oauth/types"
 import { SHORT_DATE_TIME_FORMAT_OPTIONS } from "@/utils/date"
 
 const columnHelper = createColumnHelper<AuthorizedAppRecord>()
@@ -72,22 +69,6 @@ export const authorizedAppsTableColumns = [
     cell: (context) => {
       const value = context.getValue()
 
-      const formatScope = useCallback((scope: VeridaOauthScope) => {
-        const databaseDef = ALL_DATABASE_DEFS.find(
-          (db) => db.databaseVaultName === scope.database
-        )
-
-        return (
-          <Typography variant="base-regular">
-            <span className="capitalize">{scope.operation}</span>{" "}
-            {scope.operation === "write" ? "on your" : "your"}{" "}
-            <span className="font-semibold lowercase">
-              {databaseDef?.titlePlural || scope.database}
-            </span>
-          </Typography>
-        )
-      }, [])
-
       if (!value) {
         return (
           <div className="text-muted-foreground">
@@ -101,7 +82,11 @@ export const authorizedAppsTableColumns = [
       return (
         <ul className="flex flex-col gap-0">
           {value.map((scope, index) => (
-            <li key={index}>{formatScope(scope)}</li>
+            <li key={index}>
+              <Typography variant="base-regular">
+                {scope.description}
+              </Typography>
+            </li>
           ))}
         </ul>
       )

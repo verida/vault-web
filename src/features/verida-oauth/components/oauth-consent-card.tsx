@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { useCallback } from "react"
+import { useCallback, useMemo, useState } from "react"
 
 import { Typography } from "@/components/typography"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
@@ -14,94 +14,160 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { ALL_DATABASE_DEFS } from "@/features/data/constants"
-import { useVeridaOauth } from "@/features/verida-oauth/hooks/use-verida-oauth"
-import { VeridaOauthScope } from "@/features/verida-oauth/types"
+import { Logger } from "@/features/telemetry/logger"
+import { getVeridaExplorerIdentityPageUrl } from "@/features/verida-explorer/utils"
+import { useAllowVeridaOauthRequest } from "@/features/verida-oauth/hooks/use-allow-verida-oauth-request"
+import { useDenyVeridaOauthRequest } from "@/features/verida-oauth/hooks/use-deny-verida-oauth-request"
+import { useVeridaOauthScopeDefinitions } from "@/features/verida-oauth/hooks/use-verida-oauth-scope-definitions"
+import { VeridaOauthRequestPayload } from "@/features/verida-oauth/types"
+import { ProfileAvatar } from "@/features/verida-profile/components/profile-avatar"
+import { EMPTY_PROFILE_NAME_FALLBACK } from "@/features/verida-profile/constants"
+import { useVeridaProfile } from "@/features/verida-profile/hooks/use-verida-profile"
 import { cn } from "@/styles/utils"
 
-type OAuthConsentCardProps = React.ComponentProps<typeof Card>
+const logger = Logger.create("verida-oauth")
+
+export interface OAuthConsentCardProps
+  extends React.ComponentProps<typeof Card> {
+  payload: VeridaOauthRequestPayload
+}
 
 export function OAuthConsentCard(props: OAuthConsentCardProps) {
-  const { className, ...cardProps } = props
+  const { payload, className, ...cardProps } = props
 
-  const { payload, handleAllow, handleDeny } = useVeridaOauth()
+  const { appDID, scopes, redirectUrl } = payload
 
-  // TODO: Handle case where no payload is available
+  const resolvedRedirectUrl = useMemo(() => {
+    return new URL(redirectUrl)
+  }, [redirectUrl])
 
-  const { name, url, scopes } = payload
+  const { profile, isLoading } = useVeridaProfile({
+    did: appDID,
+  })
 
-  const formatScope = useCallback((scope: VeridaOauthScope) => {
-    const databaseDef = ALL_DATABASE_DEFS.find(
-      (db) => db.databaseVaultName === scope.database
-    )
+  const profileWebsiteUrl = useMemo(() => {
+    if (profile?.website) {
+      return new URL(profile.website)
+    }
 
-    return (
-      <Typography variant="base-regular">
-        <span className="capitalize">{scope.operation}</span>{" "}
-        {scope.operation === "write" ? "on your" : "your"}{" "}
-        <span className="font-semibold lowercase">
-          {databaseDef?.titlePlural || scope.database}
-        </span>
-      </Typography>
-    )
-  }, [])
+    return null
+  }, [profile])
+
+  const { scopeDefinitions } = useVeridaOauthScopeDefinitions()
+
+  const resolvedScopes = useMemo(() => {
+    return scopes.map((scope) => {
+      const definition = scopeDefinitions?.find((def) => def.id === scope)
+
+      return definition?.description || scope
+    })
+  }, [scopes, scopeDefinitions])
+
+  const { deny } = useDenyVeridaOauthRequest({ payload })
+  const { allow } = useAllowVeridaOauthRequest({ payload })
+
+  const [isAllowing, setIsAllowing] = useState(false)
+
+  const handleDenyClick = useCallback(() => {
+    try {
+      deny()
+    } catch (error) {
+      logger.error(error)
+    }
+  }, [deny])
+
+  const handleAllowClick = useCallback(async () => {
+    try {
+      setIsAllowing(true)
+      await allow()
+    } catch (error) {
+      logger.error(error)
+    } finally {
+      setIsAllowing(false)
+    }
+  }, [allow])
 
   return (
     <Card className={cn("h-full", className)} {...cardProps}>
-      <CardHeader className="shrink-0">
-        <CardTitle>
-          <Link
-            href={url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="underline"
-          >
-            {name}
-          </Link>{" "}
-          wants to access your Verida Vault
-        </CardTitle>
-        <CardDescription>
-          <Link
-            href={url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="underline"
-          >
-            {`${url.protocol}//${url.hostname}`}
-          </Link>
-        </CardDescription>
-      </CardHeader>
-      <CardBody className="flex flex-1 flex-col gap-4 overflow-y-auto">
-        {scopes.length > 0 ? (
-          <>
-            <Typography variant="base-regular">
-              By allowing it,{" "}
+      <CardHeader className="shrink-0 gap-3">
+        <div className="flex flex-row items-center gap-2">
+          <ProfileAvatar
+            profile={profile}
+            isLoading={isLoading}
+            className="size-12"
+          />
+          <CardTitle>
+            <span
+              className={profile?.name ? "" : "italic text-muted-foreground"}
+            >
+              {profile?.name || EMPTY_PROFILE_NAME_FALLBACK}
+            </span>{" "}
+            wants to access your Verida Vault
+          </CardTitle>
+        </div>
+        <div className="flex flex-col gap-1">
+          {appDID ? (
+            <CardDescription className="truncate">
               <Link
-                href={url}
+                href={getVeridaExplorerIdentityPageUrl(appDID)}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="underline"
               >
-                {name}
-              </Link>{" "}
-              will be able to:
+                {appDID}
+              </Link>
+            </CardDescription>
+          ) : null}
+          <CardDescription className="truncate">
+            <Link
+              href={
+                profileWebsiteUrl
+                  ? profileWebsiteUrl.origin
+                  : resolvedRedirectUrl.origin
+              }
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline"
+            >
+              {profileWebsiteUrl
+                ? profileWebsiteUrl.origin
+                : resolvedRedirectUrl.origin}
+            </Link>
+          </CardDescription>
+        </div>
+      </CardHeader>
+      <CardBody className="flex flex-1 flex-col gap-4 overflow-y-auto">
+        {resolvedScopes.length > 0 ? (
+          <>
+            <Typography variant="base-regular">
+              {`By allowing it, ${profile?.name || "this application"} will be able to:`}
             </Typography>
-            <ul>
-              {scopes.map((scope, index) => (
-                <li key={index}>{formatScope(scope)}</li>
+            <ul className="list-inside list-disc">
+              {resolvedScopes.map((scope, index) => (
+                <li key={index}>
+                  <Typography variant="base-regular" component="span">
+                    {scope}
+                  </Typography>
+                </li>
               ))}
             </ul>
           </>
         ) : (
-          <Typography variant="base-regular" className="text-muted-foreground">
-            No access requested
-          </Typography>
+          <div className="text-muted-foreground">
+            <Typography variant="base-regular">No access requested</Typography>
+          </div>
         )}
+        <div className="text-muted-foreground">
+          <Typography variant="base-s-regular" className="line-clamp-2">
+            {`You will be redirected to: ${resolvedRedirectUrl.origin}`}
+          </Typography>
+        </div>
         <div>
           <Alert variant="warning">
             <AlertTitle>Privacy Notice</AlertTitle>
             <AlertDescription className="text-xs text-muted-foreground">
-              {name} will have access to your personal data.
+              {profile?.name || "This application"} will have access to your
+              personal data.
             </AlertDescription>
             <AlertDescription className="text-xs text-muted-foreground">
               Make sure you trust the application before allowing the access.
@@ -110,10 +176,18 @@ export function OAuthConsentCard(props: OAuthConsentCardProps) {
         </div>
       </CardBody>
       <CardFooter className="flex shrink-0 flex-row items-center justify-between">
-        <Button variant="outline" onClick={handleDeny}>
+        <Button
+          variant="outline"
+          onClick={handleDenyClick}
+          disabled={isAllowing}
+        >
           Deny
         </Button>
-        <Button variant="primary" onClick={handleAllow}>
+        <Button
+          variant="primary"
+          onClick={handleAllowClick}
+          disabled={isAllowing}
+        >
           Allow
         </Button>
       </CardFooter>
