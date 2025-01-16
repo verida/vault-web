@@ -27,7 +27,7 @@ export type VeridaOauthRequest =
     }
 
 export type VeridaAuthRequestPayload = {
-  appDID: string | null
+  appDID?: string
   userDID: string
   scopes: string[]
   timestamp: number

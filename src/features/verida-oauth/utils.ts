@@ -128,7 +128,7 @@ export async function allowVeridaOauthRequest({
   const now = Math.floor(Date.now() / 1000)
 
   const authRequest: VeridaAuthRequestPayload = {
-    appDID: payload.appDID,
+    appDID: payload.appDID ?? undefined,
     userDID: userDid,
     scopes: payload.scopes,
     timestamp: now,
