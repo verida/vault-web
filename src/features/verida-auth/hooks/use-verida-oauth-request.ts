@@ -1,7 +1,7 @@
 import { useSearchParams } from "next/navigation"
 import { useMemo } from "react"
 
-import { VeridaOauthRequest } from "@/features/verida-oauth/types"
+import { VeridaOauthRequest } from "@/features/verida-auth/types"
 
 export function useVeridaOauthRequest() {
   const searchParams = useSearchParams()

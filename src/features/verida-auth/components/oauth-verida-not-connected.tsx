@@ -16,8 +16,8 @@ import {
   ErrorBlockTitle,
 } from "@/components/ui/error"
 import { VeridaConnectButton } from "@/components/verida/verida-connect-button"
+import { VeridaOauthRequestPayload } from "@/features/verida-auth/types"
 import { getVeridaExplorerIdentityPageUrl } from "@/features/verida-explorer/utils"
-import { VeridaOauthRequestPayload } from "@/features/verida-oauth/types"
 import { ProfileAvatar } from "@/features/verida-profile/components/profile-avatar"
 import { EMPTY_PROFILE_NAME_FALLBACK } from "@/features/verida-profile/constants"
 import { useVeridaProfile } from "@/features/verida-profile/hooks/use-verida-profile"

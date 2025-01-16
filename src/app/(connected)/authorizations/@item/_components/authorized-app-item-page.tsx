@@ -37,7 +37,7 @@ import {
 import { EMPTY_VALUE_FALLBACK } from "@/constants/misc"
 import { RevokeAuthorizedAppDialog } from "@/features/authorized-apps/components/revoke-authorized-app-dialog"
 import { useAuthorizedApp } from "@/features/authorized-apps/hooks/use-authorized-app"
-import { VeridaOauthScope } from "@/features/verida-oauth/types"
+import { VeridaOauthScope } from "@/features/verida-auth/types"
 import { cn } from "@/styles/utils"
 import { SHORT_DATE_TIME_FORMAT_OPTIONS } from "@/utils/date"
 

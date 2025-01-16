@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query"
 
-import { getVeridaOauthScopeDefinitions } from "@/features/verida-oauth/utils"
+import { getVeridaOauthScopeDefinitions } from "@/features/verida-auth/utils"
 
 export function useVeridaOauthScopeDefinitions() {
   const { data, ...query } = useQuery({

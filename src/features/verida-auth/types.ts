@@ -1,6 +1,6 @@
 import { z } from "zod"
 
-import { VeridaOauthAuthV1ResponseSchema } from "@/features/verida-oauth/schemas"
+import { VeridaOauthAuthV1ResponseSchema } from "@/features/verida-auth/schemas"
 
 export type VeridaOauthScopeType = "data" | "api" | "unknown"
 

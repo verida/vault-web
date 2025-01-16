@@ -5,7 +5,7 @@ import { Logger } from "@/features/telemetry/logger"
 import {
   VeridaOauthAuthV1ResponseSchema,
   VeridaOauthGetScopeDefinitionsV1ResponseSchema,
-} from "@/features/verida-oauth/schemas"
+} from "@/features/verida-auth/schemas"
 import {
   VeridaAuthApiV1RequestBody,
   VeridaAuthRequestPayload,
@@ -13,7 +13,7 @@ import {
   VeridaOauthRequestPayload,
   VeridaOauthScope,
   VeridaOauthScopeType,
-} from "@/features/verida-oauth/types"
+} from "@/features/verida-auth/types"
 import { VERIDA_VAULT_CONTEXT_NAME } from "@/features/verida/constants"
 
 const logger = Logger.create("verida-oauth")

@@ -11,9 +11,9 @@ import {
 } from "@/components/ui/error"
 import { VeridaConnectionLoading } from "@/components/verida/verida-connection-loading"
 import { VeridaIdentityDropdownMenu } from "@/components/verida/verida-identity-dropdown-menu"
-import { OAuthConsentCard } from "@/features/verida-oauth/components/oauth-consent-card"
-import { OAuthVeridaNotConnected } from "@/features/verida-oauth/components/oauth-verida-not-connected"
-import { useVeridaOauthRequest } from "@/features/verida-oauth/hooks/use-verida-oauth-request"
+import { OAuthConsentCard } from "@/features/verida-auth/components/oauth-consent-card"
+import { OAuthVeridaNotConnected } from "@/features/verida-auth/components/oauth-verida-not-connected"
+import { useVeridaOauthRequest } from "@/features/verida-auth/hooks/use-verida-oauth-request"
 import { useVerida } from "@/features/verida/hooks/use-verida"
 
 export default function OAuthPage() {

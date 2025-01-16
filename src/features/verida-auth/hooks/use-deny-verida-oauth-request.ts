@@ -1,7 +1,7 @@
 import { useCallback } from "react"
 
-import { VeridaOauthRequestPayload } from "@/features/verida-oauth/types"
-import { denyVeridaOauthRequest } from "@/features/verida-oauth/utils"
+import { VeridaOauthRequestPayload } from "@/features/verida-auth/types"
+import { denyVeridaOauthRequest } from "@/features/verida-auth/utils"
 
 export interface UseDenyVeridaOauthRequestArgs {
   payload: VeridaOauthRequestPayload
