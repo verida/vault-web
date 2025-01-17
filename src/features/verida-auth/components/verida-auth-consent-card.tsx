@@ -14,6 +14,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import {
+  LoadingBlock,
+  LoadingBlockDescription,
+  LoadingBlockSpinner,
+  LoadingBlockTitle,
+} from "@/components/ui/loading"
 import { Logger } from "@/features/telemetry/logger"
 import { useAllowVeridaAuthRequest } from "@/features/verida-auth/hooks/use-allow-verida-auth-request"
 import { useDenyVeridaAuthRequest } from "@/features/verida-auth/hooks/use-deny-verida-auth-request"
@@ -82,8 +88,6 @@ export function VeridaAuthConsentCard(props: VeridaAuthConsentCardProps) {
       await allow()
     } catch (error) {
       logger.error(error)
-    } finally {
-      setIsAllowing(false)
     }
   }, [allow])
 
@@ -136,50 +140,65 @@ export function VeridaAuthConsentCard(props: VeridaAuthConsentCardProps) {
           </CardDescription>
         </div>
       </CardHeader>
-      <CardBody className="flex flex-1 flex-col gap-4 overflow-y-auto">
-        {resolvedScopes.length > 0 ? (
-          <>
-            <Typography variant="base-regular">
-              {`By allowing it, ${profile?.name || "this application"} will be able to:`}
-            </Typography>
-            <ul className="list-inside list-disc">
-              {resolvedScopes.map((scope, index) => (
-                <li key={index}>
-                  <Typography variant="base-regular" component="span">
-                    {scope}
-                  </Typography>
-                </li>
-              ))}
-            </ul>
-          </>
-        ) : (
+      {isAllowing ? (
+        <CardBody className="flex-1 py-3">
+          <LoadingBlock>
+            <LoadingBlockSpinner />
+            <LoadingBlockTitle>Allowing access</LoadingBlockTitle>
+            <LoadingBlockDescription>
+              Please wait a moment while we allow the access
+            </LoadingBlockDescription>
+          </LoadingBlock>
+        </CardBody>
+      ) : (
+        <CardBody className="flex flex-1 flex-col gap-4 overflow-y-auto">
+          {resolvedScopes.length > 0 ? (
+            <>
+              <Typography variant="base-regular">
+                {`By allowing it, ${profile?.name || "this application"} will be able to:`}
+              </Typography>
+              <ul className="list-inside list-disc">
+                {resolvedScopes.map((scope, index) => (
+                  <li key={index}>
+                    <Typography variant="base-regular" component="span">
+                      {scope}
+                    </Typography>
+                  </li>
+                ))}
+              </ul>
+            </>
+          ) : (
+            <div className="text-muted-foreground">
+              <Typography variant="base-regular">
+                No access requested
+              </Typography>
+            </div>
+          )}
           <div className="text-muted-foreground">
-            <Typography variant="base-regular">No access requested</Typography>
+            <Typography variant="base-s-regular" className="line-clamp-2">
+              {`You will be redirected to: ${resolvedRedirectUrl.origin}`}
+            </Typography>
           </div>
-        )}
-        <div className="text-muted-foreground">
-          <Typography variant="base-s-regular" className="line-clamp-2">
-            {`You will be redirected to: ${resolvedRedirectUrl.origin}`}
-          </Typography>
-        </div>
-        <div>
-          <Alert variant="warning">
-            <AlertTitle>Privacy Notice</AlertTitle>
-            <AlertDescription className="text-xs text-muted-foreground">
-              {profile?.name || "This application"} will have access to your
-              personal data.
-            </AlertDescription>
-            <AlertDescription className="text-xs text-muted-foreground">
-              Make sure you trust the application before allowing the access.
-            </AlertDescription>
-          </Alert>
-        </div>
-      </CardBody>
-      <CardFooter className="flex shrink-0 flex-row items-center justify-between">
+          <div>
+            <Alert variant="warning">
+              <AlertTitle>Privacy Notice</AlertTitle>
+              <AlertDescription className="text-xs text-muted-foreground">
+                {profile?.name || "This application"} will have access to your
+                personal data.
+              </AlertDescription>
+              <AlertDescription className="text-xs text-muted-foreground">
+                Make sure you trust the application before allowing the access.
+              </AlertDescription>
+            </Alert>
+          </div>
+        </CardBody>
+      )}
+      <CardFooter className="flex shrink-0 flex-row items-center justify-end gap-4">
         <Button
-          variant="outline"
+          variant="outline-destructive"
           onClick={handleDenyClick}
           disabled={isAllowing}
+          className="w-full sm:w-fit"
         >
           Deny
         </Button>
@@ -187,6 +206,7 @@ export function VeridaAuthConsentCard(props: VeridaAuthConsentCardProps) {
           variant="primary"
           onClick={handleAllowClick}
           disabled={isAllowing}
+          className="w-full sm:w-fit"
         >
           Allow
         </Button>
