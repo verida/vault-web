@@ -9,6 +9,7 @@ export function useVeridaAuthRequest() {
   const scopes = searchParams.getAll("scopes")
   const appDID = searchParams.get("appDID")
   const redirectUrl = searchParams.get("redirectUrl")
+  const state = searchParams.get("state")
 
   const request: VeridaAuthRequest = useMemo(() => {
     if (!redirectUrl || !scopes || scopes.length === 0) {
@@ -24,9 +25,10 @@ export function useVeridaAuthRequest() {
         appDID,
         scopes,
         redirectUrl,
+        state: state ?? undefined,
       },
     }
-  }, [redirectUrl, scopes, appDID])
+  }, [redirectUrl, scopes, appDID, state])
 
   return request
 }

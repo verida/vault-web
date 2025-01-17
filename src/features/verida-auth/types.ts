@@ -14,6 +14,7 @@ export type VeridaAuthRequestPayload = {
   appDID: string | null
   scopes: string[]
   redirectUrl: string
+  state?: string
 }
 
 export type VeridaAuthRequest =

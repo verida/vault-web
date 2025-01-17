@@ -138,15 +138,12 @@ export async function allowVeridaAuthRequest({
   const userKeyring = await userAccount.keyring(VERIDA_VAULT_CONTEXT_NAME)
   const user_sig = await userKeyring.sign(authRequest)
 
-  // TODO: Get the state from the auth request
-  const state = {}
-
   const body: VeridaAuthApiV1RequestBody = {
     client_id: userDid,
     auth_request: JSON.stringify(authRequest),
     redirect_uri: payload.redirectUrl,
     user_sig,
-    state: JSON.stringify(state),
+    state: payload.state ?? "",
   }
 
   try {
