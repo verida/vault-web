@@ -4,6 +4,12 @@ import Link from "next/link"
 import { useCallback, useMemo, useState } from "react"
 
 import { Typography } from "@/components/typography"
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
 import {
@@ -23,7 +29,7 @@ import {
 import { Logger } from "@/features/telemetry/logger"
 import { useAllowVeridaAuthRequest } from "@/features/verida-auth/hooks/use-allow-verida-auth-request"
 import { useDenyVeridaAuthRequest } from "@/features/verida-auth/hooks/use-deny-verida-auth-request"
-import { useVeridaAuthScopeDefinitions } from "@/features/verida-auth/hooks/use-verida-auth-scope-definitions"
+import { useResolvedVeridaAuthScopes } from "@/features/verida-auth/hooks/use-resolved-verida-auth-scopes"
 import { VeridaAuthRequestPayload } from "@/features/verida-auth/types"
 import { getVeridaExplorerIdentityPageUrl } from "@/features/verida-explorer/utils"
 import { ProfileAvatar } from "@/features/verida-profile/components/profile-avatar"
@@ -59,15 +65,19 @@ export function VeridaAuthConsentCard(props: VeridaAuthConsentCardProps) {
     return null
   }, [profile])
 
-  const { scopeDefinitions } = useVeridaAuthScopeDefinitions()
+  const { resolvedScopes } = useResolvedVeridaAuthScopes(scopes)
 
-  const resolvedScopes = useMemo(() => {
-    return scopes.map((scope) => {
-      const definition = scopeDefinitions?.find((def) => def.id === scope)
+  const apiScopes = useMemo(() => {
+    return resolvedScopes?.filter((scope) => scope.type === "api")
+  }, [resolvedScopes])
 
-      return definition?.description || scope
-    })
-  }, [scopes, scopeDefinitions])
+  const dataScopes = useMemo(() => {
+    return resolvedScopes?.filter((scope) => scope.type === "data")
+  }, [resolvedScopes])
+
+  const unknownScopes = useMemo(() => {
+    return resolvedScopes?.filter((scope) => scope.type === "unknown")
+  }, [resolvedScopes])
 
   const { deny } = useDenyVeridaAuthRequest({ payload })
   const { allow } = useAllowVeridaAuthRequest({ payload })
@@ -152,20 +162,118 @@ export function VeridaAuthConsentCard(props: VeridaAuthConsentCardProps) {
         </CardBody>
       ) : (
         <CardBody className="flex flex-1 flex-col gap-4 overflow-y-auto">
-          {resolvedScopes.length > 0 ? (
+          {resolvedScopes && resolvedScopes.length > 0 ? (
             <>
               <Typography variant="base-regular">
                 {`By allowing it, ${profile?.name || "this application"} will be able to:`}
               </Typography>
-              <ul className="list-inside list-disc">
-                {resolvedScopes.map((scope, index) => (
-                  <li key={index}>
-                    <Typography variant="base-regular" component="span">
-                      {scope}
-                    </Typography>
-                  </li>
-                ))}
-              </ul>
+              <Accordion
+                type="multiple"
+                defaultValue={["data-scopes", "api-scopes"]}
+              >
+                {dataScopes && dataScopes.length > 0 ? (
+                  <>
+                    <AccordionItem value="data-scopes">
+                      <AccordionTrigger>Data</AccordionTrigger>
+                      <AccordionContent>
+                        <ul className="list-inside list-disc">
+                          {dataScopes.map((scope, index) => (
+                            <li key={index}>
+                              <Typography
+                                variant="base-regular"
+                                component="span"
+                              >
+                                {scope.permissions?.map(
+                                  (permission, index, array) => {
+                                    const capitalizedPermission =
+                                      index === 0
+                                        ? permission.charAt(0).toUpperCase() +
+                                          permission.slice(1)
+                                        : permission
+
+                                    const separator =
+                                      array.length <= 1
+                                        ? ""
+                                        : index === array.length - 1
+                                          ? ""
+                                          : index === array.length - 2
+                                            ? " and "
+                                            : ", "
+
+                                    return (
+                                      <span
+                                        key={index}
+                                        className="font-semibold"
+                                      >
+                                        {capitalizedPermission}
+                                        {separator}
+                                      </span>
+                                    )
+                                  }
+                                )}{" "}
+                                your{" "}
+                                <span className="font-semibold">
+                                  {scope.name}
+                                </span>{" "}
+                                database ({scope.description})
+                              </Typography>
+                            </li>
+                          ))}
+                        </ul>
+                      </AccordionContent>
+                    </AccordionItem>
+                  </>
+                ) : null}
+                {apiScopes && apiScopes.length > 0 ? (
+                  <>
+                    <AccordionItem value="api-scopes">
+                      <AccordionTrigger>Actions</AccordionTrigger>
+                      <AccordionContent>
+                        <ul className="list-inside list-disc">
+                          {apiScopes.map((scope, index) => (
+                            <li key={index}>
+                              <Typography
+                                variant="base-regular"
+                                component="span"
+                              >
+                                {scope.description}
+                              </Typography>
+                            </li>
+                          ))}
+                        </ul>
+                      </AccordionContent>
+                    </AccordionItem>
+                  </>
+                ) : null}
+                {unknownScopes && unknownScopes.length > 0 ? (
+                  <>
+                    <AccordionItem value="unknown-scopes">
+                      <AccordionTrigger>Other</AccordionTrigger>
+                      <AccordionContent>
+                        <ul className="list-inside list-disc">
+                          {unknownScopes.map((scope, index) => (
+                            <li key={index}>
+                              <Typography
+                                variant="base-regular"
+                                component="span"
+                              >
+                                <span className="font-semibold">
+                                  {scope.permissions?.join(", ")}
+                                </span>{" "}
+                                your{" "}
+                                <span className="font-semibold">
+                                  {scope.name}
+                                </span>
+                                ({scope.description})
+                              </Typography>
+                            </li>
+                          ))}
+                        </ul>
+                      </AccordionContent>
+                    </AccordionItem>
+                  </>
+                ) : null}
+              </Accordion>
             </>
           ) : (
             <div className="text-muted-foreground">

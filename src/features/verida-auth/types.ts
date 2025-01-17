@@ -4,10 +4,15 @@ import { VeridaAuthAuthV1ResponseSchema } from "@/features/verida-auth/schemas"
 
 export type VeridaAuthScopeType = "data" | "api" | "unknown"
 
+export type VeridaAuthScopePermission = "read" | "write" | "delete" | "unknown"
+
 export type VeridaAuthScope = {
-  id: string
+  id?: string
   type: VeridaAuthScopeType
-  description: string
+  name?: string
+  description?: string
+  permissions?: VeridaAuthScopePermission[]
+  uri?: string
 }
 
 export type VeridaAuthRequestPayload = {

@@ -5,6 +5,7 @@ import { Logger } from "@/features/telemetry/logger"
 import {
   VeridaAuthAuthV1ResponseSchema,
   VeridaAuthGetScopeDefinitionsV1ResponseSchema,
+  VeridaAuthResolveScopesV1ResponseSchema,
 } from "@/features/verida-auth/schemas"
 import {
   VeridaAuthApiV1RequestBody,
@@ -12,6 +13,7 @@ import {
   VeridaAuthAuthV1Response,
   VeridaAuthRequestPayload,
   VeridaAuthScope,
+  VeridaAuthScopePermission,
   VeridaAuthScopeType,
 } from "@/features/verida-auth/types"
 import { VERIDA_VAULT_CONTEXT_NAME } from "@/features/verida/constants"
@@ -71,6 +73,61 @@ export async function getVeridaAuthScopeDefinitions(): Promise<
   }
 }
 
+export async function resolveVeridaAuthScopes(
+  scopes: string[]
+): Promise<VeridaAuthScope[]> {
+  logger.info("Resolving Verida Auth scopes")
+
+  if (!commonConfig.PRIVATE_DATA_API_BASE_URL) {
+    logger.warn(
+      "Cannot resolve Verida Auth scopes due to incorrect API configuration"
+    )
+    throw new Error("Incorrect Private Data API configuration")
+  }
+
+  try {
+    const url = new URL(
+      `${commonConfig.PRIVATE_DATA_API_BASE_URL}/api/rest/v1/auth/resolve-scopes`
+    )
+
+    for (const scope of scopes) {
+      url.searchParams.append("scopes", scope)
+    }
+
+    const response = await fetch(url.toString())
+
+    if (!response.ok) {
+      throw new Error(`HTTP error ${response.status}`)
+    }
+
+    const data = await response.json()
+
+    const validatedData = VeridaAuthResolveScopesV1ResponseSchema.parse(data)
+
+    logger.info("Successfully resolved Verida Auth scopes")
+
+    const resolvedScopes = validatedData.scopes.map(
+      (scope): VeridaAuthScope => {
+        return {
+          type: resolveVeridaAuthScopeType(scope.type),
+          name: scope.name,
+          description: scope.description,
+          permissions: scope.permissions?.map((permission) =>
+            resolveVeridaAuthScopePermission(permission)
+          ),
+          uri: scope.uri,
+        }
+      }
+    )
+
+    return resolvedScopes
+  } catch (error) {
+    throw new Error("Error getting Verida Auth scope definitions", {
+      cause: error,
+    })
+  }
+}
+
 /**
  * Resolves a Verida Auth scope type string to a standardized VeridaAuthScopeType.
  *
@@ -89,10 +146,38 @@ function resolveVeridaAuthScopeType(scopeType: string): VeridaAuthScopeType {
   }
 }
 
+/**
+ * Resolves a Verida Auth scope permission string to a standardized VeridaAuthScopePermission.
+ *
+ * @param scopePermission - The raw permission string from the Auth scope definition ('r', 'w', 'd')
+ * @returns The resolved VeridaAuthScopePermission ("read", "write", "delete", or "unknown")
+ */
+function resolveVeridaAuthScopePermission(
+  scopePermission: string
+): VeridaAuthScopePermission {
+  switch (scopePermission) {
+    case "r":
+      return "read"
+    case "w":
+      return "write"
+    case "d":
+      return "delete"
+    default:
+      return "unknown"
+  }
+}
+
 export interface DenyVeridaAuthRequestArgs {
   payload: VeridaAuthRequestPayload
 }
 
+/**
+ * Denies a Verida Auth request by redirecting back to the application with an error.
+ *
+ * @param args - The arguments for denying the auth request
+ * @param args.payload - The auth request payload containing the redirect URL and state
+ * @returns Object containing the URL to redirect the user to, with error parameters added
+ */
 export function denyVeridaAuthRequest({ payload }: DenyVeridaAuthRequestArgs) {
   logger.info("Denying Auth request")
 
