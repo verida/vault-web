@@ -89,10 +89,20 @@ function resolveVeridaAuthScopeType(scopeType: string): VeridaAuthScopeType {
   }
 }
 
-export function denyVeridaAuthRequest() {
+export interface DenyVeridaAuthRequestArgs {
+  payload: VeridaAuthRequestPayload
+}
+
+export function denyVeridaAuthRequest({ payload }: DenyVeridaAuthRequestArgs) {
   logger.info("Denying Auth request")
 
-  // TODO: To implement, if anything to do
+  const redirectUrl = new URL(payload.redirectUrl)
+  redirectUrl.searchParams.set("error", "access_denied")
+  redirectUrl.searchParams.set("state", payload.state ?? "")
+
+  return {
+    redirectUrl: redirectUrl.toString(),
+  }
 }
 
 export interface AllowVeridaAuthRequestArgs {
@@ -102,6 +112,17 @@ export interface AllowVeridaAuthRequestArgs {
   webUserInstance: WebUser
 }
 
+/**
+ * Processes an authorization request for a Verida application to access user data.
+ *
+ * @param args - The arguments for the allowVeridaAuthRequest function
+ * @param args.payload - The auth request payload containing scopes, redirectUrl, etc.
+ * @param args.sessionToken - User's API session token for authentication
+ * @param args.userDid - DID (Decentralized Identifier) of the authenticating user
+ * @param args.webUserInstance - Instance of the user's web client
+ * @returns Promise resolving to the validated auth response from the API
+ * @throws Error if API config is invalid, payload is malformed, or request fails
+ */
 export async function allowVeridaAuthRequest({
   payload,
   sessionToken,
@@ -167,8 +188,18 @@ export async function allowVeridaAuthRequest({
 
     return validatedData
   } catch (error) {
-    throw new Error("Error allowing Auth request", {
-      cause: error,
-    })
+    logger.error(
+      new Error("Error allowing Auth request", {
+        cause: error,
+      })
+    )
+
+    const redirectUrl = new URL(payload.redirectUrl)
+    redirectUrl.searchParams.set("error", "server_error")
+    redirectUrl.searchParams.set("state", payload.state ?? "")
+
+    return {
+      redirectUrl: redirectUrl.toString(),
+    }
   }
 }

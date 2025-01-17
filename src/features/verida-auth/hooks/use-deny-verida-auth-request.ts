@@ -11,9 +11,9 @@ export function useDenyVeridaAuthRequest({
   payload,
 }: UseDenyVeridaAuthRequestArgs) {
   const deny = useCallback(() => {
-    denyVeridaAuthRequest()
+    const { redirectUrl } = denyVeridaAuthRequest({ payload })
 
-    window.location.href = payload.redirectUrl
+    window.location.href = redirectUrl
   }, [payload])
 
   return {
