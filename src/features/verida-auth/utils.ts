@@ -191,6 +191,7 @@ export function denyVeridaAuthRequest({ payload }: DenyVeridaAuthRequestArgs) {
 
   const redirectUrl = new URL(payload.redirectUrl)
   redirectUrl.searchParams.set("error", "access_denied")
+  redirectUrl.searchParams.set("error_description", "User denied access")
   redirectUrl.searchParams.set("state", payload.state ?? "")
 
   return {
@@ -289,6 +290,10 @@ export async function allowVeridaAuthRequest({
 
     const redirectUrl = new URL(payload.redirectUrl)
     redirectUrl.searchParams.set("error", "server_error")
+    redirectUrl.searchParams.set(
+      "error_description",
+      "Something went wrong when granting access"
+    )
     redirectUrl.searchParams.set("state", payload.state ?? "")
 
     return {

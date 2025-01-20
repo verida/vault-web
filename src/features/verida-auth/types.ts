@@ -36,6 +36,8 @@ export type ValidVeridaAuthRequest = {
 export type InvalidVeridaAuthRequest = {
   status: "invalid"
   errorDescription: string
+  redirectUrl: string | null
+  state?: string
 }
 
 export type VeridaAuthRequest =

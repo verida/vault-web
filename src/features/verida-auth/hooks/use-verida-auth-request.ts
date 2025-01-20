@@ -11,7 +11,7 @@ export function useVeridaAuthRequest(): VeridaAuthRequest {
   const scopes = searchParams.getAll("scopes")
   const appDID = searchParams.get("appDID")
   const redirectUrl = searchParams.get("redirectUrl")
-  const state = searchParams.get("state")
+  const state = searchParams.get("state") ?? undefined
 
   const { resolvedScopes, scopeValidity } = useResolvedVeridaAuthScopes(scopes)
 
@@ -20,6 +20,8 @@ export function useVeridaAuthRequest(): VeridaAuthRequest {
       return {
         status: "invalid",
         errorDescription: "Missing required scopes",
+        redirectUrl,
+        state,
       }
     }
 
@@ -36,6 +38,8 @@ export function useVeridaAuthRequest(): VeridaAuthRequest {
       return {
         status: "invalid",
         errorDescription: "Missing appDID",
+        redirectUrl,
+        state,
       }
     }
 
@@ -43,6 +47,8 @@ export function useVeridaAuthRequest(): VeridaAuthRequest {
       return {
         status: "invalid",
         errorDescription: "Invalid appDID format",
+        redirectUrl,
+        state,
       }
     }
 
@@ -50,6 +56,8 @@ export function useVeridaAuthRequest(): VeridaAuthRequest {
       return {
         status: "invalid",
         errorDescription: "Missing redirectURL",
+        redirectUrl,
+        state,
       }
     }
 
@@ -61,6 +69,8 @@ export function useVeridaAuthRequest(): VeridaAuthRequest {
       return {
         status: "invalid",
         errorDescription: "No valid scopes",
+        redirectUrl,
+        state,
       }
     }
 
