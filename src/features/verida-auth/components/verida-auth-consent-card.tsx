@@ -94,8 +94,23 @@ export function VeridaAuthConsentCard(props: VeridaAuthConsentCardProps) {
       .map(([scope]) => scope)
   }, [scopeValidity])
 
+  const validScopes = useMemo(() => {
+    if (!scopeValidity) {
+      return null
+    }
+
+    return Object.entries(scopeValidity)
+      .filter(([, isValid]) => isValid)
+      .map(([scope]) => scope)
+  }, [scopeValidity])
+
   const { deny } = useDenyVeridaAuthRequest({ payload })
-  const { allow } = useAllowVeridaAuthRequest({ payload })
+  const { allow } = useAllowVeridaAuthRequest({
+    payload: {
+      ...payload,
+      scopes: validScopes ?? payload.scopes,
+    },
+  })
 
   const [isAllowing, setIsAllowing] = useState(false)
 
