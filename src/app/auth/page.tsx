@@ -6,6 +6,7 @@ import { VeridaConnectionLoading } from "@/components/verida/verida-connection-l
 import { VeridaIdentityDropdownMenu } from "@/components/verida/verida-identity-dropdown-menu"
 import { VeridaAuthConsentCard } from "@/features/verida-auth/components/verida-auth-consent-card"
 import { VeridaAuthInvalidRequestCard } from "@/features/verida-auth/components/verida-auth-invalid-request-card"
+import { VeridaAuthProcessingRequestCard } from "@/features/verida-auth/components/verida-auth-processing-request-card"
 import { VeridaAuthVeridaNotConnectedCard } from "@/features/verida-auth/components/verida-auth-verida-not-connected-card"
 import { useVeridaAuthRequest } from "@/features/verida-auth/hooks/use-verida-auth-request"
 import { useVerida } from "@/features/verida/hooks/use-verida"
@@ -14,7 +15,7 @@ export default function AuthPage() {
   const { isConnected, isConnecting } = useVerida()
   const request = useVeridaAuthRequest()
 
-  if (isConnecting) {
+  if (request.status !== "processing" && isConnecting) {
     return <VeridaConnectionLoading />
   }
 
@@ -36,9 +37,9 @@ export default function AuthPage() {
           hideAuthorizedApps={true}
         />
       </div>
-      {request.status === "invalid" ? (
-        <VeridaAuthInvalidRequestCard request={request} />
-      ) : (
+      {request.status === "processing" ? (
+        <VeridaAuthProcessingRequestCard />
+      ) : request.status === "valid" ? (
         <>
           {isConnected ? (
             <VeridaAuthConsentCard request={request} className="min-h-0" />
@@ -49,6 +50,8 @@ export default function AuthPage() {
             />
           )}
         </>
+      ) : (
+        <VeridaAuthInvalidRequestCard request={request} />
       )}
     </div>
   )

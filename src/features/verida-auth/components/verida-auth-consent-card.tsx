@@ -34,7 +34,6 @@ import {
 import { Logger } from "@/features/telemetry/logger"
 import { useAllowVeridaAuthRequest } from "@/features/verida-auth/hooks/use-allow-verida-auth-request"
 import { useDenyVeridaAuthRequest } from "@/features/verida-auth/hooks/use-deny-verida-auth-request"
-import { useResolvedVeridaAuthScopes } from "@/features/verida-auth/hooks/use-resolved-verida-auth-scopes"
 import { ValidVeridaAuthRequest } from "@/features/verida-auth/types"
 import { getVeridaExplorerIdentityPageUrl } from "@/features/verida-explorer/utils"
 import { ProfileAvatar } from "@/features/verida-profile/components/profile-avatar"
@@ -52,7 +51,8 @@ export interface VeridaAuthConsentCardProps
 export function VeridaAuthConsentCard(props: VeridaAuthConsentCardProps) {
   const { request, className, ...cardProps } = props
 
-  const { appDID, scopes, redirectUrl } = request.payload
+  const { payload, resolvedValidScopes, ignoredScopes } = request
+  const { appDID, redirectUrl } = payload
 
   const resolvedRedirectUrl = useMemo(() => {
     return new URL(redirectUrl)
@@ -70,47 +70,20 @@ export function VeridaAuthConsentCard(props: VeridaAuthConsentCardProps) {
     return null
   }, [profile])
 
-  const { resolvedScopes, scopeValidity } = useResolvedVeridaAuthScopes(scopes)
-
   const apiScopes = useMemo(() => {
-    return resolvedScopes?.filter((scope) => scope.type === "api")
-  }, [resolvedScopes])
+    return resolvedValidScopes?.filter((scope) => scope.type === "api")
+  }, [resolvedValidScopes])
 
   const dataScopes = useMemo(() => {
-    return resolvedScopes?.filter((scope) => scope.type === "data")
-  }, [resolvedScopes])
+    return resolvedValidScopes?.filter((scope) => scope.type === "data")
+  }, [resolvedValidScopes])
 
   const unknownScopes = useMemo(() => {
-    return resolvedScopes?.filter((scope) => scope.type === "unknown")
-  }, [resolvedScopes])
+    return resolvedValidScopes?.filter((scope) => scope.type === "unknown")
+  }, [resolvedValidScopes])
 
-  const invalidScopes = useMemo(() => {
-    if (!scopeValidity) {
-      return []
-    }
-
-    return Object.entries(scopeValidity)
-      .filter(([, isValid]) => !isValid)
-      .map(([scope]) => scope)
-  }, [scopeValidity])
-
-  const validScopes = useMemo(() => {
-    if (!scopeValidity) {
-      return null
-    }
-
-    return Object.entries(scopeValidity)
-      .filter(([, isValid]) => isValid)
-      .map(([scope]) => scope)
-  }, [scopeValidity])
-
-  const { deny } = useDenyVeridaAuthRequest({ payload: request.payload })
-  const { allow } = useAllowVeridaAuthRequest({
-    payload: {
-      ...request.payload,
-      scopes: validScopes ?? request.payload.scopes,
-    },
-  })
+  const { deny } = useDenyVeridaAuthRequest({ payload })
+  const { allow } = useAllowVeridaAuthRequest({ payload })
 
   const [isAllowing, setIsAllowing] = useState(false)
 
@@ -190,7 +163,7 @@ export function VeridaAuthConsentCard(props: VeridaAuthConsentCardProps) {
         </CardBody>
       ) : (
         <CardBody className="flex flex-1 flex-col gap-4 overflow-y-auto">
-          {resolvedScopes && resolvedScopes.length > 0 ? (
+          {resolvedValidScopes && resolvedValidScopes.length > 0 ? (
             <>
               <Typography variant="base-regular">
                 {`By allowing it, ${profile?.name || "this application"} will be able to:`}
@@ -290,18 +263,19 @@ export function VeridaAuthConsentCard(props: VeridaAuthConsentCardProps) {
                     </AccordionContent>
                   </AccordionItem>
                 ) : null}
-                {invalidScopes && invalidScopes.length > 0 ? (
+                {ignoredScopes && ignoredScopes.length > 0 ? (
                   <AccordionItem value="invalid-scopes">
                     <AccordionTrigger className="text-muted-foreground">
-                      Invalid
+                      Ignored
                     </AccordionTrigger>
                     <AccordionContent>
                       <Alert variant="error" className="flex flex-col gap-1">
                         <AlertDescription>
-                          The following requested permissions are invalid:
+                          The following requested permissions are invalid and
+                          will be ignored:
                         </AlertDescription>
                         <ul className="list-inside list-disc text-foreground">
-                          {invalidScopes.map((scope, index) => (
+                          {ignoredScopes.map((scope, index) => (
                             <li key={index}>
                               <Typography
                                 variant="base-regular"

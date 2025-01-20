@@ -22,9 +22,15 @@ export type VeridaAuthRequestPayload = {
   state?: string
 }
 
+export type ProcessingVeridaAuthRequest = {
+  status: "processing"
+}
+
 export type ValidVeridaAuthRequest = {
   status: "valid"
   payload: VeridaAuthRequestPayload
+  ignoredScopes: string[]
+  resolvedValidScopes: VeridaAuthScope[]
 }
 
 export type InvalidVeridaAuthRequest = {
@@ -33,6 +39,7 @@ export type InvalidVeridaAuthRequest = {
 }
 
 export type VeridaAuthRequest =
+  | ProcessingVeridaAuthRequest
   | ValidVeridaAuthRequest
   | InvalidVeridaAuthRequest
 
@@ -45,7 +52,7 @@ export type VeridaAuthAuthorizationRequestObject = {
 
 export type VeridaAuthApiV1RequestBody = {
   client_id: string
-  auth_request: string // Stringified version of VeridaAuthAuthRequest
+  auth_request: string // Stringified version of VeridaAuthAuthorizationRequestObject
   redirect_uri: string
   user_sig: string
   state: string

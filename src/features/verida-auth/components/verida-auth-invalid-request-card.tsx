@@ -19,9 +19,11 @@ export function VeridaAuthInvalidRequestCard(
 ) {
   const { request, className, ...cardProps } = props
 
+  // TODO: Add a timer to redirect to the redirect page after a few seconds
+
   return (
     <Card className={cn("", className)} {...cardProps}>
-      <ErrorBlock>
+      <ErrorBlock className="my-4">
         <ErrorBlockImage />
         <ErrorBlockTitle>Invalid Request</ErrorBlockTitle>
         <ErrorBlockDescription>
