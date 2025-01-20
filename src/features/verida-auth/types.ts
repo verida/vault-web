@@ -16,7 +16,7 @@ export type VeridaAuthScope = {
 }
 
 export type VeridaAuthRequestPayload = {
-  appDID: string | null
+  appDID: string
   scopes: string[]
   redirectUrl: string
   state?: string
@@ -30,10 +30,11 @@ export type VeridaAuthRequest =
   | {
       status: "invalid"
       payload: null
+      errorDescription: string
     }
 
-export type VeridaAuthAuthRequest = {
-  appDID?: string
+export type VeridaAuthAuthorizationRequestObject = {
+  appDID: string
   userDID: string
   scopes: string[]
   timestamp: number

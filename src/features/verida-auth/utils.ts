@@ -9,8 +9,8 @@ import {
 } from "@/features/verida-auth/schemas"
 import {
   VeridaAuthApiV1RequestBody,
-  VeridaAuthAuthRequest,
   VeridaAuthAuthV1Response,
+  VeridaAuthAuthorizationRequestObject,
   VeridaAuthRequestPayload,
   VeridaAuthScope,
   VeridaAuthScopePermission,
@@ -233,8 +233,8 @@ export async function allowVeridaAuthRequest({
 
   const now = Math.floor(Date.now() / 1000)
 
-  const authRequest: VeridaAuthAuthRequest = {
-    appDID: payload.appDID ?? undefined,
+  const authRequest: VeridaAuthAuthorizationRequestObject = {
+    appDID: payload.appDID,
     userDID: userDid,
     scopes: payload.scopes,
     timestamp: now,

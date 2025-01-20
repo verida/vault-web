@@ -120,18 +120,16 @@ export function VeridaAuthConsentCard(props: VeridaAuthConsentCardProps) {
           </CardTitle>
         </div>
         <div className="flex flex-col gap-1">
-          {appDID ? (
-            <CardDescription className="truncate">
-              <Link
-                href={getVeridaExplorerIdentityPageUrl(appDID)}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="underline"
-              >
-                {appDID}
-              </Link>
-            </CardDescription>
-          ) : null}
+          <CardDescription className="truncate">
+            <Link
+              href={getVeridaExplorerIdentityPageUrl(appDID)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline"
+            >
+              {appDID}
+            </Link>
+          </CardDescription>
           <CardDescription className="truncate">
             <Link
               href={
