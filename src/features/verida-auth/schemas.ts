@@ -22,6 +22,7 @@ export const VeridaAuthResolvedScopeSchema = z.object({
 
 export const VeridaAuthResolveScopesV1ResponseSchema = z.object({
   scopes: z.array(VeridaAuthResolvedScopeSchema),
+  scopeValidity: z.record(z.string(), z.boolean()),
 })
 
 export const VeridaAuthAuthV1ResponseSchema = z.object({

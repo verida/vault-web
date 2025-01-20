@@ -15,7 +15,8 @@ export function useResolvedVeridaAuthScopes(scopes: string[]) {
   })
 
   return {
-    resolvedScopes: data,
+    resolvedScopes: data?.resolvedScopes,
+    scopeValidity: data?.scopeValidity,
     ...query,
   }
 }

@@ -73,9 +73,14 @@ export async function getVeridaAuthScopeDefinitions(): Promise<
   }
 }
 
+interface ResolveVeridaAuthScopesOutput {
+  resolvedScopes: VeridaAuthScope[]
+  scopeValidity: Record<string, boolean>
+}
+
 export async function resolveVeridaAuthScopes(
   scopes: string[]
-): Promise<VeridaAuthScope[]> {
+): Promise<ResolveVeridaAuthScopesOutput> {
   logger.info("Resolving Verida Auth scopes")
 
   if (!commonConfig.PRIVATE_DATA_API_BASE_URL) {
@@ -120,7 +125,10 @@ export async function resolveVeridaAuthScopes(
       }
     )
 
-    return resolvedScopes
+    return {
+      resolvedScopes,
+      scopeValidity: validatedData.scopeValidity,
+    }
   } catch (error) {
     throw new Error("Error getting Verida Auth scope definitions", {
       cause: error,

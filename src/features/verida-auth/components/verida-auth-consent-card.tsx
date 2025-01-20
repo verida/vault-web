@@ -26,6 +26,11 @@ import {
   LoadingBlockSpinner,
   LoadingBlockTitle,
 } from "@/components/ui/loading"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
 import { Logger } from "@/features/telemetry/logger"
 import { useAllowVeridaAuthRequest } from "@/features/verida-auth/hooks/use-allow-verida-auth-request"
 import { useDenyVeridaAuthRequest } from "@/features/verida-auth/hooks/use-deny-verida-auth-request"
@@ -65,7 +70,7 @@ export function VeridaAuthConsentCard(props: VeridaAuthConsentCardProps) {
     return null
   }, [profile])
 
-  const { resolvedScopes } = useResolvedVeridaAuthScopes(scopes)
+  const { resolvedScopes, scopeValidity } = useResolvedVeridaAuthScopes(scopes)
 
   const apiScopes = useMemo(() => {
     return resolvedScopes?.filter((scope) => scope.type === "api")
@@ -78,6 +83,16 @@ export function VeridaAuthConsentCard(props: VeridaAuthConsentCardProps) {
   const unknownScopes = useMemo(() => {
     return resolvedScopes?.filter((scope) => scope.type === "unknown")
   }, [resolvedScopes])
+
+  const invalidScopes = useMemo(() => {
+    if (!scopeValidity) {
+      return []
+    }
+
+    return Object.entries(scopeValidity)
+      .filter(([, isValid]) => !isValid)
+      .map(([scope]) => scope)
+  }, [scopeValidity])
 
   const { deny } = useDenyVeridaAuthRequest({ payload })
   const { allow } = useAllowVeridaAuthRequest({ payload })
@@ -170,106 +185,121 @@ export function VeridaAuthConsentCard(props: VeridaAuthConsentCardProps) {
                 defaultValue={["data-scopes", "api-scopes"]}
               >
                 {dataScopes && dataScopes.length > 0 ? (
-                  <>
-                    <AccordionItem value="data-scopes">
-                      <AccordionTrigger>Data</AccordionTrigger>
-                      <AccordionContent>
-                        <ul className="list-inside list-disc">
-                          {dataScopes.map((scope, index) => (
-                            <li key={index}>
-                              <Typography
-                                variant="base-regular"
-                                component="span"
-                              >
-                                {scope.permissions?.map(
-                                  (permission, index, array) => {
-                                    const capitalizedPermission =
-                                      index === 0
-                                        ? permission.charAt(0).toUpperCase() +
-                                          permission.slice(1)
-                                        : permission
+                  <AccordionItem value="data-scopes">
+                    <AccordionTrigger>Data</AccordionTrigger>
+                    <AccordionContent>
+                      <ul className="list-inside list-disc">
+                        {dataScopes.map((scope, index) => (
+                          <li key={index}>
+                            <Typography variant="base-regular" component="span">
+                              {scope.permissions?.map(
+                                (permission, index, array) => {
+                                  const capitalizedPermission =
+                                    index === 0
+                                      ? permission.charAt(0).toUpperCase() +
+                                        permission.slice(1)
+                                      : permission
 
-                                    const separator =
-                                      array.length <= 1
+                                  const separator =
+                                    array.length <= 1
+                                      ? ""
+                                      : index === array.length - 1
                                         ? ""
-                                        : index === array.length - 1
-                                          ? ""
-                                          : index === array.length - 2
-                                            ? " and "
-                                            : ", "
+                                        : index === array.length - 2
+                                          ? " and "
+                                          : ", "
 
-                                    return (
-                                      <span
-                                        key={index}
-                                        className="font-semibold"
-                                      >
-                                        {capitalizedPermission}
-                                        {separator}
-                                      </span>
-                                    )
-                                  }
-                                )}{" "}
-                                your{" "}
-                                <span className="font-semibold">
-                                  {scope.name}
-                                </span>{" "}
-                                database ({scope.description})
-                              </Typography>
-                            </li>
-                          ))}
-                        </ul>
-                      </AccordionContent>
-                    </AccordionItem>
-                  </>
+                                  return (
+                                    <span key={index} className="font-semibold">
+                                      {capitalizedPermission}
+                                      {separator}
+                                    </span>
+                                  )
+                                }
+                              )}{" "}
+                              your{" "}
+                              <Tooltip>
+                                <TooltipTrigger>
+                                  <span className="font-semibold lowercase">
+                                    {scope.name}
+                                  </span>{" "}
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                  {scope.description}
+                                </TooltipContent>
+                              </Tooltip>{" "}
+                              database
+                            </Typography>
+                          </li>
+                        ))}
+                      </ul>
+                    </AccordionContent>
+                  </AccordionItem>
                 ) : null}
                 {apiScopes && apiScopes.length > 0 ? (
-                  <>
-                    <AccordionItem value="api-scopes">
-                      <AccordionTrigger>Actions</AccordionTrigger>
-                      <AccordionContent>
-                        <ul className="list-inside list-disc">
-                          {apiScopes.map((scope, index) => (
-                            <li key={index}>
-                              <Typography
-                                variant="base-regular"
-                                component="span"
-                              >
-                                {scope.description}
-                              </Typography>
-                            </li>
-                          ))}
-                        </ul>
-                      </AccordionContent>
-                    </AccordionItem>
-                  </>
+                  <AccordionItem value="api-scopes">
+                    <AccordionTrigger>Actions</AccordionTrigger>
+                    <AccordionContent>
+                      <ul className="list-inside list-disc">
+                        {apiScopes.map((scope, index) => (
+                          <li key={index}>
+                            <Typography variant="base-regular" component="span">
+                              {scope.description}
+                            </Typography>
+                          </li>
+                        ))}
+                      </ul>
+                    </AccordionContent>
+                  </AccordionItem>
                 ) : null}
                 {unknownScopes && unknownScopes.length > 0 ? (
-                  <>
-                    <AccordionItem value="unknown-scopes">
-                      <AccordionTrigger>Other</AccordionTrigger>
-                      <AccordionContent>
-                        <ul className="list-inside list-disc">
-                          {unknownScopes.map((scope, index) => (
+                  <AccordionItem value="unknown-scopes">
+                    <AccordionTrigger>Other</AccordionTrigger>
+                    <AccordionContent>
+                      <ul className="list-inside list-disc">
+                        {unknownScopes.map((scope, index) => (
+                          <li key={index}>
+                            <Typography variant="base-regular" component="span">
+                              <span className="font-semibold">
+                                {scope.permissions?.join(", ")}
+                              </span>{" "}
+                              your{" "}
+                              <span className="font-semibold">
+                                {scope.name}
+                              </span>
+                              ({scope.description})
+                            </Typography>
+                          </li>
+                        ))}
+                      </ul>
+                    </AccordionContent>
+                  </AccordionItem>
+                ) : null}
+                {invalidScopes && invalidScopes.length > 0 ? (
+                  <AccordionItem value="invalid-scopes">
+                    <AccordionTrigger className="text-muted-foreground">
+                      Invalid
+                    </AccordionTrigger>
+                    <AccordionContent>
+                      <Alert variant="error" className="flex flex-col gap-1">
+                        <AlertDescription>
+                          The following requested permissions are invalid:
+                        </AlertDescription>
+                        <ul className="list-inside list-disc text-foreground">
+                          {invalidScopes.map((scope, index) => (
                             <li key={index}>
                               <Typography
                                 variant="base-regular"
                                 component="span"
                               >
-                                <span className="font-semibold">
-                                  {scope.permissions?.join(", ")}
-                                </span>{" "}
-                                your{" "}
-                                <span className="font-semibold">
-                                  {scope.name}
-                                </span>
-                                ({scope.description})
+                                {scope}
                               </Typography>
                             </li>
                           ))}
                         </ul>
-                      </AccordionContent>
-                    </AccordionItem>
-                  </>
+                      </Alert>
+                    </AccordionContent>
+                  </AccordionItem>
                 ) : null}
               </Accordion>
             </>
