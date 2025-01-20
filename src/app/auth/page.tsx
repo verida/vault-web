@@ -2,23 +2,17 @@
 
 import Image from "next/image"
 
-import { Card } from "@/components/ui/card"
-import {
-  ErrorBlock,
-  ErrorBlockDescription,
-  ErrorBlockImage,
-  ErrorBlockTitle,
-} from "@/components/ui/error"
 import { VeridaConnectionLoading } from "@/components/verida/verida-connection-loading"
 import { VeridaIdentityDropdownMenu } from "@/components/verida/verida-identity-dropdown-menu"
 import { VeridaAuthConsentCard } from "@/features/verida-auth/components/verida-auth-consent-card"
-import { VeridaAuthVeridaNotConnected } from "@/features/verida-auth/components/verida-auth-verida-not-connected"
+import { VeridaAuthInvalidRequestCard } from "@/features/verida-auth/components/verida-auth-invalid-request-card"
+import { VeridaAuthVeridaNotConnectedCard } from "@/features/verida-auth/components/verida-auth-verida-not-connected-card"
 import { useVeridaAuthRequest } from "@/features/verida-auth/hooks/use-verida-auth-request"
 import { useVerida } from "@/features/verida/hooks/use-verida"
 
 export default function AuthPage() {
   const { isConnected, isConnecting } = useVerida()
-  const { status, payload } = useVeridaAuthRequest()
+  const request = useVeridaAuthRequest()
 
   if (isConnecting) {
     return <VeridaConnectionLoading />
@@ -42,24 +36,15 @@ export default function AuthPage() {
           hideAuthorizedApps={true}
         />
       </div>
-      {status === "invalid" ? (
-        <Card>
-          <ErrorBlock>
-            <ErrorBlockImage />
-            <ErrorBlockTitle>Invalid Request</ErrorBlockTitle>
-            <ErrorBlockDescription>
-              The Verida Auth request is invalid or missing. Please try again or
-              contact the requesting application.
-            </ErrorBlockDescription>
-          </ErrorBlock>
-        </Card>
+      {request.status === "invalid" ? (
+        <VeridaAuthInvalidRequestCard request={request} />
       ) : (
         <>
           {isConnected ? (
-            <VeridaAuthConsentCard payload={payload} className="min-h-0" />
+            <VeridaAuthConsentCard request={request} className="min-h-0" />
           ) : (
-            <VeridaAuthVeridaNotConnected
-              payload={payload}
+            <VeridaAuthVeridaNotConnectedCard
+              request={request}
               className="min-h-0"
             />
           )}

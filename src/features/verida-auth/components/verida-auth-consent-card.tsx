@@ -35,7 +35,7 @@ import { Logger } from "@/features/telemetry/logger"
 import { useAllowVeridaAuthRequest } from "@/features/verida-auth/hooks/use-allow-verida-auth-request"
 import { useDenyVeridaAuthRequest } from "@/features/verida-auth/hooks/use-deny-verida-auth-request"
 import { useResolvedVeridaAuthScopes } from "@/features/verida-auth/hooks/use-resolved-verida-auth-scopes"
-import { VeridaAuthRequestPayload } from "@/features/verida-auth/types"
+import { ValidVeridaAuthRequest } from "@/features/verida-auth/types"
 import { getVeridaExplorerIdentityPageUrl } from "@/features/verida-explorer/utils"
 import { ProfileAvatar } from "@/features/verida-profile/components/profile-avatar"
 import { EMPTY_PROFILE_NAME_FALLBACK } from "@/features/verida-profile/constants"
@@ -46,13 +46,13 @@ const logger = Logger.create("verida-auth")
 
 export interface VeridaAuthConsentCardProps
   extends React.ComponentProps<typeof Card> {
-  payload: VeridaAuthRequestPayload
+  request: ValidVeridaAuthRequest
 }
 
 export function VeridaAuthConsentCard(props: VeridaAuthConsentCardProps) {
-  const { payload, className, ...cardProps } = props
+  const { request, className, ...cardProps } = props
 
-  const { appDID, scopes, redirectUrl } = payload
+  const { appDID, scopes, redirectUrl } = request.payload
 
   const resolvedRedirectUrl = useMemo(() => {
     return new URL(redirectUrl)
@@ -104,11 +104,11 @@ export function VeridaAuthConsentCard(props: VeridaAuthConsentCardProps) {
       .map(([scope]) => scope)
   }, [scopeValidity])
 
-  const { deny } = useDenyVeridaAuthRequest({ payload })
+  const { deny } = useDenyVeridaAuthRequest({ payload: request.payload })
   const { allow } = useAllowVeridaAuthRequest({
     payload: {
-      ...payload,
-      scopes: validScopes ?? payload.scopes,
+      ...request.payload,
+      scopes: validScopes ?? request.payload.scopes,
     },
   })
 

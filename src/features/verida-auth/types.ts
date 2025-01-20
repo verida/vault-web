@@ -22,16 +22,19 @@ export type VeridaAuthRequestPayload = {
   state?: string
 }
 
+export type ValidVeridaAuthRequest = {
+  status: "valid"
+  payload: VeridaAuthRequestPayload
+}
+
+export type InvalidVeridaAuthRequest = {
+  status: "invalid"
+  errorDescription: string
+}
+
 export type VeridaAuthRequest =
-  | {
-      status: "valid"
-      payload: VeridaAuthRequestPayload
-    }
-  | {
-      status: "invalid"
-      payload: null
-      errorDescription: string
-    }
+  | ValidVeridaAuthRequest
+  | InvalidVeridaAuthRequest
 
 export type VeridaAuthAuthorizationRequestObject = {
   appDID: string

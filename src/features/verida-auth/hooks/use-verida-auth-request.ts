@@ -16,7 +16,6 @@ export function useVeridaAuthRequest() {
     if (!appDID) {
       return {
         status: "invalid",
-        payload: null,
         errorDescription: "Missing appDID",
       }
     }
@@ -24,7 +23,6 @@ export function useVeridaAuthRequest() {
     if (!isValidVeridaDid(appDID)) {
       return {
         status: "invalid",
-        payload: null,
         errorDescription: "Invalid appDID format",
       }
     }
@@ -32,7 +30,6 @@ export function useVeridaAuthRequest() {
     if (!redirectUrl) {
       return {
         status: "invalid",
-        payload: null,
         errorDescription: "Missing redirectURL",
       }
     }
@@ -40,7 +37,6 @@ export function useVeridaAuthRequest() {
     if (!scopes || scopes.length === 0) {
       return {
         status: "invalid",
-        payload: null,
         errorDescription: "Missing required scopes",
       }
     }
