@@ -13,13 +13,22 @@ export function useVeridaAuthRequest(): VeridaAuthRequest {
   const redirectUrl = searchParams.get("redirectUrl")
   const state = searchParams.get("state") ?? undefined
 
-  const { resolvedScopes, scopeValidity } = useResolvedVeridaAuthScopes(scopes)
+  const { resolvedScopes, scopeValidity, isError } =
+    useResolvedVeridaAuthScopes(scopes)
 
   const request: VeridaAuthRequest = useMemo(() => {
     if (!scopes || scopes.length === 0) {
       return {
         status: "invalid",
         errorDescription: "Missing required scopes",
+        redirectUrl,
+        state,
+      }
+    }
+
+    if (isError) {
+      return {
+        status: "error",
         redirectUrl,
         state,
       }
@@ -89,7 +98,15 @@ export function useVeridaAuthRequest(): VeridaAuthRequest {
       ignoredScopes,
       resolvedValidScopes: resolvedScopes,
     }
-  }, [scopeValidity, resolvedScopes, redirectUrl, scopes, appDID, state])
+  }, [
+    scopeValidity,
+    resolvedScopes,
+    redirectUrl,
+    scopes,
+    appDID,
+    state,
+    isError,
+  ])
 
   return request
 }

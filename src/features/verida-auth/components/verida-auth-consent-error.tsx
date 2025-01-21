@@ -16,7 +16,7 @@ import { cn } from "@/styles/utils"
 
 export interface VeridaAuthConsentErrorProps
   extends Omit<ComponentProps<typeof ErrorBlock>, "children"> {
-  redirectUrl: string
+  redirectUrl: string | null
   errorDescription?: string
 }
 
@@ -28,6 +28,10 @@ export function VeridaAuthConsentError(props: VeridaAuthConsentErrorProps) {
   )
 
   useEffect(() => {
+    if (!redirectUrl) {
+      return
+    }
+
     const redirectTimeout = setTimeout(() => {
       window.location.href = redirectUrl
     }, ERROR_REDIRECTION_DELAY)
@@ -54,14 +58,18 @@ export function VeridaAuthConsentError(props: VeridaAuthConsentErrorProps) {
           <AlertDescription>{errorDescription}</AlertDescription>
         </Alert>
       ) : null}
-      <ErrorBlockDescription>
-        {remainingSeconds > 0
-          ? `You will be redirected to the original application in ${remainingSeconds} seconds`
-          : "Please click the button below to return to the application."}
-      </ErrorBlockDescription>
-      <Button className="w-fit self-center" asChild>
-        <Link href={redirectUrl}>Return to application</Link>
-      </Button>
+      {redirectUrl ? (
+        <>
+          <ErrorBlockDescription>
+            {remainingSeconds > 0
+              ? `You will be redirected to the original application in ${remainingSeconds} seconds`
+              : "Please click the button below to return to the application."}
+          </ErrorBlockDescription>
+          <Button className="w-fit self-center" asChild>
+            <Link href={redirectUrl}>Return to application</Link>
+          </Button>
+        </>
+      ) : null}
     </ErrorBlock>
   )
 }

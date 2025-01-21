@@ -27,6 +27,13 @@ export type ProcessingVeridaAuthRequest = {
   status: "processing"
 }
 
+export type ErrorVeridaAuthRequest = {
+  status: "error"
+  errorDescription?: string
+  redirectUrl: string | null
+  state?: string
+}
+
 export type ValidVeridaAuthRequest = {
   status: "valid"
   payload: VeridaAuthRequestPayload
@@ -43,6 +50,7 @@ export type InvalidVeridaAuthRequest = {
 
 export type VeridaAuthRequest =
   | ProcessingVeridaAuthRequest
+  | ErrorVeridaAuthRequest
   | ValidVeridaAuthRequest
   | InvalidVeridaAuthRequest
 

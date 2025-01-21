@@ -5,6 +5,7 @@ import Image from "next/image"
 import { VeridaConnectionLoading } from "@/components/verida/verida-connection-loading"
 import { VeridaIdentityDropdownMenu } from "@/components/verida/verida-identity-dropdown-menu"
 import { VeridaAuthConsentCard } from "@/features/verida-auth/components/verida-auth-consent-card"
+import { VeridaAuthErrorRequestCard } from "@/features/verida-auth/components/verida-auth-error-request-card"
 import { VeridaAuthInvalidRequestCard } from "@/features/verida-auth/components/verida-auth-invalid-request-card"
 import { VeridaAuthProcessingRequestCard } from "@/features/verida-auth/components/verida-auth-processing-request-card"
 import { VeridaAuthVeridaNotConnectedCard } from "@/features/verida-auth/components/verida-auth-verida-not-connected-card"
@@ -53,6 +54,11 @@ export default function AuthPage() {
             />
           )}
         </>
+      ) : request.status === "error" ? (
+        <VeridaAuthErrorRequestCard
+          request={request}
+          className="h-full min-h-0"
+        />
       ) : (
         <VeridaAuthInvalidRequestCard request={request} />
       )}

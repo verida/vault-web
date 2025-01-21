@@ -292,7 +292,7 @@ export async function allowVeridaAuthRequest({
  * @returns The formatted redirect URL string with error parameters added
  */
 export function buildErrorRedirectUrl(
-  payload: VeridaAuthRequestPayload,
+  payload: Pick<VeridaAuthRequestPayload, "redirectUrl" | "state">,
   errorDescription: string = "Something went wrong when granting access"
 ) {
   const redirectUrl = new URL(payload.redirectUrl)
@@ -330,7 +330,9 @@ export function buildInvalidRequestRedirectUrl(
  * @param payload - The original auth request payload containing the redirect URL and state
  * @returns The formatted redirect URL string with error parameters added
  */
-export function buildDenyRequestRedirectUrl(payload: VeridaAuthRequestPayload) {
+export function buildDenyRequestRedirectUrl(
+  payload: Pick<VeridaAuthRequestPayload, "redirectUrl" | "state">
+) {
   const redirectUrl = new URL(payload.redirectUrl)
   redirectUrl.searchParams.set("error", "access_denied")
   redirectUrl.searchParams.set("error_description", "User denied access")
