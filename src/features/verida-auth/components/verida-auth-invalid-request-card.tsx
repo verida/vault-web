@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { useEffect, useMemo, useState } from "react"
+import { ComponentProps, useEffect, useMemo, useState } from "react"
 
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
@@ -14,10 +14,11 @@ import {
 } from "@/components/ui/error"
 import { ERROR_REDIRECTION_DELAY } from "@/features/verida-auth/constants"
 import { InvalidVeridaAuthRequest } from "@/features/verida-auth/types"
+import { buildInvalidRequestRedirectUrl } from "@/features/verida-auth/utils"
 import { cn } from "@/styles/utils"
 
 export interface VeridaAuthInvalidRequestCardProps
-  extends React.ComponentProps<typeof Card> {
+  extends ComponentProps<typeof Card> {
   request: InvalidVeridaAuthRequest
 }
 
@@ -25,31 +26,21 @@ export function VeridaAuthInvalidRequestCard(
   props: VeridaAuthInvalidRequestCardProps
 ) {
   const { request, className, ...cardProps } = props
-  const { errorDescription, redirectUrl, state } = request
   const [remainingSeconds, setRemainingSeconds] = useState(
     ERROR_REDIRECTION_DELAY / 1000
   )
 
-  const completedRedirectUrl = useMemo(() => {
-    if (!redirectUrl) {
-      return null
-    }
-
-    const url = new URL(redirectUrl)
-    url.searchParams.set("error", "invalid_request")
-    url.searchParams.set("error_description", errorDescription)
-    url.searchParams.set("state", state ?? "")
-
-    return url.toString()
-  }, [errorDescription, redirectUrl, state])
+  const redirectUrl = useMemo(() => {
+    return buildInvalidRequestRedirectUrl(request, request.errorDescription)
+  }, [request])
 
   useEffect(() => {
-    if (!completedRedirectUrl) {
+    if (!redirectUrl) {
       return
     }
 
     const redirectTimeout = setTimeout(() => {
-      window.location.href = completedRedirectUrl
+      window.location.href = redirectUrl
     }, ERROR_REDIRECTION_DELAY)
 
     const countdownInterval = setInterval(() => {
@@ -60,7 +51,7 @@ export function VeridaAuthInvalidRequestCard(
       clearTimeout(redirectTimeout)
       clearInterval(countdownInterval)
     }
-  }, [completedRedirectUrl])
+  }, [redirectUrl])
 
   return (
     <Card className={cn("", className)} {...cardProps}>
@@ -72,10 +63,10 @@ export function VeridaAuthInvalidRequestCard(
           contact the requesting application.
         </ErrorBlockDescription>
         <Alert variant="error">
-          <AlertDescription>{errorDescription}</AlertDescription>
+          <AlertDescription>{request.errorDescription}</AlertDescription>
         </Alert>
       </ErrorBlock>
-      {completedRedirectUrl ? (
+      {redirectUrl ? (
         <div className="flex flex-col gap-4">
           <ErrorBlockDescription>
             {remainingSeconds > 0
@@ -83,7 +74,7 @@ export function VeridaAuthInvalidRequestCard(
               : "Please click the button below to return to the application."}
           </ErrorBlockDescription>
           <Button className="w-fit self-center" asChild>
-            <Link href={completedRedirectUrl}>Return to application</Link>
+            <Link href={redirectUrl}>Return to application</Link>
           </Button>
         </div>
       ) : null}

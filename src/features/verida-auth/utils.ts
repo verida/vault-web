@@ -8,6 +8,7 @@ import {
   VeridaAuthResolveScopesV1ResponseSchema,
 } from "@/features/verida-auth/schemas"
 import {
+  InvalidVeridaAuthRequest,
   VeridaAuthApiV1RequestBody,
   VeridaAuthAuthV1Response,
   VeridaAuthAuthorizationRequestObject,
@@ -301,4 +302,19 @@ export async function allowVeridaAuthRequest({
       redirectUrl: redirectUrl.toString(),
     }
   }
+}
+
+export function buildInvalidRequestRedirectUrl(
+  request: InvalidVeridaAuthRequest,
+  errorDescription: string
+) {
+  if (!request.redirectUrl) {
+    return null
+  }
+
+  const url = new URL(request.redirectUrl)
+  url.searchParams.set("error", "invalid_request")
+  url.searchParams.set("error_description", errorDescription)
+  url.searchParams.set("state", request.state ?? "")
+  return url.toString()
 }
