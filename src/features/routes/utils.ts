@@ -73,3 +73,7 @@ export function getNewDataConnectionCallbackPageRoute() {
 export function getAuthorizedAppsPageRoute() {
   return `/authorizations`
 }
+
+export function getAuthPageRoute() {
+  return `/auth`
+}

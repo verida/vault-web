@@ -37,8 +37,7 @@ import {
 import { EMPTY_VALUE_FALLBACK } from "@/constants/misc"
 import { RevokeAuthorizedAppDialog } from "@/features/authorized-apps/components/revoke-authorized-app-dialog"
 import { useAuthorizedApp } from "@/features/authorized-apps/hooks/use-authorized-app"
-import { ALL_DATABASE_DEFS } from "@/features/data/constants"
-import { VeridaOauthScope } from "@/features/verida-oauth/types"
+import { VeridaAuthScope } from "@/features/verida-auth/types"
 import { cn } from "@/styles/utils"
 import { SHORT_DATE_TIME_FORMAT_OPTIONS } from "@/utils/date"
 
@@ -210,27 +209,11 @@ export function ItemFieldUrl(props: ItemFieldUrlProps) {
 ItemFieldUrl.displayName = "ItemFieldUrl"
 
 type ItemFieldScopesProps = {
-  scopes?: VeridaOauthScope[]
+  scopes?: VeridaAuthScope[]
 } & Omit<React.ComponentProps<typeof ItemField>, "propertyName" | "children">
 
 export function ItemFieldScopes(props: ItemFieldScopesProps) {
   const { scopes, ...itemFieldProps } = props
-
-  const formatScope = useCallback((scope: VeridaOauthScope) => {
-    const databaseDef = ALL_DATABASE_DEFS.find(
-      (db) => db.databaseVaultName === scope.database
-    )
-
-    return (
-      <Typography variant="base-regular">
-        <span className="capitalize">{scope.operation}</span>{" "}
-        {scope.operation === "write" ? "on your" : "your"}{" "}
-        <span className="font-semibold lowercase">
-          {databaseDef?.titlePlural || scope.database}
-        </span>
-      </Typography>
-    )
-  }, [])
 
   if (!scopes) {
     return (
@@ -246,7 +229,9 @@ export function ItemFieldScopes(props: ItemFieldScopesProps) {
     <ItemField propertyName="Authorizations" {...itemFieldProps}>
       <ul className="flex flex-col gap-1">
         {scopes.map((scope, index) => (
-          <li key={index}>{formatScope(scope)}</li>
+          <li key={index}>
+            <Typography variant="base-regular">{scope.description}</Typography>
+          </li>
         ))}
       </ul>
     </ItemField>

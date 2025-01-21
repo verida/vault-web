@@ -35,7 +35,7 @@ import { cn } from "@/styles/utils"
 type VeridaIdentityDropdownMenuProps = {
   keepExpanded?: boolean
   hideDisconnect?: boolean
-  hideApiKeys?: boolean
+  hideAuthorizedApps?: boolean
   hideFeedback?: boolean
 } & Pick<React.ComponentProps<typeof Button>, "className">
 
@@ -45,7 +45,7 @@ export function VeridaIdentityDropdownMenu(
   const {
     keepExpanded = false,
     hideDisconnect = false,
-    hideApiKeys = false,
+    hideAuthorizedApps = false,
     hideFeedback = false,
     className,
   } = props
@@ -182,8 +182,8 @@ export function VeridaIdentityDropdownMenu(
           </div>
         </DropdownMenuItem>
         {access === "allowed" &&
-        !hideApiKeys &&
-        featureFlags.veridaOauth.authorizedAppsUi.enabled ? (
+        !hideAuthorizedApps &&
+        featureFlags.veridaAuth.authorizedAppsUi.enabled ? (
           <DropdownMenuItem
             onClick={handleAuthorizedAppsClick}
             className="cursor-pointer gap-3 px-4 py-4"
