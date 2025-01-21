@@ -3,6 +3,7 @@
 import Link from "next/link"
 import { ComponentProps, useEffect, useMemo, useState } from "react"
 
+import { Typography } from "@/components/typography"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
@@ -55,28 +56,30 @@ export function VeridaAuthInvalidRequestCard(
 
   return (
     <Card className={cn("", className)} {...cardProps}>
-      <ErrorBlock className="my-4">
+      <ErrorBlock>
         <ErrorBlockImage />
         <ErrorBlockTitle>Invalid Request</ErrorBlockTitle>
         <ErrorBlockDescription>
           The Verida Auth request is invalid or missing. Please try again or
           contact the requesting application.
         </ErrorBlockDescription>
-        <Alert variant="error">
-          <AlertDescription>{request.errorDescription}</AlertDescription>
-        </Alert>
       </ErrorBlock>
+      <Alert variant="error">
+        <AlertDescription>{request.errorDescription}</AlertDescription>
+      </Alert>
       {redirectUrl ? (
-        <div className="flex flex-col gap-4">
-          <ErrorBlockDescription>
-            {remainingSeconds > 0
-              ? `You will be redirected to the original application in ${remainingSeconds} seconds`
-              : "Please click the button below to return to the application."}
-          </ErrorBlockDescription>
+        <>
+          <div className="text-muted-foreground">
+            <Typography variant="base-regular">
+              {remainingSeconds > 0
+                ? `You will be redirected to the original application in ${remainingSeconds} seconds`
+                : "Please click the button below to return to the application."}
+            </Typography>
+          </div>
           <Button className="w-fit self-center" asChild>
             <Link href={redirectUrl}>Return to application</Link>
           </Button>
-        </div>
+        </>
       ) : null}
     </Card>
   )

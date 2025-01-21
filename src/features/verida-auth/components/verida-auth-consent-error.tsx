@@ -43,7 +43,7 @@ export function VeridaAuthConsentError(props: VeridaAuthConsentErrorProps) {
   }, [redirectUrl])
 
   return (
-    <ErrorBlock className={cn("mt-4", className)} {...errorBlockProps}>
+    <ErrorBlock className={cn("", className)} {...errorBlockProps}>
       <ErrorBlockImage />
       <ErrorBlockTitle>Error</ErrorBlockTitle>
       <ErrorBlockDescription>

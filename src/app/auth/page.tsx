@@ -38,15 +38,18 @@ export default function AuthPage() {
         />
       </div>
       {request.status === "processing" ? (
-        <VeridaAuthProcessingRequestCard />
+        <VeridaAuthProcessingRequestCard className="h-full min-h-0" />
       ) : request.status === "valid" ? (
         <>
           {isConnected ? (
-            <VeridaAuthConsentCard request={request} className="min-h-0" />
+            <VeridaAuthConsentCard
+              request={request}
+              className="h-full min-h-0"
+            />
           ) : (
             <VeridaAuthVeridaNotConnectedCard
               request={request}
-              className="min-h-0"
+              className="h-full min-h-0"
             />
           )}
         </>

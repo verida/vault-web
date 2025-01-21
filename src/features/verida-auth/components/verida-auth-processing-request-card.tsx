@@ -1,4 +1,4 @@
-import { Card } from "@/components/ui/card"
+import { Card, CardBody } from "@/components/ui/card"
 import {
   LoadingBlock,
   LoadingBlockDescription,
@@ -17,13 +17,15 @@ export function VeridaAuthProcessingRequestCard(
 
   return (
     <Card className={cn("", className)} {...cardProps}>
-      <LoadingBlock className="my-4">
-        <LoadingBlockSpinner />
-        <LoadingBlockTitle>Processing request</LoadingBlockTitle>
-        <LoadingBlockDescription>
-          We are processing the request. This may take a few seconds.
-        </LoadingBlockDescription>
-      </LoadingBlock>
+      <CardBody className="py-3">
+        <LoadingBlock>
+          <LoadingBlockSpinner />
+          <LoadingBlockTitle>Processing request</LoadingBlockTitle>
+          <LoadingBlockDescription>
+            We are processing the request. This may take a few seconds.
+          </LoadingBlockDescription>
+        </LoadingBlock>
+      </CardBody>
     </Card>
   )
 }

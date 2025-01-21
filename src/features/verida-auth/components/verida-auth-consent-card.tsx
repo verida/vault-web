@@ -119,7 +119,7 @@ export function VeridaAuthConsentCard(props: VeridaAuthConsentCardProps) {
   }, [allow, payload])
 
   return (
-    <Card className={cn("h-full", className)} {...cardProps}>
+    <Card className={cn("", className)} {...cardProps}>
       <CardHeader className="shrink-0 gap-3">
         <div className="flex flex-row items-center gap-2">
           <ProfileAvatar
@@ -176,7 +176,7 @@ export function VeridaAuthConsentCard(props: VeridaAuthConsentCardProps) {
           </LoadingBlock>
         </CardBody>
       ) : errorRedirectUrl ? (
-        <CardBody>
+        <CardBody className="flex-1 py-3">
           <VeridaAuthConsentError redirectUrl={errorRedirectUrl} />
         </CardBody>
       ) : (

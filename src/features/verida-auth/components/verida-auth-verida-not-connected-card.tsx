@@ -52,7 +52,7 @@ export function VeridaAuthVeridaNotConnectedCard(
   }, [profile])
 
   return (
-    <Card className={cn("h-full", className)} {...cardProps}>
+    <Card className={cn("", className)} {...cardProps}>
       <CardHeader className="shrink-0 gap-3">
         <div className="flex flex-row items-center gap-2">
           <ProfileAvatar
