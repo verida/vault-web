@@ -15,6 +15,7 @@ export const VeridaAuthResolvedScopePermissionSchema = z.enum(["r", "w", "d"])
 export const VeridaAuthResolvedScopeSchema = z.object({
   type: z.string(),
   name: z.string().optional(),
+  namePlural: z.string().optional(),
   description: z.string().optional(),
   permissions: z.array(VeridaAuthResolvedScopePermissionSchema).optional(),
   uri: z.string().optional(),

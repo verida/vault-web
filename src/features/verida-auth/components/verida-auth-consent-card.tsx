@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { useCallback, useMemo, useState } from "react"
+import { Fragment, useCallback, useMemo, useState } from "react"
 
 import { Typography } from "@/components/typography"
 import {
@@ -51,7 +51,7 @@ export interface VeridaAuthConsentCardProps
 export function VeridaAuthConsentCard(props: VeridaAuthConsentCardProps) {
   const { request, className, ...cardProps } = props
 
-  const { payload, resolvedValidScopes, ignoredScopes } = request
+  const { payload, resolvedValidScopes } = request
   const { appDID, redirectUrl } = payload
 
   const resolvedRedirectUrl = useMemo(() => {
@@ -182,12 +182,6 @@ export function VeridaAuthConsentCard(props: VeridaAuthConsentCardProps) {
                             <Typography variant="base-regular" component="span">
                               {scope.permissions?.map(
                                 (permission, index, array) => {
-                                  const capitalizedPermission =
-                                    index === 0
-                                      ? permission.charAt(0).toUpperCase() +
-                                        permission.slice(1)
-                                      : permission
-
                                   const separator =
                                     array.length <= 1
                                       ? ""
@@ -198,24 +192,37 @@ export function VeridaAuthConsentCard(props: VeridaAuthConsentCardProps) {
                                           : ", "
 
                                   return (
-                                    <span key={index} className="font-semibold">
-                                      {capitalizedPermission}
+                                    <Fragment key={index}>
+                                      <span
+                                        className={cn(
+                                          "font-semibold",
+                                          index === 0 ? "capitalize" : ""
+                                        )}
+                                      >
+                                        {permission}
+                                      </span>
                                       {separator}
-                                    </span>
+                                    </Fragment>
                                   )
                                 }
                               )}{" "}
-                              your{" "}
-                              <Tooltip>
-                                <TooltipTrigger>
-                                  <span className="font-semibold lowercase">
-                                    {scope.name}
-                                  </span>{" "}
-                                </TooltipTrigger>
-                                <TooltipContent>
-                                  {scope.description}
-                                </TooltipContent>
-                              </Tooltip>{" "}
+                              in your
+                              {scope.description ? (
+                                <Tooltip>
+                                  <TooltipTrigger>
+                                    <span className="font-semibold lowercase">
+                                      {scope.namePlural || scope.name || ""}
+                                    </span>
+                                  </TooltipTrigger>
+                                  <TooltipContent>
+                                    {scope.description}
+                                  </TooltipContent>
+                                </Tooltip>
+                              ) : (
+                                <span className="font-semibold lowercase">
+                                  {scope.namePlural || scope.name || ""}
+                                </span>
+                              )}{" "}
                               database
                             </Typography>
                           </li>
@@ -260,33 +267,6 @@ export function VeridaAuthConsentCard(props: VeridaAuthConsentCardProps) {
                           </li>
                         ))}
                       </ul>
-                    </AccordionContent>
-                  </AccordionItem>
-                ) : null}
-                {ignoredScopes && ignoredScopes.length > 0 ? (
-                  <AccordionItem value="invalid-scopes">
-                    <AccordionTrigger className="text-muted-foreground">
-                      Ignored
-                    </AccordionTrigger>
-                    <AccordionContent>
-                      <Alert variant="error" className="flex flex-col gap-1">
-                        <AlertDescription>
-                          The following requested permissions are invalid and
-                          will be ignored:
-                        </AlertDescription>
-                        <ul className="list-inside list-disc text-foreground">
-                          {ignoredScopes.map((scope, index) => (
-                            <li key={index}>
-                              <Typography
-                                variant="base-regular"
-                                component="span"
-                              >
-                                {scope}
-                              </Typography>
-                            </li>
-                          ))}
-                        </ul>
-                      </Alert>
                     </AccordionContent>
                   </AccordionItem>
                 ) : null}

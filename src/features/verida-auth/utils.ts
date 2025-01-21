@@ -116,6 +116,7 @@ export async function resolveVeridaAuthScopes(
         return {
           type: resolveVeridaAuthScopeType(scope.type),
           name: scope.name,
+          namePlural: scope.namePlural,
           description: scope.description,
           permissions: scope.permissions?.map((permission) =>
             resolveVeridaAuthScopePermission(permission)

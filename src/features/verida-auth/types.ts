@@ -10,6 +10,7 @@ export type VeridaAuthScope = {
   id?: string
   type: VeridaAuthScopeType
   name?: string
+  namePlural?: string
   description?: string
   permissions?: VeridaAuthScopePermission[]
   uri?: string
