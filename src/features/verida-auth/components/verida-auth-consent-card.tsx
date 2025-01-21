@@ -32,9 +32,13 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { Logger } from "@/features/telemetry/logger"
+import { VeridaAuthConsentError } from "@/features/verida-auth/components/verida-auth-consent-error"
 import { useAllowVeridaAuthRequest } from "@/features/verida-auth/hooks/use-allow-verida-auth-request"
 import { ValidVeridaAuthRequest } from "@/features/verida-auth/types"
-import { buildDenyRequestRedirectUrl } from "@/features/verida-auth/utils"
+import {
+  buildDenyRequestRedirectUrl,
+  buildErrorRedirectUrl,
+} from "@/features/verida-auth/utils"
 import { getVeridaExplorerIdentityPageUrl } from "@/features/verida-explorer/utils"
 import { ProfileAvatar } from "@/features/verida-profile/components/profile-avatar"
 import { EMPTY_PROFILE_NAME_FALLBACK } from "@/features/verida-profile/constants"
@@ -84,6 +88,7 @@ export function VeridaAuthConsentCard(props: VeridaAuthConsentCardProps) {
   const { allow } = useAllowVeridaAuthRequest({ payload })
 
   const [isAllowing, setIsAllowing] = useState(false)
+  const [errorRedirectUrl, setErrorRedirectUrl] = useState<string | null>(null)
 
   const handleDenyClick = useCallback(() => {
     try {
@@ -98,11 +103,20 @@ export function VeridaAuthConsentCard(props: VeridaAuthConsentCardProps) {
   const handleAllowClick = useCallback(async () => {
     try {
       setIsAllowing(true)
-      await allow()
+
+      const { redirectUrl } = await allow()
+
+      // Redirect directly
+      window.location.href = redirectUrl
     } catch (error) {
       logger.error(error)
+
+      const redirectUrl = buildErrorRedirectUrl(payload)
+      setErrorRedirectUrl(redirectUrl)
+    } finally {
+      setIsAllowing(false)
     }
-  }, [allow])
+  }, [allow, payload])
 
   return (
     <Card className={cn("h-full", className)} {...cardProps}>
@@ -160,6 +174,10 @@ export function VeridaAuthConsentCard(props: VeridaAuthConsentCardProps) {
               Please wait a moment while we allow the access
             </LoadingBlockDescription>
           </LoadingBlock>
+        </CardBody>
+      ) : errorRedirectUrl ? (
+        <CardBody>
+          <VeridaAuthConsentError redirectUrl={errorRedirectUrl} />
         </CardBody>
       ) : (
         <CardBody className="flex flex-1 flex-col gap-4 overflow-y-auto">
@@ -298,24 +316,26 @@ export function VeridaAuthConsentCard(props: VeridaAuthConsentCardProps) {
           </div>
         </CardBody>
       )}
-      <CardFooter className="flex shrink-0 flex-row items-center justify-end gap-4">
-        <Button
-          variant="outline-destructive"
-          onClick={handleDenyClick}
-          disabled={isAllowing}
-          className="w-full sm:w-fit"
-        >
-          Deny
-        </Button>
-        <Button
-          variant="primary"
-          onClick={handleAllowClick}
-          disabled={isAllowing}
-          className="w-full sm:w-fit"
-        >
-          Allow
-        </Button>
-      </CardFooter>
+      {errorRedirectUrl ? null : (
+        <CardFooter className="flex shrink-0 flex-row items-center justify-end gap-4">
+          <Button
+            variant="outline-destructive"
+            onClick={handleDenyClick}
+            disabled={isAllowing}
+            className="w-full sm:w-fit"
+          >
+            Deny
+          </Button>
+          <Button
+            variant="primary"
+            onClick={handleAllowClick}
+            disabled={isAllowing}
+            className="w-full sm:w-fit"
+          >
+            Allow
+          </Button>
+        </CardFooter>
+      )}
     </Card>
   )
 }

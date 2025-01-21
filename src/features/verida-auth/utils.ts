@@ -10,7 +10,6 @@ import {
 import {
   InvalidVeridaAuthRequest,
   VeridaAuthApiV1RequestBody,
-  VeridaAuthAuthV1Response,
   VeridaAuthAuthorizationRequestObject,
   VeridaAuthRequestPayload,
   VeridaAuthScope,
@@ -79,6 +78,19 @@ interface ResolveVeridaAuthScopesOutput {
   scopeValidity: Record<string, boolean>
 }
 
+/**
+ * Resolves a list of Verida Auth scope strings into detailed scope definitions.
+ * Makes a request to the Verida Private Data API to validate and resolve the scopes.
+ *
+ * @param scopes - Array of scope strings to resolve (e.g. ["api:ds-query"])
+ * @returns Object containing:
+ *   - resolvedScopes: Array of detailed VeridaAuthScope objects with type, name, permissions etc.
+ *   - scopeValidity: Record mapping each input scope string to boolean indicating if it's valid
+ *
+ * @throws {Error} If the Private Data API URL is not configured
+ * @throws {Error} If the HTTP request fails
+ * @throws {Error} If the response validation fails
+ */
 export async function resolveVeridaAuthScopes(
   scopes: string[]
 ): Promise<ResolveVeridaAuthScopesOutput> {
@@ -184,6 +196,10 @@ export interface AllowVeridaAuthRequestArgs {
   webUserInstance: WebUser
 }
 
+export interface AllowVeridaAuthRequestOutput {
+  redirectUrl: string
+}
+
 /**
  * Processes an authorization request for a Verida application to access user data.
  *
@@ -200,7 +216,7 @@ export async function allowVeridaAuthRequest({
   sessionToken,
   userDid,
   webUserInstance,
-}: AllowVeridaAuthRequestArgs): Promise<VeridaAuthAuthV1Response> {
+}: AllowVeridaAuthRequestArgs): Promise<AllowVeridaAuthRequestOutput> {
   logger.info("Allowing Auth request")
 
   if (!commonConfig.PRIVATE_DATA_API_BASE_URL) {
@@ -258,26 +274,32 @@ export async function allowVeridaAuthRequest({
 
     logger.info("Successfully allowed Auth request")
 
-    return validatedData
-  } catch (error) {
-    logger.error(
-      new Error("Error allowing Auth request", {
-        cause: error,
-      })
-    )
-
-    const redirectUrl = new URL(payload.redirectUrl)
-    redirectUrl.searchParams.set("error", "server_error")
-    redirectUrl.searchParams.set(
-      "error_description",
-      "Something went wrong when granting access"
-    )
-    redirectUrl.searchParams.set("state", payload.state ?? "")
-
     return {
-      redirectUrl: redirectUrl.toString(),
+      redirectUrl: validatedData.redirectUrl,
     }
+  } catch (error) {
+    throw new Error("Error allowing Auth request", {
+      cause: error,
+    })
   }
+}
+
+/**
+ * Builds a redirect URL for when a server error occurs during auth request processing.
+ *
+ * @param payload - The original auth request payload containing the redirect URL and state
+ * @param errorDescription - Optional description of the server error that occurred. Defaults to generic error message.
+ * @returns The formatted redirect URL string with error parameters added
+ */
+export function buildErrorRedirectUrl(
+  payload: VeridaAuthRequestPayload,
+  errorDescription: string = "Something went wrong when granting access"
+) {
+  const redirectUrl = new URL(payload.redirectUrl)
+  redirectUrl.searchParams.set("error", "server_error")
+  redirectUrl.searchParams.set("error_description", errorDescription)
+  redirectUrl.searchParams.set("state", payload.state ?? "")
+  return redirectUrl.toString()
 }
 
 /**

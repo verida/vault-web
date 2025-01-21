@@ -15,19 +15,17 @@ export function useAllowVeridaAuthRequest({
 
   const allow = useCallback(async () => {
     if (!did) {
-      return
+      throw new Error("User not connected")
     }
 
     const sessionToken = await getAccountSessionToken()
 
-    const { redirectUrl } = await allowVeridaAuthRequest({
+    return await allowVeridaAuthRequest({
       payload,
       sessionToken,
       userDid: did,
       webUserInstance: webUserInstanceRef.current,
     })
-
-    window.location.href = redirectUrl
   }, [payload, did, getAccountSessionToken, webUserInstanceRef])
 
   return {
