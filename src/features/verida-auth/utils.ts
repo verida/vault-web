@@ -177,30 +177,6 @@ function resolveVeridaAuthScopePermission(
   }
 }
 
-export interface DenyVeridaAuthRequestArgs {
-  payload: VeridaAuthRequestPayload
-}
-
-/**
- * Denies a Verida Auth request by redirecting back to the application with an error.
- *
- * @param args - The arguments for denying the auth request
- * @param args.payload - The auth request payload containing the redirect URL and state
- * @returns Object containing the URL to redirect the user to, with error parameters added
- */
-export function denyVeridaAuthRequest({ payload }: DenyVeridaAuthRequestArgs) {
-  logger.info("Denying Auth request")
-
-  const redirectUrl = new URL(payload.redirectUrl)
-  redirectUrl.searchParams.set("error", "access_denied")
-  redirectUrl.searchParams.set("error_description", "User denied access")
-  redirectUrl.searchParams.set("state", payload.state ?? "")
-
-  return {
-    redirectUrl: redirectUrl.toString(),
-  }
-}
-
 export interface AllowVeridaAuthRequestArgs {
   payload: VeridaAuthRequestPayload
   sessionToken: string
@@ -304,6 +280,13 @@ export async function allowVeridaAuthRequest({
   }
 }
 
+/**
+ * Builds a redirect URL for when an auth request is invalid.
+ *
+ * @param request - The invalid auth request containing the redirect URL and state
+ * @param errorDescription - A description of why the request was invalid
+ * @returns The formatted redirect URL string with error parameters, or null if no redirect URL exists
+ */
 export function buildInvalidRequestRedirectUrl(
   request: InvalidVeridaAuthRequest,
   errorDescription: string
@@ -317,4 +300,19 @@ export function buildInvalidRequestRedirectUrl(
   url.searchParams.set("error_description", errorDescription)
   url.searchParams.set("state", request.state ?? "")
   return url.toString()
+}
+
+/**
+ * Builds a redirect URL for when a user denies an auth request.
+ *
+ * @param payload - The original auth request payload containing the redirect URL and state
+ * @returns The formatted redirect URL string with error parameters added
+ */
+export function buildDenyRequestRedirectUrl(payload: VeridaAuthRequestPayload) {
+  const redirectUrl = new URL(payload.redirectUrl)
+  redirectUrl.searchParams.set("error", "access_denied")
+  redirectUrl.searchParams.set("error_description", "User denied access")
+  redirectUrl.searchParams.set("state", payload.state ?? "")
+
+  return redirectUrl.toString()
 }

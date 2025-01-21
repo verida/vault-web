@@ -33,8 +33,8 @@ import {
 } from "@/components/ui/tooltip"
 import { Logger } from "@/features/telemetry/logger"
 import { useAllowVeridaAuthRequest } from "@/features/verida-auth/hooks/use-allow-verida-auth-request"
-import { useDenyVeridaAuthRequest } from "@/features/verida-auth/hooks/use-deny-verida-auth-request"
 import { ValidVeridaAuthRequest } from "@/features/verida-auth/types"
+import { buildDenyRequestRedirectUrl } from "@/features/verida-auth/utils"
 import { getVeridaExplorerIdentityPageUrl } from "@/features/verida-explorer/utils"
 import { ProfileAvatar } from "@/features/verida-profile/components/profile-avatar"
 import { EMPTY_PROFILE_NAME_FALLBACK } from "@/features/verida-profile/constants"
@@ -52,14 +52,13 @@ export function VeridaAuthConsentCard(props: VeridaAuthConsentCardProps) {
   const { request, className, ...cardProps } = props
 
   const { payload, resolvedValidScopes } = request
-  const { appDID, redirectUrl } = payload
 
   const resolvedRedirectUrl = useMemo(() => {
-    return new URL(redirectUrl)
-  }, [redirectUrl])
+    return new URL(payload.redirectUrl)
+  }, [payload.redirectUrl])
 
   const { profile, isLoading } = useVeridaProfile({
-    did: appDID,
+    did: payload.appDID,
   })
 
   const profileWebsiteUrl = useMemo(() => {
@@ -82,18 +81,19 @@ export function VeridaAuthConsentCard(props: VeridaAuthConsentCardProps) {
     return resolvedValidScopes?.filter((scope) => scope.type === "unknown")
   }, [resolvedValidScopes])
 
-  const { deny } = useDenyVeridaAuthRequest({ payload })
   const { allow } = useAllowVeridaAuthRequest({ payload })
 
   const [isAllowing, setIsAllowing] = useState(false)
 
   const handleDenyClick = useCallback(() => {
     try {
-      deny()
+      logger.info("Denying Auth request")
+      const redirectUrl = buildDenyRequestRedirectUrl(payload)
+      window.location.href = redirectUrl
     } catch (error) {
       logger.error(error)
     }
-  }, [deny])
+  }, [payload])
 
   const handleAllowClick = useCallback(async () => {
     try {
@@ -125,12 +125,12 @@ export function VeridaAuthConsentCard(props: VeridaAuthConsentCardProps) {
         <div className="flex flex-col gap-1">
           <CardDescription className="truncate">
             <Link
-              href={getVeridaExplorerIdentityPageUrl(appDID)}
+              href={getVeridaExplorerIdentityPageUrl(payload.appDID)}
               target="_blank"
               rel="noopener noreferrer"
               className="underline"
             >
-              {appDID}
+              {payload.appDID}
             </Link>
           </CardDescription>
           <CardDescription className="truncate">
