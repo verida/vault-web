@@ -240,12 +240,13 @@ export async function allowVeridaAuthRequest({
     appDID: payload.appDID,
     userDID: userDid,
     scopes: payload.scopes,
+    payer: "app",
     timestamp: now,
   }
 
   const userAccount = webUserInstance.getAccount()
   const userKeyring = await userAccount.keyring(VERIDA_VAULT_CONTEXT_NAME)
-  const user_sig = await userKeyring.sign(authRequest)
+  const user_sig = await userKeyring.sign(JSON.stringify(authRequest))
 
   const body: VeridaAuthApiV1RequestBody = {
     client_id: userDid,

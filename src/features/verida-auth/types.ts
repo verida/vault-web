@@ -58,6 +58,7 @@ export type VeridaAuthAuthorizationRequestObject = {
   appDID: string
   userDID: string
   scopes: string[]
+  payer: string
   timestamp: number
 }
 
