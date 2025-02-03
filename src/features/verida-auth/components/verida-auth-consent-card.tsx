@@ -224,7 +224,7 @@ export function VeridaAuthConsentCard(props: VeridaAuthConsentCardProps) {
                                   )
                                 }
                               )}{" "}
-                              in your
+                              in your{" "}
                               {scope.description ? (
                                 <Tooltip>
                                   <TooltipTrigger>
