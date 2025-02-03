@@ -17,7 +17,7 @@ import { Button } from "@/components/ui/button"
 import { AuthorizedAppRecord } from "@/features/authorized-apps/types"
 import { wait } from "@/utils/misc"
 
-type RevokeAuthorizedAppDialogProps = {
+export type RevokeAuthorizedAppDialogProps = {
   authorizedApp: AuthorizedAppRecord
   onRevoke?: () => void
   children?: React.ReactNode

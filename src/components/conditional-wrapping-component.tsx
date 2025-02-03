@@ -1,4 +1,4 @@
-export interface ConditionalWrappingComponentProps {
+export type ConditionalWrappingComponentProps = {
   condition: boolean
   Component: React.ComponentType<{ children: React.ReactNode }>
   children: React.ReactNode

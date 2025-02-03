@@ -56,13 +56,14 @@ import { moveItemInArray } from "@/utils/misc"
 
 const logger = Logger.create("assistants")
 
-export type AiAssistantSelectorProps = {
+export interface AiAssistantSelectorProps
+  extends Omit<React.ComponentProps<"div">, "children"> {
   currentAssistantId?: string
   onCreateClick?: () => void
   onItemSelect?: (assistant: AiAssistantRecord) => void
   onEditClick?: (assistant: AiAssistantRecord) => void
   hideSearch?: boolean
-} & Omit<React.ComponentProps<"div">, "children">
+}
 
 export function AiAssistantSelector(props: AiAssistantSelectorProps) {
   const {

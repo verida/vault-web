@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   title: "Connections",
 }
 
-type ConnectionsLayoutProps = {
+export type ConnectionsLayoutProps = {
   children: React.ReactNode
 }
 

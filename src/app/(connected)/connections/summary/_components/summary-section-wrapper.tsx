@@ -1,9 +1,10 @@
 import { Typography } from "@/components/typography"
 import { cn } from "@/styles/utils"
 
-export type SummarySectionWrapperProps = {
+export interface SummarySectionWrapperProps
+  extends React.ComponentProps<"section"> {
   sectionTitle: string | React.ReactNode
-} & React.ComponentProps<"section">
+}
 
 export function SummarySectionWrapper(props: SummarySectionWrapperProps) {
   const { sectionTitle, children, className, ...sectionProps } = props

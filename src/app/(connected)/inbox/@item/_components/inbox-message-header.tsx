@@ -29,9 +29,10 @@ import {
   formatTimeDistanceFromNow,
 } from "@/utils/date"
 
-type InboxMessageHeaderProps = {
+export interface InboxMessageHeaderProps
+  extends Omit<ComponentProps<"div">, "children"> {
   inboxMessage: VeridaInboxMessageRecord
-} & Omit<ComponentProps<"div">, "children">
+}
 
 export function InboxMessageHeader(props: InboxMessageHeaderProps) {
   const { inboxMessage, className, ...divProps } = props

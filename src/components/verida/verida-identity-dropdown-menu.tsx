@@ -32,12 +32,13 @@ import { useUserProfile } from "@/features/verida-profile/hooks/use-user-profile
 import { useVerida } from "@/features/verida/hooks/use-verida"
 import { cn } from "@/styles/utils"
 
-type VeridaIdentityDropdownMenuProps = {
+export interface VeridaIdentityDropdownMenuProps
+  extends Pick<React.ComponentProps<typeof Button>, "className"> {
   keepExpanded?: boolean
   hideDisconnect?: boolean
   hideAuthorizedApps?: boolean
   hideFeedback?: boolean
-} & Pick<React.ComponentProps<typeof Button>, "className">
+}
 
 export function VeridaIdentityDropdownMenu(
   props: VeridaIdentityDropdownMenuProps

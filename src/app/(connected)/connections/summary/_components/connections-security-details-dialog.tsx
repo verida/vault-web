@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/security"
 import { getDataPageRoute } from "@/features/routes/utils"
 
-type ConnectionsSecurityDetailsDialogProps = React.ComponentProps<
+export type ConnectionsSecurityDetailsDialogProps = React.ComponentProps<
   typeof SecurityDetailsDialogTrigger
 >
 

@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/breadcrumb"
 import { cn } from "@/styles/utils"
 
-interface RequestProcessingStepBreadcrumbProps
+export interface RequestProcessingStepBreadcrumbProps
   extends ComponentProps<typeof Breadcrumb> {
   steps: {
     name: string

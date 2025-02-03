@@ -17,11 +17,12 @@ import {
 import { DataProvider } from "@/features/data-connections/types"
 import { cn } from "@/styles/utils"
 
-export type DataProvidersListProps = {
+export interface DataProvidersListProps
+  extends Omit<React.ComponentProps<"div">, "children"> {
   providers: DataProvider[] | undefined
   isLoading: boolean
   isError: boolean
-} & React.ComponentProps<"div">
+}
 
 export function DataProvidersList(props: DataProvidersListProps) {
   const { providers, isLoading, isError, className, ...divProps } = props

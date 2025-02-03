@@ -7,8 +7,10 @@ import {
 } from "@/components/ui/loading"
 import { cn } from "@/styles/utils"
 
-export interface VeridaAuthProcessingRequestCardProps
-  extends React.ComponentProps<typeof Card> {}
+export type VeridaAuthProcessingRequestCardProps = Omit<
+  React.ComponentProps<typeof Card>,
+  "children"
+>
 
 export function VeridaAuthProcessingRequestCard(
   props: VeridaAuthProcessingRequestCardProps

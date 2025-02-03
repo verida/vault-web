@@ -2,7 +2,7 @@
 
 import { ThemeProvider as NextThemesProvider } from "next-themes"
 
-type ThemesProviderProps = {
+export type ThemesProviderProps = {
   children: React.ReactNode
 }
 
@@ -15,3 +15,4 @@ export function ThemesProvider(props: ThemesProviderProps) {
     </NextThemesProvider>
   )
 }
+ThemesProvider.displayName = "ThemesProvider"

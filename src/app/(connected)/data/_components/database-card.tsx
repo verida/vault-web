@@ -5,9 +5,9 @@ import { Card, CardBody } from "@/components/ui/card"
 import { DatabaseDefinition } from "@/features/data/types"
 import { cn } from "@/styles/utils"
 
-export type DatabaseCardProps = {
+export interface DatabaseCardProps extends React.ComponentProps<typeof Card> {
   databaseDefinition: DatabaseDefinition
-} & React.ComponentProps<typeof Card>
+}
 
 export function DatabaseCard(props: DatabaseCardProps) {
   const { databaseDefinition, className, ...cardProps } = props

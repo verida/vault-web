@@ -46,3 +46,4 @@ export function LandingPageContent(props: LandingPageContentProps) {
     </div>
   )
 }
+LandingPageContent.displayName = "LandingPageContent"

@@ -2,7 +2,7 @@ import { notFound } from "next/navigation"
 
 import { featureFlags } from "@/config/features"
 
-interface AuthLayoutProps {
+export type AuthLayoutProps = {
   children: React.ReactNode
 }
 

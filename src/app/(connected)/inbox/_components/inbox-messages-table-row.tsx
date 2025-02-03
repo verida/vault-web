@@ -17,9 +17,10 @@ import { VERIDA_VAULT_CONTEXT_NAME } from "@/features/verida/constants"
 import { useVerida } from "@/features/verida/hooks/use-verida"
 import { cn } from "@/styles/utils"
 
-type InboxMessagesTableRowProps = {
+export interface InboxMessagesTableRowProps
+  extends Omit<React.ComponentProps<typeof DataTableBaseRow>, "children"> {
   row: Row<VeridaInboxMessageRecord>
-} & Omit<React.ComponentProps<typeof DataTableBaseRow>, "children">
+}
 
 export function InboxMessagesTableRow(props: InboxMessagesTableRowProps) {
   const { row, className, ...cardProps } = props

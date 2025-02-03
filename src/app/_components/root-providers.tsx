@@ -41,3 +41,4 @@ export function RootProviders(props: RootProvidersProps) {
     </Suspense>
   )
 }
+RootProviders.displayName = "RootProviders"

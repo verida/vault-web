@@ -20,7 +20,7 @@ import { useGetAiAssistants } from "@/features/assistants/hooks/use-get-ai-assis
 import { getAssistantPageRoute } from "@/features/routes/utils"
 import { getMediaQuery } from "@/styles/utils"
 
-type AssistantPageProps = {
+export type AssistantPageProps = {
   params: {
     assistantId: string
   }

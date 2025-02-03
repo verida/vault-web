@@ -20,7 +20,7 @@ export const ItemSheetTrigger = SheetTrigger
 
 export const ItemSheetClose = SheetClose
 
-type ItemSheetContentProps = React.ComponentProps<typeof SheetContent>
+export type ItemSheetContentProps = React.ComponentProps<typeof SheetContent>
 
 export function ItemSheetContent(props: ItemSheetContentProps) {
   const {
@@ -44,10 +44,11 @@ export function ItemSheetContent(props: ItemSheetContentProps) {
 }
 ItemSheetContent.displayName = "ItemSheetContent"
 
-type ItemSheetHeaderProps = {
+export interface ItemSheetHeaderProps
+  extends React.ComponentProps<typeof SheetHeader> {
   right?: React.ReactNode
   hideCloseButton?: boolean
-} & React.ComponentProps<typeof SheetHeader>
+}
 
 export function ItemSheetHeader(props: ItemSheetHeaderProps) {
   const { children, right, hideCloseButton, className, ...sheetHeaderProps } =
@@ -96,10 +97,11 @@ export function ItemSheetHeader(props: ItemSheetHeaderProps) {
 }
 ItemSheetHeader.displayName = "ItemSheetHeader"
 
-type ItemSheetTitleProps = {
+export interface ItemSheetTitleProps
+  extends Omit<React.ComponentProps<typeof Typography>, "variant"> {
   /** Used for accessibility reason, not displayed in the UI */
   description?: string
-} & Omit<React.ComponentProps<typeof Typography>, "variant">
+}
 
 export function ItemSheetTitle(props: ItemSheetTitleProps) {
   const { description = "Item sheet", className, ...typographyProps } = props
@@ -120,7 +122,7 @@ export function ItemSheetTitle(props: ItemSheetTitleProps) {
 }
 ItemSheetTitle.displayName = "ItemSheetTitle"
 
-type ItemSheetBodyProps = React.ComponentProps<typeof SheetBody>
+export type ItemSheetBodyProps = React.ComponentProps<typeof SheetBody>
 
 export function ItemSheetBody(props: ItemSheetBodyProps) {
   const { className, ...sheetBodyProps } = props
@@ -133,7 +135,7 @@ export function ItemSheetBody(props: ItemSheetBodyProps) {
 }
 ItemSheetBody.displayName = "ItemSheetBody"
 
-type ItemSheetFooterProps = React.ComponentProps<typeof SheetFooter>
+export type ItemSheetFooterProps = React.ComponentProps<typeof SheetFooter>
 
 export function ItemSheetFooter(props: ItemSheetFooterProps) {
   const { className, ...sheetFooterProps } = props

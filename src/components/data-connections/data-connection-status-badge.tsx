@@ -26,7 +26,9 @@ export const badgeVariants = cva(
   }
 )
 
-type BadgeVariants = VariantProps<typeof badgeVariants>
+export type DataConnectionStatusBadgeVariants = VariantProps<
+  typeof badgeVariants
+>
 
 export type DataConnectionStatusBadgeProps = {
   status: DataConnectionStatus | DataConnectionHandlerStatus
@@ -37,7 +39,7 @@ export function DataConnectionStatusBadge(
 ) {
   const { status, className, ...divProps } = props
 
-  const variant: BadgeVariants["variant"] = useMemo(() => {
+  const variant: DataConnectionStatusBadgeVariants["variant"] = useMemo(() => {
     switch (status) {
       case "connected":
       case "active":
@@ -93,3 +95,4 @@ export function DataConnectionStatusBadge(
     </div>
   )
 }
+DataConnectionStatusBadge.displayName = "DataConnectionStatusBadge"

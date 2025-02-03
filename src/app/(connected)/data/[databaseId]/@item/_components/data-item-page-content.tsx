@@ -29,7 +29,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { DatabaseDefinition } from "@/features/data/types"
 import { useVeridaDataRecord } from "@/features/verida-database/hooks/use-verida-data-record"
 
-export interface DataItemPageContentProps {
+export type DataItemPageContentProps = {
   open: boolean
   onOpenChange: (open: boolean) => void
   databaseDefinition: DatabaseDefinition

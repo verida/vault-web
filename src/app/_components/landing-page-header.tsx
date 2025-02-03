@@ -12,6 +12,7 @@ export type LandingPageHeaderProps = Omit<
 
 export function LandingPageHeader(props: LandingPageHeaderProps) {
   const { className, ...headerProps } = props
+
   return (
     <header {...headerProps} className={cn("py-4 md:py-6", className)}>
       <div className="flex flex-row flex-wrap items-center justify-between gap-4">
@@ -41,3 +42,4 @@ export function LandingPageHeader(props: LandingPageHeaderProps) {
     </header>
   )
 }
+LandingPageHeader.displayName = "LandingPageHeader"

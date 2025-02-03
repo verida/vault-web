@@ -14,7 +14,7 @@ import {
   SecurityIcon,
 } from "@/components/ui/security"
 
-type DataSecurityDetailsDialogProps = React.ComponentProps<
+export type DataSecurityDetailsDialogProps = React.ComponentProps<
   typeof SecurityDetailsDialogTrigger
 >
 

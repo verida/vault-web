@@ -23,9 +23,10 @@ import { cn } from "@/styles/utils"
 import { LONG_DATE_TIME_FORMAT_OPTIONS } from "@/utils/date"
 import { wait } from "@/utils/misc"
 
-export type DataConnectionDetailsProps = {
+export interface DataConnectionDetailsProps
+  extends Omit<React.ComponentProps<"div">, "children"> {
   connection: DataConnection
-} & React.ComponentProps<"div">
+}
 
 export function DataConnectionDetails(props: DataConnectionDetailsProps) {
   const { connection, className, ...divProps } = props

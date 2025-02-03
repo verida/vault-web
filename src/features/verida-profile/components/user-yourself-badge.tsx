@@ -1,7 +1,10 @@
 import { Badge } from "@/components/ui/badge"
 import { cn } from "@/styles/utils"
 
-type UserYourselfBadgeProps = React.ComponentProps<typeof Badge>
+export type UserYourselfBadgeProps = Omit<
+  React.ComponentProps<typeof Badge>,
+  "children"
+>
 
 export function UserYourselfBadge(props: UserYourselfBadgeProps) {
   const { variant = "secondary", className, ...badgeProps } = props

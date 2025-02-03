@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   title: "Inbox",
 }
 
-type InboxLayoutProps = {
+export type InboxLayoutProps = {
   children: React.ReactNode
   item: React.ReactNode
 }

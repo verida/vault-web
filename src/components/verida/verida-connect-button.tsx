@@ -6,13 +6,14 @@ import { Button } from "@/components/ui/button"
 import { useVerida } from "@/features/verida/hooks/use-verida"
 import { cn } from "@/styles/utils"
 
-type VeridaConnectButtonProps = {
+export interface VeridaConnectButtonProps
+  extends Omit<
+    React.ComponentProps<typeof Button>,
+    "children" | "disabled" | "onClick"
+  > {
   label?: string | React.ReactNode
   connectingLabel?: string | React.ReactNode
-} & Omit<
-  React.ComponentProps<typeof Button>,
-  "children" | "disabled" | "onClick"
->
+}
 
 export function VeridaConnectButton(props: VeridaConnectButtonProps) {
   const {

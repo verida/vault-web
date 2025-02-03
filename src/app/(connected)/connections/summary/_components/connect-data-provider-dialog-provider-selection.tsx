@@ -62,9 +62,10 @@ export function ConnectDataProviderDialogProviderSelection(
 ConnectDataProviderDialogProviderSelection.displayName =
   "ConnectDataProviderDialogProviderSelection"
 
-type ProviderSelectionItemProps = {
+interface ProviderSelectionItemProps
+  extends Omit<React.ComponentProps<typeof Button>, "children"> {
   provider: DataProvider
-} & React.ComponentProps<typeof Button>
+}
 
 function ProviderSelectionItem(props: ProviderSelectionItemProps) {
   const { provider, className, ...buttonProps } = props
@@ -106,7 +107,10 @@ function ProviderSelectionItem(props: ProviderSelectionItemProps) {
 }
 ProviderSelectionItem.displayName = "ProviderSelectionItem"
 
-type ProviderSelectionItemSkeletonProps = React.ComponentProps<"div">
+type ProviderSelectionItemSkeletonProps = Omit<
+  React.ComponentProps<"div">,
+  "children"
+>
 
 function ProviderSelectionItemSkeleton(
   props: ProviderSelectionItemSkeletonProps

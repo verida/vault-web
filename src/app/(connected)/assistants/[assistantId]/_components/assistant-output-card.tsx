@@ -20,7 +20,10 @@ import { USER_DATABASE_DEFS } from "@/features/data/constants"
 import { cn } from "@/styles/utils"
 import { SHORT_TIME_FORMAT_OPTIONS } from "@/utils/date"
 
-export type AssistantOutputCardProps = React.ComponentProps<"div">
+export type AssistantOutputCardProps = Omit<
+  React.ComponentProps<"div">,
+  "children"
+>
 
 export function AssistantOutputCard(props: AssistantOutputCardProps) {
   const { className, ...divProps } = props

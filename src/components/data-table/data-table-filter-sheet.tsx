@@ -10,7 +10,7 @@ import {
 } from "@/components/standard-sheet"
 import { Button } from "@/components/ui/button"
 
-type DataTableFilterSheetProps = {
+export type DataTableFilterSheetProps = {
   children: React.ReactNode
 }
 

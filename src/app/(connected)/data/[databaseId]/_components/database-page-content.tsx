@@ -3,9 +3,10 @@ import React from "react"
 import { DataRecordsTable } from "@/app/(connected)/data/[databaseId]/_components/data-records-table"
 import { DatabaseDefinition } from "@/features/data/types"
 
-export type DatabasePageContentProps = {
+export interface DatabasePageContentProps
+  extends Omit<React.ComponentProps<typeof DataRecordsTable>, "children"> {
   databaseDefinition: DatabaseDefinition
-} & Omit<React.ComponentProps<typeof DataRecordsTable>, "children">
+}
 
 export function DatabasePageContent(props: DatabasePageContentProps) {
   const { databaseDefinition, ...dataRecordsTableProps } = props

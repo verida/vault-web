@@ -25,7 +25,7 @@ import { useUpdateAiPrompt } from "@/features/assistants/hooks/use-update-ai-pro
 import { AiPromptFormData, AiPromptRecord } from "@/features/assistants/types"
 import { getAssistantPageRoute } from "@/features/routes/utils"
 
-type AiPromptDialogProviderProps = {
+export type AiPromptDialogProviderProps = {
   children: React.ReactNode
 }
 

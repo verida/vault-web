@@ -4,14 +4,15 @@ import { EMPTY_VALUE_FALLBACK } from "@/constants/misc"
 import { DataConnection, DataProvider } from "@/features/data-connections/types"
 import { cn } from "@/styles/utils"
 
-export type DataConnectionAvatarProps = {
+export interface DataConnectionAvatarProps
+  extends Omit<React.ComponentProps<"div">, "children"> {
   connection?: DataConnection
   isConnectionLoading?: boolean
   provider?: DataProvider
   isProviderLoading?: boolean
   connectionAvatarClassName?: React.ComponentProps<typeof Avatar>["className"]
   providerAvatarClassName?: React.ComponentProps<typeof Avatar>["className"]
-} & React.ComponentProps<"div">
+}
 
 export function DataConnectionAvatar(props: DataConnectionAvatarProps) {
   const {

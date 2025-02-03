@@ -6,7 +6,7 @@ import {
 } from "@/components/ui/loading"
 import { cn } from "@/styles/utils"
 
-type VeridaConnectionLoadingProps = Omit<
+export type VeridaConnectionLoadingProps = Omit<
   React.ComponentPropsWithoutRef<typeof LoadingBlock>,
   "children"
 >

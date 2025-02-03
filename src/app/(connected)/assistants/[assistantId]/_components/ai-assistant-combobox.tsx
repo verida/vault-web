@@ -15,9 +15,10 @@ import { DEFAULT_ASSISTANT } from "@/features/assistants/constants"
 import { useGetAiAssistants } from "@/features/assistants/hooks/use-get-ai-assistants"
 import { cn } from "@/styles/utils"
 
-type AiAssistantComboboxProps = {
+export interface AiAssistantComboboxProps
+  extends Omit<React.ComponentProps<typeof Button>, "children"> {
   assistantId: string
-} & Omit<React.ComponentProps<typeof Button>, "children">
+}
 
 export function AiAssistantCombobox(props: AiAssistantComboboxProps) {
   const { assistantId, className, ...buttonProps } = props

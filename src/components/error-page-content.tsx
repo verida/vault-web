@@ -22,7 +22,9 @@ export type ErrorPageProps = {
   reset: () => void
 }
 
-type ErrorPageContentProps = {
+export interface ErrorPageContentProps
+  extends ErrorPageProps,
+    React.ComponentProps<"div"> {
   mainMessage?: string | null
   subMessage?: string | null
   resetButtonLabel?: string
@@ -32,8 +34,7 @@ type ErrorPageContentProps = {
   navigationButtonLabel?: string
   navigationButtonHref?: string
   hideNavigationButton?: boolean
-} & ErrorPageProps &
-  React.ComponentProps<"div">
+}
 
 export function ErrorPageContent(props: ErrorPageContentProps) {
   const {
@@ -104,3 +105,4 @@ export function ErrorPageContent(props: ErrorPageContentProps) {
     </div>
   )
 }
+ErrorPageContent.displayName = "ErrorPageContent"

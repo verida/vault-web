@@ -5,7 +5,7 @@ import {
   CommandContextType,
 } from "@/features/command/contexts/command-context"
 
-export interface CommandProviderProps {
+export type CommandProviderProps = {
   children: React.ReactNode
 }
 

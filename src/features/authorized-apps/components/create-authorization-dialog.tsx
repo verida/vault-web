@@ -14,7 +14,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 
-type CreateAuthorizationDialogProps = {
+export type CreateAuthorizationDialogProps = {
   children?: React.ReactNode
 }
 

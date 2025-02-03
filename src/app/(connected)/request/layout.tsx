@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   title: "Request",
 }
 
-export interface RequestLayoutProps {
+export type RequestLayoutProps = {
   children: React.ReactNode
 }
 

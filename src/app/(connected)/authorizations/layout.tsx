@@ -22,7 +22,7 @@ import { featureFlags } from "@/config/features"
 import { CreateAuthorizationDialog } from "@/features/authorized-apps/components/create-authorization-dialog"
 import { RevokeAllAuthorizedAppsDialog } from "@/features/authorized-apps/components/revoke-all-authorized-apps-dialog"
 
-type AuthorizationsLayoutProps = {
+export type AuthorizationsLayoutProps = {
   children: React.ReactNode
   item: React.ReactNode
 }

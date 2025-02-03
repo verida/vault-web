@@ -23,7 +23,8 @@ import {
 import { DataTablePaginationSizeValue } from "@/features/data-table/types"
 import { cn } from "@/styles/utils"
 
-export type DataTableProps<TData> = {
+export interface DataTableProps<TData>
+  extends Omit<React.ComponentProps<"div">, "children"> {
   table: Table<TData>
   rowComponent: (row: Row<TData>) => React.ReactNode
   isLoading?: boolean
@@ -39,7 +40,7 @@ export type DataTableProps<TData> = {
   emptyStateImage?: React.ReactNode
   emptyStateTitle?: string
   emptyStateDescription?: string
-} & Omit<React.ComponentProps<"div">, "children">
+}
 
 export function DataTable<TData>(props: DataTableProps<TData>) {
   const {

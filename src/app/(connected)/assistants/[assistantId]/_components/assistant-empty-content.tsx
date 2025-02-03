@@ -13,7 +13,10 @@ import { useDataConnections } from "@/features/data-connections/hooks/use-data-c
 import { getConnectionsPageRoute } from "@/features/routes/utils"
 import { cn } from "@/styles/utils"
 
-export type AssistantEmptyContentProps = React.ComponentProps<"div">
+export type AssistantEmptyContentProps = Omit<
+  React.ComponentProps<"div">,
+  "children"
+>
 
 export function AssistantEmptyContent(props: AssistantEmptyContentProps) {
   const { className, ...divProps } = props

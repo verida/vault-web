@@ -6,9 +6,10 @@ import { DataTableColumnHeader } from "@/components/data-table/data-table-column
 import { AuthorizedAppRecord } from "@/features/authorized-apps/types"
 import { cn } from "@/styles/utils"
 
-export type AuthorizedAppsTableRowProps = {
+export interface AuthorizedAppsTableRowProps
+  extends Omit<React.ComponentProps<typeof DataTableBaseRow>, "children"> {
   row: Row<AuthorizedAppRecord>
-} & Omit<React.ComponentProps<typeof DataTableBaseRow>, "children">
+}
 
 export function AuthorizedAppsTableRow(props: AuthorizedAppsTableRowProps) {
   const { row, className, ...cardProps } = props
@@ -83,3 +84,4 @@ export function AuthorizedAppsTableRow(props: AuthorizedAppsTableRowProps) {
     </DataTableBaseRow>
   )
 }
+AuthorizedAppsTableRow.displayName = "AuthorizedAppsTableRow"

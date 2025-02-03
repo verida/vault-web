@@ -6,7 +6,7 @@ import { AppUnrestrictedProviders } from "@/app/(connected)/_components/app-unre
 import { RestrictedAccessHandler } from "@/app/(connected)/_components/restricted-access-handler"
 import { featureFlags } from "@/config/features"
 
-type AppLayoutProps = {
+export type AppLayoutProps = {
   children: React.ReactNode
 }
 

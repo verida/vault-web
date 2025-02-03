@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   title: "Data",
 }
 
-type DataLayoutProps = {
+export type DataLayoutProps = {
   children: React.ReactNode
 }
 

@@ -21,9 +21,10 @@ const fallbackData: VeridaRecord[] = []
 
 const getRowId = (record: VeridaRecord) => record._id
 
-export type DataRecordsTableProps = {
+export interface DataRecordsTableProps
+  extends Pick<React.ComponentProps<typeof DataTable>, "className"> {
   databaseDefinition: DatabaseDefinition
-} & Pick<React.ComponentProps<typeof DataTable>, "className">
+}
 
 export function DataRecordsTable(props: DataRecordsTableProps) {
   const { databaseDefinition, className } = props

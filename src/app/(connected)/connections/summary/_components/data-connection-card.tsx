@@ -19,9 +19,10 @@ import { getDataConnectionLatestSyncEnd } from "@/features/data-connections/util
 import { getConnectionPageRoute } from "@/features/routes/utils"
 import { LONG_DATE_TIME_FORMAT_OPTIONS } from "@/utils/date"
 
-export type DataConnectionCardProps = {
+export interface DataConnectionCardProps
+  extends Omit<React.ComponentProps<typeof Card>, "children"> {
   connection: DataConnection
-} & React.ComponentProps<typeof Card>
+}
 
 export function DataConnectionCard(props: DataConnectionCardProps) {
   const { connection, className, ...cardProps } = props
@@ -100,7 +101,10 @@ export function DataConnectionCard(props: DataConnectionCardProps) {
 }
 DataConnectionCard.displayName = "DataConnectionCard"
 
-export type DataConnectionSkeletonCardProps = React.ComponentProps<typeof Card>
+export type DataConnectionSkeletonCardProps = Omit<
+  React.ComponentProps<typeof Card>,
+  "children"
+>
 
 export function DataConnectionSkeletonCard(
   props: DataConnectionSkeletonCardProps

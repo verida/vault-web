@@ -7,10 +7,11 @@ import { DataTableBaseRow } from "@/components/data-table/data-table-base-row"
 import { DataConnectionSyncLog } from "@/features/data-connections/types"
 import { cn } from "@/styles/utils"
 
-export type DataConnectionLogsTableRowProps = {
+export interface DataConnectionLogsTableRowProps
+  extends Omit<React.ComponentProps<typeof DataTableBaseRow>, "children"> {
   row: Row<DataConnectionSyncLog>
   hideConnectionColumn?: boolean
-} & Omit<React.ComponentProps<typeof DataTableBaseRow>, "children">
+}
 
 export function DataConnectionLogsTableRow(
   props: DataConnectionLogsTableRowProps

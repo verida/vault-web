@@ -1,4 +1,4 @@
-type ConnectionLayoutProps = {
+export type ConnectionLayoutProps = {
   children: React.ReactNode
 }
 

@@ -204,9 +204,10 @@ export function IncomingDataItemPageContent(
 }
 IncomingDataItemPageContent.displayName = "IncomingDataItemPageContent"
 
-type IncomingDataItemCardProps = {
+interface IncomingDataItemCardProps
+  extends Omit<React.ComponentProps<typeof Card>, "children"> {
   item: UnsavedVeridaRecord
-} & Omit<React.ComponentProps<typeof Card>, "children">
+}
 
 function IncomingDataItemCard(props: IncomingDataItemCardProps) {
   const { item, className, ...cardProps } = props

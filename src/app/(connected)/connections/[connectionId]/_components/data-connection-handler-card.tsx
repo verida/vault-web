@@ -13,10 +13,11 @@ import {
 import { cn } from "@/styles/utils"
 import { LONG_DATE_TIME_FORMAT_OPTIONS } from "@/utils/date"
 
-export type DataConnectionHandlerCardProps = {
+export interface DataConnectionHandlerCardProps
+  extends Omit<React.ComponentProps<typeof Card>, "children"> {
   handlerDefinition?: DataProviderHandler
   connectionHandler?: DataConnectionHandler
-} & React.ComponentProps<typeof Card>
+}
 
 export function DataConnectionHandlerCard(
   props: DataConnectionHandlerCardProps
@@ -88,8 +89,9 @@ export function DataConnectionHandlerCard(
 }
 DataConnectionHandlerCard.displayName = "DataConnectionHandlerCard"
 
-export type DataConnectionHandlerCardSkeletonProps = React.ComponentProps<
-  typeof Card
+export type DataConnectionHandlerCardSkeletonProps = Omit<
+  React.ComponentProps<typeof Card>,
+  "children"
 >
 
 export function DataConnectionHandlerCardSkeleton(

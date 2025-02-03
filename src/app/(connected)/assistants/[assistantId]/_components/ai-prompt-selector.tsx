@@ -51,10 +51,11 @@ import { moveItemInArray } from "@/utils/misc"
 
 const logger = Logger.create("assistants")
 
-export type AiPromptSelectorProps = {
+export interface AiPromptSelectorProps
+  extends Omit<React.ComponentProps<"div">, "children"> {
   onSelect?: () => void
   onSetPrompt?: () => void
-} & Omit<React.ComponentProps<"div">, "children">
+}
 
 export function AiPromptSelector(props: AiPromptSelectorProps) {
   const { className, onSelect, onSetPrompt, ...divProps } = props

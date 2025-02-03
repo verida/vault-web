@@ -1,6 +1,6 @@
 import { ConnectionsSummaryNavTabs } from "@/app/(connected)/connections/summary/_components/connections-summary-nav-tabs"
 
-type ConnectionsSummaryLayoutProps = {
+export type ConnectionsSummaryLayoutProps = {
   children: React.ReactNode
 }
 

@@ -1,7 +1,7 @@
 import { Typography } from "@/components/typography"
 import { cn } from "@/styles/utils"
 
-type MessageBlockProps = React.ComponentProps<"div">
+export type MessageBlockProps = React.ComponentProps<"div">
 
 export function MessageBlock(props: MessageBlockProps) {
   const { className, ...divProps } = props
@@ -18,7 +18,7 @@ export function MessageBlock(props: MessageBlockProps) {
 }
 MessageBlock.displayName = "MessageBlock"
 
-type MessageBlockTitleProps = React.ComponentProps<typeof Typography>
+export type MessageBlockTitleProps = React.ComponentProps<typeof Typography>
 
 export function MessageBlockTitle(props: MessageBlockTitleProps) {
   const { variant = "base-semibold", className, ...typographyProps } = props
@@ -33,7 +33,7 @@ export function MessageBlockTitle(props: MessageBlockTitleProps) {
 }
 MessageBlockTitle.displayName = "MessageBlockTitle"
 
-type MessageBlockBodyProps = React.ComponentProps<typeof Typography>
+export type MessageBlockBodyProps = React.ComponentProps<typeof Typography>
 
 export function MessageBlockBody(props: MessageBlockBodyProps) {
   const { variant = "base-regular", className, ...typographyProps } = props

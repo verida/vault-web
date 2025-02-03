@@ -7,12 +7,13 @@ import { SummarySectionWrapper } from "@/app/(connected)/connections/summary/_co
 import { useDataProviders } from "@/features/data-connections/hooks/use-data-providers"
 import { DataProviderStatus } from "@/features/data-connections/types"
 
-export type DataProvidersSectionProps = {
+export interface DataProvidersSectionProps
+  extends Omit<React.ComponentProps<typeof SummarySectionWrapper>, "children"> {
   hideIfLoading?: boolean
   hideIfEmpty?: boolean
   hideIfError?: boolean
   filteredStatus: DataProviderStatus
-} & React.ComponentProps<typeof SummarySectionWrapper>
+}
 
 export function DataProvidersSection(props: DataProvidersSectionProps) {
   const {

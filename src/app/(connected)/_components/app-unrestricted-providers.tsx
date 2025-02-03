@@ -21,3 +21,4 @@ export function AppUnrestrictedProviders(props: AppUnrestrictedProvidersProps) {
     </VeridaInboxProvider>
   )
 }
+AppUnrestrictedProviders.displayName = "AppUnrestrictedProviders"

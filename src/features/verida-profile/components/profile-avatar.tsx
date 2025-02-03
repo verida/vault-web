@@ -4,10 +4,11 @@ import { EMPTY_VALUE_FALLBACK } from "@/constants/misc"
 import { VeridaProfile } from "@/features/verida-profile/types"
 import { cn } from "@/styles/utils"
 
-type ProfileAvatarProps = {
+export interface ProfileAvatarProps
+  extends Omit<React.ComponentProps<typeof Avatar>, "children"> {
   profile: VeridaProfile | undefined | null
   isLoading?: boolean
-} & Omit<React.ComponentProps<typeof Avatar>, "children">
+}
 
 export function ProfileAvatar(props: ProfileAvatarProps) {
   const { profile, isLoading, className, ...avatarProps } = props

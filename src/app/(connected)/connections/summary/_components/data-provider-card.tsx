@@ -9,9 +9,10 @@ import { Card, CardBody, CardHeader } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton"
 import { DataProvider } from "@/features/data-connections/types"
 
-export type DataProviderCardProps = {
+export interface DataProviderCardProps
+  extends Omit<React.ComponentProps<typeof Card>, "children"> {
   provider: DataProvider
-} & React.ComponentProps<typeof Card>
+}
 
 export function DataProviderCard(props: DataProviderCardProps) {
   const { provider, className, ...cardProps } = props

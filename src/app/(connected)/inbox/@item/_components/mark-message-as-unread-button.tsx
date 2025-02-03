@@ -16,10 +16,11 @@ import { cn } from "@/styles/utils"
 
 const logger = Logger.create("verida-inbox")
 
-type MarkMessageAsUnreadButtonProps = {
+export interface MarkMessageAsUnreadButtonProps
+  extends Omit<React.ComponentProps<typeof Button>, "onClick" | "children"> {
   messageRecord: VeridaInboxMessageRecord
   onMarkAsUnread?: () => void
-} & Omit<React.ComponentProps<typeof Button>, "onClick" | "children">
+}
 
 export function MarkMessageAsUnreadButton(
   props: MarkMessageAsUnreadButtonProps

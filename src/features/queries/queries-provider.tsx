@@ -67,7 +67,7 @@ const localStoragePersister = createSyncStoragePersister({
   retry: removeOldestQuery,
 })
 
-type QueriesProviderProps = {
+export type QueriesProviderProps = {
   children: React.ReactNode
 }
 
@@ -101,3 +101,4 @@ export function QueriesProvider(props: QueriesProviderProps) {
     </PersistQueryClientProvider>
   )
 }
+QueriesProvider.displayName = "QueriesProvider"

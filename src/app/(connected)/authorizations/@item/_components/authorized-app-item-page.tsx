@@ -41,7 +41,7 @@ import { VeridaAuthScope } from "@/features/verida-auth/types"
 import { cn } from "@/styles/utils"
 import { SHORT_DATE_TIME_FORMAT_OPTIONS } from "@/utils/date"
 
-type AuthorizedAppItemPageContentProps = {
+export type AuthorizedAppItemPageContentProps = {
   open: boolean
   onOpenChange: (open: boolean) => void
   itemId: string
@@ -172,9 +172,13 @@ export function AuthorizedAppItemPageContent(
 }
 AuthorizedAppItemPageContent.displayName = "AuthorizedAppItemPageContent"
 
-type ItemFieldUrlProps = {
+export interface ItemFieldUrlProps
+  extends Omit<
+    React.ComponentProps<typeof ItemField>,
+    "propertyName" | "children"
+  > {
   url?: string
-} & Omit<React.ComponentProps<typeof ItemField>, "propertyName" | "children">
+}
 
 export function ItemFieldUrl(props: ItemFieldUrlProps) {
   const { url, ...itemFieldProps } = props
@@ -208,9 +212,13 @@ export function ItemFieldUrl(props: ItemFieldUrlProps) {
 }
 ItemFieldUrl.displayName = "ItemFieldUrl"
 
-type ItemFieldScopesProps = {
+export interface ItemFieldScopesProps
+  extends Omit<
+    React.ComponentProps<typeof ItemField>,
+    "propertyName" | "children"
+  > {
   scopes?: VeridaAuthScope[]
-} & Omit<React.ComponentProps<typeof ItemField>, "propertyName" | "children">
+}
 
 export function ItemFieldScopes(props: ItemFieldScopesProps) {
   const { scopes, ...itemFieldProps } = props
@@ -239,9 +247,13 @@ export function ItemFieldScopes(props: ItemFieldScopesProps) {
 }
 ItemFieldScopes.displayName = "ItemFieldScopes"
 
-type ItemFieldLastUsedProps = {
+export interface ItemFieldLastUsedProps
+  extends Omit<
+    React.ComponentProps<typeof ItemField>,
+    "propertyName" | "children"
+  > {
   lastUsed?: string
-} & Omit<React.ComponentProps<typeof ItemField>, "propertyName" | "children">
+}
 
 export function ItemFieldLastUsed(props: ItemFieldLastUsedProps) {
   const { lastUsed, ...itemFieldProps } = props
@@ -270,9 +282,13 @@ export function ItemFieldLastUsed(props: ItemFieldLastUsedProps) {
 }
 ItemFieldLastUsed.displayName = "ItemFieldLastUsed"
 
-type ItemFieldCreatedProps = {
+export interface ItemFieldCreatedProps
+  extends Omit<
+    React.ComponentProps<typeof ItemField>,
+    "propertyName" | "children"
+  > {
   createdAt?: string
-} & Omit<React.ComponentProps<typeof ItemField>, "propertyName" | "children">
+}
 
 export function ItemFieldCreated(props: ItemFieldCreatedProps) {
   const { createdAt, ...itemFieldProps } = props
@@ -301,9 +317,9 @@ export function ItemFieldCreated(props: ItemFieldCreatedProps) {
 }
 ItemFieldCreated.displayName = "ItemFieldCreated"
 
-export type ItemFieldProps = {
+export interface ItemFieldProps extends React.ComponentProps<"div"> {
   propertyName: string
-} & React.ComponentProps<"div">
+}
 
 export function ItemField(props: ItemFieldProps) {
   const { propertyName, children, className, ...divProps } = props

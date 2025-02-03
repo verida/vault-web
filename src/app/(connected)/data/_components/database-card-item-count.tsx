@@ -5,9 +5,10 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { useVeridaDataRecords } from "@/features/verida-database/hooks/use-verida-data-records"
 import { cn } from "@/styles/utils"
 
-export type DatabaseCardItemCountProps = {
+export interface DatabaseCardItemCountProps
+  extends Omit<React.ComponentProps<"div">, "children"> {
   databaseVaultName: string
-} & React.ComponentProps<"div">
+}
 
 export function DatabaseCardItemCount(props: DatabaseCardItemCountProps) {
   const { databaseVaultName, className, ...divProps } = props

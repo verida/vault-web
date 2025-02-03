@@ -4,9 +4,10 @@ import { DataTableBaseRow } from "@/components/data-table/data-table-base-row"
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header"
 import { cn } from "@/styles/utils"
 
-export type DataTableGenericRowProps<TData> = {
+export interface DataTableGenericRowProps<TData>
+  extends Omit<React.ComponentProps<typeof DataTableBaseRow>, "children"> {
   row: Row<TData>
-} & Omit<React.ComponentProps<typeof DataTableBaseRow>, "children">
+}
 
 export function DataTableGenericRow<TData>(
   props: DataTableGenericRowProps<TData>
