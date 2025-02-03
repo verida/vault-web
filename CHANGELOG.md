@@ -1,3 +1,14 @@
+# 0.13.0 (2025-02-03)
+
+## Enhancements
+
+- Implement Verida Auth request consent flow
+- Implement user profile request feature
+
+## Misc
+
+- Update dependencies
+
 # 0.12.0 (2025-01-09)
 
 ## Enhancements
