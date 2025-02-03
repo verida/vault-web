@@ -16,7 +16,7 @@ import {
 import { Button } from "@/components/ui/button"
 import { wait } from "@/utils/misc"
 
-type RevokeAllAuthorizedAppsDialogProps = {
+export type RevokeAllAuthorizedAppsDialogProps = {
   children?: React.ReactNode
 }
 

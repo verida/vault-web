@@ -13,10 +13,11 @@ import { EMPTY_VALUE_FALLBACK } from "@/constants/misc"
 import { DATA_TABLE_PAGINATION_SIZES } from "@/features/data-table/constants"
 import { DataTablePaginationSizeValue } from "@/features/data-table/types"
 
-export type DataTablePaginationProps<TData> = {
+export interface DataTablePaginationProps<TData>
+  extends Omit<React.ComponentProps<"footer">, "children"> {
   table: Table<TData>
   paginationSizes?: DataTablePaginationSizeValue[]
-} & Omit<React.ComponentProps<"footer">, "children">
+}
 
 export function DataTablePagination<TData>(
   props: DataTablePaginationProps<TData>

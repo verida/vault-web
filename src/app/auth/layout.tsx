@@ -2,14 +2,14 @@ import { notFound } from "next/navigation"
 
 import { featureFlags } from "@/config/features"
 
-type OAuthLayoutProps = {
+export type AuthLayoutProps = {
   children: React.ReactNode
 }
 
-export default function OAuthLayout(props: OAuthLayoutProps) {
+export default function AuthLayout(props: AuthLayoutProps) {
   const { children } = props
 
-  if (!featureFlags.veridaOauth.enabled) {
+  if (!featureFlags.veridaAuth.enabled) {
     return notFound()
   }
 
@@ -19,4 +19,4 @@ export default function OAuthLayout(props: OAuthLayoutProps) {
     </div>
   )
 }
-OAuthLayout.displayName = "OAuthLayout"
+AuthLayout.displayName = "AuthLayout"

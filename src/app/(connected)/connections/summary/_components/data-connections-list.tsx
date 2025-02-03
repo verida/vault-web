@@ -17,7 +17,10 @@ import {
 import { useDataConnections } from "@/features/data-connections/hooks/use-data-connections"
 import { cn } from "@/styles/utils"
 
-export type DataConnectionsListProps = React.ComponentProps<"div">
+export type DataConnectionsListProps = Omit<
+  React.ComponentProps<"div">,
+  "children"
+>
 
 export function DataConnectionsList(props: DataConnectionsListProps) {
   const { className, ...divProps } = props

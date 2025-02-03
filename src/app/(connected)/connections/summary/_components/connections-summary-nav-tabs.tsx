@@ -49,3 +49,4 @@ export function ConnectionsSummaryNavTabs() {
     </Tabs>
   )
 }
+ConnectionsSummaryNavTabs.displayName = "ConnectionsSummaryNavTabs"

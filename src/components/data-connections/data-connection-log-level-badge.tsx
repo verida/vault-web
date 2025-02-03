@@ -12,9 +12,10 @@ import {
 import { DataConnectionSyncLogLevel } from "@/features/data-connections/types"
 import { cn } from "@/styles/utils"
 
-export type DataConnectionLogLevelBadgeProps = {
+export interface DataConnectionLogLevelBadgeProps
+  extends Pick<SVGProps<SVGSVGElement>, "className"> {
   level: DataConnectionSyncLogLevel
-} & Pick<SVGProps<SVGSVGElement>, "className">
+}
 
 export function DataConnectionLogLevelBadge(
   props: DataConnectionLogLevelBadgeProps

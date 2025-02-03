@@ -5,11 +5,12 @@ import { Typography } from "@/components/typography"
 import { getVeridaMessageStatus } from "@/features/verida-inbox/utils"
 import { cn } from "@/styles/utils"
 
-export type InboxMessageStatusIndicatorProps = {
+export interface InboxMessageStatusIndicatorProps
+  extends Omit<React.ComponentProps<"div">, "children"> {
   messageType?: string
   messageData?: unknown
   isMessageUnread?: boolean
-} & Omit<React.ComponentProps<"div">, "children">
+}
 
 export function InboxMessageStatusIndicator(
   props: InboxMessageStatusIndicatorProps

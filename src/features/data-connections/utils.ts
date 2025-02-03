@@ -69,23 +69,20 @@ export function buildConnectionHandlerId({
 export async function getDataProviders(): Promise<DataProvider[]> {
   logger.info("Fetching data providers")
 
-  // Use mock response if API configuration is missing
-  if (!commonConfig.PRIVATE_DATA_API_BASE_URL) {
-    logger.warn("Cannot get data providers due to incorrect API configuration")
-    throw new Error("Incorrect Private Data API configuration")
-  }
-
   try {
     logger.debug("Sending API request to fetch data providers")
-    const response = await fetch(
-      `${commonConfig.PRIVATE_DATA_API_BASE_URL}/api/rest/v1/providers`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
+
+    const url = new URL(
+      "/api/rest/v1/providers",
+      commonConfig.PRIVATE_DATA_API_BASE_URL
     )
+
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
 
     if (!response.ok) {
       throw new Error(`HTTP error ${response.status}`)
@@ -144,25 +141,21 @@ export async function getDataConnections(
 ): Promise<DataConnection[]> {
   logger.info("Fetching data connections")
 
-  if (!commonConfig.PRIVATE_DATA_API_BASE_URL) {
-    logger.warn(
-      "Cannot get data connections due to incorrect API configuration"
-    )
-    throw new Error("Incorrect Private Data API configuration")
-  }
-
   try {
     logger.debug("Sending API request to fetch data connections")
-    const response = await fetch(
-      `${commonConfig.PRIVATE_DATA_API_BASE_URL}/api/rest/v1/connections`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          "X-API-Key": sessionToken,
-        },
-      }
+
+    const url = new URL(
+      "/api/rest/v1/connections",
+      commonConfig.PRIVATE_DATA_API_BASE_URL
     )
+
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "X-API-Key": sessionToken,
+      },
+    })
 
     if (!response.ok) {
       throw new Error(`HTTP error ${response.status}`)
@@ -200,20 +193,14 @@ export async function syncDataConnection(
 ): Promise<DataConnectionsApiV1SyncConnectionResponse> {
   logger.info("Syncing data connection", { connectionId })
 
-  if (!commonConfig.PRIVATE_DATA_API_BASE_URL) {
-    logger.warn(
-      "Cannot sync data connection due to incorrect API configuration"
-    )
-    throw new Error("Incorrect Private Data API configuration")
-  }
-
   const url = new URL(
-    `${commonConfig.PRIVATE_DATA_API_BASE_URL}/api/rest/v1/connections/${connectionId}/sync`
+    `/api/rest/v1/connections/${connectionId}/sync`,
+    commonConfig.PRIVATE_DATA_API_BASE_URL
   )
 
   try {
     logger.debug("Sending API request to sync data connection")
-    const response = await fetch(url.toString(), {
+    const response = await fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -260,20 +247,14 @@ export async function syncAllDataConnections(
 ): Promise<DataConnectionsApiV1SyncAllConnectionsResponse> {
   logger.info("Syncing all data connections")
 
-  if (!commonConfig.PRIVATE_DATA_API_BASE_URL) {
-    logger.warn(
-      "Cannot sync data connection due to incorrect API configuration"
-    )
-    throw new Error("Incorrect Private Data API configuration")
-  }
-
   const url = new URL(
-    `${commonConfig.PRIVATE_DATA_API_BASE_URL}/api/rest/v1/connections/sync`
+    "/api/rest/v1/connections/sync",
+    commonConfig.PRIVATE_DATA_API_BASE_URL
   )
 
   try {
     logger.debug("Sending API request to sync data connection")
-    const response = await fetch(url.toString(), {
+    const response = await fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -321,20 +302,15 @@ export async function disconnectDataConnection(
     connectionId,
   })
 
-  if (!commonConfig.PRIVATE_DATA_API_BASE_URL) {
-    logger.warn(
-      "Cannot disconnect data connection due to incorrect Private Data API configuration"
-    )
-    throw new Error("Incorrect Private Data API configuration")
-  }
-
-  const url = new URL(
-    `${commonConfig.PRIVATE_DATA_API_BASE_URL}/api/rest/v1/connections/${connectionId}`
-  )
-
   try {
     logger.debug("Sending API request to disconnect data connection")
-    const response = await fetch(url.toString(), {
+
+    const url = new URL(
+      `/api/rest/v1/connections/${connectionId}`,
+      commonConfig.PRIVATE_DATA_API_BASE_URL
+    )
+
+    const response = await fetch(url, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -376,16 +352,13 @@ export function buildConnectProviderUrl(
   providerId: string,
   sessionToken: string
 ): string {
-  if (!commonConfig.PRIVATE_DATA_API_BASE_URL) {
-    throw new Error("Incorrect Private Data API configuration")
-  }
-
   // The connection will actually be driven by the Private Data server.
   // The Vault web app will open a new tab with the URL returned by this
   // function. Once the connection is established, the Private Data server will
   // redirect back to the Vault app as set in the `redirect` search param.
   const connectUrl = new URL(
-    `${commonConfig.PRIVATE_DATA_API_BASE_URL}/providers/${providerId}/connect`
+    `/providers/${providerId}/connect`,
+    commonConfig.PRIVATE_DATA_API_BASE_URL
   )
   connectUrl.searchParams.append("api_key", sessionToken)
 

@@ -38,9 +38,10 @@ const fallbackData: VeridaRecord<DataConnectionSyncLog>[] = []
 
 const getRowId = (record: VeridaRecord<DataConnectionSyncLog>) => record._id
 
-export type DataConnectionLogsProps = {
+export interface DataConnectionLogsProps
+  extends Pick<React.ComponentProps<typeof DataTable>, "className"> {
   connection: DataConnection
-} & Pick<React.ComponentProps<typeof DataTable>, "className">
+}
 
 export function DataConnectionLogs(props: DataConnectionLogsProps) {
   const { connection, className } = props

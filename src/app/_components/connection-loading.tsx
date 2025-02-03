@@ -1,7 +1,7 @@
 import { VeridaConnectionLoading } from "@/components/verida/verida-connection-loading"
 import { cn } from "@/styles/utils"
 
-type ConnectionLoadingProps = Omit<
+export type ConnectionLoadingProps = Omit<
   React.ComponentPropsWithoutRef<"div">,
   "children"
 >
@@ -21,3 +21,4 @@ export function ConnectionLoading(props: ConnectionLoadingProps) {
     </div>
   )
 }
+ConnectionLoading.displayName = "ConnectionLoading"

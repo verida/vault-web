@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   title: "AI Assistant",
 }
 
-type AssistantsLayoutProps = {
+export type AssistantsLayoutProps = {
   children: React.ReactNode
 }
 

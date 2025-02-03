@@ -6,7 +6,7 @@ import { PageWrapper } from "@/components/page-wrapper"
 import { Button } from "@/components/ui/button"
 import { featureFlags } from "@/config/features"
 
-type ConnectionsLogsLayoutProps = {
+export type ConnectionsLogsLayoutProps = {
   children: React.ReactNode
 }
 

@@ -11,7 +11,7 @@ import { RestrictedAccessStatus } from "@/features/restricted-access/types"
 import { getRestrictedAccessStatus } from "@/features/restricted-access/utils"
 import { useVerida } from "@/features/verida/hooks/use-verida"
 
-type RestrictedAccessProviderProps = {
+export type RestrictedAccessProviderProps = {
   children: React.ReactNode
 }
 

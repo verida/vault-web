@@ -22,17 +22,10 @@ export async function searchData({
       searchTypes,
     })
 
-    if (!commonConfig.PRIVATE_DATA_API_BASE_URL) {
-      logger.warn(
-        "Cannot fetch Verida data records due to incorrect API configuration"
-      )
-      throw new Error("Incorrect Private Data API configuration")
-    }
-
     const url = new URL(
-      `${commonConfig.PRIVATE_DATA_API_BASE_URL}/api/rest/v1/search/universal`
+      "/api/rest/v1/search/universal",
+      commonConfig.PRIVATE_DATA_API_BASE_URL
     )
-
     url.searchParams.set("keywords", searchValue)
     if (limit) {
       url.searchParams.set("limit", limit.toString())
@@ -44,7 +37,7 @@ export async function searchData({
     url.searchParams.set("searchTypes", searchTypes.join(","))
 
     // Make API request to search data
-    const response = await fetch(url.toString(), {
+    const response = await fetch(url, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

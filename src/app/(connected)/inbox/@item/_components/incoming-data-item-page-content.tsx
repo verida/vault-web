@@ -5,10 +5,6 @@ import { useCallback, useMemo, useState } from "react"
 import { InboxMessageHeader } from "@/app/(connected)/inbox/@item/_components/inbox-message-header"
 import { InvalidItemPageContent } from "@/app/(connected)/inbox/@item/_components/invalid-item-page-content"
 import { MarkMessageAsUnreadButton } from "@/app/(connected)/inbox/@item/_components/mark-message-as-unread-button"
-import {
-  MessageBlock,
-  MessageBlockTitle,
-} from "@/app/(connected)/inbox/@item/_components/message-block"
 import { ResetMessageStatusButton } from "@/app/(connected)/inbox/@item/_components/reset-message-status-button"
 import { InboxIncomingDataTypeIcon } from "@/components/icons/inbox-incoming"
 import {
@@ -22,6 +18,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { Card, CardDescription, CardTitle } from "@/components/ui/card"
+import { MessageBlock, MessageBlockBody } from "@/components/ui/message-block"
 import { commonConfig } from "@/config/common"
 import { EMPTY_VALUE_FALLBACK } from "@/constants/misc"
 import { UnsavedVeridaRecord } from "@/features/verida-database/types"
@@ -129,7 +126,7 @@ export function IncomingDataItemPageContent(
       <ItemSheetBody className="flex flex-col gap-6">
         <InboxMessageHeader inboxMessage={inboxMessage} />
         <MessageBlock>
-          <MessageBlockTitle>{inboxMessage.message}</MessageBlockTitle>
+          <MessageBlockBody>{`"${inboxMessage.message}"`}</MessageBlockBody>
         </MessageBlock>
         {data.data && data.data.length > 0 ? (
           <div className="flex flex-col gap-3">
@@ -207,16 +204,17 @@ export function IncomingDataItemPageContent(
 }
 IncomingDataItemPageContent.displayName = "IncomingDataItemPageContent"
 
-type IncomingDataItemCardProps = {
+interface IncomingDataItemCardProps
+  extends Omit<React.ComponentProps<typeof Card>, "children"> {
   item: UnsavedVeridaRecord
-} & Omit<React.ComponentProps<typeof Card>, "children">
+}
 
 function IncomingDataItemCard(props: IncomingDataItemCardProps) {
   const { item, className, ...cardProps } = props
 
   return (
     <Card
-      className={cn("flex flex-col gap-2 bg-surface-active p-4", className)}
+      className={cn("gap-2 bg-surface-active p-4", className)}
       {...cardProps}
     >
       <div className="flex flex-row items-center gap-2">
@@ -239,14 +237,12 @@ function IncomingDataItemCard(props: IncomingDataItemCardProps) {
           </CardTitle>
         </div>
       </div>
-      <div>
-        <CardDescription
-          variant="base-regular"
-          className={cn("line-clamp-2", item.summary ? "" : "italic")}
-        >
-          {item.summary || "No description"}
-        </CardDescription>
-      </div>
+      <CardDescription
+        variant="base-regular"
+        className={cn("line-clamp-2", item.summary ? "" : "italic")}
+      >
+        {item.summary || "No description"}
+      </CardDescription>
     </Card>
   )
 }

@@ -1,6 +1,7 @@
 "use client"
 
 import { intlFormat, isDate } from "date-fns"
+import Link from "next/link"
 import { ComponentProps, useCallback, useEffect, useState } from "react"
 
 import { Typography } from "@/components/typography"
@@ -13,6 +14,7 @@ import {
 import { Card } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton"
 import { EMPTY_VALUE_FALLBACK } from "@/constants/misc"
+import { getVeridaExplorerIdentityPageUrl } from "@/features/verida-explorer/utils"
 import { VeridaInboxMessageRecord } from "@/features/verida-inbox/types"
 import { ProfileAvatar } from "@/features/verida-profile/components/profile-avatar"
 import { UserYourselfBadge } from "@/features/verida-profile/components/user-yourself-badge"
@@ -27,9 +29,10 @@ import {
   formatTimeDistanceFromNow,
 } from "@/utils/date"
 
-type InboxMessageHeaderProps = {
+export interface InboxMessageHeaderProps
+  extends Omit<ComponentProps<"div">, "children"> {
   inboxMessage: VeridaInboxMessageRecord
-} & Omit<ComponentProps<"div">, "children">
+}
 
 export function InboxMessageHeader(props: InboxMessageHeaderProps) {
   const { inboxMessage, className, ...divProps } = props
@@ -115,7 +118,7 @@ export function InboxMessageHeader(props: InboxMessageHeaderProps) {
             </div>
           </div>
           <AccordionContent className="pb-0">
-            <Card className="flex flex-col gap-4 px-4 py-3 shadow-none">
+            <Card className="gap-4 px-4 py-3 shadow-none">
               {sentBy.context &&
               sentBy.context !== VERIDA_VAULT_CONTEXT_NAME ? (
                 <div className="flex flex-col gap-1">
@@ -132,9 +135,16 @@ export function InboxMessageHeader(props: InboxMessageHeaderProps) {
                   <Typography variant="base-semibold">DID</Typography>
                   {did === sentBy.did && <UserYourselfBadge className="" />}
                 </div>
-                <Typography variant="base-regular" className="break-words">
-                  {sentBy.did}
-                </Typography>
+                <Link
+                  href={getVeridaExplorerIdentityPageUrl(sentBy.did)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline"
+                >
+                  <Typography variant="base-regular" className="break-words">
+                    {sentBy.did}
+                  </Typography>
+                </Link>
               </div>
             </Card>
           </AccordionContent>

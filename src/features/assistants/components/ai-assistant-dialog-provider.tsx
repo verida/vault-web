@@ -24,7 +24,7 @@ import {
 } from "@/features/assistants/types"
 import { getAssistantPageRoute } from "@/features/routes/utils"
 
-type AiAssistantDialogProviderProps = {
+export type AiAssistantDialogProviderProps = {
   children: React.ReactNode
 }
 

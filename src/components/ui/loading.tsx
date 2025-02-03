@@ -50,7 +50,7 @@ export function LoadingBlockDescription(props: LoadingBlockDescriptionProps) {
 }
 LoadingBlockDescription.displayName = "LoadingBlockDescription"
 
-type LoadingProgressProps = React.ComponentProps<typeof Progress>
+export type LoadingProgressProps = React.ComponentProps<typeof Progress>
 
 export function LoadingProgress(props: LoadingProgressProps) {
   return <Progress {...props} />

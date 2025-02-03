@@ -4,7 +4,7 @@ import { AiAssistantCombobox } from "@/app/(connected)/assistants/[assistantId]/
 import { PageWrapper } from "@/components/page-wrapper"
 import { Typography } from "@/components/typography"
 
-type AssistantLayoutProps = {
+export type AssistantLayoutProps = {
   children: React.ReactNode
   params: {
     assistantId: string

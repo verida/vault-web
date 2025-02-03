@@ -5,7 +5,7 @@ import {
   LoadingBlockTitle,
 } from "@/components/ui/loading"
 
-export default function OAuthLoadingPage() {
+export default function AuthLoadingPage() {
   return (
     <LoadingBlock>
       <LoadingBlockSpinner />
@@ -14,4 +14,4 @@ export default function OAuthLoadingPage() {
     </LoadingBlock>
   )
 }
-OAuthLoadingPage.displayName = "OAuthLoadingPage"
+AuthLoadingPage.displayName = "AuthLoadingPage"

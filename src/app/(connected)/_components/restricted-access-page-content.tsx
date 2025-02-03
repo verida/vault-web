@@ -18,10 +18,11 @@ import {
 import { ACCESS_REQUEST_FORM_URL } from "@/features/restricted-access/constants"
 import { cn } from "@/styles/utils"
 
-export type RestrictedAccessPageContentProps = {
+export interface RestrictedAccessPageContentProps
+  extends Omit<React.ComponentPropsWithoutRef<"div">, "children"> {
   isLoading: boolean
   isError: boolean
-} & Omit<React.ComponentPropsWithoutRef<"div">, "children">
+}
 
 export function RestrictedAccessPageContent(
   props: RestrictedAccessPageContentProps
@@ -92,3 +93,4 @@ export function RestrictedAccessPageContent(
     </div>
   )
 }
+RestrictedAccessPageContent.displayName = "RestrictedAccessPageContent"

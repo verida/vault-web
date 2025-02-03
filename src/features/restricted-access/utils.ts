@@ -17,20 +17,15 @@ export async function getRestrictedAccessStatus(
 ): Promise<RestrictedAccessStatus> {
   logger.info("Checking restricted access status", { did })
 
-  if (!commonConfig.PRIVATE_DATA_API_BASE_URL) {
-    logger.warn(
-      "Cannot check restricted access status due to incorrect API configuration"
-    )
-    throw new Error("Incorrect Private Data API configuration")
-  }
-
-  const url = new URL(
-    `${commonConfig.PRIVATE_DATA_API_BASE_URL}/api/rest/v1/access/${did}`
-  )
-
   try {
     logger.debug("Sending API request to check restricted access status")
-    const response = await fetch(url.toString(), {
+
+    const url = new URL(
+      `/api/rest/v1/access/${did}`,
+      commonConfig.PRIVATE_DATA_API_BASE_URL
+    )
+
+    const response = await fetch(url, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

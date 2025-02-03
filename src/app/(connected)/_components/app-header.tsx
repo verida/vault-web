@@ -51,3 +51,4 @@ export function AppHeader(props: AppHeaderProps) {
     </header>
   )
 }
+AppHeader.displayName = "AppHeader"

@@ -47,7 +47,8 @@ export async function fetchVeridaProfileFromApi({
       url.searchParams.set("ignoreCache", "true")
     }
 
-    const response = await fetch(url.toString())
+    const response = await fetch(url)
+
     const data = await response.json()
 
     const validatedProfile = VeridaProfileApiResponseSchema.parse(data)

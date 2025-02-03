@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/loading"
 import { AiAssistantHotloadResult } from "@/features/assistants/types"
 
-type AssistantLoadingPageProps = {
+export type AssistantLoadingPageProps = {
   hotload?: AiAssistantHotloadResult
 }
 

@@ -20,7 +20,7 @@ import { useGetAiAssistants } from "@/features/assistants/hooks/use-get-ai-assis
 import { getAssistantPageRoute } from "@/features/routes/utils"
 import { getMediaQuery } from "@/styles/utils"
 
-type AssistantPageProps = {
+export type AssistantPageProps = {
   params: {
     assistantId: string
   }
@@ -83,7 +83,7 @@ export default function AssistantPage(props: AssistantPageProps) {
       <div className="flex h-full w-full flex-row justify-center gap-6">
         {isXL ? (
           <aside>
-            <Card className="flex w-[26.5rem] flex-col gap-3 rounded-xl p-3">
+            <Card className="w-[26.5rem] gap-3 rounded-xl p-3">
               <div className="flex flex-row items-center gap-2 px-1 pt-1 text-muted-foreground">
                 <MessageSquareMoreIcon className="size-5 sm:size-6" />
                 <Typography variant="base-semibold">

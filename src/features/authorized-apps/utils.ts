@@ -1,4 +1,3 @@
-import { commonConfig } from "@/config/common"
 import { MOCK_AUTHORIZED_APPS } from "@/features/authorized-apps/mock"
 import { AuthorizedAppRecord } from "@/features/authorized-apps/types"
 import { Logger } from "@/features/telemetry/logger"
@@ -30,12 +29,6 @@ export async function getAuthorizedApps(
   { sessionToken, filter, options }: GetAuthorizedAppsArgs
 ) {
   logger.info("Fetching authorized apps")
-
-  // Use mock response if API configuration is missing
-  if (!commonConfig.PRIVATE_DATA_API_BASE_URL) {
-    logger.warn("Cannot get authorized apps due to incorrect API configuration")
-    throw new Error("Incorrect Private Data API configuration")
-  }
 
   try {
     // TODO: Implement getting authorized apps from the API
@@ -80,12 +73,6 @@ export async function getAuthorizedApp(
   { sessionToken, authorizedAppRecordId }: GetAuthorizedAppArgs
 ) {
   logger.info("Fetching authorized app")
-
-  // Use mock response if API configuration is missing
-  if (!commonConfig.PRIVATE_DATA_API_BASE_URL) {
-    logger.warn("Cannot get authorized apps due to incorrect API configuration")
-    throw new Error("Incorrect Private Data API configuration")
-  }
 
   try {
     // TODO: Implement getting authorized apps from the API

@@ -117,8 +117,9 @@ export function AppHeaderNavBar(props: AppHeaderNavBarProps) {
     </NavigationMenu>
   )
 }
+AppHeaderNavBar.displayName = "AppHeaderNavBar"
 
-type AppHeaderNavMenuProps = Pick<
+export type AppHeaderNavMenuProps = Pick<
   React.ComponentProps<typeof Button>,
   "className"
 >
@@ -249,3 +250,4 @@ export function AppHeaderNavMenu(props: AppHeaderNavMenuProps) {
     </Popover>
   )
 }
+AppHeaderNavMenu.displayName = "AppHeaderNavMenu"

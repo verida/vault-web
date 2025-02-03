@@ -10,7 +10,7 @@ import {
   AiPromptConfigDialogState,
 } from "@/features/assistants/contexts/ai-prompt-config-dialog-context"
 
-type AiPromptConfigDialogProviderProps = {
+export type AiPromptConfigDialogProviderProps = {
   children: React.ReactNode
 }
 

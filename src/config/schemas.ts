@@ -33,7 +33,7 @@ export const CommonConfigSchema = z.object({
     .optional()
     .transform((value) => (value === "" ? undefined : value)),
   PRIVATE_DATA_API_BASE_URL: z.string().url(),
-  FEATURE_FLAG_VERIDA_OAUTH_ENABLED: z
+  FEATURE_FLAG_VERIDA_AUTH_ENABLED: z
     .string()
     .optional()
     .transform((value) => value === "true"),
@@ -88,6 +88,10 @@ export const CommonConfigSchema = z.object({
     .optional()
     .transform((value) => value === "true"),
   FEATURE_FLAG_DATA_CONNECTIONS_LOGS_DESTROY_ENABLED: z
+    .string()
+    .optional()
+    .transform((value) => value === "true"),
+  FEATURE_FLAG_REQUESTS_ENABLED: z
     .string()
     .optional()
     .transform((value) => value === "true"),

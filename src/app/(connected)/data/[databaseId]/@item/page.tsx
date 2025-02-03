@@ -6,7 +6,7 @@ import { DataItemPageContent } from "@/app/(connected)/data/[databaseId]/@item/_
 import { USER_DATABASE_DEFS } from "@/features/data/constants"
 import { useItemIdState } from "@/features/data/hooks/use-itemd-id-state"
 
-type DataItemPageProps = {
+export type DataItemPageProps = {
   params: { databaseId: string }
 }
 

@@ -3,8 +3,8 @@ import { commonConfig } from "@/config/common"
 // Basic feature flags for now
 // But likely to stay as a separate global variable like this
 export const featureFlags = {
-  veridaOauth: {
-    enabled: commonConfig.FEATURE_FLAG_VERIDA_OAUTH_ENABLED,
+  veridaAuth: {
+    enabled: commonConfig.FEATURE_FLAG_VERIDA_AUTH_ENABLED,
     authorizedAppsUi: {
       enabled: commonConfig.FEATURE_FLAG_AUTHORIZED_APPS_ENABLED,
     },
@@ -43,5 +43,8 @@ export const featureFlags = {
       enabled: commonConfig.FEATURE_FLAG_DATA_CONNECTIONS_LOGS_ENABLED,
       destroy: commonConfig.FEATURE_FLAG_DATA_CONNECTIONS_LOGS_DESTROY_ENABLED,
     },
+  },
+  requests: {
+    enabled: commonConfig.FEATURE_FLAG_REQUESTS_ENABLED,
   },
 }

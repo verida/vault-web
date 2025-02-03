@@ -63,3 +63,4 @@ export function SyncAllConnectionsButton(props: SyncAllConnectionsButtonProps) {
 
   return null
 }
+SyncAllConnectionsButton.displayName = "SyncAllConnectionsButton"

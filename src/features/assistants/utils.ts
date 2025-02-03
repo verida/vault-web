@@ -26,14 +26,6 @@ export async function sendAiPromptInputToAssistant(
 ): Promise<AiAssistantOutput> {
   logger.info("Processing prompt input")
 
-  // Use mock response if API configuration is missing
-  if (!commonConfig.PRIVATE_DATA_API_BASE_URL) {
-    logger.warn(
-      "Unable to process prompt input due to missing API configuration"
-    )
-    throw new Error("API configuration is missing")
-  }
-
   if (!aiPromptInput.prompt) {
     throw new Error("Prompt is required")
   }
@@ -60,17 +52,20 @@ export async function sendAiPromptInputToAssistant(
 
   try {
     logger.debug("Sending request to AI assistant API")
-    const response = await fetch(
-      `${commonConfig.PRIVATE_DATA_API_BASE_URL}/api/rest/v1/llm/agent`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "X-API-Key": sessionToken,
-        },
-        body: JSON.stringify(body),
-      }
+
+    const url = new URL(
+      "/api/rest/v1/llm/agent",
+      commonConfig.PRIVATE_DATA_API_BASE_URL
     )
+
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-API-Key": sessionToken,
+      },
+      body: JSON.stringify(body),
+    })
 
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`)
@@ -112,18 +107,14 @@ export function hotloadAPI(
   return new Promise((resolve, reject) => {
     logger.info("Starting AI assistant hotload")
 
-    if (!commonConfig.PRIVATE_DATA_API_BASE_URL) {
-      logger.warn("Unable to hotload AI assistant due to missing configuration")
-      reject(new Error("API configuration is missing"))
-      return
-    }
-
     // Create an EventSource to receive progress updates
     const url = new URL(
-      `${commonConfig.PRIVATE_DATA_API_BASE_URL}/api/rest/v1/llm/hotload`
+      "/api/rest/v1/llm/hotload",
+      commonConfig.PRIVATE_DATA_API_BASE_URL
     )
     url.searchParams.append("api_key", sessionToken)
-    const eventSource = new EventSource(url.toString())
+
+    const eventSource = new EventSource(url)
 
     eventSource.onmessage = (event) => {
       const parsedData = JSON.parse(event.data)

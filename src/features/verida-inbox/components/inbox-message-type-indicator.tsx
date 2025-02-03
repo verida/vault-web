@@ -7,10 +7,11 @@ import { Typography } from "@/components/typography"
 import { VeridaInboxMessageSupportedType } from "@/features/verida-inbox/types"
 import { cn } from "@/styles/utils"
 
-type InboxMessageTypeIndicatorProps = {
+export interface InboxMessageTypeIndicatorProps
+  extends Omit<React.ComponentProps<"div">, "children"> {
   type: string
   isMessageUnread?: boolean
-} & Omit<React.ComponentProps<"div">, "children">
+}
 
 export function InboxMessageTypeIndicator(
   props: InboxMessageTypeIndicatorProps

@@ -5,9 +5,9 @@ import { Card, CardBody } from "@/components/ui/card"
 import { DatabaseDefinition } from "@/features/data/types"
 import { cn } from "@/styles/utils"
 
-export type DatabaseCardProps = {
+export interface DatabaseCardProps extends React.ComponentProps<typeof Card> {
   databaseDefinition: DatabaseDefinition
-} & React.ComponentProps<typeof Card>
+}
 
 export function DatabaseCard(props: DatabaseCardProps) {
   const { databaseDefinition, className, ...cardProps } = props
@@ -15,12 +15,12 @@ export function DatabaseCard(props: DatabaseCardProps) {
   return (
     <Card
       className={cn(
-        "rounded-2xl hover:border-border-hover hover:bg-surface-hover",
+        "rounded-2xl px-4 hover:border-border-hover hover:bg-surface-hover md:px-6",
         className
       )}
       {...cardProps}
     >
-      <CardBody className="flex flex-col gap-4 px-4 py-6 md:gap-6 md:px-6">
+      <CardBody className="flex flex-col gap-4 md:gap-6">
         <DatabaseIcon fill={databaseDefinition.color} />
         <div className="flex flex-col gap-1">
           <Typography variant="heading-4">

@@ -37,3 +37,4 @@ export function LandingPageFooter(props: LandingPageFooterProps) {
     </footer>
   )
 }
+LandingPageFooter.displayName = "LandingPageFooter"

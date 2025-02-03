@@ -1,9 +1,23 @@
+import { featureFlags } from "@/config/features"
+
 export function getRootPageRoute() {
   return `/`
 }
 
 export function getDefaultRedirectPathAfterConnection() {
-  return getAssistantsPageRoute()
+  if (featureFlags.assistant.enabled) {
+    return getAssistantsPageRoute()
+  }
+
+  if (featureFlags.data.enabled) {
+    return getDataPageRoute()
+  }
+
+  if (featureFlags.inbox.enabled) {
+    return getInboxPageRoute()
+  }
+
+  return getConnectionsPageRoute()
 }
 
 export function getAssistantsPageRoute() {
@@ -72,4 +86,8 @@ export function getNewDataConnectionCallbackPageRoute() {
 
 export function getAuthorizedAppsPageRoute() {
   return `/authorizations`
+}
+
+export function getAuthPageRoute() {
+  return `/auth`
 }

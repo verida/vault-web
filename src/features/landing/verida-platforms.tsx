@@ -5,7 +5,7 @@ import { Telegram } from "@/components/icons/telegram"
 import { Twitter } from "@/components/icons/twitter"
 import { Youtube } from "@/components/icons/youtube"
 
-type VeridaPlatform = {
+export type VeridaPlatform = {
   label: string
   url: string
   icon: React.ComponentType<React.ComponentProps<"svg">>

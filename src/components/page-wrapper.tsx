@@ -5,14 +5,14 @@ import { Typography } from "@/components/typography"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/styles/utils"
 
-export type PageWrapperProps = {
+export interface PageWrapperProps extends React.ComponentProps<"div"> {
   pageTitle?: string | React.ReactNode
   rightContent?: React.ReactNode
   backNavigationHref?: string
   backNavigationLabel?: string
   children: React.ReactNode
   contentClassName?: React.ComponentProps<"div">["className"]
-} & React.ComponentProps<"div">
+}
 
 export function PageWrapper(props: PageWrapperProps) {
   const {

@@ -25,7 +25,7 @@ import { useVerida } from "@/features/verida/hooks/use-verida"
 
 const logger = Logger.create("verida-inbox")
 
-type VeridaInboxProviderProps = {
+export type VeridaInboxProviderProps = {
   children: React.ReactNode
 }
 
@@ -118,7 +118,9 @@ export function VeridaInboxProvider(props: VeridaInboxProviderProps) {
 }
 VeridaInboxProvider.displayName = "VeridaInboxProvider"
 
-type NewMessageToastActionProps = { messageId: string }
+type NewMessageToastActionProps = {
+  messageId: string
+}
 
 function NewMessageToastAction(props: NewMessageToastActionProps) {
   const { messageId } = props
@@ -141,3 +143,4 @@ function NewMessageToastAction(props: NewMessageToastActionProps) {
     </ToastAction>
   )
 }
+NewMessageToastAction.displayName = "NewMessageToastAction"

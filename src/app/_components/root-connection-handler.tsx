@@ -31,3 +31,4 @@ export function RootConnectionHandler(props: RootConnectionHandlerProps) {
 
   return <>{children}</>
 }
+RootConnectionHandler.displayName = "RootConnectionHandler"

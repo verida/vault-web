@@ -225,7 +225,7 @@ function SearchCommandItem(props: SearchCommandItemProps) {
 }
 SearchCommandItem.displayName = "SearchCommandItem"
 
-export type SearchCommandSearchTypeMenuProps = {
+type SearchCommandSearchTypeMenuProps = {
   selectedSearchTypes: SearchType[]
   onSelectSearchType: (searchType: SearchType, isSelected: boolean) => void
   showIndicator?: boolean
@@ -338,6 +338,7 @@ function SearchCommandSearchTypeMenu(props: SearchCommandSearchTypeMenuProps) {
     </DropdownMenu>
   )
 }
+SearchCommandSearchTypeMenu.displayName = "SearchCommandSearchTypeMenu"
 
 export type AppCommandDialogTriggerProps = Omit<
   React.ComponentProps<typeof Button>,

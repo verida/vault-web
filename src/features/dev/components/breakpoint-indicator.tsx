@@ -2,7 +2,10 @@ import React from "react"
 
 import { cn } from "@/styles/utils"
 
-export type BreakpointIndicatorProps = React.ComponentProps<"div">
+export type BreakpointIndicatorProps = Omit<
+  React.ComponentProps<"div">,
+  "children"
+>
 
 export function BreakpointIndicator(props: BreakpointIndicatorProps) {
   const { className, ...divProps } = props

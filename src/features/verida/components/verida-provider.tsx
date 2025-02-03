@@ -37,7 +37,7 @@ const webUserInstance = new WebUser({
   },
 })
 
-export interface VeridaProviderProps {
+export type VeridaProviderProps = {
   children?: React.ReactNode
 }
 

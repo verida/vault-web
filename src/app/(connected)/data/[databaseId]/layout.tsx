@@ -7,7 +7,7 @@ import {
   LoadingBlockTitle,
 } from "@/components/ui/loading"
 
-type DatabaseLayoutProps = {
+export type DatabaseLayoutProps = {
   children: React.ReactNode
   item: React.ReactNode
 }

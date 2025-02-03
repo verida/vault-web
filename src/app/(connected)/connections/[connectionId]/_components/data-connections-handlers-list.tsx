@@ -8,10 +8,11 @@ import { useDataProvider } from "@/features/data-connections/hooks/use-data-prov
 import { DataConnectionHandler } from "@/features/data-connections/types"
 import { cn } from "@/styles/utils"
 
-export type DataConnectionsHandlersListProps = {
+export interface DataConnectionsHandlersListProps
+  extends Omit<React.ComponentProps<"div">, "children"> {
   connectionHandlers: DataConnectionHandler[]
   providerId: string
-} & React.ComponentProps<"div">
+}
 
 export function DataConnectionsHandlersList(
   props: DataConnectionsHandlersListProps
