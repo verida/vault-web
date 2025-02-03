@@ -71,10 +71,10 @@
     "zod": "^3.24.1"
   },
   "devDependencies": {
-    "@sentry/types": "^8.51.0",
+    "@sentry/types": "^8.53.0",
     "@tailwindcss/typography": "^0.5.16",
-    "@tanstack/react-query-devtools": "^5.64.2",
-    "@trivago/prettier-plugin-sort-imports": "^5.2.1",
+    "@tanstack/react-query-devtools": "^5.66.0",
+    "@trivago/prettier-plugin-sort-imports": "^5.2.2",
     "@types/node": "^18.19.74",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
