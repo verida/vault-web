@@ -29,23 +29,20 @@ export async function getUserProfile({
 }: GetUserProfileArgs) {
   logger.info("Getting user profile")
 
-  if (!commonConfig.PRIVATE_DATA_API_BASE_URL) {
-    logger.warn("Cannot get Verida records due to incorrect API configuration")
-    throw new Error("Incorrect Private Data API configuration")
-  }
-
   try {
-    const response = await fetch(
-      `${commonConfig.PRIVATE_DATA_API_BASE_URL}/api/rest/v1/llm/profile`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "X-API-Key": sessionToken,
-        },
-        body: JSON.stringify(params),
-      }
+    const url = new URL(
+      "/api/rest/v1/llm/profile",
+      commonConfig.PRIVATE_DATA_API_BASE_URL
     )
+
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-API-Key": sessionToken,
+      },
+      body: JSON.stringify(params),
+    })
 
     if (!response.ok) {
       throw new Error(`HTTP error ${response.status}`)

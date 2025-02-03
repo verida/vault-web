@@ -38,17 +38,13 @@ export async function getVeridaAuthScopeDefinitions(): Promise<
 > {
   logger.info("Getting Verida Auth scope definitions")
 
-  if (!commonConfig.PRIVATE_DATA_API_BASE_URL) {
-    logger.warn(
-      "Cannot get Verida Auth scope definitions due to incorrect API configuration"
-    )
-    throw new Error("Incorrect Private Data API configuration")
-  }
-
   try {
-    const response = await fetch(
-      `${commonConfig.PRIVATE_DATA_API_BASE_URL}/api/rest/v1/auth/scopes`
+    const url = new URL(
+      "/api/rest/v1/auth/scopes",
+      commonConfig.PRIVATE_DATA_API_BASE_URL
     )
+
+    const response = await fetch(url)
 
     if (!response.ok) {
       throw new Error(`HTTP error ${response.status}`)
@@ -96,23 +92,17 @@ export async function resolveVeridaAuthScopes(
 ): Promise<ResolveVeridaAuthScopesOutput> {
   logger.info("Resolving Verida Auth scopes")
 
-  if (!commonConfig.PRIVATE_DATA_API_BASE_URL) {
-    logger.warn(
-      "Cannot resolve Verida Auth scopes due to incorrect API configuration"
-    )
-    throw new Error("Incorrect Private Data API configuration")
-  }
-
   try {
     const url = new URL(
-      `${commonConfig.PRIVATE_DATA_API_BASE_URL}/api/rest/v1/auth/resolve-scopes`
+      "/api/rest/v1/auth/resolve-scopes",
+      commonConfig.PRIVATE_DATA_API_BASE_URL
     )
 
     for (const scope of scopes) {
       url.searchParams.append("scopes", scope)
     }
 
-    const response = await fetch(url.toString())
+    const response = await fetch(url)
 
     if (!response.ok) {
       throw new Error(`HTTP error ${response.status}`)
@@ -219,13 +209,6 @@ export async function allowVeridaAuthRequest({
 }: AllowVeridaAuthRequestArgs): Promise<AllowVeridaAuthRequestOutput> {
   logger.info("Allowing Auth request")
 
-  if (!commonConfig.PRIVATE_DATA_API_BASE_URL) {
-    logger.warn(
-      "Cannot get Verida Auth scope definitions due to incorrect API configuration"
-    )
-    throw new Error("Incorrect Private Data API configuration")
-  }
-
   if (!payload.scopes.length) {
     throw new Error("Invalid scopes")
   }
@@ -257,17 +240,19 @@ export async function allowVeridaAuthRequest({
   }
 
   try {
-    const response = await fetch(
-      `${commonConfig.PRIVATE_DATA_API_BASE_URL}/api/rest/v1/auth/auth`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "X-API-Key": sessionToken,
-        },
-        body: JSON.stringify(body),
-      }
+    const url = new URL(
+      "/api/rest/v1/auth/auth",
+      commonConfig.PRIVATE_DATA_API_BASE_URL
     )
+
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-API-Key": sessionToken,
+      },
+      body: JSON.stringify(body),
+    })
 
     const data = await response.json()
 

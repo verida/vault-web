@@ -67,24 +67,21 @@ export async function getVeridaDataRecords<T extends z.ZodObject<any>>({
     options: resolvedOptions,
   })
 
-  if (!commonConfig.PRIVATE_DATA_API_BASE_URL) {
-    logger.warn("Cannot get Verida records due to incorrect API configuration")
-    throw new Error("Incorrect Private Data API configuration")
-  }
-
   try {
-    // Make API request to fetch data
-    const response = await fetch(
-      `${commonConfig.PRIVATE_DATA_API_BASE_URL}/api/rest/v1/db/query/${databaseName}`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "X-API-Key": sessionToken,
-        },
-        body: JSON.stringify({ query: filter, options: resolvedOptions }),
-      }
+    const url = new URL(
+      `/api/rest/v1/db/query/${databaseName}`,
+      commonConfig.PRIVATE_DATA_API_BASE_URL
     )
+
+    // Make API request to fetch data
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-API-Key": sessionToken,
+      },
+      body: JSON.stringify({ query: filter, options: resolvedOptions }),
+    })
 
     if (!response.ok) {
       throw new Error(`HTTP error ${response.status}`)
@@ -145,25 +142,20 @@ export async function getVeridaDataRecord<T extends z.ZodObject<any>>({
     recordId,
   })
 
-  if (!commonConfig.PRIVATE_DATA_API_BASE_URL) {
-    logger.warn(
-      "Cannot fetch Verida data record due to incorrect API configuration"
-    )
-    throw new Error("Incorrect Private Data API configuration")
-  }
-
   try {
-    // Make API request to fetch data
-    const response = await fetch(
-      `${commonConfig.PRIVATE_DATA_API_BASE_URL}/api/rest/v1/db/get/${databaseName}/${recordId}`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          "X-API-Key": sessionToken,
-        },
-      }
+    const url = new URL(
+      `/api/rest/v1/db/get/${databaseName}/${recordId}`,
+      commonConfig.PRIVATE_DATA_API_BASE_URL
     )
+
+    // Make API request to fetch data
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "X-API-Key": sessionToken,
+      },
+    })
 
     if (!response.ok) {
       throw new Error(`HTTP error ${response.status}`)
@@ -221,14 +213,6 @@ export async function createVeridaDataRecord<T extends z.ZodObject<any>>({
     databaseName,
     record,
   })
-
-  // Check if the API base URL is configured
-  if (!commonConfig.PRIVATE_DATA_API_BASE_URL) {
-    logger.warn(
-      "Cannot create Verida record due to incorrect API configuration"
-    )
-    throw new Error("Incorrect Private Data API configuration")
-  }
 
   try {
     // Encode the schema URL for the database
@@ -316,14 +300,6 @@ export async function updateVeridaDataRecord<T extends z.ZodObject<any>>({
     databaseName,
     record,
   })
-
-  // Check if the API base URL is configured
-  if (!commonConfig.PRIVATE_DATA_API_BASE_URL) {
-    logger.warn(
-      "Cannot update Verida record due to incorrect API configuration"
-    )
-    throw new Error("Incorrect Private Data API configuration")
-  }
 
   try {
     // Encode the schema URL for the database
@@ -448,13 +424,6 @@ async function performVeridaDeleteOperation({
     databaseName,
     ...(recordId && { recordId }),
   })
-
-  if (!commonConfig.PRIVATE_DATA_API_BASE_URL) {
-    logger.warn(
-      "Cannot perform delete operation due to incorrect API configuration"
-    )
-    throw new Error("Incorrect Private Data API configuration")
-  }
 
   try {
     const schemaUrlBase64 = getEncodedSchemaFromDatabaseName(databaseName)
