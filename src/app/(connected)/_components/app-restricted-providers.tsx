@@ -1,5 +1,5 @@
-"use client"
-
+import { ConditionalWrappingComponent } from "@/components/conditional-wrapping-component"
+import { featureFlags } from "@/config/features"
 import { AssistantsProvider } from "@/features/assistants/components/assistants-provider"
 import { DataConnectionsProvider } from "@/features/data-connections/components/data-connections-provider"
 
@@ -15,7 +15,13 @@ export function AppRestrictedProviders(props: AppRestrictedProvidersProps) {
   // For global providers required in any cases, use the RootProviders component.
   return (
     <DataConnectionsProvider>
-      <AssistantsProvider>{children}</AssistantsProvider>
+      <ConditionalWrappingComponent
+        condition={featureFlags.assistant.enabled}
+        Component={AssistantsProvider}
+      >
+        {children}
+      </ConditionalWrappingComponent>
     </DataConnectionsProvider>
   )
 }
+AppRestrictedProviders.displayName = "AppRestrictedProviders"
