@@ -1,3 +1,13 @@
+# 0.14.0 (2025-02-04)
+
+## Enhancements
+
+- Improve Verida Auth consent flow
+
+## Misc
+
+- Update dependencies
+
 # 0.13.0 (2025-02-03)
 
 ## Enhancements
