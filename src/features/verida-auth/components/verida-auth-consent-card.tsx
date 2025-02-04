@@ -27,6 +27,12 @@ import {
   LoadingBlockTitle,
 } from "@/components/ui/loading"
 import {
+  SuccessBlock,
+  SuccessBlockDescription,
+  SuccessBlockImage,
+  SuccessBlockTitle,
+} from "@/components/ui/success"
+import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
@@ -89,6 +95,7 @@ export function VeridaAuthConsentCard(props: VeridaAuthConsentCardProps) {
 
   const [isAllowing, setIsAllowing] = useState(false)
   const [errorRedirectUrl, setErrorRedirectUrl] = useState<string | null>(null)
+  const [successRedirectUrl, setSuccessRedirectUrl] = useState<URL | null>(null)
 
   const handleDenyClick = useCallback(() => {
     try {
@@ -106,8 +113,10 @@ export function VeridaAuthConsentCard(props: VeridaAuthConsentCardProps) {
 
       const { redirectUrl } = await allow()
 
-      // Redirect directly
-      window.location.href = redirectUrl
+      const url = new URL(redirectUrl)
+      setSuccessRedirectUrl(url)
+
+      window.location.href = redirectUrl // Redirect directly
     } catch (error) {
       logger.error(error)
 
@@ -178,6 +187,25 @@ export function VeridaAuthConsentCard(props: VeridaAuthConsentCardProps) {
       ) : errorRedirectUrl ? (
         <CardBody className="flex-1 py-3">
           <VeridaAuthConsentError redirectUrl={errorRedirectUrl} />
+        </CardBody>
+      ) : successRedirectUrl ? (
+        <CardBody className="flex-1 py-3">
+          <SuccessBlock>
+            <SuccessBlockImage />
+            <SuccessBlockTitle>Access Allowed</SuccessBlockTitle>
+            <SuccessBlockDescription>
+              You will be redirected to{" "}
+              <Link
+                href={successRedirectUrl.toString()}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline"
+              >
+                {successRedirectUrl.origin}
+              </Link>{" "}
+              shortly
+            </SuccessBlockDescription>
+          </SuccessBlock>
         </CardBody>
       ) : (
         <CardBody className="flex flex-1 flex-col gap-4 overflow-y-auto">
@@ -316,7 +344,7 @@ export function VeridaAuthConsentCard(props: VeridaAuthConsentCardProps) {
           </div>
         </CardBody>
       )}
-      {errorRedirectUrl ? null : (
+      {errorRedirectUrl || successRedirectUrl ? null : (
         <CardFooter className="flex shrink-0 flex-row items-center justify-end gap-4">
           <Button
             variant="outline-destructive"
