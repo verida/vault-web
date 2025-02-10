@@ -2,6 +2,7 @@
   "name": "vault-web",
   "version": "0.14.0",
   "private": true,
+  "license": "ISC",
   "scripts": {
     "version": "npx genversion --es6 --double ./src/config/version.ts",
     "postinstall": "yarn run version",
