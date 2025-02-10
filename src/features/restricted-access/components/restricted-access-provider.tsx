@@ -3,6 +3,7 @@
 import { useQuery } from "@tanstack/react-query"
 import { useEffect, useMemo, useState } from "react"
 
+import { featureFlags } from "@/config/features"
 import {
   RestrictedAccessContext,
   RestrictedAccessContextValue,
@@ -23,6 +24,7 @@ export function RestrictedAccessProvider(props: RestrictedAccessProviderProps) {
   const [persist, setPersist] = useState(false)
 
   const { data, isLoading, isError } = useQuery({
+    enabled: !!did && !featureFlags.restrictedAccess.disabled,
     queryKey: ["restricted-access", "status", did],
     queryFn: async (): Promise<RestrictedAccessStatus> => {
       if (!did) {
@@ -30,7 +32,6 @@ export function RestrictedAccessProvider(props: RestrictedAccessProviderProps) {
       }
       return getRestrictedAccessStatus(did)
     },
-    enabled: !!did,
     staleTime: 1000 * 60 * 10, // 10 minutes
     meta: {
       persist,
@@ -45,7 +46,9 @@ export function RestrictedAccessProvider(props: RestrictedAccessProviderProps) {
 
   const value: RestrictedAccessContextValue = useMemo(
     () => ({
-      access: data ?? "denied",
+      access: featureFlags.restrictedAccess.disabled
+        ? "allowed"
+        : (data ?? "denied"),
       isLoading,
       isError,
     }),

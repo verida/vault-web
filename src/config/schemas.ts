@@ -15,6 +15,10 @@ export const CommonConfigSchema = z.object({
     .string()
     .optional()
     .transform((value) => value === "true"),
+  FEATURE_FLAG_RESTRICTED_ACCESS_DISABLED: z
+    .string()
+    .optional()
+    .transform((value) => value === "true"),
   VERIDA_NETWORK: z
     .enum(["myrtle", "banksia", "devnet", "local"])
     .default("banksia")

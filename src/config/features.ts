@@ -3,6 +3,9 @@ import { commonConfig } from "@/config/common"
 // Basic feature flags for now
 // But likely to stay as a separate global variable like this
 export const featureFlags = {
+  restrictedAccess: {
+    disabled: commonConfig.FEATURE_FLAG_RESTRICTED_ACCESS_DISABLED,
+  },
   veridaAuth: {
     enabled: commonConfig.FEATURE_FLAG_VERIDA_AUTH_ENABLED,
     authorizedAppsUi: {
