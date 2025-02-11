@@ -280,7 +280,7 @@ export function VeridaAuthConsentCard(props: VeridaAuthConsentCardProps) {
                   ) : null}
                   {apiScopes && apiScopes.length > 0 ? (
                     <AccordionItem value="api-scopes">
-                      <AccordionTrigger>Actions</AccordionTrigger>
+                      <AccordionTrigger>Operations</AccordionTrigger>
                       <AccordionContent className="flex flex-col gap-2">
                         <ul className="list-inside list-disc">
                           {apiScopes.map((scope, index) => (
