@@ -33,6 +33,7 @@ export default function AuthPage() {
         </div>
         <VeridaIdentityDropdownMenu
           keepExpanded
+          displayNotConnectedSkeleton
           hideDisconnect={false}
           hideFeedback={false}
           hideAuthorizedApps={true}

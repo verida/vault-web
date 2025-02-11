@@ -1,6 +1,11 @@
 import { z } from "zod"
 
-import { VeridaAuthAuthV1ResponseSchema } from "@/features/verida-auth/schemas"
+import {
+  VeridaAuthAuthV1ResponseSchema,
+  VeridaAuthRequestPayerSchema,
+} from "@/features/verida-auth/schemas"
+
+export type VeridaAuthPayer = z.infer<typeof VeridaAuthRequestPayerSchema>
 
 export type VeridaAuthScopeType = "data" | "api" | "unknown"
 
@@ -18,6 +23,7 @@ export type VeridaAuthScope = {
 
 export type VeridaAuthRequestPayload = {
   appDID: string
+  payer: VeridaAuthPayer
   scopes: string[]
   redirectUrl: string
   state?: string
