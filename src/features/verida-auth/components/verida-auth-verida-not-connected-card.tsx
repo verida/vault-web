@@ -27,8 +27,8 @@ export function VeridaAuthVeridaNotConnectedCard(
     <Card className={cn("", className)} {...cardProps}>
       <VeridaAuthCardHeader request={request} className="shrink-0" />
       <CardBody className="flex flex-1 flex-col gap-4 overflow-y-auto">
-        <div className="flex flex-col gap-4">
-          <ErrorBlock>
+        <div className="flex flex-col items-center gap-4">
+          <ErrorBlock className="my-8">
             <ErrorBlockTitle variant="heading-4" component="p">
               You are not connected
             </ErrorBlockTitle>
@@ -47,8 +47,8 @@ export function VeridaAuthVeridaNotConnectedCard(
                 verida.network
               </Link>
             </ErrorBlockDescription>
-            <VeridaConnectButton label="Connect with Verida" />
           </ErrorBlock>
+          <VeridaConnectButton label="Connect with Verida" className="w-fit" />
         </div>
       </CardBody>
     </Card>
