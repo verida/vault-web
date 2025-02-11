@@ -13,7 +13,7 @@ export const UserProfileApiRequestSchema = BaseRequestSchema.extend({
   did: z.string().optional(),
   purpose: z.string().optional(),
   profileJsonSchemaUrl: z.string().url(),
-  profileParams: UserAiProfileParamsSchema,
+  profileParams: UserAiProfileParamsSchema.optional(),
   endpointUrl: z.string().url(),
   endpointParams: UserProfileApiRequestEndpointParamsSchema.optional(),
   exposesUserData: z.boolean().default(true),
