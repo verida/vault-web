@@ -12,14 +12,7 @@ import {
 } from "@/components/ui/accordion"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
-import {
-  Card,
-  CardBody,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
+import { Card, CardBody, CardFooter } from "@/components/ui/card"
 import {
   LoadingBlock,
   LoadingBlockDescription,
@@ -38,6 +31,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { Logger } from "@/features/telemetry/logger"
+import { VeridaAuthCardHeader } from "@/features/verida-auth/components/verida-auth-card-header"
 import { VeridaAuthConsentError } from "@/features/verida-auth/components/verida-auth-consent-error"
 import { useAllowVeridaAuthRequest } from "@/features/verida-auth/hooks/use-allow-verida-auth-request"
 import { ValidVeridaAuthRequest } from "@/features/verida-auth/types"
@@ -45,9 +39,6 @@ import {
   buildDenyRequestRedirectUrl,
   buildErrorRedirectUrl,
 } from "@/features/verida-auth/utils"
-import { getVeridaExplorerIdentityPageUrl } from "@/features/verida-explorer/utils"
-import { ProfileAvatar } from "@/features/verida-profile/components/profile-avatar"
-import { EMPTY_PROFILE_NAME_FALLBACK } from "@/features/verida-profile/constants"
 import { useVeridaProfile } from "@/features/verida-profile/hooks/use-verida-profile"
 import { cn } from "@/styles/utils"
 
@@ -67,17 +58,9 @@ export function VeridaAuthConsentCard(props: VeridaAuthConsentCardProps) {
     return new URL(payload.redirectUrl)
   }, [payload.redirectUrl])
 
-  const { profile, isLoading } = useVeridaProfile({
+  const { profile } = useVeridaProfile({
     did: payload.appDID,
   })
-
-  const profileWebsiteUrl = useMemo(() => {
-    if (profile?.website) {
-      return new URL(profile.website)
-    }
-
-    return null
-  }, [profile])
 
   const apiScopes = useMemo(() => {
     return resolvedValidScopes?.filter((scope) => scope.type === "api")
@@ -129,51 +112,7 @@ export function VeridaAuthConsentCard(props: VeridaAuthConsentCardProps) {
 
   return (
     <Card className={cn("", className)} {...cardProps}>
-      <CardHeader className="shrink-0 gap-3">
-        <div className="flex flex-row items-center gap-2">
-          <ProfileAvatar
-            profile={profile}
-            isLoading={isLoading}
-            className="size-12"
-          />
-          <CardTitle>
-            <span
-              className={profile?.name ? "" : "italic text-muted-foreground"}
-            >
-              {profile?.name || EMPTY_PROFILE_NAME_FALLBACK}
-            </span>{" "}
-            wants to access your Verida Vault
-          </CardTitle>
-        </div>
-        <div className="flex flex-col gap-1">
-          <CardDescription className="truncate">
-            <Link
-              href={getVeridaExplorerIdentityPageUrl(payload.appDID)}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="underline"
-            >
-              {payload.appDID}
-            </Link>
-          </CardDescription>
-          <CardDescription className="truncate">
-            <Link
-              href={
-                profileWebsiteUrl
-                  ? profileWebsiteUrl.origin
-                  : resolvedRedirectUrl.origin
-              }
-              target="_blank"
-              rel="noopener noreferrer"
-              className="underline"
-            >
-              {profileWebsiteUrl
-                ? profileWebsiteUrl.origin
-                : resolvedRedirectUrl.origin}
-            </Link>
-          </CardDescription>
-        </div>
-      </CardHeader>
+      <VeridaAuthCardHeader request={request} className="shrink-0" />
       <CardBody className="flex-1 overflow-y-auto">
         {isAllowing ? (
           <LoadingBlock className="my-3">
