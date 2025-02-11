@@ -174,23 +174,22 @@ export function VeridaAuthConsentCard(props: VeridaAuthConsentCardProps) {
           </CardDescription>
         </div>
       </CardHeader>
-      {isAllowing ? (
-        <CardBody className="flex-1 py-3">
-          <LoadingBlock>
+      <CardBody className="flex-1 overflow-y-auto">
+        {isAllowing ? (
+          <LoadingBlock className="my-3">
             <LoadingBlockSpinner />
             <LoadingBlockTitle>Allowing access</LoadingBlockTitle>
             <LoadingBlockDescription>
               Please wait a moment while we allow the access
             </LoadingBlockDescription>
           </LoadingBlock>
-        </CardBody>
-      ) : errorRedirectUrl ? (
-        <CardBody className="flex-1 py-3">
-          <VeridaAuthConsentError redirectUrl={errorRedirectUrl} />
-        </CardBody>
-      ) : successRedirectUrl ? (
-        <CardBody className="flex-1 py-3">
-          <SuccessBlock>
+        ) : errorRedirectUrl ? (
+          <VeridaAuthConsentError
+            redirectUrl={errorRedirectUrl}
+            className="my-3"
+          />
+        ) : successRedirectUrl ? (
+          <SuccessBlock className="my-3">
             <SuccessBlockImage />
             <SuccessBlockTitle>Access Allowed</SuccessBlockTitle>
             <SuccessBlockDescription>
@@ -206,144 +205,170 @@ export function VeridaAuthConsentCard(props: VeridaAuthConsentCardProps) {
               shortly
             </SuccessBlockDescription>
           </SuccessBlock>
-        </CardBody>
-      ) : (
-        <CardBody className="flex flex-1 flex-col gap-4 overflow-y-auto">
-          {resolvedValidScopes && resolvedValidScopes.length > 0 ? (
-            <>
-              <Typography variant="base-regular">
-                {`By allowing it, ${profile?.name || "this application"} will be able to:`}
-              </Typography>
-              <Accordion
-                type="multiple"
-                defaultValue={["data-scopes", "api-scopes"]}
-              >
-                {dataScopes && dataScopes.length > 0 ? (
-                  <AccordionItem value="data-scopes">
-                    <AccordionTrigger>Data</AccordionTrigger>
-                    <AccordionContent>
-                      <ul className="list-inside list-disc">
-                        {dataScopes.map((scope, index) => (
-                          <li key={index}>
-                            <Typography variant="base-regular" component="span">
-                              {scope.permissions?.map(
-                                (permission, index, array) => {
-                                  const separator =
-                                    array.length <= 1
-                                      ? ""
-                                      : index === array.length - 1
+        ) : (
+          <div className="flex h-full flex-col gap-4">
+            {resolvedValidScopes && resolvedValidScopes.length > 0 ? (
+              <>
+                <Typography variant="base-regular">
+                  {`By allowing it, ${profile?.name || "this application"} will be able to:`}
+                </Typography>
+                <Accordion
+                  type="multiple"
+                  defaultValue={["data-scopes", "api-scopes"]}
+                >
+                  {dataScopes && dataScopes.length > 0 ? (
+                    <AccordionItem value="data-scopes">
+                      <AccordionTrigger>Data</AccordionTrigger>
+                      <AccordionContent>
+                        <ul className="list-inside list-disc">
+                          {dataScopes.map((scope, index) => (
+                            <li key={index}>
+                              <Typography
+                                variant="base-regular"
+                                component="span"
+                              >
+                                {scope.permissions?.map(
+                                  (permission, index, array) => {
+                                    const separator =
+                                      array.length <= 1
                                         ? ""
-                                        : index === array.length - 2
-                                          ? " and "
-                                          : ", "
+                                        : index === array.length - 1
+                                          ? ""
+                                          : index === array.length - 2
+                                            ? " and "
+                                            : ", "
 
-                                  return (
-                                    <Fragment key={index}>
-                                      <span
-                                        className={cn(
-                                          "font-semibold",
-                                          index === 0 ? "capitalize" : ""
-                                        )}
-                                      >
-                                        {permission}
+                                    return (
+                                      <Fragment key={index}>
+                                        <span
+                                          className={cn(
+                                            "font-semibold",
+                                            index === 0 ? "capitalize" : ""
+                                          )}
+                                        >
+                                          {permission}
+                                        </span>
+                                        {separator}
+                                      </Fragment>
+                                    )
+                                  }
+                                )}{" "}
+                                in your{" "}
+                                {scope.description ? (
+                                  <Tooltip>
+                                    <TooltipTrigger>
+                                      <span className="font-semibold lowercase">
+                                        {scope.namePlural || scope.name || ""}
                                       </span>
-                                      {separator}
-                                    </Fragment>
-                                  )
-                                }
-                              )}{" "}
-                              in your{" "}
-                              {scope.description ? (
-                                <Tooltip>
-                                  <TooltipTrigger>
-                                    <span className="font-semibold lowercase">
-                                      {scope.namePlural || scope.name || ""}
-                                    </span>
-                                  </TooltipTrigger>
-                                  <TooltipContent>
-                                    {scope.description}
-                                  </TooltipContent>
-                                </Tooltip>
-                              ) : (
-                                <span className="font-semibold lowercase">
-                                  {scope.namePlural || scope.name || ""}
+                                    </TooltipTrigger>
+                                    <TooltipContent>
+                                      {scope.description}
+                                    </TooltipContent>
+                                  </Tooltip>
+                                ) : (
+                                  <span className="font-semibold lowercase">
+                                    {scope.namePlural || scope.name || ""}
+                                  </span>
+                                )}{" "}
+                                database
+                              </Typography>
+                            </li>
+                          ))}
+                        </ul>
+                      </AccordionContent>
+                    </AccordionItem>
+                  ) : null}
+                  {apiScopes && apiScopes.length > 0 ? (
+                    <AccordionItem value="api-scopes">
+                      <AccordionTrigger>Actions</AccordionTrigger>
+                      <AccordionContent className="flex flex-col gap-2">
+                        <ul className="list-inside list-disc">
+                          {apiScopes.map((scope, index) => (
+                            <li key={index}>
+                              <Typography
+                                variant="base-regular"
+                                component="span"
+                              >
+                                {scope.description}
+                              </Typography>
+                            </li>
+                          ))}
+                        </ul>
+                        {request.payload.payer === "app" ? (
+                          <Alert variant="info">
+                            <AlertDescription className="text-muted-foreground">
+                              {`This application subsidizes their usage of the
+                              Verida Network. You won't be charged for it.`}
+                            </AlertDescription>
+                          </Alert>
+                        ) : (
+                          <Alert variant="warning">
+                            <AlertDescription className="text-muted-foreground">
+                              This application does not subsidize their usage of
+                              the Verida Network. This cost will incur to your
+                              account.
+                            </AlertDescription>
+                          </Alert>
+                        )}
+                      </AccordionContent>
+                    </AccordionItem>
+                  ) : null}
+                  {unknownScopes && unknownScopes.length > 0 ? (
+                    <AccordionItem value="unknown-scopes">
+                      <AccordionTrigger>Other</AccordionTrigger>
+                      <AccordionContent>
+                        <ul className="list-inside list-disc">
+                          {unknownScopes.map((scope, index) => (
+                            <li key={index}>
+                              <Typography
+                                variant="base-regular"
+                                component="span"
+                              >
+                                <span className="font-semibold">
+                                  {scope.permissions?.join(", ")}
+                                </span>{" "}
+                                your{" "}
+                                <span className="font-semibold">
+                                  {scope.name}
                                 </span>
-                              )}{" "}
-                              database
-                            </Typography>
-                          </li>
-                        ))}
-                      </ul>
-                    </AccordionContent>
-                  </AccordionItem>
-                ) : null}
-                {apiScopes && apiScopes.length > 0 ? (
-                  <AccordionItem value="api-scopes">
-                    <AccordionTrigger>Actions</AccordionTrigger>
-                    <AccordionContent>
-                      <ul className="list-inside list-disc">
-                        {apiScopes.map((scope, index) => (
-                          <li key={index}>
-                            <Typography variant="base-regular" component="span">
-                              {scope.description}
-                            </Typography>
-                          </li>
-                        ))}
-                      </ul>
-                    </AccordionContent>
-                  </AccordionItem>
-                ) : null}
-                {unknownScopes && unknownScopes.length > 0 ? (
-                  <AccordionItem value="unknown-scopes">
-                    <AccordionTrigger>Other</AccordionTrigger>
-                    <AccordionContent>
-                      <ul className="list-inside list-disc">
-                        {unknownScopes.map((scope, index) => (
-                          <li key={index}>
-                            <Typography variant="base-regular" component="span">
-                              <span className="font-semibold">
-                                {scope.permissions?.join(", ")}
-                              </span>{" "}
-                              your{" "}
-                              <span className="font-semibold">
-                                {scope.name}
-                              </span>
-                              ({scope.description})
-                            </Typography>
-                          </li>
-                        ))}
-                      </ul>
-                    </AccordionContent>
-                  </AccordionItem>
-                ) : null}
-              </Accordion>
-            </>
-          ) : (
+                                ({scope.description})
+                              </Typography>
+                            </li>
+                          ))}
+                        </ul>
+                      </AccordionContent>
+                    </AccordionItem>
+                  ) : null}
+                </Accordion>
+              </>
+            ) : (
+              <div className="text-muted-foreground">
+                <Typography variant="base-regular">
+                  No access requested
+                </Typography>
+              </div>
+            )}
             <div className="text-muted-foreground">
-              <Typography variant="base-regular">
-                No access requested
+              <Typography variant="base-s-regular" className="line-clamp-2">
+                {`You will be redirected to: ${resolvedRedirectUrl.origin}`}
               </Typography>
             </div>
-          )}
-          <div className="text-muted-foreground">
-            <Typography variant="base-s-regular" className="line-clamp-2">
-              {`You will be redirected to: ${resolvedRedirectUrl.origin}`}
-            </Typography>
+            <div className="flex flex-col gap-2">
+              <Alert variant="warning">
+                <AlertTitle>Privacy Notice</AlertTitle>
+                <AlertDescription className="text-xs text-muted-foreground">
+                  {profile?.name || "This application"} will have access to your
+                  personal data.
+                </AlertDescription>
+                <AlertDescription className="text-xs text-muted-foreground">
+                  Make sure you trust the application before allowing the
+                  access.
+                </AlertDescription>
+              </Alert>
+            </div>
           </div>
-          <div>
-            <Alert variant="warning">
-              <AlertTitle>Privacy Notice</AlertTitle>
-              <AlertDescription className="text-xs text-muted-foreground">
-                {profile?.name || "This application"} will have access to your
-                personal data.
-              </AlertDescription>
-              <AlertDescription className="text-xs text-muted-foreground">
-                Make sure you trust the application before allowing the access.
-              </AlertDescription>
-            </Alert>
-          </div>
-        </CardBody>
-      )}
+        )}
+      </CardBody>
       {errorRedirectUrl || successRedirectUrl ? null : (
         <CardFooter className="flex shrink-0 flex-row items-center justify-end gap-4">
           <Button
