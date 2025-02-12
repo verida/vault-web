@@ -1,5 +1,15 @@
 import { z } from "zod"
 
+import { isValidVeridaDid } from "@/features/verida/utils"
+
+export const VeridaAuthRequestAppDIDSchema = z.string().refine(isValidVeridaDid)
+
+export const VeridaAuthRequestPayerSchema = z
+  .optional(z.enum(["user", "app"]))
+  .default("app")
+
+export const VeridaAuthRequestRedirectUrlSchema = z.string().url()
+
 export const VeridaAuthGetScopeDefinitionsV1ResponseSchema = z.object({
   scopes: z.record(
     z.string(),

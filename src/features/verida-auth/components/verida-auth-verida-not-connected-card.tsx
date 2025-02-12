@@ -1,26 +1,12 @@
 "use client"
 
 import Link from "next/link"
-import { useMemo } from "react"
 
-import {
-  Card,
-  CardBody,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
-import {
-  ErrorBlock,
-  ErrorBlockDescription,
-  ErrorBlockTitle,
-} from "@/components/ui/error"
+import { Typography } from "@/components/typography"
+import { Card, CardBody } from "@/components/ui/card"
 import { VeridaConnectButton } from "@/components/verida/verida-connect-button"
+import { VeridaAuthCardHeader } from "@/features/verida-auth/components/verida-auth-card-header"
 import { ValidVeridaAuthRequest } from "@/features/verida-auth/types"
-import { getVeridaExplorerIdentityPageUrl } from "@/features/verida-explorer/utils"
-import { ProfileAvatar } from "@/features/verida-profile/components/profile-avatar"
-import { EMPTY_PROFILE_NAME_FALLBACK } from "@/features/verida-profile/constants"
-import { useVeridaProfile } from "@/features/verida-profile/hooks/use-verida-profile"
 import { cn } from "@/styles/utils"
 
 export interface VeridaAuthVeridaNotConnectedCardProps
@@ -33,94 +19,41 @@ export function VeridaAuthVeridaNotConnectedCard(
 ) {
   const { request, className, ...cardProps } = props
 
-  const { appDID, redirectUrl } = request.payload
-
-  const resolvedRedirectUrl = useMemo(() => {
-    return new URL(redirectUrl)
-  }, [redirectUrl])
-
-  const { profile, isLoading } = useVeridaProfile({
-    did: appDID,
-  })
-
-  const profileWebsiteUrl = useMemo(() => {
-    if (profile?.website) {
-      return new URL(profile.website)
-    }
-
-    return null
-  }, [profile])
-
   return (
     <Card className={cn("", className)} {...cardProps}>
-      <CardHeader className="shrink-0 gap-3">
-        <div className="flex flex-row items-center gap-2">
-          <ProfileAvatar
-            profile={profile}
-            isLoading={isLoading}
-            className="size-12"
-          />
-          <CardTitle>
-            <span
-              className={profile?.name ? "" : "italic text-muted-foreground"}
-            >
-              {profile?.name || EMPTY_PROFILE_NAME_FALLBACK}
-            </span>{" "}
-            wants to access your Verida Vault
-          </CardTitle>
-        </div>
-        <div className="flex flex-col gap-1">
-          <CardDescription className="truncate">
-            <Link
-              href={getVeridaExplorerIdentityPageUrl(appDID)}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="underline"
-            >
-              {appDID}
-            </Link>
-          </CardDescription>
-          <CardDescription className="truncate">
-            <Link
-              href={
-                profileWebsiteUrl
-                  ? profileWebsiteUrl.origin
-                  : resolvedRedirectUrl.origin
-              }
-              target="_blank"
-              rel="noopener noreferrer"
-              className="underline"
-            >
-              {profileWebsiteUrl
-                ? profileWebsiteUrl.origin
-                : resolvedRedirectUrl.origin}
-            </Link>
-          </CardDescription>
-        </div>
-      </CardHeader>
-      <CardBody className="flex flex-1 flex-col gap-4 overflow-y-auto">
-        <div className="flex flex-col gap-4">
-          <ErrorBlock>
-            <ErrorBlockTitle variant="heading-4" component="p">
-              You are not connected
-            </ErrorBlockTitle>
-            <ErrorBlockDescription>
-              Learn more about how the Verida Network helps you take back
-              control of your personal data.
-            </ErrorBlockDescription>
-            <ErrorBlockDescription>
-              Check{" "}
+      <VeridaAuthCardHeader request={request} className="shrink-0" />
+      <CardBody className="flex-1 overflow-y-auto pt-4 sm:pt-8">
+        <div className="flex flex-col items-center gap-6">
+          <Typography variant="heading-4" component="p">
+            You are not connected
+          </Typography>
+          <div className="flex flex-col items-center gap-4 text-muted-foreground">
+            <Typography>
+              The Verida Vault allows you to extract your emails, messages and
+              other personal data to securely and privately store them on the
+              Verida Network and use them in AI applications.
+            </Typography>
+            <Typography>
+              Connect to your Verida Vault using your Verida Wallet.
+            </Typography>
+            <VeridaConnectButton
+              label="Connect with your Verida Wallet"
+              className="w-fit"
+            />
+          </div>
+          <div className="text-muted-foreground">
+            <Typography>
+              Learn more about{" "}
               <Link
                 href="https://www.verida.network/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-primary underline"
               >
-                verida.network
+                Verida Network
               </Link>
-            </ErrorBlockDescription>
-            <VeridaConnectButton label="Connect with Verida" />
-          </ErrorBlock>
+            </Typography>
+          </div>
         </div>
       </CardBody>
     </Card>

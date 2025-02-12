@@ -2,25 +2,81 @@ import { useSearchParams } from "next/navigation"
 import { useMemo } from "react"
 
 import { useResolvedVeridaAuthScopes } from "@/features/verida-auth/hooks/use-resolved-verida-auth-scopes"
+import {
+  VeridaAuthRequestAppDIDSchema,
+  VeridaAuthRequestPayerSchema,
+  VeridaAuthRequestRedirectUrlSchema,
+} from "@/features/verida-auth/schemas"
 import { VeridaAuthRequest } from "@/features/verida-auth/types"
-import { isValidVeridaDid } from "@/features/verida/utils"
 
 export function useVeridaAuthRequest(): VeridaAuthRequest {
   const searchParams = useSearchParams()
 
   const scopes = searchParams.getAll("scopes")
-  const appDID = searchParams.get("appDID")
-  const redirectUrl = searchParams.get("redirectUrl")
+  const appDIDParam = searchParams.get("appDID")
+  const payerParam = searchParams.get("payer")
+  const redirectUrlParam = searchParams.get("redirectUrl")
   const state = searchParams.get("state") ?? undefined
 
   const { resolvedScopes, scopeValidity, isError } =
     useResolvedVeridaAuthScopes(scopes)
 
   const request: VeridaAuthRequest = useMemo(() => {
+    // Checking redirectUrl
+
+    const redirectUrlValidationResult =
+      VeridaAuthRequestRedirectUrlSchema.safeParse(redirectUrlParam)
+
+    if (!redirectUrlValidationResult.success) {
+      return {
+        status: "invalid",
+        errorDescription: "Invalid redirectUrl",
+        redirectUrl: null,
+        state,
+      }
+    }
+
+    const redirectUrl = redirectUrlValidationResult.data
+
+    // Checking appDID
+
+    const appDIDValidationResult =
+      VeridaAuthRequestAppDIDSchema.safeParse(appDIDParam)
+
+    if (!appDIDValidationResult.success) {
+      return {
+        status: "invalid",
+        errorDescription: "Invalid appDID",
+        redirectUrl,
+        state,
+      }
+    }
+
+    const appDID = appDIDValidationResult.data
+
+    // Checking payer
+
+    const payerValidationResult = VeridaAuthRequestPayerSchema.safeParse(
+      payerParam ?? undefined
+    )
+
+    if (!payerValidationResult.success) {
+      return {
+        status: "invalid",
+        errorDescription: "Invalid payer",
+        redirectUrl,
+        state,
+      }
+    }
+
+    const payer = payerValidationResult.data
+
+    // Checking scopes
+
     if (!scopes || scopes.length === 0) {
       return {
         status: "invalid",
-        errorDescription: "Missing required scopes",
+        errorDescription: "Missing scope",
         redirectUrl,
         state,
       }
@@ -40,33 +96,6 @@ export function useVeridaAuthRequest(): VeridaAuthRequest {
     if (!scopeValidity || !resolvedScopes) {
       return {
         status: "processing",
-      }
-    }
-
-    if (!appDID) {
-      return {
-        status: "invalid",
-        errorDescription: "Missing appDID",
-        redirectUrl,
-        state,
-      }
-    }
-
-    if (!isValidVeridaDid(appDID)) {
-      return {
-        status: "invalid",
-        errorDescription: "Invalid appDID format",
-        redirectUrl,
-        state,
-      }
-    }
-
-    if (!redirectUrl) {
-      return {
-        status: "invalid",
-        errorDescription: "Missing redirectURL",
-        redirectUrl,
-        state,
       }
     }
 
@@ -91,6 +120,7 @@ export function useVeridaAuthRequest(): VeridaAuthRequest {
       status: "valid",
       payload: {
         appDID,
+        payer,
         scopes: validScopes,
         redirectUrl,
         state: state ?? undefined,
@@ -101,9 +131,10 @@ export function useVeridaAuthRequest(): VeridaAuthRequest {
   }, [
     scopeValidity,
     resolvedScopes,
-    redirectUrl,
+    redirectUrlParam,
     scopes,
-    appDID,
+    appDIDParam,
+    payerParam,
     state,
     isError,
   ])

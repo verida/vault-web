@@ -4,6 +4,7 @@ import {
   ErrorPageContent,
   ErrorPageProps,
 } from "@/components/error-page-content"
+import { PlausibleScript } from "@/features/plausible/PlausibleScript"
 import { sora } from "@/styles/font"
 import { cn } from "@/styles/utils"
 
@@ -12,6 +13,9 @@ export default function GlobalErrorPage(props: ErrorPageProps) {
 
   return (
     <html>
+      <head>
+        <PlausibleScript />
+      </head>
       <body className={cn("h-dvh", sora.variable)}>
         <ErrorPageContent error={error} reset={reset} hideNavigationButton />
       </body>

@@ -35,6 +35,7 @@ import { cn } from "@/styles/utils"
 export interface VeridaIdentityDropdownMenuProps
   extends Pick<React.ComponentProps<typeof Button>, "className"> {
   keepExpanded?: boolean
+  displayNotConnectedSkeleton?: boolean
   hideDisconnect?: boolean
   hideAuthorizedApps?: boolean
   hideFeedback?: boolean
@@ -45,6 +46,7 @@ export function VeridaIdentityDropdownMenu(
 ) {
   const {
     keepExpanded = false,
+    displayNotConnectedSkeleton = false,
     hideDisconnect = false,
     hideAuthorizedApps = false,
     hideFeedback = false,
@@ -77,7 +79,13 @@ export function VeridaIdentityDropdownMenu(
   }, [router])
 
   if (!isConnected) {
-    return null
+    return (
+      <>
+        {displayNotConnectedSkeleton ? (
+          <VeridaIdentityNotConnectedDropdownMenuButton className={className} />
+        ) : null}
+      </>
+    )
   }
 
   return (
@@ -220,3 +228,43 @@ export function VeridaIdentityDropdownMenu(
   )
 }
 VeridaIdentityDropdownMenu.displayName = "VeridaIdentityDropdownMenu"
+
+interface VeridaIdentityNotConnectedDropdownMenuButtonProps
+  extends Pick<React.ComponentProps<typeof Button>, "className"> {
+  keepExpanded?: boolean
+}
+
+function VeridaIdentityNotConnectedDropdownMenuButton(
+  props: VeridaIdentityNotConnectedDropdownMenuButtonProps
+) {
+  const { keepExpanded = false, className } = props
+
+  return (
+    <Button
+      variant="outline"
+      disabled
+      className={cn(
+        "h-auto max-w-56 border-0",
+        keepExpanded
+          ? "rounded-lg border py-2 pl-3 pr-2"
+          : "rounded-full p-0 md:rounded-lg md:border md:py-2 md:pl-3 md:pr-2",
+        className
+      )}
+    >
+      <div className="flex w-full flex-row items-center gap-2">
+        <div className="size-8 shrink-0 rounded-full border bg-surface-active" />
+        <div>
+          <Typography variant="base-semibold" className="italic">
+            Not Connected
+          </Typography>
+        </div>
+        <SimpleDown
+          className={cn(
+            "shrink-0 text-muted-foreground",
+            keepExpanded ? "" : "hidden md:block"
+          )}
+        />
+      </div>
+    </Button>
+  )
+}
