@@ -1,3 +1,15 @@
+# 0.15.0 (2025-02-12)
+
+## Enhancements
+
+- Improve UI of Verida Auth
+
+## Misc
+
+- Add license
+- Set up Plausible integration
+- Update dependencies
+
 # 0.14.0 (2025-02-04)
 
 ## Enhancements
