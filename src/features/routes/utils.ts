@@ -91,3 +91,11 @@ export function getAuthorizedAppsPageRoute() {
 export function getAuthPageRoute() {
   return `/auth`
 }
+
+export function getOnboardingPageRoute() {
+  return `/onboarding`
+}
+
+export function getOnboardingStepPageRoute({ stepId }: { stepId: string }) {
+  return `/onboarding/${stepId}`
+}
