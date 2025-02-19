@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 export default function RootPage() {
   return (
     <RootConnectionHandler>
-      <LandingPageContent className="h-dvh" />
+      <LandingPageContent />
     </RootConnectionHandler>
   )
 }
