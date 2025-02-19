@@ -1,7 +1,6 @@
 import {
   OnboardingCard,
   OnboardingCardBody,
-  OnboardingCardFooter,
   OnboardingCardHeader,
 } from "@/features/onboarding/components/onboarding-card"
 
@@ -21,10 +20,6 @@ export default function OnboardingPage() {
           <li>Optionally extracting your personal data</li>
         </ul>
       </OnboardingCardBody>
-      <OnboardingCardFooter
-        nextStepPath="/onboarding/install-wallet"
-        nextStepLabel="Start"
-      />
     </OnboardingCard>
   )
 }

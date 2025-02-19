@@ -2,7 +2,9 @@ import { createContext } from "react"
 
 export type OnboardingContextType = {
   currentStepIndex: number
-  setCurrentStepIndex: (index: number) => void
+  goToStep: (stepIndex: number) => void
+  goToNextStep: () => void
+  goToPreviousStep: () => void
 }
 
 export const OnboardingContext = createContext<OnboardingContextType | null>(

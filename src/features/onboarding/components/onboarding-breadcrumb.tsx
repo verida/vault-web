@@ -1,7 +1,5 @@
 "use client"
 
-import Link from "next/link"
-import { usePathname } from "next/navigation"
 import { ComponentProps } from "react"
 
 import {
@@ -12,12 +10,8 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
-import { onboardingSteps } from "@/features/onboarding/config/onboarding-steps"
+import { ONBOARDING_STEPS } from "@/features/onboarding/constants"
 import { useOnboarding } from "@/features/onboarding/hooks/use-onboarding"
-import {
-  getOnboardingPageRoute,
-  getOnboardingStepPageRoute,
-} from "@/features/routes/utils"
 
 export interface OnboardingBreadcrumbProps
   extends ComponentProps<typeof Breadcrumb> {}
@@ -25,29 +19,30 @@ export interface OnboardingBreadcrumbProps
 export function OnboardingBreadcrumb(props: OnboardingBreadcrumbProps) {
   const { className, ...BreadcrumbProps } = props
 
-  const pathname = usePathname()
-  const { currentStepIndex } = useOnboarding()
+  const { currentStepIndex, goToStep } = useOnboarding()
 
-  // Don't show breadcrumb on the main onboarding page
-  if (pathname === getOnboardingPageRoute()) {
-    return null
-  }
-
+  // TODO: Make a responsive breadcrumb nicely adapting to the screen size
   return (
     <Breadcrumb className={className} {...BreadcrumbProps}>
       <BreadcrumbList>
-        {onboardingSteps.map((step, index) => (
-          <BreadcrumbItem key={step.id}>
+        {ONBOARDING_STEPS.map((step, index) => (
+          <BreadcrumbItem key={step.path}>
             {index === currentStepIndex ? (
-              <BreadcrumbPage>{step.title}</BreadcrumbPage>
-            ) : (
-              <BreadcrumbLink asChild>
-                <Link href={getOnboardingStepPageRoute({ stepId: step.id })}>
-                  {step.title}
-                </Link>
+              <BreadcrumbPage className="text-primary">
+                {step.breadcrumbTitle}
+              </BreadcrumbPage>
+            ) : index < currentStepIndex ? (
+              <BreadcrumbLink asChild className="underline">
+                <button onClick={() => goToStep(index)}>
+                  {step.breadcrumbTitle}
+                </button>
               </BreadcrumbLink>
+            ) : (
+              <BreadcrumbPage className="text-muted-foreground">
+                {step.breadcrumbTitle}
+              </BreadcrumbPage>
             )}
-            {index < onboardingSteps.length - 1 ? (
+            {index < ONBOARDING_STEPS.length - 1 ? (
               <BreadcrumbSeparator />
             ) : null}
           </BreadcrumbItem>
