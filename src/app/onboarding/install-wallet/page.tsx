@@ -1,10 +1,16 @@
 import Image from "next/image"
+import Link from "next/link"
 
+import { Typography } from "@/components/typography"
 import {
   OnboardingCard,
   OnboardingCardBody,
   OnboardingCardHeader,
 } from "@/features/onboarding/components/onboarding-card"
+import {
+  VERIDA_WALLET_APPLE_APP_STORE_URL,
+  VERIDA_WALLET_GOOGLE_PLAY_STORE_URL,
+} from "@/features/verida-wallet/constants"
 
 export default function OnboardingInstallWalletPage() {
   return (
@@ -13,19 +19,28 @@ export default function OnboardingInstallWalletPage() {
         title="Install the Verida Wallet"
         description="Get started by installing the Verida Wallet on your mobile device."
       />
-      <OnboardingCardBody>
-        <ol className="mb-6 list-inside list-decimal space-y-2">
-          <li>{`Choose your device's app store below.`}</li>
+      <OnboardingCardBody className="flex flex-col gap-8">
+        <ol className="flex list-inside list-decimal flex-col gap-1">
           <li>
-            {` Search for "Verida Wallet" or click the store badge to go directly
-            to the app.`}
+            <Typography component="span">
+              Click on the link below to install the Verida Wallet from
+              smartphone app store
+            </Typography>
           </li>
-          <li>{`Tap "Install" to download and install the app.`}</li>
-          <li>Once installed, open the Verida Wallet app.</li>
+          <li>
+            <Typography component="span">
+              Follow the instructions to install the app.
+            </Typography>
+          </li>
+          <li>
+            <Typography component="span">
+              Once installed, go to the next step of this onboarding process.
+            </Typography>
+          </li>
         </ol>
-        <div className="mb-6 flex justify-center space-x-4">
-          <a
-            href="https://apps.apple.com/us/app/verida-wallet"
+        <div className="flex flex-col items-center justify-center gap-8 md:flex-row">
+          <Link
+            href={VERIDA_WALLET_APPLE_APP_STORE_URL}
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -35,9 +50,9 @@ export default function OnboardingInstallWalletPage() {
               width={160}
               height={53}
             />
-          </a>
-          <a
-            href="https://play.google.com/store/apps/details?id=com.verida.wallet"
+          </Link>
+          <Link
+            href={VERIDA_WALLET_GOOGLE_PLAY_STORE_URL}
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -47,7 +62,7 @@ export default function OnboardingInstallWalletPage() {
               width={180}
               height={53}
             />
-          </a>
+          </Link>
         </div>
       </OnboardingCardBody>
     </OnboardingCard>

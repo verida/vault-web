@@ -1,3 +1,4 @@
+import { Typography } from "@/components/typography"
 import {
   OnboardingCard,
   OnboardingCardBody,
@@ -12,11 +13,20 @@ export default function OnboardingCreateIdentityPage() {
         description="Set up your Verida Identity in the mobile app."
       />
       <OnboardingCardBody>
-        <ol className="mb-6 list-inside list-decimal space-y-2">
-          <li>Open the Verida Wallet app on your mobile device.</li>
-          <li>{`Tap "Create New Identity".`}</li>
-          <li>Follow the on-screen instructions to set up your identity.</li>
-          <li>Make sure to securely store your recovery phrase.</li>
+        <ol className="flex list-inside list-decimal flex-col gap-1">
+          <li>
+            <Typography component="span">
+              Open the Verida Wallet app on your mobile device
+            </Typography>
+          </li>
+          <li>
+            <Typography component="span">{`Tap "Create New Identity"`}</Typography>
+          </li>
+          <li>
+            <Typography component="span">
+              Follow the on-screen instructions to set up your identity
+            </Typography>
+          </li>
         </ol>
       </OnboardingCardBody>
     </OnboardingCard>

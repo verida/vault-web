@@ -1,3 +1,4 @@
+import { Typography } from "@/components/typography"
 import {
   OnboardingCard,
   OnboardingCardBody,
@@ -11,13 +12,29 @@ export default function OnboardingPage() {
         title="Welcome to the Verida Vault"
         description="Let's get you set up with Verida in just a few steps."
       />
-      <OnboardingCardBody>
-        <p className="mb-4">This onboarding process will guide you through:</p>
-        <ul className="mb-6 list-inside list-disc">
-          <li>Installing the Verida Wallet</li>
-          <li>Creating your Verida Identity</li>
-          <li>Connecting to the Verida Vault</li>
-          <li>Optionally extracting your personal data</li>
+      <OnboardingCardBody className="flex flex-col gap-2">
+        <Typography>This onboarding process will guide you through:</Typography>
+        <ul className="flex list-inside list-disc flex-col gap-1">
+          <li>
+            <Typography component="span">
+              Installing the Verida Wallet
+            </Typography>
+          </li>
+          <li>
+            <Typography component="span">
+              Creating your Verida Identity
+            </Typography>
+          </li>
+          <li>
+            <Typography component="span">
+              Connecting to the Verida Vault
+            </Typography>
+          </li>
+          <li>
+            <Typography component="span">
+              Optionally extracting your personal data
+            </Typography>
+          </li>
         </ul>
       </OnboardingCardBody>
     </OnboardingCard>

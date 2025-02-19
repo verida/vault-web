@@ -24,8 +24,8 @@ export const ONBOARDING_STEPS: OnboardingStep[] = [
     path: getOnboardingConnectVaultPageRoute(),
     breadcrumbTitle: "Connect Vault",
   },
-  {
-    path: getOnboardingExtractDataPageRoute(),
-    breadcrumbTitle: "Extract Data",
-  },
+  // {
+  //   path: getOnboardingExtractDataPageRoute(),
+  //   breadcrumbTitle: "Extract Data",
+  // },
 ]
