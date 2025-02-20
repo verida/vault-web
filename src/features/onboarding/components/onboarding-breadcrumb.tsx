@@ -1,6 +1,6 @@
 "use client"
 
-import { ComponentProps } from "react"
+import { ComponentProps, Fragment } from "react"
 
 import {
   Breadcrumb,
@@ -26,8 +26,8 @@ export function OnboardingBreadcrumb(props: OnboardingBreadcrumbProps) {
     <Breadcrumb className={className} {...BreadcrumbProps}>
       <BreadcrumbList>
         {ONBOARDING_STEPS.map((step, index) => (
-          <>
-            <BreadcrumbItem key={step.path}>
+          <Fragment key={step.path}>
+            <BreadcrumbItem>
               {index === currentStepIndex ? (
                 <BreadcrumbPage className="text-primary">
                   {step.breadcrumbTitle}
@@ -47,7 +47,7 @@ export function OnboardingBreadcrumb(props: OnboardingBreadcrumbProps) {
             {index < ONBOARDING_STEPS.length - 1 ? (
               <BreadcrumbSeparator />
             ) : null}
-          </>
+          </Fragment>
         ))}
       </BreadcrumbList>
     </Breadcrumb>
