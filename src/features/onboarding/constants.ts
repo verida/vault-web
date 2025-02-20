@@ -2,7 +2,7 @@ import { OnboardingStep } from "@/features/onboarding/types"
 import {
   getOnboardingConnectVaultPageRoute,
   getOnboardingCreateIdentityPageRoute,
-  getOnboardingExtractDataPageRoute,
+  // getOnboardingExtractDataPageRoute,
   getOnboardingInstallWalletPageRoute,
   getOnboardingPageRoute,
 } from "@/features/routes/utils"
