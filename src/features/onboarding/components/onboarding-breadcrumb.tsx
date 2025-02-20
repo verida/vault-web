@@ -26,26 +26,28 @@ export function OnboardingBreadcrumb(props: OnboardingBreadcrumbProps) {
     <Breadcrumb className={className} {...BreadcrumbProps}>
       <BreadcrumbList>
         {ONBOARDING_STEPS.map((step, index) => (
-          <BreadcrumbItem key={step.path}>
-            {index === currentStepIndex ? (
-              <BreadcrumbPage className="text-primary">
-                {step.breadcrumbTitle}
-              </BreadcrumbPage>
-            ) : index < currentStepIndex ? (
-              <BreadcrumbLink asChild className="underline">
-                <button onClick={() => goToStep(index)}>
+          <>
+            <BreadcrumbItem key={step.path}>
+              {index === currentStepIndex ? (
+                <BreadcrumbPage className="text-primary">
                   {step.breadcrumbTitle}
-                </button>
-              </BreadcrumbLink>
-            ) : (
-              <BreadcrumbPage className="text-muted-foreground">
-                {step.breadcrumbTitle}
-              </BreadcrumbPage>
-            )}
+                </BreadcrumbPage>
+              ) : index < currentStepIndex ? (
+                <BreadcrumbLink asChild className="underline">
+                  <button onClick={() => goToStep(index)}>
+                    {step.breadcrumbTitle}
+                  </button>
+                </BreadcrumbLink>
+              ) : (
+                <BreadcrumbPage className="text-muted-foreground">
+                  {step.breadcrumbTitle}
+                </BreadcrumbPage>
+              )}
+            </BreadcrumbItem>
             {index < ONBOARDING_STEPS.length - 1 ? (
               <BreadcrumbSeparator />
             ) : null}
-          </BreadcrumbItem>
+          </>
         ))}
       </BreadcrumbList>
     </Breadcrumb>
