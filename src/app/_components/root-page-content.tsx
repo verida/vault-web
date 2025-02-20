@@ -1,11 +1,10 @@
-import Link from "next/link"
 import React from "react"
 
 import { RootPageFooter } from "@/app/_components/root-page-footer"
 import { RootPageHeader } from "@/app/_components/root-page-header"
 import { Typography } from "@/components/typography"
-import { Button } from "@/components/ui/button"
 import { VeridaConnectButton } from "@/components/verida/verida-connect-button"
+import { OnboardingButton } from "@/features/onboarding/components/onboarding-button"
 import { cn } from "@/styles/utils"
 
 export interface RootPageContentProps
@@ -41,9 +40,7 @@ export function RootPageContent(props: RootPageContentProps) {
             >
               New to Verida?
             </Typography>
-            <Button asChild>
-              <Link href="/onboarding">Get Started</Link>
-            </Button>
+            <OnboardingButton />
           </div>
           <div className="flex flex-col gap-2">
             <Typography

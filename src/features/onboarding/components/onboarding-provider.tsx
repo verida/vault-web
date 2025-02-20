@@ -3,6 +3,7 @@
 import { usePathname, useRouter } from "next/navigation"
 import { ReactNode, useCallback, useMemo } from "react"
 
+import { useRedirectPathQueryState } from "@/features/auth/hooks/use-redirect-path-query-state"
 import { ONBOARDING_STEPS } from "@/features/onboarding/constants"
 import {
   OnboardingContext,
@@ -20,15 +21,20 @@ export function OnboardingProvider(props: OnboardingProviderProps) {
   const pathname = usePathname()
   const router = useRouter()
 
+  const { redirectPath, serializeRedirectPath } = useRedirectPathQueryState()
+
   const currentStepIndex = useMemo(() => {
     return ONBOARDING_STEPS.findIndex((step) => step.path === pathname)
   }, [pathname])
 
   const goToStep = useCallback(
     (stepIndex: number) => {
-      router.push(ONBOARDING_STEPS[stepIndex].path)
+      const newPath = serializeRedirectPath(ONBOARDING_STEPS[stepIndex].path, {
+        redirectPath,
+      })
+      router.push(newPath)
     },
-    [router]
+    [router, redirectPath, serializeRedirectPath]
   )
 
   const goToNextStep = useCallback(() => {
@@ -36,18 +42,23 @@ export function OnboardingProvider(props: OnboardingProviderProps) {
       goToStep(currentStepIndex + 1)
     } else {
       // TODO: Handle redirect to entry point (home, auth, request)
-      router.push(getRootPageRoute())
+      const newPath = serializeRedirectPath(getRootPageRoute(), {
+        redirectPath,
+      })
+      router.push(newPath)
     }
-  }, [currentStepIndex, goToStep, router])
+  }, [currentStepIndex, goToStep, router, redirectPath, serializeRedirectPath])
 
   const goToPreviousStep = useCallback(() => {
     if (currentStepIndex > 0) {
       goToStep(currentStepIndex - 1)
     } else {
-      // TODO: Handle redirect to entry point (home, auth, request)
-      router.push(getRootPageRoute())
+      const newPath = serializeRedirectPath(getRootPageRoute(), {
+        redirectPath,
+      })
+      router.push(newPath)
     }
-  }, [currentStepIndex, goToStep, router])
+  }, [currentStepIndex, goToStep, router, redirectPath, serializeRedirectPath])
 
   const contextValue: OnboardingContextType = useMemo(
     () => ({
