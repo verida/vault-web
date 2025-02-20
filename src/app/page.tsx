@@ -1,7 +1,7 @@
 import { Metadata } from "next"
 
-import { LandingPageContent } from "@/app/_components/landing-page-content"
 import { RootConnectionHandler } from "@/app/_components/root-connection-handler"
+import { RootPageContent } from "@/app/_components/root-page-content"
 import { APP_TITLE_FOR_LANDING } from "@/constants/app"
 
 export const metadata: Metadata = {
@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 export default function RootPage() {
   return (
     <RootConnectionHandler>
-      <LandingPageContent />
+      <RootPageContent />
     </RootConnectionHandler>
   )
 }

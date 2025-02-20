@@ -4,10 +4,10 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { VERIDA_PLATFORMS } from "@/features/landing/verida-platforms"
 
-export interface LandingPageHeaderProps
+export interface RootPageHeaderProps
   extends Omit<React.ComponentProps<"header">, "children"> {}
 
-export function LandingPageHeader(props: LandingPageHeaderProps) {
+export function RootPageHeader(props: RootPageHeaderProps) {
   const { className, ...headerProps } = props
 
   return (
@@ -39,4 +39,4 @@ export function LandingPageHeader(props: LandingPageHeaderProps) {
     </header>
   )
 }
-LandingPageHeader.displayName = "LandingPageHeader"
+RootPageHeader.displayName = "RootPageHeader"

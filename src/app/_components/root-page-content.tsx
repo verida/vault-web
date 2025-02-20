@@ -1,17 +1,17 @@
 import Link from "next/link"
 import React from "react"
 
-import { LandingPageFooter } from "@/app/_components/landing-page-footer"
-import { LandingPageHeader } from "@/app/_components/landing-page-header"
+import { RootPageFooter } from "@/app/_components/root-page-footer"
+import { RootPageHeader } from "@/app/_components/root-page-header"
 import { Typography } from "@/components/typography"
 import { Button } from "@/components/ui/button"
 import { VeridaConnectButton } from "@/components/verida/verida-connect-button"
 import { cn } from "@/styles/utils"
 
-export interface LandingPageContentProps
+export interface RootPageContentProps
   extends Omit<React.ComponentProps<"div">, "children"> {}
 
-export function LandingPageContent(props: LandingPageContentProps) {
+export function RootPageContent(props: RootPageContentProps) {
   const { className, ...divProps } = props
 
   return (
@@ -22,7 +22,7 @@ export function LandingPageContent(props: LandingPageContentProps) {
       )}
       {...divProps}
     >
-      <LandingPageHeader />
+      <RootPageHeader />
       <div className="flex flex-1 flex-col items-center justify-center gap-10">
         <div className="flex flex-col gap-2 text-center">
           <Typography variant="heading-1">
@@ -60,8 +60,8 @@ export function LandingPageContent(props: LandingPageContentProps) {
           </div>
         </div>
       </div>
-      <LandingPageFooter />
+      <RootPageFooter />
     </div>
   )
 }
-LandingPageContent.displayName = "LandingPageContent"
+RootPageContent.displayName = "RootPageContent"

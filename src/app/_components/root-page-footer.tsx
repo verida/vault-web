@@ -3,10 +3,10 @@ import Link from "next/link"
 import { Typography } from "@/components/typography"
 import { TERMS_AND_CONDITIONS_URL, VERIDA_WEBSITE_URL } from "@/constants/app"
 
-export interface LandingPageFooterProps
+export interface RootPageFooterProps
   extends Omit<React.ComponentProps<"footer">, "children"> {}
 
-export function LandingPageFooter(props: LandingPageFooterProps) {
+export function RootPageFooter(props: RootPageFooterProps) {
   const { className, ...footerProps } = props
 
   const currentDate = new Date()
@@ -36,4 +36,4 @@ export function LandingPageFooter(props: LandingPageFooterProps) {
     </footer>
   )
 }
-LandingPageFooter.displayName = "LandingPageFooter"
+RootPageFooter.displayName = "RootPageFooter"
