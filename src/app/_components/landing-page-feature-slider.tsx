@@ -12,11 +12,17 @@ const nbSlides = LANDING_PAGE_SLIDES.length
 
 const INTERVAL = 15000
 
+/**
+ * @deprecated
+ */
 export type LandingPageFeatureSliderProps = Omit<
   React.ComponentProps<"div">,
   "children"
 >
 
+/**
+ * @deprecated
+ */
 export function LandingPageFeatureSlider(props: LandingPageFeatureSliderProps) {
   const { className, ...divProps } = props
   const [currentStep, setCurrentStep] = useState(0)

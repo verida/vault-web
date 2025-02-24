@@ -15,6 +15,7 @@ export function useDataConnections() {
   const { did, getAccountSessionToken } = useVerida()
 
   const { data, ...query } = useQuery({
+    enabled: !!did,
     queryKey: DataConnectionsQueryKeys.dataConnections({ did }),
     queryFn: async () => {
       const sessionToken = await getAccountSessionToken()
