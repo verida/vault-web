@@ -30,7 +30,11 @@ export default function OnboardingConnectVaultPage() {
         title="Connect to Verida Vault"
         description="Use your Verida Identity to connect to this application."
       />
-      <OnboardingCardBody>
+      <OnboardingCardBody className="flex flex-col gap-8">
+        <Typography>
+          As you created your Verida identity in the Verida Wallet mobile app,
+          you can now connect to the Verida Vault web application with it.
+        </Typography>
         {isConnected ? (
           <SuccessBlock>
             <SuccessBlockImage />
@@ -53,7 +57,7 @@ export default function OnboardingConnectVaultPage() {
             </LoadingBlockDescription>
           </LoadingBlock>
         ) : (
-          <div className="flex flex-col gap-8">
+          <>
             <ol className="flex list-inside list-decimal flex-col gap-1">
               <li>
                 <Typography component="span">
@@ -62,9 +66,7 @@ export default function OnboardingConnectVaultPage() {
               </li>
               <li>
                 <Typography component="span">
-                  Open the Verida Wallet app on your mobile device and scan the
-                  QR code displayed. Alternatively, on mobile device simply
-                  click the displayed button to open the Verida Wallet directly
+                  {`On your mobile device, scan the QR code or click the "Connect" button to open the Verida Wallet.`}
                 </Typography>
               </li>
               <li>
@@ -74,7 +76,7 @@ export default function OnboardingConnectVaultPage() {
               </li>
             </ol>
             <VeridaConnectButton className="w-fit self-center" />
-          </div>
+          </>
         )}
       </OnboardingCardBody>
     </OnboardingCard>

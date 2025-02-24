@@ -17,14 +17,21 @@ export default function OnboardingInstallWalletPage() {
     <OnboardingCard>
       <OnboardingCardHeader
         title="Install the Verida Wallet"
-        description="Get started by installing the Verida Wallet on your mobile device."
+        description="Start by installing the Verida Wallet on your mobile device"
       />
       <OnboardingCardBody className="flex flex-col gap-8">
+        <div className="flex flex-col gap-2">
+          <Typography>
+            The Verida Wallet is a mobile application controlling your identity
+            on the Verida Network. You own the private key of your identity and
+            all the data related to it.
+          </Typography>
+        </div>
         <ol className="flex list-inside list-decimal flex-col gap-1">
           <li>
             <Typography component="span">
-              Click on the link below to install the Verida Wallet from
-              smartphone app store
+              Click on the link below to install the Verida Wallet from your
+              phone app store
             </Typography>
           </li>
           <li>
