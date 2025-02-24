@@ -1,10 +1,18 @@
+# 0.16.0 (2025-02-24)
+
+## Enhancements
+
+- Add onboarding for new Verida users
+
+## Misc
+
+- Update dependencies
+
 # 0.15.0 (2025-02-12)
 
 ## Enhancements
 
 - Improve UI of Verida Auth
-
-## Misc
 
 - Add license
 - Set up Plausible integration
