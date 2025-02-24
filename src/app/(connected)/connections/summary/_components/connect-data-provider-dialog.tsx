@@ -43,17 +43,24 @@ import { getConnectionPageRoute } from "@/features/routes/utils"
 import { Logger } from "@/features/telemetry/logger"
 import { useVerida } from "@/features/verida/hooks/use-verida"
 
+// TODO: Move to `@/components/...`
+
 const logger = Logger.create("connect-data-provider-dialog")
 
 export type ConnectDataProviderDialogProps = {
   children: React.ReactNode
   providerId?: string
+  disableRedirectToConnectionPage?: boolean
 }
 
 export function ConnectDataProviderDialog(
   props: ConnectDataProviderDialogProps
 ) {
-  const { children, providerId } = props
+  const {
+    children,
+    providerId,
+    disableRedirectToConnectionPage = false,
+  } = props
 
   const { getAccountSessionToken } = useVerida()
   const router = useRouter()
@@ -110,16 +117,16 @@ export function ConnectDataProviderDialog(
 
       const { connectionId } = payload
 
-      if (connectionId) {
+      if (connectionId && !disableRedirectToConnectionPage) {
         setTimeout(() => {
           router.push(getConnectionPageRoute({ connectionId }))
         }, 1000 * 3) // 3 seconds
       } else {
-        // For the moment the connectionId is not available, so we handle that other case to set conencted status and adapt the UI
+        // For the moment the connectionId is not available, so we handle that other case to set connected status and adapt the UI
         setStatus("connected")
       }
     },
-    [router]
+    [router, disableRedirectToConnectionPage]
   )
 
   useEffect(() => {

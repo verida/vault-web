@@ -1,5 +1,8 @@
 import React from "react"
 
+/**
+ * @deprecated
+ */
 export type LandingPageSlide = {
   title: string
   description: string
@@ -8,6 +11,9 @@ export type LandingPageSlide = {
   icon: React.ComponentType<React.ComponentProps<"svg">>
 }
 
+/**
+ * @deprecated
+ */
 export const LANDING_PAGE_SLIDES: LandingPageSlide[] = [
   {
     title: "AI Assistant",

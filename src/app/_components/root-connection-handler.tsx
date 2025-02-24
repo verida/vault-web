@@ -1,15 +1,17 @@
 "use client"
 
-import { redirect, useSearchParams } from "next/navigation"
+import { redirect } from "next/navigation"
+import { ReactNode } from "react"
 
 import { ConnectionLoading } from "@/app/_components/connection-loading"
+import { useRedirectPathQueryState } from "@/features/auth/hooks/use-redirect-path-query-state"
 import { getDefaultRedirectPathAfterConnection } from "@/features/routes/utils"
 import { useVerida } from "@/features/verida/hooks/use-verida"
 
 const DEFAULT_REDIRECT_PATH = getDefaultRedirectPathAfterConnection()
 
-export type RootConnectionHandlerProps = {
-  children: React.ReactNode
+export interface RootConnectionHandlerProps {
+  children: ReactNode
 }
 
 export function RootConnectionHandler(props: RootConnectionHandlerProps) {
@@ -17,12 +19,10 @@ export function RootConnectionHandler(props: RootConnectionHandlerProps) {
 
   const { isConnected, isConnecting } = useVerida()
 
-  const searchParams = useSearchParams()
-  // Ensure to use the same `redirectPath` query parameter as in `AppConnectionHandler`.
-  const redirectPath = searchParams.get("redirectPath") || DEFAULT_REDIRECT_PATH
+  const { redirectPath } = useRedirectPathQueryState()
 
   if (isConnected) {
-    redirect(decodeURIComponent(redirectPath))
+    redirect(redirectPath || DEFAULT_REDIRECT_PATH)
   }
 
   if (isConnecting) {
