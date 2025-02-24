@@ -17,15 +17,25 @@ import {
 import { DataProvider } from "@/features/data-connections/types"
 import { cn } from "@/styles/utils"
 
+// TODO: Move to `@/components/...`
+
 export interface DataProvidersListProps
   extends Omit<React.ComponentProps<"div">, "children"> {
   providers: DataProvider[] | undefined
   isLoading: boolean
   isError: boolean
+  disableRedirectToConnectionPage?: boolean
 }
 
 export function DataProvidersList(props: DataProvidersListProps) {
-  const { providers, isLoading, isError, className, ...divProps } = props
+  const {
+    providers,
+    isLoading,
+    isError,
+    className,
+    disableRedirectToConnectionPage,
+    ...divProps
+  } = props
 
   if (providers) {
     if (providers.length === 0) {
@@ -51,7 +61,11 @@ export function DataProvidersList(props: DataProvidersListProps) {
       >
         {providers.map((provider) => (
           <article key={provider.id}>
-            <DataProviderCard provider={provider} className="h-full" />
+            <DataProviderCard
+              provider={provider}
+              disableRedirectToConnectionPage={disableRedirectToConnectionPage}
+              className="h-full"
+            />
           </article>
         ))}
       </div>

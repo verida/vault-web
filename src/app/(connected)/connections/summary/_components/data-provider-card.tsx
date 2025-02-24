@@ -9,13 +9,17 @@ import { Card, CardBody, CardHeader } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton"
 import { DataProvider } from "@/features/data-connections/types"
 
+// TODO: Move to `@/components/...`
+
 export interface DataProviderCardProps
   extends Omit<React.ComponentProps<typeof Card>, "children"> {
   provider: DataProvider
+  disableRedirectToConnectionPage?: boolean
 }
 
 export function DataProviderCard(props: DataProviderCardProps) {
-  const { provider, className, ...cardProps } = props
+  const { provider, className, disableRedirectToConnectionPage, ...cardProps } =
+    props
 
   return (
     <Card className={className} {...cardProps}>
@@ -25,7 +29,10 @@ export function DataProviderCard(props: DataProviderCardProps) {
           <AvatarFallback>{provider.label?.[0]?.toUpperCase()}</AvatarFallback>
         </Avatar>
         {provider.status === "active" ? (
-          <ConnectDataProviderDialog providerId={provider.id}>
+          <ConnectDataProviderDialog
+            providerId={provider.id}
+            disableRedirectToConnectionPage={disableRedirectToConnectionPage}
+          >
             <ConnectDataProviderDialogTrigger asChild>
               <Button size="lg" variant="outline">
                 Connect
