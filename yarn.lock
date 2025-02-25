@@ -1882,6 +1882,11 @@
   resolved "https://registry.yarnpkg.com/@sentry/core/-/core-8.54.0.tgz#a2ebec965cadcb6de89e116689feeef79d5862a6"
   integrity sha512-03bWf+D1j28unOocY/5FDB6bUHtYlm6m6ollVejhg45ZmK9iPjdtxNWbrLsjT1WRym0Tjzowu+A3p+eebYEv0Q==
 
+"@sentry/core@9.2.0":
+  version "9.2.0"
+  resolved "https://registry.yarnpkg.com/@sentry/core/-/core-9.2.0.tgz#75ca124f2d612e52b4ab44f64e2f75321af703bf"
+  integrity sha512-REnEuneWyv3DkZfr0ZCQOZRCkBxUuWMY7aJ7BwWU9t3CFRUIPO0ePiXb2eZJEkDtalJK+m9pSTDUbChtrzQmLA==
+
 "@sentry/nextjs@^8.54.0":
   version "8.54.0"
   resolved "https://registry.yarnpkg.com/@sentry/nextjs/-/nextjs-8.54.0.tgz#53e8c8620de95c7f3ac848b21a3e5021a11ba57d"
@@ -1959,12 +1964,12 @@
     "@sentry/core" "8.54.0"
     hoist-non-react-statics "^3.3.2"
 
-"@sentry/types@^8.54.0":
-  version "8.54.0"
-  resolved "https://registry.yarnpkg.com/@sentry/types/-/types-8.54.0.tgz#1d57bb094443081de4e0d8b638e6ebc40f5ddd36"
-  integrity sha512-wztdtr7dOXQKi0iRvKc8XJhJ7HaAfOv8lGu0yqFOFwBZucO/SHnu87GOPi8mvrTiy1bentQO5l+zXWAaMvG4uw==
+"@sentry/types@^9.2.0":
+  version "9.2.0"
+  resolved "https://registry.yarnpkg.com/@sentry/types/-/types-9.2.0.tgz#19af022a0ed363c8c9366d6072bd6a8f9f465031"
+  integrity sha512-dfGWmjqRo6+/N9Xk+bdnqRT3DaSNmToZDxj6yz7kJS4YjXU+RIW/xM6ysQsgxcLbTZGEmm7OPcinzcLc1KWM+g==
   dependencies:
-    "@sentry/core" "8.54.0"
+    "@sentry/core" "9.2.0"
 
 "@sentry/vercel-edge@8.54.0":
   version "8.54.0"
