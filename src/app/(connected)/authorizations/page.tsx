@@ -1,6 +1,10 @@
 "use client"
 
-import { getCoreRowModel, useReactTable } from "@tanstack/react-table"
+import {
+  getCoreRowModel,
+  getPaginationRowModel,
+  useReactTable,
+} from "@tanstack/react-table"
 import Link from "next/link"
 import { useSearchParams } from "next/navigation"
 import React from "react"
@@ -10,42 +14,31 @@ import { AuthorizedAppsTableRow } from "@/app/(connected)/authorizations/_compon
 import { DataTable } from "@/components/data-table/data-table"
 import { EMPTY_VALUE_FALLBACK } from "@/constants/misc"
 import { useAuthorizedAppItemIdState } from "@/features/authorized-apps/hooks/use-authorized-app-item-id-state"
-import { useAuthorizedApps } from "@/features/authorized-apps/hooks/use-authorized-apps"
-import { AuthorizedAppRecord } from "@/features/authorized-apps/types"
 import { DataTableColumnAlignFeature } from "@/features/data-table/data-table-column-align-feature"
 import { DataTableColumnClassNameFeature } from "@/features/data-table/data-table-column-classname-feature"
 import { useDataTableState } from "@/features/data-table/hooks/use-data-table-state"
+import { useVeridaAuthTokens } from "@/features/verida-auth/hooks/use-verida-auth-tokens"
+import { VeridaAuthToken } from "@/features/verida-auth/types"
 
-const fallbackData: AuthorizedAppRecord[] = []
+const fallbackData: VeridaAuthToken[] = []
 
-const getRowId = (record: AuthorizedAppRecord) => record._id
+const getRowId = (record: VeridaAuthToken) => record._id
 
 export default function AuthorizationsPage() {
   const { pagination, setPagination } = useDataTableState()
 
-  const {
-    authorizedApps,
-    pagination: authorizedAppsPaginationInfo,
-    isLoading,
-    isFetching,
-    isError,
-  } = useAuthorizedApps({
-    options: {
-      limit: pagination.pageSize,
-      skip: pagination.pageIndex * pagination.pageSize,
-    },
-  })
+  const { tokens, isLoading, isFetching, isError } = useVeridaAuthTokens()
 
   const table = useReactTable({
-    data: authorizedApps ?? fallbackData,
+    data: tokens ?? fallbackData,
     renderFallbackValue: EMPTY_VALUE_FALLBACK,
     columns: authorizedAppsTableColumns,
     _features: [DataTableColumnAlignFeature, DataTableColumnClassNameFeature],
     getRowId,
     getCoreRowModel: getCoreRowModel(),
-    manualPagination: true,
-    rowCount:
-      authorizedAppsPaginationInfo?.unfilteredTotalRecordsCount ?? undefined,
+    getPaginationRowModel: getPaginationRowModel(),
+    manualPagination: false,
+    rowCount: tokens?.length ?? undefined,
     onPaginationChange: setPagination,
     state: {
       pagination,
@@ -53,7 +46,6 @@ export default function AuthorizationsPage() {
     initialState: {
       columnVisibility: {
         id: false,
-        url: false,
       },
     },
   })

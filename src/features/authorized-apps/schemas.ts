@@ -1,5 +1,8 @@
 import { z } from "zod"
 
+/**
+ * @deprecated
+ */
 export const AuthorizedAppBaseSchema = z.object({
   name: z.string(),
   url: z.string(),

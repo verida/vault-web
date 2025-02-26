@@ -1,62 +1,68 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { createColumnHelper } from "@tanstack/react-table"
-import { intlFormat, isDate } from "date-fns"
-import Link from "next/link"
 
 import { Typography } from "@/components/typography"
 import { EMPTY_VALUE_FALLBACK } from "@/constants/misc"
-import { AuthorizedAppRecord } from "@/features/authorized-apps/types"
-import { SHORT_DATE_TIME_FORMAT_OPTIONS } from "@/utils/date"
+import { VeridaAuthScope } from "@/features/verida-auth/components/verida-auth-scope"
+import { useResolvedVeridaAuthScopes } from "@/features/verida-auth/hooks/use-resolved-verida-auth-scopes"
+import { VeridaAuthToken } from "@/features/verida-auth/types"
+import { ProfileAvatar } from "@/features/verida-profile/components/profile-avatar"
+import { EMPTY_PROFILE_NAME_FALLBACK } from "@/features/verida-profile/constants"
+import { useVeridaProfile } from "@/features/verida-profile/hooks/use-verida-profile"
+import { cn } from "@/styles/utils"
 
-const columnHelper = createColumnHelper<AuthorizedAppRecord>()
+const columnHelper = createColumnHelper<VeridaAuthToken>()
 
 export const authorizedAppsTableColumns = [
   columnHelper.accessor((row) => row._id, {
     id: "id",
     header: "ID",
   }),
-  columnHelper.accessor((row) => row.name, {
-    id: "name",
+  columnHelper.accessor((row) => row.appDID, {
+    id: "application",
     header: "Application",
     meta: {
       headerClassName: "w-64 shrink-0",
     },
-    cell: (context) => (
-      <Typography variant="base-semibold" className="truncate">
-        {context.renderValue()}
-      </Typography>
-    ),
-  }),
-  columnHelper.accessor((row) => row.url, {
-    id: "url",
-    header: "URL",
     cell: (context) => {
-      const value = context.getValue()
+      const appDID = context.getValue()
 
-      if (!value) {
-        return (
-          <div className="text-muted-foreground">
-            <Typography variant="base-s-regular" className="truncate">
-              {EMPTY_VALUE_FALLBACK}
-            </Typography>
-          </div>
-        )
-      }
-
-      // Use URL to get the punycode hostname
-      const url = new URL(value)
+      const { profile, isLoading } = useVeridaProfile({
+        did: appDID,
+      })
 
       return (
-        <Link
-          href={url.toString()}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-muted-foreground underline"
-        >
-          <Typography variant="base-s-regular" className="truncate">
-            {`${url.protocol}//${url.hostname}`}
-          </Typography>
-        </Link>
+        <div className="flex flex-row items-center gap-2">
+          <ProfileAvatar
+            profile={profile}
+            isLoading={isLoading}
+            className="size-12"
+          />
+          <div className="flex min-w-0 flex-1 flex-col gap-0">
+            {appDID ? (
+              <Typography variant="base-regular" className="truncate">
+                <span
+                  className={cn(
+                    profile?.name ? "" : "italic text-muted-foreground"
+                  )}
+                >
+                  {profile?.name || EMPTY_PROFILE_NAME_FALLBACK}
+                </span>
+              </Typography>
+            ) : (
+              <Typography variant="base-regular" className="truncate">
+                <span className="italic text-muted-foreground">
+                  {`<Not linked to an Application>`}
+                </span>
+              </Typography>
+            )}
+            <div className="text-muted-foreground">
+              <Typography variant="base-s-regular" className="truncate">
+                {appDID ?? EMPTY_VALUE_FALLBACK}
+              </Typography>
+            </div>
+          </div>
+        </div>
       )
     },
   }),
@@ -67,9 +73,11 @@ export const authorizedAppsTableColumns = [
       headerClassName: "flex-1",
     },
     cell: (context) => {
-      const value = context.getValue()
+      const scopes = context.getValue()
 
-      if (!value) {
+      const { resolvedScopes } = useResolvedVeridaAuthScopes(scopes)
+
+      if (!scopes || !resolvedScopes || resolvedScopes.length === 0) {
         return (
           <div className="text-muted-foreground">
             <Typography variant="base-regular" className="truncate">
@@ -81,36 +89,23 @@ export const authorizedAppsTableColumns = [
 
       return (
         <ul className="flex flex-col gap-0">
-          {value.map((scope, index) => (
-            <li key={index}>
-              <Typography variant="base-regular">
-                {scope.description}
+          {resolvedScopes
+            .slice(0, resolvedScopes.length > 3 ? 2 : 3)
+            .map((scope, index) => (
+              <li key={index}>
+                <Typography variant="base-regular" component="span">
+                  <VeridaAuthScope scope={scope} />
+                </Typography>
+              </li>
+            ))}
+          {resolvedScopes.length > 3 && (
+            <li>
+              <Typography variant="base-regular" component="span">
+                ...
               </Typography>
             </li>
-          ))}
+          )}
         </ul>
-      )
-    },
-  }),
-  columnHelper.accessor((row) => row.lastAccessedAt, {
-    id: "lastAccessedAt",
-    header: "Last Used",
-    meta: {
-      headerClassName: "w-44 shrink-0",
-      align: "right",
-    },
-    cell: (context) => {
-      const value = context.getValue()
-      const date = new Date(value || "")
-
-      return (
-        <div className="text-muted-foreground">
-          <Typography variant="base-regular" className="truncate">
-            {isDate(date)
-              ? intlFormat(date, SHORT_DATE_TIME_FORMAT_OPTIONS)
-              : EMPTY_VALUE_FALLBACK}
-          </Typography>
-        </div>
       )
     },
   }),
