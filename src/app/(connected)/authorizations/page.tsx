@@ -27,10 +27,10 @@ const getRowId = (record: VeridaAuthToken) => record._id
 export default function AuthorizationsPage() {
   const { pagination, setPagination } = useDataTableState()
 
-  const { tokens, isLoading, isFetching, isError } = useVeridaAuthTokens()
+  const { authTokens, isLoading, isFetching, isError } = useVeridaAuthTokens()
 
   const table = useReactTable({
-    data: tokens ?? fallbackData,
+    data: authTokens ?? fallbackData,
     renderFallbackValue: EMPTY_VALUE_FALLBACK,
     columns: authorizedAppsTableColumns,
     _features: [DataTableColumnAlignFeature, DataTableColumnClassNameFeature],
@@ -38,7 +38,7 @@ export default function AuthorizationsPage() {
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     manualPagination: false,
-    rowCount: tokens?.length ?? undefined,
+    rowCount: authTokens?.length ?? undefined,
     onPaginationChange: setPagination,
     state: {
       pagination,

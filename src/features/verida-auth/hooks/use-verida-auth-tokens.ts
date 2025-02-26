@@ -1,4 +1,4 @@
-import { QueryClient, useQuery } from "@tanstack/react-query"
+import { QueryClient, useQuery, useQueryClient } from "@tanstack/react-query"
 
 import { UseQueryOptions } from "@/features/queries/types"
 import { Logger } from "@/features/telemetry/logger"
@@ -17,13 +17,26 @@ const logger = Logger.create("verida-auth")
  */
 export function useVeridaAuthTokens(queryOptions?: UseQueryOptions) {
   const { did, getAccountSessionToken } = useVerida()
+  const queryClient = useQueryClient()
 
   const { data, ...query } = useQuery({
     enabled: !!did && queryOptions?.enabled !== false,
     queryKey: ["verida-auth", "tokens", did],
     queryFn: async () => {
       const sessionToken = await getAccountSessionToken()
-      return getVeridaAuthTokens({ sessionToken })
+      const tokens = await getVeridaAuthTokens({ sessionToken })
+
+      // Set individual token query data for each token
+      tokens.forEach((token) => {
+        if (token._id) {
+          queryClient.setQueryData(
+            ["verida-auth", "token", did, token._id],
+            token
+          )
+        }
+      })
+
+      return tokens
     },
     staleTime: queryOptions?.staleTime ?? 1000 * 60 * 5, // 5 minutes
     gcTime: queryOptions?.gcTime,
@@ -34,7 +47,7 @@ export function useVeridaAuthTokens(queryOptions?: UseQueryOptions) {
   })
 
   return {
-    tokens: data,
+    authTokens: data,
     ...query,
   }
 }

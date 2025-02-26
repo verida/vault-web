@@ -4,7 +4,6 @@ import { intlFormat, isDate } from "date-fns"
 import Link from "next/link"
 import { useCallback, useMemo } from "react"
 
-import { DeleteIcon } from "@/components/icons/delete-icon"
 import {
   ItemSheet,
   ItemSheetBody,
@@ -14,7 +13,12 @@ import {
   ItemSheetTitle,
 } from "@/components/item-sheet"
 import { Typography } from "@/components/typography"
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
 import { Button } from "@/components/ui/button"
 import {
   ErrorBlock,
@@ -28,16 +32,14 @@ import {
   LoadingBlockSpinner,
   LoadingBlockTitle,
 } from "@/components/ui/loading"
-import { Skeleton } from "@/components/ui/skeleton"
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip"
 import { EMPTY_VALUE_FALLBACK } from "@/constants/misc"
-import { RevokeAuthorizedAppDialog } from "@/features/authorized-apps/components/revoke-authorized-app-dialog"
-import { useAuthorizedApp } from "@/features/authorized-apps/hooks/use-authorized-app"
-import { VeridaAuthScope } from "@/features/verida-auth/types"
+import { VeridaAuthScope } from "@/features/verida-auth/components/verida-auth-scope"
+import { useResolvedVeridaAuthScopes } from "@/features/verida-auth/hooks/use-resolved-verida-auth-scopes"
+import { useVeridaAuthToken } from "@/features/verida-auth/hooks/use-verida-auth-token"
+import { VeridaAuthScope as VeridaAuthScopeType } from "@/features/verida-auth/types"
+import { ProfileAvatar } from "@/features/verida-profile/components/profile-avatar"
+import { EMPTY_PROFILE_NAME_FALLBACK } from "@/features/verida-profile/constants"
+import { useVeridaProfile } from "@/features/verida-profile/hooks/use-verida-profile"
 import { cn } from "@/styles/utils"
 import { SHORT_DATE_TIME_FORMAT_OPTIONS } from "@/utils/date"
 
@@ -52,42 +54,134 @@ export function AuthorizedAppItemPageContent(
 ) {
   const { open, onOpenChange, itemId } = props
 
-  const { authorizedApp, isLoading, isError } = useAuthorizedApp({
-    authorizedAppRecordId: itemId,
+  const { authToken, isLoading, isError } = useVeridaAuthToken({
+    tokenId: itemId,
   })
+
+  const { profile, isLoading: isLoadingProfile } = useVeridaProfile({
+    did: authToken?.appDID,
+  })
+
+  const { resolvedScopes } = useResolvedVeridaAuthScopes(
+    authToken?.scopes ?? []
+  )
+
+  const apiScopes = useMemo(() => {
+    return resolvedScopes?.filter((scope) => scope.type === "api")
+  }, [resolvedScopes])
+
+  const dataScopes = useMemo(() => {
+    return resolvedScopes?.filter((scope) => scope.type === "data")
+  }, [resolvedScopes])
+
+  const unknownScopes = useMemo(() => {
+    return resolvedScopes?.filter((scope) => scope.type === "unknown")
+  }, [resolvedScopes])
 
   const handleClose = useCallback(() => {
     onOpenChange(false)
   }, [onOpenChange])
 
-  const handleRevoke = useCallback(() => {
-    handleClose()
-  }, [handleClose])
-
-  const title = useMemo(() => {
-    if (authorizedApp) {
-      return <>{authorizedApp.name}</>
-    }
-
-    if (isLoading) {
-      return <Skeleton className="h-6 w-64" />
-    }
-
-    return (
-      <span className="italic text-muted-foreground">
-        {`<Unknown Authorized App>`}
-      </span>
-    )
-  }, [isLoading, authorizedApp])
+  // const handleRevoke = useCallback(() => {
+  //   handleClose()
+  // }, [handleClose])
 
   const body = useMemo(() => {
-    if (authorizedApp) {
+    if (authToken) {
       return (
         <div className="flex flex-col gap-4">
-          <ItemFieldUrl url={authorizedApp.url} />
-          <ItemFieldScopes scopes={authorizedApp.scopes} />
-          <ItemFieldLastUsed lastUsed={authorizedApp.lastAccessedAt} />
-          <ItemFieldCreated createdAt={authorizedApp.insertedAt} />
+          <div className="flex flex-row items-center gap-2">
+            <ProfileAvatar
+              profile={profile}
+              isLoading={isLoadingProfile}
+              className="size-12"
+            />
+            <div className="flex min-w-0 flex-1 flex-col gap-0">
+              {authToken?.appDID ? (
+                <Typography variant="base-regular" className="truncate">
+                  <span
+                    className={cn(
+                      profile?.name ? "" : "italic text-muted-foreground"
+                    )}
+                  >
+                    {profile?.name || EMPTY_PROFILE_NAME_FALLBACK}
+                  </span>
+                </Typography>
+              ) : (
+                <Typography variant="base-regular" className="truncate">
+                  <span className="italic text-muted-foreground">
+                    {`<Not linked to an Application>`}
+                  </span>
+                </Typography>
+              )}
+              <div className="text-muted-foreground">
+                <Typography variant="base-s-regular" className="truncate">
+                  {authToken?.appDID ?? EMPTY_VALUE_FALLBACK}
+                </Typography>
+              </div>
+            </div>
+          </div>
+          {resolvedScopes && resolvedScopes.length > 0 ? (
+            <Accordion
+              type="multiple"
+              defaultValue={["data-scopes", "api-scopes"]}
+            >
+              {dataScopes && dataScopes.length > 0 ? (
+                <AccordionItem value="data-scopes">
+                  <AccordionTrigger>Data</AccordionTrigger>
+                  <AccordionContent>
+                    <ul className="list-inside list-disc">
+                      {dataScopes.map((scope, index) => (
+                        <li key={index}>
+                          <Typography variant="base-regular" component="span">
+                            <VeridaAuthScope scope={scope} />
+                          </Typography>
+                        </li>
+                      ))}
+                    </ul>
+                  </AccordionContent>
+                </AccordionItem>
+              ) : null}
+              {apiScopes && apiScopes.length > 0 ? (
+                <AccordionItem value="api-scopes">
+                  <AccordionTrigger>Operations</AccordionTrigger>
+                  <AccordionContent className="flex flex-col gap-2">
+                    <ul className="list-inside list-disc">
+                      {apiScopes.map((scope, index) => (
+                        <li key={index}>
+                          <Typography variant="base-regular" component="span">
+                            <VeridaAuthScope scope={scope} />
+                          </Typography>
+                        </li>
+                      ))}
+                    </ul>
+                  </AccordionContent>
+                </AccordionItem>
+              ) : null}
+              {unknownScopes && unknownScopes.length > 0 ? (
+                <AccordionItem value="unknown-scopes">
+                  <AccordionTrigger>Other</AccordionTrigger>
+                  <AccordionContent>
+                    <ul className="list-inside list-disc">
+                      {unknownScopes.map((scope, index) => (
+                        <li key={index}>
+                          <Typography variant="base-regular" component="span">
+                            <VeridaAuthScope scope={scope} />
+                          </Typography>
+                        </li>
+                      ))}
+                    </ul>
+                  </AccordionContent>
+                </AccordionItem>
+              ) : null}
+            </Accordion>
+          ) : (
+            <div className="text-muted-foreground">
+              <Typography variant="base-regular">
+                No access requested
+              </Typography>
+            </div>
+          )}
         </div>
       )
     }
@@ -126,42 +220,47 @@ export function AuthorizedAppItemPageContent(
         </ErrorBlockDescription>
       </ErrorBlock>
     )
-  }, [authorizedApp, isLoading, isError])
+  }, [
+    authToken,
+    isLoading,
+    isError,
+    profile,
+    isLoadingProfile,
+    resolvedScopes,
+    apiScopes,
+    dataScopes,
+    unknownScopes,
+  ])
 
   return (
     <ItemSheet open={open} onOpenChange={onOpenChange}>
       <ItemSheetContent>
         <ItemSheetHeader
-          right={
-            authorizedApp ? (
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <RevokeAuthorizedAppDialog
-                    authorizedApp={authorizedApp}
-                    onRevoke={handleRevoke}
-                  >
-                    <Button variant="outline-destructive" size="icon">
-                      <DeleteIcon className="size-5 shrink-0" />
-                      <span className="sr-only">Revoke</span>
-                    </Button>
-                  </RevokeAuthorizedAppDialog>
-                </TooltipTrigger>
-                <TooltipContent>Revoke</TooltipContent>
-              </Tooltip>
-            ) : undefined
-          }
+        // right={
+        //   authorizedApp ? (
+        //     <Tooltip>
+        //       <TooltipTrigger asChild>
+        //         <RevokeAuthorizedAppDialog
+        //           authorizedApp={authorizedApp}
+        //           onRevoke={handleRevoke}
+        //         >
+        //           <Button variant="outline-destructive" size="icon">
+        //             <DeleteIcon className="size-5 shrink-0" />
+        //             <span className="sr-only">Revoke</span>
+        //           </Button>
+        //         </RevokeAuthorizedAppDialog>
+        //       </TooltipTrigger>
+        //       <TooltipContent>Revoke</TooltipContent>
+        //     </Tooltip>
+        //   ) : undefined
+        // }
         >
-          <ItemSheetTitle description="Authorized app">{title}</ItemSheetTitle>
+          <ItemSheetTitle description="Authorized app">
+            Authorized app
+          </ItemSheetTitle>
         </ItemSheetHeader>
         <ItemSheetBody>{body}</ItemSheetBody>
         <ItemSheetFooter className="flex flex-col gap-4">
-          <Alert variant="warning">
-            <AlertTitle>Non-functional</AlertTitle>
-            <AlertDescription>
-              This Authorized Apps feature is not functional yet. Only the UI
-              has been (partially) implemented for the moment.
-            </AlertDescription>
-          </Alert>
           <Button variant="outline" className="w-full" onClick={handleClose}>
             Close
           </Button>
@@ -217,7 +316,7 @@ export interface ItemFieldScopesProps
     React.ComponentProps<typeof ItemField>,
     "propertyName" | "children"
   > {
-  scopes?: VeridaAuthScope[]
+  scopes?: VeridaAuthScopeType[]
 }
 
 export function ItemFieldScopes(props: ItemFieldScopesProps) {

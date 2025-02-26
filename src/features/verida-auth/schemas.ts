@@ -53,3 +53,7 @@ export const VeridaAuthTokenRecordSchema = VeridaBaseRecordSchema.extend(
 export const VeridaAuthGetTokensApiV1ResponseSchema = z.object({
   tokens: z.array(VeridaAuthTokenRecordSchema),
 })
+
+export const VeridaAuthGetTokenApiV1ResponseSchema = z.object({
+  token: VeridaAuthTokenRecordSchema,
+})
