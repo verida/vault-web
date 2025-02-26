@@ -22,7 +22,8 @@ export const authorizedAppsTableColumns = [
     id: "application",
     header: "Application",
     meta: {
-      headerClassName: "w-64 shrink-0",
+      headerClassName: "md:w-80 w-full shrink-0",
+      cellClassName: "md:w-80 w-full",
     },
     cell: (context) => {
       const appDID = context.getValue()

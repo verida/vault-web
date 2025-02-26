@@ -27,7 +27,12 @@ export function AuthorizedAppsTableRow(props: AuthorizedAppsTableRowProps) {
       className={cn("flex flex-col gap-6 md:flex-row", className)}
       {...cardProps}
     >
-      <div className="flex shrink-0 flex-col gap-1 md:w-64">
+      <div
+        className={cn(
+          "flex shrink-0 flex-col gap-1",
+          applicationCell?.getClassName()
+        )}
+      >
         <div>
           {applicationCell
             ? flexRender(
