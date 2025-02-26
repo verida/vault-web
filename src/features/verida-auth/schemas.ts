@@ -1,5 +1,6 @@
 import { z } from "zod"
 
+import { VeridaBaseRecordSchema } from "@/features/verida-database/schemas"
 import { isValidVeridaDid } from "@/features/verida/utils"
 
 export const VeridaAuthRequestAppDIDSchema = z.string().refine(isValidVeridaDid)
@@ -38,4 +39,17 @@ export const VeridaAuthResolveScopesV1ResponseSchema = z.object({
 
 export const VeridaAuthAuthV1ResponseSchema = z.object({
   redirectUrl: z.string().url(),
+})
+
+export const VeridaAuthTokenBaseSchema = z.object({
+  appDID: z.string().optional(),
+  scopes: z.array(z.string()),
+})
+
+export const VeridaAuthTokenRecordSchema = VeridaBaseRecordSchema.extend(
+  VeridaAuthTokenBaseSchema.shape
+)
+
+export const VeridaAuthGetTokensApiV1ResponseSchema = z.object({
+  tokens: z.array(VeridaAuthTokenRecordSchema),
 })

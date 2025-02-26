@@ -5,6 +5,7 @@ import { Logger } from "@/features/telemetry/logger"
 import {
   VeridaAuthAuthV1ResponseSchema,
   VeridaAuthGetScopeDefinitionsV1ResponseSchema,
+  VeridaAuthGetTokensApiV1ResponseSchema,
   VeridaAuthResolveScopesV1ResponseSchema,
 } from "@/features/verida-auth/schemas"
 import {
@@ -15,6 +16,7 @@ import {
   VeridaAuthScope,
   VeridaAuthScopePermission,
   VeridaAuthScopeType,
+  VeridaAuthToken,
 } from "@/features/verida-auth/types"
 import { VERIDA_VAULT_CONTEXT_NAME } from "@/features/verida/constants"
 
@@ -325,4 +327,59 @@ export function buildDenyRequestRedirectUrl(
   redirectUrl.searchParams.set("state", payload.state ?? "")
 
   return redirectUrl.toString()
+}
+
+export type GetVeridaAuthTokensArgs = {
+  sessionToken: string
+}
+
+/**
+ * Fetches and validates Verida Auth tokens from the API.
+ *
+ * This function retrieves the auth tokens for the authenticated user,
+ * validates the response against a schema, and returns the tokens.
+ *
+ * @param sessionToken - User's API session token for authentication
+ * @returns Promise resolving to an array of Verida Auth tokens
+ * @throws If the API base URL is not configured
+ * @throws If the HTTP request fails
+ * @throws If the response validation fails
+ */
+export async function getVeridaAuthTokens({
+  sessionToken,
+}: GetVeridaAuthTokensArgs): Promise<VeridaAuthToken[]> {
+  logger.info("Getting Verida Auth tokens")
+
+  try {
+    const url = new URL(
+      "/api/rest/v1/auth/tokens",
+      commonConfig.PRIVATE_DATA_API_BASE_URL
+    )
+
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "X-API-Key": sessionToken,
+      },
+    })
+
+    if (!response.ok) {
+      throw new Error(`HTTP error ${response.status}: ${response.statusText}`)
+    }
+
+    const data = await response.json()
+
+    const validatedData = VeridaAuthGetTokensApiV1ResponseSchema.parse(data)
+
+    logger.info("Successfully got Verida Auth tokens")
+
+    logger.debug("Verida Auth tokens", { tokens: validatedData.tokens })
+
+    return validatedData.tokens
+  } catch (error) {
+    throw new Error("Error getting Verida Auth tokens", {
+      cause: error,
+    })
+  }
 }
