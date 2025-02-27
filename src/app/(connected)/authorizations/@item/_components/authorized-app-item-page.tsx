@@ -4,6 +4,7 @@ import { intlFormat, isDate } from "date-fns"
 import Link from "next/link"
 import { useCallback, useMemo } from "react"
 
+import { DeleteIcon } from "@/components/icons/delete-icon"
 import {
   ItemSheet,
   ItemSheetBody,
@@ -32,7 +33,16 @@ import {
   LoadingBlockSpinner,
   LoadingBlockTitle,
 } from "@/components/ui/loading"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
 import { EMPTY_VALUE_FALLBACK } from "@/constants/misc"
+import {
+  RevokeAuthorizedAppDialog,
+  RevokeAuthorizedAppDialogTrigger,
+} from "@/features/authorized-apps/components/revoke-authorized-app-dialog"
 import { VeridaAuthScope } from "@/features/verida-auth/components/verida-auth-scope"
 import { useResolvedVeridaAuthScopes } from "@/features/verida-auth/hooks/use-resolved-verida-auth-scopes"
 import { useVeridaAuthToken } from "@/features/verida-auth/hooks/use-verida-auth-token"
@@ -82,9 +92,9 @@ export function AuthorizedAppItemPageContent(
     onOpenChange(false)
   }, [onOpenChange])
 
-  // const handleRevoke = useCallback(() => {
-  //   handleClose()
-  // }, [handleClose])
+  const handleRevoke = useCallback(() => {
+    handleClose()
+  }, [handleClose])
 
   const body = useMemo(() => {
     if (authToken) {
@@ -236,24 +246,26 @@ export function AuthorizedAppItemPageContent(
     <ItemSheet open={open} onOpenChange={onOpenChange}>
       <ItemSheetContent>
         <ItemSheetHeader
-        // right={
-        //   authorizedApp ? (
-        //     <Tooltip>
-        //       <TooltipTrigger asChild>
-        //         <RevokeAuthorizedAppDialog
-        //           authorizedApp={authorizedApp}
-        //           onRevoke={handleRevoke}
-        //         >
-        //           <Button variant="outline-destructive" size="icon">
-        //             <DeleteIcon className="size-5 shrink-0" />
-        //             <span className="sr-only">Revoke</span>
-        //           </Button>
-        //         </RevokeAuthorizedAppDialog>
-        //       </TooltipTrigger>
-        //       <TooltipContent>Revoke</TooltipContent>
-        //     </Tooltip>
-        //   ) : undefined
-        // }
+          right={
+            authToken ? (
+              <Tooltip>
+                <RevokeAuthorizedAppDialog
+                  authToken={authToken}
+                  onRevoke={handleRevoke}
+                >
+                  <RevokeAuthorizedAppDialogTrigger asChild>
+                    <TooltipTrigger asChild>
+                      <Button variant="outline-destructive" size="icon">
+                        <DeleteIcon className="size-5 shrink-0" />
+                        <span className="sr-only">Revoke</span>
+                      </Button>
+                    </TooltipTrigger>
+                  </RevokeAuthorizedAppDialogTrigger>
+                </RevokeAuthorizedAppDialog>
+                <TooltipContent>Revoke</TooltipContent>
+              </Tooltip>
+            ) : undefined
+          }
         >
           <ItemSheetTitle description="Authorized app">
             Authorized app
