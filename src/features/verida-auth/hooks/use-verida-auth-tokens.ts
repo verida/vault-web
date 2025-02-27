@@ -2,6 +2,7 @@ import { QueryClient, useQuery, useQueryClient } from "@tanstack/react-query"
 
 import { UseQueryOptions } from "@/features/queries/types"
 import { Logger } from "@/features/telemetry/logger"
+import { VeridaAuthQueryKeys } from "@/features/verida-auth/queries"
 import { getVeridaAuthTokens } from "@/features/verida-auth/utils"
 import { useVerida } from "@/features/verida/hooks/use-verida"
 
@@ -21,7 +22,7 @@ export function useVeridaAuthTokens(queryOptions?: UseQueryOptions) {
 
   const { data, ...query } = useQuery({
     enabled: !!did && queryOptions?.enabled !== false,
-    queryKey: ["verida-auth", "tokens", did],
+    queryKey: VeridaAuthQueryKeys.authTokens(did),
     queryFn: async () => {
       const sessionToken = await getAccountSessionToken()
       const tokens = await getVeridaAuthTokens({ sessionToken })
@@ -30,7 +31,7 @@ export function useVeridaAuthTokens(queryOptions?: UseQueryOptions) {
       tokens.forEach((token) => {
         if (token._id) {
           queryClient.setQueryData(
-            ["verida-auth", "token", did, token._id],
+            VeridaAuthQueryKeys.authToken({ did, tokenId: token._id }),
             token
           )
         }
@@ -66,7 +67,7 @@ export async function invalidateVeridaAuthTokens(
   did: string
 ) {
   await queryClient.invalidateQueries({
-    queryKey: ["verida-auth", "tokens", did],
+    queryKey: VeridaAuthQueryKeys.authTokens(did),
   })
   logger.info("Successfully invalidated Verida Auth tokens queries")
 }

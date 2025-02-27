@@ -1,6 +1,6 @@
 "use client"
 
-import { useCallback } from "react"
+import { useCallback, useState } from "react"
 
 import {
   AlertDialog,
@@ -14,11 +14,12 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button"
-import { AuthorizedAppRecord } from "@/features/authorized-apps/types"
-import { wait } from "@/utils/misc"
+import { useToast } from "@/features/toasts/use-toast"
+import { useRevokeVeridaAuthToken } from "@/features/verida-auth/hooks/use-revoke-verida-auth-token"
+import { VeridaAuthToken } from "@/features/verida-auth/types"
 
 export type RevokeAuthorizedAppDialogProps = {
-  authorizedApp: AuthorizedAppRecord
+  authToken: VeridaAuthToken
   onRevoke?: () => void
   children?: React.ReactNode
 }
@@ -26,24 +27,44 @@ export type RevokeAuthorizedAppDialogProps = {
 export function RevokeAuthorizedAppDialog(
   props: RevokeAuthorizedAppDialogProps
 ) {
-  const { authorizedApp, onRevoke, children } = props
-
-  // TODO: Implement a custom hook for deleting the authorized app
+  const { authToken, onRevoke, children } = props
+  const { revokeAuthToken } = useRevokeVeridaAuthToken()
+  const { toast } = useToast()
+  const [status, setStatus] = useState<"idle" | "processing" | "error">("idle")
 
   const handleRevoke = useCallback(async () => {
-    // TODO: Use the mutation function from the custom hook instead of this mock
-    await wait(2000)
-    onRevoke?.()
-  }, [onRevoke])
+    if (!authToken._id) return
+
+    setStatus("processing")
+    revokeAuthToken(
+      { tokenId: authToken._id },
+      {
+        onSuccess: () => {
+          toast({
+            variant: "success",
+            description: "Access successfully revoked",
+          })
+          onRevoke?.()
+        },
+        onError: () => {
+          setStatus("error")
+          toast({
+            variant: "error",
+            description: "Something went wrong while revoking access",
+          })
+        },
+      }
+    )
+  }, [authToken._id, revokeAuthToken, onRevoke, toast])
 
   return (
     <AlertDialog>
-      <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
+      {children}
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Revoke Access</AlertDialogTitle>
           <AlertDialogDescription>
-            Are you sure you want to revoke access for {authorizedApp.name}?
+            Are you sure you want to revoke access for this application?
           </AlertDialogDescription>
           <AlertDialogDescription>
             This action cannot be undone.
@@ -53,8 +74,12 @@ export function RevokeAuthorizedAppDialog(
           <AlertDialogCancel asChild>
             <Button variant="outline">Cancel</Button>
           </AlertDialogCancel>
-          <AlertDialogAction variant="destructive" onClick={handleRevoke}>
-            Revoke
+          <AlertDialogAction
+            variant="destructive"
+            onClick={handleRevoke}
+            disabled={status === "processing"}
+          >
+            {status === "processing" ? "Revoking..." : "Revoke"}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
@@ -62,3 +87,5 @@ export function RevokeAuthorizedAppDialog(
   )
 }
 RevokeAuthorizedAppDialog.displayName = "RevokeAuthorizedAppDialog"
+
+export const RevokeAuthorizedAppDialogTrigger = AlertDialogTrigger

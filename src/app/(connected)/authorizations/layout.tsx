@@ -32,20 +32,6 @@ export default function AuthorizationsLayout(props: AuthorizationsLayoutProps) {
       //   <div className="flex flex-row items-center gap-2">
       //     <Tooltip>
       //       <TooltipTrigger asChild>
-      //         <RevokeAllAuthorizedAppsDialog>
-      //           <Button
-      //             variant="outline-destructive"
-      //             className="h-12 w-12 p-0 sm:w-auto sm:px-6 sm:py-2"
-      //           >
-      //             <DeleteIcon className="size-5 shrink-0 sm:hidden" />
-      //             <span className="sr-only sm:not-sr-only">Revoke All</span>
-      //           </Button>
-      //         </RevokeAllAuthorizedAppsDialog>
-      //       </TooltipTrigger>
-      //       <TooltipContent>Revoke authorization for all apps</TooltipContent>
-      //     </Tooltip>
-      //     <Tooltip>
-      //       <TooltipTrigger asChild>
       //         <CreateAuthorizationDialog>
       //           <Button
       //             variant="primary"

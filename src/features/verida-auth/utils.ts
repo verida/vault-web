@@ -8,6 +8,7 @@ import {
   VeridaAuthGetTokenApiV1ResponseSchema,
   VeridaAuthGetTokensApiV1ResponseSchema,
   VeridaAuthResolveScopesV1ResponseSchema,
+  VeridaAuthRevokeTokenApiV1ResponseSchema,
 } from "@/features/verida-auth/schemas"
 import {
   InvalidVeridaAuthRequest,
@@ -440,6 +441,65 @@ export async function getVeridaAuthToken({
     return validatedData.token
   } catch (error) {
     throw new Error("Error getting Verida Auth token", {
+      cause: error,
+    })
+  }
+}
+
+export type RevokeVeridaAuthTokenArgs = {
+  tokenId: string
+  sessionToken: string
+}
+
+/**
+ * Revokes a Verida Auth token by ID.
+ *
+ * This function sends a request to revoke a specific auth token for the authenticated user,
+ * validates the response against a schema, and returns whether the token was successfully revoked.
+ *
+ * @param tokenId - The ID of the token to revoke
+ * @param sessionToken - User's API session token for authentication
+ * @returns Promise resolving to a boolean indicating if the token was successfully revoked
+ * @throws If the API base URL is not configured
+ * @throws If the HTTP request fails
+ * @throws If the response validation fails
+ */
+export async function revokeVeridaAuthToken({
+  tokenId,
+  sessionToken,
+}: RevokeVeridaAuthTokenArgs): Promise<void> {
+  logger.info("Revoking Verida Auth token", { tokenId })
+
+  try {
+    const url = new URL(
+      "/api/rest/v1/auth/revoke",
+      commonConfig.PRIVATE_DATA_API_BASE_URL
+    )
+    url.searchParams.append("tokenId", tokenId)
+
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "X-API-Key": sessionToken,
+      },
+    })
+
+    if (!response.ok) {
+      throw new Error(`HTTP error ${response.status}: ${response.statusText}`)
+    }
+
+    const data = await response.json()
+
+    const validatedData = VeridaAuthRevokeTokenApiV1ResponseSchema.parse(data)
+
+    if (!validatedData.revoked) {
+      throw new Error("Failed to revoke Verida Auth token")
+    }
+
+    logger.info("Successfully revoked Verida Auth token", { tokenId })
+  } catch (error) {
+    throw new Error("Error revoking Verida Auth token", {
       cause: error,
     })
   }
