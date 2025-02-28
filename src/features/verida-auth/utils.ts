@@ -4,6 +4,7 @@ import { commonConfig } from "@/config/common"
 import { Logger } from "@/features/telemetry/logger"
 import {
   VeridaAuthAuthV1ResponseSchema,
+  VeridaAuthCreateTokenApiV1ResponseSchema,
   VeridaAuthGetScopeDefinitionsV1ResponseSchema,
   VeridaAuthGetTokenApiV1ResponseSchema,
   VeridaAuthGetTokensApiV1ResponseSchema,
@@ -500,6 +501,95 @@ export async function revokeVeridaAuthToken({
     logger.info("Successfully revoked Verida Auth token", { tokenId })
   } catch (error) {
     throw new Error("Error revoking Verida Auth token", {
+      cause: error,
+    })
+  }
+}
+
+export type CreateVeridaAuthTokenArgs = {
+  sessionToken: string
+  scopes: string[]
+  fetchTokenDetails?: boolean
+}
+
+export type CreateVeridaAuthTokenResult = {
+  tokenString: string
+  tokenDetails?: VeridaAuthToken
+}
+
+/**
+ * Creates a new Verida Auth token with the specified scopes.
+ *
+ * This function sends a request to create a new auth token for the authenticated user,
+ * validates the response against a schema, and returns the created token string.
+ * Optionally, it can also fetch and return the token details.
+ *
+ * @param scopes - Array of scope strings to include in the token
+ * @param sessionToken - User's API session token for authentication
+ * @param fetchTokenDetails - Whether to fetch the token details after creation (default: false)
+ * @returns Promise resolving to an object containing the token string and optionally the token details
+ * @throws If the API base URL is not configured
+ * @throws If the HTTP request fails
+ * @throws If the response validation fails
+ */
+export async function createVeridaAuthToken({
+  scopes,
+  sessionToken,
+  fetchTokenDetails = false,
+}: CreateVeridaAuthTokenArgs): Promise<CreateVeridaAuthTokenResult> {
+  logger.info("Creating Verida Auth token", { scopes })
+
+  try {
+    const url = new URL(
+      "/api/rest/v1/auth/token",
+      commonConfig.PRIVATE_DATA_API_BASE_URL
+    )
+
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-API-Key": sessionToken,
+      },
+      body: JSON.stringify({
+        scopes,
+      }),
+    })
+
+    if (!response.ok) {
+      throw new Error(`HTTP error ${response.status}: ${response.statusText}`)
+    }
+
+    const data = await response.json()
+
+    const validatedData = VeridaAuthCreateTokenApiV1ResponseSchema.parse(data)
+    const tokenString = validatedData.token
+
+    logger.info("Successfully created Verida Auth token")
+
+    // If we don't need token details, return just the token string
+    if (!fetchTokenDetails) {
+      return { tokenString }
+    }
+
+    // Try to get token details using the token string directly
+    try {
+      const tokenDetails = await getVeridaAuthToken({
+        tokenId: tokenString,
+        sessionToken,
+      })
+
+      if (tokenDetails) {
+        return { tokenString, tokenDetails }
+      }
+    } catch (error) {
+      logger.error(new Error("Failed to get token details", { cause: error }))
+    }
+
+    // If we couldn't get token details, just return the token string
+    return { tokenString }
+  } catch (error) {
+    throw new Error("Error creating Verida Auth token", {
       cause: error,
     })
   }
