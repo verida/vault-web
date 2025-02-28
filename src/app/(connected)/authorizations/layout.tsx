@@ -1,15 +1,26 @@
 import { notFound } from "next/navigation"
 import React, { Suspense } from "react"
 
+import { PlusIcon } from "@/components/icons/plus-icon"
 import { PageWrapper } from "@/components/page-wrapper"
 import { Typography } from "@/components/typography"
+import { Button } from "@/components/ui/button"
 import {
   LoadingBlock,
   LoadingBlockDescription,
   LoadingBlockSpinner,
   LoadingBlockTitle,
 } from "@/components/ui/loading"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
 import { featureFlags } from "@/config/features"
+import {
+  CreateAuthorizationDialog,
+  CreateAuthorizationDialogTrigger,
+} from "@/features/authorized-apps/components/create-authorization-dialog"
 
 export type AuthorizationsLayoutProps = {
   children: React.ReactNode
@@ -28,24 +39,26 @@ export default function AuthorizationsLayout(props: AuthorizationsLayoutProps) {
   return (
     <PageWrapper
       pageTitle="Authorized Apps"
-      // rightContent={
-      //   <div className="flex flex-row items-center gap-2">
-      //     <Tooltip>
-      //       <TooltipTrigger asChild>
-      //         <CreateAuthorizationDialog>
-      //           <Button
-      //             variant="primary"
-      //             className="h-12 w-12 p-0 sm:w-auto sm:px-6 sm:py-2"
-      //           >
-      //             <PlusIcon className="size-5 sm:hidden" />
-      //             <span className="sr-only sm:not-sr-only">Create</span>
-      //           </Button>
-      //         </CreateAuthorizationDialog>
-      //       </TooltipTrigger>
-      //       <TooltipContent>Create a new authorization</TooltipContent>
-      //     </Tooltip>
-      //   </div>
-      // }
+      rightContent={
+        <div className="flex flex-row items-center gap-2">
+          <Tooltip>
+            <CreateAuthorizationDialog>
+              <CreateAuthorizationDialogTrigger asChild>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant="primary"
+                    className="h-12 w-12 p-0 sm:w-auto sm:px-6 sm:py-2"
+                  >
+                    <PlusIcon className="size-5 sm:hidden" />
+                    <span className="sr-only sm:not-sr-only">Create</span>
+                  </Button>
+                </TooltipTrigger>
+              </CreateAuthorizationDialogTrigger>
+            </CreateAuthorizationDialog>
+            <TooltipContent>Create a new authorization</TooltipContent>
+          </Tooltip>
+        </div>
+      }
       contentClassName="gap-8"
     >
       <div className="max-w-3xl text-muted-foreground">

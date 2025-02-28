@@ -61,3 +61,7 @@ export const VeridaAuthGetTokenApiV1ResponseSchema = z.object({
 export const VeridaAuthRevokeTokenApiV1ResponseSchema = z.object({
   revoked: z.boolean(),
 })
+
+export const VeridaAuthCreateTokenApiV1ResponseSchema = z.object({
+  token: z.string(),
+})
