@@ -3,6 +3,8 @@ import { z } from "zod"
 import {
   VeridaAuthAuthV1ResponseSchema,
   VeridaAuthRequestPayerSchema,
+  VeridaAuthTokenBaseSchema,
+  VeridaAuthTokenRecordSchema,
 } from "@/features/verida-auth/schemas"
 
 export type VeridaAuthPayer = z.infer<typeof VeridaAuthRequestPayerSchema>
@@ -79,3 +81,7 @@ export type VeridaAuthApiV1RequestBody = {
 export type VeridaAuthAuthV1Response = z.infer<
   typeof VeridaAuthAuthV1ResponseSchema
 >
+
+export type VeridaAuthTokenBase = z.infer<typeof VeridaAuthTokenBaseSchema>
+
+export type VeridaAuthToken = z.infer<typeof VeridaAuthTokenRecordSchema>

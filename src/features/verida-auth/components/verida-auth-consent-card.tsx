@@ -25,14 +25,10 @@ import {
   SuccessBlockImage,
   SuccessBlockTitle,
 } from "@/components/ui/success"
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip"
 import { Logger } from "@/features/telemetry/logger"
 import { VeridaAuthCardHeader } from "@/features/verida-auth/components/verida-auth-card-header"
 import { VeridaAuthConsentError } from "@/features/verida-auth/components/verida-auth-consent-error"
+import { VeridaAuthScope } from "@/features/verida-auth/components/verida-auth-scope"
 import { useAllowVeridaAuthRequest } from "@/features/verida-auth/hooks/use-allow-verida-auth-request"
 import { ValidVeridaAuthRequest } from "@/features/verida-auth/types"
 import {
@@ -166,50 +162,7 @@ export function VeridaAuthConsentCard(props: VeridaAuthConsentCardProps) {
                                 variant="base-regular"
                                 component="span"
                               >
-                                {scope.permissions?.map(
-                                  (permission, index, array) => {
-                                    const separator =
-                                      array.length <= 1
-                                        ? ""
-                                        : index === array.length - 1
-                                          ? ""
-                                          : index === array.length - 2
-                                            ? " and "
-                                            : ", "
-
-                                    return (
-                                      <Fragment key={index}>
-                                        <span
-                                          className={cn(
-                                            "font-semibold",
-                                            index === 0 ? "capitalize" : ""
-                                          )}
-                                        >
-                                          {permission}
-                                        </span>
-                                        {separator}
-                                      </Fragment>
-                                    )
-                                  }
-                                )}{" "}
-                                in your{" "}
-                                {scope.description ? (
-                                  <Tooltip>
-                                    <TooltipTrigger>
-                                      <span className="font-semibold lowercase">
-                                        {scope.namePlural || scope.name || ""}
-                                      </span>
-                                    </TooltipTrigger>
-                                    <TooltipContent>
-                                      {scope.description}
-                                    </TooltipContent>
-                                  </Tooltip>
-                                ) : (
-                                  <span className="font-semibold lowercase">
-                                    {scope.namePlural || scope.name || ""}
-                                  </span>
-                                )}{" "}
-                                database
+                                <VeridaAuthScope scope={scope} />
                               </Typography>
                             </li>
                           ))}
@@ -228,7 +181,7 @@ export function VeridaAuthConsentCard(props: VeridaAuthConsentCardProps) {
                                 variant="base-regular"
                                 component="span"
                               >
-                                {scope.description}
+                                <VeridaAuthScope scope={scope} />
                               </Typography>
                             </li>
                           ))}
@@ -263,14 +216,7 @@ export function VeridaAuthConsentCard(props: VeridaAuthConsentCardProps) {
                                 variant="base-regular"
                                 component="span"
                               >
-                                <span className="font-semibold">
-                                  {scope.permissions?.join(", ")}
-                                </span>{" "}
-                                your{" "}
-                                <span className="font-semibold">
-                                  {scope.name}
-                                </span>
-                                ({scope.description})
+                                <VeridaAuthScope scope={scope} />
                               </Typography>
                             </li>
                           ))}

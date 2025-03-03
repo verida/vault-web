@@ -64,6 +64,7 @@ export default function OnboardingExtractDataPage() {
                       <DataConnectionCard
                         connection={connection}
                         className="h-full"
+                        hideDetailsLink
                       />
                     </article>
                   ))}
