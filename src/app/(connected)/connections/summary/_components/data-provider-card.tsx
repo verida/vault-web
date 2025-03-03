@@ -46,9 +46,11 @@ export function DataProviderCard(props: DataProviderCardProps) {
         ) : null}
       </CardHeader>
       <CardBody className="flex flex-col gap-2">
-        <Typography variant="heading-4">{provider.label}</Typography>
+        <Typography variant="heading-4" component="h5">
+          {provider.label}
+        </Typography>
         <div className="text-muted-foreground">
-          <Typography variant="base-l" className="line-clamp-3">
+          <Typography variant="base-regular" className="line-clamp-3">
             {provider.description}
           </Typography>
         </div>

@@ -55,11 +55,15 @@ export function DataConnectionCard(props: DataConnectionCardProps) {
       <div className="flex flex-col gap-3 sm:gap-4">
         <CardBody className="flex flex-col gap-2">
           {provider?.label ? (
-            <Typography variant="heading-4">{provider.label}</Typography>
+            <Typography variant="heading-4" component="h5">
+              {provider.label}
+            </Typography>
           ) : isProviderLoading ? (
             <Skeleton className="h-6 w-32" />
           ) : (
-            <Typography variant="heading-4">-</Typography>
+            <Typography variant="heading-4" component="h5">
+              -
+            </Typography>
           )}
           <Typography variant="base-regular">
             {connection.profile.readableId}
