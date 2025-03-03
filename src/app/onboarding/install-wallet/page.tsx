@@ -30,13 +30,13 @@ export default function OnboardingInstallWalletPage() {
         <ol className="flex list-inside list-decimal flex-col gap-1">
           <li>
             <Typography component="span">
-              Click on the link below to install the Verida Wallet from your
-              phone app store
+              Go to the Verida Wallet page on your phone app store. (Click on
+              the link below or scan the QR code from your phone)
             </Typography>
           </li>
           <li>
             <Typography component="span">
-              Follow the instructions to install the app.
+              Install the Verida Wallet mobile app.
             </Typography>
           </li>
           <li>
@@ -45,31 +45,41 @@ export default function OnboardingInstallWalletPage() {
             </Typography>
           </li>
         </ol>
-        <div className="flex flex-col items-center justify-center gap-8 md:flex-row">
-          <Link
-            href={VERIDA_WALLET_APPLE_APP_STORE_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+        <div className="flex flex-col items-center gap-8">
+          <div className="relative aspect-square w-full max-w-[240px] overflow-hidden rounded-3xl border p-4 shadow-sm">
             <Image
-              src="/assets/app-store-badge.svg"
-              alt="Download on the App Store"
-              width={160}
-              height={53}
+              src="/assets/install-verida-wallet-qr-code.svg"
+              alt="Install Verida Wallet QR Code"
+              fill
+              className="object-contain p-2 text-foreground"
             />
-          </Link>
-          <Link
-            href={VERIDA_WALLET_GOOGLE_PLAY_STORE_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              src="/assets/google-play-badge.png"
-              alt="Get it on Google Play"
-              width={180}
-              height={53}
-            />
-          </Link>
+          </div>
+          <div className="flex flex-col items-center justify-center gap-8 md:flex-row">
+            <Link
+              href={VERIDA_WALLET_APPLE_APP_STORE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Image
+                src="/assets/app-store-badge.svg"
+                alt="Download on the App Store"
+                width={160}
+                height={53}
+              />
+            </Link>
+            <Link
+              href={VERIDA_WALLET_GOOGLE_PLAY_STORE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Image
+                src="/assets/google-play-badge.png"
+                alt="Get it on Google Play"
+                width={180}
+                height={53}
+              />
+            </Link>
+          </div>
         </div>
       </OnboardingCardBody>
     </OnboardingCard>
