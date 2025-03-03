@@ -22,10 +22,11 @@ import { LONG_DATE_TIME_FORMAT_OPTIONS } from "@/utils/date"
 export interface DataConnectionCardProps
   extends Omit<React.ComponentProps<typeof Card>, "children"> {
   connection: DataConnection
+  hideDetailsLink?: boolean
 }
 
 export function DataConnectionCard(props: DataConnectionCardProps) {
-  const { connection, className, ...cardProps } = props
+  const { connection, hideDetailsLink = false, className, ...cardProps } = props
 
   const { provider, isLoading: isProviderLoading } = useDataProvider(
     connection.providerId
@@ -39,15 +40,17 @@ export function DataConnectionCard(props: DataConnectionCardProps) {
     <Card className={className} {...cardProps}>
       <CardHeader className="flex flex-row items-start justify-between gap-4">
         <DataConnectionAvatar connection={connection} provider={provider} />
-        <Button size="lg" variant="outline" asChild>
-          <Link
-            href={getConnectionPageRoute({
-              connectionId: connection._id,
-            })}
-          >
-            Details
-          </Link>
-        </Button>
+        {!hideDetailsLink ? (
+          <Button size="lg" variant="outline" asChild>
+            <Link
+              href={getConnectionPageRoute({
+                connectionId: connection._id,
+              })}
+            >
+              Details
+            </Link>
+          </Button>
+        ) : null}
       </CardHeader>
       <div className="flex flex-col gap-3 sm:gap-4">
         <CardBody className="flex flex-col gap-2">
