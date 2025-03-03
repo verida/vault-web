@@ -1,3 +1,18 @@
+# 0.17.0 (2025-03-03)
+
+## Enhancements
+
+- View authorized applications via Verida Auth
+- Allow users to revoke access to authorized applications
+- Allow users to create new Verida Auth authorization tokens
+- Add QR code for easier Verida Wallet installation in onboarding
+- Improve data connections display in onboarding
+
+## Misc
+
+- Remove redundant data connections sync on app load
+- Update dependencies
+
 # 0.16.0 (2025-02-24)
 
 ## Enhancements
@@ -13,6 +28,8 @@
 ## Enhancements
 
 - Improve UI of Verida Auth
+
+## Misc
 
 - Add license
 - Set up Plausible integration
