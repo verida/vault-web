@@ -4,8 +4,6 @@ export const DEFAULT_DATA_PROVIDER_DESCRIPTION = `Connect your account to extrac
 
 export const DATA_CONNECTIONS_CHANNEL = "data-connections"
 
-export const DATA_CONNECTIONS_SYNC_INTERVAL = 1000 * 60 * 30 // 30 minutes
-
 export const DATA_CONNECTIONS_LOGS_DB_DEF: DatabaseDefinition = {
   id: "data-connections-logs",
   type: "technical",
