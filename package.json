@@ -74,9 +74,9 @@
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.16",
-    "@tanstack/react-query-devtools": "^5.66.9",
+    "@tanstack/react-query-devtools": "^5.66.11",
     "@trivago/prettier-plugin-sort-imports": "^5.2.2",
-    "@types/node": "^18.19.76",
+    "@types/node": "^18.19.78",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
     "@types/react-transition-group": "^4.4.12",
@@ -84,17 +84,17 @@
     "@typescript-eslint/parser": "^7.18.0",
     "autoprefixer": "^10.4.20",
     "eslint": "^8.57.0",
-    "eslint-config-next": "15.1.7",
-    "eslint-config-prettier": "10.0.1",
+    "eslint-config-next": "15.2.0",
+    "eslint-config-prettier": "10.0.2",
     "eslint-plugin-prettier": "^5.2.3",
     "file-loader": "^6.2.0",
     "genversion": "^3.2.0",
     "postcss": "^8.5.3",
-    "prettier": "^3.5.2",
+    "prettier": "^3.5.3",
     "prettier-plugin-tailwindcss": "^0.6.11",
     "tailwindcss": "^3.4.17",
     "tailwindcss-animate": "^1.0.7",
-    "typescript": "^5.7.3"
+    "typescript": "^5.8.2"
   },
   "resolutions": {
     "qrcode-with-logos": "1.0.3",
