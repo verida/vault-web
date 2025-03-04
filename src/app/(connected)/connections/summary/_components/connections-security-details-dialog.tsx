@@ -36,8 +36,8 @@ export function ConnectionsSecurityDetailsDialog(
             </SecurityDetailsDialogTitle>
           </div>
           <SecurityDetailsDialogDescription>
-            The Verida Private Data Bridge ensures your data is securely
-            extracted from your platforms.
+            Verida Confidential Compute ensures your data is extracted from your
+            platforms in a secured way.
           </SecurityDetailsDialogDescription>
         </SecurityDetailsDialogHeader>
         <SecurityDetailsDialogBody className="flex flex-col gap-4">
@@ -83,12 +83,12 @@ export function ConnectionsSecurityDetailsDialog(
         </SecurityDetailsDialogBody>
         <SecurityDetailsDialogFooter>
           <Link
-            href="https://developers.verida.network/private-data-bridge/introduction"
+            href="https://docs.verida.ai/resources/privacy-and-security#confidential-compute"
             target="_blank"
             className="text-muted-foreground underline"
           >
             <Typography variant="base-regular">
-              Learn more about Verida Private Data Bridge
+              Learn more about Verida Confidential Compute
             </Typography>
           </Link>
         </SecurityDetailsDialogFooter>

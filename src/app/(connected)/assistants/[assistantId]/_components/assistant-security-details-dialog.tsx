@@ -96,7 +96,7 @@ export function AssistantSecurityDetailsDialog(
         </SecurityDetailsDialogBody>
         <SecurityDetailsDialogFooter>
           <Link
-            href="https://developers.verida.network/apis/privacy-and-security#llm-privacy-alpha"
+            href="https://docs.verida.ai/resources/privacy-and-security#llm-privacy-beta"
             target="_blank"
             className="text-muted-foreground underline"
           >
