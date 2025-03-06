@@ -111,3 +111,7 @@ export function getOnboardingConnectVaultPageRoute() {
 export function getOnboardingExtractDataPageRoute() {
   return `/onboarding/extract-data`
 }
+
+export function getDiscoverPageRoute() {
+  return `/discover`
+}
