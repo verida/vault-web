@@ -100,10 +100,15 @@ export const CommonConfigSchema = z.object({
     .string()
     .optional()
     .transform((value) => value === "true"),
+  FEATURE_FLAG_APPS_MARKETPLACE_ENABLED: z
+    .string()
+    .optional()
+    .transform((value) => value === "true"),
   isClient: z.boolean(),
   appVersion: z.string(),
 })
 
 export const ServerConfigSchema = z.object({
-  // ... any other server-specific properties
+  NOTION_API_KEY: z.string(),
+  NOTION_APPS_DATABASE_ID: z.string(),
 })

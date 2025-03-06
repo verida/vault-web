@@ -46,6 +46,8 @@ const commonConfigCheckResult = CommonConfigSchema.safeParse({
     process.env.NEXT_PUBLIC_FEATURE_FLAG_DATA_CONNECTIONS_LOGS_DESTROY_ENABLED,
   FEATURE_FLAG_REQUESTS_ENABLED:
     process.env.NEXT_PUBLIC_FEATURE_FLAG_REQUESTS_ENABLED,
+  FEATURE_FLAG_APPS_MARKETPLACE_ENABLED:
+    process.env.NEXT_PUBLIC_FEATURE_FLAG_APPS_MARKETPLACE_ENABLED,
   isClient: !(typeof window === "undefined"),
   appVersion: version,
 })
