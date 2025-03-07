@@ -3,7 +3,7 @@ import { Suspense } from "react"
 import { AppsList } from "@/features/apps-marketplace/components/apps-list"
 import { AppsListSkeleton } from "@/features/apps-marketplace/components/apps-list-skeleton"
 
-export const revalidate = 60 * 5 // 5 minutes
+export const dynamic = "force-dynamic"
 
 export default function MarketplacePage() {
   return (
