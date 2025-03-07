@@ -1,4 +1,5 @@
 import { Client } from "@notionhq/client"
+import { cache } from "react"
 
 import { serverConfig } from "@/config/server"
 import { MarketplaceAppSchema } from "@/features/apps-marketplace/schemas"
@@ -12,7 +13,7 @@ const logger = Logger.create("apps-marketplace")
  *
  * @returns Promise resolving to an array of MarketplaceApp objects.
  */
-export async function getMarketplaceApps(): Promise<MarketplaceApp[]> {
+export const getMarketplaceApps = cache(async (): Promise<MarketplaceApp[]> => {
   const notionClient = new Client({ auth: serverConfig.NOTION_API_KEY })
   const databaseId = serverConfig.NOTION_APPS_DATABASE_ID
 
@@ -98,4 +99,4 @@ export async function getMarketplaceApps(): Promise<MarketplaceApp[]> {
     logger.error(error)
     return []
   }
-}
+})
