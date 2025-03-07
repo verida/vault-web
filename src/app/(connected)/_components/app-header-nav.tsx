@@ -1,5 +1,6 @@
 "use client"
 
+import { LayoutGridIcon } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import React, { useCallback, useState } from "react"
@@ -28,6 +29,7 @@ import {
   getConnectionsPageRoute,
   getConnectionsSummaryPageRoute,
   getDataPageRoute,
+  getDiscoverPageRoute,
 } from "@/features/routes/utils"
 import { cn } from "@/styles/utils"
 
@@ -109,6 +111,26 @@ export function AppHeaderNavBar(props: AppHeaderNavBarProps) {
               <div className="flex items-center gap-2">
                 <Connection />
                 <span className="sr-only lg:not-sr-only">Connections</span>
+              </div>
+            </Link>
+          </NavigationMenuItem>
+        ) : null}
+        {featureFlags.appsMarketplace.enabled ? (
+          <NavigationMenuItem>
+            <Link
+              href={getDiscoverPageRoute()}
+              data-active={
+                path.startsWith(getDiscoverPageRoute()) ? true : undefined
+              }
+              className={cn(
+                navigationMenuTriggerStyle({
+                  className: "h-full rounded-none border-b-2 font-semibold",
+                })
+              )}
+            >
+              <div className="flex items-center gap-2">
+                <LayoutGridIcon className="size-6" />
+                <span className="sr-only lg:not-sr-only">Discover</span>
               </div>
             </Link>
           </NavigationMenuItem>
@@ -240,6 +262,28 @@ export function AppHeaderNavMenu(props: AppHeaderNavMenuProps) {
                   <div className="flex items-center gap-2">
                     <Connection />
                     <span>Connections</span>
+                  </div>
+                </Link>
+              </NavigationMenuItem>
+            ) : null}
+            {featureFlags.appsMarketplace.enabled ? (
+              <NavigationMenuItem>
+                <Link
+                  href={getDiscoverPageRoute()}
+                  onClick={handleClickItem}
+                  data-active={
+                    path.startsWith(getDiscoverPageRoute()) ? true : undefined
+                  }
+                  className={cn(
+                    navigationMenuTriggerStyle({
+                      className:
+                        "h-auto w-full justify-start py-4 font-semibold data-[active]:bg-surface-active data-[active]:hover:bg-surface-hover data-[active]:focus:bg-surface-hover",
+                    })
+                  )}
+                >
+                  <div className="flex items-center gap-2">
+                    <LayoutGridIcon className="size-6" />
+                    <span>Discover</span>
                   </div>
                 </Link>
               </NavigationMenuItem>
