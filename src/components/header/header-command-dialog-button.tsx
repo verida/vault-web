@@ -29,6 +29,10 @@ export function HeaderCommandDialogButton(
   const { openCommand } = useCommand()
 
   const shortcutText = useMemo(() => {
+    if (typeof window === "undefined") {
+      // To handle pre-rendering server-side
+      return "Ctrl+K"
+    }
     const macosPlatforms = /macOS|Macintosh|MacIntel|MacPPC|Mac68K/
     return macosPlatforms.test(window.navigator.userAgent) ? "⌘K" : "Ctrl+K"
   }, [])
