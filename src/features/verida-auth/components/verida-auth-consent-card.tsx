@@ -3,7 +3,6 @@
 import Link from "next/link"
 import { Fragment, useCallback, useMemo, useState } from "react"
 
-import { Typography } from "@/components/typography"
 import {
   Accordion,
   AccordionContent,
@@ -25,6 +24,7 @@ import {
   SuccessBlockImage,
   SuccessBlockTitle,
 } from "@/components/ui/success"
+import { Typography } from "@/components/ui/typography"
 import { Logger } from "@/features/telemetry/logger"
 import { VeridaAuthCardHeader } from "@/features/verida-auth/components/verida-auth-card-header"
 import { VeridaAuthConsentError } from "@/features/verida-auth/components/verida-auth-consent-error"

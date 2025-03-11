@@ -1,8 +1,8 @@
 import React from "react"
 
-import { Spinner } from "@/components/spinner"
-import { Typography } from "@/components/typography"
+import { Spinner } from "@/components/icons/spinner"
 import { Progress } from "@/components/ui/progress"
+import { Typography } from "@/components/ui/typography"
 import { cn } from "@/styles/utils"
 
 export type LoadingBlockProps = React.ComponentProps<"div">

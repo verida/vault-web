@@ -1,8 +1,8 @@
 import Link from "next/link"
 
 import { ArrowLeftIcon } from "@/components/icons/arrow-left-icon"
-import { Typography } from "@/components/typography"
 import { Button } from "@/components/ui/button"
+import { Typography } from "@/components/ui/typography"
 import { cn } from "@/styles/utils"
 
 export interface PageWrapperProps extends React.ComponentProps<"div"> {

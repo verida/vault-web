@@ -12,13 +12,13 @@ import {
   ItemSheetFooter,
   ItemSheetHeader,
   ItemSheetTitle,
-} from "@/components/item-sheet"
-import { Typography } from "@/components/typography"
+} from "@/components/layouts/item-sheet"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { Card, CardDescription, CardTitle } from "@/components/ui/card"
 import { MessageBlock, MessageBlockBody } from "@/components/ui/message-block"
+import { Typography } from "@/components/ui/typography"
 import { commonConfig } from "@/config/common"
 import { EMPTY_VALUE_FALLBACK } from "@/constants/misc"
 import { UnsavedVeridaRecord } from "@/features/verida-database/types"

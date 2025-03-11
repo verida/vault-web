@@ -3,7 +3,7 @@
 import {
   ErrorPageContent,
   ErrorPageProps,
-} from "@/components/error-page-content"
+} from "@/components/layouts/error-page-content"
 
 export default function ConnectionErrorPage(props: ErrorPageProps) {
   const { error, reset } = props

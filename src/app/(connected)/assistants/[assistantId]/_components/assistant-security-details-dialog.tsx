@@ -1,7 +1,6 @@
 import { BrainCircuitIcon, DatabaseIcon } from "lucide-react"
 import Link from "next/link"
 
-import { Typography } from "@/components/typography"
 import {
   SecurityDetailsDialog,
   SecurityDetailsDialogBody,
@@ -13,6 +12,7 @@ import {
   SecurityDetailsDialogTrigger,
   SecurityIcon,
 } from "@/components/ui/security"
+import { Typography } from "@/components/ui/typography"
 
 export type AssistantSecurityDetailsDialogProps = React.ComponentProps<
   typeof SecurityDetailsDialogTrigger

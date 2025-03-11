@@ -4,7 +4,6 @@ import { useMemo } from "react"
 
 import { DataConnectionCard } from "@/app/(connected)/connections/summary/_components/data-connection-card"
 import { DataProvidersList } from "@/app/(connected)/connections/summary/_components/data-providers-list"
-import { Typography } from "@/components/typography"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import {
   ErrorBlock,
@@ -12,6 +11,7 @@ import {
   ErrorBlockImage,
   ErrorBlockTitle,
 } from "@/components/ui/error"
+import { Typography } from "@/components/ui/typography"
 import { useDataConnections } from "@/features/data-connections/hooks/use-data-connections"
 import { useDataProviders } from "@/features/data-connections/hooks/use-data-providers"
 import {

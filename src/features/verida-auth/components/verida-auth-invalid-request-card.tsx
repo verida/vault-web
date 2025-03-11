@@ -3,7 +3,6 @@
 import Link from "next/link"
 import { ComponentProps, useEffect, useMemo, useState } from "react"
 
-import { Typography } from "@/components/typography"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
@@ -13,6 +12,7 @@ import {
   ErrorBlockImage,
   ErrorBlockTitle,
 } from "@/components/ui/error"
+import { Typography } from "@/components/ui/typography"
 import { ERROR_REDIRECTION_DELAY } from "@/features/verida-auth/constants"
 import { InvalidVeridaAuthRequest } from "@/features/verida-auth/types"
 import { buildInvalidRequestRedirectUrl } from "@/features/verida-auth/utils"

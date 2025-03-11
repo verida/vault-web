@@ -1,7 +1,7 @@
 import { CheckIcon, CircleDashedIcon, XIcon } from "lucide-react"
 import { useMemo } from "react"
 
-import { Typography } from "@/components/typography"
+import { Typography } from "@/components/ui/typography"
 import { getVeridaMessageStatus } from "@/features/verida-inbox/utils"
 import { cn } from "@/styles/utils"
 

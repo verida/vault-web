@@ -15,11 +15,11 @@ import {
   ItemSheetFooter,
   ItemSheetHeader,
   ItemSheetTitle,
-} from "@/components/item-sheet"
-import { Typography } from "@/components/typography"
+} from "@/components/layouts/item-sheet"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
 import { MessageBlock, MessageBlockBody } from "@/components/ui/message-block"
+import { Typography } from "@/components/ui/typography"
 import { commonConfig } from "@/config/common"
 import { VeridaRecord } from "@/features/verida-database/types"
 import { InboxMessageStatusIndicator } from "@/features/verida-inbox/components/inbox.message-status-indicator"

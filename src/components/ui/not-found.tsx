@@ -2,7 +2,7 @@ import Image from "next/image"
 import React from "react"
 
 import ErrorIllustration from "@/assets/error-illustration.svg"
-import { Typography } from "@/components/typography"
+import { Typography } from "@/components/ui/typography"
 import { cn } from "@/styles/utils"
 
 export type NotFoundBlockProps = React.ComponentProps<"div">

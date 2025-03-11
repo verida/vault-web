@@ -2,7 +2,7 @@ import { notFound } from "next/navigation"
 
 import { DestroyAllLogsDialog } from "@/app/(connected)/connections/summary/logs/_components/destroy-all-logs-dialog"
 import { DeleteIcon } from "@/components/icons/delete-icon"
-import { PageWrapper } from "@/components/page-wrapper"
+import { PageWrapper } from "@/components/layouts/page-wrapper"
 import { Button } from "@/components/ui/button"
 import { featureFlags } from "@/config/features"
 

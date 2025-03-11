@@ -2,7 +2,6 @@
 
 import { ReactNode, useCallback, useMemo, useState } from "react"
 
-import { Typography } from "@/components/typography"
 import {
   Accordion,
   AccordionContent,
@@ -41,6 +40,7 @@ import {
   MessageBlockBody,
   MessageBlockTitle,
 } from "@/components/ui/message-block"
+import { Typography } from "@/components/ui/typography"
 import { useToast } from "@/features/toasts/use-toast"
 import { useCreateVeridaAuthToken } from "@/features/verida-auth/hooks/use-create-verida-auth-token"
 import { useVeridaAuthScopeDefinitions } from "@/features/verida-auth/hooks/use-verida-auth-scope-definitions"

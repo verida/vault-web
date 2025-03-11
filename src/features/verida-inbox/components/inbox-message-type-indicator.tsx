@@ -3,7 +3,7 @@ import { useMemo } from "react"
 import { InboxDataRequestTypeIcon } from "@/components/icons/inbox-data"
 import { InboxIncomingDataTypeIcon } from "@/components/icons/inbox-incoming"
 import { InboxMessageTypeIcon } from "@/components/icons/inbox-message"
-import { Typography } from "@/components/typography"
+import { Typography } from "@/components/ui/typography"
 import { VeridaInboxMessageSupportedType } from "@/features/verida-inbox/types"
 import { cn } from "@/styles/utils"
 

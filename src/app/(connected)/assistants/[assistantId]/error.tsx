@@ -6,7 +6,7 @@ import { AiAssistantSelector } from "@/app/(connected)/assistants/[assistantId]/
 import {
   ErrorPageContent,
   ErrorPageProps,
-} from "@/components/error-page-content"
+} from "@/components/layouts/error-page-content"
 
 export default function AssistantErrorPage(props: ErrorPageProps) {
   const { error, reset } = props

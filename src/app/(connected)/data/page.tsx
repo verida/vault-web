@@ -3,8 +3,8 @@ import React from "react"
 
 import { DataSecurityDetailsDialog } from "@/app/(connected)/data/_components/data-security-details-dialog"
 import { DatabaseCard } from "@/app/(connected)/data/_components/database-card"
-import { PageWrapper } from "@/components/page-wrapper"
-import { Typography } from "@/components/typography"
+import { PageWrapper } from "@/components/layouts/page-wrapper"
+import { Typography } from "@/components/ui/typography"
 import { USER_DATABASE_DEFS } from "@/features/data/constants"
 import { getDatabasePageRoute } from "@/features/routes/utils"
 

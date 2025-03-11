@@ -1,7 +1,7 @@
 import { DatabaseCardItemCount } from "@/app/(connected)/data/_components/database-card-item-count"
 import { DatabaseIcon } from "@/components/icons/database-icon"
-import { Typography } from "@/components/typography"
 import { Card, CardBody } from "@/components/ui/card"
+import { Typography } from "@/components/ui/typography"
 import { DatabaseDefinition } from "@/features/data/types"
 import { cn } from "@/styles/utils"
 

@@ -2,7 +2,7 @@ import Image from "next/image"
 import React from "react"
 
 import EmptyIllustration from "@/assets/empty-illustration.svg"
-import { Typography } from "@/components/typography"
+import { Typography } from "@/components/ui/typography"
 import { cn } from "@/styles/utils"
 
 export type EmptyStateProps = React.ComponentProps<"div">

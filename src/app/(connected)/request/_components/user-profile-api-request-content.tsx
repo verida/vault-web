@@ -6,7 +6,6 @@ import { ComponentProps, useCallback, useMemo, useState } from "react"
 
 import { RequestHeader } from "@/app/(connected)/request/_components/request-header"
 import { RequestProcessingStepBreadcrumb } from "@/app/(connected)/request/_components/request-processing-step-breadcrumb"
-import { Typography } from "@/components/typography"
 import {
   Accordion,
   AccordionContent,
@@ -40,6 +39,7 @@ import {
   SuccessBlockDescription,
   SuccessBlockImage,
 } from "@/components/ui/success"
+import { Typography } from "@/components/ui/typography"
 import { UserProfileApiRequest } from "@/features/requests/types"
 import { acceptUserProfileApiRequest } from "@/features/requests/utils"
 import { getRootPageRoute } from "@/features/routes/utils"

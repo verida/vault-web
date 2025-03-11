@@ -2,8 +2,7 @@ import { notFound } from "next/navigation"
 import React, { Suspense } from "react"
 
 import { PlusIcon } from "@/components/icons/plus-icon"
-import { PageWrapper } from "@/components/page-wrapper"
-import { Typography } from "@/components/typography"
+import { PageWrapper } from "@/components/layouts/page-wrapper"
 import { Button } from "@/components/ui/button"
 import {
   LoadingBlock,
@@ -16,6 +15,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
+import { Typography } from "@/components/ui/typography"
 import { featureFlags } from "@/config/features"
 import {
   CreateAuthorizationDialog,

@@ -12,8 +12,7 @@ import {
   ItemSheetFooter,
   ItemSheetHeader,
   ItemSheetTitle,
-} from "@/components/item-sheet"
-import { Typography } from "@/components/typography"
+} from "@/components/layouts/item-sheet"
 import {
   Accordion,
   AccordionContent,
@@ -38,6 +37,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
+import { Typography } from "@/components/ui/typography"
 import { EMPTY_VALUE_FALLBACK } from "@/constants/misc"
 import {
   RevokeAuthorizedAppDialog,

@@ -2,9 +2,9 @@ import { intlFormat, isDate } from "date-fns"
 import React from "react"
 
 import { DataConnectionStatusBadge } from "@/components/data-connections/data-connection-status-badge"
-import { Typography } from "@/components/typography"
 import { Card, CardBody, CardHeader, CardTitle } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton"
+import { Typography } from "@/components/ui/typography"
 import { EMPTY_VALUE_FALLBACK } from "@/constants/misc"
 import {
   DataConnectionHandler,

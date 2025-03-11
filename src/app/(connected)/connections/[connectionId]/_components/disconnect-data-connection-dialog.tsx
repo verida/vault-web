@@ -3,7 +3,6 @@
 import { useRouter } from "next/navigation"
 import { useCallback, useState } from "react"
 
-import { Typography } from "@/components/typography"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import {
   AlertDialog,
@@ -17,6 +16,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button"
+import { Typography } from "@/components/ui/typography"
 import { useDataProvider } from "@/features/data-connections/hooks/use-data-provider"
 import { useDisconnectDataConnection } from "@/features/data-connections/hooks/use-disconnect-data-connection"
 import { DataConnection } from "@/features/data-connections/types"

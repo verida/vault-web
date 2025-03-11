@@ -1,5 +1,4 @@
 import { CloseSideRight } from "@/components/icons/close-side-right"
-import { Typography } from "@/components/typography"
 import { Button } from "@/components/ui/button"
 import {
   Sheet,
@@ -12,6 +11,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
+import { Typography } from "@/components/ui/typography"
 import { cn } from "@/styles/utils"
 
 export const ItemSheet = Sheet

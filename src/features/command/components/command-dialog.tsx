@@ -7,7 +7,6 @@ import { useDebounce } from "use-debounce"
 import { Close as CloseIcon } from "@/components/icons/close"
 import { Data } from "@/components/icons/data"
 import { DatabaseIcon } from "@/components/icons/database-icon"
-import { Typography } from "@/components/typography"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import {
@@ -30,6 +29,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { Typography } from "@/components/ui/typography"
 import { useCommand } from "@/features/command/hooks/use-command"
 import { DEFAULT_SELECTED_SEARCH_TYPES } from "@/features/data-search/constants"
 import { useSearchData } from "@/features/data-search/hooks/use-search-data"

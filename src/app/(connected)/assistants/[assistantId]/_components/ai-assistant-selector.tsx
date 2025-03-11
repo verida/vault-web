@@ -21,7 +21,6 @@ import { useRouter } from "next/navigation"
 import React, { useCallback, useMemo, useState } from "react"
 
 import { EditIcon } from "@/components/icons/edit-icon"
-import { Typography } from "@/components/typography"
 import { Button } from "@/components/ui/button"
 import {
   Command,
@@ -37,6 +36,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
+import { Typography } from "@/components/ui/typography"
 import {
   DEFAULT_ASSISTANT,
   DEFAULT_ASSISTANT_ORDER,

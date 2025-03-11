@@ -1,7 +1,7 @@
 "use client"
 
-import { Typography } from "@/components/typography"
 import { Skeleton } from "@/components/ui/skeleton"
+import { Typography } from "@/components/ui/typography"
 import { useVeridaDataRecords } from "@/features/verida-database/hooks/use-verida-data-records"
 import { cn } from "@/styles/utils"
 

@@ -2,7 +2,7 @@ import Image from "next/image"
 import React from "react"
 
 import SuccessIllustration from "@/assets/success-illustration.svg"
-import { Typography } from "@/components/typography"
+import { Typography } from "@/components/ui/typography"
 import { cn } from "@/styles/utils"
 
 export type SuccessBlockProps = React.ComponentProps<"div">

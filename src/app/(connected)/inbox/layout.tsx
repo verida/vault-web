@@ -2,7 +2,7 @@ import { Metadata } from "next"
 import { notFound } from "next/navigation"
 import { Suspense } from "react"
 
-import { PageWrapper } from "@/components/page-wrapper"
+import { PageWrapper } from "@/components/layouts/page-wrapper"
 import {
   LoadingBlock,
   LoadingBlockDescription,

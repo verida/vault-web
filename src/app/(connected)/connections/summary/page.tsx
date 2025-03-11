@@ -8,9 +8,9 @@ import { DataProvidersSection } from "@/app/(connected)/connections/summary/_com
 import { SummarySectionWrapper } from "@/app/(connected)/connections/summary/_components/summary-section-wrapper"
 import { SyncAllConnectionsButton } from "@/app/(connected)/connections/summary/_components/sync-all-connections-button"
 import { PlusIcon } from "@/components/icons/plus-icon"
-import { PageWrapper } from "@/components/page-wrapper"
-import { Typography } from "@/components/typography"
+import { PageWrapper } from "@/components/layouts/page-wrapper"
 import { Button } from "@/components/ui/button"
+import { Typography } from "@/components/ui/typography"
 
 export default function ConnectionsSummaryPage() {
   return (

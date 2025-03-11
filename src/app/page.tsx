@@ -2,8 +2,8 @@ import { Metadata } from "next"
 import Link from "next/link"
 
 import { RootConnectionHandler } from "@/components/root-connection-handler"
-import { Typography } from "@/components/typography"
 import { Button } from "@/components/ui/button"
+import { Typography } from "@/components/ui/typography"
 import { VeridaConnectButton } from "@/components/verida/verida-connect-button"
 import {
   APP_TITLE_FOR_LANDING,

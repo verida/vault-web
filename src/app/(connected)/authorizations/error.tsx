@@ -5,7 +5,7 @@ import React from "react"
 import {
   ErrorPageContent,
   ErrorPageProps,
-} from "@/components/error-page-content"
+} from "@/components/layouts/error-page-content"
 
 export default function AuthorizationsErrorPage(props: ErrorPageProps) {
   const { error, reset } = props

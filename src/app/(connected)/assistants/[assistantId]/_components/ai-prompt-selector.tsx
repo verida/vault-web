@@ -20,7 +20,6 @@ import { ArrowUpRightIcon, GripVerticalIcon } from "lucide-react"
 import { useCallback, useMemo } from "react"
 
 import { EditIcon } from "@/components/icons/edit-icon"
-import { Typography } from "@/components/typography"
 import { Button } from "@/components/ui/button"
 import {
   Command,
@@ -35,6 +34,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
+import { Typography } from "@/components/ui/typography"
 import { featureFlags } from "@/config/features"
 import {
   DEFAULT_PROMPT_ORDER,

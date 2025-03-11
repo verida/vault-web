@@ -1,6 +1,5 @@
 "use client"
 
-import { Typography } from "@/components/typography"
 import {
   LoadingBlock,
   LoadingBlockDescription,
@@ -13,6 +12,7 @@ import {
   SuccessBlockImage,
   SuccessBlockTitle,
 } from "@/components/ui/success"
+import { Typography } from "@/components/ui/typography"
 import { VeridaConnectButton } from "@/components/verida/verida-connect-button"
 import {
   OnboardingCard,

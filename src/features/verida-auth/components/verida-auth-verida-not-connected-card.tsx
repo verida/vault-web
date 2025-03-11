@@ -2,8 +2,8 @@
 
 import Link from "next/link"
 
-import { Typography } from "@/components/typography"
 import { Card, CardBody } from "@/components/ui/card"
+import { Typography } from "@/components/ui/typography"
 import { VeridaConnectButton } from "@/components/verida/verida-connect-button"
 import { OnboardingButton } from "@/features/onboarding/components/onboarding-button"
 import { VeridaAuthCardHeader } from "@/features/verida-auth/components/verida-auth-card-header"

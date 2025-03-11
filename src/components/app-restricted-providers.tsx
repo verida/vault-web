@@ -1,6 +1,6 @@
 import { ReactNode } from "react"
 
-import { ConditionalWrappingComponent } from "@/components/conditional-wrapping-component"
+import { ConditionalWrappingComponent } from "@/components/layouts/conditional-wrapping-component"
 import { featureFlags } from "@/config/features"
 import { AssistantsProvider } from "@/features/assistants/components/assistants-provider"
 import { DataConnectionsProvider } from "@/features/data-connections/components/data-connections-provider"

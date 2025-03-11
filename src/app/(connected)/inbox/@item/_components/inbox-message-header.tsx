@@ -4,7 +4,6 @@ import { intlFormat, isDate } from "date-fns"
 import Link from "next/link"
 import { ComponentProps, useCallback, useEffect, useState } from "react"
 
-import { Typography } from "@/components/typography"
 import {
   Accordion,
   AccordionContent,
@@ -13,6 +12,7 @@ import {
 } from "@/components/ui/accordion"
 import { Card } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton"
+import { Typography } from "@/components/ui/typography"
 import { EMPTY_VALUE_FALLBACK } from "@/constants/misc"
 import { getVeridaExplorerIdentityPageUrl } from "@/features/verida-explorer/utils"
 import { VeridaInboxMessageRecord } from "@/features/verida-inbox/types"
