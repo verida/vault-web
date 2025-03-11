@@ -119,4 +119,4 @@ function ProfileItemUrlField(props: ProfileItemUrlFieldProps) {
     </div>
   )
 }
-ProfileItemField.displayName = "ProfileItemField"
+ProfileItemUrlField.displayName = "ProfileItemUrlField"
