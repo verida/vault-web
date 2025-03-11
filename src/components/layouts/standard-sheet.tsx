@@ -22,7 +22,8 @@ export const StandardSheetTrigger = SheetTrigger
 
 export const StandardSheetClose = SheetClose
 
-export type StandardSheetContentProps = ComponentProps<typeof SheetContent>
+export interface StandardSheetContentProps
+  extends ComponentProps<typeof SheetContent> {}
 
 export function StandardSheetContent(props: StandardSheetContentProps) {
   const {
@@ -108,7 +109,8 @@ export function StandardSheetTitle(props: StandardSheetTitleProps) {
 }
 StandardSheetTitle.displayName = "StandardSheetTitle"
 
-export type StandardSheetBodyProps = ComponentProps<typeof SheetBody>
+export interface StandardSheetBodyProps
+  extends ComponentProps<typeof SheetBody> {}
 
 export function StandardSheetBody(props: StandardSheetBodyProps) {
   const { className, ...sheetBodyProps } = props
@@ -122,7 +124,8 @@ export function StandardSheetBody(props: StandardSheetBodyProps) {
 }
 StandardSheetBody.displayName = "StandardSheetBody"
 
-export type StandardSheetFooterProps = ComponentProps<typeof SheetFooter>
+export interface StandardSheetFooterProps
+  extends ComponentProps<typeof SheetFooter> {}
 
 export function StandardSheetFooter(props: StandardSheetFooterProps) {
   const { className, ...sheetFooterProps } = props

@@ -20,7 +20,8 @@ import { USER_DATABASE_DEFS } from "@/features/data/constants"
 import { cn } from "@/styles/utils"
 import { SHORT_TIME_FORMAT_OPTIONS } from "@/utils/date"
 
-export type AssistantOutputCardProps = Omit<ComponentProps<"div">, "children">
+export interface AssistantOutputCardProps
+  extends Omit<ComponentProps<"div">, "children"> {}
 
 export function AssistantOutputCard(props: AssistantOutputCardProps) {
   const { className, ...divProps } = props
@@ -200,7 +201,8 @@ export function AssistantOutputCard(props: AssistantOutputCardProps) {
 }
 AssistantOutputCard.displayName = "AssistantOutputCard"
 
-type AssistantOutputSkeletonProps = Omit<ComponentProps<"div">, "children">
+interface AssistantOutputSkeletonProps
+  extends Omit<ComponentProps<"div">, "children"> {}
 
 function AssistantOutputSkeleton(props: AssistantOutputSkeletonProps) {
   const { className, ...divProps } = props

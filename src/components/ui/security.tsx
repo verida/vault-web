@@ -16,7 +16,8 @@ import {
 } from "@/components/ui/dialog"
 import { cn } from "@/styles/utils"
 
-export type SecurityIconProps = ComponentProps<typeof ShieldCheckIcon>
+export interface SecurityIconProps
+  extends ComponentProps<typeof ShieldCheckIcon> {}
 
 export function SecurityIcon(props: SecurityIconProps) {
   const { className, ...iconProps } = props
@@ -46,11 +47,9 @@ const securityBadgeVariants = cva("", {
   },
 })
 
-export type SecuredBadgeProps = Omit<
-  ComponentProps<typeof Badge>,
-  "children" | "variant"
-> &
-  VariantProps<typeof securityBadgeVariants>
+export interface SecuredBadgeProps
+  extends Omit<ComponentProps<typeof Badge>, "children" | "variant">,
+    VariantProps<typeof securityBadgeVariants> {}
 
 export function SecurityBadge(props: SecuredBadgeProps) {
   const { variant, className, ...divProps } = props
@@ -115,11 +114,9 @@ const securityDetailsDialogTriggerVariants = cva("", {
   },
 })
 
-export type SecurityDetailsDialogTriggerProps = Pick<
-  ComponentProps<typeof Button>,
-  "className"
-> &
-  VariantProps<typeof securityDetailsDialogTriggerVariants>
+export interface SecurityDetailsDialogTriggerProps
+  extends Pick<ComponentProps<typeof Button>, "className">,
+    VariantProps<typeof securityDetailsDialogTriggerVariants> {}
 
 export function SecurityDetailsDialogTrigger(
   props: SecurityDetailsDialogTriggerProps

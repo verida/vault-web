@@ -2,10 +2,8 @@ import { type ComponentProps } from "react"
 
 import { cn } from "@/styles/utils"
 
-export type InboxMessageUnreadIndicatorProps = Omit<
-  ComponentProps<"div">,
-  "children"
->
+export interface InboxMessageUnreadIndicatorProps
+  extends Omit<ComponentProps<"div">, "children"> {}
 
 export function InboxMessageUnreadIndicator(
   props: InboxMessageUnreadIndicatorProps

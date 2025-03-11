@@ -30,7 +30,8 @@ import { useAssistants } from "@/features/assistants/hooks/use-assistants"
 import { useGetAiPrompts } from "@/features/assistants/hooks/use-get-ai-prompts"
 import { cn, getMediaQuery } from "@/styles/utils"
 
-export type AssistantUserInputProps = Omit<ComponentProps<"div">, "children">
+export interface AssistantUserInputProps
+  extends Omit<ComponentProps<"div">, "children"> {}
 
 export function AssistantUserInput(props: AssistantUserInputProps) {
   const { ...divProps } = props

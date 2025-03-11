@@ -10,10 +10,8 @@ import { useToast } from "@/features/toasts/use-toast"
 import { cn } from "@/styles/utils"
 import { wait } from "@/utils/misc"
 
-export type SyncAllConnectionsButtonProps = Pick<
-  ComponentProps<typeof Button>,
-  "className" | "disabled"
->
+export interface SyncAllConnectionsButtonProps
+  extends Pick<ComponentProps<typeof Button>, "className" | "disabled"> {}
 
 export function SyncAllConnectionsButton(props: SyncAllConnectionsButtonProps) {
   const { className, disabled } = props

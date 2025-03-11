@@ -1,5 +1,5 @@
 import { type VariantProps, cva } from "class-variance-authority"
-import * as React from "react"
+import { type HTMLAttributes, forwardRef } from "react"
 
 import { StatusErrorIcon } from "@/components/icons/status-error-icon"
 import { StatusInfoIcon } from "@/components/icons/status-info-icon"
@@ -27,9 +27,9 @@ const alertVariants = cva(
   }
 )
 
-const Alert = React.forwardRef<
+const Alert = forwardRef<
   HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement> & VariantProps<typeof alertVariants>
+  HTMLAttributes<HTMLDivElement> & VariantProps<typeof alertVariants>
 >(({ className, variant, children, ...props }, ref) => (
   <div
     ref={ref}
@@ -49,9 +49,9 @@ const Alert = React.forwardRef<
 ))
 Alert.displayName = "Alert"
 
-const AlertTitle = React.forwardRef<
+const AlertTitle = forwardRef<
   HTMLParagraphElement,
-  React.HTMLAttributes<HTMLHeadingElement>
+  HTMLAttributes<HTMLHeadingElement>
 >(({ className, ...props }, ref) => (
   <h5
     // TODO: Use Typography
@@ -62,9 +62,9 @@ const AlertTitle = React.forwardRef<
 ))
 AlertTitle.displayName = "AlertTitle"
 
-const AlertDescription = React.forwardRef<
+const AlertDescription = forwardRef<
   HTMLParagraphElement,
-  React.HTMLAttributes<HTMLParagraphElement>
+  HTMLAttributes<HTMLParagraphElement>
 >(({ className, ...props }, ref) => (
   <div
     // TODO: Use Typography

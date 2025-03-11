@@ -15,9 +15,8 @@ import {
 } from "@/components/ui/security"
 import { Typography } from "@/components/ui/typography"
 
-export type AssistantSecurityDetailsDialogProps = ComponentProps<
-  typeof SecurityDetailsDialogTrigger
->
+export interface AssistantSecurityDetailsDialogProps
+  extends ComponentProps<typeof SecurityDetailsDialogTrigger> {}
 
 export function AssistantSecurityDetailsDialog(
   props: AssistantSecurityDetailsDialogProps

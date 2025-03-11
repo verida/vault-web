@@ -22,7 +22,8 @@ export const ItemSheetTrigger = SheetTrigger
 
 export const ItemSheetClose = SheetClose
 
-export type ItemSheetContentProps = ComponentProps<typeof SheetContent>
+export interface ItemSheetContentProps
+  extends ComponentProps<typeof SheetContent> {}
 
 export function ItemSheetContent(props: ItemSheetContentProps) {
   const {
@@ -124,7 +125,7 @@ export function ItemSheetTitle(props: ItemSheetTitleProps) {
 }
 ItemSheetTitle.displayName = "ItemSheetTitle"
 
-export type ItemSheetBodyProps = ComponentProps<typeof SheetBody>
+export interface ItemSheetBodyProps extends ComponentProps<typeof SheetBody> {}
 
 export function ItemSheetBody(props: ItemSheetBodyProps) {
   const { className, ...sheetBodyProps } = props
@@ -137,7 +138,8 @@ export function ItemSheetBody(props: ItemSheetBodyProps) {
 }
 ItemSheetBody.displayName = "ItemSheetBody"
 
-export type ItemSheetFooterProps = ComponentProps<typeof SheetFooter>
+export interface ItemSheetFooterProps
+  extends ComponentProps<typeof SheetFooter> {}
 
 export function ItemSheetFooter(props: ItemSheetFooterProps) {
   const { className, ...sheetFooterProps } = props

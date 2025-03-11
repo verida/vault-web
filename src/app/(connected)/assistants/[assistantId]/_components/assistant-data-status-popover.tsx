@@ -19,7 +19,8 @@ import { useDataProvider } from "@/features/data-connections/hooks/use-data-prov
 import type { DataConnection } from "@/features/data-connections/types"
 import { cn } from "@/styles/utils"
 
-export type AssistantDataStatusPopoverProps = ComponentProps<typeof Button>
+export interface AssistantDataStatusPopoverProps
+  extends ComponentProps<typeof Button> {}
 
 export function AssistantDataStatusPopover(
   props: AssistantDataStatusPopoverProps

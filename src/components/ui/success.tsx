@@ -5,7 +5,7 @@ import SuccessIllustration from "@/assets/success-illustration.svg"
 import { Typography } from "@/components/ui/typography"
 import { cn } from "@/styles/utils"
 
-export type SuccessBlockProps = ComponentProps<"div">
+export interface SuccessBlockProps extends ComponentProps<"div"> {}
 
 export function SuccessBlock(props: SuccessBlockProps) {
   const { className, ...divProps } = props
@@ -32,7 +32,8 @@ export function SuccessBlockImage() {
 }
 SuccessBlockImage.displayName = "SuccessBlockImage"
 
-export type SuccessBlockTitleProps = ComponentProps<typeof Typography>
+export interface SuccessBlockTitleProps
+  extends ComponentProps<typeof Typography> {}
 
 export function SuccessBlockTitle(props: SuccessBlockTitleProps) {
   const { variant = "heading-4", ...typographyProps } = props
@@ -41,7 +42,8 @@ export function SuccessBlockTitle(props: SuccessBlockTitleProps) {
 }
 SuccessBlockTitle.displayName = "SuccessBlockTitle"
 
-export type SuccessBlockDescriptionProps = ComponentProps<typeof Typography>
+export interface SuccessBlockDescriptionProps
+  extends ComponentProps<typeof Typography> {}
 
 export function SuccessBlockDescription(props: SuccessBlockDescriptionProps) {
   const { variant = "base-regular", ...typographyProps } = props

@@ -2,7 +2,13 @@
 
 import * as SheetPrimitive from "@radix-ui/react-dialog"
 import { type VariantProps, cva } from "class-variance-authority"
-import * as React from "react"
+import {
+  type ComponentProps,
+  type ComponentPropsWithoutRef,
+  type ElementRef,
+  type HTMLAttributes,
+  forwardRef,
+} from "react"
 
 import { cn } from "@/styles/utils"
 
@@ -14,9 +20,9 @@ const SheetPortal = SheetPrimitive.Portal
 
 const SheetClose = SheetPrimitive.Close
 
-const SheetOverlay = React.forwardRef<
-  React.ElementRef<typeof SheetPrimitive.Overlay>,
-  React.ComponentPropsWithoutRef<typeof SheetPrimitive.Overlay>
+const SheetOverlay = forwardRef<
+  ElementRef<typeof SheetPrimitive.Overlay>,
+  ComponentPropsWithoutRef<typeof SheetPrimitive.Overlay>
 >(({ className, ...props }, ref) => (
   <SheetPrimitive.Overlay
     className={cn(
@@ -48,13 +54,14 @@ const sheetVariants = cva(
   }
 )
 
-type SheetContentProps = {
+interface SheetContentProps
+  extends ComponentPropsWithoutRef<typeof SheetPrimitive.Content>,
+    VariantProps<typeof sheetVariants> {
   hideOverlay?: boolean
-} & React.ComponentPropsWithoutRef<typeof SheetPrimitive.Content> &
-  VariantProps<typeof sheetVariants>
+}
 
-const SheetContent = React.forwardRef<
-  React.ElementRef<typeof SheetPrimitive.Content>,
+const SheetContent = forwardRef<
+  ElementRef<typeof SheetPrimitive.Content>,
   SheetContentProps
 >(
   (
@@ -75,42 +82,33 @@ const SheetContent = React.forwardRef<
 )
 SheetContent.displayName = SheetPrimitive.Content.displayName
 
-const SheetHeader = ({
-  className,
-  ...props
-}: React.ComponentProps<"header">) => (
+const SheetHeader = ({ className, ...props }: ComponentProps<"header">) => (
   <header className={cn(className)} {...props} />
 )
 SheetHeader.displayName = "SheetHeader"
 
-const SheetBody = ({
-  className,
-  ...props
-}: React.HTMLAttributes<HTMLDivElement>) => (
+const SheetBody = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) => (
   <div className={cn(className)} {...props} />
 )
 SheetBody.displayName = "SheetBody"
 
-const SheetFooter = ({
-  className,
-  ...props
-}: React.ComponentProps<"footer">) => (
+const SheetFooter = ({ className, ...props }: ComponentProps<"footer">) => (
   <footer className={cn(className)} {...props} />
 )
 SheetFooter.displayName = "SheetFooter"
 
-const SheetTitle = React.forwardRef<
-  React.ElementRef<typeof SheetPrimitive.Title>,
-  React.ComponentPropsWithoutRef<typeof SheetPrimitive.Title>
+const SheetTitle = forwardRef<
+  ElementRef<typeof SheetPrimitive.Title>,
+  ComponentPropsWithoutRef<typeof SheetPrimitive.Title>
 >(({ className, ...props }, ref) => (
   // TODO: Use Typography?
   <SheetPrimitive.Title ref={ref} className={cn(className)} {...props} />
 ))
 SheetTitle.displayName = SheetPrimitive.Title.displayName
 
-const SheetDescription = React.forwardRef<
-  React.ElementRef<typeof SheetPrimitive.Description>,
-  React.ComponentPropsWithoutRef<typeof SheetPrimitive.Description>
+const SheetDescription = forwardRef<
+  ElementRef<typeof SheetPrimitive.Description>,
+  ComponentPropsWithoutRef<typeof SheetPrimitive.Description>
 >(({ className, ...props }, ref) => (
   // TODO: Use Typography?
   <SheetPrimitive.Description ref={ref} className={cn(className)} {...props} />

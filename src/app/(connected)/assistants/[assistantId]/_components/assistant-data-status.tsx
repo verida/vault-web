@@ -14,7 +14,8 @@ import { Typography } from "@/components/ui/typography"
 import { useDataConnections } from "@/features/data-connections/hooks/use-data-connections"
 import { cn } from "@/styles/utils"
 
-export type AssistantDataStatusProps = Omit<ComponentProps<"div">, "children">
+export interface AssistantDataStatusProps
+  extends Omit<ComponentProps<"div">, "children"> {}
 
 export function AssistantDataStatus(props: AssistantDataStatusProps) {
   const { className, ...divProps } = props

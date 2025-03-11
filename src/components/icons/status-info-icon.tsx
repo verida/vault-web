@@ -1,6 +1,6 @@
 import { type SVGProps } from "react"
 
-type StatusInfoIconProps = SVGProps<SVGSVGElement>
+interface StatusInfoIconProps extends SVGProps<SVGSVGElement> {}
 
 export const StatusInfoIcon = (props: StatusInfoIconProps) => (
   <svg

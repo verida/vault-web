@@ -62,7 +62,8 @@ export function DataProviderCard(props: DataProviderCardProps) {
 }
 DataProviderCard.displayName = "DataProviderCard"
 
-export type DataProviderSkeletonCardProps = ComponentProps<typeof Card>
+export interface DataProviderSkeletonCardProps
+  extends ComponentProps<typeof Card> {}
 
 export function DataProviderSkeletonCard(props: DataProviderSkeletonCardProps) {
   const { className, ...cardProps } = props

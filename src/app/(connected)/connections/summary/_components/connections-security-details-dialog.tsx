@@ -16,9 +16,8 @@ import {
 import { Typography } from "@/components/ui/typography"
 import { getDataPageRoute } from "@/features/routes/utils"
 
-export type ConnectionsSecurityDetailsDialogProps = ComponentProps<
-  typeof SecurityDetailsDialogTrigger
->
+export interface ConnectionsSecurityDetailsDialogProps
+  extends ComponentProps<typeof SecurityDetailsDialogTrigger> {}
 
 export function ConnectionsSecurityDetailsDialog(
   props: ConnectionsSecurityDetailsDialogProps

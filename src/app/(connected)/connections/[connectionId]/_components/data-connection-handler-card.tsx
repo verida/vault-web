@@ -89,10 +89,8 @@ export function DataConnectionHandlerCard(
 }
 DataConnectionHandlerCard.displayName = "DataConnectionHandlerCard"
 
-export type DataConnectionHandlerCardSkeletonProps = Omit<
-  ComponentProps<typeof Card>,
-  "children"
->
+export interface DataConnectionHandlerCardSkeletonProps
+  extends Omit<ComponentProps<typeof Card>, "children"> {}
 
 export function DataConnectionHandlerCardSkeleton(
   props: DataConnectionHandlerCardSkeletonProps

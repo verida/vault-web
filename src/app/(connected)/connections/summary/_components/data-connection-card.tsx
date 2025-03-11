@@ -108,10 +108,8 @@ export function DataConnectionCard(props: DataConnectionCardProps) {
 }
 DataConnectionCard.displayName = "DataConnectionCard"
 
-export type DataConnectionSkeletonCardProps = Omit<
-  ComponentProps<typeof Card>,
-  "children"
->
+export interface DataConnectionSkeletonCardProps
+  extends Omit<ComponentProps<typeof Card>, "children"> {}
 
 export function DataConnectionSkeletonCard(
   props: DataConnectionSkeletonCardProps

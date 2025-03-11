@@ -108,10 +108,8 @@ function ProviderSelectionItem(props: ProviderSelectionItemProps) {
 }
 ProviderSelectionItem.displayName = "ProviderSelectionItem"
 
-type ProviderSelectionItemSkeletonProps = Omit<
-  ComponentProps<"div">,
-  "children"
->
+interface ProviderSelectionItemSkeletonProps
+  extends Omit<ComponentProps<"div">, "children"> {}
 
 function ProviderSelectionItemSkeleton(
   props: ProviderSelectionItemSkeletonProps

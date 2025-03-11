@@ -76,7 +76,7 @@ export function PageWrapper(props: PageWrapperProps) {
 }
 PageWrapper.displayName = "PageWrapper"
 
-export type PageTitleProps = ComponentProps<typeof Typography>
+export interface PageTitleProps extends ComponentProps<typeof Typography> {}
 
 export function PageTitle(props: PageTitleProps) {
   const { ...typographyProps } = props
