@@ -2,25 +2,25 @@
 
 import { intlFormat } from "date-fns"
 import Link from "next/link"
-import { useMemo } from "react"
+import { type ComponentProps, useMemo } from "react"
 
 import { DataConnectionAvatar } from "@/components/data-connections/data-connection-avatar"
 import { DataConnectionStatusBadge } from "@/components/data-connections/data-connection-status-badge"
-import { Typography } from "@/components/typography"
 import { Button } from "@/components/ui/button"
 import { Card, CardBody, CardFooter, CardHeader } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 import { Skeleton } from "@/components/ui/skeleton"
 import { TooltipIndicator } from "@/components/ui/tooltip"
+import { Typography } from "@/components/ui/typography"
 import { EMPTY_VALUE_FALLBACK } from "@/constants/misc"
 import { useDataProvider } from "@/features/data-connections/hooks/use-data-provider"
-import { DataConnection } from "@/features/data-connections/types"
+import type { DataConnection } from "@/features/data-connections/types"
 import { getDataConnectionLatestSyncEnd } from "@/features/data-connections/utils"
 import { getConnectionPageRoute } from "@/features/routes/utils"
 import { LONG_DATE_TIME_FORMAT_OPTIONS } from "@/utils/date"
 
 export interface DataConnectionCardProps
-  extends Omit<React.ComponentProps<typeof Card>, "children"> {
+  extends Omit<ComponentProps<typeof Card>, "children"> {
   connection: DataConnection
   hideDetailsLink?: boolean
 }
@@ -108,10 +108,8 @@ export function DataConnectionCard(props: DataConnectionCardProps) {
 }
 DataConnectionCard.displayName = "DataConnectionCard"
 
-export type DataConnectionSkeletonCardProps = Omit<
-  React.ComponentProps<typeof Card>,
-  "children"
->
+export interface DataConnectionSkeletonCardProps
+  extends Omit<ComponentProps<typeof Card>, "children"> {}
 
 export function DataConnectionSkeletonCard(
   props: DataConnectionSkeletonCardProps

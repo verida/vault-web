@@ -1,7 +1,7 @@
 import { BrainCircuitIcon, DatabaseIcon } from "lucide-react"
 import Link from "next/link"
+import type { ComponentProps } from "react"
 
-import { Typography } from "@/components/typography"
 import {
   SecurityDetailsDialog,
   SecurityDetailsDialogBody,
@@ -13,10 +13,10 @@ import {
   SecurityDetailsDialogTrigger,
   SecurityIcon,
 } from "@/components/ui/security"
+import { Typography } from "@/components/ui/typography"
 
-export type AssistantSecurityDetailsDialogProps = React.ComponentProps<
-  typeof SecurityDetailsDialogTrigger
->
+export interface AssistantSecurityDetailsDialogProps
+  extends ComponentProps<typeof SecurityDetailsDialogTrigger> {}
 
 export function AssistantSecurityDetailsDialog(
   props: AssistantSecurityDetailsDialogProps

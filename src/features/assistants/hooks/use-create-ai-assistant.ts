@@ -2,10 +2,10 @@ import { useCallback } from "react"
 
 import { AI_ASSISTANTS_DB_DEF } from "@/features/assistants/constants"
 import { AiAssistantBaseSchema } from "@/features/assistants/schemas"
-import { AiAssistantBase } from "@/features/assistants/types"
+import type { AiAssistantBase } from "@/features/assistants/types"
 import { useToast } from "@/features/toasts/use-toast"
 import { useCreateVeridaRecord } from "@/features/verida-database/hooks/use-create-verida-record"
-import { UnsavedVeridaRecord } from "@/features/verida-database/types"
+import type { UnsavedVeridaRecord } from "@/features/verida-database/types"
 
 export function useCreateAiAssistant() {
   const { toast } = useToast()

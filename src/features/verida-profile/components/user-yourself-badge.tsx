@@ -1,10 +1,10 @@
+import { type ComponentProps } from "react"
+
 import { Badge } from "@/components/ui/badge"
 import { cn } from "@/styles/utils"
 
-export type UserYourselfBadgeProps = Omit<
-  React.ComponentProps<typeof Badge>,
-  "children"
->
+export interface UserYourselfBadgeProps
+  extends Omit<ComponentProps<typeof Badge>, "children"> {}
 
 export function UserYourselfBadge(props: UserYourselfBadgeProps) {
   const { variant = "secondary", className, ...badgeProps } = props

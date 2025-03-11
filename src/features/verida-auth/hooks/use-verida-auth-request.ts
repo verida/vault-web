@@ -7,7 +7,7 @@ import {
   VeridaAuthRequestPayerSchema,
   VeridaAuthRequestRedirectUrlSchema,
 } from "@/features/verida-auth/schemas"
-import { VeridaAuthRequest } from "@/features/verida-auth/types"
+import type { VeridaAuthRequest } from "@/features/verida-auth/types"
 
 export function useVeridaAuthRequest(): VeridaAuthRequest {
   const searchParams = useSearchParams()

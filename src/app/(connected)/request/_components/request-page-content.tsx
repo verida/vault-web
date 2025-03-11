@@ -1,7 +1,7 @@
 import { UserProfileApiRequestContent } from "@/app/(connected)/request/_components/user-profile-api-request-content"
-import { SupportedRequest } from "@/features/requests/types"
+import type { SupportedRequest } from "@/features/requests/types"
 
-export type RequestPageContentProps = {
+export interface RequestPageContentProps {
   request: SupportedRequest
 }
 

@@ -9,7 +9,7 @@ import {
 export default function NewDataConnectionCallbackPage() {
   return (
     <NewDataConnectionCallbackHandler>
-      <div className="flex h-dvh flex-col items-center justify-center">
+      <div className="flex h-full flex-col items-center justify-center">
         <SuccessBlock>
           <SuccessBlockImage />
           <SuccessBlockTitle>

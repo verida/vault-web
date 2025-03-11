@@ -1,5 +1,6 @@
+import { type ComponentProps, type ReactNode } from "react"
+
 import { CloseSideRight } from "@/components/icons/close-side-right"
-import { Typography } from "@/components/typography"
 import { Button } from "@/components/ui/button"
 import {
   Sheet,
@@ -12,6 +13,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
+import { Typography } from "@/components/ui/typography"
 import { cn } from "@/styles/utils"
 
 export const ItemSheet = Sheet
@@ -20,7 +22,8 @@ export const ItemSheetTrigger = SheetTrigger
 
 export const ItemSheetClose = SheetClose
 
-export type ItemSheetContentProps = React.ComponentProps<typeof SheetContent>
+export interface ItemSheetContentProps
+  extends ComponentProps<typeof SheetContent> {}
 
 export function ItemSheetContent(props: ItemSheetContentProps) {
   const {
@@ -45,8 +48,8 @@ export function ItemSheetContent(props: ItemSheetContentProps) {
 ItemSheetContent.displayName = "ItemSheetContent"
 
 export interface ItemSheetHeaderProps
-  extends React.ComponentProps<typeof SheetHeader> {
-  right?: React.ReactNode
+  extends ComponentProps<typeof SheetHeader> {
+  right?: ReactNode
   hideCloseButton?: boolean
 }
 
@@ -98,7 +101,7 @@ export function ItemSheetHeader(props: ItemSheetHeaderProps) {
 ItemSheetHeader.displayName = "ItemSheetHeader"
 
 export interface ItemSheetTitleProps
-  extends Omit<React.ComponentProps<typeof Typography>, "variant"> {
+  extends Omit<ComponentProps<typeof Typography>, "variant"> {
   /** Used for accessibility reason, not displayed in the UI */
   description?: string
 }
@@ -122,7 +125,7 @@ export function ItemSheetTitle(props: ItemSheetTitleProps) {
 }
 ItemSheetTitle.displayName = "ItemSheetTitle"
 
-export type ItemSheetBodyProps = React.ComponentProps<typeof SheetBody>
+export interface ItemSheetBodyProps extends ComponentProps<typeof SheetBody> {}
 
 export function ItemSheetBody(props: ItemSheetBodyProps) {
   const { className, ...sheetBodyProps } = props
@@ -135,7 +138,8 @@ export function ItemSheetBody(props: ItemSheetBodyProps) {
 }
 ItemSheetBody.displayName = "ItemSheetBody"
 
-export type ItemSheetFooterProps = React.ComponentProps<typeof SheetFooter>
+export interface ItemSheetFooterProps
+  extends ComponentProps<typeof SheetFooter> {}
 
 export function ItemSheetFooter(props: ItemSheetFooterProps) {
   const { className, ...sheetFooterProps } = props

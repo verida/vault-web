@@ -1,7 +1,7 @@
 import { useEffect } from "react"
 
 import { useInboxMessageMarkAsRead } from "@/features/verida-inbox/hooks/use-inbox-message-mark-as-read"
-import { VeridaInboxMessageRecord } from "@/features/verida-inbox/types"
+import type { VeridaInboxMessageRecord } from "@/features/verida-inbox/types"
 
 type UseInboxMessageAutoReadOptions = {
   messageRecord?: VeridaInboxMessageRecord | null

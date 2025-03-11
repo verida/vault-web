@@ -1,6 +1,6 @@
-import React, { SVGProps } from "react"
+import { type SVGProps } from "react"
 
-type StatusSuccessIconProps = SVGProps<SVGSVGElement>
+interface StatusSuccessIconProps extends SVGProps<SVGSVGElement> {}
 
 export const StatusSuccessIcon = (props: StatusSuccessIconProps) => (
   <svg

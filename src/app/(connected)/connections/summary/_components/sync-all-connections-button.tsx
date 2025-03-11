@@ -1,6 +1,6 @@
 "use client"
 
-import { useCallback, useState } from "react"
+import { type ComponentProps, useCallback, useState } from "react"
 
 import { RefreshIcon } from "@/components/icons/refresh-icon"
 import { Button } from "@/components/ui/button"
@@ -10,10 +10,8 @@ import { useToast } from "@/features/toasts/use-toast"
 import { cn } from "@/styles/utils"
 import { wait } from "@/utils/misc"
 
-export type SyncAllConnectionsButtonProps = Pick<
-  React.ComponentProps<typeof Button>,
-  "className" | "disabled"
->
+export interface SyncAllConnectionsButtonProps
+  extends Pick<ComponentProps<typeof Button>, "className" | "disabled"> {}
 
 export function SyncAllConnectionsButton(props: SyncAllConnectionsButtonProps) {
   const { className, disabled } = props

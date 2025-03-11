@@ -1,18 +1,28 @@
 "use client"
 
-import React, { useCallback, useLayoutEffect, useRef } from "react"
+import {
+  type ChangeEventHandler,
+  type ComponentProps,
+  type MutableRefObject,
+  type ReactNode,
+  forwardRef,
+  useCallback,
+  useLayoutEffect,
+  useRef,
+} from "react"
 
 import { cn } from "@/styles/utils"
 
-export type TextareaProps = {
-  containerClassName?: React.ComponentProps<"div">["className"]
-  startAdornment?: React.ReactNode
-  startAdornmentContainerClassName?: React.ComponentProps<"div">["className"]
-  endAdornment?: React.ReactNode
-  endAdornmentContainerClassName?: React.ComponentProps<"div">["className"]
-} & Omit<React.ComponentProps<"textarea">, "rows">
+export interface TextareaProps
+  extends Omit<ComponentProps<"textarea">, "rows"> {
+  containerClassName?: ComponentProps<"div">["className"]
+  startAdornment?: ReactNode
+  startAdornmentContainerClassName?: ComponentProps<"div">["className"]
+  endAdornment?: ReactNode
+  endAdornmentContainerClassName?: ComponentProps<"div">["className"]
+}
 
-export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
+export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
   (props, ref) => {
     const {
       className,
@@ -28,7 +38,7 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
     // Create internal ref if no ref is provided
     const textareaRef = useRef<HTMLTextAreaElement>(null)
     const resolvedRef =
-      (ref as React.MutableRefObject<HTMLTextAreaElement>) || textareaRef
+      (ref as MutableRefObject<HTMLTextAreaElement>) || textareaRef
 
     const adjustHeight = useCallback(() => {
       if (!resolvedRef.current) {
@@ -42,14 +52,13 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
     }, [resolvedRef])
 
     // Handle changes to resize the textarea
-    const handleChange: React.ChangeEventHandler<HTMLTextAreaElement> =
-      useCallback(
-        (event) => {
-          adjustHeight()
-          onChange?.(event)
-        },
-        [adjustHeight, onChange]
-      )
+    const handleChange: ChangeEventHandler<HTMLTextAreaElement> = useCallback(
+      (event) => {
+        adjustHeight()
+        onChange?.(event)
+      },
+      [adjustHeight, onChange]
+    )
 
     // Adjust height on mount and when content changes
     useLayoutEffect(() => {

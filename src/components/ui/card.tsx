@@ -1,38 +1,36 @@
-import React from "react"
+import { type ComponentProps, type HTMLAttributes, forwardRef } from "react"
 
-import { Typography } from "@/components/typography"
+import { Typography } from "@/components/ui/typography"
 import { cn } from "@/styles/utils"
 
-export const Card = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
-  <div
-    ref={ref}
-    className={cn(
-      "flex flex-col gap-6 rounded-lg border bg-surface p-6 shadow-sm",
-      className
-    )}
-    {...props}
-  />
-))
+export const Card = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
+  ({ className, ...props }, ref) => (
+    <div
+      ref={ref}
+      className={cn(
+        "flex flex-col gap-6 rounded-lg border bg-surface p-6 shadow-sm",
+        className
+      )}
+      {...props}
+    />
+  )
+)
 Card.displayName = "Card"
 
-export const CardHeader = React.forwardRef<
-  HTMLDivElement,
-  React.ComponentProps<"header">
->(({ className, ...props }, ref) => (
-  <header
-    ref={ref}
-    className={cn("flex flex-col gap-1.5", className)}
-    {...props}
-  />
-))
+export const CardHeader = forwardRef<HTMLDivElement, ComponentProps<"header">>(
+  ({ className, ...props }, ref) => (
+    <header
+      ref={ref}
+      className={cn("flex flex-col gap-1.5", className)}
+      {...props}
+    />
+  )
+)
 CardHeader.displayName = "CardHeader"
 
-export const CardTitle = React.forwardRef<
+export const CardTitle = forwardRef<
   HTMLParagraphElement,
-  React.ComponentProps<typeof Typography>
+  ComponentProps<typeof Typography>
 >(({ variant = "heading-3", className, ...props }, ref) => (
   <Typography
     ref={ref}
@@ -43,9 +41,9 @@ export const CardTitle = React.forwardRef<
 ))
 CardTitle.displayName = "CardTitle"
 
-export const CardDescription = React.forwardRef<
+export const CardDescription = forwardRef<
   HTMLParagraphElement,
-  React.ComponentProps<typeof Typography> & { wrapperClassName?: string }
+  ComponentProps<typeof Typography> & { wrapperClassName?: string }
 >(
   (
     { variant = "base-regular", className, wrapperClassName, ...props },
@@ -63,18 +61,17 @@ export const CardDescription = React.forwardRef<
 )
 CardDescription.displayName = "CardDescription"
 
-export const CardBody = React.forwardRef<
+export const CardBody = forwardRef<
   HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
+  HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => (
   <div ref={ref} className={className} {...props} />
 ))
 CardBody.displayName = "CardBody"
 
-export const CardFooter = React.forwardRef<
-  HTMLDivElement,
-  React.ComponentProps<"footer">
->(({ className, ...props }, ref) => (
-  <footer ref={ref} className={className} {...props} />
-))
+export const CardFooter = forwardRef<HTMLDivElement, ComponentProps<"footer">>(
+  ({ className, ...props }, ref) => (
+    <footer ref={ref} className={className} {...props} />
+  )
+)
 CardFooter.displayName = "CardFooter"

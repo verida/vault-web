@@ -1,12 +1,12 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query"
 
-import {
+import type {
   VeridaDatabaseQueryFilter,
   VeridaDatabaseQueryOptions,
 } from "@/features/verida-database/types"
 import { useVeridaInbox } from "@/features/verida-inbox/hooks/use-verida-inbox"
 import { VeridaInboxQueryKeys } from "@/features/verida-inbox/queries"
-import { VeridaInboxMessageRecord } from "@/features/verida-inbox/types"
+import type { VeridaInboxMessageRecord } from "@/features/verida-inbox/types"
 import { getVeridaInboxMessages } from "@/features/verida-inbox/utils"
 import { useVerida } from "@/features/verida/hooks/use-verida"
 

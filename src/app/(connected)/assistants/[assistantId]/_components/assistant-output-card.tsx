@@ -1,17 +1,17 @@
 "use client"
 
 import { intlFormat } from "date-fns"
-import { useMemo } from "react"
+import { type ComponentProps, useMemo } from "react"
 
 import { AssistantOutputCardMenu } from "@/app/(connected)/assistants/[assistantId]/_components/assistant-output-card-menu"
 import { MoreIcon } from "@/components/icons/more-icon"
 import { VeridaNetworkLogo } from "@/components/icons/verida-network-logo"
 import { MarkdownRenderer } from "@/components/markdown-renderer"
-import { Typography } from "@/components/typography"
 import { Avatar } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { Card, CardBody, CardFooter, CardHeader } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton"
+import { Typography } from "@/components/ui/typography"
 import { EMPTY_VALUE_FALLBACK } from "@/constants/misc"
 import { DEFAULT_ASSISTANT } from "@/features/assistants/constants"
 import { useAssistants } from "@/features/assistants/hooks/use-assistants"
@@ -20,10 +20,8 @@ import { USER_DATABASE_DEFS } from "@/features/data/constants"
 import { cn } from "@/styles/utils"
 import { SHORT_TIME_FORMAT_OPTIONS } from "@/utils/date"
 
-export type AssistantOutputCardProps = Omit<
-  React.ComponentProps<"div">,
-  "children"
->
+export interface AssistantOutputCardProps
+  extends Omit<ComponentProps<"div">, "children"> {}
 
 export function AssistantOutputCard(props: AssistantOutputCardProps) {
   const { className, ...divProps } = props
@@ -203,10 +201,8 @@ export function AssistantOutputCard(props: AssistantOutputCardProps) {
 }
 AssistantOutputCard.displayName = "AssistantOutputCard"
 
-type AssistantOutputSkeletonProps = Omit<
-  React.ComponentProps<"div">,
-  "children"
->
+interface AssistantOutputSkeletonProps
+  extends Omit<ComponentProps<"div">, "children"> {}
 
 function AssistantOutputSkeleton(props: AssistantOutputSkeletonProps) {
   const { className, ...divProps } = props

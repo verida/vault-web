@@ -2,7 +2,7 @@
 
 import {
   DndContext,
-  DragEndEvent,
+  type DragEndEvent,
   KeyboardSensor,
   PointerSensor,
   closestCenter,
@@ -18,10 +18,9 @@ import {
 import { CSS } from "@dnd-kit/utilities"
 import { CheckIcon, GripVerticalIcon } from "lucide-react"
 import { useRouter } from "next/navigation"
-import React, { useCallback, useMemo, useState } from "react"
+import { type ComponentProps, useCallback, useMemo, useState } from "react"
 
 import { EditIcon } from "@/components/icons/edit-icon"
-import { Typography } from "@/components/typography"
 import { Button } from "@/components/ui/button"
 import {
   Command,
@@ -37,6 +36,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
+import { Typography } from "@/components/ui/typography"
 import {
   DEFAULT_ASSISTANT,
   DEFAULT_ASSISTANT_ORDER,
@@ -45,7 +45,7 @@ import {
 import { useAiAssistantDialog } from "@/features/assistants/hooks/use-ai-assistant-dialog"
 import { useGetAiAssistants } from "@/features/assistants/hooks/use-get-ai-assistants"
 import { useUpdateAiAssistant } from "@/features/assistants/hooks/use-update-ai-assistant"
-import {
+import type {
   AiAssistantFormData,
   AiAssistantRecord,
 } from "@/features/assistants/types"
@@ -57,7 +57,7 @@ import { moveItemInArray } from "@/utils/misc"
 const logger = Logger.create("assistants")
 
 export interface AiAssistantSelectorProps
-  extends Omit<React.ComponentProps<"div">, "children"> {
+  extends Omit<ComponentProps<"div">, "children"> {
   currentAssistantId?: string
   onCreateClick?: () => void
   onItemSelect?: (assistant: AiAssistantRecord) => void
@@ -277,7 +277,7 @@ export function AiAssistantSelector(props: AiAssistantSelectorProps) {
 }
 AiAssistantSelector.displayName = "AiAssistantSelector"
 
-type AiAssistantSelectorItemProps = {
+interface AiAssistantSelectorItemProps {
   sortable?: boolean
   assistant: AiAssistantRecord
   isCurrentAssistant?: boolean

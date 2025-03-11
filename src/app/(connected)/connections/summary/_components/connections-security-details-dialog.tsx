@@ -1,7 +1,7 @@
 import { CpuIcon, DatabaseIcon } from "lucide-react"
 import Link from "next/link"
+import { type ComponentProps } from "react"
 
-import { Typography } from "@/components/typography"
 import {
   SecurityDetailsDialog,
   SecurityDetailsDialogBody,
@@ -13,11 +13,11 @@ import {
   SecurityDetailsDialogTrigger,
   SecurityIcon,
 } from "@/components/ui/security"
+import { Typography } from "@/components/ui/typography"
 import { getDataPageRoute } from "@/features/routes/utils"
 
-export type ConnectionsSecurityDetailsDialogProps = React.ComponentProps<
-  typeof SecurityDetailsDialogTrigger
->
+export interface ConnectionsSecurityDetailsDialogProps
+  extends ComponentProps<typeof SecurityDetailsDialogTrigger> {}
 
 export function ConnectionsSecurityDetailsDialog(
   props: ConnectionsSecurityDetailsDialogProps

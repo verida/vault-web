@@ -1,6 +1,6 @@
 import { z } from "zod"
 
-import { VeridaBaseRecord } from "@/features/verida-database/types"
+import type { VeridaBaseRecord } from "@/features/verida-database/types"
 import { VerifiableCredentialBaseSchema } from "@/features/verifiable-credentials/schemas"
 
 export type VerifiableCredentialBase = z.infer<

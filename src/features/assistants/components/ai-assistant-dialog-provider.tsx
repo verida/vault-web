@@ -1,7 +1,7 @@
 "use client"
 
 import { useRouter } from "next/navigation"
-import { useCallback, useMemo, useState } from "react"
+import { type ReactNode, useCallback, useMemo, useState } from "react"
 
 import { ManageAiAssistantDialog } from "@/features/assistants/components/manage-ai-assistant-dialog"
 import {
@@ -10,22 +10,22 @@ import {
 } from "@/features/assistants/constants"
 import {
   AiAssistantDialogContext,
-  AiAssistantDialogContextType,
-  AiAssistantDialogState,
+  type AiAssistantDialogContextType,
+  type AiAssistantDialogState,
 } from "@/features/assistants/contexts/ai-assistant-dialog-context"
 import { useAssistants } from "@/features/assistants/hooks/use-assistants"
 import { useCreateAiAssistant } from "@/features/assistants/hooks/use-create-ai-assistant"
 import { useDeleteAiAssistant } from "@/features/assistants/hooks/use-delete-ai-assistant"
 import { useGetAiAssistants } from "@/features/assistants/hooks/use-get-ai-assistants"
 import { useUpdateAiAssistant } from "@/features/assistants/hooks/use-update-ai-assistant"
-import {
+import type {
   AiAssistantFormData,
   AiAssistantRecord,
 } from "@/features/assistants/types"
 import { getAssistantPageRoute } from "@/features/routes/utils"
 
-export type AiAssistantDialogProviderProps = {
-  children: React.ReactNode
+export interface AiAssistantDialogProviderProps {
+  children: ReactNode
 }
 
 export function AiAssistantDialogProvider(

@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { useEffect, useMemo } from "react"
+import { type ComponentProps, useEffect, useMemo } from "react"
 
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
@@ -17,14 +17,14 @@ import { cn } from "@/styles/utils"
 
 const logger = Logger.create("error-boundary")
 
-export type ErrorPageProps = {
+export interface ErrorPageProps {
   error: Error & { digest?: string }
   reset: () => void
 }
 
 export interface ErrorPageContentProps
   extends ErrorPageProps,
-    React.ComponentProps<"div"> {
+    ComponentProps<"div"> {
   mainMessage?: string | null
   subMessage?: string | null
   resetButtonLabel?: string

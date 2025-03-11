@@ -1,7 +1,7 @@
 import { createContext } from "react"
 
-import { DataConnectionsChannelEvent } from "@/features/data-connections/types"
-import { StrictBroadcastChannel } from "@/types/strict-broadcast-channel"
+import type { DataConnectionsChannelEvent } from "@/features/data-connections/types"
+import { type StrictBroadcastChannel } from "@/types/strict-broadcast-channel"
 
 export type DataConnectionsBroadcastContextValue = {
   triggerNewDataConnectionEvent: ({

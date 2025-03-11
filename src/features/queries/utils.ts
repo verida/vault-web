@@ -1,4 +1,4 @@
-import { QueryClient, QueryKey } from "@tanstack/react-query"
+import type { QueryClient, QueryKey } from "@tanstack/react-query"
 
 import { Logger } from "@/features/telemetry/logger"
 

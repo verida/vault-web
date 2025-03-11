@@ -12,7 +12,7 @@ import {
   ItemSheetClose,
   ItemSheetContent,
   ItemSheetFooter,
-} from "@/components/item-sheet"
+} from "@/components/layouts/item-sheet"
 import { Button } from "@/components/ui/button"
 import {
   ErrorBlock,
@@ -31,7 +31,7 @@ import { useInboxMessageAutoRead } from "@/features/verida-inbox/hooks/use-inbox
 import { useVeridaInbox } from "@/features/verida-inbox/hooks/use-verida-inbox"
 import { VeridaInboxMessageSupportedType } from "@/features/verida-inbox/types"
 
-export type ItemPageContentProps = {
+export interface ItemPageContentProps {
   open: boolean
   onOpenChange: (open: boolean) => void
   itemId: string

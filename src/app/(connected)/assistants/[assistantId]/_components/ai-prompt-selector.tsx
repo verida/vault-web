@@ -2,7 +2,7 @@
 
 import {
   DndContext,
-  DragEndEvent,
+  type DragEndEvent,
   KeyboardSensor,
   PointerSensor,
   closestCenter,
@@ -17,10 +17,14 @@ import {
 } from "@dnd-kit/sortable"
 import { CSS } from "@dnd-kit/utilities"
 import { ArrowUpRightIcon, GripVerticalIcon } from "lucide-react"
-import { useCallback, useMemo } from "react"
+import {
+  type ComponentProps,
+  type ReactNode,
+  useCallback,
+  useMemo,
+} from "react"
 
 import { EditIcon } from "@/components/icons/edit-icon"
-import { Typography } from "@/components/typography"
 import { Button } from "@/components/ui/button"
 import {
   Command,
@@ -35,6 +39,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
+import { Typography } from "@/components/ui/typography"
 import { featureFlags } from "@/config/features"
 import {
   DEFAULT_PROMPT_ORDER,
@@ -44,7 +49,7 @@ import { useAiPromptDialog } from "@/features/assistants/hooks/use-ai-prompt-dia
 import { useAssistants } from "@/features/assistants/hooks/use-assistants"
 import { useGetAiPrompts } from "@/features/assistants/hooks/use-get-ai-prompts"
 import { useUpdateAiPrompt } from "@/features/assistants/hooks/use-update-ai-prompt"
-import { AiPromptInput, AiPromptRecord } from "@/features/assistants/types"
+import type { AiPromptInput, AiPromptRecord } from "@/features/assistants/types"
 import { Logger } from "@/features/telemetry/logger"
 import { cn } from "@/styles/utils"
 import { moveItemInArray } from "@/utils/misc"
@@ -52,7 +57,7 @@ import { moveItemInArray } from "@/utils/misc"
 const logger = Logger.create("assistants")
 
 export interface AiPromptSelectorProps
-  extends Omit<React.ComponentProps<"div">, "children"> {
+  extends Omit<ComponentProps<"div">, "children"> {
   onSelect?: () => void
   onSetPrompt?: () => void
 }
@@ -257,12 +262,12 @@ export function AiPromptSelector(props: AiPromptSelectorProps) {
 }
 AiPromptSelector.displayName = "AiPromptSelector"
 
-type AiPromptSelectorItemProps = {
+interface AiPromptSelectorItemProps {
   aiPrompt: AiPromptRecord
   onSelect: () => void
   onSetPrompt: () => void
   sortable?: boolean
-  additionalActions?: React.ReactNode
+  additionalActions?: ReactNode
 }
 
 function AiPromptSelectorItem(props: AiPromptSelectorItemProps) {

@@ -5,7 +5,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
-import { VeridaAuthScope as VeridaAuthScopeType } from "@/features/verida-auth/types"
+import type { VeridaAuthScope as VeridaAuthScopeType } from "@/features/verida-auth/types"
 import { cn } from "@/styles/utils"
 
 export interface VeridaAuthScopeProps {

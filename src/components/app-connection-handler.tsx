@@ -1,13 +1,14 @@
 "use client"
 
 import { redirect, usePathname, useSearchParams } from "next/navigation"
+import { type ReactNode } from "react"
 
 import { useRedirectPathQueryState } from "@/features/auth/hooks/use-redirect-path-query-state"
 import { getRootPageRoute } from "@/features/routes/utils"
 import { useVerida } from "@/features/verida/hooks/use-verida"
 
-export type AppConnectionHandlerProps = {
-  children: React.ReactNode
+export interface AppConnectionHandlerProps {
+  children: ReactNode
 }
 
 export function AppConnectionHandler(props: AppConnectionHandlerProps) {

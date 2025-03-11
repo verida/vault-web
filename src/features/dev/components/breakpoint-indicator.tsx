@@ -1,11 +1,9 @@
-import React from "react"
+import { type ComponentProps } from "react"
 
 import { cn } from "@/styles/utils"
 
-export type BreakpointIndicatorProps = Omit<
-  React.ComponentProps<"div">,
-  "children"
->
+export interface BreakpointIndicatorProps
+  extends Omit<ComponentProps<"div">, "children"> {}
 
 export function BreakpointIndicator(props: BreakpointIndicatorProps) {
   const { className, ...divProps } = props

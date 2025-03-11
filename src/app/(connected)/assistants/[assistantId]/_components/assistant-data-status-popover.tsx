@@ -1,11 +1,10 @@
 "use client"
 
 import { formatDistanceToNow } from "date-fns"
-import { useCallback, useEffect, useState } from "react"
+import { type ComponentProps, useCallback, useEffect, useState } from "react"
 
 import { DataConnectionStatusBadge } from "@/components/data-connections/data-connection-status-badge"
 import { QuestionMarkIcon } from "@/components/icons/question-mark-icon"
-import { Typography } from "@/components/typography"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import {
@@ -13,15 +12,15 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
+import { Typography } from "@/components/ui/typography"
 import { useDataConnection } from "@/features/data-connections/hooks/use-data-connection"
 import { useDataConnections } from "@/features/data-connections/hooks/use-data-connections"
 import { useDataProvider } from "@/features/data-connections/hooks/use-data-provider"
-import { DataConnection } from "@/features/data-connections/types"
+import type { DataConnection } from "@/features/data-connections/types"
 import { cn } from "@/styles/utils"
 
-export type AssistantDataStatusPopoverProps = React.ComponentProps<
-  typeof Button
->
+export interface AssistantDataStatusPopoverProps
+  extends ComponentProps<typeof Button> {}
 
 export function AssistantDataStatusPopover(
   props: AssistantDataStatusPopoverProps
@@ -76,7 +75,7 @@ export function AssistantDataStatusPopover(
 }
 AssistantDataStatusPopover.displayName = "AssistantDataStatusPopover"
 
-type AssistantDataStatusPopoverItemProps = {
+interface AssistantDataStatusPopoverItemProps {
   connection: DataConnection
 }
 

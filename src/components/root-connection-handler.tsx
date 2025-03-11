@@ -1,9 +1,9 @@
 "use client"
 
 import { redirect } from "next/navigation"
-import { ReactNode } from "react"
+import type { ReactNode } from "react"
 
-import { ConnectionLoading } from "@/app/_components/connection-loading"
+import { VeridaConnectionLoading } from "@/components/verida/verida-connection-loading"
 import { useRedirectPathQueryState } from "@/features/auth/hooks/use-redirect-path-query-state"
 import { getDefaultRedirectPathAfterConnection } from "@/features/routes/utils"
 import { useVerida } from "@/features/verida/hooks/use-verida"
@@ -26,7 +26,11 @@ export function RootConnectionHandler(props: RootConnectionHandlerProps) {
   }
 
   if (isConnecting) {
-    return <ConnectionLoading />
+    return (
+      <div className="flex h-full w-full flex-col items-center justify-center gap-8 p-4">
+        <VeridaConnectionLoading />
+      </div>
+    )
   }
 
   return <>{children}</>

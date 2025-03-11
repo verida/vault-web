@@ -2,11 +2,10 @@
 
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { ComponentProps, useCallback, useMemo, useState } from "react"
+import { type ComponentProps, useCallback, useMemo, useState } from "react"
 
 import { RequestHeader } from "@/app/(connected)/request/_components/request-header"
 import { RequestProcessingStepBreadcrumb } from "@/app/(connected)/request/_components/request-processing-step-breadcrumb"
-import { Typography } from "@/components/typography"
 import {
   Accordion,
   AccordionContent,
@@ -40,7 +39,8 @@ import {
   SuccessBlockDescription,
   SuccessBlockImage,
 } from "@/components/ui/success"
-import { UserProfileApiRequest } from "@/features/requests/types"
+import { Typography } from "@/components/ui/typography"
+import type { UserProfileApiRequest } from "@/features/requests/types"
 import { acceptUserProfileApiRequest } from "@/features/requests/utils"
 import { getRootPageRoute } from "@/features/routes/utils"
 import { Logger } from "@/features/telemetry/logger"
@@ -51,7 +51,7 @@ import { cn } from "@/styles/utils"
 
 const logger = Logger.create("requests")
 
-export type UserProfileApiRequestContentProps = {
+export interface UserProfileApiRequestContentProps {
   request: UserProfileApiRequest
 }
 

@@ -1,8 +1,8 @@
-import {
+import type {
   VeridaDatabaseQueryFilter,
   VeridaDatabaseQueryOptions,
 } from "@/features/verida-database/types"
-import { VeridaInboxMessageRecord } from "@/features/verida-inbox/types"
+import type { VeridaInboxMessageRecord } from "@/features/verida-inbox/types"
 
 export const VeridaInboxQueryKeys = {
   invalidateInbox: () => ["inbox"],

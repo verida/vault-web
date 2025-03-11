@@ -2,8 +2,8 @@
 
 import {
   ErrorPageContent,
-  ErrorPageProps,
-} from "@/components/error-page-content"
+  type ErrorPageProps,
+} from "@/components/layouts/error-page-content"
 import { getConnectionsSummaryPageRoute } from "@/features/routes/utils"
 
 export default function ConnectionsLogsErrorPage(props: ErrorPageProps) {

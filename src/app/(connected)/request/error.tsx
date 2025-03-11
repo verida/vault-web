@@ -2,8 +2,8 @@
 
 import {
   ErrorPageContent,
-  ErrorPageProps,
-} from "@/components/error-page-content"
+  type ErrorPageProps,
+} from "@/components/layouts/error-page-content"
 
 export default function RequestErrorPage(props: ErrorPageProps) {
   const { error, reset } = props

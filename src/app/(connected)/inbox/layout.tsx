@@ -1,8 +1,8 @@
-import { Metadata } from "next"
+import { type Metadata } from "next"
 import { notFound } from "next/navigation"
-import { Suspense } from "react"
+import { type ReactNode, Suspense } from "react"
 
-import { PageWrapper } from "@/components/page-wrapper"
+import { PageWrapper } from "@/components/layouts/page-wrapper"
 import {
   LoadingBlock,
   LoadingBlockDescription,
@@ -15,9 +15,9 @@ export const metadata: Metadata = {
   title: "Inbox",
 }
 
-export type InboxLayoutProps = {
-  children: React.ReactNode
-  item: React.ReactNode
+export interface InboxLayoutProps {
+  children: ReactNode
+  item: ReactNode
 }
 
 export default function InboxLayout(props: InboxLayoutProps) {

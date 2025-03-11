@@ -1,6 +1,6 @@
 import { useCallback } from "react"
 
-import { VeridaAuthRequestPayload } from "@/features/verida-auth/types"
+import type { VeridaAuthRequestPayload } from "@/features/verida-auth/types"
 import { allowVeridaAuthRequest } from "@/features/verida-auth/utils"
 import { useVerida } from "@/features/verida/hooks/use-verida"
 

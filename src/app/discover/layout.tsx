@@ -1,9 +1,9 @@
-import { Metadata } from "next"
+import type { Metadata } from "next"
 import { notFound } from "next/navigation"
-import { ReactNode } from "react"
+import type { ReactNode } from "react"
 
-import { PageWrapper } from "@/components/page-wrapper"
-import { Typography } from "@/components/typography"
+import { PageWrapper } from "@/components/layouts/page-wrapper"
+import { Typography } from "@/components/ui/typography"
 import { featureFlags } from "@/config/features"
 
 export const metadata: Metadata = {

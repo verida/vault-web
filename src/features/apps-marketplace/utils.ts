@@ -3,7 +3,7 @@ import { cache } from "react"
 
 import { serverConfig } from "@/config/server"
 import { MarketplaceAppSchema } from "@/features/apps-marketplace/schemas"
-import { MarketplaceApp } from "@/features/apps-marketplace/types"
+import type { MarketplaceApp } from "@/features/apps-marketplace/types"
 import { Logger } from "@/features/telemetry/logger"
 
 const logger = Logger.create("apps-marketplace")

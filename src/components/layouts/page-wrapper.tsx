@@ -1,17 +1,18 @@
 import Link from "next/link"
+import { type ComponentProps, type ReactNode } from "react"
 
 import { ArrowLeftIcon } from "@/components/icons/arrow-left-icon"
-import { Typography } from "@/components/typography"
 import { Button } from "@/components/ui/button"
+import { Typography } from "@/components/ui/typography"
 import { cn } from "@/styles/utils"
 
-export interface PageWrapperProps extends React.ComponentProps<"div"> {
-  pageTitle?: string | React.ReactNode
-  rightContent?: React.ReactNode
+export interface PageWrapperProps extends ComponentProps<"div"> {
+  pageTitle?: string | ReactNode
+  rightContent?: ReactNode
   backNavigationHref?: string
   backNavigationLabel?: string
-  children: React.ReactNode
-  contentClassName?: React.ComponentProps<"div">["className"]
+  children: ReactNode
+  contentClassName?: ComponentProps<"div">["className"]
 }
 
 export function PageWrapper(props: PageWrapperProps) {
@@ -75,7 +76,7 @@ export function PageWrapper(props: PageWrapperProps) {
 }
 PageWrapper.displayName = "PageWrapper"
 
-export type PageTitleProps = React.ComponentProps<typeof Typography>
+export interface PageTitleProps extends ComponentProps<typeof Typography> {}
 
 export function PageTitle(props: PageTitleProps) {
   const { ...typographyProps } = props

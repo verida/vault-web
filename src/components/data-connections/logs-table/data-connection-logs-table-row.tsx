@@ -1,14 +1,14 @@
 "use client"
 
-import { Row, flexRender } from "@tanstack/react-table"
-import React, { useMemo } from "react"
+import { type Row, flexRender } from "@tanstack/react-table"
+import { type ComponentProps, useMemo } from "react"
 
 import { DataTableBaseRow } from "@/components/data-table/data-table-base-row"
-import { DataConnectionSyncLog } from "@/features/data-connections/types"
+import type { DataConnectionSyncLog } from "@/features/data-connections/types"
 import { cn } from "@/styles/utils"
 
 export interface DataConnectionLogsTableRowProps
-  extends Omit<React.ComponentProps<typeof DataTableBaseRow>, "children"> {
+  extends Omit<ComponentProps<typeof DataTableBaseRow>, "children"> {
   row: Row<DataConnectionSyncLog>
   hideConnectionColumn?: boolean
 }

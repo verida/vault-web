@@ -12,17 +12,17 @@ import {
   ItemSheetFooter,
   ItemSheetHeader,
   ItemSheetTitle,
-} from "@/components/item-sheet"
+} from "@/components/layouts/item-sheet"
 import { Button } from "@/components/ui/button"
 import {
   MessageBlock,
   MessageBlockBody,
   MessageBlockTitle,
 } from "@/components/ui/message-block"
-import { VeridaInboxMessageRecord } from "@/features/verida-inbox/types"
+import type { VeridaInboxMessageRecord } from "@/features/verida-inbox/types"
 import { getDataFromMessage } from "@/features/verida-inbox/utils"
 
-export type MessageItemPageContentProps = {
+export interface MessageItemPageContentProps {
   inboxMessage: VeridaInboxMessageRecord
   onMarkAsUnread?: () => void
 }

@@ -1,8 +1,12 @@
-import { QueryKey, useMutation, useQueryClient } from "@tanstack/react-query"
+import {
+  type QueryKey,
+  useMutation,
+  useQueryClient,
+} from "@tanstack/react-query"
 import { z } from "zod"
 
 import { VeridaDatabaseQueryKeys } from "@/features/verida-database/queries"
-import {
+import type {
   FetchVeridaDataRecordsResult,
   VeridaRecord,
 } from "@/features/verida-database/types"

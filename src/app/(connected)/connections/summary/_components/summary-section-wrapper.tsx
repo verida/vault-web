@@ -1,9 +1,10 @@
-import { Typography } from "@/components/typography"
+import { type ComponentProps, type ReactNode } from "react"
+
+import { Typography } from "@/components/ui/typography"
 import { cn } from "@/styles/utils"
 
-export interface SummarySectionWrapperProps
-  extends React.ComponentProps<"section"> {
-  sectionTitle: string | React.ReactNode
+export interface SummarySectionWrapperProps extends ComponentProps<"section"> {
+  sectionTitle: string | ReactNode
 }
 
 export function SummarySectionWrapper(props: SummarySectionWrapperProps) {

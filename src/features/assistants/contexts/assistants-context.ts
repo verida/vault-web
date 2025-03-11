@@ -1,6 +1,6 @@
-import { createContext } from "react"
+import { type Dispatch, type SetStateAction, createContext } from "react"
 
-import {
+import type {
   AiAssistantHotloadResult,
   AiAssistantOutput,
   AiPromptInput,
@@ -13,9 +13,7 @@ export type AssistantsContextType = {
   aiAssistantOutput: AiAssistantOutput | null
   processAiPromptInput: () => Promise<void>
   setAndProcessAiPromptInput: (aiPromptInput: AiPromptInput) => Promise<void>
-  updateAiPromptInput: React.Dispatch<
-    React.SetStateAction<AiPromptInput | null>
-  >
+  updateAiPromptInput: Dispatch<SetStateAction<AiPromptInput | null>>
   clearAiPromptInput: () => void
   clearAiAssistantOutput: () => void
   error: string | null

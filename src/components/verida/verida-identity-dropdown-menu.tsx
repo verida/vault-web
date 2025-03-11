@@ -2,13 +2,12 @@
 
 import { MessageCircle } from "lucide-react"
 import { useRouter } from "next/navigation"
-import React, { useCallback } from "react"
+import { type ComponentProps, useCallback } from "react"
 
 import { ApiKeyIcon } from "@/components/icons/api-key-icon"
 import { Copy } from "@/components/icons/copy"
 import { Logout } from "@/components/icons/logout"
 import { SimpleDown } from "@/components/icons/simple-down"
-import { Typography } from "@/components/typography"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import {
@@ -19,6 +18,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Skeleton } from "@/components/ui/skeleton"
+import { Typography } from "@/components/ui/typography"
 import { featureFlags } from "@/config/features"
 import { version } from "@/config/version"
 import { APP_NAME } from "@/constants/app"
@@ -33,7 +33,7 @@ import { useVerida } from "@/features/verida/hooks/use-verida"
 import { cn } from "@/styles/utils"
 
 export interface VeridaIdentityDropdownMenuProps
-  extends Pick<React.ComponentProps<typeof Button>, "className"> {
+  extends Pick<ComponentProps<typeof Button>, "className"> {
   keepExpanded?: boolean
   displayNotConnectedSkeleton?: boolean
   hideDisconnect?: boolean
@@ -78,13 +78,9 @@ export function VeridaIdentityDropdownMenu(
     router.push(getAuthorizedAppsPageRoute())
   }, [router])
 
-  if (!isConnected) {
+  if (!isConnected && displayNotConnectedSkeleton) {
     return (
-      <>
-        {displayNotConnectedSkeleton ? (
-          <VeridaIdentityNotConnectedDropdownMenuButton className={className} />
-        ) : null}
-      </>
+      <VeridaIdentityNotConnectedDropdownMenuButton className={className} />
     )
   }
 
@@ -230,7 +226,7 @@ export function VeridaIdentityDropdownMenu(
 VeridaIdentityDropdownMenu.displayName = "VeridaIdentityDropdownMenu"
 
 interface VeridaIdentityNotConnectedDropdownMenuButtonProps
-  extends Pick<React.ComponentProps<typeof Button>, "className"> {
+  extends Pick<ComponentProps<typeof Button>, "className"> {
   keepExpanded?: boolean
 }
 

@@ -1,11 +1,11 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { createColumnHelper } from "@tanstack/react-table"
 
-import { Typography } from "@/components/typography"
+import { Typography } from "@/components/ui/typography"
 import { EMPTY_VALUE_FALLBACK } from "@/constants/misc"
 import { VeridaAuthScope } from "@/features/verida-auth/components/verida-auth-scope"
 import { useResolvedVeridaAuthScopes } from "@/features/verida-auth/hooks/use-resolved-verida-auth-scopes"
-import { VeridaAuthToken } from "@/features/verida-auth/types"
+import type { VeridaAuthToken } from "@/features/verida-auth/types"
 import { ProfileAvatar } from "@/features/verida-profile/components/profile-avatar"
 import { EMPTY_PROFILE_NAME_FALLBACK } from "@/features/verida-profile/constants"
 import { useVeridaProfile } from "@/features/verida-profile/hooks/use-verida-profile"

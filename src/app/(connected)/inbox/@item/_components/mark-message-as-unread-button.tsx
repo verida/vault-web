@@ -1,7 +1,7 @@
 "use client"
 
 import { MailIcon } from "lucide-react"
-import { useCallback, useState } from "react"
+import { type ComponentProps, useCallback, useState } from "react"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -11,13 +11,13 @@ import {
 } from "@/components/ui/tooltip"
 import { Logger } from "@/features/telemetry/logger"
 import { useInboxMessageMarkAsUnread } from "@/features/verida-inbox/hooks/use-inbox-message-mark-as-unread"
-import { VeridaInboxMessageRecord } from "@/features/verida-inbox/types"
+import type { VeridaInboxMessageRecord } from "@/features/verida-inbox/types"
 import { cn } from "@/styles/utils"
 
 const logger = Logger.create("verida-inbox")
 
 export interface MarkMessageAsUnreadButtonProps
-  extends Omit<React.ComponentProps<typeof Button>, "onClick" | "children"> {
+  extends Omit<ComponentProps<typeof Button>, "onClick" | "children"> {
   messageRecord: VeridaInboxMessageRecord
   onMarkAsUnread?: () => void
 }

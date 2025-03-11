@@ -1,14 +1,14 @@
-import { Row, flexRender } from "@tanstack/react-table"
-import { useMemo } from "react"
+import { type Row, flexRender } from "@tanstack/react-table"
+import { type ComponentProps, useMemo } from "react"
 
 import { DataTableBaseRow } from "@/components/data-table/data-table-base-row"
-import { Typography } from "@/components/typography"
 import { Skeleton } from "@/components/ui/skeleton"
+import { Typography } from "@/components/ui/typography"
 import { EMPTY_VALUE_FALLBACK } from "@/constants/misc"
 import { InboxMessageTypeIndicator } from "@/features/verida-inbox/components/inbox-message-type-indicator"
 import { InboxMessageUnreadIndicator } from "@/features/verida-inbox/components/inbox-message-unread-indicator"
 import { InboxMessageStatusIndicator } from "@/features/verida-inbox/components/inbox.message-status-indicator"
-import { VeridaInboxMessageRecord } from "@/features/verida-inbox/types"
+import type { VeridaInboxMessageRecord } from "@/features/verida-inbox/types"
 import { ProfileAvatar } from "@/features/verida-profile/components/profile-avatar"
 import { UserYourselfBadge } from "@/features/verida-profile/components/user-yourself-badge"
 import { EMPTY_PROFILE_NAME_FALLBACK } from "@/features/verida-profile/constants"
@@ -18,7 +18,7 @@ import { useVerida } from "@/features/verida/hooks/use-verida"
 import { cn } from "@/styles/utils"
 
 export interface InboxMessagesTableRowProps
-  extends Omit<React.ComponentProps<typeof DataTableBaseRow>, "children"> {
+  extends Omit<ComponentProps<typeof DataTableBaseRow>, "children"> {
   row: Row<VeridaInboxMessageRecord>
 }
 

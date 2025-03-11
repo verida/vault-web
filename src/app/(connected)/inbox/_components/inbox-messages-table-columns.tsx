@@ -4,7 +4,7 @@ import { isDate, isToday } from "date-fns"
 import { useCallback, useEffect, useState } from "react"
 
 import { EMPTY_VALUE_FALLBACK } from "@/constants/misc"
-import { VeridaInboxMessageRecord } from "@/features/verida-inbox/types"
+import type { VeridaInboxMessageRecord } from "@/features/verida-inbox/types"
 import {
   formatDateDistanceFromNow,
   formatTimeDistanceFromNow,

@@ -4,7 +4,7 @@ import {
   AI_PROMPTS_DB_DEF,
 } from "@/features/assistants/constants"
 import { DATA_CONNECTIONS_LOGS_DB_DEF } from "@/features/data-connections/constants"
-import { DatabaseDefinition } from "@/features/data/types"
+import type { DatabaseDefinition } from "@/features/data/types"
 
 /**
  * Not sorted and including databases definitions that are not included in the UI

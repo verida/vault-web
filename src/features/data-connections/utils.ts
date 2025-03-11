@@ -9,7 +9,7 @@ import {
   DataConnectionsApiV1SyncAllConnectionsResponseSchema,
   DataConnectionsApiV1SyncConnectionResponseSchema,
 } from "@/features/data-connections/schemas"
-import {
+import type {
   DataConnection,
   DataConnectionsApiV1DisconnectConnectionResponse,
   DataConnectionsApiV1SyncAllConnectionsResponse,
@@ -24,10 +24,10 @@ const logger = Logger.create("data-connections")
 /**
  * Builds a unique connection ID by combining the provider ID and account ID.
  *
- * @param {Object} params - The parameters for building the connection ID.
- * @param {string} params.providerId - The ID of the data provider.
- * @param {string} params.accountId - The ID of the user account.
- * @returns {string} A unique connection ID in the format "providerId:accountId".
+ * @param params - The parameters for building the connection ID.
+ * @param params.providerId - The ID of the data provider.
+ * @param params.accountId - The ID of the user account.
+ * @returns A unique connection ID in the format "providerId:accountId".
  */
 export function buildConnectionId({
   providerId,
@@ -42,11 +42,11 @@ export function buildConnectionId({
 /**
  * Builds a unique connection handler ID by combining the provider ID, account ID, and handler ID.
  *
- * @param {Object} params - The parameters for building the connection handler ID.
- * @param {string} params.providerId - The ID of the data provider.
- * @param {string} params.accountId - The ID of the user account.
- * @param {string} params.handlerId - The ID of the data provider handler.
- * @returns {string} A unique connection handler ID in the format "providerId:accountId:handlerId".
+ * @param params - The parameters for building the connection handler ID.
+ * @param params.providerId - The ID of the data provider.
+ * @param params.accountId - The ID of the user account.
+ * @param params.handlerId - The ID of the data provider handler.
+ * @returns A unique connection handler ID in the format "providerId:accountId:handlerId".
  */
 export function buildConnectionHandlerId({
   providerId,

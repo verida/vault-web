@@ -1,15 +1,12 @@
 "use client"
 
-// import { SearchIcon } from "lucide-react"
 import { useRouter } from "next/navigation"
-import { useCallback, useMemo, useState } from "react"
+import { type ComponentProps, useCallback, useMemo, useState } from "react"
 import { useDebounce } from "use-debounce"
 
 import { Close as CloseIcon } from "@/components/icons/close"
 import { Data } from "@/components/icons/data"
 import { DatabaseIcon } from "@/components/icons/database-icon"
-import { SearchIcon } from "@/components/icons/search-icon"
-import { Typography } from "@/components/typography"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import {
@@ -32,29 +29,23 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip"
+import { Typography } from "@/components/ui/typography"
 import { useCommand } from "@/features/command/hooks/use-command"
 import { DEFAULT_SELECTED_SEARCH_TYPES } from "@/features/data-search/constants"
 import { useSearchData } from "@/features/data-search/hooks/use-search-data"
-import { SearchDataResult, SearchType } from "@/features/data-search/types"
+import type { SearchDataResult, SearchType } from "@/features/data-search/types"
 import { USER_DATABASE_DEFS } from "@/features/data/constants"
-import { useRestrictedAccess } from "@/features/restricted-access/hooks/use-restricted-access"
 import { getDatabaseItemPageRoute } from "@/features/routes/utils"
 import { cn } from "@/styles/utils"
 
-export function AppCommandDialog() {
-  const { access } = useRestrictedAccess()
-
+export function CommandDialog() {
   const router = useRouter()
   const { isOpen, changeCommandState } = useCommand()
 
   const [searchTypes, setSearchTypes] = useState<SearchType[]>(
     DEFAULT_SELECTED_SEARCH_TYPES
   )
+
   const hasCustomSearchTypes = useMemo(() => {
     return (
       !DEFAULT_SELECTED_SEARCH_TYPES.every((type) =>
@@ -112,10 +103,6 @@ export function AppCommandDialog() {
     },
     [router, handleClose]
   )
-
-  if (access !== "allowed") {
-    return null
-  }
 
   return (
     <Dialog open={isOpen} onOpenChange={handleChangeDialogState}>
@@ -185,9 +172,9 @@ export function AppCommandDialog() {
     </Dialog>
   )
 }
-AppCommandDialog.displayName = "AppCommandDialog"
+CommandDialog.displayName = "AppCommandDialog"
 
-type SearchCommandItemProps = {
+interface SearchCommandItemProps {
   item: SearchDataResult
   onSelect: (item: SearchDataResult) => void
 }
@@ -225,11 +212,12 @@ function SearchCommandItem(props: SearchCommandItemProps) {
 }
 SearchCommandItem.displayName = "SearchCommandItem"
 
-type SearchCommandSearchTypeMenuProps = {
+interface SearchCommandSearchTypeMenuProps
+  extends Pick<ComponentProps<typeof Button>, "className"> {
   selectedSearchTypes: SearchType[]
   onSelectSearchType: (searchType: SearchType, isSelected: boolean) => void
   showIndicator?: boolean
-} & Pick<React.ComponentProps<typeof Button>, "className">
+}
 
 function SearchCommandSearchTypeMenu(props: SearchCommandSearchTypeMenuProps) {
   const { className, selectedSearchTypes, onSelectSearchType, showIndicator } =
@@ -339,46 +327,3 @@ function SearchCommandSearchTypeMenu(props: SearchCommandSearchTypeMenuProps) {
   )
 }
 SearchCommandSearchTypeMenu.displayName = "SearchCommandSearchTypeMenu"
-
-export type AppCommandDialogTriggerProps = Omit<
-  React.ComponentProps<typeof Button>,
-  "children" | "onClick"
->
-
-export function AppCommandDialogTrigger(props: AppCommandDialogTriggerProps) {
-  const { variant = "ghost", size = "sm", className, ...buttonProps } = props
-
-  const { openCommand } = useCommand()
-  const { access } = useRestrictedAccess()
-
-  const shortcutText = useMemo(() => {
-    const macosPlatforms = /macOS|Macintosh|MacIntel|MacPPC|Mac68K/
-    return macosPlatforms.test(window.navigator.userAgent) ? "⌘K" : "Ctrl+K"
-  }, [])
-
-  if (access !== "allowed") {
-    return null
-  }
-
-  return (
-    <Tooltip>
-      <TooltipTrigger asChild>
-        <Button
-          variant={variant}
-          size={size}
-          className={cn("gap-1", className)}
-          onClick={openCommand}
-          {...buttonProps}
-        >
-          <SearchIcon className="size-6 shrink-0" />
-          <span className="sr-only">Search</span>
-          <span className="hidden rounded-sm bg-surface-hover p-1 text-base-s-regular text-muted-foreground md:inline-block">
-            {shortcutText}
-          </span>
-        </Button>
-      </TooltipTrigger>
-      <TooltipContent>Search</TooltipContent>
-    </Tooltip>
-  )
-}
-AppCommandDialogTrigger.displayName = "AppCommandDialogTrigger"

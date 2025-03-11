@@ -1,9 +1,8 @@
 "use client"
 
 import { useRouter } from "next/navigation"
-import { useCallback, useState } from "react"
+import { type ReactNode, useCallback, useState } from "react"
 
-import { Typography } from "@/components/typography"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import {
   AlertDialog,
@@ -17,14 +16,15 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button"
+import { Typography } from "@/components/ui/typography"
 import { useDataProvider } from "@/features/data-connections/hooks/use-data-provider"
 import { useDisconnectDataConnection } from "@/features/data-connections/hooks/use-disconnect-data-connection"
-import { DataConnection } from "@/features/data-connections/types"
+import type { DataConnection } from "@/features/data-connections/types"
 import { getConnectionsSummaryPageRoute } from "@/features/routes/utils"
 import { useToast } from "@/features/toasts/use-toast"
 
-export type DisconnectDataConnectionDialogProps = {
-  children: React.ReactNode
+export interface DisconnectDataConnectionDialogProps {
+  children: ReactNode
   connection: DataConnection
 }
 

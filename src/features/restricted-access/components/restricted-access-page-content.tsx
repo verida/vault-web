@@ -1,7 +1,7 @@
 import Link from "next/link"
+import type { ComponentPropsWithoutRef } from "react"
 
 import { LockIcon } from "@/components/icons/lock"
-import { Typography } from "@/components/typography"
 import { Button } from "@/components/ui/button"
 import {
   ErrorBlock,
@@ -15,11 +15,12 @@ import {
   LoadingBlockSpinner,
   LoadingBlockTitle,
 } from "@/components/ui/loading"
+import { Typography } from "@/components/ui/typography"
 import { ACCESS_REQUEST_FORM_URL } from "@/features/restricted-access/constants"
 import { cn } from "@/styles/utils"
 
 export interface RestrictedAccessPageContentProps
-  extends Omit<React.ComponentPropsWithoutRef<"div">, "children"> {
+  extends Omit<ComponentPropsWithoutRef<"div">, "children"> {
   isLoading: boolean
   isError: boolean
 }

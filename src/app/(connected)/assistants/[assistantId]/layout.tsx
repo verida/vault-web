@@ -1,11 +1,11 @@
-import React from "react"
+import { type ReactNode } from "react"
 
 import { AiAssistantCombobox } from "@/app/(connected)/assistants/[assistantId]/_components/ai-assistant-combobox"
-import { PageWrapper } from "@/components/page-wrapper"
-import { Typography } from "@/components/typography"
+import { PageWrapper } from "@/components/layouts/page-wrapper"
+import { Typography } from "@/components/ui/typography"
 
-export type AssistantLayoutProps = {
-  children: React.ReactNode
+export interface AssistantLayoutProps {
+  children: ReactNode
   params: {
     assistantId: string
   }

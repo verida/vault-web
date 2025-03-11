@@ -1,8 +1,7 @@
 "use client"
 
 import { MessageSquareMoreIcon } from "lucide-react"
-import { useCallback, useState } from "react"
-import React from "react"
+import { type ComponentProps, useCallback, useState } from "react"
 
 import { AiPromptSelector } from "@/app/(connected)/assistants/[assistantId]/_components/ai-prompt-selector"
 import { Button } from "@/components/ui/button"
@@ -19,7 +18,7 @@ import {
 import { cn } from "@/styles/utils"
 
 export interface AiPromptsComboboxProps
-  extends Omit<React.ComponentProps<typeof Button>, "children"> {
+  extends Omit<ComponentProps<typeof Button>, "children"> {
   onSetPrompt?: () => void
 }
 

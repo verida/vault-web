@@ -1,9 +1,14 @@
 "use client"
 
 import Link from "next/link"
-import { Fragment, useCallback, useMemo, useState } from "react"
+import {
+  type ComponentProps,
+  Fragment,
+  useCallback,
+  useMemo,
+  useState,
+} from "react"
 
-import { Typography } from "@/components/typography"
 import {
   Accordion,
   AccordionContent,
@@ -25,12 +30,13 @@ import {
   SuccessBlockImage,
   SuccessBlockTitle,
 } from "@/components/ui/success"
+import { Typography } from "@/components/ui/typography"
 import { Logger } from "@/features/telemetry/logger"
 import { VeridaAuthCardHeader } from "@/features/verida-auth/components/verida-auth-card-header"
 import { VeridaAuthConsentError } from "@/features/verida-auth/components/verida-auth-consent-error"
 import { VeridaAuthScope } from "@/features/verida-auth/components/verida-auth-scope"
 import { useAllowVeridaAuthRequest } from "@/features/verida-auth/hooks/use-allow-verida-auth-request"
-import { ValidVeridaAuthRequest } from "@/features/verida-auth/types"
+import type { ValidVeridaAuthRequest } from "@/features/verida-auth/types"
 import {
   buildDenyRequestRedirectUrl,
   buildErrorRedirectUrl,
@@ -41,7 +47,7 @@ import { cn } from "@/styles/utils"
 const logger = Logger.create("verida-auth")
 
 export interface VeridaAuthConsentCardProps
-  extends React.ComponentProps<typeof Card> {
+  extends ComponentProps<typeof Card> {
   request: ValidVeridaAuthRequest
 }
 

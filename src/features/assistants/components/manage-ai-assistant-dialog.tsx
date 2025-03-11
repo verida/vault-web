@@ -1,7 +1,7 @@
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useCallback, useEffect, useState } from "react"
+import { type ReactNode, useCallback, useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 
 import { Alert, AlertDescription } from "@/components/ui/alert"
@@ -37,13 +37,13 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { AiAssistantFormDataSchema } from "@/features/assistants/schemas"
-import { AiAssistantFormData } from "@/features/assistants/types"
+import type { AiAssistantFormData } from "@/features/assistants/types"
 import { Logger } from "@/features/telemetry/logger"
 import { cn } from "@/styles/utils"
 
 const logger = Logger.create("assistants")
 
-export type ManageAiAssistantDialogProps = {
+export interface ManageAiAssistantDialogProps {
   type: "create" | "edit"
   initialData: Partial<AiAssistantFormData>
   open: boolean
@@ -172,8 +172,8 @@ export function ManageAiAssistantDialog(props: ManageAiAssistantDialogProps) {
 }
 ManageAiAssistantDialog.displayName = "ManageAiAssistantDialog"
 
-type DeleteAiAssistantDialogProps = {
-  children: React.ReactNode
+interface DeleteAiAssistantDialogProps {
+  children: ReactNode
   onDelete: () => Promise<void>
   isProcessing: boolean
 }

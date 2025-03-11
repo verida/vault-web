@@ -1,16 +1,22 @@
 "use client"
 
 import { useQueryClient } from "@tanstack/react-query"
-import React, { useCallback, useEffect, useMemo, useState } from "react"
+import {
+  type ReactNode,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react"
 import { useLocalStorage } from "usehooks-ts"
 
 import { DEFAULT_ASSISTANT } from "@/features/assistants/constants"
 import {
   AssistantsContext,
-  AssistantsContextType,
+  type AssistantsContextType,
 } from "@/features/assistants/contexts/assistants-context"
 import { prefetchGetAiPrompts } from "@/features/assistants/hooks/use-get-ai-prompts"
-import {
+import type {
   AiAssistantHotloadResult,
   AiAssistantOutput,
   AiPromptInput,
@@ -24,8 +30,8 @@ import { useVerida } from "@/features/verida/hooks/use-verida"
 
 const logger = Logger.create("assistants")
 
-export type AssistantsProviderProps = {
-  children: React.ReactNode
+export interface AssistantsProviderProps {
+  children: ReactNode
 }
 
 /**
