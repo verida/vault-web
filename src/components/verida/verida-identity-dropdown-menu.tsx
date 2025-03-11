@@ -1,6 +1,7 @@
 "use client"
 
 import { MessageCircle } from "lucide-react"
+import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { type ComponentProps, useCallback } from "react"
 
@@ -15,13 +16,14 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Typography } from "@/components/ui/typography"
 import { featureFlags } from "@/config/features"
 import { version } from "@/config/version"
-import { APP_NAME } from "@/constants/app"
+import { APP_NAME, TERMS_AND_CONDITIONS_URL } from "@/constants/app"
 import { EMPTY_VALUE_FALLBACK } from "@/constants/misc"
 import { useRestrictedAccess } from "@/features/restricted-access/hooks/use-restricted-access"
 import { getAuthorizedAppsPageRoute } from "@/features/routes/utils"
@@ -140,7 +142,10 @@ export function VeridaIdentityDropdownMenu(
         className="w-screen max-w-80 rounded-xl p-0 text-muted-foreground"
         align="end"
       >
-        <DropdownMenuItem className="block px-4 py-3" onClick={handleCopyDid}>
+        <DropdownMenuItem
+          className="block rounded-none px-4 py-3"
+          onClick={handleCopyDid}
+        >
           <div className="flex flex-row items-center gap-3">
             {profile ? (
               <Avatar className="size-12">
@@ -191,7 +196,7 @@ export function VeridaIdentityDropdownMenu(
         featureFlags.veridaAuth.authorizedAppsUi.enabled ? (
           <DropdownMenuItem
             onClick={handleAuthorizedAppsClick}
-            className="cursor-pointer gap-3 px-4 py-4"
+            className="gap-3 rounded-none px-4 py-4"
           >
             <ApiKeyIcon className="size-5" />
             <Typography variant="base-semibold">Authorized Apps</Typography>
@@ -200,7 +205,7 @@ export function VeridaIdentityDropdownMenu(
         {!hideFeedback && isUserFeedbackReady ? (
           <DropdownMenuItem
             onClick={openUserFeedbackForm}
-            className="cursor-pointer gap-3 px-4 py-4 text-muted-foreground"
+            className="gap-3 rounded-none px-4 py-4 text-muted-foreground"
           >
             <MessageCircle />
             <Typography variant="base-semibold">Give your feedback</Typography>
@@ -210,14 +215,23 @@ export function VeridaIdentityDropdownMenu(
           <DropdownMenuItem
             onClick={disconnect}
             disabled={!isConnected}
-            className="cursor-pointer gap-3 px-4 py-4 text-destructive"
+            className="gap-3 rounded-none px-4 py-4 text-destructive"
           >
             <Logout />
             <Typography variant="base-semibold">Disconnect</Typography>
           </DropdownMenuItem>
         ) : null}
-        <DropdownMenuLabel className="text-center text-xs font-normal">
-          {`${APP_NAME} ${version}`}
+        <DropdownMenuSeparator />
+        <DropdownMenuLabel className="flex flex-col items-center gap-0 rounded-none text-center text-xs font-normal">
+          <span>{`${APP_NAME} ${version}`}</span>
+          <Link
+            href={TERMS_AND_CONDITIONS_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline"
+          >
+            Terms & Conditions
+          </Link>
         </DropdownMenuLabel>
       </DropdownMenuContent>
     </DropdownMenu>
