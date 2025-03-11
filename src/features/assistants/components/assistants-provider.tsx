@@ -1,13 +1,7 @@
 "use client"
 
 import { useQueryClient } from "@tanstack/react-query"
-import React, {
-  ReactNode,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from "react"
+import { ReactNode, useCallback, useEffect, useMemo, useState } from "react"
 import { useLocalStorage } from "usehooks-ts"
 
 import { DEFAULT_ASSISTANT } from "@/features/assistants/constants"

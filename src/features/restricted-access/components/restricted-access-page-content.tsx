@@ -1,4 +1,5 @@
 import Link from "next/link"
+import { ComponentPropsWithoutRef } from "react"
 
 import { LockIcon } from "@/components/icons/lock"
 import { Button } from "@/components/ui/button"
@@ -19,7 +20,7 @@ import { ACCESS_REQUEST_FORM_URL } from "@/features/restricted-access/constants"
 import { cn } from "@/styles/utils"
 
 export interface RestrictedAccessPageContentProps
-  extends Omit<React.ComponentPropsWithoutRef<"div">, "children"> {
+  extends Omit<ComponentPropsWithoutRef<"div">, "children"> {
   isLoading: boolean
   isError: boolean
 }

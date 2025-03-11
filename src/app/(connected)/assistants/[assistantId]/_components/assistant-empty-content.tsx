@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import React, { useCallback } from "react"
+import { ComponentProps, useCallback } from "react"
 
 import { VeridaNetworkColouredLogo } from "@/components/icons/verida-network-coloured-logo"
 import { Button } from "@/components/ui/button"
@@ -13,10 +13,7 @@ import { useDataConnections } from "@/features/data-connections/hooks/use-data-c
 import { getConnectionsPageRoute } from "@/features/routes/utils"
 import { cn } from "@/styles/utils"
 
-export type AssistantEmptyContentProps = Omit<
-  React.ComponentProps<"div">,
-  "children"
->
+export type AssistantEmptyContentProps = Omit<ComponentProps<"div">, "children">
 
 export function AssistantEmptyContent(props: AssistantEmptyContentProps) {
   const { className, ...divProps } = props

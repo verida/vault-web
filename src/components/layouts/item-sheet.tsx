@@ -1,3 +1,5 @@
+import { ComponentProps, ReactNode } from "react"
+
 import { CloseSideRight } from "@/components/icons/close-side-right"
 import { Button } from "@/components/ui/button"
 import {
@@ -20,7 +22,7 @@ export const ItemSheetTrigger = SheetTrigger
 
 export const ItemSheetClose = SheetClose
 
-export type ItemSheetContentProps = React.ComponentProps<typeof SheetContent>
+export type ItemSheetContentProps = ComponentProps<typeof SheetContent>
 
 export function ItemSheetContent(props: ItemSheetContentProps) {
   const {
@@ -45,8 +47,8 @@ export function ItemSheetContent(props: ItemSheetContentProps) {
 ItemSheetContent.displayName = "ItemSheetContent"
 
 export interface ItemSheetHeaderProps
-  extends React.ComponentProps<typeof SheetHeader> {
-  right?: React.ReactNode
+  extends ComponentProps<typeof SheetHeader> {
+  right?: ReactNode
   hideCloseButton?: boolean
 }
 
@@ -98,7 +100,7 @@ export function ItemSheetHeader(props: ItemSheetHeaderProps) {
 ItemSheetHeader.displayName = "ItemSheetHeader"
 
 export interface ItemSheetTitleProps
-  extends Omit<React.ComponentProps<typeof Typography>, "variant"> {
+  extends Omit<ComponentProps<typeof Typography>, "variant"> {
   /** Used for accessibility reason, not displayed in the UI */
   description?: string
 }
@@ -122,7 +124,7 @@ export function ItemSheetTitle(props: ItemSheetTitleProps) {
 }
 ItemSheetTitle.displayName = "ItemSheetTitle"
 
-export type ItemSheetBodyProps = React.ComponentProps<typeof SheetBody>
+export type ItemSheetBodyProps = ComponentProps<typeof SheetBody>
 
 export function ItemSheetBody(props: ItemSheetBodyProps) {
   const { className, ...sheetBodyProps } = props
@@ -135,7 +137,7 @@ export function ItemSheetBody(props: ItemSheetBodyProps) {
 }
 ItemSheetBody.displayName = "ItemSheetBody"
 
-export type ItemSheetFooterProps = React.ComponentProps<typeof SheetFooter>
+export type ItemSheetFooterProps = ComponentProps<typeof SheetFooter>
 
 export function ItemSheetFooter(props: ItemSheetFooterProps) {
   const { className, ...sheetFooterProps } = props

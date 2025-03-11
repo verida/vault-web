@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import { ComponentProps } from "react"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -17,7 +18,7 @@ import { cn } from "@/styles/utils"
 
 export interface HeaderInboxButtonProps
   extends Pick<
-    React.ComponentProps<typeof Button>,
+    ComponentProps<typeof Button>,
     "variant" | "size" | "className"
   > {}
 

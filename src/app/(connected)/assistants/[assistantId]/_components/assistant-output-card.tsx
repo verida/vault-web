@@ -1,7 +1,7 @@
 "use client"
 
 import { intlFormat } from "date-fns"
-import { useMemo } from "react"
+import { ComponentProps, useMemo } from "react"
 
 import { AssistantOutputCardMenu } from "@/app/(connected)/assistants/[assistantId]/_components/assistant-output-card-menu"
 import { MoreIcon } from "@/components/icons/more-icon"
@@ -20,10 +20,7 @@ import { USER_DATABASE_DEFS } from "@/features/data/constants"
 import { cn } from "@/styles/utils"
 import { SHORT_TIME_FORMAT_OPTIONS } from "@/utils/date"
 
-export type AssistantOutputCardProps = Omit<
-  React.ComponentProps<"div">,
-  "children"
->
+export type AssistantOutputCardProps = Omit<ComponentProps<"div">, "children">
 
 export function AssistantOutputCard(props: AssistantOutputCardProps) {
   const { className, ...divProps } = props
@@ -203,10 +200,7 @@ export function AssistantOutputCard(props: AssistantOutputCardProps) {
 }
 AssistantOutputCard.displayName = "AssistantOutputCard"
 
-type AssistantOutputSkeletonProps = Omit<
-  React.ComponentProps<"div">,
-  "children"
->
+type AssistantOutputSkeletonProps = Omit<ComponentProps<"div">, "children">
 
 function AssistantOutputSkeleton(props: AssistantOutputSkeletonProps) {
   const { className, ...divProps } = props

@@ -18,7 +18,7 @@ import {
 import { CSS } from "@dnd-kit/utilities"
 import { CheckIcon, GripVerticalIcon } from "lucide-react"
 import { useRouter } from "next/navigation"
-import React, { useCallback, useMemo, useState } from "react"
+import { ComponentProps, useCallback, useMemo, useState } from "react"
 
 import { EditIcon } from "@/components/icons/edit-icon"
 import { Button } from "@/components/ui/button"
@@ -57,7 +57,7 @@ import { moveItemInArray } from "@/utils/misc"
 const logger = Logger.create("assistants")
 
 export interface AiAssistantSelectorProps
-  extends Omit<React.ComponentProps<"div">, "children"> {
+  extends Omit<ComponentProps<"div">, "children"> {
   currentAssistantId?: string
   onCreateClick?: () => void
   onItemSelect?: (assistant: AiAssistantRecord) => void

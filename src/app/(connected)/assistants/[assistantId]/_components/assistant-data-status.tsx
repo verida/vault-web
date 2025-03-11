@@ -1,17 +1,20 @@
 "use client"
 
 import { formatDistanceToNow } from "date-fns"
-import { useCallback, useEffect, useMemo, useState } from "react"
+import {
+  ComponentProps,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react"
 
 import { AssistantDataStatusPopover } from "@/app/(connected)/assistants/[assistantId]/_components/assistant-data-status-popover"
 import { Typography } from "@/components/ui/typography"
 import { useDataConnections } from "@/features/data-connections/hooks/use-data-connections"
 import { cn } from "@/styles/utils"
 
-export type AssistantDataStatusProps = Omit<
-  React.ComponentProps<"div">,
-  "children"
->
+export type AssistantDataStatusProps = Omit<ComponentProps<"div">, "children">
 
 export function AssistantDataStatus(props: AssistantDataStatusProps) {
   const { className, ...divProps } = props

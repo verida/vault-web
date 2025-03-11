@@ -1,7 +1,7 @@
 "use client"
 
 import { ChevronDownIcon } from "lucide-react"
-import { useCallback, useMemo, useState } from "react"
+import { ComponentProps, useCallback, useMemo, useState } from "react"
 
 import { AiAssistantSelector } from "@/app/(connected)/assistants/[assistantId]/_components/ai-assistant-selector"
 import { Button } from "@/components/ui/button"
@@ -16,7 +16,7 @@ import { useGetAiAssistants } from "@/features/assistants/hooks/use-get-ai-assis
 import { cn } from "@/styles/utils"
 
 export interface AiAssistantComboboxProps
-  extends Omit<React.ComponentProps<typeof Button>, "children"> {
+  extends Omit<ComponentProps<typeof Button>, "children"> {
   assistantId: string
 }
 

@@ -1,3 +1,5 @@
+import { ComponentPropsWithoutRef } from "react"
+
 import {
   LoadingBlock,
   LoadingBlockDescription,
@@ -7,7 +9,7 @@ import {
 import { cn } from "@/styles/utils"
 
 export type VeridaConnectionLoadingProps = Omit<
-  React.ComponentPropsWithoutRef<typeof LoadingBlock>,
+  ComponentPropsWithoutRef<typeof LoadingBlock>,
   "children"
 >
 

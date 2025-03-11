@@ -1,11 +1,11 @@
 import Image from "next/image"
-import React from "react"
+import { ComponentProps } from "react"
 
 import EmptyIllustration from "@/assets/empty-illustration.svg"
 import { Typography } from "@/components/ui/typography"
 import { cn } from "@/styles/utils"
 
-export type EmptyStateProps = React.ComponentProps<"div">
+export type EmptyStateProps = ComponentProps<"div">
 
 export function EmptyState(props: EmptyStateProps) {
   const { className, ...divProps } = props
@@ -32,7 +32,7 @@ export function EmptyStateImage() {
 }
 EmptyStateImage.displayName = "EmptyStateImage"
 
-export type EmptyStateTitleProps = React.ComponentProps<typeof Typography>
+export type EmptyStateTitleProps = ComponentProps<typeof Typography>
 
 export function EmptyStateTitle(props: EmptyStateTitleProps) {
   const { variant = "heading-4", ...typographyProps } = props
@@ -41,7 +41,7 @@ export function EmptyStateTitle(props: EmptyStateTitleProps) {
 }
 EmptyStateTitle.displayName = "EmptyStateTitle"
 
-export type EmptyStateDescriptionProps = React.ComponentProps<typeof Typography>
+export type EmptyStateDescriptionProps = ComponentProps<typeof Typography>
 
 export function EmptyStateDescription(props: EmptyStateDescriptionProps) {
   const { variant = "base-regular", ...typographyProps } = props

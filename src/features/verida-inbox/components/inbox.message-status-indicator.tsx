@@ -1,12 +1,12 @@
 import { CheckIcon, CircleDashedIcon, XIcon } from "lucide-react"
-import { useMemo } from "react"
+import { ComponentProps, useMemo } from "react"
 
 import { Typography } from "@/components/ui/typography"
 import { getVeridaMessageStatus } from "@/features/verida-inbox/utils"
 import { cn } from "@/styles/utils"
 
 export interface InboxMessageStatusIndicatorProps
-  extends Omit<React.ComponentProps<"div">, "children"> {
+  extends Omit<ComponentProps<"div">, "children"> {
   messageType?: string
   messageData?: unknown
   isMessageUnread?: boolean

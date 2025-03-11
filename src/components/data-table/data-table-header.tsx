@@ -1,10 +1,11 @@
 import { Header, flexRender } from "@tanstack/react-table"
+import { ComponentProps } from "react"
 
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header"
 import { cn } from "@/styles/utils"
 
 export interface DataTableHeaderProps<TData, TValue>
-  extends Omit<React.ComponentProps<"header">, "children"> {
+  extends Omit<ComponentProps<"header">, "children"> {
   columnHeaders: Header<TData, TValue>[]
 }
 

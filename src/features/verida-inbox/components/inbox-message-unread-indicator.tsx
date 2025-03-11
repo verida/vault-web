@@ -1,7 +1,9 @@
+import { ComponentProps } from "react"
+
 import { cn } from "@/styles/utils"
 
 export type InboxMessageUnreadIndicatorProps = Omit<
-  React.ComponentProps<"div">,
+  ComponentProps<"div">,
   "children"
 >
 

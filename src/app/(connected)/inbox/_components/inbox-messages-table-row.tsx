@@ -1,5 +1,5 @@
 import { Row, flexRender } from "@tanstack/react-table"
-import { useMemo } from "react"
+import { ComponentProps, useMemo } from "react"
 
 import { DataTableBaseRow } from "@/components/data-table/data-table-base-row"
 import { Skeleton } from "@/components/ui/skeleton"
@@ -18,7 +18,7 @@ import { useVerida } from "@/features/verida/hooks/use-verida"
 import { cn } from "@/styles/utils"
 
 export interface InboxMessagesTableRowProps
-  extends Omit<React.ComponentProps<typeof DataTableBaseRow>, "children"> {
+  extends Omit<ComponentProps<typeof DataTableBaseRow>, "children"> {
   row: Row<VeridaInboxMessageRecord>
 }
 

@@ -1,3 +1,5 @@
+import { ComponentProps } from "react"
+
 import { CloseSideRight } from "@/components/icons/close-side-right"
 import { Button } from "@/components/ui/button"
 import {
@@ -20,9 +22,7 @@ export const StandardSheetTrigger = SheetTrigger
 
 export const StandardSheetClose = SheetClose
 
-export type StandardSheetContentProps = React.ComponentProps<
-  typeof SheetContent
->
+export type StandardSheetContentProps = ComponentProps<typeof SheetContent>
 
 export function StandardSheetContent(props: StandardSheetContentProps) {
   const {
@@ -47,7 +47,7 @@ export function StandardSheetContent(props: StandardSheetContentProps) {
 StandardSheetContent.displayName = "StandardSheetContent"
 
 export interface StandardSheetHeaderProps
-  extends React.ComponentProps<typeof SheetHeader> {
+  extends ComponentProps<typeof SheetHeader> {
   hideCloseButton?: boolean
 }
 
@@ -80,7 +80,7 @@ export function StandardSheetHeader(props: StandardSheetHeaderProps) {
 StandardSheetHeader.displayName = "StandardSheetHeader"
 
 export interface StandardSheetTitleProps
-  extends Omit<React.ComponentProps<typeof Typography>, "variant"> {
+  extends Omit<ComponentProps<typeof Typography>, "variant"> {
   /** Used for accessibility reason, not displayed in the UI */
   description?: string
 }
@@ -108,7 +108,7 @@ export function StandardSheetTitle(props: StandardSheetTitleProps) {
 }
 StandardSheetTitle.displayName = "StandardSheetTitle"
 
-export type StandardSheetBodyProps = React.ComponentProps<typeof SheetBody>
+export type StandardSheetBodyProps = ComponentProps<typeof SheetBody>
 
 export function StandardSheetBody(props: StandardSheetBodyProps) {
   const { className, ...sheetBodyProps } = props
@@ -122,7 +122,7 @@ export function StandardSheetBody(props: StandardSheetBodyProps) {
 }
 StandardSheetBody.displayName = "StandardSheetBody"
 
-export type StandardSheetFooterProps = React.ComponentProps<typeof SheetFooter>
+export type StandardSheetFooterProps = ComponentProps<typeof SheetFooter>
 
 export function StandardSheetFooter(props: StandardSheetFooterProps) {
   const { className, ...sheetFooterProps } = props

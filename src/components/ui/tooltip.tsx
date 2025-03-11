@@ -1,7 +1,7 @@
 "use client"
 
 import * as TooltipPrimitive from "@radix-ui/react-tooltip"
-import React, { useCallback, useEffect, useRef, useState } from "react"
+import { forwardRef, useCallback, useEffect, useRef, useState } from "react"
 
 import { QuestionMarkIcon } from "@/components/icons/question-mark-icon"
 import { Button } from "@/components/ui/button"
@@ -13,7 +13,7 @@ const Tooltip = TooltipPrimitive.Root
 
 const TooltipTrigger = TooltipPrimitive.Trigger
 
-const TooltipContent = React.forwardRef<
+const TooltipContent = forwardRef<
   React.ElementRef<typeof TooltipPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Content>
 >(({ className, sideOffset = 4, collisionPadding = 4, ...props }, ref) => (

@@ -1,3 +1,5 @@
+import { ComponentProps } from "react"
+
 import { Card, CardBody } from "@/components/ui/card"
 import {
   LoadingBlock,
@@ -8,7 +10,7 @@ import {
 import { cn } from "@/styles/utils"
 
 export type VeridaAuthProcessingRequestCardProps = Omit<
-  React.ComponentProps<typeof Card>,
+  ComponentProps<typeof Card>,
   "children"
 >
 

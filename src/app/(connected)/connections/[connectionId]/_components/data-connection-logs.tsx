@@ -1,6 +1,7 @@
 "use client"
 
 import { getCoreRowModel, useReactTable } from "@tanstack/react-table"
+import { ComponentProps } from "react"
 
 import { dataConnectionLogsTableColumns } from "@/components/data-connections/logs-table/data-connection-logs-table-columns"
 import { DataConnectionLogsTableRow } from "@/components/data-connections/logs-table/data-connection-logs-table-row"
@@ -39,7 +40,7 @@ const fallbackData: VeridaRecord<DataConnectionSyncLog>[] = []
 const getRowId = (record: VeridaRecord<DataConnectionSyncLog>) => record._id
 
 export interface DataConnectionLogsProps
-  extends Pick<React.ComponentProps<typeof DataTable>, "className"> {
+  extends Pick<ComponentProps<typeof DataTable>, "className"> {
   connection: DataConnection
 }
 

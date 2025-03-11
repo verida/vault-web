@@ -1,8 +1,10 @@
+import { ComponentProps } from "react"
+
 import { Badge } from "@/components/ui/badge"
 import { cn } from "@/styles/utils"
 
 export type UserYourselfBadgeProps = Omit<
-  React.ComponentProps<typeof Badge>,
+  ComponentProps<typeof Badge>,
   "children"
 >
 

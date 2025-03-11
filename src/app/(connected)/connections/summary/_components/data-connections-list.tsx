@@ -1,5 +1,7 @@
 "use client"
 
+import { ComponentProps } from "react"
+
 import {
   DataConnectionCard,
   DataConnectionSkeletonCard,
@@ -17,10 +19,7 @@ import {
 import { useDataConnections } from "@/features/data-connections/hooks/use-data-connections"
 import { cn } from "@/styles/utils"
 
-export type DataConnectionsListProps = Omit<
-  React.ComponentProps<"div">,
-  "children"
->
+export type DataConnectionsListProps = Omit<ComponentProps<"div">, "children">
 
 export function DataConnectionsList(props: DataConnectionsListProps) {
   const { className, ...divProps } = props

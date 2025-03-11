@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import { ComponentProps } from "react"
 
 import { Card, CardBody } from "@/components/ui/card"
 import { Typography } from "@/components/ui/typography"
@@ -11,7 +12,7 @@ import { ValidVeridaAuthRequest } from "@/features/verida-auth/types"
 import { cn } from "@/styles/utils"
 
 export interface VeridaAuthVeridaNotConnectedCardProps
-  extends React.ComponentProps<typeof Card> {
+  extends ComponentProps<typeof Card> {
   request: ValidVeridaAuthRequest
 }
 

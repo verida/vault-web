@@ -1,6 +1,6 @@
 "use client"
 
-import { useCallback } from "react"
+import { ComponentProps, ReactNode, useCallback } from "react"
 
 import { Button } from "@/components/ui/button"
 import { useVerida } from "@/features/verida/hooks/use-verida"
@@ -8,11 +8,11 @@ import { cn } from "@/styles/utils"
 
 export interface VeridaConnectButtonProps
   extends Omit<
-    React.ComponentProps<typeof Button>,
+    ComponentProps<typeof Button>,
     "children" | "disabled" | "onClick"
   > {
-  label?: string | React.ReactNode
-  connectingLabel?: string | React.ReactNode
+  label?: string | ReactNode
+  connectingLabel?: string | ReactNode
 }
 
 export function VeridaConnectButton(props: VeridaConnectButtonProps) {

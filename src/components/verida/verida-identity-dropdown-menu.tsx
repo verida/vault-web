@@ -2,7 +2,7 @@
 
 import { MessageCircle } from "lucide-react"
 import { useRouter } from "next/navigation"
-import React, { useCallback } from "react"
+import { ComponentProps, useCallback } from "react"
 
 import { ApiKeyIcon } from "@/components/icons/api-key-icon"
 import { Copy } from "@/components/icons/copy"
@@ -33,7 +33,7 @@ import { useVerida } from "@/features/verida/hooks/use-verida"
 import { cn } from "@/styles/utils"
 
 export interface VeridaIdentityDropdownMenuProps
-  extends Pick<React.ComponentProps<typeof Button>, "className"> {
+  extends Pick<ComponentProps<typeof Button>, "className"> {
   keepExpanded?: boolean
   displayNotConnectedSkeleton?: boolean
   hideDisconnect?: boolean
@@ -226,7 +226,7 @@ export function VeridaIdentityDropdownMenu(
 VeridaIdentityDropdownMenu.displayName = "VeridaIdentityDropdownMenu"
 
 interface VeridaIdentityNotConnectedDropdownMenuButtonProps
-  extends Pick<React.ComponentProps<typeof Button>, "className"> {
+  extends Pick<ComponentProps<typeof Button>, "className"> {
   keepExpanded?: boolean
 }
 

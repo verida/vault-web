@@ -1,3 +1,5 @@
+import { ComponentProps } from "react"
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Skeleton } from "@/components/ui/skeleton"
 import { EMPTY_VALUE_FALLBACK } from "@/constants/misc"
@@ -5,13 +7,13 @@ import { DataConnection, DataProvider } from "@/features/data-connections/types"
 import { cn } from "@/styles/utils"
 
 export interface DataConnectionAvatarProps
-  extends Omit<React.ComponentProps<"div">, "children"> {
+  extends Omit<ComponentProps<"div">, "children"> {
   connection?: DataConnection
   isConnectionLoading?: boolean
   provider?: DataProvider
   isProviderLoading?: boolean
-  connectionAvatarClassName?: React.ComponentProps<typeof Avatar>["className"]
-  providerAvatarClassName?: React.ComponentProps<typeof Avatar>["className"]
+  connectionAvatarClassName?: ComponentProps<typeof Avatar>["className"]
+  providerAvatarClassName?: ComponentProps<typeof Avatar>["className"]
 }
 
 export function DataConnectionAvatar(props: DataConnectionAvatarProps) {

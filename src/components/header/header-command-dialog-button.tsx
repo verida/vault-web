@@ -1,6 +1,6 @@
 "use client"
 
-import { useMemo } from "react"
+import { ComponentProps, useMemo } from "react"
 
 import { SearchIcon } from "@/components/icons/search-icon"
 import { Button } from "@/components/ui/button"
@@ -16,7 +16,7 @@ import { useVerida } from "@/features/verida/hooks/use-verida"
 import { cn } from "@/styles/utils"
 
 export interface HeaderCommandDialogButtonProps
-  extends Omit<React.ComponentProps<typeof Button>, "children" | "onClick"> {}
+  extends Omit<ComponentProps<typeof Button>, "children" | "onClick"> {}
 
 export function HeaderCommandDialogButton(
   props: HeaderCommandDialogButtonProps

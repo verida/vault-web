@@ -1,4 +1,5 @@
 import Image from "next/image"
+import { ComponentProps } from "react"
 
 import { HeaderCommandDialogButton } from "@/components/header/header-command-dialog-button"
 import { HeaderInboxButton } from "@/components/header/header-inbox-button"
@@ -7,7 +8,7 @@ import { VeridaIdentityDropdownMenu } from "@/components/verida/verida-identity-
 import { cn } from "@/styles/utils"
 
 export interface HeaderProps
-  extends Omit<React.ComponentProps<"header">, "children"> {}
+  extends Omit<ComponentProps<"header">, "children"> {}
 
 export function Header(props: HeaderProps) {
   const { className, ...headerProps } = props

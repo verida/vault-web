@@ -1,5 +1,7 @@
 "use client"
 
+import { ComponentProps } from "react"
+
 import {
   DataConnectionHandlerCard,
   DataConnectionHandlerCardSkeleton,
@@ -9,7 +11,7 @@ import { DataConnectionHandler } from "@/features/data-connections/types"
 import { cn } from "@/styles/utils"
 
 export interface DataConnectionsHandlersListProps
-  extends Omit<React.ComponentProps<"div">, "children"> {
+  extends Omit<ComponentProps<"div">, "children"> {
   connectionHandlers: DataConnectionHandler[]
   providerId: string
 }

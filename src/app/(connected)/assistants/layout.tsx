@@ -1,6 +1,6 @@
 import { Metadata } from "next"
 import { notFound } from "next/navigation"
-import React, { ReactNode } from "react"
+import { ReactNode } from "react"
 
 import { featureFlags } from "@/config/features"
 import { AiAssistantDialogProvider } from "@/features/assistants/components/ai-assistant-dialog-provider"

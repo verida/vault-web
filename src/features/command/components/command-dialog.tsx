@@ -1,7 +1,7 @@
 "use client"
 
 import { useRouter } from "next/navigation"
-import { useCallback, useMemo, useState } from "react"
+import { ComponentProps, useCallback, useMemo, useState } from "react"
 import { useDebounce } from "use-debounce"
 
 import { Close as CloseIcon } from "@/components/icons/close"
@@ -213,7 +213,7 @@ function SearchCommandItem(props: SearchCommandItemProps) {
 SearchCommandItem.displayName = "SearchCommandItem"
 
 interface SearchCommandSearchTypeMenuProps
-  extends Pick<React.ComponentProps<typeof Button>, "className"> {
+  extends Pick<ComponentProps<typeof Button>, "className"> {
   selectedSearchTypes: SearchType[]
   onSelectSearchType: (searchType: SearchType, isSelected: boolean) => void
   showIndicator?: boolean

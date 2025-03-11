@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useCallback, useLayoutEffect, useRef } from "react"
+import { forwardRef, useCallback, useLayoutEffect, useRef } from "react"
 
 import { cn } from "@/styles/utils"
 
@@ -12,7 +12,7 @@ export type TextareaProps = {
   endAdornmentContainerClassName?: React.ComponentProps<"div">["className"]
 } & Omit<React.ComponentProps<"textarea">, "rows">
 
-export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
+export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
   (props, ref) => {
     const {
       className,

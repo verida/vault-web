@@ -3,7 +3,7 @@
 import { LayoutGridIcon } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import React, { useCallback, useState } from "react"
+import { ComponentProps, useCallback, useState } from "react"
 
 import { AiAssistantIcon } from "@/components/icons/ai-assistant-icon"
 import { Close as CloseIcon } from "@/components/icons/close"
@@ -34,7 +34,7 @@ import { useVerida } from "@/features/verida/hooks/use-verida"
 import { cn } from "@/styles/utils"
 
 export interface HeaderNavBarProps
-  extends Pick<React.ComponentProps<typeof NavigationMenu>, "className"> {}
+  extends Pick<ComponentProps<typeof NavigationMenu>, "className"> {}
 
 export function HeaderNavBar(props: HeaderNavBarProps) {
   const { className } = props
@@ -140,7 +140,7 @@ export function HeaderNavBar(props: HeaderNavBarProps) {
 HeaderNavBar.displayName = "HeaderNavBar"
 
 export interface HeaderNavMenuProps
-  extends Pick<React.ComponentProps<typeof Button>, "className"> {}
+  extends Pick<ComponentProps<typeof Button>, "className"> {}
 
 export function HeaderNavMenu(props: HeaderNavMenuProps) {
   const { className } = props

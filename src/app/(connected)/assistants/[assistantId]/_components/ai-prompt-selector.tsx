@@ -17,7 +17,7 @@ import {
 } from "@dnd-kit/sortable"
 import { CSS } from "@dnd-kit/utilities"
 import { ArrowUpRightIcon, GripVerticalIcon } from "lucide-react"
-import { ReactNode, useCallback, useMemo } from "react"
+import { ComponentProps, ReactNode, useCallback, useMemo } from "react"
 
 import { EditIcon } from "@/components/icons/edit-icon"
 import { Button } from "@/components/ui/button"
@@ -52,7 +52,7 @@ import { moveItemInArray } from "@/utils/misc"
 const logger = Logger.create("assistants")
 
 export interface AiPromptSelectorProps
-  extends Omit<React.ComponentProps<"div">, "children"> {
+  extends Omit<ComponentProps<"div">, "children"> {
   onSelect?: () => void
   onSetPrompt?: () => void
 }

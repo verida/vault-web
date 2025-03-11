@@ -1,6 +1,7 @@
 "use client"
 
 import { ChevronRight } from "lucide-react"
+import { ComponentProps } from "react"
 
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
@@ -63,7 +64,7 @@ ConnectDataProviderDialogProviderSelection.displayName =
   "ConnectDataProviderDialogProviderSelection"
 
 interface ProviderSelectionItemProps
-  extends Omit<React.ComponentProps<typeof Button>, "children"> {
+  extends Omit<ComponentProps<typeof Button>, "children"> {
   provider: DataProvider
 }
 
@@ -108,7 +109,7 @@ function ProviderSelectionItem(props: ProviderSelectionItemProps) {
 ProviderSelectionItem.displayName = "ProviderSelectionItem"
 
 type ProviderSelectionItemSkeletonProps = Omit<
-  React.ComponentProps<"div">,
+  ComponentProps<"div">,
   "children"
 >
 

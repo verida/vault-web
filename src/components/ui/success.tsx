@@ -1,11 +1,11 @@
 import Image from "next/image"
-import React from "react"
+import { ComponentProps } from "react"
 
 import SuccessIllustration from "@/assets/success-illustration.svg"
 import { Typography } from "@/components/ui/typography"
 import { cn } from "@/styles/utils"
 
-export type SuccessBlockProps = React.ComponentProps<"div">
+export type SuccessBlockProps = ComponentProps<"div">
 
 export function SuccessBlock(props: SuccessBlockProps) {
   const { className, ...divProps } = props
@@ -32,7 +32,7 @@ export function SuccessBlockImage() {
 }
 SuccessBlockImage.displayName = "SuccessBlockImage"
 
-export type SuccessBlockTitleProps = React.ComponentProps<typeof Typography>
+export type SuccessBlockTitleProps = ComponentProps<typeof Typography>
 
 export function SuccessBlockTitle(props: SuccessBlockTitleProps) {
   const { variant = "heading-4", ...typographyProps } = props
@@ -41,9 +41,7 @@ export function SuccessBlockTitle(props: SuccessBlockTitleProps) {
 }
 SuccessBlockTitle.displayName = "SuccessBlockTitle"
 
-export type SuccessBlockDescriptionProps = React.ComponentProps<
-  typeof Typography
->
+export type SuccessBlockDescriptionProps = ComponentProps<typeof Typography>
 
 export function SuccessBlockDescription(props: SuccessBlockDescriptionProps) {
   const { variant = "base-regular", ...typographyProps } = props

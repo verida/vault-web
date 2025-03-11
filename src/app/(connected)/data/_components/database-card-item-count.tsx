@@ -1,12 +1,14 @@
 "use client"
 
+import { ComponentProps } from "react"
+
 import { Skeleton } from "@/components/ui/skeleton"
 import { Typography } from "@/components/ui/typography"
 import { useVeridaDataRecords } from "@/features/verida-database/hooks/use-verida-data-records"
 import { cn } from "@/styles/utils"
 
 export interface DatabaseCardItemCountProps
-  extends Omit<React.ComponentProps<"div">, "children"> {
+  extends Omit<ComponentProps<"div">, "children"> {
   databaseVaultName: string
 }
 

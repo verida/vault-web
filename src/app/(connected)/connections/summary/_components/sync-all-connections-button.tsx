@@ -1,6 +1,6 @@
 "use client"
 
-import { useCallback, useState } from "react"
+import { ComponentProps, useCallback, useState } from "react"
 
 import { RefreshIcon } from "@/components/icons/refresh-icon"
 import { Button } from "@/components/ui/button"
@@ -11,7 +11,7 @@ import { cn } from "@/styles/utils"
 import { wait } from "@/utils/misc"
 
 export type SyncAllConnectionsButtonProps = Pick<
-  React.ComponentProps<typeof Button>,
+  ComponentProps<typeof Button>,
   "className" | "disabled"
 >
 

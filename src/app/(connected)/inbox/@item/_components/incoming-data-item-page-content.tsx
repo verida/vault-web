@@ -1,6 +1,6 @@
 "use client"
 
-import { useCallback, useMemo, useState } from "react"
+import { ComponentProps, useCallback, useMemo, useState } from "react"
 
 import { InboxMessageHeader } from "@/app/(connected)/inbox/@item/_components/inbox-message-header"
 import { InvalidItemPageContent } from "@/app/(connected)/inbox/@item/_components/invalid-item-page-content"
@@ -205,7 +205,7 @@ export function IncomingDataItemPageContent(
 IncomingDataItemPageContent.displayName = "IncomingDataItemPageContent"
 
 interface IncomingDataItemCardProps
-  extends Omit<React.ComponentProps<typeof Card>, "children"> {
+  extends Omit<ComponentProps<typeof Card>, "children"> {
   item: UnsavedVeridaRecord
 }
 

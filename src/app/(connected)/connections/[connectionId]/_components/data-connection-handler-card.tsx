@@ -1,5 +1,5 @@
 import { intlFormat, isDate } from "date-fns"
-import React from "react"
+import { ComponentProps } from "react"
 
 import { DataConnectionStatusBadge } from "@/components/data-connections/data-connection-status-badge"
 import { Card, CardBody, CardHeader, CardTitle } from "@/components/ui/card"
@@ -14,7 +14,7 @@ import { cn } from "@/styles/utils"
 import { LONG_DATE_TIME_FORMAT_OPTIONS } from "@/utils/date"
 
 export interface DataConnectionHandlerCardProps
-  extends Omit<React.ComponentProps<typeof Card>, "children"> {
+  extends Omit<ComponentProps<typeof Card>, "children"> {
   handlerDefinition?: DataProviderHandler
   connectionHandler?: DataConnectionHandler
 }
@@ -90,7 +90,7 @@ export function DataConnectionHandlerCard(
 DataConnectionHandlerCard.displayName = "DataConnectionHandlerCard"
 
 export type DataConnectionHandlerCardSkeletonProps = Omit<
-  React.ComponentProps<typeof Card>,
+  ComponentProps<typeof Card>,
   "children"
 >
 

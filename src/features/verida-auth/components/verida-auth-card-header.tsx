@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { useMemo } from "react"
+import { ComponentProps, useMemo } from "react"
 
 import {
   Accordion,
@@ -17,7 +17,7 @@ import { EMPTY_PROFILE_NAME_FALLBACK } from "@/features/verida-profile/constants
 import { useVeridaProfile } from "@/features/verida-profile/hooks/use-verida-profile"
 
 export interface VeridaAuthCardHeaderProps
-  extends React.ComponentProps<typeof CardHeader> {
+  extends ComponentProps<typeof CardHeader> {
   request: ValidVeridaAuthRequest
 }
 

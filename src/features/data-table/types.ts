@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { RowData } from "@tanstack/react-table"
+import { ComponentProps } from "react"
 
 export type DataTableColumnAlign = "left" | "center" | "right"
 
-export type DataTableColumnClassName = React.ComponentProps<"div">["className"]
+export type DataTableColumnClassName = ComponentProps<"div">["className"]
 
 export interface DataTableExtendedHeader {
   getAlign: () => DataTableColumnAlign

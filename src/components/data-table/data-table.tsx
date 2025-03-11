@@ -1,4 +1,5 @@
 import { Row, Table } from "@tanstack/react-table"
+import { ComponentProps, ReactNode } from "react"
 
 import { DataTableHeader } from "@/components/data-table/data-table-header"
 import { DataTablePagination } from "@/components/data-table/data-table-pagination"
@@ -24,9 +25,9 @@ import { DataTablePaginationSizeValue } from "@/features/data-table/types"
 import { cn } from "@/styles/utils"
 
 export interface DataTableProps<TData>
-  extends Omit<React.ComponentProps<"div">, "children"> {
+  extends Omit<ComponentProps<"div">, "children"> {
   table: Table<TData>
-  rowComponent: (row: Row<TData>) => React.ReactNode
+  rowComponent: (row: Row<TData>) => ReactNode
   isLoading?: boolean
   isRefreshing?: boolean
   isError?: boolean
@@ -34,10 +35,10 @@ export interface DataTableProps<TData>
   loadingTitle?: string
   loadingDescription?: string
   refreshingMessage?: string
-  errorImage?: React.ReactNode
+  errorImage?: ReactNode
   errorTitle?: string
   errorDescription?: string
-  emptyStateImage?: React.ReactNode
+  emptyStateImage?: ReactNode
   emptyStateTitle?: string
   emptyStateDescription?: string
 }

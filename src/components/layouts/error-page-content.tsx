@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { useEffect, useMemo } from "react"
+import { ComponentProps, useEffect, useMemo } from "react"
 
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
@@ -24,7 +24,7 @@ export interface ErrorPageProps {
 
 export interface ErrorPageContentProps
   extends ErrorPageProps,
-    React.ComponentProps<"div"> {
+    ComponentProps<"div"> {
   mainMessage?: string | null
   subMessage?: string | null
   resetButtonLabel?: string

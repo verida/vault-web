@@ -43,7 +43,7 @@ UI and Styling
 Performance Optimization
 
 - Minimize 'useEffect', and 'setState'.
-- Until we use React 19, use `useMemo` and `useCallback` for performance optimization as well as `React.forwardRef` for reusable components.
+- Until we use React 19, use `useMemo` and `useCallback` for performance optimization as well as `forwardRef` for reusable components.
 - Wrap client components in Suspense with fallback.
 - Use dynamic loading for non-critical components.
 - Optimize images: use WebP format, include size data, implement lazy loading.

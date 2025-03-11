@@ -1,5 +1,5 @@
 import { Row, flexRender } from "@tanstack/react-table"
-import { useMemo } from "react"
+import { ComponentProps, useMemo } from "react"
 
 import { DataTableBaseRow } from "@/components/data-table/data-table-base-row"
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header"
@@ -7,7 +7,7 @@ import { VeridaAuthToken } from "@/features/verida-auth/types"
 import { cn } from "@/styles/utils"
 
 export interface AuthorizedAppsTableRowProps
-  extends Omit<React.ComponentProps<typeof DataTableBaseRow>, "children"> {
+  extends Omit<ComponentProps<typeof DataTableBaseRow>, "children"> {
   row: Row<VeridaAuthToken>
 }
 

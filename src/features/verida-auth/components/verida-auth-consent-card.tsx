@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { Fragment, useCallback, useMemo, useState } from "react"
+import { ComponentProps, Fragment, useCallback, useMemo, useState } from "react"
 
 import {
   Accordion,
@@ -41,7 +41,7 @@ import { cn } from "@/styles/utils"
 const logger = Logger.create("verida-auth")
 
 export interface VeridaAuthConsentCardProps
-  extends React.ComponentProps<typeof Card> {
+  extends ComponentProps<typeof Card> {
   request: ValidVeridaAuthRequest
 }
 

@@ -1,4 +1,5 @@
 import { Table } from "@tanstack/react-table"
+import { ComponentProps } from "react"
 
 import {
   Pagination,
@@ -14,7 +15,7 @@ import { DATA_TABLE_PAGINATION_SIZES } from "@/features/data-table/constants"
 import { DataTablePaginationSizeValue } from "@/features/data-table/types"
 
 export interface DataTablePaginationProps<TData>
-  extends Omit<React.ComponentProps<"footer">, "children"> {
+  extends Omit<ComponentProps<"footer">, "children"> {
   table: Table<TData>
   paginationSizes?: DataTablePaginationSizeValue[]
 }

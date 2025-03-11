@@ -1,7 +1,7 @@
 "use client"
 
 import { formatDistanceToNow } from "date-fns"
-import { useCallback, useEffect, useState } from "react"
+import { ComponentProps, useCallback, useEffect, useState } from "react"
 
 import { DataConnectionStatusBadge } from "@/components/data-connections/data-connection-status-badge"
 import { QuestionMarkIcon } from "@/components/icons/question-mark-icon"
@@ -19,9 +19,7 @@ import { useDataProvider } from "@/features/data-connections/hooks/use-data-prov
 import { DataConnection } from "@/features/data-connections/types"
 import { cn } from "@/styles/utils"
 
-export type AssistantDataStatusPopoverProps = React.ComponentProps<
-  typeof Button
->
+export type AssistantDataStatusPopoverProps = ComponentProps<typeof Button>
 
 export function AssistantDataStatusPopover(
   props: AssistantDataStatusPopoverProps

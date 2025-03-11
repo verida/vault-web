@@ -1,7 +1,7 @@
 "use client"
 
 import { intlFormat, isDate } from "date-fns"
-import { useCallback } from "react"
+import { ComponentProps, useCallback } from "react"
 
 import {
   DataDeleteRecordDialog,
@@ -129,7 +129,7 @@ export function GenericDataItemPageContent(
 GenericDataItemPageContent.displayName = "GenericDataItemPageContent"
 
 export interface GenericDataItemFieldProps
-  extends Omit<React.ComponentProps<"div">, "children"> {
+  extends Omit<ComponentProps<"div">, "children"> {
   propertyName: string
   value: unknown
 }

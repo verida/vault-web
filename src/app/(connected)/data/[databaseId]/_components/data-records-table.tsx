@@ -3,7 +3,7 @@
 import { getCoreRowModel, useReactTable } from "@tanstack/react-table"
 import Link from "next/link"
 import { useSearchParams } from "next/navigation"
-import { useMemo } from "react"
+import { ComponentProps, useMemo } from "react"
 
 import { getDataRecordsTableColumns } from "@/app/(connected)/data/[databaseId]/_components/data-records-table-columns"
 import { DataTable } from "@/components/data-table/data-table"
@@ -22,7 +22,7 @@ const fallbackData: VeridaRecord[] = []
 const getRowId = (record: VeridaRecord) => record._id
 
 export interface DataRecordsTableProps
-  extends Pick<React.ComponentProps<typeof DataTable>, "className"> {
+  extends Pick<ComponentProps<typeof DataTable>, "className"> {
   databaseDefinition: DatabaseDefinition
 }
 

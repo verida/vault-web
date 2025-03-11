@@ -3,7 +3,7 @@
 import { useQueryClient } from "@tanstack/react-query"
 import { type DatastoreOpenConfig } from "@verida/types"
 import { WebUser } from "@verida/web-helpers"
-import React, {
+import {
   ReactNode,
   useCallback,
   useEffect,

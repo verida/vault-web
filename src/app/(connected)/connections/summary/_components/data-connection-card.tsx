@@ -2,7 +2,7 @@
 
 import { intlFormat } from "date-fns"
 import Link from "next/link"
-import { useMemo } from "react"
+import { ComponentProps, useMemo } from "react"
 
 import { DataConnectionAvatar } from "@/components/data-connections/data-connection-avatar"
 import { DataConnectionStatusBadge } from "@/components/data-connections/data-connection-status-badge"
@@ -20,7 +20,7 @@ import { getConnectionPageRoute } from "@/features/routes/utils"
 import { LONG_DATE_TIME_FORMAT_OPTIONS } from "@/utils/date"
 
 export interface DataConnectionCardProps
-  extends Omit<React.ComponentProps<typeof Card>, "children"> {
+  extends Omit<ComponentProps<typeof Card>, "children"> {
   connection: DataConnection
   hideDetailsLink?: boolean
 }
@@ -109,7 +109,7 @@ export function DataConnectionCard(props: DataConnectionCardProps) {
 DataConnectionCard.displayName = "DataConnectionCard"
 
 export type DataConnectionSkeletonCardProps = Omit<
-  React.ComponentProps<typeof Card>,
+  ComponentProps<typeof Card>,
   "children"
 >
 

@@ -1,4 +1,4 @@
-import { useMemo } from "react"
+import { ComponentProps, useMemo } from "react"
 
 import { InboxDataRequestTypeIcon } from "@/components/icons/inbox-data"
 import { InboxIncomingDataTypeIcon } from "@/components/icons/inbox-incoming"
@@ -8,7 +8,7 @@ import { VeridaInboxMessageSupportedType } from "@/features/verida-inbox/types"
 import { cn } from "@/styles/utils"
 
 export interface InboxMessageTypeIndicatorProps
-  extends Omit<React.ComponentProps<"div">, "children"> {
+  extends Omit<ComponentProps<"div">, "children"> {
   type: string
   isMessageUnread?: boolean
 }

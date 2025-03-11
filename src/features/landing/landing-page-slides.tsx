@@ -1,4 +1,4 @@
-import React from "react"
+import { ComponentProps, ComponentType } from "react"
 
 /**
  * @deprecated
@@ -8,7 +8,7 @@ export type LandingPageSlide = {
   description: string
   image: string
   imageAlt: string
-  icon: React.ComponentType<React.ComponentProps<"svg">>
+  icon: ComponentType<ComponentProps<"svg">>
 }
 
 /**

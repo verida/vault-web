@@ -2,7 +2,7 @@
 
 import { intlFormat, isDate } from "date-fns"
 import Link from "next/link"
-import { useCallback, useMemo } from "react"
+import { ComponentProps, useCallback, useMemo } from "react"
 
 import { DeleteIcon } from "@/components/icons/delete-icon"
 import {
@@ -284,10 +284,7 @@ export function AuthorizedAppItemPageContent(
 AuthorizedAppItemPageContent.displayName = "AuthorizedAppItemPageContent"
 
 export interface ItemFieldUrlProps
-  extends Omit<
-    React.ComponentProps<typeof ItemField>,
-    "propertyName" | "children"
-  > {
+  extends Omit<ComponentProps<typeof ItemField>, "propertyName" | "children"> {
   url?: string
 }
 
@@ -324,10 +321,7 @@ export function ItemFieldUrl(props: ItemFieldUrlProps) {
 ItemFieldUrl.displayName = "ItemFieldUrl"
 
 export interface ItemFieldScopesProps
-  extends Omit<
-    React.ComponentProps<typeof ItemField>,
-    "propertyName" | "children"
-  > {
+  extends Omit<ComponentProps<typeof ItemField>, "propertyName" | "children"> {
   scopes?: VeridaAuthScopeType[]
 }
 
@@ -359,10 +353,7 @@ export function ItemFieldScopes(props: ItemFieldScopesProps) {
 ItemFieldScopes.displayName = "ItemFieldScopes"
 
 export interface ItemFieldLastUsedProps
-  extends Omit<
-    React.ComponentProps<typeof ItemField>,
-    "propertyName" | "children"
-  > {
+  extends Omit<ComponentProps<typeof ItemField>, "propertyName" | "children"> {
   lastUsed?: string
 }
 
@@ -394,10 +385,7 @@ export function ItemFieldLastUsed(props: ItemFieldLastUsedProps) {
 ItemFieldLastUsed.displayName = "ItemFieldLastUsed"
 
 export interface ItemFieldCreatedProps
-  extends Omit<
-    React.ComponentProps<typeof ItemField>,
-    "propertyName" | "children"
-  > {
+  extends Omit<ComponentProps<typeof ItemField>, "propertyName" | "children"> {
   createdAt?: string
 }
 
@@ -428,7 +416,7 @@ export function ItemFieldCreated(props: ItemFieldCreatedProps) {
 }
 ItemFieldCreated.displayName = "ItemFieldCreated"
 
-export interface ItemFieldProps extends React.ComponentProps<"div"> {
+export interface ItemFieldProps extends ComponentProps<"div"> {
   propertyName: string
 }
 

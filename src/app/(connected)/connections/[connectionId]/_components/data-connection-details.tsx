@@ -1,7 +1,7 @@
 "use client"
 
 import { intlFormat } from "date-fns"
-import { useCallback, useMemo, useState } from "react"
+import { ComponentProps, useCallback, useMemo, useState } from "react"
 
 import {
   DisconnectDataConnectionDialog,
@@ -24,7 +24,7 @@ import { LONG_DATE_TIME_FORMAT_OPTIONS } from "@/utils/date"
 import { wait } from "@/utils/misc"
 
 export interface DataConnectionDetailsProps
-  extends Omit<React.ComponentProps<"div">, "children"> {
+  extends Omit<ComponentProps<"div">, "children"> {
   connection: DataConnection
 }
 

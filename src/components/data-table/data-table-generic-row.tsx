@@ -1,11 +1,12 @@
 import { Row, flexRender } from "@tanstack/react-table"
+import { ComponentProps } from "react"
 
 import { DataTableBaseRow } from "@/components/data-table/data-table-base-row"
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header"
 import { cn } from "@/styles/utils"
 
 export interface DataTableGenericRowProps<TData>
-  extends Omit<React.ComponentProps<typeof DataTableBaseRow>, "children"> {
+  extends Omit<ComponentProps<typeof DataTableBaseRow>, "children"> {
   row: Row<TData>
 }
 

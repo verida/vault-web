@@ -1,5 +1,7 @@
 "use client"
 
+import { ComponentProps } from "react"
+
 import { Close } from "@/components/icons/close"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
@@ -19,7 +21,7 @@ import { VeridaRecord } from "@/features/verida-database/types"
 import { cn } from "@/styles/utils"
 
 export interface DataRequestItemPageRequestedDataCardProps
-  extends Omit<React.ComponentProps<typeof Card>, "children"> {
+  extends Omit<ComponentProps<typeof Card>, "children"> {
   requestedItemSchemaUrl: string
   selectedDataItems: VeridaRecord[]
   disableSelection?: boolean
@@ -116,7 +118,7 @@ DataRequestItemPageRequestedDataCard.displayName =
   "DataRequestItemPageRequestedDataCard"
 
 interface SelectedDataItemBadgeProps
-  extends Omit<React.ComponentProps<typeof Badge>, "children"> {
+  extends Omit<ComponentProps<typeof Badge>, "children"> {
   item: VeridaRecord
   unselectDisabled?: boolean
   onUnselect?: () => void

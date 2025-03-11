@@ -1,5 +1,6 @@
 import { BadgeCheckIcon, DatabaseIcon, KeyRoundIcon } from "lucide-react"
 import Link from "next/link"
+import { ComponentProps } from "react"
 
 import {
   SecurityDetailsDialog,
@@ -14,7 +15,7 @@ import {
 } from "@/components/ui/security"
 import { Typography } from "@/components/ui/typography"
 
-export type DataSecurityDetailsDialogProps = React.ComponentProps<
+export type DataSecurityDetailsDialogProps = ComponentProps<
   typeof SecurityDetailsDialogTrigger
 >
 
