@@ -277,7 +277,7 @@ export function AiAssistantSelector(props: AiAssistantSelectorProps) {
 }
 AiAssistantSelector.displayName = "AiAssistantSelector"
 
-type AiAssistantSelectorItemProps = {
+interface AiAssistantSelectorItemProps {
   sortable?: boolean
   assistant: AiAssistantRecord
   isCurrentAssistant?: boolean

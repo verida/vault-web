@@ -32,7 +32,7 @@ import {
 } from "@/features/verida-inbox/utils"
 import { cn } from "@/styles/utils"
 
-export type DataRequestItemPageContentProps = {
+export interface DataRequestItemPageContentProps {
   inboxMessage: VeridaInboxMessageRecord
   onDecline: () => void
   onAccept: () => void

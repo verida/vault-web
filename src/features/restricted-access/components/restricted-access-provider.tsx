@@ -1,7 +1,7 @@
 "use client"
 
 import { useQuery } from "@tanstack/react-query"
-import { useEffect, useMemo, useState } from "react"
+import { ReactNode, useEffect, useMemo, useState } from "react"
 
 import { featureFlags } from "@/config/features"
 import {
@@ -12,8 +12,8 @@ import { RestrictedAccessStatus } from "@/features/restricted-access/types"
 import { getRestrictedAccessStatus } from "@/features/restricted-access/utils"
 import { useVerida } from "@/features/verida/hooks/use-verida"
 
-export type RestrictedAccessProviderProps = {
-  children: React.ReactNode
+export interface RestrictedAccessProviderProps {
+  children: ReactNode
 }
 
 export function RestrictedAccessProvider(props: RestrictedAccessProviderProps) {

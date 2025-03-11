@@ -76,7 +76,7 @@ export function AssistantDataStatusPopover(
 }
 AssistantDataStatusPopover.displayName = "AssistantDataStatusPopover"
 
-type AssistantDataStatusPopoverItemProps = {
+interface AssistantDataStatusPopoverItemProps {
   connection: DataConnection
 }
 

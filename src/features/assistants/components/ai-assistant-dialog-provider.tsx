@@ -1,7 +1,7 @@
 "use client"
 
 import { useRouter } from "next/navigation"
-import { useCallback, useMemo, useState } from "react"
+import { ReactNode, useCallback, useMemo, useState } from "react"
 
 import { ManageAiAssistantDialog } from "@/features/assistants/components/manage-ai-assistant-dialog"
 import {
@@ -24,8 +24,8 @@ import {
 } from "@/features/assistants/types"
 import { getAssistantPageRoute } from "@/features/routes/utils"
 
-export type AiAssistantDialogProviderProps = {
-  children: React.ReactNode
+export interface AiAssistantDialogProviderProps {
+  children: ReactNode
 }
 
 export function AiAssistantDialogProvider(

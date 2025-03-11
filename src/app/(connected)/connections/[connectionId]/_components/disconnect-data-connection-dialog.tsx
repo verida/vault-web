@@ -1,7 +1,7 @@
 "use client"
 
 import { useRouter } from "next/navigation"
-import { useCallback, useState } from "react"
+import { ReactNode, useCallback, useState } from "react"
 
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import {
@@ -23,8 +23,8 @@ import { DataConnection } from "@/features/data-connections/types"
 import { getConnectionsSummaryPageRoute } from "@/features/routes/utils"
 import { useToast } from "@/features/toasts/use-toast"
 
-export type DisconnectDataConnectionDialogProps = {
-  children: React.ReactNode
+export interface DisconnectDataConnectionDialogProps {
+  children: ReactNode
   connection: DataConnection
 }
 

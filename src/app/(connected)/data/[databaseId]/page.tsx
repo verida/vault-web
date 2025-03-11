@@ -10,8 +10,10 @@ import { featureFlags } from "@/config/features"
 import { USER_DATABASE_DEFS } from "@/features/data/constants"
 import { getDataPageRoute } from "@/features/routes/utils"
 
-export type DatabasePageProps = {
-  params: { databaseId: string }
+export interface DatabasePageProps {
+  params: {
+    databaseId: string
+  }
 }
 
 export default function DatabasePage(props: DatabasePageProps) {

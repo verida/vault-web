@@ -1,4 +1,4 @@
-import { Suspense } from "react"
+import { ReactNode, Suspense } from "react"
 
 import {
   LoadingBlock,
@@ -7,9 +7,9 @@ import {
   LoadingBlockTitle,
 } from "@/components/ui/loading"
 
-export type DatabaseLayoutProps = {
-  children: React.ReactNode
-  item: React.ReactNode
+export interface DatabaseLayoutProps {
+  children: ReactNode
+  item: ReactNode
 }
 
 export default function DatabaseLayout(props: DatabaseLayoutProps) {

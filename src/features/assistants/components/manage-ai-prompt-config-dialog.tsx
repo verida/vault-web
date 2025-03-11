@@ -39,7 +39,7 @@ import { PromptConfigFormDataSchema } from "@/features/assistants/schemas"
 import { PromptConfigFormData } from "@/features/assistants/types"
 import { useToast } from "@/features/toasts/use-toast"
 
-export type ManageAiPromptConfigDialogProps = {
+export interface ManageAiPromptConfigDialogProps {
   open: boolean
   onOpenChange: (open: boolean) => void
 }

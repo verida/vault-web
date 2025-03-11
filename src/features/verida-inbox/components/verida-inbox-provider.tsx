@@ -3,7 +3,7 @@
 import { useQueryClient } from "@tanstack/react-query"
 import { IMessaging } from "@verida/types"
 import { usePathname, useRouter } from "next/navigation"
-import { useCallback, useEffect, useMemo, useState } from "react"
+import { ReactNode, useCallback, useEffect, useMemo, useState } from "react"
 import { useDebouncedCallback } from "use-debounce"
 
 import { ToastAction } from "@/components/ui/toast"
@@ -25,8 +25,8 @@ import { useVerida } from "@/features/verida/hooks/use-verida"
 
 const logger = Logger.create("verida-inbox")
 
-export type VeridaInboxProviderProps = {
-  children: React.ReactNode
+export interface VeridaInboxProviderProps {
+  children: ReactNode
 }
 
 export function VeridaInboxProvider(props: VeridaInboxProviderProps) {
@@ -118,7 +118,7 @@ export function VeridaInboxProvider(props: VeridaInboxProviderProps) {
 }
 VeridaInboxProvider.displayName = "VeridaInboxProvider"
 
-type NewMessageToastActionProps = {
+interface NewMessageToastActionProps {
   messageId: string
 }
 

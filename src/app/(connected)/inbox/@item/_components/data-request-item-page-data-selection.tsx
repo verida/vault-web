@@ -46,7 +46,7 @@ import { VeridaRecord } from "@/features/verida-database/types"
 import { cn } from "@/styles/utils"
 import { SHORT_DATE_TIME_FORMAT_OPTIONS } from "@/utils/date"
 
-export type DataRequestItemPageDataSelectionProps = {
+export interface DataRequestItemPageDataSelectionProps {
   requestedDataSchemaUrl: string
   filter?: Record<string, unknown>
   selectionLimit?: number

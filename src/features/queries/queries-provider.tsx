@@ -7,6 +7,7 @@ import {
   PersistQueryClientProvider,
   removeOldestQuery,
 } from "@tanstack/react-query-persist-client"
+import { ReactNode } from "react"
 
 import {
   getLogger,
@@ -67,8 +68,8 @@ const localStoragePersister = createSyncStoragePersister({
   retry: removeOldestQuery,
 })
 
-export type QueriesProviderProps = {
-  children: React.ReactNode
+export interface QueriesProviderProps {
+  children: ReactNode
 }
 
 export function QueriesProvider(props: QueriesProviderProps) {

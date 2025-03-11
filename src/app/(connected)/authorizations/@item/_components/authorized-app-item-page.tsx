@@ -53,7 +53,7 @@ import { useVeridaProfile } from "@/features/verida-profile/hooks/use-verida-pro
 import { cn } from "@/styles/utils"
 import { SHORT_DATE_TIME_FORMAT_OPTIONS } from "@/utils/date"
 
-export type AuthorizedAppItemPageContentProps = {
+export interface AuthorizedAppItemPageContentProps {
   open: boolean
   onOpenChange: (open: boolean) => void
   itemId: string

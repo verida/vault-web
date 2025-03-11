@@ -1,7 +1,7 @@
 "use client"
 
 import { useQueryClient } from "@tanstack/react-query"
-import { useCallback, useEffect, useMemo, useRef } from "react"
+import { ReactNode, useCallback, useEffect, useMemo, useRef } from "react"
 
 import { DATA_CONNECTIONS_CHANNEL } from "@/features/data-connections/constants"
 import {
@@ -15,8 +15,8 @@ import { StrictBroadcastChannel } from "@/types/strict-broadcast-channel"
 
 const logger = Logger.create("data-connections")
 
-export type DataConnectionsBroadcastProviderProps = {
-  children: React.ReactNode
+export interface DataConnectionsBroadcastProviderProps {
+  children: ReactNode
 }
 
 export function DataConnectionsBroadcastProvider(

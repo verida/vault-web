@@ -1,7 +1,7 @@
 "use client"
 
 import { useRouter } from "next/navigation"
-import { useCallback, useMemo, useState } from "react"
+import { ReactNode, useCallback, useMemo, useState } from "react"
 
 import { featureFlags } from "@/config/features"
 import { ManageAiPromptDialog } from "@/features/assistants/components/manage-ai-prompt-dialog"
@@ -25,8 +25,8 @@ import { useUpdateAiPrompt } from "@/features/assistants/hooks/use-update-ai-pro
 import { AiPromptFormData, AiPromptRecord } from "@/features/assistants/types"
 import { getAssistantPageRoute } from "@/features/routes/utils"
 
-export type AiPromptDialogProviderProps = {
-  children: React.ReactNode
+export interface AiPromptDialogProviderProps {
+  children: ReactNode
 }
 
 export function AiPromptDialogProvider(props: AiPromptDialogProviderProps) {

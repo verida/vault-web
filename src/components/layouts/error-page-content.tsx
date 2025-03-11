@@ -17,7 +17,7 @@ import { cn } from "@/styles/utils"
 
 const logger = Logger.create("error-boundary")
 
-export type ErrorPageProps = {
+export interface ErrorPageProps {
   error: Error & { digest?: string }
   reset: () => void
 }

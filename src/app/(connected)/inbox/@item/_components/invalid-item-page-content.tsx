@@ -9,7 +9,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { MessageBlock, MessageBlockBody } from "@/components/ui/message-block"
 import { VeridaInboxMessageRecord } from "@/features/verida-inbox/types"
 
-export type InvalidItemPageContentProps = {
+export interface InvalidItemPageContentProps {
   inboxMessage: VeridaInboxMessageRecord
   onMarkAsUnread?: () => void
 }

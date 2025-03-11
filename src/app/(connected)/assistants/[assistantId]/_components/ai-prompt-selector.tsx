@@ -17,7 +17,7 @@ import {
 } from "@dnd-kit/sortable"
 import { CSS } from "@dnd-kit/utilities"
 import { ArrowUpRightIcon, GripVerticalIcon } from "lucide-react"
-import { useCallback, useMemo } from "react"
+import { ReactNode, useCallback, useMemo } from "react"
 
 import { EditIcon } from "@/components/icons/edit-icon"
 import { Button } from "@/components/ui/button"
@@ -257,12 +257,12 @@ export function AiPromptSelector(props: AiPromptSelectorProps) {
 }
 AiPromptSelector.displayName = "AiPromptSelector"
 
-type AiPromptSelectorItemProps = {
+interface AiPromptSelectorItemProps {
   aiPrompt: AiPromptRecord
   onSelect: () => void
   onSetPrompt: () => void
   sortable?: boolean
-  additionalActions?: React.ReactNode
+  additionalActions?: ReactNode
 }
 
 function AiPromptSelectorItem(props: AiPromptSelectorItemProps) {

@@ -6,7 +6,7 @@ import { DataConnectionPageContent } from "@/app/(connected)/connections/[connec
 import ConnectionLoadingPage from "@/app/(connected)/connections/[connectionId]/loading"
 import { useDataConnection } from "@/features/data-connections/hooks/use-data-connection"
 
-export type ConnectionPageProps = {
+export interface ConnectionPageProps {
   params: {
     connectionId: string
   }

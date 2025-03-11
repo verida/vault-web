@@ -1,7 +1,7 @@
 "use client"
 
 import { useRouter } from "next/navigation"
-import { useCallback, useEffect, useState } from "react"
+import { ReactNode, useCallback, useEffect, useState } from "react"
 
 import { ConnectDataProviderDialogProviderSelection } from "@/app/(connected)/connections/summary/_components/connect-data-provider-dialog-provider-selection"
 import { VLogo } from "@/components/icons/logo"
@@ -47,8 +47,8 @@ import { useVerida } from "@/features/verida/hooks/use-verida"
 
 const logger = Logger.create("connect-data-provider-dialog")
 
-export type ConnectDataProviderDialogProps = {
-  children: React.ReactNode
+export interface ConnectDataProviderDialogProps {
+  children: ReactNode
   providerId?: string
   disableRedirectToConnectionPage?: boolean
 }

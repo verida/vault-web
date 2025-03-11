@@ -3,7 +3,14 @@
 import { useQueryClient } from "@tanstack/react-query"
 import { type DatastoreOpenConfig } from "@verida/types"
 import { WebUser } from "@verida/web-helpers"
-import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"
+import React, {
+  ReactNode,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react"
 
 import { commonConfig } from "@/config/common"
 import { Logger } from "@/features/telemetry/logger"
@@ -37,8 +44,8 @@ const webUserInstance = new WebUser({
   },
 })
 
-export type VeridaProviderProps = {
-  children?: React.ReactNode
+export interface VeridaProviderProps {
+  children?: ReactNode
 }
 
 export function VeridaProvider(props: VeridaProviderProps) {

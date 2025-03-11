@@ -1,6 +1,6 @@
 "use client"
 
-import { useCallback, useState } from "react"
+import { ReactNode, useCallback, useState } from "react"
 
 import {
   AlertDialog,
@@ -19,8 +19,8 @@ import { DatabaseDefinition } from "@/features/data/types"
 import { useToast } from "@/features/toasts/use-toast"
 import { useDestroyVeridaDatabase } from "@/features/verida-database/hooks/use-destroy-verida-database"
 
-export type DataDestroyDatabaseDialogProps = {
-  children: React.ReactNode
+export interface DataDestroyDatabaseDialogProps {
+  children: ReactNode
   databaseDefinition: DatabaseDefinition
 }
 

@@ -1,15 +1,15 @@
 "use client"
 
 import { useQueryClient } from "@tanstack/react-query"
-import { useEffect } from "react"
+import { ReactNode, useEffect } from "react"
 
 import { prefetchDataProviders } from "@/features/data-connections/hooks/use-data-providers"
 import { Logger } from "@/features/telemetry/logger"
 
 const logger = Logger.create("data-connections")
 
-export type DataConnectionsProviderProps = {
-  children: React.ReactNode
+export interface DataConnectionsProviderProps {
+  children: ReactNode
 }
 
 export function DataConnectionsProvider(props: DataConnectionsProviderProps) {

@@ -1,6 +1,6 @@
 "use client"
 
-import { useCallback, useMemo, useState } from "react"
+import { ReactNode, useCallback, useMemo, useState } from "react"
 
 import { featureFlags } from "@/config/features"
 import { ManageAiPromptConfigDialog } from "@/features/assistants/components/manage-ai-prompt-config-dialog"
@@ -10,8 +10,8 @@ import {
   AiPromptConfigDialogState,
 } from "@/features/assistants/contexts/ai-prompt-config-dialog-context"
 
-export type AiPromptConfigDialogProviderProps = {
-  children: React.ReactNode
+export interface AiPromptConfigDialogProviderProps {
+  children: ReactNode
 }
 
 export function AiPromptConfigDialogProvider(

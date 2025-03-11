@@ -1,6 +1,6 @@
 "use client"
 
-import { useCallback } from "react"
+import { ReactNode, useCallback } from "react"
 
 import {
   DropdownMenu,
@@ -11,8 +11,8 @@ import {
 import { useAssistants } from "@/features/assistants/hooks/use-assistants"
 import { useToast } from "@/features/toasts/use-toast"
 
-export type AssistantOutputCardMenuProps = {
-  children: React.ReactNode
+export interface AssistantOutputCardMenuProps {
+  children: ReactNode
 }
 
 export function AssistantOutputCardMenu(props: AssistantOutputCardMenuProps) {

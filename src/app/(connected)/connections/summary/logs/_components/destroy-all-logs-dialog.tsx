@@ -1,6 +1,6 @@
 "use client"
 
-import { useCallback, useState } from "react"
+import { ReactNode, useCallback, useState } from "react"
 
 import {
   AlertDialog,
@@ -19,8 +19,8 @@ import { DATA_CONNECTIONS_LOGS_DB_DEF } from "@/features/data-connections/consta
 import { useToast } from "@/features/toasts/use-toast"
 import { useDestroyVeridaDatabase } from "@/features/verida-database/hooks/use-destroy-verida-database"
 
-export type DestroyAllLogsDialogProps = {
-  children: React.ReactNode
+export interface DestroyAllLogsDialogProps {
+  children: ReactNode
 }
 
 export function DestroyAllLogsDialog(props: DestroyAllLogsDialogProps) {

@@ -1,7 +1,7 @@
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useCallback, useEffect, useState } from "react"
+import { ReactNode, useCallback, useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 
 import {
@@ -43,7 +43,7 @@ import { cn } from "@/styles/utils"
 
 const logger = Logger.create("assistants")
 
-export type ManageAiPromptDialogProps = {
+export interface ManageAiPromptDialogProps {
   type: "create" | "edit"
   initialData: Partial<AiPromptFormData>
   open: boolean
@@ -192,8 +192,8 @@ export function ManageAiPromptDialog(props: ManageAiPromptDialogProps) {
 }
 ManageAiPromptDialog.displayName = "AssistantManagePromptDialog"
 
-type DeleteAiPromptDialogProps = {
-  children: React.ReactNode
+interface DeleteAiPromptDialogProps {
+  children: ReactNode
   onDelete: () => Promise<void>
   isProcessing: boolean
 }

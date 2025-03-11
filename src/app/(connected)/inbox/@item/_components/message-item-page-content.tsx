@@ -22,7 +22,7 @@ import {
 import { VeridaInboxMessageRecord } from "@/features/verida-inbox/types"
 import { getDataFromMessage } from "@/features/verida-inbox/utils"
 
-export type MessageItemPageContentProps = {
+export interface MessageItemPageContentProps {
   inboxMessage: VeridaInboxMessageRecord
   onMarkAsUnread?: () => void
 }

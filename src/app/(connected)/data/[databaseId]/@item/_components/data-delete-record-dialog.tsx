@@ -1,7 +1,7 @@
 "use client"
 
 import { useRouter } from "next/navigation"
-import { useCallback, useState } from "react"
+import { ReactNode, useCallback, useState } from "react"
 
 import {
   AlertDialog,
@@ -21,8 +21,8 @@ import { getDatabasePageRoute } from "@/features/routes/utils"
 import { useToast } from "@/features/toasts/use-toast"
 import { useDeleteVeridaRecord } from "@/features/verida-database/hooks/use-delete-verida-record"
 
-export type DataDeleteRecordDialogProps = {
-  children: React.ReactNode
+export interface DataDeleteRecordDialogProps {
+  children: ReactNode
   databaseDefinition: DatabaseDefinition
   recordId: string
 }

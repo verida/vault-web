@@ -35,7 +35,7 @@ import { VeridaRecord } from "@/features/verida-database/types"
 import { cn } from "@/styles/utils"
 import { LONG_DATE_TIME_FORMAT_OPTIONS } from "@/utils/date"
 
-export type GenericDataItemPageContentProps = {
+export interface GenericDataItemPageContentProps {
   record: VeridaRecord
   databaseDefinition: DatabaseDefinition
 }

@@ -1,5 +1,6 @@
+import { Metadata } from "next"
 import { notFound } from "next/navigation"
-import React, { Suspense } from "react"
+import React, { ReactNode, Suspense } from "react"
 
 import { PlusIcon } from "@/components/icons/plus-icon"
 import { PageWrapper } from "@/components/layouts/page-wrapper"
@@ -22,9 +23,13 @@ import {
   CreateAuthorizationDialogTrigger,
 } from "@/features/authorized-apps/components/create-authorization-dialog"
 
-export type AuthorizationsLayoutProps = {
-  children: React.ReactNode
-  item: React.ReactNode
+export const metadata: Metadata = {
+  title: "Authorized Apps",
+}
+
+export interface AuthorizationsLayoutProps {
+  children: ReactNode
+  item: ReactNode
 }
 
 export default function AuthorizationsLayout(props: AuthorizationsLayoutProps) {

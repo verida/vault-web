@@ -51,7 +51,7 @@ import { cn } from "@/styles/utils"
 
 const logger = Logger.create("requests")
 
-export type UserProfileApiRequestContentProps = {
+export interface UserProfileApiRequestContentProps {
   request: UserProfileApiRequest
 }
 

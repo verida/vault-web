@@ -13,7 +13,7 @@ import { useDataProviders } from "@/features/data-connections/hooks/use-data-pro
 import { DataProvider } from "@/features/data-connections/types"
 import { cn } from "@/styles/utils"
 
-export type ConnectDataProviderDialogProviderSelectionProps = {
+export interface ConnectDataProviderDialogProviderSelectionProps {
   onSelectItem: (provider: DataProvider) => void
 }
 

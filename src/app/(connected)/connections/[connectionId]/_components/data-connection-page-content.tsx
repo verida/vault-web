@@ -13,7 +13,7 @@ import { useDataProvider } from "@/features/data-connections/hooks/use-data-prov
 import { DataConnection } from "@/features/data-connections/types"
 import { getConnectionsSummaryPageRoute } from "@/features/routes/utils"
 
-export type DataConnectionPageContentProps = {
+export interface DataConnectionPageContentProps {
   connection: DataConnection
 }
 

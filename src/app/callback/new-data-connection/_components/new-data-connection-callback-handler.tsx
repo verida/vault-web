@@ -1,15 +1,15 @@
 "use client"
 
 import { useSearchParams } from "next/navigation"
-import { useEffect } from "react"
+import { ReactNode, useEffect } from "react"
 
 import { useDataConnectionsBroadcast } from "@/features/data-connections/hooks/use-data-connections-broadcast"
 import { Logger } from "@/features/telemetry/logger"
 
 const logger = Logger.create("data-connections")
 
-export type NewDataConnectionCallbackHandlerProps = {
-  children: React.ReactNode
+export interface NewDataConnectionCallbackHandlerProps {
+  children: ReactNode
 }
 
 export function NewDataConnectionCallbackHandler(

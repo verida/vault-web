@@ -1,8 +1,13 @@
+import { Metadata } from "next"
 import { ReactNode } from "react"
 
 import { OnboardingBreadcrumb } from "@/features/onboarding/components/onboarding-breadcrumb"
 import { OnboardingProvider } from "@/features/onboarding/components/onboarding-provider"
 import { OnboardingStepNav } from "@/features/onboarding/components/onboarding-step-nav"
+
+export const metadata: Metadata = {
+  title: "Onboarding",
+}
 
 export interface OnboardingLayoutProps {
   children: ReactNode
