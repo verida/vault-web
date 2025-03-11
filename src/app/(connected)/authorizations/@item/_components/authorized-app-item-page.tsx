@@ -312,7 +312,7 @@ export function ItemFieldUrl(props: ItemFieldUrlProps) {
         className="underline"
       >
         <Typography variant="base-regular" className="truncate">
-          {`${urlObject.protocol}//${urlObject.hostname}`}
+          {urlObject.origin}
         </Typography>
       </Link>
     </ItemField>
