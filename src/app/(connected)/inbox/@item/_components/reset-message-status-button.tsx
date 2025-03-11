@@ -1,7 +1,7 @@
 "use client"
 
 import { MailQuestionIcon } from "lucide-react"
-import { ComponentProps, useCallback, useState } from "react"
+import { type ComponentProps, useCallback, useState } from "react"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/tooltip"
 import { Logger } from "@/features/telemetry/logger"
 import { useResetMessageStatus } from "@/features/verida-inbox/hooks/use-reset-message-status"
-import { VeridaInboxMessageRecord } from "@/features/verida-inbox/types"
+import type { VeridaInboxMessageRecord } from "@/features/verida-inbox/types"
 import { cn } from "@/styles/utils"
 
 const logger = Logger.create("verida-inbox")

@@ -1,8 +1,7 @@
 "use client"
 
 import { MessageSquareMoreIcon } from "lucide-react"
-import { ComponentProps, useCallback, useState } from "react"
-import React from "react"
+import { type ComponentProps, useCallback, useState } from "react"
 
 import { AiPromptSelector } from "@/app/(connected)/assistants/[assistantId]/_components/ai-prompt-selector"
 import { Button } from "@/components/ui/button"

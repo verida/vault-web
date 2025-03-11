@@ -1,4 +1,4 @@
-import { ReactNode } from "react"
+import { type ReactNode } from "react"
 
 import { AiAssistantCombobox } from "@/app/(connected)/assistants/[assistantId]/_components/ai-assistant-combobox"
 import { PageWrapper } from "@/components/layouts/page-wrapper"

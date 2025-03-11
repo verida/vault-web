@@ -1,8 +1,8 @@
 import { type VariantProps, cva } from "class-variance-authority"
-import { ComponentProps, useMemo } from "react"
+import { type ComponentProps, useMemo } from "react"
 
 import { Typography } from "@/components/ui/typography"
-import {
+import type {
   DataConnectionHandlerStatus,
   DataConnectionStatus,
 } from "@/features/data-connections/types"

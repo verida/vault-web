@@ -16,7 +16,7 @@ import { useDataTableState } from "@/features/data-table/hooks/use-data-table-st
 import { useGetVeridaInboxMessages } from "@/features/verida-inbox/hooks/use-get-verida-inbox-messages"
 import { useInboxMessageItemIdState } from "@/features/verida-inbox/hooks/use-inbox-message-item-id-state"
 import { useVeridaInbox } from "@/features/verida-inbox/hooks/use-verida-inbox"
-import { VeridaInboxMessageRecord } from "@/features/verida-inbox/types"
+import type { VeridaInboxMessageRecord } from "@/features/verida-inbox/types"
 
 const fallbackData: VeridaInboxMessageRecord[] = []
 

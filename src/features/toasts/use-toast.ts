@@ -1,7 +1,7 @@
 "use client"
 
 // Inspired by react-hot-toast library
-import { ReactNode, useEffect, useState } from "react"
+import { type ReactNode, useEffect, useState } from "react"
 
 import type { ToastActionElement, ToastProps } from "@/components/ui/toast"
 

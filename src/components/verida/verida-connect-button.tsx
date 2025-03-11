@@ -1,6 +1,6 @@
 "use client"
 
-import { ComponentProps, ReactNode, useCallback } from "react"
+import { type ComponentProps, type ReactNode, useCallback } from "react"
 
 import { Button } from "@/components/ui/button"
 import { useVerida } from "@/features/verida/hooks/use-verida"

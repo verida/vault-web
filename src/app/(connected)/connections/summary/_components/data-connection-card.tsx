@@ -2,7 +2,7 @@
 
 import { intlFormat } from "date-fns"
 import Link from "next/link"
-import { ComponentProps, useMemo } from "react"
+import { type ComponentProps, useMemo } from "react"
 
 import { DataConnectionAvatar } from "@/components/data-connections/data-connection-avatar"
 import { DataConnectionStatusBadge } from "@/components/data-connections/data-connection-status-badge"
@@ -14,7 +14,7 @@ import { TooltipIndicator } from "@/components/ui/tooltip"
 import { Typography } from "@/components/ui/typography"
 import { EMPTY_VALUE_FALLBACK } from "@/constants/misc"
 import { useDataProvider } from "@/features/data-connections/hooks/use-data-provider"
-import { DataConnection } from "@/features/data-connections/types"
+import type { DataConnection } from "@/features/data-connections/types"
 import { getDataConnectionLatestSyncEnd } from "@/features/data-connections/utils"
 import { getConnectionPageRoute } from "@/features/routes/utils"
 import { LONG_DATE_TIME_FORMAT_OPTIONS } from "@/utils/date"

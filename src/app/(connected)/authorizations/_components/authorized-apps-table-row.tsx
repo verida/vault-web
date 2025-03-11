@@ -1,9 +1,9 @@
-import { Row, flexRender } from "@tanstack/react-table"
-import { ComponentProps, useMemo } from "react"
+import { type Row, flexRender } from "@tanstack/react-table"
+import { type ComponentProps, useMemo } from "react"
 
 import { DataTableBaseRow } from "@/components/data-table/data-table-base-row"
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header"
-import { VeridaAuthToken } from "@/features/verida-auth/types"
+import type { VeridaAuthToken } from "@/features/verida-auth/types"
 import { cn } from "@/styles/utils"
 
 export interface AuthorizedAppsTableRowProps

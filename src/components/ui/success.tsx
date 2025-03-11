@@ -1,5 +1,5 @@
 import Image from "next/image"
-import { ComponentProps } from "react"
+import { type ComponentProps } from "react"
 
 import SuccessIllustration from "@/assets/success-illustration.svg"
 import { Typography } from "@/components/ui/typography"

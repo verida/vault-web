@@ -1,8 +1,8 @@
-import { IMessaging } from "@verida/types"
+import type { IMessaging } from "@verida/types"
 import { WebUser } from "@verida/web-helpers"
 
 import { Logger } from "@/features/telemetry/logger"
-import {
+import type {
   FetchVeridaDataRecordsResult,
   VeridaDatabaseQueryFilter,
   VeridaDatabaseQueryOptions,
@@ -15,10 +15,10 @@ import {
   VeridaInboxMessageTypeMessageDataSchema,
 } from "@/features/verida-inbox/schemas"
 import {
-  VeridaInboxMessage,
-  VeridaInboxMessageRecord,
+  type VeridaInboxMessage,
+  type VeridaInboxMessageRecord,
   VeridaInboxMessageSupportedType,
-  VeridaMessageStatus,
+  type VeridaMessageStatus,
 } from "@/features/verida-inbox/types"
 
 const logger = Logger.create("verida-inbox")

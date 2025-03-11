@@ -11,10 +11,10 @@ import { Typography } from "@/components/ui/typography"
 import { EMPTY_VALUE_FALLBACK } from "@/constants/misc"
 import { useDataConnection } from "@/features/data-connections/hooks/use-data-connection"
 import { useDataProvider } from "@/features/data-connections/hooks/use-data-provider"
-import { DataConnectionSyncLog } from "@/features/data-connections/types"
+import type { DataConnectionSyncLog } from "@/features/data-connections/types"
 import { buildConnectionId } from "@/features/data-connections/utils"
 import { getConnectionPageRoute } from "@/features/routes/utils"
-import { VeridaRecord } from "@/features/verida-database/types"
+import type { VeridaRecord } from "@/features/verida-database/types"
 import { SHORT_DATE_TIME_FORMAT_OPTIONS } from "@/utils/date"
 
 const columnHelper = createColumnHelper<VeridaRecord<DataConnectionSyncLog>>()

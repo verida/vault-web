@@ -1,6 +1,6 @@
 "use client"
 
-import { ComponentProps, Fragment } from "react"
+import { type ComponentProps, Fragment } from "react"
 
 import {
   Breadcrumb,

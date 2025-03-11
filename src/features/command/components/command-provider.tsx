@@ -1,9 +1,9 @@
-import { ReactNode, useEffect, useMemo, useState } from "react"
+import { type ReactNode, useEffect, useMemo, useState } from "react"
 
 import { featureFlags } from "@/config/features"
 import {
   CommandContext,
-  CommandContextType,
+  type CommandContextType,
 } from "@/features/command/contexts/command-context"
 import { useRestrictedAccess } from "@/features/restricted-access/hooks/use-restricted-access"
 

@@ -1,6 +1,6 @@
 "use client"
 
-import { SVGProps, useLayoutEffect, useRef, useState } from "react"
+import { type SVGProps, useLayoutEffect, useRef, useState } from "react"
 
 import { cn } from "@/styles/utils"
 

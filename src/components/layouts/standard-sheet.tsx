@@ -1,4 +1,4 @@
-import { ComponentProps } from "react"
+import { type ComponentProps } from "react"
 
 import { CloseSideRight } from "@/components/icons/close-side-right"
 import { Button } from "@/components/ui/button"

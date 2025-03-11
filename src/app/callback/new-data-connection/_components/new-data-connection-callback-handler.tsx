@@ -1,7 +1,7 @@
 "use client"
 
 import { useSearchParams } from "next/navigation"
-import { ReactNode, useEffect } from "react"
+import { type ReactNode, useEffect } from "react"
 
 import { useDataConnectionsBroadcast } from "@/features/data-connections/hooks/use-data-connections-broadcast"
 import { Logger } from "@/features/telemetry/logger"

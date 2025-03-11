@@ -1,7 +1,7 @@
 "use client"
 
 import { intlFormat, isDate } from "date-fns"
-import { ComponentProps, useCallback } from "react"
+import { type ComponentProps, useCallback } from "react"
 
 import {
   DataDeleteRecordDialog,
@@ -30,8 +30,8 @@ import {
 import { Typography } from "@/components/ui/typography"
 import { featureFlags } from "@/config/features"
 import { EMPTY_VALUE_FALLBACK } from "@/constants/misc"
-import { DatabaseDefinition } from "@/features/data/types"
-import { VeridaRecord } from "@/features/verida-database/types"
+import type { DatabaseDefinition } from "@/features/data/types"
+import type { VeridaRecord } from "@/features/verida-database/types"
 import { cn } from "@/styles/utils"
 import { LONG_DATE_TIME_FORMAT_OPTIONS } from "@/utils/date"
 

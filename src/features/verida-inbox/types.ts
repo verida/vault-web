@@ -1,6 +1,6 @@
 import { z } from "zod"
 
-import { VeridaRecord } from "@/features/verida-database/types"
+import type { VeridaRecord } from "@/features/verida-database/types"
 import { VeridaInboxMessageBaseSchema } from "@/features/verida-inbox/schemas"
 
 export enum VeridaInboxMessageSupportedType {

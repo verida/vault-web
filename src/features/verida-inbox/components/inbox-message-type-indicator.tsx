@@ -1,4 +1,4 @@
-import { ComponentProps, useMemo } from "react"
+import { type ComponentProps, useMemo } from "react"
 
 import { InboxDataRequestTypeIcon } from "@/components/icons/inbox-data"
 import { InboxIncomingDataTypeIcon } from "@/components/icons/inbox-incoming"

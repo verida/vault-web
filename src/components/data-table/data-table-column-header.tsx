@@ -1,6 +1,6 @@
-import { ComponentProps } from "react"
+import { type ComponentProps } from "react"
 
-import { DataTableColumnAlign } from "@/features/data-table/types"
+import type { DataTableColumnAlign } from "@/features/data-table/types"
 import { cn } from "@/styles/utils"
 
 export interface DataTableColumnHeaderProps extends ComponentProps<"div"> {

@@ -2,7 +2,7 @@
 
 import { intlFormat, isDate } from "date-fns"
 import Link from "next/link"
-import { ComponentProps, useCallback, useMemo } from "react"
+import { type ComponentProps, useCallback, useMemo } from "react"
 
 import { DeleteIcon } from "@/components/icons/delete-icon"
 import {
@@ -46,7 +46,7 @@ import {
 import { VeridaAuthScope } from "@/features/verida-auth/components/verida-auth-scope"
 import { useResolvedVeridaAuthScopes } from "@/features/verida-auth/hooks/use-resolved-verida-auth-scopes"
 import { useVeridaAuthToken } from "@/features/verida-auth/hooks/use-verida-auth-token"
-import { VeridaAuthScope as VeridaAuthScopeType } from "@/features/verida-auth/types"
+import type { VeridaAuthScope as VeridaAuthScopeType } from "@/features/verida-auth/types"
 import { ProfileAvatar } from "@/features/verida-profile/components/profile-avatar"
 import { EMPTY_PROFILE_NAME_FALLBACK } from "@/features/verida-profile/constants"
 import { useVeridaProfile } from "@/features/verida-profile/hooks/use-verida-profile"

@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { ComponentProps, useMemo } from "react"
+import { type ComponentProps, useMemo } from "react"
 
 import {
   Accordion,
@@ -10,7 +10,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion"
 import { CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { ValidVeridaAuthRequest } from "@/features/verida-auth/types"
+import type { ValidVeridaAuthRequest } from "@/features/verida-auth/types"
 import { getVeridaExplorerIdentityPageUrl } from "@/features/verida-explorer/utils"
 import { ProfileAvatar } from "@/features/verida-profile/components/profile-avatar"
 import { EMPTY_PROFILE_NAME_FALLBACK } from "@/features/verida-profile/constants"

@@ -1,7 +1,7 @@
 "use client"
 
 import { useQueryClient } from "@tanstack/react-query"
-import { ReactNode, useEffect } from "react"
+import { type ReactNode, useEffect } from "react"
 
 import { prefetchDataProviders } from "@/features/data-connections/hooks/use-data-providers"
 import { Logger } from "@/features/telemetry/logger"

@@ -1,5 +1,5 @@
 import Image from "next/image"
-import { ComponentProps } from "react"
+import { type ComponentProps } from "react"
 
 import { HeaderCommandDialogButton } from "@/components/header/header-command-dialog-button"
 import { HeaderInboxButton } from "@/components/header/header-inbox-button"

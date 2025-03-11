@@ -1,9 +1,9 @@
-import { ComponentProps } from "react"
+import { type ComponentProps } from "react"
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Skeleton } from "@/components/ui/skeleton"
 import { EMPTY_VALUE_FALLBACK } from "@/constants/misc"
-import { VeridaProfile } from "@/features/verida-profile/types"
+import type { VeridaProfile } from "@/features/verida-profile/types"
 import { cn } from "@/styles/utils"
 
 export interface ProfileAvatarProps

@@ -2,9 +2,9 @@
 
 import { BookmarkIcon, Settings2Icon, XIcon } from "lucide-react"
 import {
-  ChangeEventHandler,
-  ComponentProps,
-  KeyboardEventHandler,
+  type ChangeEventHandler,
+  type ComponentProps,
+  type KeyboardEventHandler,
   useCallback,
   useLayoutEffect,
   useMemo,

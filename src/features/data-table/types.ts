@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { RowData } from "@tanstack/react-table"
-import { ComponentProps } from "react"
+import { type RowData } from "@tanstack/react-table"
+import { type ComponentProps } from "react"
 
 export type DataTableColumnAlign = "left" | "center" | "right"
 

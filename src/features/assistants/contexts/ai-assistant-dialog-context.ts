@@ -1,6 +1,6 @@
 import { createContext } from "react"
 
-import {
+import type {
   AiAssistantFormData,
   AiAssistantRecord,
 } from "@/features/assistants/types"

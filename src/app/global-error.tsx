@@ -2,7 +2,7 @@
 
 import {
   ErrorPageContent,
-  ErrorPageProps,
+  type ErrorPageProps,
 } from "@/components/layouts/error-page-content"
 import { PlausibleScript } from "@/features/plausible/PlausibleScript"
 import { sora } from "@/styles/font"

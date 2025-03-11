@@ -21,11 +21,11 @@ import { Button } from "@/components/ui/button"
 import { MessageBlock, MessageBlockBody } from "@/components/ui/message-block"
 import { Typography } from "@/components/ui/typography"
 import { commonConfig } from "@/config/common"
-import { VeridaRecord } from "@/features/verida-database/types"
+import type { VeridaRecord } from "@/features/verida-database/types"
 import { InboxMessageStatusIndicator } from "@/features/verida-inbox/components/inbox.message-status-indicator"
 import { useAcceptDataRequestMessage } from "@/features/verida-inbox/hooks/use-accept-data-request-message"
 import { useDeclineDataRequestMessage } from "@/features/verida-inbox/hooks/use-decline-data-request-message"
-import { VeridaInboxMessageRecord } from "@/features/verida-inbox/types"
+import type { VeridaInboxMessageRecord } from "@/features/verida-inbox/types"
 import {
   getDataFromDataRequestMessage,
   getVeridaMessageStatus,

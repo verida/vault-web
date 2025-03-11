@@ -1,5 +1,5 @@
-import { Row, Table } from "@tanstack/react-table"
-import { ComponentProps, ReactNode } from "react"
+import { type Row, type Table } from "@tanstack/react-table"
+import { type ComponentProps, type ReactNode } from "react"
 
 import { DataTableHeader } from "@/components/data-table/data-table-header"
 import { DataTablePagination } from "@/components/data-table/data-table-pagination"
@@ -21,7 +21,7 @@ import {
   LoadingBlockSpinner,
   LoadingBlockTitle,
 } from "@/components/ui/loading"
-import { DataTablePaginationSizeValue } from "@/features/data-table/types"
+import type { DataTablePaginationSizeValue } from "@/features/data-table/types"
 import { cn } from "@/styles/utils"
 
 export interface DataTableProps<TData>

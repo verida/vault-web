@@ -1,7 +1,7 @@
 "use client"
 
 import { useRouter } from "next/navigation"
-import { ReactNode, useCallback, useEffect, useState } from "react"
+import { type ReactNode, useCallback, useEffect, useState } from "react"
 
 import { ConnectDataProviderDialogProviderSelection } from "@/app/(connected)/connections/summary/_components/connect-data-provider-dialog-provider-selection"
 import { VLogo } from "@/components/icons/logo"
@@ -34,7 +34,7 @@ import {
 import { Typography } from "@/components/ui/typography"
 import { useDataConnectionsBroadcast } from "@/features/data-connections/hooks/use-data-connections-broadcast"
 import { useDataProviders } from "@/features/data-connections/hooks/use-data-providers"
-import {
+import type {
   DataConnectionsChannelEvent,
   DataProvider,
 } from "@/features/data-connections/types"

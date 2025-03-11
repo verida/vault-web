@@ -1,7 +1,7 @@
 "use client"
 
 import { useRouter } from "next/navigation"
-import { ReactNode, useCallback, useMemo, useState } from "react"
+import { type ReactNode, useCallback, useMemo, useState } from "react"
 
 import { featureFlags } from "@/config/features"
 import { ManageAiPromptDialog } from "@/features/assistants/components/manage-ai-prompt-dialog"
@@ -12,8 +12,8 @@ import {
 } from "@/features/assistants/constants"
 import {
   AiPromptDialogContext,
-  AiPromptDialogContextType,
-  AiPromptDialogState,
+  type AiPromptDialogContextType,
+  type AiPromptDialogState,
 } from "@/features/assistants/contexts/ai-prompt-dialog-context"
 import { useAssistants } from "@/features/assistants/hooks/use-assistants"
 import { useCreateAiAssistant } from "@/features/assistants/hooks/use-create-ai-assistant"
@@ -22,7 +22,10 @@ import { useDeleteAiPrompt } from "@/features/assistants/hooks/use-delete-ai-pro
 import { useGetAiAssistants } from "@/features/assistants/hooks/use-get-ai-assistants"
 import { useGetAiPrompts } from "@/features/assistants/hooks/use-get-ai-prompts"
 import { useUpdateAiPrompt } from "@/features/assistants/hooks/use-update-ai-prompt"
-import { AiPromptFormData, AiPromptRecord } from "@/features/assistants/types"
+import type {
+  AiPromptFormData,
+  AiPromptRecord,
+} from "@/features/assistants/types"
 import { getAssistantPageRoute } from "@/features/routes/utils"
 
 export interface AiPromptDialogProviderProps {

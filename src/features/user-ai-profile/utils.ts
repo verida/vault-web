@@ -1,7 +1,7 @@
 import { commonConfig } from "@/config/common"
 import { Logger } from "@/features/telemetry/logger"
 import { GetUserAiProfileV1ResponseSchema } from "@/features/user-ai-profile/schemas"
-import { UserAiProfileParams } from "@/features/user-ai-profile/types"
+import type { UserAiProfileParams } from "@/features/user-ai-profile/types"
 
 const logger = Logger.create("requests")
 

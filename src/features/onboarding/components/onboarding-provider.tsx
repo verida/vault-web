@@ -1,12 +1,12 @@
 "use client"
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
-import { ReactNode, useCallback, useMemo } from "react"
+import { type ReactNode, useCallback, useMemo } from "react"
 
 import { ONBOARDING_STEPS } from "@/features/onboarding/constants"
 import {
   OnboardingContext,
-  OnboardingContextType,
+  type OnboardingContextType,
 } from "@/features/onboarding/contexts/onboarding-context"
 import { useOnboardingEntryQueryState } from "@/features/onboarding/hooks/use-onboarding-entry-query-state"
 import { getRootPageRoute } from "@/features/routes/utils"

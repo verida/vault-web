@@ -1,5 +1,5 @@
-import { Row, flexRender } from "@tanstack/react-table"
-import { ComponentProps } from "react"
+import { type Row, flexRender } from "@tanstack/react-table"
+import { type ComponentProps } from "react"
 
 import { DataTableBaseRow } from "@/components/data-table/data-table-base-row"
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header"

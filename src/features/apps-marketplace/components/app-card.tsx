@@ -1,6 +1,6 @@
 import { ExternalLink } from "lucide-react"
 import Link from "next/link"
-import { ComponentProps } from "react"
+import type { ComponentProps } from "react"
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
@@ -14,7 +14,7 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { Typography } from "@/components/ui/typography"
-import { MarketplaceApp } from "@/features/apps-marketplace/types"
+import type { MarketplaceApp } from "@/features/apps-marketplace/types"
 import { cn } from "@/styles/utils"
 
 export interface AppCardProps extends ComponentProps<typeof Card> {

@@ -1,6 +1,6 @@
-import { VariantProps, cva } from "class-variance-authority"
+import { type VariantProps, cva } from "class-variance-authority"
 import { ShieldAlertIcon, ShieldCheckIcon } from "lucide-react"
-import { ComponentProps, ElementRef, forwardRef } from "react"
+import { type ComponentProps, type ElementRef, forwardRef } from "react"
 
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"

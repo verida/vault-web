@@ -1,7 +1,7 @@
 "use client"
 
 import { intlFormat } from "date-fns"
-import { ComponentProps, useMemo } from "react"
+import { type ComponentProps, useMemo } from "react"
 
 import { AssistantOutputCardMenu } from "@/app/(connected)/assistants/[assistantId]/_components/assistant-output-card-menu"
 import { MoreIcon } from "@/components/icons/more-icon"

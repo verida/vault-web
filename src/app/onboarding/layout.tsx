@@ -1,5 +1,5 @@
-import { Metadata } from "next"
-import { ReactNode } from "react"
+import type { Metadata } from "next"
+import type { ReactNode } from "react"
 
 import { OnboardingBreadcrumb } from "@/features/onboarding/components/onboarding-breadcrumb"
 import { OnboardingProvider } from "@/features/onboarding/components/onboarding-provider"

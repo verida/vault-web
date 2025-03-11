@@ -1,6 +1,6 @@
 "use client"
 
-import { ComponentProps, useCallback, useState } from "react"
+import { type ComponentProps, useCallback, useState } from "react"
 
 import { RefreshIcon } from "@/components/icons/refresh-icon"
 import { Button } from "@/components/ui/button"

@@ -3,7 +3,7 @@
 import { LayoutGridIcon } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { ComponentProps, useCallback, useState } from "react"
+import { type ComponentProps, useCallback, useState } from "react"
 
 import { AiAssistantIcon } from "@/components/icons/ai-assistant-icon"
 import { Close as CloseIcon } from "@/components/icons/close"

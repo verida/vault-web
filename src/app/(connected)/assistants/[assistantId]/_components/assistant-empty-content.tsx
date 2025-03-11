@@ -1,14 +1,14 @@
 "use client"
 
 import Link from "next/link"
-import { ComponentProps, useCallback } from "react"
+import { type ComponentProps, useCallback } from "react"
 
 import { VeridaNetworkColouredLogo } from "@/components/icons/verida-network-coloured-logo"
 import { Button } from "@/components/ui/button"
 import { Typography } from "@/components/ui/typography"
 import { SUGGESTED_PROMPTS } from "@/features/assistants/constants"
 import { useAssistants } from "@/features/assistants/hooks/use-assistants"
-import { AiPromptInput } from "@/features/assistants/types"
+import type { AiPromptInput } from "@/features/assistants/types"
 import { useDataConnections } from "@/features/data-connections/hooks/use-data-connections"
 import { getConnectionsPageRoute } from "@/features/routes/utils"
 import { cn } from "@/styles/utils"

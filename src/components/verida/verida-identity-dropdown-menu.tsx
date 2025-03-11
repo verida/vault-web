@@ -2,7 +2,7 @@
 
 import { MessageCircle } from "lucide-react"
 import { useRouter } from "next/navigation"
-import { ComponentProps, useCallback } from "react"
+import { type ComponentProps, useCallback } from "react"
 
 import { ApiKeyIcon } from "@/components/icons/api-key-icon"
 import { Copy } from "@/components/icons/copy"

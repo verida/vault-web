@@ -2,7 +2,7 @@
 
 import { formatDistanceToNow } from "date-fns"
 import {
-  ComponentProps,
+  type ComponentProps,
   useCallback,
   useEffect,
   useMemo,

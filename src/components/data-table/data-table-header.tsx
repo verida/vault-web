@@ -1,5 +1,5 @@
-import { Header, flexRender } from "@tanstack/react-table"
-import { ComponentProps } from "react"
+import { type Header, flexRender } from "@tanstack/react-table"
+import { type ComponentProps } from "react"
 
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header"
 import { cn } from "@/styles/utils"

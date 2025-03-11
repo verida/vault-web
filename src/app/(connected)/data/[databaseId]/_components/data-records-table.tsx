@@ -3,7 +3,7 @@
 import { getCoreRowModel, useReactTable } from "@tanstack/react-table"
 import Link from "next/link"
 import { useSearchParams } from "next/navigation"
-import { ComponentProps, useMemo } from "react"
+import { type ComponentProps, useMemo } from "react"
 
 import { getDataRecordsTableColumns } from "@/app/(connected)/data/[databaseId]/_components/data-records-table-columns"
 import { DataTable } from "@/components/data-table/data-table"
@@ -13,9 +13,9 @@ import { DataTableColumnAlignFeature } from "@/features/data-table/data-table-co
 import { DataTableColumnClassNameFeature } from "@/features/data-table/data-table-column-classname-feature"
 import { useDataTableState } from "@/features/data-table/hooks/use-data-table-state"
 import { useItemIdState } from "@/features/data/hooks/use-itemd-id-state"
-import { DatabaseDefinition } from "@/features/data/types"
+import type { DatabaseDefinition } from "@/features/data/types"
 import { useVeridaDataRecords } from "@/features/verida-database/hooks/use-verida-data-records"
-import { VeridaRecord } from "@/features/verida-database/types"
+import type { VeridaRecord } from "@/features/verida-database/types"
 
 const fallbackData: VeridaRecord[] = []
 

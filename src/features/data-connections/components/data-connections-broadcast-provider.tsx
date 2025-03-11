@@ -1,17 +1,17 @@
 "use client"
 
 import { useQueryClient } from "@tanstack/react-query"
-import { ReactNode, useCallback, useEffect, useMemo, useRef } from "react"
+import { type ReactNode, useCallback, useEffect, useMemo, useRef } from "react"
 
 import { DATA_CONNECTIONS_CHANNEL } from "@/features/data-connections/constants"
 import {
   DataConnectionsBroadcastContext,
-  DataConnectionsBroadcastContextValue,
+  type DataConnectionsBroadcastContextValue,
 } from "@/features/data-connections/contexts/data-connections-broadcast-context"
 import { DataConnectionsQueryKeys } from "@/features/data-connections/queries"
-import { DataConnectionsChannelEvent } from "@/features/data-connections/types"
+import type { DataConnectionsChannelEvent } from "@/features/data-connections/types"
 import { Logger } from "@/features/telemetry/logger"
-import { StrictBroadcastChannel } from "@/types/strict-broadcast-channel"
+import { type StrictBroadcastChannel } from "@/types/strict-broadcast-channel"
 
 const logger = Logger.create("data-connections")
 

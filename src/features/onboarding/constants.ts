@@ -1,4 +1,4 @@
-import { OnboardingStep } from "@/features/onboarding/types"
+import type { OnboardingStep } from "@/features/onboarding/types"
 import {
   getOnboardingConnectVaultPageRoute,
   getOnboardingCreateIdentityPageRoute,

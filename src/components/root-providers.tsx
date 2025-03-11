@@ -1,7 +1,7 @@
 "use client"
 
 import { NuqsAdapter } from "nuqs/adapters/next/app"
-import { ReactNode, Suspense } from "react"
+import { type ReactNode, Suspense } from "react"
 
 import { Toaster } from "@/components/ui/toaster"
 import { TooltipProvider } from "@/components/ui/tooltip"

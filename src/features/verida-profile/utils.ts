@@ -4,7 +4,7 @@ import { Network } from "@verida/types"
 import { Logger } from "@/features/telemetry/logger"
 import { VERIDA_PROFILE_DB_NAME } from "@/features/verida-profile/constants"
 import { VeridaProfileApiResponseSchema } from "@/features/verida-profile/schemas"
-import { VeridaProfile } from "@/features/verida-profile/types"
+import type { VeridaProfile } from "@/features/verida-profile/types"
 import { VERIDA_VAULT_CONTEXT_NAME } from "@/features/verida/constants"
 import { isValidVeridaDid } from "@/features/verida/utils"
 

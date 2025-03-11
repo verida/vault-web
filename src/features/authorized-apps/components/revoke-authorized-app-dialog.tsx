@@ -1,6 +1,6 @@
 "use client"
 
-import { ReactNode, useCallback, useState } from "react"
+import { type ReactNode, useCallback, useState } from "react"
 
 import {
   AlertDialog,
@@ -16,7 +16,7 @@ import {
 import { Button } from "@/components/ui/button"
 import { useToast } from "@/features/toasts/use-toast"
 import { useRevokeVeridaAuthToken } from "@/features/verida-auth/hooks/use-revoke-verida-auth-token"
-import { VeridaAuthToken } from "@/features/verida-auth/types"
+import type { VeridaAuthToken } from "@/features/verida-auth/types"
 
 export interface RevokeAuthorizedAppDialogProps {
   authToken: VeridaAuthToken

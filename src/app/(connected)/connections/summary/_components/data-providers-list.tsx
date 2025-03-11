@@ -1,6 +1,6 @@
 "use client"
 
-import { ComponentProps } from "react"
+import { type ComponentProps } from "react"
 
 import {
   DataProviderCard,
@@ -16,7 +16,7 @@ import {
   ErrorBlockDescription,
   ErrorBlockImage,
 } from "@/components/ui/error"
-import { DataProvider } from "@/features/data-connections/types"
+import type { DataProvider } from "@/features/data-connections/types"
 import { cn } from "@/styles/utils"
 
 // TODO: Move to `@/components/...`

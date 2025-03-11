@@ -19,7 +19,7 @@ import {
   MessageBlockBody,
   MessageBlockTitle,
 } from "@/components/ui/message-block"
-import { VeridaInboxMessageRecord } from "@/features/verida-inbox/types"
+import type { VeridaInboxMessageRecord } from "@/features/verida-inbox/types"
 import { getDataFromMessage } from "@/features/verida-inbox/utils"
 
 export interface MessageItemPageContentProps {

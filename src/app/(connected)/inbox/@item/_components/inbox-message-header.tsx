@@ -2,7 +2,7 @@
 
 import { intlFormat, isDate } from "date-fns"
 import Link from "next/link"
-import { ComponentProps, useCallback, useEffect, useState } from "react"
+import { type ComponentProps, useCallback, useEffect, useState } from "react"
 
 import {
   Accordion,
@@ -15,7 +15,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { Typography } from "@/components/ui/typography"
 import { EMPTY_VALUE_FALLBACK } from "@/constants/misc"
 import { getVeridaExplorerIdentityPageUrl } from "@/features/verida-explorer/utils"
-import { VeridaInboxMessageRecord } from "@/features/verida-inbox/types"
+import type { VeridaInboxMessageRecord } from "@/features/verida-inbox/types"
 import { ProfileAvatar } from "@/features/verida-profile/components/profile-avatar"
 import { UserYourselfBadge } from "@/features/verida-profile/components/user-yourself-badge"
 import { EMPTY_PROFILE_NAME_FALLBACK } from "@/features/verida-profile/constants"

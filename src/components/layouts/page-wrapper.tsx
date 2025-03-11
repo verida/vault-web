@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { ComponentProps, ReactNode } from "react"
+import { type ComponentProps, type ReactNode } from "react"
 
 import { ArrowLeftIcon } from "@/components/icons/arrow-left-icon"
 import { Button } from "@/components/ui/button"

@@ -5,7 +5,7 @@ import React from "react"
 import { AiAssistantSelector } from "@/app/(connected)/assistants/[assistantId]/_components/ai-assistant-selector"
 import {
   ErrorPageContent,
-  ErrorPageProps,
+  type ErrorPageProps,
 } from "@/components/layouts/error-page-content"
 
 export default function AssistantErrorPage(props: ErrorPageProps) {

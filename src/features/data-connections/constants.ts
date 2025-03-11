@@ -1,4 +1,4 @@
-import { DatabaseDefinition } from "@/features/data/types"
+import type { DatabaseDefinition } from "@/features/data/types"
 
 export const DEFAULT_DATA_PROVIDER_DESCRIPTION = `Connect your account to extract your data and store it into your Vault.`
 

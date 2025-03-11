@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { ComponentProps, useEffect, useMemo } from "react"
+import { type ComponentProps, useEffect, useMemo } from "react"
 
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"

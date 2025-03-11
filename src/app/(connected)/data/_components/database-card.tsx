@@ -1,10 +1,10 @@
-import { ComponentProps } from "react"
+import { type ComponentProps } from "react"
 
 import { DatabaseCardItemCount } from "@/app/(connected)/data/_components/database-card-item-count"
 import { DatabaseIcon } from "@/components/icons/database-icon"
 import { Card, CardBody } from "@/components/ui/card"
 import { Typography } from "@/components/ui/typography"
-import { DatabaseDefinition } from "@/features/data/types"
+import type { DatabaseDefinition } from "@/features/data/types"
 import { cn } from "@/styles/utils"
 
 export interface DatabaseCardProps extends ComponentProps<typeof Card> {

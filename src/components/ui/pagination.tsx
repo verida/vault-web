@@ -16,7 +16,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { EMPTY_VALUE_FALLBACK } from "@/constants/misc"
-import { DataTablePaginationSizeValue } from "@/features/data-table/types"
+import type { DataTablePaginationSizeValue } from "@/features/data-table/types"
 import { cn } from "@/styles/utils"
 
 const Pagination = ({ className, ...props }: React.ComponentProps<"nav">) => (

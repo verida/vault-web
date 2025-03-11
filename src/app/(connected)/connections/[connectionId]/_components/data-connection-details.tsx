@@ -1,7 +1,7 @@
 "use client"
 
 import { intlFormat } from "date-fns"
-import { ComponentProps, useCallback, useMemo, useState } from "react"
+import { type ComponentProps, useCallback, useMemo, useState } from "react"
 
 import {
   DisconnectDataConnectionDialog,
@@ -16,7 +16,7 @@ import { Typography } from "@/components/ui/typography"
 import { EMPTY_VALUE_FALLBACK } from "@/constants/misc"
 import { useDataProvider } from "@/features/data-connections/hooks/use-data-provider"
 import { useSyncDataConnection } from "@/features/data-connections/hooks/use-sync-data-connection"
-import { DataConnection } from "@/features/data-connections/types"
+import type { DataConnection } from "@/features/data-connections/types"
 import { getDataConnectionLatestSyncEnd } from "@/features/data-connections/utils"
 import { useToast } from "@/features/toasts/use-toast"
 import { cn } from "@/styles/utils"

@@ -2,7 +2,7 @@ import {
   BaseRequestSchema,
   UserProfileApiRequestSchema,
 } from "@/features/requests/schemas"
-import {
+import type {
   UserProfileApiRequest,
   UserProfileApiRequestBody,
 } from "@/features/requests/types"

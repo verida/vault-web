@@ -1,4 +1,4 @@
-import { ComponentProps } from "react"
+import { type ComponentProps } from "react"
 
 import {
   ConnectDataProviderDialog,
@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardBody, CardHeader } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Typography } from "@/components/ui/typography"
-import { DataProvider } from "@/features/data-connections/types"
+import type { DataProvider } from "@/features/data-connections/types"
 
 // TODO: Move to `@/components/...`
 

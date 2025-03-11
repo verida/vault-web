@@ -1,7 +1,7 @@
 "use client"
 
 import { ChevronDownIcon } from "lucide-react"
-import { ComponentProps, useCallback, useMemo, useState } from "react"
+import { type ComponentProps, useCallback, useMemo, useState } from "react"
 
 import { AiAssistantSelector } from "@/app/(connected)/assistants/[assistantId]/_components/ai-assistant-selector"
 import { Button } from "@/components/ui/button"

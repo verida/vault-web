@@ -4,7 +4,7 @@ import { useQueryClient } from "@tanstack/react-query"
 import { type DatastoreOpenConfig } from "@verida/types"
 import { WebUser } from "@verida/web-helpers"
 import {
-  ReactNode,
+  type ReactNode,
   useCallback,
   useEffect,
   useMemo,
@@ -19,7 +19,7 @@ import { invalidateVeridaProfile } from "@/features/verida-profile/hooks/use-ver
 import { VERIDA_VAULT_CONTEXT_NAME } from "@/features/verida/constants"
 import {
   VeridaContext,
-  VeridaContextType,
+  type VeridaContextType,
 } from "@/features/verida/contexts/verida-context"
 
 const logger = Logger.create("verida")

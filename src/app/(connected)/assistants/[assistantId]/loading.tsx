@@ -7,7 +7,7 @@ import {
   LoadingBlockTitle,
   LoadingProgress,
 } from "@/components/ui/loading"
-import { AiAssistantHotloadResult } from "@/features/assistants/types"
+import type { AiAssistantHotloadResult } from "@/features/assistants/types"
 
 export interface AssistantLoadingPageProps {
   hotload?: AiAssistantHotloadResult

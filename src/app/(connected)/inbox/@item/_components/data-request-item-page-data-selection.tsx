@@ -3,7 +3,13 @@
 import { AvatarImage } from "@radix-ui/react-avatar"
 import { intlFormat, isDate } from "date-fns"
 import { XIcon } from "lucide-react"
-import { ComponentProps, useCallback, useId, useMemo, useState } from "react"
+import {
+  type ComponentProps,
+  useCallback,
+  useId,
+  useMemo,
+  useState,
+} from "react"
 import { useDebounce } from "use-debounce"
 
 import { ArrowLeftIcon } from "@/components/icons/arrow-left-icon"
@@ -42,7 +48,7 @@ import { Typography } from "@/components/ui/typography"
 import { EMPTY_VALUE_FALLBACK } from "@/constants/misc"
 import { USER_DATABASE_DEFS } from "@/features/data/constants"
 import { useVeridaDataRecords } from "@/features/verida-database/hooks/use-verida-data-records"
-import { VeridaRecord } from "@/features/verida-database/types"
+import type { VeridaRecord } from "@/features/verida-database/types"
 import { cn } from "@/styles/utils"
 import { SHORT_DATE_TIME_FORMAT_OPTIONS } from "@/utils/date"
 

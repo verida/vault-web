@@ -3,7 +3,7 @@ import { intlFormat, isDate } from "date-fns"
 
 import { Typography } from "@/components/ui/typography"
 import { EMPTY_VALUE_FALLBACK } from "@/constants/misc"
-import { VeridaRecord } from "@/features/verida-database/types"
+import type { VeridaRecord } from "@/features/verida-database/types"
 import { SHORT_DATE_TIME_FORMAT_OPTIONS } from "@/utils/date"
 
 // TODO: Pass a schema here to dynamically generate the columns

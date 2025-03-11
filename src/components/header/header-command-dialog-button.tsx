@@ -1,6 +1,6 @@
 "use client"
 
-import { ComponentProps, useMemo } from "react"
+import { type ComponentProps, useMemo } from "react"
 
 import { SearchIcon } from "@/components/icons/search-icon"
 import { Button } from "@/components/ui/button"

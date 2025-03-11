@@ -1,6 +1,6 @@
 "use client"
 
-import { ReactNode, useCallback } from "react"
+import { type ReactNode, useCallback } from "react"
 
 import {
   DropdownMenu,

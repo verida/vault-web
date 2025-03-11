@@ -1,6 +1,6 @@
 import { type DatastoreOpenConfig, type IDatastore } from "@verida/types"
 import { type WebUser } from "@verida/web-helpers"
-import { MutableRefObject, createContext } from "react"
+import { type MutableRefObject, createContext } from "react"
 
 export type VeridaContextType = {
   webUserInstanceRef: MutableRefObject<WebUser>

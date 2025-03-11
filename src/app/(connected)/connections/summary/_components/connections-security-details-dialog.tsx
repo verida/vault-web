@@ -1,6 +1,6 @@
 import { CpuIcon, DatabaseIcon } from "lucide-react"
 import Link from "next/link"
-import { ComponentProps } from "react"
+import { type ComponentProps } from "react"
 
 import {
   SecurityDetailsDialog,

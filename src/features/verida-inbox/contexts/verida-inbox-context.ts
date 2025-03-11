@@ -1,7 +1,7 @@
-import { IMessaging } from "@verida/types"
+import type { IMessaging } from "@verida/types"
 import { createContext } from "react"
 
-import { VeridaMessagingEngineStatus } from "@/features/verida-inbox/types"
+import type { VeridaMessagingEngineStatus } from "@/features/verida-inbox/types"
 
 export type VeridaInboxContextType = {
   messagingEngine: IMessaging | null

@@ -1,6 +1,6 @@
 "use client"
 
-import { ReactNode } from "react"
+import type { ReactNode } from "react"
 
 import { RestrictedAccessPageContent } from "@/features/restricted-access/components/restricted-access-page-content"
 import { useRestrictedAccess } from "@/features/restricted-access/hooks/use-restricted-access"

@@ -3,7 +3,7 @@ import {
   PrivateDataApiV1LLMAgentResponseSchema,
   PrivateDataApiV1LlmHotloadResponseSchema,
 } from "@/features/assistants/schemas"
-import {
+import type {
   AiAssistantOutput,
   AiPromptInput,
   PrivateDataApiV1LLMAgentRequestBody,

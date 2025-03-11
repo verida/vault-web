@@ -1,4 +1,4 @@
-import { ReactNode } from "react"
+import type { ReactNode } from "react"
 
 import { AppConnectionHandler } from "@/components/app-connection-handler"
 import { AppRestrictedProviders } from "@/components/app-restricted-providers"

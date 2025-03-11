@@ -1,7 +1,13 @@
 "use client"
 
 import Link from "next/link"
-import { ComponentProps, Fragment, useCallback, useMemo, useState } from "react"
+import {
+  type ComponentProps,
+  Fragment,
+  useCallback,
+  useMemo,
+  useState,
+} from "react"
 
 import {
   Accordion,
@@ -30,7 +36,7 @@ import { VeridaAuthCardHeader } from "@/features/verida-auth/components/verida-a
 import { VeridaAuthConsentError } from "@/features/verida-auth/components/verida-auth-consent-error"
 import { VeridaAuthScope } from "@/features/verida-auth/components/verida-auth-scope"
 import { useAllowVeridaAuthRequest } from "@/features/verida-auth/hooks/use-allow-verida-auth-request"
-import { ValidVeridaAuthRequest } from "@/features/verida-auth/types"
+import type { ValidVeridaAuthRequest } from "@/features/verida-auth/types"
 import {
   buildDenyRequestRedirectUrl,
   buildErrorRedirectUrl,

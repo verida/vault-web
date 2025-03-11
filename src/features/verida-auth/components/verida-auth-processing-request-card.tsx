@@ -1,4 +1,4 @@
-import { ComponentProps } from "react"
+import { type ComponentProps } from "react"
 
 import { Card, CardBody } from "@/components/ui/card"
 import {

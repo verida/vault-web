@@ -1,7 +1,7 @@
 "use client"
 
 import { useRouter } from "next/navigation"
-import { ComponentProps, useCallback, useMemo, useState } from "react"
+import { type ComponentProps, useCallback, useMemo, useState } from "react"
 import { useDebounce } from "use-debounce"
 
 import { Close as CloseIcon } from "@/components/icons/close"
@@ -33,7 +33,7 @@ import { Typography } from "@/components/ui/typography"
 import { useCommand } from "@/features/command/hooks/use-command"
 import { DEFAULT_SELECTED_SEARCH_TYPES } from "@/features/data-search/constants"
 import { useSearchData } from "@/features/data-search/hooks/use-search-data"
-import { SearchDataResult, SearchType } from "@/features/data-search/types"
+import type { SearchDataResult, SearchType } from "@/features/data-search/types"
 import { USER_DATABASE_DEFS } from "@/features/data/constants"
 import { getDatabaseItemPageRoute } from "@/features/routes/utils"
 import { cn } from "@/styles/utils"

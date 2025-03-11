@@ -7,7 +7,7 @@ import {
   PersistQueryClientProvider,
   removeOldestQuery,
 } from "@tanstack/react-query-persist-client"
-import { ReactNode } from "react"
+import { type ReactNode } from "react"
 
 import {
   getLogger,

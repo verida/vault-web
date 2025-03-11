@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next"
-import { ReactNode } from "react"
+import type { ReactNode } from "react"
 
 import { Header } from "@/components/header/header"
 import { RootProviders } from "@/components/root-providers"

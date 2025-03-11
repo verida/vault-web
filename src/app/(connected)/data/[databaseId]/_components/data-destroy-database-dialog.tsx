@@ -1,6 +1,6 @@
 "use client"
 
-import { ReactNode, useCallback, useState } from "react"
+import { type ReactNode, useCallback, useState } from "react"
 
 import {
   AlertDialog,
@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button"
 import { featureFlags } from "@/config/features"
-import { DatabaseDefinition } from "@/features/data/types"
+import type { DatabaseDefinition } from "@/features/data/types"
 import { useToast } from "@/features/toasts/use-toast"
 import { useDestroyVeridaDatabase } from "@/features/verida-database/hooks/use-destroy-verida-database"
 

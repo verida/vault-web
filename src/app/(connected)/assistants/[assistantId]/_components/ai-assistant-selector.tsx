@@ -2,7 +2,7 @@
 
 import {
   DndContext,
-  DragEndEvent,
+  type DragEndEvent,
   KeyboardSensor,
   PointerSensor,
   closestCenter,
@@ -18,7 +18,7 @@ import {
 import { CSS } from "@dnd-kit/utilities"
 import { CheckIcon, GripVerticalIcon } from "lucide-react"
 import { useRouter } from "next/navigation"
-import { ComponentProps, useCallback, useMemo, useState } from "react"
+import { type ComponentProps, useCallback, useMemo, useState } from "react"
 
 import { EditIcon } from "@/components/icons/edit-icon"
 import { Button } from "@/components/ui/button"
@@ -45,7 +45,7 @@ import {
 import { useAiAssistantDialog } from "@/features/assistants/hooks/use-ai-assistant-dialog"
 import { useGetAiAssistants } from "@/features/assistants/hooks/use-get-ai-assistants"
 import { useUpdateAiAssistant } from "@/features/assistants/hooks/use-update-ai-assistant"
-import {
+import type {
   AiAssistantFormData,
   AiAssistantRecord,
 } from "@/features/assistants/types"

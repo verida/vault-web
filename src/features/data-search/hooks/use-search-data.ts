@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query"
 
-import { SearchType } from "@/features/data-search/types"
+import type { SearchType } from "@/features/data-search/types"
 import { searchData } from "@/features/data-search/utils"
 import { useVerida } from "@/features/verida/hooks/use-verida"
 

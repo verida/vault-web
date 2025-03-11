@@ -2,7 +2,7 @@
 
 import {
   ErrorPageContent,
-  ErrorPageProps,
+  type ErrorPageProps,
 } from "@/components/layouts/error-page-content"
 
 export default function DatabaseErrorPage(props: ErrorPageProps) {

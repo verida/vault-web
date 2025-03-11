@@ -7,11 +7,11 @@ import { DataConnectionLogsTableRow } from "@/components/data-connections/logs-t
 import { DataTable } from "@/components/data-table/data-table"
 import { EMPTY_VALUE_FALLBACK } from "@/constants/misc"
 import { useDataConnectionsLogs } from "@/features/data-connections/hooks/use-data-connections-logs"
-import { DataConnectionSyncLog } from "@/features/data-connections/types"
+import type { DataConnectionSyncLog } from "@/features/data-connections/types"
 import { DataTableColumnAlignFeature } from "@/features/data-table/data-table-column-align-feature"
 import { DataTableColumnClassNameFeature } from "@/features/data-table/data-table-column-classname-feature"
 import { useDataTableState } from "@/features/data-table/hooks/use-data-table-state"
-import { VeridaRecord } from "@/features/verida-database/types"
+import type { VeridaRecord } from "@/features/verida-database/types"
 
 const fallbackData: VeridaRecord<DataConnectionSyncLog>[] = []
 

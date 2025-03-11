@@ -36,7 +36,7 @@ import { commonConfig } from "@/config/common"
 import { LLM_MODEL_DEFS } from "@/features/assistants/constants"
 import { useAssistants } from "@/features/assistants/hooks/use-assistants"
 import { PromptConfigFormDataSchema } from "@/features/assistants/schemas"
-import { PromptConfigFormData } from "@/features/assistants/types"
+import type { PromptConfigFormData } from "@/features/assistants/types"
 import { useToast } from "@/features/toasts/use-toast"
 
 export interface ManageAiPromptConfigDialogProps {

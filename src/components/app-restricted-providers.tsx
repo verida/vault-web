@@ -1,4 +1,4 @@
-import { ReactNode } from "react"
+import { type ReactNode } from "react"
 
 import { ConditionalWrappingComponent } from "@/components/layouts/conditional-wrapping-component"
 import { featureFlags } from "@/config/features"

@@ -1,7 +1,7 @@
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
-import { ReactNode, useCallback, useEffect, useState } from "react"
+import { type ReactNode, useCallback, useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 
 import {
@@ -37,7 +37,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { AiPromptFormDataSchema } from "@/features/assistants/schemas"
-import { AiPromptFormData } from "@/features/assistants/types"
+import type { AiPromptFormData } from "@/features/assistants/types"
 import { Logger } from "@/features/telemetry/logger"
 import { cn } from "@/styles/utils"
 

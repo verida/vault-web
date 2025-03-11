@@ -1,5 +1,5 @@
 import { type VariantProps, cva } from "class-variance-authority"
-import { ComponentPropsWithRef, ReactNode } from "react"
+import { type ComponentPropsWithRef, type ReactNode } from "react"
 
 import { cn } from "@/styles/utils"
 

@@ -1,6 +1,6 @@
 "use client"
 
-import { ComponentProps } from "react"
+import { type ComponentProps } from "react"
 
 import { Close } from "@/components/icons/close"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
@@ -17,7 +17,7 @@ import {
 import { Typography } from "@/components/ui/typography"
 import { EMPTY_VALUE_FALLBACK } from "@/constants/misc"
 import { useDataSchema } from "@/features/verida-data-schemas/hooks/use-data-schema"
-import { VeridaRecord } from "@/features/verida-database/types"
+import type { VeridaRecord } from "@/features/verida-database/types"
 import { cn } from "@/styles/utils"
 
 export interface DataRequestItemPageRequestedDataCardProps

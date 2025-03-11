@@ -1,4 +1,4 @@
-import { DataTablePaginationSizeValue } from "@/features/data-table/types"
+import type { DataTablePaginationSizeValue } from "@/features/data-table/types"
 
 export const DATA_TABLE_PAGINATION_SIZE_DEFAULT = 10
 

@@ -1,7 +1,7 @@
 "use client"
 
 import { ChevronRight } from "lucide-react"
-import { ComponentProps } from "react"
+import { type ComponentProps } from "react"
 
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
@@ -11,7 +11,7 @@ import { DialogBody } from "@/components/ui/dialog"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Typography } from "@/components/ui/typography"
 import { useDataProviders } from "@/features/data-connections/hooks/use-data-providers"
-import { DataProvider } from "@/features/data-connections/types"
+import type { DataProvider } from "@/features/data-connections/types"
 import { cn } from "@/styles/utils"
 
 export interface ConnectDataProviderDialogProviderSelectionProps {

@@ -1,9 +1,15 @@
 "use client"
 
 import { useQueryClient } from "@tanstack/react-query"
-import { IMessaging } from "@verida/types"
+import type { IMessaging } from "@verida/types"
 import { usePathname, useRouter } from "next/navigation"
-import { ReactNode, useCallback, useEffect, useMemo, useState } from "react"
+import {
+  type ReactNode,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react"
 import { useDebouncedCallback } from "use-debounce"
 
 import { ToastAction } from "@/components/ui/toast"
@@ -15,12 +21,12 @@ import { Logger } from "@/features/telemetry/logger"
 import { useToast } from "@/features/toasts/use-toast"
 import {
   VeridaInboxContext,
-  VeridaInboxContextType,
+  type VeridaInboxContextType,
 } from "@/features/verida-inbox/contexts/verida-inbox-context"
 import { useInboxMessageItemIdState } from "@/features/verida-inbox/hooks/use-inbox-message-item-id-state"
 import { VeridaInboxQueryKeys } from "@/features/verida-inbox/queries"
 import { VeridaInboxMessageRecordSchema } from "@/features/verida-inbox/schemas"
-import { VeridaMessagingEngineStatus } from "@/features/verida-inbox/types"
+import type { VeridaMessagingEngineStatus } from "@/features/verida-inbox/types"
 import { useVerida } from "@/features/verida/hooks/use-verida"
 
 const logger = Logger.create("verida-inbox")

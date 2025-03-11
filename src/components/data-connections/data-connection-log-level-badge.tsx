@@ -1,4 +1,4 @@
-import { SVGProps } from "react"
+import { type SVGProps } from "react"
 
 import { StatusDebugIcon } from "@/components/icons/status-debug-icon"
 import { StatusErrorIcon } from "@/components/icons/status-error-icon"
@@ -9,7 +9,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
-import { DataConnectionSyncLogLevel } from "@/features/data-connections/types"
+import type { DataConnectionSyncLogLevel } from "@/features/data-connections/types"
 import { cn } from "@/styles/utils"
 
 export interface DataConnectionLogLevelBadgeProps

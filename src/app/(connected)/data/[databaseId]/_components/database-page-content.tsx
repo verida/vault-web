@@ -1,7 +1,7 @@
-import { ComponentProps } from "react"
+import { type ComponentProps } from "react"
 
 import { DataRecordsTable } from "@/app/(connected)/data/[databaseId]/_components/data-records-table"
-import { DatabaseDefinition } from "@/features/data/types"
+import type { DatabaseDefinition } from "@/features/data/types"
 
 export interface DatabasePageContentProps
   extends Omit<ComponentProps<typeof DataRecordsTable>, "children"> {

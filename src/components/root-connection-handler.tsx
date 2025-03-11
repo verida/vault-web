@@ -1,7 +1,7 @@
 "use client"
 
 import { redirect } from "next/navigation"
-import { ReactNode } from "react"
+import type { ReactNode } from "react"
 
 import { VeridaConnectionLoading } from "@/components/verida/verida-connection-loading"
 import { useRedirectPathQueryState } from "@/features/auth/hooks/use-redirect-path-query-state"

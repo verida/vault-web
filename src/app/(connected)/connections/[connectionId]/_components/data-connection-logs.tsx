@@ -1,22 +1,22 @@
 "use client"
 
 import { getCoreRowModel, useReactTable } from "@tanstack/react-table"
-import { ComponentProps } from "react"
+import { type ComponentProps } from "react"
 
 import { dataConnectionLogsTableColumns } from "@/components/data-connections/logs-table/data-connection-logs-table-columns"
 import { DataConnectionLogsTableRow } from "@/components/data-connections/logs-table/data-connection-logs-table-row"
 import { DataTable } from "@/components/data-table/data-table"
 import { EMPTY_VALUE_FALLBACK } from "@/constants/misc"
 import { useDataConnectionLogs } from "@/features/data-connections/hooks/use-data-connection-logs"
-import {
+import type {
   DataConnection,
   DataConnectionSyncLog,
 } from "@/features/data-connections/types"
 import { DataTableColumnAlignFeature } from "@/features/data-table/data-table-column-align-feature"
 import { DataTableColumnClassNameFeature } from "@/features/data-table/data-table-column-classname-feature"
 import { useDataTableState } from "@/features/data-table/hooks/use-data-table-state"
-import { DataTablePaginationSizeValue } from "@/features/data-table/types"
-import { VeridaRecord } from "@/features/verida-database/types"
+import type { DataTablePaginationSizeValue } from "@/features/data-table/types"
+import type { VeridaRecord } from "@/features/verida-database/types"
 
 const PAGINATION_SIZE_DEFAULT = 5
 

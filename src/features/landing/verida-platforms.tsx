@@ -1,4 +1,4 @@
-import { ComponentProps, ComponentType } from "react"
+import type { ComponentProps, ComponentType } from "react"
 
 import { Discord } from "@/components/icons/discord"
 import { Linkedin } from "@/components/icons/linkedin"

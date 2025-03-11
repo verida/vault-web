@@ -1,4 +1,4 @@
-import { ComponentProps } from "react"
+import { type ComponentProps } from "react"
 
 import { Card } from "@/components/ui/card"
 import { cn } from "@/styles/utils"

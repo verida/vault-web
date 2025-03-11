@@ -18,7 +18,7 @@ import { DataTableColumnAlignFeature } from "@/features/data-table/data-table-co
 import { DataTableColumnClassNameFeature } from "@/features/data-table/data-table-column-classname-feature"
 import { useDataTableState } from "@/features/data-table/hooks/use-data-table-state"
 import { useVeridaAuthTokens } from "@/features/verida-auth/hooks/use-verida-auth-tokens"
-import { VeridaAuthToken } from "@/features/verida-auth/types"
+import type { VeridaAuthToken } from "@/features/verida-auth/types"
 
 const fallbackData: VeridaAuthToken[] = []
 

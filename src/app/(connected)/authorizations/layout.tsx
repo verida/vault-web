@@ -1,6 +1,6 @@
-import { Metadata } from "next"
+import { type Metadata } from "next"
 import { notFound } from "next/navigation"
-import { ReactNode, Suspense } from "react"
+import { type ReactNode, Suspense } from "react"
 
 import { PlusIcon } from "@/components/icons/plus-icon"
 import { PageWrapper } from "@/components/layouts/page-wrapper"

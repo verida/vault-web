@@ -2,10 +2,10 @@ import { QueryClient, useQuery, useQueryClient } from "@tanstack/react-query"
 import { useMemo } from "react"
 import { z } from "zod"
 
-import { UseQueryOptions } from "@/features/queries/types"
+import type { UseQueryOptions } from "@/features/queries/types"
 import { Logger } from "@/features/telemetry/logger"
 import { VeridaDatabaseQueryKeys } from "@/features/verida-database/queries"
-import {
+import type {
   VeridaDatabaseQueryFilter,
   VeridaDatabaseQueryOptions,
   VeridaRecord,
