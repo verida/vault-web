@@ -23,7 +23,6 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 import { featureFlags } from "@/config/features"
-import { useRestrictedAccess } from "@/features/restricted-access/hooks/use-restricted-access"
 import {
   getAssistantsPageRoute,
   getConnectionsPageRoute,
@@ -31,21 +30,20 @@ import {
   getDataPageRoute,
   getDiscoverPageRoute,
 } from "@/features/routes/utils"
+import { useVerida } from "@/features/verida/hooks/use-verida"
 import { cn } from "@/styles/utils"
 
-export type AppHeaderNavBarProps = Pick<
-  React.ComponentProps<typeof NavigationMenu>,
-  "className"
->
+export interface HeaderNavBarProps
+  extends Pick<React.ComponentProps<typeof NavigationMenu>, "className"> {}
 
-export function AppHeaderNavBar(props: AppHeaderNavBarProps) {
+export function HeaderNavBar(props: HeaderNavBarProps) {
   const { className } = props
+
+  const { isConnected } = useVerida()
 
   const path = usePathname()
 
-  const { access } = useRestrictedAccess()
-
-  if (access !== "allowed") {
+  if (!isConnected) {
     return null
   }
 
@@ -139,16 +137,17 @@ export function AppHeaderNavBar(props: AppHeaderNavBarProps) {
     </NavigationMenu>
   )
 }
-AppHeaderNavBar.displayName = "AppHeaderNavBar"
+HeaderNavBar.displayName = "HeaderNavBar"
 
-export type AppHeaderNavMenuProps = Pick<
-  React.ComponentProps<typeof Button>,
-  "className"
->
+export interface HeaderNavMenuProps
+  extends Pick<React.ComponentProps<typeof Button>, "className"> {}
 
-export function AppHeaderNavMenu(props: AppHeaderNavMenuProps) {
+export function HeaderNavMenu(props: HeaderNavMenuProps) {
   const { className } = props
 
+  const { isConnected } = useVerida()
+
+  const path = usePathname()
   const [isOpen, setIsOpen] = useState(false)
 
   const handleOpenChange = useCallback((isOpen: boolean) => {
@@ -163,11 +162,7 @@ export function AppHeaderNavMenu(props: AppHeaderNavMenuProps) {
     setIsOpen(false)
   }, [])
 
-  const path = usePathname()
-
-  const { access } = useRestrictedAccess()
-
-  if (access !== "allowed") {
+  if (!isConnected) {
     return null
   }
 
@@ -294,4 +289,4 @@ export function AppHeaderNavMenu(props: AppHeaderNavMenuProps) {
     </Popover>
   )
 }
-AppHeaderNavMenu.displayName = "AppHeaderNavMenu"
+HeaderNavMenu.displayName = "HeaderNavMenu"

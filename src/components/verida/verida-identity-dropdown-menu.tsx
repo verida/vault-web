@@ -78,13 +78,9 @@ export function VeridaIdentityDropdownMenu(
     router.push(getAuthorizedAppsPageRoute())
   }, [router])
 
-  if (!isConnected) {
+  if (!isConnected && displayNotConnectedSkeleton) {
     return (
-      <>
-        {displayNotConnectedSkeleton ? (
-          <VeridaIdentityNotConnectedDropdownMenuButton className={className} />
-        ) : null}
-      </>
+      <VeridaIdentityNotConnectedDropdownMenuButton className={className} />
     )
   }
 

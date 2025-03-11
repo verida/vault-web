@@ -1,25 +1,25 @@
 "use client"
 
 import { NuqsAdapter } from "nuqs/adapters/next/app"
-import { Suspense } from "react"
+import { ReactNode, Suspense } from "react"
 
 import { Toaster } from "@/components/ui/toaster"
 import { TooltipProvider } from "@/components/ui/tooltip"
+import { CommandProvider } from "@/features/command/components/command-provider"
 import { DataConnectionsBroadcastProvider } from "@/features/data-connections/components/data-connections-broadcast-provider"
 import { QueriesProvider } from "@/features/queries/queries-provider"
 import { RestrictedAccessProvider } from "@/features/restricted-access/components/restricted-access-provider"
 import { ThemesProvider } from "@/features/themes/themes-provider"
+import { VeridaInboxProvider } from "@/features/verida-inbox/components/verida-inbox-provider"
 import { VeridaProvider } from "@/features/verida/components/verida-provider"
 
-export type RootProvidersProps = {
-  children: React.ReactNode
+export interface RootProvidersProps {
+  children: ReactNode
 }
 
 export function RootProviders(props: RootProvidersProps) {
   const { children } = props
 
-  // Put global providers not requiring the user to be connected or authorised to use the app.
-  // For providers requiring the user to be connected and/or authorised to use the app, use the AppRestrictedProviders or AppUnrestrictedProviders components instead.
   return (
     <Suspense>
       <NuqsAdapter>
@@ -29,7 +29,9 @@ export function RootProviders(props: RootProvidersProps) {
               <VeridaProvider>
                 <RestrictedAccessProvider>
                   <DataConnectionsBroadcastProvider>
-                    {children}
+                    <VeridaInboxProvider>
+                      <CommandProvider>{children}</CommandProvider>
+                    </VeridaInboxProvider>
                   </DataConnectionsBroadcastProvider>
                 </RestrictedAccessProvider>
               </VeridaProvider>

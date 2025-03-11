@@ -12,19 +12,22 @@ import { featureFlags } from "@/config/features"
 import { useRestrictedAccess } from "@/features/restricted-access/hooks/use-restricted-access"
 import { getInboxPageRoute } from "@/features/routes/utils"
 import { InboxWithBadge } from "@/features/verida-inbox/components/inbox-with-badge"
+import { useVerida } from "@/features/verida/hooks/use-verida"
 import { cn } from "@/styles/utils"
 
-export type AppHeaderInboxLinkProps = Pick<
-  React.ComponentProps<typeof Button>,
-  "variant" | "size" | "className"
->
+export interface HeaderInboxButtonProps
+  extends Pick<
+    React.ComponentProps<typeof Button>,
+    "variant" | "size" | "className"
+  > {}
 
-export function AppHeaderInboxLink(props: AppHeaderInboxLinkProps) {
+export function HeaderInboxButton(props: HeaderInboxButtonProps) {
   const { variant = "ghost", size = "sm", className } = props
 
   const { access } = useRestrictedAccess()
+  const { isConnected } = useVerida()
 
-  if (!featureFlags.inbox.enabled || access !== "allowed") {
+  if (!featureFlags.inbox.enabled || access !== "allowed" || !isConnected) {
     return null
   }
 
@@ -42,4 +45,4 @@ export function AppHeaderInboxLink(props: AppHeaderInboxLinkProps) {
     </Tooltip>
   )
 }
-AppHeaderInboxLink.displayName = "AppHeaderInboxLink"
+HeaderInboxButton.displayName = "HeaderInboxButton"

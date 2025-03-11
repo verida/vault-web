@@ -1,11 +1,13 @@
 "use client"
 
-import { RestrictedAccessPageContent } from "@/app/(connected)/_components/restricted-access-page-content"
+import { ReactNode } from "react"
+
+import { RestrictedAccessPageContent } from "@/features/restricted-access/components/restricted-access-page-content"
 import { useRestrictedAccess } from "@/features/restricted-access/hooks/use-restricted-access"
 import { useVerida } from "@/features/verida/hooks/use-verida"
 
-export type RestrictedAccessHandlerProps = {
-  children: React.ReactNode
+export interface RestrictedAccessHandlerProps {
+  children: ReactNode
 }
 
 export function RestrictedAccessHandler(props: RestrictedAccessHandlerProps) {

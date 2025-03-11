@@ -1,9 +1,10 @@
 import { notFound } from "next/navigation"
+import { ReactNode } from "react"
 
 import { featureFlags } from "@/config/features"
 
-export type AuthLayoutProps = {
-  children: React.ReactNode
+export interface AuthLayoutProps {
+  children: ReactNode
 }
 
 export default function AuthLayout(props: AuthLayoutProps) {
@@ -14,7 +15,7 @@ export default function AuthLayout(props: AuthLayoutProps) {
   }
 
   return (
-    <div className="flex h-full w-full flex-col items-center justify-center gap-8 p-4">
+    <div className="flex h-full w-full flex-col items-center gap-8">
       {children}
     </div>
   )

@@ -1,20 +1,28 @@
-import { useEffect, useMemo, useState } from "react"
+import { ReactNode, useEffect, useMemo, useState } from "react"
 
+import { featureFlags } from "@/config/features"
 import {
   CommandContext,
   CommandContextType,
 } from "@/features/command/contexts/command-context"
+import { useRestrictedAccess } from "@/features/restricted-access/hooks/use-restricted-access"
 
-export type CommandProviderProps = {
-  children: React.ReactNode
+export interface CommandProviderProps {
+  children: ReactNode
 }
 
 export function CommandProvider(props: CommandProviderProps) {
   const { children } = props
 
+  const { access } = useRestrictedAccess()
+
   const [isOpen, setIsOpen] = useState(false)
 
   useEffect(() => {
+    if (!featureFlags.commandDialog.enabled || access !== "allowed") {
+      return
+    }
+
     const down = (e: KeyboardEvent) => {
       if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
         e.preventDefault()
@@ -23,7 +31,7 @@ export function CommandProvider(props: CommandProviderProps) {
     }
     document.addEventListener("keydown", down)
     return () => document.removeEventListener("keydown", down)
-  }, [])
+  }, [access])
 
   const contextValue: CommandContextType = useMemo(
     () => ({
@@ -31,9 +39,10 @@ export function CommandProvider(props: CommandProviderProps) {
       openCommand: () => setIsOpen(true),
       closeCommand: () => setIsOpen(false),
       toggleCommand: () => setIsOpen((prev) => !prev),
-      isOpen,
+      isOpen:
+        featureFlags.commandDialog.enabled && access === "allowed" && isOpen,
     }),
-    [isOpen]
+    [isOpen, access]
   )
 
   return (

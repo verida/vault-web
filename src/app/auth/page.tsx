@@ -1,9 +1,6 @@
 "use client"
 
-import Image from "next/image"
-
 import { VeridaConnectionLoading } from "@/components/verida/verida-connection-loading"
-import { VeridaIdentityDropdownMenu } from "@/components/verida/verida-identity-dropdown-menu"
 import { VeridaAuthConsentCard } from "@/features/verida-auth/components/verida-auth-consent-card"
 import { VeridaAuthErrorRequestCard } from "@/features/verida-auth/components/verida-auth-error-request-card"
 import { VeridaAuthInvalidRequestCard } from "@/features/verida-auth/components/verida-auth-invalid-request-card"
@@ -22,23 +19,6 @@ export default function AuthPage() {
 
   return (
     <div className="flex max-h-full w-full max-w-3xl flex-col gap-2">
-      <div className="flex shrink-0 flex-row items-center justify-between">
-        <div className="flex shrink-0 flex-row items-center">
-          <Image
-            src="/logo.svg"
-            alt="Verida Vault Logo"
-            height={32}
-            width={95}
-          />
-        </div>
-        <VeridaIdentityDropdownMenu
-          keepExpanded
-          displayNotConnectedSkeleton
-          hideDisconnect={false}
-          hideFeedback={false}
-          hideAuthorizedApps={true}
-        />
-      </div>
       {request.status === "processing" ? (
         <VeridaAuthProcessingRequestCard className="h-full min-h-0" />
       ) : request.status === "valid" ? (
