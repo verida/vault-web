@@ -84,6 +84,10 @@ export function getNewDataConnectionCallbackPageRoute() {
   return `/callback/new-data-connection`
 }
 
+export function getProfilePageRoute() {
+  return `/profile`
+}
+
 export function getAuthorizedAppsPageRoute() {
   return `/authorizations`
 }
