@@ -1,5 +1,6 @@
 import { Client } from "@verida/client-ts"
 import { Network } from "@verida/types"
+import type { WebUser } from "@verida/web-helpers"
 
 import { Logger } from "@/features/telemetry/logger"
 import { VERIDA_PROFILE_DB_NAME } from "@/features/verida-profile/constants"
@@ -237,5 +238,55 @@ async function getVeridaProfileDatastore({
     throw new Error("Failed to get Verida profile datastore", {
       cause: error,
     })
+  }
+}
+
+export type UpdateVeridaProfileArgs = {
+  profileToSave: VeridaProfile
+  did: string
+  webUserInstance: WebUser
+  network: Network
+  rpcUrl?: string
+  contextName?: string
+}
+
+export async function updateVeridaProfile({
+  webUserInstance,
+  did,
+  network,
+  rpcUrl,
+  contextName = VERIDA_VAULT_CONTEXT_NAME,
+  profileToSave,
+}: UpdateVeridaProfileArgs) {
+  logger.info("Updating user profile")
+
+  try {
+    const vaultContext = webUserInstance.getContext()
+    const profileDatastore = await vaultContext.openProfile()
+
+    if (!profileDatastore) {
+      throw new Error("Verida profile datastore unavailable")
+    }
+
+    // Unfortunatelly, looks like we can't Promise.all the set calls as it creates conflicts
+    await profileDatastore.set("name", profileToSave.name)
+    await profileDatastore.set("avatar", profileToSave.avatar)
+    await profileDatastore.set("description", profileToSave.description)
+    await profileDatastore.set("country", profileToSave.country)
+    await profileDatastore.set("website", profileToSave.website)
+
+    const updatedProfile = await getVeridaProfileFromClient({
+      did,
+      network,
+      contextName,
+      options: {
+        rpcUrl,
+      },
+    })
+
+    logger.info("Successfully updated Verida profile")
+    return updatedProfile
+  } catch (error) {
+    throw new Error("Failed to update Verida profile", { cause: error })
   }
 }

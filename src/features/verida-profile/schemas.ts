@@ -18,3 +18,19 @@ export const VeridaProfileSchema = z.object({
 export const VeridaProfileApiResponseSchema = VeridaBaseRecordSchema.extend(
   VeridaProfileSchema.shape
 )
+
+export const VeridaProfileFormDataSchema = z.object({
+  name: z.string(),
+  description: z.string().optional(),
+  avatar: z
+    .object({
+      uri: z.string().optional(),
+    })
+    .optional(),
+  website: z
+    .string()
+    .url({ message: "Please enter a valid URL" })
+    .optional()
+    .or(z.literal("")),
+  country: z.string().optional(),
+})

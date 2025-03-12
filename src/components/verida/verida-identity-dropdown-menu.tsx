@@ -3,7 +3,7 @@
 import { MessageCircleIcon, UserIcon } from "lucide-react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { type ComponentProps, type ReactNode, useCallback } from "react"
+import { type ComponentProps, useCallback } from "react"
 
 import { ApiKeyIcon } from "@/components/icons/api-key-icon"
 import { Copy } from "@/components/icons/copy"

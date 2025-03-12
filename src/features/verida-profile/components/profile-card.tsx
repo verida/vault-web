@@ -3,9 +3,11 @@
 import Link from "next/link"
 import { type ComponentProps, useMemo } from "react"
 
-import { Card, CardBody, CardHeader } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Card, CardBody, CardFooter, CardHeader } from "@/components/ui/card"
 import { Typography } from "@/components/ui/typography"
 import { EMPTY_VALUE_FALLBACK } from "@/constants/misc"
+import { getProfileEditPageRoute } from "@/features/routes/utils"
 import { getVeridaExplorerIdentityPageUrl } from "@/features/verida-explorer/utils"
 import { ProfileAvatar } from "@/features/verida-profile/components/profile-avatar"
 import { EMPTY_PROFILE_NAME_FALLBACK } from "@/features/verida-profile/constants"
@@ -59,8 +61,12 @@ export function ProfileCard(props: ProfileCardProps) {
         <ProfileItemField label="Description" value={profile.description} />
         <ProfileItemField label="Country" value={profile.country} />
         <ProfileItemUrlField label="Website" url={formattedWebsite} />
-        <ProfileItemField label="Username" value={profile.username} />
       </CardBody>
+      <CardFooter className="flex flex-row justify-end">
+        <Button asChild variant="outline">
+          <Link href={getProfileEditPageRoute()}>Edit Profile</Link>
+        </Button>
+      </CardFooter>
     </Card>
   )
 }
