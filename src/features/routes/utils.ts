@@ -88,6 +88,10 @@ export function getProfilePageRoute() {
   return `/profile`
 }
 
+export function getProfileEditPageRoute() {
+  return `/profile/edit`
+}
+
 export function getAuthorizedAppsPageRoute() {
   return `/authorizations`
 }

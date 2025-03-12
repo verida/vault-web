@@ -5,17 +5,17 @@ import {
   LoadingBlockTitle,
 } from "@/components/ui/loading"
 
-export default function ProfileLoadingPage() {
+export default function ProfileEditLoadingPage() {
   return (
     <div className="flex h-full flex-1 flex-row items-center justify-center p-4">
       <LoadingBlock>
         <LoadingBlockSpinner />
-        <LoadingBlockTitle>Loading profile...</LoadingBlockTitle>
+        <LoadingBlockTitle>Loading profile editor...</LoadingBlockTitle>
         <LoadingBlockDescription>
-          Please wait while we are getting your profile details
+          Please wait while we are preparing the profile editor
         </LoadingBlockDescription>
       </LoadingBlock>
     </div>
   )
 }
-ProfileLoadingPage.displayName = "ProfileLoadingPage"
+ProfileEditLoadingPage.displayName = "ProfileEditLoadingPage"

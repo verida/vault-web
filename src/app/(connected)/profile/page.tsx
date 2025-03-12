@@ -33,7 +33,7 @@ export default function ProfilePage() {
           <LoadingBlockSpinner />
           <LoadingBlockTitle>Loading profile...</LoadingBlockTitle>
           <LoadingBlockDescription>
-            Please wait while we are getting your profile information
+            Please wait while we are getting your profile details
           </LoadingBlockDescription>
         </LoadingBlock>
       </div>
@@ -46,7 +46,7 @@ export default function ProfilePage() {
         <ErrorBlockImage />
         <ErrorBlockTitle>Error loading profile</ErrorBlockTitle>
         <ErrorBlockDescription>
-          There was an error loading your profile information. Please try again
+          There was an error loading your profile details. Please try again
           later.
         </ErrorBlockDescription>
       </ErrorBlock>
