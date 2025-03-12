@@ -66,6 +66,8 @@ export function useUpdateVeridaProfile(
           ...profileToSave,
         })
       }
+
+      return { previousProfileData }
     },
     onError: (_error, _variables, context) => {
       toast({
