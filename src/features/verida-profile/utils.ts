@@ -1,5 +1,5 @@
 import { Client } from "@verida/client-ts"
-import { Network } from "@verida/types"
+import { type IProfile, Network } from "@verida/types"
 import type { WebUser } from "@verida/web-helpers"
 
 import { Logger } from "@/features/telemetry/logger"
@@ -21,6 +21,8 @@ type FetchVeridaProfileArgs = {
 }
 
 /**
+ * A bit unreliable at the moment, prefer using the client.
+ *
  * Fetches a Verida profile from the API.
  *
  * @param args - The arguments for fetching the profile.
@@ -58,6 +60,43 @@ export async function fetchVeridaProfileFromApi({
     return validatedProfile
   } catch (error) {
     throw new Error("Failed to fetch Verida profile from API", { cause: error })
+  }
+}
+
+type GetVeridaProfileFromWebUserArgs = {
+  webUserInstance: WebUser
+}
+
+/**
+ * Retrieves a Verida profile using a WebUser instance.
+ *
+ * This function is used when fetching the profile of the currently authenticated user.
+ *
+ * @param args - The arguments for retrieving the profile
+ * @param args.webUserInstance - The authenticated WebUser instance to use for fetching the profile
+ * @returns The user's Verida profile
+ * @throws {Error} If the profile datastore is unavailable or if retrieval fails
+ */
+export async function getVeridaProfileFromWebUser({
+  webUserInstance,
+}: GetVeridaProfileFromWebUserArgs): Promise<VeridaProfile> {
+  try {
+    logger.info("Getting Verida profile from WebUser")
+    const vaultContext = webUserInstance.getContext()
+    const profileDatastore = await vaultContext.openProfile()
+
+    if (!profileDatastore) {
+      throw new Error("Verida profile datastore unavailable")
+    }
+
+    const profile = await getVeridaProfileFromDatastore(profileDatastore)
+
+    logger.info("Successfully got Verida profile from WebUser")
+    return profile
+  } catch (error) {
+    throw new Error("Failed to get Verida profile from WebUser", {
+      cause: error,
+    })
   }
 }
 
@@ -101,34 +140,7 @@ export async function getVeridaProfileFromClient({
       throw new Error("No Verida profile datastore found")
     }
 
-    // Fetch profile data concurrently
-    const [
-      nameResult,
-      avatarResult,
-      descriptionResult,
-      countryResult,
-      websiteResult,
-    ] = await Promise.allSettled([
-      profileDb.get("name"),
-      profileDb.get("avatar"),
-      profileDb.get("description"),
-      profileDb.get("country"),
-      profileDb.get("website"),
-    ])
-
-    const profile = {
-      name: nameResult.status === "fulfilled" ? nameResult.value : undefined,
-      avatar:
-        avatarResult.status === "fulfilled" ? avatarResult.value : undefined,
-      description:
-        descriptionResult.status === "fulfilled"
-          ? descriptionResult.value
-          : undefined,
-      country:
-        countryResult.status === "fulfilled" ? countryResult.value : undefined,
-      website:
-        websiteResult.status === "fulfilled" ? websiteResult.value : undefined,
-    }
+    const profile = getVeridaProfileFromDatastore(profileDb)
 
     logger.info("Successfully retrieved Verida profile from client")
     return profile
@@ -139,56 +151,47 @@ export async function getVeridaProfileFromClient({
   }
 }
 
-type GetVeridaProfileArgs = {
-  did: string
-  network: Network
-  contextName?: string
-  apiOptions?: FetchVeridaProfileArgs["options"]
-  clientOptions?: GetVeridaProfileFromClientArgs["options"]
-}
-
 /**
- * Retrieves a Verida profile, first attempting to fetch from the API,
- * then falling back to the client if API fetch fails.
- * @param args - The arguments for retrieving the profile.
- * @returns The retrieved Verida profile.
- * @throws If both API and client retrieval methods fail.
+ * Retrieves profile data from a Verida profile datastore.
+ *
+ * This function concurrently fetches multiple profile fields (name, avatar, description, country, website) from the provided datastore. It uses Promise.allSettled to handle potential failures gracefully - if any individual field fetch fails, that field will be undefined in the returned profile rather than causing the entire operation to fail.
+ *
+ * @param profileDatastore - The Verida profile datastore to fetch from
+ * @returns A VeridaProfile object containing the fetched profile data
  */
-export async function getVeridaProfile({
-  did,
-  network,
-  contextName,
-  apiOptions,
-  clientOptions,
-}: GetVeridaProfileArgs): Promise<VeridaProfile> {
-  logger.info("Getting Verida profile")
+async function getVeridaProfileFromDatastore(
+  profileDatastore: IProfile
+): Promise<VeridaProfile> {
+  // Fetch profile data concurrently
+  const [
+    nameResult,
+    avatarResult,
+    descriptionResult,
+    countryResult,
+    websiteResult,
+  ] = await Promise.allSettled([
+    profileDatastore.get("name"),
+    profileDatastore.get("avatar"),
+    profileDatastore.get("description"),
+    profileDatastore.get("country"),
+    profileDatastore.get("website"),
+  ])
 
-  // Try to fetch from the API first
-  try {
-    return await fetchVeridaProfileFromApi({
-      did,
-      network,
-      contextName,
-      options: apiOptions,
-    })
-  } catch (apiError) {
-    logger.error(apiError)
-    logger.warn(
-      "Failed to fetch Verida profile from API, falling back to Verida client"
-    )
-
-    // If API fetch fails, try to fetch from the client
-    try {
-      return await getVeridaProfileFromClient({
-        did,
-        network,
-        contextName,
-        options: clientOptions,
-      })
-    } catch (clientError) {
-      throw new Error("Failed to get Verida profile", { cause: clientError })
-    }
+  const profile: VeridaProfile = {
+    name: nameResult.status === "fulfilled" ? nameResult.value : undefined,
+    avatar:
+      avatarResult.status === "fulfilled" ? avatarResult.value : undefined,
+    description:
+      descriptionResult.status === "fulfilled"
+        ? descriptionResult.value
+        : undefined,
+    country:
+      countryResult.status === "fulfilled" ? countryResult.value : undefined,
+    website:
+      websiteResult.status === "fulfilled" ? websiteResult.value : undefined,
   }
+
+  return profile
 }
 
 type GetVeridaProfileDatastoreArgs = {
@@ -243,19 +246,19 @@ async function getVeridaProfileDatastore({
 
 export type UpdateVeridaProfileArgs = {
   profileToSave: VeridaProfile
-  did: string
   webUserInstance: WebUser
-  network: Network
-  rpcUrl?: string
-  contextName?: string
 }
 
+/**
+ * Updates a user's Verida profile with new information.
+ *
+ * @param webUserInstance - The authenticated Verida web user instance
+ * @param profileToSave - The profile data to update containing name, avatar, description etc.
+ * @returns The updated Verida profile
+ * @throws If profile datastore is unavailable or update fails
+ */
 export async function updateVeridaProfile({
   webUserInstance,
-  did,
-  network,
-  rpcUrl,
-  contextName = VERIDA_VAULT_CONTEXT_NAME,
   profileToSave,
 }: UpdateVeridaProfileArgs) {
   logger.info("Updating user profile")
@@ -275,13 +278,8 @@ export async function updateVeridaProfile({
     await profileDatastore.set("country", profileToSave.country)
     await profileDatastore.set("website", profileToSave.website)
 
-    const updatedProfile = await getVeridaProfileFromClient({
-      did,
-      network,
-      contextName,
-      options: {
-        rpcUrl,
-      },
+    const updatedProfile = await getVeridaProfileFromWebUser({
+      webUserInstance,
     })
 
     logger.info("Successfully updated Verida profile")

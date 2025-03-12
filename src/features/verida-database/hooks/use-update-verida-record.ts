@@ -18,6 +18,14 @@ type UpdateRecordArgs<T extends z.ZodObject<any>> = {
   record: VeridaRecord<z.infer<T>>
 }
 
+type UpdateRecordMutationContext<T extends z.ZodObject<any>> = {
+  previousRecordData: VeridaRecord<z.infer<T>> | undefined
+  previousRecordsData: [
+    QueryKey,
+    FetchVeridaDataRecordsResult<z.infer<T>> | undefined,
+  ][]
+}
+
 export type UseUpdateVeridaRecordOptions = {
   disableOptimisticUpdate?: boolean
 }
@@ -33,13 +41,7 @@ export function useUpdateVeridaRecord<T extends z.ZodObject<any>>(
     VeridaRecord<z.infer<T>>,
     Error,
     UpdateRecordArgs<T>,
-    {
-      previousRecordData: VeridaRecord<z.infer<T>> | undefined
-      previousRecordsData: [
-        QueryKey,
-        FetchVeridaDataRecordsResult<z.infer<T>> | undefined,
-      ][]
-    }
+    UpdateRecordMutationContext<T>
   >({
     mutationFn: async ({ databaseName, record }) => {
       const sessionToken = await getAccountSessionToken()

@@ -33,7 +33,7 @@ import {
 import { Textarea } from "@/components/ui/textarea"
 import { getProfilePageRoute } from "@/features/routes/utils"
 import { Logger } from "@/features/telemetry/logger"
-import { useUpdateProfile } from "@/features/verida-profile/hooks/use-update-profile"
+import { useUpdateVeridaProfile } from "@/features/verida-profile/hooks/use-update-verida-profile"
 import { useUserProfile } from "@/features/verida-profile/hooks/use-user-profile"
 import { VeridaProfileFormDataSchema } from "@/features/verida-profile/schemas"
 import type { VeridaProfileFormData } from "@/features/verida-profile/types"
@@ -42,7 +42,7 @@ const logger = Logger.create("verida-profile")
 
 export default function ProfileEditPage() {
   const { profile, isLoading, isError } = useUserProfile()
-  const { updateProfileAsync, isPending } = useUpdateProfile()
+  const { updateProfileAsync, isPending } = useUpdateVeridaProfile()
   const router = useRouter()
 
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -62,7 +62,9 @@ export default function ProfileEditPage() {
     async (data: VeridaProfileFormData) => {
       setIsSubmitting(true)
       try {
-        await updateProfileAsync(data)
+        await updateProfileAsync({
+          profileToSave: data,
+        })
         router.replace(getProfilePageRoute())
       } catch (error) {
         logger.error(error)

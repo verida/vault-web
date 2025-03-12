@@ -3,8 +3,13 @@ import { Network } from "@verida/types"
 
 import { commonConfig } from "@/config/common"
 import { Logger } from "@/features/telemetry/logger"
-import { getVeridaProfileFromClient } from "@/features/verida-profile/utils"
+import { VeridaProfileQueryKeys } from "@/features/verida-profile/queries"
+import {
+  getVeridaProfileFromClient,
+  getVeridaProfileFromWebUser,
+} from "@/features/verida-profile/utils"
 import { VERIDA_VAULT_CONTEXT_NAME } from "@/features/verida/constants"
+import { useVerida } from "@/features/verida/hooks/use-verida"
 
 const logger = Logger.create("verida-profile")
 
@@ -19,8 +24,10 @@ export function useVeridaProfile({
   network = commonConfig.VERIDA_NETWORK,
   contextName = VERIDA_VAULT_CONTEXT_NAME,
 }: UseVeridaProfileArgs) {
+  const { did: currentUserDid, webUserInstanceRef } = useVerida()
+
   const { data, ...query } = useQuery({
-    queryKey: ["verida", "profile", did],
+    queryKey: VeridaProfileQueryKeys.profile(did),
     enabled: !!did,
     queryFn: () => {
       if (!did) {
@@ -31,6 +38,13 @@ export function useVeridaProfile({
 
       // TODO: Use getVeridaProfile instead once the backend is stable.
       // Lots of calls returning errors and no profile right now.
+
+      if (currentUserDid === did) {
+        return getVeridaProfileFromWebUser({
+          webUserInstance: webUserInstanceRef.current,
+        })
+      }
+
       return getVeridaProfileFromClient({
         did,
         network,
@@ -58,6 +72,8 @@ export async function invalidateVeridaProfile(
   queryClient: QueryClient,
   did: string
 ) {
-  await queryClient.invalidateQueries({ queryKey: ["verida", "profile", did] })
+  await queryClient.invalidateQueries({
+    queryKey: VeridaProfileQueryKeys.invalidateProfile(did),
+  })
   logger.info("Successfully invalidated Verida profile queries")
 }
