@@ -31,6 +31,12 @@ import {
   LoadingBlockTitle,
 } from "@/components/ui/loading"
 import { Textarea } from "@/components/ui/textarea"
+import {
+  CountryCombobox,
+  CountryComboboxContent,
+  CountryComboboxTrigger,
+  CountryComboboxValue,
+} from "@/features/countries/components/country-combobox"
 import { getProfilePageRoute } from "@/features/routes/utils"
 import { Logger } from "@/features/telemetry/logger"
 import { useUpdateVeridaProfile } from "@/features/verida-profile/hooks/use-update-verida-profile"
@@ -170,9 +176,17 @@ export default function ProfileEditPage() {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Country</FormLabel>
-                      <FormControl>
-                        <Input placeholder="Australia" {...field} />
-                      </FormControl>
+                      <CountryCombobox>
+                        <CountryComboboxTrigger asChild>
+                          <FormControl>
+                            <CountryComboboxValue selectedValue={field.value} />
+                          </FormControl>
+                        </CountryComboboxTrigger>
+                        <CountryComboboxContent
+                          selectedValue={field.value}
+                          onSelectValue={field.onChange}
+                        />
+                      </CountryCombobox>
                       <FormDescription>
                         The country where you are located. (optional)
                       </FormDescription>
