@@ -146,6 +146,10 @@ export default function ProfileEditPage() {
                           value={field.value}
                           onValueChange={field.onChange}
                           onError={(error) => {
+                            if (!error) {
+                              form.clearErrors("avatar.uri")
+                              return
+                            }
                             form.setError("avatar.uri", {
                               message: error,
                             })
