@@ -97,7 +97,7 @@ export function CountryComboboxContent(props: CountryComboboxContentProps) {
             {countries.map((country) => (
               <CommandItem
                 value={country.name}
-                key={country.code}
+                key={country.iso2}
                 onSelect={() => {
                   onSelectValue(country.name)
                 }}

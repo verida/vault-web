@@ -1,5 +1,3 @@
-import type { ICountryData, TCountryCode } from "countries-list"
+import type { ICountryData } from "countries-list"
 
-export interface CountryData extends ICountryData {
-  code: TCountryCode
-}
+export type CountryData = ICountryData
