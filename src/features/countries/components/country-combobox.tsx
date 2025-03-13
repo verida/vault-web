@@ -49,9 +49,11 @@ export const CountryComboboxValue = forwardRef<
       )}
     >
       <div className="flex flex-row items-center justify-between gap-4">
-        {selectedValue
-          ? countries.find((country) => country.name === selectedValue)?.name
-          : "Select country"}
+        <Typography variant="base-l">
+          {selectedValue
+            ? countries.find((country) => country.name === selectedValue)?.name
+            : "Select country"}
+        </Typography>
         <ChevronsUpDownIcon className="size-5 shrink-0 opacity-50" />
       </div>
     </Button>
@@ -81,7 +83,7 @@ export function CountryComboboxContent(props: CountryComboboxContentProps) {
           className="rounded-none border-0 border-b focus-visible:ring-0"
         />
         <CommandList className="w-full">
-          <CommandEmpty>No language found.</CommandEmpty>
+          <CommandEmpty>No country found.</CommandEmpty>
           <CommandGroup>
             <CommandItem
               value=""
