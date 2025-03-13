@@ -83,8 +83,7 @@ export function CountryComboboxContent(props: CountryComboboxContentProps) {
         <CommandList className="w-full">
           <CommandEmpty>No language found.</CommandEmpty>
           <CommandGroup>
-            {/* FIXME: Fix clearing the country */}
-            {/* <CommandItem
+            <CommandItem
               value=""
               onSelect={() => {
                 onSelectValue("")
@@ -94,7 +93,7 @@ export function CountryComboboxContent(props: CountryComboboxContentProps) {
               <Typography component="span" className="truncate italic">
                 No country
               </Typography>
-            </CommandItem> */}
+            </CommandItem>
             {countries.map((country) => (
               <CommandItem
                 value={country.name}
