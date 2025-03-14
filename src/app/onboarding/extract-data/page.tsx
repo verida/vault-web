@@ -2,9 +2,8 @@
 
 import { useMemo } from "react"
 
-import { DataConnectionCard } from "@/app/(connected)/connections/summary/_components/data-connection-card"
+import { DataConnectionsList } from "@/app/(connected)/connections/summary/_components/data-connections-list"
 import { DataProvidersList } from "@/app/(connected)/connections/summary/_components/data-providers-list"
-import { Typography } from "@/components/typography"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import {
   ErrorBlock,
@@ -12,7 +11,7 @@ import {
   ErrorBlockImage,
   ErrorBlockTitle,
 } from "@/components/ui/error"
-import { useDataConnections } from "@/features/data-connections/hooks/use-data-connections"
+import { Typography } from "@/components/ui/typography"
 import { useDataProviders } from "@/features/data-connections/hooks/use-data-providers"
 import {
   OnboardingCard,
@@ -20,11 +19,9 @@ import {
   OnboardingCardHeader,
 } from "@/features/onboarding/components/onboarding-card"
 import { useVerida } from "@/features/verida/hooks/use-verida"
-import { cn } from "@/styles/utils"
 
 export default function OnboardingExtractDataPage() {
   const { isConnected } = useVerida()
-  const { connections } = useDataConnections()
   const { providers, isLoading, isError } = useDataProviders()
 
   const filteredProviders = useMemo(
@@ -49,28 +46,10 @@ export default function OnboardingExtractDataPage() {
           </ErrorBlock>
         ) : (
           <>
-            {connections && connections.length > 0 ? (
-              <section className="flex flex-col gap-4">
-                <Typography variant="heading-4">
-                  You already have existing Data Connections
-                </Typography>
-                <div
-                  className={cn(
-                    "grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6"
-                  )}
-                >
-                  {connections.map((connection) => (
-                    <article key={connection._id}>
-                      <DataConnectionCard
-                        connection={connection}
-                        className="h-full"
-                        hideDetailsLink
-                      />
-                    </article>
-                  ))}
-                </div>
-              </section>
-            ) : null}
+            <section className="flex flex-col gap-4">
+              <Typography variant="heading-4">Data Connections</Typography>
+              <DataConnectionsList />
+            </section>
             <section className="flex flex-col gap-4">
               <Typography variant="heading-4">Available Platforms</Typography>
               <DataProvidersList

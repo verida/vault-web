@@ -2,7 +2,7 @@ import { z } from "zod"
 
 import { Logger } from "@/features/telemetry/logger"
 import { VeridaDataSchemaSchema } from "@/features/verida-data-schemas/schemas"
-import { VeridaDataSchema } from "@/features/verida-data-schemas/types"
+import type { VeridaDataSchema } from "@/features/verida-data-schemas/types"
 
 const logger = Logger.create("verida-data-schemas")
 

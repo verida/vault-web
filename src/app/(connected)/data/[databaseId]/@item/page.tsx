@@ -6,8 +6,10 @@ import { DataItemPageContent } from "@/app/(connected)/data/[databaseId]/@item/_
 import { USER_DATABASE_DEFS } from "@/features/data/constants"
 import { useItemIdState } from "@/features/data/hooks/use-itemd-id-state"
 
-export type DataItemPageProps = {
-  params: { databaseId: string }
+export interface DataItemPageProps {
+  params: {
+    databaseId: string
+  }
 }
 
 export default function DataItemPage(props: DataItemPageProps) {

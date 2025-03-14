@@ -1,5 +1,6 @@
-import { Metadata } from "next"
+import { type Metadata } from "next"
 import { notFound } from "next/navigation"
+import { type ReactNode } from "react"
 
 import { featureFlags } from "@/config/features"
 
@@ -7,8 +8,8 @@ export const metadata: Metadata = {
   title: "Data",
 }
 
-export type DataLayoutProps = {
-  children: React.ReactNode
+export interface DataLayoutProps {
+  children: ReactNode
 }
 
 export default function DataLayout(props: DataLayoutProps) {

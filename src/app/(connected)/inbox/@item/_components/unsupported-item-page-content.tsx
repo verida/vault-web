@@ -4,12 +4,12 @@ import {
   ItemSheetBody,
   ItemSheetHeader,
   ItemSheetTitle,
-} from "@/components/item-sheet"
+} from "@/components/layouts/item-sheet"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { MessageBlock, MessageBlockBody } from "@/components/ui/message-block"
-import { VeridaInboxMessageRecord } from "@/features/verida-inbox/types"
+import type { VeridaInboxMessageRecord } from "@/features/verida-inbox/types"
 
-export type UnsupportedItemPageContentProps = {
+export interface UnsupportedItemPageContentProps {
   inboxMessage: VeridaInboxMessageRecord
   onMarkAsUnread?: () => void
 }

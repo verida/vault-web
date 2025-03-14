@@ -1,5 +1,7 @@
-export type ConnectionLayoutProps = {
-  children: React.ReactNode
+import { type ReactNode } from "react"
+
+export interface ConnectionLayoutProps {
+  children: ReactNode
 }
 
 export default function ConnectionLayout(props: ConnectionLayoutProps) {

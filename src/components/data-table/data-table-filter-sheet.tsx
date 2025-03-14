@@ -1,3 +1,5 @@
+import { type ReactNode } from "react"
+
 import {
   StandardSheet,
   StandardSheetBody,
@@ -7,11 +9,11 @@ import {
   StandardSheetHeader,
   StandardSheetTitle,
   StandardSheetTrigger,
-} from "@/components/standard-sheet"
+} from "@/components/layouts/standard-sheet"
 import { Button } from "@/components/ui/button"
 
-export type DataTableFilterSheetProps = {
-  children: React.ReactNode
+export interface DataTableFilterSheetProps {
+  children: ReactNode
 }
 
 // TODO: To implement

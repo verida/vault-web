@@ -1,6 +1,6 @@
 import { useDataConnectionsLogs } from "@/features/data-connections/hooks/use-data-connections-logs"
-import { DataConnectionSyncLog } from "@/features/data-connections/types"
-import {
+import type { DataConnectionSyncLog } from "@/features/data-connections/types"
+import type {
   VeridaDatabaseQueryFilter,
   VeridaDatabaseQueryOptions,
   VeridaRecord,

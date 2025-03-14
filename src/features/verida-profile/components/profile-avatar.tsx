@@ -1,11 +1,13 @@
+import { type ComponentProps } from "react"
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Skeleton } from "@/components/ui/skeleton"
 import { EMPTY_VALUE_FALLBACK } from "@/constants/misc"
-import { VeridaProfile } from "@/features/verida-profile/types"
+import type { VeridaProfile } from "@/features/verida-profile/types"
 import { cn } from "@/styles/utils"
 
 export interface ProfileAvatarProps
-  extends Omit<React.ComponentProps<typeof Avatar>, "children"> {
+  extends Omit<ComponentProps<typeof Avatar>, "children"> {
   profile: VeridaProfile | undefined | null
   isLoading?: boolean
 }

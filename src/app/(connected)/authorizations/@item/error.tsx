@@ -2,7 +2,7 @@
 
 import { useEffect } from "react"
 
-import { ErrorPageProps } from "@/components/error-page-content"
+import { type ErrorPageProps } from "@/components/layouts/error-page-content"
 import { Logger } from "@/features/telemetry/logger"
 import { useToast } from "@/features/toasts/use-toast"
 

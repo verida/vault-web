@@ -2,7 +2,7 @@
 
 import { intlFormat, isDate } from "date-fns"
 import Link from "next/link"
-import { useCallback, useMemo } from "react"
+import { type ComponentProps, useCallback, useMemo } from "react"
 
 import { DeleteIcon } from "@/components/icons/delete-icon"
 import {
@@ -12,8 +12,7 @@ import {
   ItemSheetFooter,
   ItemSheetHeader,
   ItemSheetTitle,
-} from "@/components/item-sheet"
-import { Typography } from "@/components/typography"
+} from "@/components/layouts/item-sheet"
 import {
   Accordion,
   AccordionContent,
@@ -38,6 +37,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
+import { Typography } from "@/components/ui/typography"
 import { EMPTY_VALUE_FALLBACK } from "@/constants/misc"
 import {
   RevokeAuthorizedAppDialog,
@@ -46,14 +46,14 @@ import {
 import { VeridaAuthScope } from "@/features/verida-auth/components/verida-auth-scope"
 import { useResolvedVeridaAuthScopes } from "@/features/verida-auth/hooks/use-resolved-verida-auth-scopes"
 import { useVeridaAuthToken } from "@/features/verida-auth/hooks/use-verida-auth-token"
-import { VeridaAuthScope as VeridaAuthScopeType } from "@/features/verida-auth/types"
+import type { VeridaAuthScope as VeridaAuthScopeType } from "@/features/verida-auth/types"
 import { ProfileAvatar } from "@/features/verida-profile/components/profile-avatar"
 import { EMPTY_PROFILE_NAME_FALLBACK } from "@/features/verida-profile/constants"
 import { useVeridaProfile } from "@/features/verida-profile/hooks/use-verida-profile"
 import { cn } from "@/styles/utils"
 import { SHORT_DATE_TIME_FORMAT_OPTIONS } from "@/utils/date"
 
-export type AuthorizedAppItemPageContentProps = {
+export interface AuthorizedAppItemPageContentProps {
   open: boolean
   onOpenChange: (open: boolean) => void
   itemId: string
@@ -284,10 +284,7 @@ export function AuthorizedAppItemPageContent(
 AuthorizedAppItemPageContent.displayName = "AuthorizedAppItemPageContent"
 
 export interface ItemFieldUrlProps
-  extends Omit<
-    React.ComponentProps<typeof ItemField>,
-    "propertyName" | "children"
-  > {
+  extends Omit<ComponentProps<typeof ItemField>, "propertyName" | "children"> {
   url?: string
 }
 
@@ -315,7 +312,7 @@ export function ItemFieldUrl(props: ItemFieldUrlProps) {
         className="underline"
       >
         <Typography variant="base-regular" className="truncate">
-          {`${urlObject.protocol}//${urlObject.hostname}`}
+          {urlObject.origin}
         </Typography>
       </Link>
     </ItemField>
@@ -324,10 +321,7 @@ export function ItemFieldUrl(props: ItemFieldUrlProps) {
 ItemFieldUrl.displayName = "ItemFieldUrl"
 
 export interface ItemFieldScopesProps
-  extends Omit<
-    React.ComponentProps<typeof ItemField>,
-    "propertyName" | "children"
-  > {
+  extends Omit<ComponentProps<typeof ItemField>, "propertyName" | "children"> {
   scopes?: VeridaAuthScopeType[]
 }
 
@@ -359,10 +353,7 @@ export function ItemFieldScopes(props: ItemFieldScopesProps) {
 ItemFieldScopes.displayName = "ItemFieldScopes"
 
 export interface ItemFieldLastUsedProps
-  extends Omit<
-    React.ComponentProps<typeof ItemField>,
-    "propertyName" | "children"
-  > {
+  extends Omit<ComponentProps<typeof ItemField>, "propertyName" | "children"> {
   lastUsed?: string
 }
 
@@ -394,10 +385,7 @@ export function ItemFieldLastUsed(props: ItemFieldLastUsedProps) {
 ItemFieldLastUsed.displayName = "ItemFieldLastUsed"
 
 export interface ItemFieldCreatedProps
-  extends Omit<
-    React.ComponentProps<typeof ItemField>,
-    "propertyName" | "children"
-  > {
+  extends Omit<ComponentProps<typeof ItemField>, "propertyName" | "children"> {
   createdAt?: string
 }
 
@@ -428,7 +416,7 @@ export function ItemFieldCreated(props: ItemFieldCreatedProps) {
 }
 ItemFieldCreated.displayName = "ItemFieldCreated"
 
-export interface ItemFieldProps extends React.ComponentProps<"div"> {
+export interface ItemFieldProps extends ComponentProps<"div"> {
   propertyName: string
 }
 

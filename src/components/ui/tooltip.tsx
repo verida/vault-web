@@ -1,7 +1,16 @@
 "use client"
 
 import * as TooltipPrimitive from "@radix-ui/react-tooltip"
-import React, { useCallback, useEffect, useRef, useState } from "react"
+import {
+  type ComponentProps,
+  type ComponentPropsWithoutRef,
+  type ElementRef,
+  forwardRef,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react"
 
 import { QuestionMarkIcon } from "@/components/icons/question-mark-icon"
 import { Button } from "@/components/ui/button"
@@ -13,9 +22,9 @@ const Tooltip = TooltipPrimitive.Root
 
 const TooltipTrigger = TooltipPrimitive.Trigger
 
-const TooltipContent = React.forwardRef<
-  React.ElementRef<typeof TooltipPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Content>
+const TooltipContent = forwardRef<
+  ElementRef<typeof TooltipPrimitive.Content>,
+  ComponentPropsWithoutRef<typeof TooltipPrimitive.Content>
 >(({ className, sideOffset = 4, collisionPadding = 4, ...props }, ref) => (
   <TooltipPrimitive.Content
     ref={ref}
@@ -30,9 +39,10 @@ const TooltipContent = React.forwardRef<
 ))
 TooltipContent.displayName = TooltipPrimitive.Content.displayName
 
-type TooltipIndicatorProps = {
+interface TooltipIndicatorProps
+  extends Pick<ComponentProps<typeof Button>, "className"> {
   content: string
-} & Pick<React.ComponentProps<typeof Button>, "className">
+}
 
 function TooltipIndicator(props: TooltipIndicatorProps) {
   const { content, className } = props

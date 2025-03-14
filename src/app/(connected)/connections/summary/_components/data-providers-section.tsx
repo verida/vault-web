@@ -1,14 +1,14 @@
 "use client"
 
-import { useMemo } from "react"
+import { type ComponentProps, useMemo } from "react"
 
 import { DataProvidersList } from "@/app/(connected)/connections/summary/_components/data-providers-list"
 import { SummarySectionWrapper } from "@/app/(connected)/connections/summary/_components/summary-section-wrapper"
 import { useDataProviders } from "@/features/data-connections/hooks/use-data-providers"
-import { DataProviderStatus } from "@/features/data-connections/types"
+import type { DataProviderStatus } from "@/features/data-connections/types"
 
 export interface DataProvidersSectionProps
-  extends Omit<React.ComponentProps<typeof SummarySectionWrapper>, "children"> {
+  extends Omit<ComponentProps<typeof SummarySectionWrapper>, "children"> {
   hideIfLoading?: boolean
   hideIfEmpty?: boolean
   hideIfError?: boolean

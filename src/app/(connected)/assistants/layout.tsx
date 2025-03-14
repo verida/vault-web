@@ -1,6 +1,6 @@
-import { Metadata } from "next"
+import { type Metadata } from "next"
 import { notFound } from "next/navigation"
-import React from "react"
+import { type ReactNode } from "react"
 
 import { featureFlags } from "@/config/features"
 import { AiAssistantDialogProvider } from "@/features/assistants/components/ai-assistant-dialog-provider"
@@ -11,8 +11,8 @@ export const metadata: Metadata = {
   title: "AI Assistant",
 }
 
-export type AssistantsLayoutProps = {
-  children: React.ReactNode
+export interface AssistantsLayoutProps {
+  children: ReactNode
 }
 
 export default function AssistantsLayout(props: AssistantsLayoutProps) {

@@ -1,8 +1,8 @@
 import { type VariantProps, cva } from "class-variance-authority"
-import { useMemo } from "react"
+import { type ComponentProps, useMemo } from "react"
 
-import { Typography } from "@/components/typography"
-import {
+import { Typography } from "@/components/ui/typography"
+import type {
   DataConnectionHandlerStatus,
   DataConnectionStatus,
 } from "@/features/data-connections/types"
@@ -30,9 +30,10 @@ export type DataConnectionStatusBadgeVariants = VariantProps<
   typeof badgeVariants
 >
 
-export type DataConnectionStatusBadgeProps = {
+export interface DataConnectionStatusBadgeProps
+  extends Omit<ComponentProps<"div">, "children"> {
   status: DataConnectionStatus | DataConnectionHandlerStatus
-} & Omit<React.ComponentProps<"div">, "children">
+}
 
 export function DataConnectionStatusBadge(
   props: DataConnectionStatusBadgeProps

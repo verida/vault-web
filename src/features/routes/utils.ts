@@ -84,6 +84,14 @@ export function getNewDataConnectionCallbackPageRoute() {
   return `/callback/new-data-connection`
 }
 
+export function getProfilePageRoute() {
+  return `/profile`
+}
+
+export function getProfileEditPageRoute() {
+  return `/profile/edit`
+}
+
 export function getAuthorizedAppsPageRoute() {
   return `/authorizations`
 }
@@ -110,4 +118,8 @@ export function getOnboardingConnectVaultPageRoute() {
 
 export function getOnboardingExtractDataPageRoute() {
   return `/onboarding/extract-data`
+}
+
+export function getDiscoverPageRoute() {
+  return `/discover`
 }

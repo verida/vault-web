@@ -1,18 +1,20 @@
+import { type ComponentProps } from "react"
+
 import {
   ConnectDataProviderDialog,
   ConnectDataProviderDialogTrigger,
 } from "@/app/(connected)/connections/summary/_components/connect-data-provider-dialog"
-import { Typography } from "@/components/typography"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { Card, CardBody, CardHeader } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton"
-import { DataProvider } from "@/features/data-connections/types"
+import { Typography } from "@/components/ui/typography"
+import type { DataProvider } from "@/features/data-connections/types"
 
 // TODO: Move to `@/components/...`
 
 export interface DataProviderCardProps
-  extends Omit<React.ComponentProps<typeof Card>, "children"> {
+  extends Omit<ComponentProps<typeof Card>, "children"> {
   provider: DataProvider
   disableRedirectToConnectionPage?: boolean
 }
@@ -60,7 +62,8 @@ export function DataProviderCard(props: DataProviderCardProps) {
 }
 DataProviderCard.displayName = "DataProviderCard"
 
-export type DataProviderSkeletonCardProps = React.ComponentProps<typeof Card>
+export interface DataProviderSkeletonCardProps
+  extends ComponentProps<typeof Card> {}
 
 export function DataProviderSkeletonCard(props: DataProviderSkeletonCardProps) {
   const { className, ...cardProps } = props

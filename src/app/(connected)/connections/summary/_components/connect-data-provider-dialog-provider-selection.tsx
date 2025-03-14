@@ -1,19 +1,20 @@
 "use client"
 
 import { ChevronRight } from "lucide-react"
+import { type ComponentProps } from "react"
 
-import { Typography } from "@/components/typography"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { DialogBody } from "@/components/ui/dialog"
 import { Skeleton } from "@/components/ui/skeleton"
+import { Typography } from "@/components/ui/typography"
 import { useDataProviders } from "@/features/data-connections/hooks/use-data-providers"
-import { DataProvider } from "@/features/data-connections/types"
+import type { DataProvider } from "@/features/data-connections/types"
 import { cn } from "@/styles/utils"
 
-export type ConnectDataProviderDialogProviderSelectionProps = {
+export interface ConnectDataProviderDialogProviderSelectionProps {
   onSelectItem: (provider: DataProvider) => void
 }
 
@@ -63,7 +64,7 @@ ConnectDataProviderDialogProviderSelection.displayName =
   "ConnectDataProviderDialogProviderSelection"
 
 interface ProviderSelectionItemProps
-  extends Omit<React.ComponentProps<typeof Button>, "children"> {
+  extends Omit<ComponentProps<typeof Button>, "children"> {
   provider: DataProvider
 }
 
@@ -107,10 +108,8 @@ function ProviderSelectionItem(props: ProviderSelectionItemProps) {
 }
 ProviderSelectionItem.displayName = "ProviderSelectionItem"
 
-type ProviderSelectionItemSkeletonProps = Omit<
-  React.ComponentProps<"div">,
-  "children"
->
+interface ProviderSelectionItemSkeletonProps
+  extends Omit<ComponentProps<"div">, "children"> {}
 
 function ProviderSelectionItemSkeleton(
   props: ProviderSelectionItemSkeletonProps

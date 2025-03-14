@@ -3,7 +3,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { Logger } from "@/features/telemetry/logger"
 import { VeridaAuthQueryKeys } from "@/features/verida-auth/queries"
 import {
-  CreateVeridaAuthTokenResult,
+  type CreateVeridaAuthTokenResult,
   createVeridaAuthToken,
 } from "@/features/verida-auth/utils"
 import { useVerida } from "@/features/verida/hooks/use-verida"

@@ -10,7 +10,7 @@ import {
   getVeridaDatabaseGetRecordApiV1ResponseSchema,
   getVeridaDatabaseQueryApiV1ResponseSchema,
 } from "@/features/verida-database/schemas"
-import {
+import type {
   FetchVeridaDataRecordsResult,
   UnsavedVeridaRecord,
   VeridaDatabaseQueryFilter,

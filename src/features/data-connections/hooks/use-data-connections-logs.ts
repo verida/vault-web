@@ -1,7 +1,7 @@
 import { DATA_CONNECTIONS_LOGS_DB_DEF } from "@/features/data-connections/constants"
 import { DataConnectionSyncLogBaseSchema } from "@/features/data-connections/schemas"
 import {
-  UseVeridaDataRecordsArgs,
+  type UseVeridaDataRecordsArgs,
   useVeridaDataRecords,
 } from "@/features/verida-database/hooks/use-verida-data-records"
 

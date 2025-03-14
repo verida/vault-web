@@ -11,7 +11,7 @@ import {
   ItemSheetFooter,
   ItemSheetHeader,
   ItemSheetTitle,
-} from "@/components/item-sheet"
+} from "@/components/layouts/item-sheet"
 import { Button } from "@/components/ui/button"
 import {
   ErrorBlock,
@@ -26,10 +26,10 @@ import {
   LoadingBlockTitle,
 } from "@/components/ui/loading"
 import { Skeleton } from "@/components/ui/skeleton"
-import { DatabaseDefinition } from "@/features/data/types"
+import type { DatabaseDefinition } from "@/features/data/types"
 import { useVeridaDataRecord } from "@/features/verida-database/hooks/use-verida-data-record"
 
-export type DataItemPageContentProps = {
+export interface DataItemPageContentProps {
   open: boolean
   onOpenChange: (open: boolean) => void
   databaseDefinition: DatabaseDefinition

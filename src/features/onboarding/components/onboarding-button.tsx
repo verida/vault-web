@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { usePathname, useSearchParams } from "next/navigation"
-import { ComponentProps } from "react"
+import { type ComponentProps } from "react"
 
 import { Button } from "@/components/ui/button"
 import { useOnboardingEntryQueryState } from "@/features/onboarding/hooks/use-onboarding-entry-query-state"

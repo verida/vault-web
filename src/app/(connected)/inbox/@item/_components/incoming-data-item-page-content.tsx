@@ -1,6 +1,6 @@
 "use client"
 
-import { useCallback, useMemo, useState } from "react"
+import { type ComponentProps, useCallback, useMemo, useState } from "react"
 
 import { InboxMessageHeader } from "@/app/(connected)/inbox/@item/_components/inbox-message-header"
 import { InvalidItemPageContent } from "@/app/(connected)/inbox/@item/_components/invalid-item-page-content"
@@ -12,27 +12,27 @@ import {
   ItemSheetFooter,
   ItemSheetHeader,
   ItemSheetTitle,
-} from "@/components/item-sheet"
-import { Typography } from "@/components/typography"
+} from "@/components/layouts/item-sheet"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { Card, CardDescription, CardTitle } from "@/components/ui/card"
 import { MessageBlock, MessageBlockBody } from "@/components/ui/message-block"
+import { Typography } from "@/components/ui/typography"
 import { commonConfig } from "@/config/common"
 import { EMPTY_VALUE_FALLBACK } from "@/constants/misc"
-import { UnsavedVeridaRecord } from "@/features/verida-database/types"
+import type { UnsavedVeridaRecord } from "@/features/verida-database/types"
 import { InboxMessageStatusIndicator } from "@/features/verida-inbox/components/inbox.message-status-indicator"
 import { useAcceptIncomingDataMessage } from "@/features/verida-inbox/hooks/use-accept-incoming-data-message"
 import { useDeclineIncomingDataMessage } from "@/features/verida-inbox/hooks/use-decline-incoming-data-message"
-import { VeridaInboxMessageRecord } from "@/features/verida-inbox/types"
+import type { VeridaInboxMessageRecord } from "@/features/verida-inbox/types"
 import {
   getDataFromIncomingDataMessage,
   getVeridaMessageStatus,
 } from "@/features/verida-inbox/utils"
 import { cn } from "@/styles/utils"
 
-export type IncomingDataItemPageContentProps = {
+export interface IncomingDataItemPageContentProps {
   inboxMessage: VeridaInboxMessageRecord
   onDecline: () => void
   onAccept: () => void
@@ -205,7 +205,7 @@ export function IncomingDataItemPageContent(
 IncomingDataItemPageContent.displayName = "IncomingDataItemPageContent"
 
 interface IncomingDataItemCardProps
-  extends Omit<React.ComponentProps<typeof Card>, "children"> {
+  extends Omit<ComponentProps<typeof Card>, "children"> {
   item: UnsavedVeridaRecord
 }
 

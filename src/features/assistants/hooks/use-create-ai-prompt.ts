@@ -2,10 +2,10 @@ import { useCallback } from "react"
 
 import { AI_PROMPTS_DB_DEF } from "@/features/assistants/constants"
 import { AiPromptBaseSchema } from "@/features/assistants/schemas"
-import { AiPromptBase } from "@/features/assistants/types"
+import type { AiPromptBase } from "@/features/assistants/types"
 import { useToast } from "@/features/toasts/use-toast"
 import { useCreateVeridaRecord } from "@/features/verida-database/hooks/use-create-verida-record"
-import { UnsavedVeridaRecord } from "@/features/verida-database/types"
+import type { UnsavedVeridaRecord } from "@/features/verida-database/types"
 
 export function useCreateAiPrompt() {
   const { toast } = useToast()

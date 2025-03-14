@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { z } from "zod"
 
 import { VeridaDatabaseQueryKeys } from "@/features/verida-database/queries"
-import {
+import type {
   UnsavedVeridaRecord,
   VeridaRecord,
 } from "@/features/verida-database/types"

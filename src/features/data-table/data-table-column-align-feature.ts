@@ -1,6 +1,10 @@
-import { ColumnDef, RowData, TableFeature } from "@tanstack/react-table"
+import {
+  type ColumnDef,
+  type RowData,
+  type TableFeature,
+} from "@tanstack/react-table"
 
-import { DataTableColumnAlign } from "@/features/data-table/types"
+import type { DataTableColumnAlign } from "@/features/data-table/types"
 
 export const DATA_TABLE_COLUMN_ALIGN_DEFAULT: DataTableColumnAlign = "left"
 

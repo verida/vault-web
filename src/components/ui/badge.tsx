@@ -1,5 +1,5 @@
 import { type VariantProps, cva } from "class-variance-authority"
-import * as React from "react"
+import type { HTMLAttributes } from "react"
 
 import { cn } from "@/styles/utils"
 
@@ -8,13 +8,14 @@ export const badgeVariants = cva(
   {
     variants: {
       variant: {
-        primary:
+        "primary":
           "border-transparent bg-primary text-primary-foreground hover:bg-primary-hover",
-        secondary:
+        "primary-inverse": "border-transparent bg-primary/10 text-primary",
+        "secondary":
           "border-transparent bg-muted text-muted-foreground hover:bg-muted/80",
-        destructive:
+        "destructive":
           "border-transparent bg-destructive text-destructive-foreground hover:bg-destructive-hover focus:ring-destructive",
-        outline: "text-foreground",
+        "outline": "text-foreground",
       },
     },
     defaultVariants: {
@@ -23,8 +24,9 @@ export const badgeVariants = cva(
   }
 )
 
-export type BadgeProps = React.HTMLAttributes<HTMLDivElement> &
-  VariantProps<typeof badgeVariants>
+export interface BadgeProps
+  extends HTMLAttributes<HTMLDivElement>,
+    VariantProps<typeof badgeVariants> {}
 
 export function Badge(props: BadgeProps) {
   const { className, variant, ...divProps } = props

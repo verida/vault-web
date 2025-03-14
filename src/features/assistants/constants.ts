@@ -1,10 +1,10 @@
-import {
+import type {
   AiAssistantRecord,
   AiPromptRecord,
   LLMModelDefinition,
   LlmModel,
 } from "@/features/assistants/types"
-import { DatabaseDefinition } from "@/features/data/types"
+import type { DatabaseDefinition } from "@/features/data/types"
 
 export const LLM_MODEL_DEFS: Record<LlmModel, LLMModelDefinition> = {
   "CLAUDE_HAIKU_3.5": {

@@ -1,5 +1,7 @@
 "use client"
 
+import { type ComponentProps } from "react"
+
 import {
   DataProviderCard,
   DataProviderSkeletonCard,
@@ -14,13 +16,13 @@ import {
   ErrorBlockDescription,
   ErrorBlockImage,
 } from "@/components/ui/error"
-import { DataProvider } from "@/features/data-connections/types"
+import type { DataProvider } from "@/features/data-connections/types"
 import { cn } from "@/styles/utils"
 
 // TODO: Move to `@/components/...`
 
 export interface DataProvidersListProps
-  extends Omit<React.ComponentProps<"div">, "children"> {
+  extends Omit<ComponentProps<"div">, "children"> {
   providers: DataProvider[] | undefined
   isLoading: boolean
   isError: boolean

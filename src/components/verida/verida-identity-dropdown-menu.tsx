@@ -1,14 +1,14 @@
 "use client"
 
-import { MessageCircle } from "lucide-react"
+import { MessageCircleIcon, UserIcon } from "lucide-react"
+import Link from "next/link"
 import { useRouter } from "next/navigation"
-import React, { useCallback } from "react"
+import { type ComponentProps, useCallback } from "react"
 
 import { ApiKeyIcon } from "@/components/icons/api-key-icon"
 import { Copy } from "@/components/icons/copy"
 import { Logout } from "@/components/icons/logout"
 import { SimpleDown } from "@/components/icons/simple-down"
-import { Typography } from "@/components/typography"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import {
@@ -16,29 +16,41 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Skeleton } from "@/components/ui/skeleton"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
+import { Typography } from "@/components/ui/typography"
 import { featureFlags } from "@/config/features"
 import { version } from "@/config/version"
-import { APP_NAME } from "@/constants/app"
+import { APP_NAME, TERMS_AND_CONDITIONS_URL } from "@/constants/app"
 import { EMPTY_VALUE_FALLBACK } from "@/constants/misc"
 import { useRestrictedAccess } from "@/features/restricted-access/hooks/use-restricted-access"
-import { getAuthorizedAppsPageRoute } from "@/features/routes/utils"
+import {
+  getAuthorizedAppsPageRoute,
+  getProfilePageRoute,
+} from "@/features/routes/utils"
 import { useUserFeedback } from "@/features/telemetry/use-user-feedback"
 import { useToast } from "@/features/toasts/use-toast"
+import { ProfileAvatar } from "@/features/verida-profile/components/profile-avatar"
 import { EMPTY_PROFILE_NAME_FALLBACK } from "@/features/verida-profile/constants"
 import { useUserProfile } from "@/features/verida-profile/hooks/use-user-profile"
 import { useVerida } from "@/features/verida/hooks/use-verida"
 import { cn } from "@/styles/utils"
 
 export interface VeridaIdentityDropdownMenuProps
-  extends Pick<React.ComponentProps<typeof Button>, "className"> {
+  extends Pick<ComponentProps<typeof Button>, "className"> {
   keepExpanded?: boolean
   displayNotConnectedSkeleton?: boolean
   hideDisconnect?: boolean
   hideAuthorizedApps?: boolean
   hideFeedback?: boolean
+  hideProfile?: boolean
 }
 
 export function VeridaIdentityDropdownMenu(
@@ -50,6 +62,7 @@ export function VeridaIdentityDropdownMenu(
     hideDisconnect = false,
     hideAuthorizedApps = false,
     hideFeedback = false,
+    hideProfile = false,
     className,
   } = props
 
@@ -57,7 +70,7 @@ export function VeridaIdentityDropdownMenu(
 
   const { access } = useRestrictedAccess()
   const { isConnected, did, disconnect } = useVerida()
-  const { profile } = useUserProfile()
+  const { profile, isLoading } = useUserProfile()
 
   const { openForm: openUserFeedbackForm, isReady: isUserFeedbackReady } =
     useUserFeedback()
@@ -65,7 +78,7 @@ export function VeridaIdentityDropdownMenu(
   const { toast } = useToast()
 
   const handleCopyDid = useCallback(async () => {
-    if (did) {
+    if (did && typeof window !== "undefined") {
       await window.navigator.clipboard.writeText(did)
       toast({
         variant: "success",
@@ -78,13 +91,13 @@ export function VeridaIdentityDropdownMenu(
     router.push(getAuthorizedAppsPageRoute())
   }, [router])
 
-  if (!isConnected) {
+  const handleProfileClick = useCallback(() => {
+    router.push(getProfilePageRoute())
+  }, [router])
+
+  if (!isConnected && displayNotConnectedSkeleton) {
     return (
-      <>
-        {displayNotConnectedSkeleton ? (
-          <VeridaIdentityNotConnectedDropdownMenuButton className={className} />
-        ) : null}
-      </>
+      <VeridaIdentityNotConnectedDropdownMenuButton className={className} />
     )
   }
 
@@ -144,18 +157,13 @@ export function VeridaIdentityDropdownMenu(
         className="w-screen max-w-80 rounded-xl p-0 text-muted-foreground"
         align="end"
       >
-        <DropdownMenuItem className="block px-4 py-3" onClick={handleCopyDid}>
+        <DropdownMenuLabel className="block rounded-none px-4 py-3">
           <div className="flex flex-row items-center gap-3">
-            {profile ? (
-              <Avatar className="size-12">
-                <AvatarImage alt="User Avatar" src={profile.avatar?.uri} />
-                <AvatarFallback>
-                  {profile.name?.at(0)?.toUpperCase() || EMPTY_VALUE_FALLBACK}
-                </AvatarFallback>
-              </Avatar>
-            ) : (
-              <Skeleton className="size-12 shrink-0 rounded-full border" />
-            )}
+            <ProfileAvatar
+              profile={profile}
+              isLoading={isLoading}
+              className="size-12"
+            />
             <div className="flex min-w-0 flex-1 flex-col gap-0.5">
               {profile ? (
                 <p
@@ -183,45 +191,64 @@ export function VeridaIdentityDropdownMenu(
               )}
             </div>
             {did ? (
-              <div className="-mx-2 flex cursor-pointer flex-row items-center justify-center rounded-md p-2">
-                <Copy width="100%" height="100%" className="size-5" />
-                <span className="sr-only">Click to copy DID</span>
-              </div>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={handleCopyDid}
+                    className="-mx-2 flex flex-row items-center justify-center p-2"
+                  >
+                    <Copy width="100%" height="100%" className="size-5" />
+                    <span className="sr-only">Click to copy DID</span>
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>Copy DID</TooltipContent>
+              </Tooltip>
             ) : null}
           </div>
-        </DropdownMenuItem>
+        </DropdownMenuLabel>
+        {!hideProfile && (
+          <IdentityDropdownMenuItem onClick={handleProfileClick}>
+            <UserIcon className="size-5" />
+            <Typography variant="base-semibold">Profile</Typography>
+          </IdentityDropdownMenuItem>
+        )}
         {access === "allowed" &&
         !hideAuthorizedApps &&
         featureFlags.veridaAuth.authorizedAppsUi.enabled ? (
-          <DropdownMenuItem
-            onClick={handleAuthorizedAppsClick}
-            className="cursor-pointer gap-3 px-4 py-4"
-          >
+          <IdentityDropdownMenuItem onClick={handleAuthorizedAppsClick}>
             <ApiKeyIcon className="size-5" />
             <Typography variant="base-semibold">Authorized Apps</Typography>
-          </DropdownMenuItem>
+          </IdentityDropdownMenuItem>
         ) : null}
         {!hideFeedback && isUserFeedbackReady ? (
-          <DropdownMenuItem
-            onClick={openUserFeedbackForm}
-            className="cursor-pointer gap-3 px-4 py-4 text-muted-foreground"
-          >
-            <MessageCircle />
+          <IdentityDropdownMenuItem onClick={openUserFeedbackForm}>
+            <MessageCircleIcon />
             <Typography variant="base-semibold">Give your feedback</Typography>
-          </DropdownMenuItem>
+          </IdentityDropdownMenuItem>
         ) : null}
         {!hideDisconnect ? (
-          <DropdownMenuItem
+          <IdentityDropdownMenuItem
             onClick={disconnect}
             disabled={!isConnected}
-            className="cursor-pointer gap-3 px-4 py-4 text-destructive"
+            className="text-destructive"
           >
             <Logout />
             <Typography variant="base-semibold">Disconnect</Typography>
-          </DropdownMenuItem>
+          </IdentityDropdownMenuItem>
         ) : null}
-        <DropdownMenuLabel className="text-center text-xs font-normal">
-          {`${APP_NAME} ${version}`}
+        <DropdownMenuSeparator />
+        <DropdownMenuLabel className="flex flex-col items-center gap-0 rounded-none text-center text-xs font-normal">
+          <span>{`${APP_NAME} ${version}`}</span>
+          <Link
+            href={TERMS_AND_CONDITIONS_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline"
+          >
+            Terms & Conditions
+          </Link>
         </DropdownMenuLabel>
       </DropdownMenuContent>
     </DropdownMenu>
@@ -230,7 +257,7 @@ export function VeridaIdentityDropdownMenu(
 VeridaIdentityDropdownMenu.displayName = "VeridaIdentityDropdownMenu"
 
 interface VeridaIdentityNotConnectedDropdownMenuButtonProps
-  extends Pick<React.ComponentProps<typeof Button>, "className"> {
+  extends Pick<ComponentProps<typeof Button>, "className"> {
   keepExpanded?: boolean
 }
 
@@ -268,3 +295,20 @@ function VeridaIdentityNotConnectedDropdownMenuButton(
     </Button>
   )
 }
+
+interface IdentityDropdownMenuItemProps
+  extends ComponentProps<typeof DropdownMenuItem> {}
+
+function IdentityDropdownMenuItem(props: IdentityDropdownMenuItemProps) {
+  const { children, className, ...dropdownMenuItemProps } = props
+
+  return (
+    <DropdownMenuItem
+      className={cn("gap-3 rounded-none px-4 py-4", className)}
+      {...dropdownMenuItemProps}
+    >
+      {children}
+    </DropdownMenuItem>
+  )
+}
+IdentityDropdownMenuItem.displayName = "IdentityDropdownMenuItem"

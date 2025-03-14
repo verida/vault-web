@@ -1,6 +1,6 @@
 import { AI_ASSISTANTS_DB_DEF } from "@/features/assistants/constants"
 import { AiAssistantBaseSchema } from "@/features/assistants/schemas"
-import { UseQueryOptions } from "@/features/queries/types"
+import type { UseQueryOptions } from "@/features/queries/types"
 import { useVeridaDataRecord } from "@/features/verida-database/hooks/use-verida-data-record"
 
 type UseGetAiAssistantArgs = {

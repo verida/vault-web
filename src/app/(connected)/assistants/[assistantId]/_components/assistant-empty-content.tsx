@@ -1,22 +1,20 @@
 "use client"
 
 import Link from "next/link"
-import React, { useCallback } from "react"
+import { type ComponentProps, useCallback } from "react"
 
 import { VeridaNetworkColouredLogo } from "@/components/icons/verida-network-coloured-logo"
-import { Typography } from "@/components/typography"
 import { Button } from "@/components/ui/button"
+import { Typography } from "@/components/ui/typography"
 import { SUGGESTED_PROMPTS } from "@/features/assistants/constants"
 import { useAssistants } from "@/features/assistants/hooks/use-assistants"
-import { AiPromptInput } from "@/features/assistants/types"
+import type { AiPromptInput } from "@/features/assistants/types"
 import { useDataConnections } from "@/features/data-connections/hooks/use-data-connections"
 import { getConnectionsPageRoute } from "@/features/routes/utils"
 import { cn } from "@/styles/utils"
 
-export type AssistantEmptyContentProps = Omit<
-  React.ComponentProps<"div">,
-  "children"
->
+export interface AssistantEmptyContentProps
+  extends Omit<ComponentProps<"div">, "children"> {}
 
 export function AssistantEmptyContent(props: AssistantEmptyContentProps) {
   const { className, ...divProps } = props

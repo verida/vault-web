@@ -1,0 +1,21 @@
+import {
+  LoadingBlock,
+  LoadingBlockDescription,
+  LoadingBlockSpinner,
+  LoadingBlockTitle,
+} from "@/components/ui/loading"
+
+export default function ProfileEditLoadingPage() {
+  return (
+    <div className="flex h-full flex-1 flex-row items-center justify-center p-4">
+      <LoadingBlock>
+        <LoadingBlockSpinner />
+        <LoadingBlockTitle>Loading profile editor...</LoadingBlockTitle>
+        <LoadingBlockDescription>
+          Please wait while we are preparing the profile editor
+        </LoadingBlockDescription>
+      </LoadingBlock>
+    </div>
+  )
+}
+ProfileEditLoadingPage.displayName = "ProfileEditLoadingPage"

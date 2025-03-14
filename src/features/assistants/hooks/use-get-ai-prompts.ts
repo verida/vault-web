@@ -6,8 +6,8 @@ import {
 } from "@/features/assistants/constants"
 import { AiPromptBaseSchema } from "@/features/assistants/schemas"
 import {
-  PrefetchVeridaDataRecordsArgs,
-  UseVeridaDataRecordsArgs,
+  type PrefetchVeridaDataRecordsArgs,
+  type UseVeridaDataRecordsArgs,
   prefetchVeridaDataRecords,
   useVeridaDataRecords,
 } from "@/features/verida-database/hooks/use-verida-data-records"

@@ -1,4 +1,4 @@
-import { SearchType } from "@/features/data-search/types"
+import type { SearchType } from "@/features/data-search/types"
 
 export type DatabaseDefinition = {
   id: string

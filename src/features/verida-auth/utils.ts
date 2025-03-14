@@ -11,7 +11,7 @@ import {
   VeridaAuthResolveScopesV1ResponseSchema,
   VeridaAuthRevokeTokenApiV1ResponseSchema,
 } from "@/features/verida-auth/schemas"
-import {
+import type {
   InvalidVeridaAuthRequest,
   VeridaAuthApiV1RequestBody,
   VeridaAuthAuthorizationRequestObject,

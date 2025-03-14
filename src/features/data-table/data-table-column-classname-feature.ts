@@ -1,6 +1,10 @@
-import { ColumnDef, RowData, TableFeature } from "@tanstack/react-table"
+import {
+  type ColumnDef,
+  type RowData,
+  type TableFeature,
+} from "@tanstack/react-table"
 
-import { DataTableColumnClassName } from "@/features/data-table/types"
+import type { DataTableColumnClassName } from "@/features/data-table/types"
 
 export const DATA_TABLE_COLUMN_CLASSNAME_DEFAULT: DataTableColumnClassName =
   "flex-1"

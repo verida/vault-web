@@ -1,8 +1,7 @@
 "use client"
 
-import { ReactNode, useCallback, useMemo, useState } from "react"
+import { type ReactNode, useCallback, useMemo, useState } from "react"
 
-import { Typography } from "@/components/typography"
 import {
   Accordion,
   AccordionContent,
@@ -41,10 +40,11 @@ import {
   MessageBlockBody,
   MessageBlockTitle,
 } from "@/components/ui/message-block"
+import { Typography } from "@/components/ui/typography"
 import { useToast } from "@/features/toasts/use-toast"
 import { useCreateVeridaAuthToken } from "@/features/verida-auth/hooks/use-create-verida-auth-token"
 import { useVeridaAuthScopeDefinitions } from "@/features/verida-auth/hooks/use-verida-auth-scope-definitions"
-import { VeridaAuthScope } from "@/features/verida-auth/types"
+import type { VeridaAuthScope } from "@/features/verida-auth/types"
 
 export interface CreateAuthorizationDialogProps {
   children?: ReactNode

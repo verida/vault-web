@@ -1,12 +1,11 @@
 "use client"
 
 import { useRouter } from "next/navigation"
-import { useCallback, useEffect, useState } from "react"
+import { type ReactNode, useCallback, useEffect, useState } from "react"
 
 import { ConnectDataProviderDialogProviderSelection } from "@/app/(connected)/connections/summary/_components/connect-data-provider-dialog-provider-selection"
 import { VLogo } from "@/components/icons/logo"
 import { Switch } from "@/components/icons/switch"
-import { Typography } from "@/components/typography"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
@@ -32,9 +31,10 @@ import {
   SuccessBlockImage,
   SuccessBlockTitle,
 } from "@/components/ui/success"
+import { Typography } from "@/components/ui/typography"
 import { useDataConnectionsBroadcast } from "@/features/data-connections/hooks/use-data-connections-broadcast"
 import { useDataProviders } from "@/features/data-connections/hooks/use-data-providers"
-import {
+import type {
   DataConnectionsChannelEvent,
   DataProvider,
 } from "@/features/data-connections/types"
@@ -47,8 +47,8 @@ import { useVerida } from "@/features/verida/hooks/use-verida"
 
 const logger = Logger.create("connect-data-provider-dialog")
 
-export type ConnectDataProviderDialogProps = {
-  children: React.ReactNode
+export interface ConnectDataProviderDialogProps {
+  children: ReactNode
   providerId?: string
   disableRedirectToConnectionPage?: boolean
 }

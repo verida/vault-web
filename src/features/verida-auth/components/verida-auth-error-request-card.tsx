@@ -1,13 +1,13 @@
-import { useMemo } from "react"
+import { type ComponentProps, useMemo } from "react"
 
 import { Card, CardBody } from "@/components/ui/card"
 import { VeridaAuthConsentError } from "@/features/verida-auth/components/verida-auth-consent-error"
-import { ErrorVeridaAuthRequest } from "@/features/verida-auth/types"
+import type { ErrorVeridaAuthRequest } from "@/features/verida-auth/types"
 import { buildErrorRedirectUrl } from "@/features/verida-auth/utils"
 import { cn } from "@/styles/utils"
 
 export interface VeridaAuthErrorRequestCardProps
-  extends React.ComponentProps<typeof Card> {
+  extends ComponentProps<typeof Card> {
   request: ErrorVeridaAuthRequest
 }
 

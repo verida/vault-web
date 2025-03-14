@@ -2,10 +2,10 @@ import { useCallback } from "react"
 
 import { AI_PROMPTS_DB_DEF } from "@/features/assistants/constants"
 import { AiPromptBaseSchema } from "@/features/assistants/schemas"
-import { AiPromptRecord } from "@/features/assistants/types"
+import type { AiPromptRecord } from "@/features/assistants/types"
 import { useToast } from "@/features/toasts/use-toast"
 import {
-  UseUpdateVeridaRecordOptions,
+  type UseUpdateVeridaRecordOptions,
   useUpdateVeridaRecord,
 } from "@/features/verida-database/hooks/use-update-verida-record"
 

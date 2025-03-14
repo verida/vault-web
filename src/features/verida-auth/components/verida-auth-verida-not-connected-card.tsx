@@ -1,17 +1,18 @@
 "use client"
 
 import Link from "next/link"
+import { type ComponentProps } from "react"
 
-import { Typography } from "@/components/typography"
 import { Card, CardBody } from "@/components/ui/card"
+import { Typography } from "@/components/ui/typography"
 import { VeridaConnectButton } from "@/components/verida/verida-connect-button"
 import { OnboardingButton } from "@/features/onboarding/components/onboarding-button"
 import { VeridaAuthCardHeader } from "@/features/verida-auth/components/verida-auth-card-header"
-import { ValidVeridaAuthRequest } from "@/features/verida-auth/types"
+import type { ValidVeridaAuthRequest } from "@/features/verida-auth/types"
 import { cn } from "@/styles/utils"
 
 export interface VeridaAuthVeridaNotConnectedCardProps
-  extends React.ComponentProps<typeof Card> {
+  extends ComponentProps<typeof Card> {
   request: ValidVeridaAuthRequest
 }
 

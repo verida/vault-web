@@ -1,4 +1,4 @@
-import {
+import type {
   VeridaDatabaseQueryFilter,
   VeridaDatabaseQueryOptions,
 } from "@/features/verida-database/types"

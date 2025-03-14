@@ -1,9 +1,9 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { QueryKey } from "@tanstack/react-query"
+import { type QueryKey } from "@tanstack/react-query"
 
 import { Logger } from "@/features/telemetry/logger"
 import { VeridaAuthQueryKeys } from "@/features/verida-auth/queries"
-import { VeridaAuthToken } from "@/features/verida-auth/types"
+import type { VeridaAuthToken } from "@/features/verida-auth/types"
 import { revokeVeridaAuthToken } from "@/features/verida-auth/utils"
 import { useVerida } from "@/features/verida/hooks/use-verida"
 

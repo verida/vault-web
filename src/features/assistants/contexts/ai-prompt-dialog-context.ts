@@ -1,6 +1,9 @@
 import { createContext } from "react"
 
-import { AiPromptFormData, AiPromptRecord } from "@/features/assistants/types"
+import type {
+  AiPromptFormData,
+  AiPromptRecord,
+} from "@/features/assistants/types"
 
 export type AiPromptDialogState = {
   type: "create" | "edit"

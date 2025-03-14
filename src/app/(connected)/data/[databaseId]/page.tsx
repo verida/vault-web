@@ -4,14 +4,16 @@ import React from "react"
 import { DataDestroyDatabaseDialog } from "@/app/(connected)/data/[databaseId]/_components/data-destroy-database-dialog"
 import { DatabasePageContent } from "@/app/(connected)/data/[databaseId]/_components/database-page-content"
 import { DeleteIcon } from "@/components/icons/delete-icon"
-import { PageWrapper } from "@/components/page-wrapper"
+import { PageWrapper } from "@/components/layouts/page-wrapper"
 import { Button } from "@/components/ui/button"
 import { featureFlags } from "@/config/features"
 import { USER_DATABASE_DEFS } from "@/features/data/constants"
 import { getDataPageRoute } from "@/features/routes/utils"
 
-export type DatabasePageProps = {
-  params: { databaseId: string }
+export interface DatabasePageProps {
+  params: {
+    databaseId: string
+  }
 }
 
 export default function DatabasePage(props: DatabasePageProps) {

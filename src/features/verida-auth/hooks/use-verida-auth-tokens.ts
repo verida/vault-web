@@ -1,6 +1,6 @@
 import { QueryClient, useQuery, useQueryClient } from "@tanstack/react-query"
 
-import { UseQueryOptions } from "@/features/queries/types"
+import type { UseQueryOptions } from "@/features/queries/types"
 import { Logger } from "@/features/telemetry/logger"
 import { VeridaAuthQueryKeys } from "@/features/verida-auth/queries"
 import { getVeridaAuthTokens } from "@/features/verida-auth/utils"

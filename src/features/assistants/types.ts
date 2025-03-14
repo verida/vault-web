@@ -21,7 +21,7 @@ import {
   PromptSearchSortSchema,
   PromptSearchTimeframeSchema,
 } from "@/features/assistants/schemas"
-import { VeridaRecord } from "@/features/verida-database/types"
+import type { VeridaRecord } from "@/features/verida-database/types"
 
 // FIXME: Fix the supposedly circular dependency of importing SearchTypeSchema
 // import { SearchType } from "@/features/data-search/types"

@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query"
 import { z } from "zod"
 
-import { UseQueryOptions } from "@/features/queries/types"
+import type { UseQueryOptions } from "@/features/queries/types"
 import { VeridaDatabaseQueryKeys } from "@/features/verida-database/queries"
 import { getVeridaDataRecord } from "@/features/verida-database/utils"
 import { useVerida } from "@/features/verida/hooks/use-verida"

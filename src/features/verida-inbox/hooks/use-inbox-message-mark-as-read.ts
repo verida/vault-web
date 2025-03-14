@@ -1,10 +1,14 @@
-import { QueryKey, useMutation, useQueryClient } from "@tanstack/react-query"
+import {
+  type QueryKey,
+  useMutation,
+  useQueryClient,
+} from "@tanstack/react-query"
 
-import { FetchVeridaDataRecordsResult } from "@/features/verida-database/types"
+import type { FetchVeridaDataRecordsResult } from "@/features/verida-database/types"
 import { useUpdateInboxQueryCache } from "@/features/verida-inbox/hooks/use-update-inbox-query-cache"
 import { useVeridaInbox } from "@/features/verida-inbox/hooks/use-verida-inbox"
 import { VeridaInboxQueryKeys } from "@/features/verida-inbox/queries"
-import { VeridaInboxMessageRecord } from "@/features/verida-inbox/types"
+import type { VeridaInboxMessageRecord } from "@/features/verida-inbox/types"
 import { markMessageAsRead } from "@/features/verida-inbox/utils"
 import { useVerida } from "@/features/verida/hooks/use-verida"
 

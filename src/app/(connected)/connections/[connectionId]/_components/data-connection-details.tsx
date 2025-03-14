@@ -1,7 +1,7 @@
 "use client"
 
 import { intlFormat } from "date-fns"
-import { useCallback, useMemo, useState } from "react"
+import { type ComponentProps, useCallback, useMemo, useState } from "react"
 
 import {
   DisconnectDataConnectionDialog,
@@ -9,14 +9,14 @@ import {
 } from "@/app/(connected)/connections/[connectionId]/_components/disconnect-data-connection-dialog"
 import { DataConnectionAvatar } from "@/components/data-connections/data-connection-avatar"
 import { DataConnectionStatusBadge } from "@/components/data-connections/data-connection-status-badge"
-import { Typography } from "@/components/typography"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { TooltipIndicator } from "@/components/ui/tooltip"
+import { Typography } from "@/components/ui/typography"
 import { EMPTY_VALUE_FALLBACK } from "@/constants/misc"
 import { useDataProvider } from "@/features/data-connections/hooks/use-data-provider"
 import { useSyncDataConnection } from "@/features/data-connections/hooks/use-sync-data-connection"
-import { DataConnection } from "@/features/data-connections/types"
+import type { DataConnection } from "@/features/data-connections/types"
 import { getDataConnectionLatestSyncEnd } from "@/features/data-connections/utils"
 import { useToast } from "@/features/toasts/use-toast"
 import { cn } from "@/styles/utils"
@@ -24,7 +24,7 @@ import { LONG_DATE_TIME_FORMAT_OPTIONS } from "@/utils/date"
 import { wait } from "@/utils/misc"
 
 export interface DataConnectionDetailsProps
-  extends Omit<React.ComponentProps<"div">, "children"> {
+  extends Omit<ComponentProps<"div">, "children"> {
   connection: DataConnection
 }
 

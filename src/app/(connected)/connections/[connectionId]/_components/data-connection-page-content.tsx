@@ -5,15 +5,15 @@ import React from "react"
 import { DataConnectionDetails } from "@/app/(connected)/connections/[connectionId]/_components/data-connection-details"
 import { DataConnectionLogs } from "@/app/(connected)/connections/[connectionId]/_components/data-connection-logs"
 import { DataConnectionsHandlersList } from "@/app/(connected)/connections/[connectionId]/_components/data-connections-handlers-list"
-import { PageTitle, PageWrapper } from "@/components/page-wrapper"
-import { Typography } from "@/components/typography"
+import { PageTitle, PageWrapper } from "@/components/layouts/page-wrapper"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Skeleton } from "@/components/ui/skeleton"
+import { Typography } from "@/components/ui/typography"
 import { useDataProvider } from "@/features/data-connections/hooks/use-data-provider"
-import { DataConnection } from "@/features/data-connections/types"
+import type { DataConnection } from "@/features/data-connections/types"
 import { getConnectionsSummaryPageRoute } from "@/features/routes/utils"
 
-export type DataConnectionPageContentProps = {
+export interface DataConnectionPageContentProps {
   connection: DataConnection
 }
 

@@ -50,4 +50,7 @@ export const featureFlags = {
   requests: {
     enabled: commonConfig.FEATURE_FLAG_REQUESTS_ENABLED,
   },
+  appsMarketplace: {
+    enabled: commonConfig.FEATURE_FLAG_APPS_MARKETPLACE_ENABLED,
+  },
 }
