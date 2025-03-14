@@ -78,7 +78,7 @@ export function VeridaIdentityDropdownMenu(
   const { toast } = useToast()
 
   const handleCopyDid = useCallback(async () => {
-    if (did) {
+    if (did && typeof window !== "undefined") {
       await window.navigator.clipboard.writeText(did)
       toast({
         variant: "success",
