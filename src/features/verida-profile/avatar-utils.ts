@@ -10,7 +10,6 @@ export const ALLOWED_AVATAR_FILE_TYPES = [
   "image/webp",
   "image/gif",
 ]
-export const MAX_AVATAR_DIMENSION = 500 // Maximum width/height for the square image
 
 /**
  * Validates an image file for use as an avatar
@@ -42,15 +41,11 @@ export function validateAvatarFile(file: File): {
 }
 
 /**
- * Crops an image to a square and resizes it to the specified dimensions
- * @param image The image element to crop
- * @param maxDimension The maximum width/height for the output image
- * @returns A Promise that resolves to the cropped image as a data URL
+ * Processes an image from the crop dialog and ensures it's a proper square
+ * @param image The image element from the crop dialog
+ * @returns A Promise that resolves to the processed image as a data URL
  */
-export function cropImageToSquare(
-  image: HTMLImageElement,
-  maxDimension = MAX_AVATAR_DIMENSION
-): Promise<string> {
+export function cropImageToSquare(image: HTMLImageElement): Promise<string> {
   return new Promise((resolve, reject) => {
     try {
       const canvas = document.createElement("canvas")
@@ -60,33 +55,27 @@ export function cropImageToSquare(
         throw new Error("Could not get canvas context")
       }
 
-      // Calculate the square crop dimensions
-      const size = Math.min(image.naturalWidth, image.naturalHeight)
-      const startX = (image.naturalWidth - size) / 2
-      const startY = (image.naturalHeight - size) / 2
+      // Get the natural dimensions of the image (this is the cropped square from the dialog)
+      const { naturalWidth, naturalHeight } = image
 
-      // Set canvas dimensions to our desired output size
-      canvas.width = maxDimension
-      canvas.height = maxDimension
+      // The image should already be square from the crop dialog
+      // But we'll ensure it's square just in case
+      const size = Math.min(naturalWidth, naturalHeight)
 
-      // Draw the cropped and resized image to the canvas
-      ctx.drawImage(
-        image,
-        startX,
-        startY,
-        size,
-        size,
-        0,
-        0,
-        maxDimension,
-        maxDimension
-      )
+      // Set canvas dimensions to preserve the original resolution
+      canvas.width = size
+      canvas.height = size
 
-      // Convert canvas to base64 data URL
-      const dataUrl = canvas.toDataURL("image/jpeg", 0.9)
+      // Draw the image to the canvas
+      ctx.drawImage(image, 0, 0, size, size, 0, 0, size, size)
+
+      // Convert canvas to base64 data URL with high quality
+      const dataUrl = canvas.toDataURL("image/jpeg", 0.92)
       resolve(dataUrl)
     } catch (error) {
-      logger.error("Error cropping image:", { tags: { error: String(error) } })
+      logger.error("Error processing cropped image:", {
+        tags: { error: String(error) },
+      })
       reject(error)
     }
   })

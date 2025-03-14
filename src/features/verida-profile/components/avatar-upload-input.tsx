@@ -49,13 +49,14 @@ export function AvatarUploadInput(props: AvatarUploadInputProps) {
         accept={ALLOWED_AVATAR_FILE_TYPES.join(",")}
         onChange={handleFileChange}
         containerClassName="absolute top-0 left-0"
-        className="size-24 rounded-full opacity-100"
+        className="size-24 rounded-full opacity-0"
       />
-      <label htmlFor={formItemId}>
-        <Avatar className="size-24">
+      <label htmlFor={formItemId} className="group cursor-pointer">
+        <Avatar className="size-24 transition-colors group-hover:border-border-hover">
           <AvatarImage src={value} alt="Profile avatar" />
           <AvatarFallback>{EMPTY_VALUE_FALLBACK}</AvatarFallback>
         </Avatar>
+        <span className="sr-only">Upload avatar</span>
       </label>
       <AvatarCropDialog
         isOpen={isDialogOpen}
