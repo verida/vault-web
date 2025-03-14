@@ -278,7 +278,7 @@ export function AvatarCropDialog(props: AvatarCropDialogProps) {
   useEffect(() => {
     const controller = new AbortController()
 
-    if (isOpen) {
+    if (isOpen && typeof window !== "undefined") {
       window.addEventListener("mousemove", handleMouseMove, {
         signal: controller.signal,
       })

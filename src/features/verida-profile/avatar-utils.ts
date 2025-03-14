@@ -1,5 +1,4 @@
-import heic2any from "heic2any"
-
+// import heic2any from "heic2any"
 import { Logger } from "@/features/telemetry/logger"
 
 const logger = Logger.create("verida-profile")
@@ -151,6 +150,9 @@ export async function convertHeicToJpeg(file: File): Promise<File> {
     logger.info("Converting HEIC/HEIF image to JPEG", {
       fileType: file.type,
     })
+
+    // Dynamic import to avoid bundling heic2any to prevent messing with pre-rendering
+    const heic2any = (await import("heic2any")).default
 
     // Convert HEIC to JPEG using heic2any
     const jpegBlob = (await heic2any({
