@@ -22,9 +22,9 @@ export function AvatarUploadInput(props: AvatarUploadInputProps) {
   const { formItemId } = useFormField()
 
   const {
-    avatarPreview,
+    newAvatarUri,
     isDialogOpen,
-    tempImageUrl,
+    selectedImageUrl,
     handleFileChange,
     handleCropImage,
     handleCancelCrop,
@@ -32,10 +32,10 @@ export function AvatarUploadInput(props: AvatarUploadInputProps) {
   } = useAvatarUpload()
 
   useEffect(() => {
-    if (avatarPreview) {
-      onValueChange(avatarPreview)
+    if (newAvatarUri) {
+      onValueChange(newAvatarUri)
     }
-  }, [avatarPreview, onValueChange])
+  }, [newAvatarUri, onValueChange])
 
   // useEffect(() => {
   //   onError(validationError)
@@ -61,7 +61,7 @@ export function AvatarUploadInput(props: AvatarUploadInputProps) {
       <AvatarCropDialog
         isOpen={isDialogOpen}
         onOpenChange={(open) => !open && handleCancelCrop()}
-        imageUrl={tempImageUrl}
+        imageUrl={selectedImageUrl}
         onCrop={handleCropImage}
         onCancel={handleCancelCrop}
       />

@@ -12,13 +12,12 @@ import {
 const logger = Logger.create("verida-profile")
 
 interface UseAvatarUploadReturn {
-  avatarPreview: string | null
+  newAvatarUri: string | null
   isDialogOpen: boolean
-  tempImageUrl: string | null
+  selectedImageUrl: string | null
   handleFileChange: (event: React.ChangeEvent<HTMLInputElement>) => void
   handleCropImage: (imageElement: HTMLImageElement) => Promise<void>
   handleCancelCrop: () => void
-  setAvatarPreview: (preview: string | null) => void
   validationError: string | undefined
 }
 
@@ -27,9 +26,9 @@ interface UseAvatarUploadReturn {
  * @returns Methods and state for avatar upload
  */
 export function useAvatarUpload(): UseAvatarUploadReturn {
-  const [avatarPreview, setAvatarPreview] = useState<string | null>(null)
+  const [newAvatarUri, setNewAvatarUri] = useState<string | null>(null)
   const [isDialogOpen, setDialogOpen] = useState(false)
-  const [tempImageUrl, setTempImageUrl] = useState<string | null>(null)
+  const [selectedImageUrl, setSelectedImageUrl] = useState<string | null>(null)
   const [validationError, setValidationError] = useState<string | undefined>(
     undefined
   )
@@ -37,7 +36,9 @@ export function useAvatarUpload(): UseAvatarUploadReturn {
   const handleFileChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       const file = event.target.files?.[0]
-      if (!file) return
+      if (!file) {
+        return
+      }
 
       // Validate the file
       const validation = validateAvatarFile(file)
@@ -50,7 +51,7 @@ export function useAvatarUpload(): UseAvatarUploadReturn {
 
       // Create a temporary URL for the image
       const { previewUrl, cleanup } = createImagePreview(file)
-      setTempImageUrl(previewUrl)
+      setSelectedImageUrl(previewUrl)
       setDialogOpen(true)
 
       // Store the cleanup function to be called when the component unmounts
@@ -62,15 +63,15 @@ export function useAvatarUpload(): UseAvatarUploadReturn {
   const handleCropImage = useCallback(
     async (imageElement: HTMLImageElement) => {
       try {
-        const dataUrl = await cropImageToSquare(imageElement)
-        setAvatarPreview(dataUrl)
+        const imageDataUri = await cropImageToSquare(imageElement)
+        setNewAvatarUri(imageDataUri)
         setValidationError(undefined)
 
         // Clean up
         setDialogOpen(false)
-        if (tempImageUrl) {
-          URL.revokeObjectURL(tempImageUrl)
-          setTempImageUrl(null)
+        if (selectedImageUrl) {
+          URL.revokeObjectURL(selectedImageUrl)
+          setSelectedImageUrl(null)
         }
 
         logger.debug("Avatar cropped successfully")
@@ -79,25 +80,24 @@ export function useAvatarUpload(): UseAvatarUploadReturn {
         setValidationError("Error processing image. Please try again.")
       }
     },
-    [tempImageUrl]
+    [selectedImageUrl]
   )
 
   const handleCancelCrop = useCallback(() => {
     setDialogOpen(false)
-    if (tempImageUrl) {
-      URL.revokeObjectURL(tempImageUrl)
-      setTempImageUrl(null)
+    if (selectedImageUrl) {
+      URL.revokeObjectURL(selectedImageUrl)
+      setSelectedImageUrl(null)
     }
-  }, [tempImageUrl])
+  }, [selectedImageUrl])
 
   return {
-    avatarPreview,
+    newAvatarUri,
     isDialogOpen,
-    tempImageUrl,
+    selectedImageUrl,
     handleFileChange,
     handleCropImage,
     handleCancelCrop,
-    setAvatarPreview,
     validationError,
   }
 }

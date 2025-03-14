@@ -42,8 +42,9 @@ export function validateAvatarFile(file: File): {
 
 /**
  * Processes an image from the crop dialog and ensures it's a proper square
+ *
  * @param image The image element from the crop dialog
- * @returns A Promise that resolves to the processed image as a data URL
+ * @returns A Promise that resolves to the processed image as a data URI
  */
 export function cropImageToSquare(image: HTMLImageElement): Promise<string> {
   return new Promise((resolve, reject) => {
