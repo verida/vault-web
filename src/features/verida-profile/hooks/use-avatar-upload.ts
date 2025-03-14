@@ -15,7 +15,7 @@ interface UseAvatarUploadReturn {
   newAvatarUri: string | null
   isDialogOpen: boolean
   selectedImageUrl: string | null
-  handleFileChange: (event: React.ChangeEvent<HTMLInputElement>) => void
+  handleFileChange: (event: React.ChangeEvent<HTMLInputElement>) => () => void
   handleCropImage: (imageElement: HTMLImageElement) => Promise<void>
   handleCancelCrop: () => void
   validationError: string | undefined
@@ -37,14 +37,14 @@ export function useAvatarUpload(): UseAvatarUploadReturn {
     (event: React.ChangeEvent<HTMLInputElement>) => {
       const file = event.target.files?.[0]
       if (!file) {
-        return
+        return () => {}
       }
 
       // Validate the file
       const validation = validateAvatarFile(file)
       if (!validation.isValid) {
         setValidationError(validation.errorMessage || "Invalid file")
-        return
+        return () => {}
       }
 
       setValidationError(undefined)
