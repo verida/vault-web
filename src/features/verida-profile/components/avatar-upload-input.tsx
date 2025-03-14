@@ -1,8 +1,10 @@
 "use client"
 
-import { useEffect } from "react"
+import { useCallback, useEffect } from "react"
 
+import { DeleteIcon } from "@/components/icons/delete-icon"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Button } from "@/components/ui/button"
 import { useFormField } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { EMPTY_VALUE_FALLBACK } from "@/constants/misc"
@@ -41,6 +43,10 @@ export function AvatarUploadInput(props: AvatarUploadInputProps) {
   //   onError(validationError)
   // }, [validationError, onError])
 
+  const handleClearAvatar = useCallback(() => {
+    onValueChange(undefined)
+  }, [onValueChange])
+
   return (
     <div className="relative flex flex-col items-center gap-4 sm:flex-row">
       <Input
@@ -49,15 +55,29 @@ export function AvatarUploadInput(props: AvatarUploadInputProps) {
         accept={ALLOWED_AVATAR_FILE_TYPES.join(",")}
         onChange={handleFileChange}
         containerClassName="absolute top-0 left-0"
-        className="size-24 rounded-full opacity-0"
+        className="size-24 rounded-full border-none opacity-100"
       />
-      <label htmlFor={formItemId} className="group cursor-pointer">
-        <Avatar className="size-24 transition-colors group-hover:border-border-hover">
-          <AvatarImage src={value} alt="Profile avatar" />
-          <AvatarFallback>{EMPTY_VALUE_FALLBACK}</AvatarFallback>
-        </Avatar>
-        <span className="sr-only">Upload avatar</span>
-      </label>
+      <div className="relative">
+        <label htmlFor={formItemId} className="group cursor-pointer">
+          <Avatar className="size-24 transition-colors group-hover:border-border-hover">
+            <AvatarImage src={value} alt="Profile avatar" />
+            <AvatarFallback>{EMPTY_VALUE_FALLBACK}</AvatarFallback>
+          </Avatar>
+          <span className="sr-only">Upload avatar</span>
+        </label>
+        {value ? (
+          <Button
+            type="button"
+            variant="outline-destructive"
+            size="icon"
+            className="absolute bottom-0 right-0 size-8 translate-x-1/3 rounded-full"
+            onClick={handleClearAvatar}
+          >
+            <DeleteIcon className="size-4" />
+            <span className="sr-only">Clear avatar</span>
+          </Button>
+        ) : null}
+      </div>
       <AvatarCropDialog
         isOpen={isDialogOpen}
         onOpenChange={(open) => !open && handleCancelCrop()}
