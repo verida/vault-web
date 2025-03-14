@@ -271,12 +271,14 @@ export async function updateVeridaProfile({
       throw new Error("Verida profile datastore unavailable")
     }
 
+    const { name, avatar, description, country, website } = profileToSave
+
     // Unfortunatelly, looks like we can't Promise.all the set calls as it creates conflicts
-    await profileDatastore.set("name", profileToSave.name)
-    await profileDatastore.set("avatar", profileToSave.avatar)
-    await profileDatastore.set("description", profileToSave.description)
-    await profileDatastore.set("country", profileToSave.country)
-    await profileDatastore.set("website", profileToSave.website)
+    await setDatastoreField(profileDatastore, "name", name)
+    await setDatastoreField(profileDatastore, "avatar", avatar)
+    await setDatastoreField(profileDatastore, "description", description)
+    await setDatastoreField(profileDatastore, "country", country)
+    await setDatastoreField(profileDatastore, "website", website)
 
     const updatedProfile = await getVeridaProfileFromWebUser({
       webUserInstance,
@@ -287,4 +289,12 @@ export async function updateVeridaProfile({
   } catch (error) {
     throw new Error("Failed to update Verida profile", { cause: error })
   }
+}
+
+function setDatastoreField(
+  datastore: IProfile,
+  field: string,
+  value: any | undefined
+) {
+  return datastore.set(field, value === "" ? undefined : value)
 }

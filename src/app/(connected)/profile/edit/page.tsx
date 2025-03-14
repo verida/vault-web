@@ -31,8 +31,15 @@ import {
   LoadingBlockTitle,
 } from "@/components/ui/loading"
 import { Textarea } from "@/components/ui/textarea"
+import {
+  CountryCombobox,
+  CountryComboboxContent,
+  CountryComboboxTrigger,
+  CountryComboboxValue,
+} from "@/features/countries/components/country-combobox"
 import { getProfilePageRoute } from "@/features/routes/utils"
 import { Logger } from "@/features/telemetry/logger"
+import { AvatarUploadInput } from "@/features/verida-profile/components/avatar-upload-input"
 import { useUpdateVeridaProfile } from "@/features/verida-profile/hooks/use-update-verida-profile"
 import { useUserProfile } from "@/features/verida-profile/hooks/use-user-profile"
 import { VeridaProfileFormDataSchema } from "@/features/verida-profile/schemas"
@@ -130,6 +137,35 @@ export default function ProfileEditPage() {
               <CardBody className="flex flex-col gap-6 px-0.5">
                 <FormField
                   control={form.control}
+                  name="avatar.uri"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Avatar</FormLabel>
+                      <FormControl>
+                        <AvatarUploadInput
+                          value={field.value}
+                          onValueChange={field.onChange}
+                          onError={(error) => {
+                            if (!error) {
+                              form.clearErrors("avatar.uri")
+                              return
+                            }
+                            form.setError("avatar.uri", {
+                              message: error,
+                            })
+                          }}
+                        />
+                      </FormControl>
+                      <FormDescription>
+                        Upload a square image (JPG, PNG, WebP, GIF) less than
+                        1MB
+                      </FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
                   name="name"
                   render={({ field }) => (
                     <FormItem>
@@ -170,9 +206,17 @@ export default function ProfileEditPage() {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Country</FormLabel>
-                      <FormControl>
-                        <Input placeholder="Australia" {...field} />
-                      </FormControl>
+                      <CountryCombobox>
+                        <CountryComboboxTrigger asChild>
+                          <FormControl>
+                            <CountryComboboxValue selectedValue={field.value} />
+                          </FormControl>
+                        </CountryComboboxTrigger>
+                        <CountryComboboxContent
+                          selectedValue={field.value}
+                          onSelectValue={field.onChange}
+                        />
+                      </CountryCombobox>
                       <FormDescription>
                         The country where you are located. (optional)
                       </FormDescription>

@@ -69,9 +69,11 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
         requestAnimationFrame(adjustHeight)
       }
 
-      window.addEventListener("resize", handleResize, {
-        signal: abortController.signal,
-      })
+      if (typeof window !== "undefined") {
+        window.addEventListener("resize", handleResize, {
+          signal: abortController.signal,
+        })
+      }
 
       return () => {
         abortController.abort()
