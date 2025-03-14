@@ -56,23 +56,30 @@ export function AvatarUploadInput(props: AvatarUploadInputProps) {
     }
   }, [onValueChange, clear])
 
+  const handleAvatarClick = useCallback(() => {
+    if (!isConverting && fileInputRef.current) {
+      fileInputRef.current.click()
+    }
+  }, [isConverting])
+
   return (
     <div className="relative flex flex-col items-center gap-4 sm:flex-row">
-      <Input
+      <input
         ref={fileInputRef}
         id={formItemId}
         type="file"
         accept={ALLOWED_AVATAR_FILE_TYPES.join(",")}
         onChange={handleFileChange}
-        containerClassName="absolute top-0 left-0"
-        className="size-24 rounded-full border-none opacity-100"
+        className="absolute left-0 top-0 hidden size-24 rounded-full border-none"
         disabled={isConverting}
       />
       <div className="relative">
-        <label
-          htmlFor={formItemId}
+        <button
+          id={formItemId}
+          type="button"
+          onClick={handleAvatarClick}
           className={cn(
-            "group cursor-pointer",
+            "group cursor-pointer appearance-none rounded-full border-0 bg-transparent p-0",
             isConverting ? "pointer-events-none" : ""
           )}
         >
@@ -91,7 +98,7 @@ export function AvatarUploadInput(props: AvatarUploadInputProps) {
             )}
           </Avatar>
           <span className="sr-only">Upload avatar</span>
-        </label>
+        </button>
         {value && !isConverting ? (
           <Button
             type="button"
