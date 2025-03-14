@@ -1,3 +1,5 @@
+import heic2any from "heic2any"
+
 import { Logger } from "@/features/telemetry/logger"
 
 const logger = Logger.create("verida-profile")
@@ -9,6 +11,8 @@ export const ALLOWED_AVATAR_FILE_TYPES = [
   "image/png",
   "image/webp",
   "image/gif",
+  "image/heic",
+  "image/heif",
 ]
 
 /**
@@ -98,5 +102,74 @@ export function createImagePreview(file: File): {
     cleanup: () => {
       URL.revokeObjectURL(previewUrl)
     },
+  }
+}
+
+/**
+ * Converts an image file to JPEG format if it's in HEIC/HEIF format.
+ * iOS devices often save images in HEIC/HEIF format which needs to be converted for web compatibility.
+ *
+ * @param file The image file to potentially convert
+ * @returns A Promise that resolves to either:
+ * - A new File object in JPEG format if the input was HEIC/HEIF
+ * - The original file if it was already in a web-compatible format
+ */
+export function convertImage(file: File): Promise<File> {
+  // Check if the file is a HEIC/HEIF format by extension (iOS doesn't always set the correct mime type)
+  const isHeicFormat =
+    file.name.toLowerCase().endsWith(".heic") ||
+    file.name.toLowerCase().endsWith(".heif") ||
+    file.type === "image/heic" ||
+    file.type === "image/heif"
+
+  if (isHeicFormat) {
+    return convertHeicToJpeg(file)
+  }
+
+  return Promise.resolve(file)
+}
+
+/**
+ * Converts HEIC/HEIF images to JPEG format
+ *
+ * @param file The file to convert
+ * @returns A Promise that resolves to the converted file or the original file if not HEIC/HEIF
+ */
+export async function convertHeicToJpeg(file: File): Promise<File> {
+  // Check if the file is a HEIC/HEIF format by extension (iOS doesn't always set the correct mime type)
+  const isHeicFormat =
+    file.name.toLowerCase().endsWith(".heic") ||
+    file.name.toLowerCase().endsWith(".heif") ||
+    file.type === "image/heic" ||
+    file.type === "image/heif"
+
+  if (!isHeicFormat) {
+    return Promise.resolve(file)
+  }
+
+  try {
+    logger.info("Converting HEIC/HEIF image to JPEG", {
+      fileType: file.type,
+    })
+
+    // Convert HEIC to JPEG using heic2any
+    const jpegBlob = (await heic2any({
+      blob: file,
+      toType: "image/jpeg",
+      quality: 0.92,
+    })) as Blob
+
+    // Create a new file with the converted blob
+    const newFileName = file.name.replace(/\.(heic|heif)$/i, ".jpg")
+
+    const newFile = new File([jpegBlob], newFileName, {
+      type: "image/jpeg",
+    })
+
+    logger.info("Successfully converted HEIC/HEIF image to JPEG")
+
+    return newFile
+  } catch (error) {
+    throw new Error("Error converting HEIC/HEIF to JPEG", { cause: error })
   }
 }

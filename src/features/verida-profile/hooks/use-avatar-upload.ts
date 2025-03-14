@@ -4,6 +4,7 @@ import { useCallback, useState } from "react"
 
 import { Logger } from "@/features/telemetry/logger"
 import {
+  convertImage,
   createImagePreview,
   cropImageToSquare,
   validateAvatarFile,
@@ -12,13 +13,17 @@ import {
 const logger = Logger.create("verida-profile")
 
 interface UseAvatarUploadReturn {
-  newAvatarUri: string | null
-  isDialogOpen: boolean
+  handleSelectedFileChange: (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => Promise<() => void>
+  isConverting: boolean
   selectedImageUrl: string | null
-  handleFileChange: (event: React.ChangeEvent<HTMLInputElement>) => () => void
+  isDialogOpen: boolean
   handleCropImage: (imageElement: HTMLImageElement) => Promise<void>
   handleCancelCrop: () => void
+  newAvatarUri: string | null
   validationError: string | undefined
+  clear: () => void
 }
 
 /**
@@ -32,30 +37,47 @@ export function useAvatarUpload(): UseAvatarUploadReturn {
   const [validationError, setValidationError] = useState<string | undefined>(
     undefined
   )
+  const [isConverting, setIsConverting] = useState(false)
 
-  const handleFileChange = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSelectedFileChange = useCallback(
+    async (event: React.ChangeEvent<HTMLInputElement>) => {
       const file = event.target.files?.[0]
       if (!file) {
         return () => {}
       }
 
-      // Validate the file
-      const validation = validateAvatarFile(file)
-      if (!validation.isValid) {
-        setValidationError(validation.errorMessage || "Invalid file")
-        return () => {}
-      }
-
+      // Set a loading state while we process the file
+      setIsConverting(true)
       setValidationError(undefined)
 
-      // Create a temporary URL for the image
-      const { previewUrl, cleanup } = createImagePreview(file)
-      setSelectedImageUrl(previewUrl)
-      setDialogOpen(true)
+      try {
+        // Convert file when needed and possible
+        const processedFile = await convertImage(file)
 
-      // Store the cleanup function to be called when the component unmounts
-      return cleanup
+        // Validate the processed file
+        const validation = validateAvatarFile(processedFile)
+        if (!validation.isValid) {
+          setValidationError(validation.errorMessage || "Invalid file")
+          setIsConverting(false)
+          return () => {}
+        }
+
+        // Create a temporary URL for the image
+        const { previewUrl, cleanup } = createImagePreview(processedFile)
+        setSelectedImageUrl(previewUrl)
+        setDialogOpen(true)
+        setIsConverting(false)
+
+        return cleanup
+      } catch (error) {
+        logger.error(new Error("Error processing image file", { cause: error }))
+
+        setValidationError(
+          "Error processing image. Please try a different file."
+        )
+        setIsConverting(false)
+        return () => {}
+      }
     },
     []
   )
@@ -91,13 +113,23 @@ export function useAvatarUpload(): UseAvatarUploadReturn {
     }
   }, [selectedImageUrl])
 
+  const clear = useCallback(() => {
+    setNewAvatarUri(null)
+    setSelectedImageUrl(null)
+    setValidationError(undefined)
+    setDialogOpen(false)
+    setIsConverting(false)
+  }, [])
+
   return {
-    newAvatarUri,
-    isDialogOpen,
+    handleSelectedFileChange,
+    isConverting,
     selectedImageUrl,
-    handleFileChange,
+    isDialogOpen,
     handleCropImage,
     handleCancelCrop,
+    newAvatarUri,
     validationError,
+    clear,
   }
 }
