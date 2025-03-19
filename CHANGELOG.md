@@ -1,3 +1,17 @@
+# 0.18.0 (2025-03-12)
+
+## Enhancements
+
+- Add user profile feature
+- Add a Discovery page showcasing applications integrating Verida
+- Add Terms & Conditions in Identity menu
+- Add loading state for data connections in the onboarding
+- Reworked the application layout (header)
+
+## Misc
+
+- Update dependencies
+
 # 0.17.0 (2025-03-03)
 
 ## Enhancements
