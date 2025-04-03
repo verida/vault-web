@@ -19,6 +19,7 @@ export const CommonConfigSchema = z.object({
     .string()
     .optional()
     .transform((value) => value === "true"),
+  THIRD_WEB_CLIENT_ID: z.string(),
   VERIDA_NETWORK: z
     .enum(["myrtle", "banksia", "devnet", "local"])
     .default("banksia")
