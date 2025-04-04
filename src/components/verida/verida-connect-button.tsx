@@ -24,14 +24,14 @@ export function VeridaConnectButton(props: VeridaConnectButtonProps) {
     ...buttonProps
   } = props
 
-  const { connect, isConnecting, isConnected } = useVerida()
+  const { connectLegacyAccount, isConnecting, isConnected } = useVerida()
 
   const handleButtonClick = useCallback(() => {
     if (isConnecting || isConnected) {
       return
     }
-    connect()
-  }, [connect, isConnecting, isConnected])
+    connectLegacyAccount()
+  }, [connectLegacyAccount, isConnecting, isConnected])
 
   return (
     <Button

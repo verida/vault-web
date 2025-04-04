@@ -1,228 +1,229 @@
 "use client"
 
-import { useQueryClient } from "@tanstack/react-query"
 import type { Account } from "@verida/account"
-import { Client, type Context } from "@verida/client-ts"
-import { WebUser } from "@verida/web-helpers"
+import { VaultAccount, hasSession } from "@verida/account-web-vault"
+import {
+  Client,
+  type Context,
+  Network as NetworkClient,
+} from "@verida/client-ts"
 import {
   type ReactNode,
   useCallback,
   useEffect,
   useMemo,
-  useRef,
   useState,
 } from "react"
 
 import { commonConfig } from "@/config/common"
 import { Logger } from "@/features/telemetry/logger"
 import { Sentry } from "@/features/telemetry/sentry"
-import { invalidateVeridaProfile } from "@/features/verida-profile/hooks/use-verida-profile"
 import { VERIDA_VAULT_CONTEXT_NAME } from "@/features/verida/constants"
 import {
   VeridaContext,
   type VeridaContextType,
 } from "@/features/verida/contexts/verida-context"
+import { VeridaAlreadyConnectedError } from "@/features/verida/errors/verida-already-connected-error"
+import { VeridaConnectionAbortedError } from "@/features/verida/errors/verida-connection-aborted-error"
 import { VeridaConnectionError } from "@/features/verida/errors/verida-connection-error"
 import { VeridaDisconnectionError } from "@/features/verida/errors/verida-disconnection-error"
+import { VeridaNotConnectedError } from "@/features/verida/errors/verida-not-connected-error"
+import { buildSession, buildSessionToken } from "@/features/verida/utils"
 
 const logger = Logger.create("verida")
-
-// Move client in a state because it mutates with the account
-const client = new Client({
-  network: commonConfig.VERIDA_NETWORK,
-  didClientConfig: {
-    network: commonConfig.VERIDA_NETWORK,
-    rpcUrl: commonConfig.VERIDA_RPC_URL,
-  },
-})
-
-const webUserInstance = new WebUser({
-  debug: commonConfig.DEV_MODE,
-  clientConfig: {
-    network: commonConfig.VERIDA_NETWORK,
-    didClientConfig: {
-      network: commonConfig.VERIDA_NETWORK,
-      rpcUrl: commonConfig.VERIDA_RPC_URL,
-    },
-  },
-  contextConfig: {
-    name: VERIDA_VAULT_CONTEXT_NAME,
-  },
-  accountConfig: {
-    request: {
-      logoUrl: `${commonConfig.BASE_URL}/images/verida_vault_logo_for_connect.png`,
-    },
-    network: commonConfig.VERIDA_NETWORK,
-  },
-})
 
 export interface VeridaProviderProps {
   children?: ReactNode
 }
 
 export function VeridaProvider(props: VeridaProviderProps) {
-  const webUserInstanceRef = useRef(webUserInstance)
-
+  const [client, setClient] = useState<Client | null>(null)
   const [account, setAccount] = useState<Account | null>(null)
+  const [did, setDid] = useState<string | null>(null)
   const [context, setContext] = useState<Context | null>(null)
-  const [isConnected, setIsConnected] = useState(false)
+  const [sessionToken, setSessionToken] = useState<string | null>(null)
   const [isConnecting, setIsConnecting] = useState(false)
   const [isDisconnecting, setIsDisconnecting] = useState(false)
-  const [did, setDid] = useState<string | null>(null)
 
-  const updateStates = useCallback(async () => {
-    const newIsConnected = webUserInstance.isConnected()
-    setIsConnected(newIsConnected)
-    setIsConnecting(false)
-    setIsDisconnecting(false)
+  const isConnected = useMemo(() => {
+    return !!client && !!account && !!context && !!did
+  }, [client, account, context, did])
 
-    if (!newIsConnected) {
-      // If not connected, no need to continue, just clear everything
-      setDid(null)
-      Sentry.setUser(null)
-      return
-    }
-
-    try {
-      const newDid = webUserInstance.getDid()
-      setDid(newDid)
-      Sentry.setUser({ id: newDid })
-    } catch (_error) {
-      // Only error is if user not connected which is prevented by above check
-      Sentry.setUser(null)
-      setDid(null)
-    }
+  const clearStates = useCallback(() => {
+    setClient(null)
+    setAccount(null)
+    setDid(null)
+    setContext(null)
+    setSessionToken(null)
+    Sentry.setUser(null)
   }, [])
 
-  const connect = useCallback(async () => {
-    logger.info("User connecting to Verida")
-
-    try {
-      setIsConnecting(true)
-
-      const connected = await webUserInstanceRef.current.connect()
-
-      if (connected) {
-        setAccount(webUserInstanceRef.current.getAccount())
-        setContext(webUserInstanceRef.current.getContext())
+  const connectAccount = useCallback(
+    async (accountToConnect: Account) => {
+      if (isConnecting || isDisconnecting) {
+        return
       }
 
-      logger.info(
-        connected
-          ? "Connection to Verida successful"
-          : "User did not connect to Verida"
-      )
-    } catch (error) {
-      throw new VeridaConnectionError({
-        cause: error,
+      if (isConnected) {
+        throw new VeridaAlreadyConnectedError()
+      }
+
+      logger.info("Connecting user to Verida")
+
+      try {
+        setIsConnecting(true)
+
+        const _context = await NetworkClient.connect({
+          client: {
+            network: commonConfig.VERIDA_NETWORK,
+            didClientConfig: {
+              network: commonConfig.VERIDA_NETWORK,
+              rpcUrl: commonConfig.VERIDA_RPC_URL,
+            },
+          },
+          account: accountToConnect,
+          context: {
+            name: VERIDA_VAULT_CONTEXT_NAME,
+          },
+        })
+
+        if (!_context) {
+          setIsConnecting(false)
+          logger.warn("User did not connect to Verida")
+          throw new VeridaConnectionAbortedError()
+        }
+
+        const _did = await accountToConnect.did()
+        const _client = _context.getClient()
+
+        const session =
+          accountToConnect instanceof VaultAccount
+            ? await accountToConnect.getContextSession(
+                VERIDA_VAULT_CONTEXT_NAME
+              )
+            : await buildSession(_context)
+
+        if (session) {
+          const token = buildSessionToken(session)
+          setSessionToken(token)
+        }
+
+        setClient(_client)
+        setAccount(accountToConnect)
+        setDid(_did)
+        setContext(_context)
+        Sentry.setUser({ id: _did })
+
+        setIsConnecting(false)
+
+        logger.info("Connection to Verida successful")
+      } catch (error) {
+        clearStates()
+        setIsConnecting(false)
+
+        if (error instanceof VeridaConnectionAbortedError) {
+          throw error
+        }
+
+        throw new VeridaConnectionError({
+          cause: error,
+        })
+      }
+    },
+    [isConnected, isConnecting, isDisconnecting, clearStates]
+  )
+
+  const connectLegacyAccount = useCallback(async () => {
+    return connectAccount(
+      new VaultAccount({
+        request: {
+          logoUrl: `${commonConfig.BASE_URL}/images/verida_vault_logo_for_connect.png`,
+        },
+        network: commonConfig.VERIDA_NETWORK,
       })
-    } finally {
-      setIsConnecting(false)
-    }
-  }, [webUserInstanceRef])
+    )
+  }, [connectAccount])
 
   const autoConnect = useCallback(async () => {
     logger.info("Checking for existing Verida session")
 
-    if (webUserInstance.hasSession()) {
+    if (hasSession(VERIDA_VAULT_CONTEXT_NAME)) {
       logger.info("Existing Verida session found, connecting automatically...")
-      connect()
+      connectLegacyAccount()
     }
 
     logger.info("No existing Verida session found, skipping connection")
-  }, [connect])
-
-  const connectionEventListener = useCallback(() => {
-    void updateStates()
-  }, [updateStates])
-
-  const queryClient = useQueryClient()
-
-  const profileChangedEventListener = useCallback(() => {
-    if (!did) {
-      return
-    }
-    invalidateVeridaProfile(queryClient, did)
-  }, [queryClient, did])
-
-  useEffect(() => {
-    logger.info("Initialising the Verida client")
-    webUserInstance.addListener("connected", connectionEventListener)
-    webUserInstance.addListener("profileChanged", profileChangedEventListener)
-    webUserInstance.addListener("disconnected", connectionEventListener)
-
-    void autoConnect()
-
-    return () => {
-      logger.info("Cleaning the Verida client")
-      webUserInstance.removeAllListeners()
-    }
-  }, [connectionEventListener, profileChangedEventListener, autoConnect])
+  }, [connectLegacyAccount])
 
   const disconnect = useCallback(async () => {
-    logger.info("User disconnecting from Verida")
+    logger.info("Disconnecting user from Verida")
 
     setIsDisconnecting(true)
+
     try {
-      await webUserInstanceRef.current.disconnect()
-      setAccount(null)
-      setDid(null)
-      setContext(null)
+      if (!context) {
+        logger.warn(
+          "User already disconnected from Verida. Aborting disconnect."
+        )
+        throw new VeridaNotConnectedError()
+      }
+
+      await context.disconnect()
+
+      logger.info("User successfully disconnected from Verida")
     } catch (error) {
+      if (error instanceof VeridaNotConnectedError) {
+        throw error
+      }
+
       throw new VeridaDisconnectionError({
         cause: error,
       })
     } finally {
+      clearStates()
       setIsDisconnecting(false)
     }
-
-    logger.info("User successfully disconnected from Verida")
-  }, [webUserInstanceRef])
+  }, [context, clearStates])
 
   const getAccountSessionToken = useCallback(async () => {
-    if (!account) {
-      throw new Error("User not connected to Verida")
+    if (!sessionToken) {
+      return Promise.reject(new Error("User not connected to Verida"))
+    }
+    return Promise.resolve(sessionToken)
+  }, [sessionToken])
+
+  useEffect(() => {
+    if (isConnected || isConnecting || isDisconnecting) {
+      return
     }
 
-    // TODO: Use account instead of webUserInstanceRef
-    // Have to cast it as only VaultAccount implements getContextSession
-    // If Account instance of AutoAccount, we need to build the session manually
-
-    const _account = webUserInstanceRef.current.getAccount()
-    const contextSession = await _account.getContextSession(
-      VERIDA_VAULT_CONTEXT_NAME
-    )
-
-    if (!contextSession) {
-      throw new Error("No context session found")
-    }
-
-    const stringifiedSession = JSON.stringify(contextSession)
-    const sessionToken = Buffer.from(stringifiedSession).toString("base64")
-    return sessionToken
-  }, [account, webUserInstanceRef])
+    void autoConnect()
+  }, [isConnected, isConnecting, isDisconnecting, autoConnect])
 
   const contextValue: VeridaContextType = useMemo(
     () => ({
       client,
       account,
+      did,
       context,
+      sessionToken,
       isConnected,
       isConnecting,
       isDisconnecting,
-      did,
-      connect,
+      connectLegacyAccount,
       disconnect,
       getAccountSessionToken,
     }),
     [
-      context,
+      client,
       account,
+      did,
+      context,
+      sessionToken,
       isConnected,
       isConnecting,
       isDisconnecting,
-      did,
-      connect,
+      connectLegacyAccount,
       disconnect,
       getAccountSessionToken,
     ]

@@ -3,15 +3,18 @@ import type { Client, Context } from "@verida/client-ts"
 import { createContext } from "react"
 
 export type VeridaContextType = {
-  client: Client
+  client: Client | null
   account: Account | null
   did: string | null
   context: Context | null
+  sessionToken: string | null
   isConnected: boolean
   isConnecting: boolean
   isDisconnecting: boolean
-  connect: () => Promise<void>
+  connectLegacyAccount: () => Promise<void>
   disconnect: () => Promise<void>
+
+  /** @deprecated Use `sessionToken` instead */
   getAccountSessionToken: () => Promise<string>
 }
 

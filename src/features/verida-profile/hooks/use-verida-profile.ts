@@ -19,9 +19,9 @@ export function useVeridaProfile({ did }: UseVeridaProfileArgs) {
 
   const { data, ...query } = useQuery({
     queryKey: VeridaProfileQueryKeys.profile(did),
-    enabled: !!did,
+    enabled: !!did && !!client,
     queryFn: () => {
-      if (!did) {
+      if (!did || !client) {
         // To satisfy the type checker
         // Should not happen as the hook is disabled if !did
         throw new Error("DID is required")
