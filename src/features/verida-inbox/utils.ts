@@ -1,5 +1,5 @@
+import type { Context } from "@verida/client-ts"
 import type { IMessaging } from "@verida/types"
-import { WebUser } from "@verida/web-helpers"
 
 import { Logger } from "@/features/telemetry/logger"
 import type {
@@ -528,7 +528,7 @@ export async function declineDataRequestMessage(
  *
  * @param messagingEngine - The Verida messaging engine instance
  * @param messageRecord - The inbox message record to accept
- * @param webUserInstance - The web user instance used to open datastores
+ * @param context - The Verida context used to open datastores
  *
  * @returns A promise that resolves when the message is accepted and data is saved
  *
@@ -541,7 +541,7 @@ export async function declineDataRequestMessage(
 export async function acceptIncomingDataMessage(
   messagingEngine: IMessaging,
   messageRecord: VeridaInboxMessageRecord,
-  webUserInstance: WebUser
+  context: Context
 ): Promise<void> {
   logger.info("Accepting incoming data message")
 
@@ -587,9 +587,7 @@ export async function acceptIncomingDataMessage(
           throw new Error("Data record schema is required")
         }
 
-        const store = await webUserInstance.openDatastore(
-          dataRecordToSave.schema
-        )
+        const store = await context.openDatastore(dataRecordToSave.schema)
         const saveResult = await store.save(dataRecordToSave, {
           forceUpdate: true,
         })

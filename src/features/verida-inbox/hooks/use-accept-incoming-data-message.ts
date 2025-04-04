@@ -32,7 +32,7 @@ interface UseAcceptIncomingDataMessageOptions {
 export function useAcceptIncomingDataMessage(
   options?: UseAcceptIncomingDataMessageOptions
 ) {
-  const { did, webUserInstanceRef } = useVerida()
+  const { did, context } = useVerida()
   const { messagingEngine } = useVeridaInbox()
   const queryClient = useQueryClient()
   const {
@@ -49,15 +49,15 @@ export function useAcceptIncomingDataMessage(
     MutationContext
   >({
     mutationFn: ({ messageRecord }) => {
+      if (!context) {
+        throw new Error("User not connected to Verida")
+      }
+
       if (!messagingEngine) {
         throw new Error("Messaging engine not initialized")
       }
 
-      return acceptIncomingDataMessage(
-        messagingEngine,
-        messageRecord,
-        webUserInstanceRef.current
-      )
+      return acceptIncomingDataMessage(messagingEngine, messageRecord, context)
     },
     onMutate: async ({ messageRecord }) => {
       if (options?.disableOptimisticUpdate) {

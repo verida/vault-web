@@ -1,6 +1,5 @@
-import { Client } from "@verida/client-ts"
+import { Client, Context } from "@verida/client-ts"
 import { type IProfile, Network } from "@verida/types"
-import type { WebUser } from "@verida/web-helpers"
 
 import { Logger } from "@/features/telemetry/logger"
 import { VERIDA_PROFILE_DB_NAME } from "@/features/verida-profile/constants"
@@ -21,7 +20,7 @@ type FetchVeridaProfileArgs = {
 }
 
 /**
- * A bit unreliable at the moment, prefer using the client.
+ * A bit unreliable at the moment, prefer using the client or context methods.
  *
  * Fetches a Verida profile from the API.
  *
@@ -63,27 +62,27 @@ export async function fetchVeridaProfileFromApi({
   }
 }
 
-type GetVeridaProfileFromWebUserArgs = {
-  webUserInstance: WebUser
+type GetVeridaProfileFromContextArgs = {
+  context: Context
 }
 
 /**
- * Retrieves a Verida profile using a WebUser instance.
+ * Retrieves a Verida profile using a Context instance.
  *
  * This function is used when fetching the profile of the currently authenticated user.
  *
  * @param args - The arguments for retrieving the profile
- * @param args.webUserInstance - The authenticated WebUser instance to use for fetching the profile
+ * @param args.context - The authenticated Context instance to use for fetching the profile
  * @returns The user's Verida profile
  * @throws {Error} If the profile datastore is unavailable or if retrieval fails
  */
-export async function getVeridaProfileFromWebUser({
-  webUserInstance,
-}: GetVeridaProfileFromWebUserArgs): Promise<VeridaProfile> {
+export async function getVeridaProfileFromContext({
+  context,
+}: GetVeridaProfileFromContextArgs): Promise<VeridaProfile> {
+  logger.info("Getting Verida profile from Context")
+
   try {
-    logger.info("Getting Verida profile from WebUser")
-    const vaultContext = webUserInstance.getContext()
-    const profileDatastore = await vaultContext.openProfile()
+    const profileDatastore = await context.openProfile()
 
     if (!profileDatastore) {
       throw new Error("Verida profile datastore unavailable")
@@ -91,50 +90,45 @@ export async function getVeridaProfileFromWebUser({
 
     const profile = await getVeridaProfileFromDatastore(profileDatastore)
 
-    logger.info("Successfully got Verida profile from WebUser")
+    logger.info("Successfully got Verida profile from Context")
     return profile
   } catch (error) {
-    throw new Error("Failed to get Verida profile from WebUser", {
+    throw new Error("Failed to get Verida profile from Context", {
       cause: error,
     })
   }
 }
 
 type GetVeridaProfileFromClientArgs = {
+  client: Client
   did: string
-  network: Network
-  contextName?: string
-  options?: {
-    fallbackToVaultContext?: boolean
-    rpcUrl?: string
-  }
 }
 
 /**
  * Retrieves a Verida profile using the Verida client.
+ *
  * @param args - The arguments for retrieving the profile.
+ * @param args.client - The authenticated Verida client instance.
+ * @param args.did - The DID of the user to retrieve the profile for.
  * @returns The retrieved Verida profile.
  * @throws If the DID is invalid or if retrieval fails.
  */
 export async function getVeridaProfileFromClient({
+  client,
   did,
-  network,
-  contextName = VERIDA_VAULT_CONTEXT_NAME,
-  options,
 }: GetVeridaProfileFromClientArgs): Promise<VeridaProfile> {
+  logger.info("Fetching Verida profile from Verida client")
+
   if (!isValidVeridaDid(did)) {
     throw new Error("Invalid Verida DID")
   }
 
   try {
-    logger.info("Fetching Verida profile from Verida client")
-    const profileDb = await getVeridaProfileDatastore({
+    const profileDb = await client.openPublicProfile(
       did,
-      network,
-      contextName,
-      fallbackToVaultContext: options?.fallbackToVaultContext,
-      rpcUrl: options?.rpcUrl,
-    })
+      VERIDA_VAULT_CONTEXT_NAME,
+      VERIDA_PROFILE_DB_NAME
+    )
 
     if (!profileDb) {
       throw new Error("No Verida profile datastore found")
@@ -194,78 +188,28 @@ async function getVeridaProfileFromDatastore(
   return profile
 }
 
-type GetVeridaProfileDatastoreArgs = {
-  did: string
-  network: Network
-  contextName: string
-  fallbackToVaultContext?: boolean
-  rpcUrl?: string
-}
-
-/**
- * Retrieves the Verida profile datastore.
- *
- * @param args - The arguments for retrieving the datastore.
- * @returns The Verida profile datastore.
- * @throws If the DID is invalid or if datastore retrieval fails.
- */
-async function getVeridaProfileDatastore({
-  did,
-  network,
-  contextName,
-  fallbackToVaultContext = true,
-  rpcUrl,
-}: GetVeridaProfileDatastoreArgs) {
-  if (!isValidVeridaDid(did)) {
-    throw new Error("Invalid Verida DID")
-  }
-
-  try {
-    const client = new Client({
-      network,
-      didClientConfig: {
-        rpcUrl,
-        network,
-      },
-    })
-
-    return client.openPublicProfile(
-      did,
-      contextName,
-      VERIDA_PROFILE_DB_NAME,
-      fallbackToVaultContext && contextName !== VERIDA_VAULT_CONTEXT_NAME
-        ? VERIDA_VAULT_CONTEXT_NAME
-        : undefined
-    )
-  } catch (error) {
-    throw new Error("Failed to get Verida profile datastore", {
-      cause: error,
-    })
-  }
-}
-
 export type UpdateVeridaProfileArgs = {
+  context: Context
   profileToSave: VeridaProfile
-  webUserInstance: WebUser
 }
 
 /**
  * Updates a user's Verida profile with new information.
  *
- * @param webUserInstance - The authenticated Verida web user instance
- * @param profileToSave - The profile data to update containing name, avatar, description etc.
+ * @param args - The arguments for updating the profile.
+ * @param args.context - The authenticated Verida context instance.
+ * @param args.profileToSave - The profile data to update containing name, avatar, description etc.
  * @returns The updated Verida profile
  * @throws If profile datastore is unavailable or update fails
  */
 export async function updateVeridaProfile({
-  webUserInstance,
+  context,
   profileToSave,
 }: UpdateVeridaProfileArgs) {
   logger.info("Updating user profile")
 
   try {
-    const vaultContext = webUserInstance.getContext()
-    const profileDatastore = await vaultContext.openProfile()
+    const profileDatastore = await context.openProfile()
 
     if (!profileDatastore) {
       throw new Error("Verida profile datastore unavailable")
@@ -280,8 +224,8 @@ export async function updateVeridaProfile({
     await setDatastoreField(profileDatastore, "country", country)
     await setDatastoreField(profileDatastore, "website", website)
 
-    const updatedProfile = await getVeridaProfileFromWebUser({
-      webUserInstance,
+    const updatedProfile = await getVeridaProfileFromContext({
+      context,
     })
 
     logger.info("Successfully updated Verida profile")

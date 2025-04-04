@@ -1,7 +1,8 @@
 "use client"
 
 import { useQueryClient } from "@tanstack/react-query"
-import { type DatastoreOpenConfig } from "@verida/types"
+import type { Account } from "@verida/account"
+import { Client, type Context } from "@verida/client-ts"
 import { WebUser } from "@verida/web-helpers"
 import {
   type ReactNode,
@@ -21,8 +22,19 @@ import {
   VeridaContext,
   type VeridaContextType,
 } from "@/features/verida/contexts/verida-context"
+import { VeridaConnectionError } from "@/features/verida/errors/verida-connection-error"
+import { VeridaDisconnectionError } from "@/features/verida/errors/verida-disconnection-error"
 
 const logger = Logger.create("verida")
+
+// Move client in a state because it mutates with the account
+const client = new Client({
+  network: commonConfig.VERIDA_NETWORK,
+  didClientConfig: {
+    network: commonConfig.VERIDA_NETWORK,
+    rpcUrl: commonConfig.VERIDA_RPC_URL,
+  },
+})
 
 const webUserInstance = new WebUser({
   debug: commonConfig.DEV_MODE,
@@ -51,6 +63,8 @@ export interface VeridaProviderProps {
 export function VeridaProvider(props: VeridaProviderProps) {
   const webUserInstanceRef = useRef(webUserInstance)
 
+  const [account, setAccount] = useState<Account | null>(null)
+  const [context, setContext] = useState<Context | null>(null)
   const [isConnected, setIsConnected] = useState(false)
   const [isConnecting, setIsConnecting] = useState(false)
   const [isDisconnecting, setIsDisconnecting] = useState(false)
@@ -80,32 +94,43 @@ export function VeridaProvider(props: VeridaProviderProps) {
     }
   }, [])
 
-  const autoConnect = useCallback(async () => {
-    logger.info("Checking for existing Verida session")
+  const connect = useCallback(async () => {
+    logger.info("User connecting to Verida")
 
-    if (!webUserInstance.hasSession()) {
-      logger.info("No existing Verida session found, skipping connection")
-      return
-    }
-
-    logger.info("Existing Verida session found, connecting automatically...")
-
-    setIsConnecting(true)
     try {
+      setIsConnecting(true)
+
       const connected = await webUserInstanceRef.current.connect()
-      // Will trigger a 'connected' event if already connected and therefore update the states
+
+      if (connected) {
+        setAccount(webUserInstanceRef.current.getAccount())
+        setContext(webUserInstanceRef.current.getContext())
+      }
+
       logger.info(
         connected
           ? "Connection to Verida successful"
-          : "Connection to Verida failed"
+          : "User did not connect to Verida"
       )
     } catch (error) {
-      logger.warn("Connection to Verida with existing session failed")
-      logger.error(error)
+      throw new VeridaConnectionError({
+        cause: error,
+      })
     } finally {
       setIsConnecting(false)
     }
-  }, [])
+  }, [webUserInstanceRef])
+
+  const autoConnect = useCallback(async () => {
+    logger.info("Checking for existing Verida session")
+
+    if (webUserInstance.hasSession()) {
+      logger.info("Existing Verida session found, connecting automatically...")
+      connect()
+    }
+
+    logger.info("No existing Verida session found, skipping connection")
+  }, [connect])
 
   const connectionEventListener = useCallback(() => {
     void updateStates()
@@ -134,33 +159,37 @@ export function VeridaProvider(props: VeridaProviderProps) {
     }
   }, [connectionEventListener, profileChangedEventListener, autoConnect])
 
-  const connect = useCallback(async () => {
-    logger.info("User connecting to Verida")
-
-    setIsConnecting(true)
-    const connected = await webUserInstanceRef.current.connect()
-    setIsConnecting(false)
-
-    logger.info(
-      connected
-        ? "Connection to Verida successful"
-        : "User did not connect to Verida"
-    )
-  }, [webUserInstanceRef])
-
   const disconnect = useCallback(async () => {
     logger.info("User disconnecting from Verida")
 
     setIsDisconnecting(true)
-    await webUserInstanceRef.current.disconnect()
-    setIsDisconnecting(false)
+    try {
+      await webUserInstanceRef.current.disconnect()
+      setAccount(null)
+      setDid(null)
+      setContext(null)
+    } catch (error) {
+      throw new VeridaDisconnectionError({
+        cause: error,
+      })
+    } finally {
+      setIsDisconnecting(false)
+    }
 
     logger.info("User successfully disconnected from Verida")
   }, [webUserInstanceRef])
 
   const getAccountSessionToken = useCallback(async () => {
-    const account = webUserInstanceRef.current.getAccount()
-    const contextSession = await account.getContextSession(
+    if (!account) {
+      throw new Error("User not connected to Verida")
+    }
+
+    // TODO: Use account instead of webUserInstanceRef
+    // Have to cast it as only VaultAccount implements getContextSession
+    // If Account instance of AutoAccount, we need to build the session manually
+
+    const _account = webUserInstanceRef.current.getAccount()
+    const contextSession = await _account.getContextSession(
       VERIDA_VAULT_CONTEXT_NAME
     )
 
@@ -171,32 +200,13 @@ export function VeridaProvider(props: VeridaProviderProps) {
     const stringifiedSession = JSON.stringify(contextSession)
     const sessionToken = Buffer.from(stringifiedSession).toString("base64")
     return sessionToken
-  }, [webUserInstanceRef])
-
-  const openDatastore = useCallback(
-    async (schemaUrl: string, config?: DatastoreOpenConfig) => {
-      logger.info("Opening Verida datastore", {
-        schemaUrl,
-        config,
-      })
-
-      const datastore = await webUserInstanceRef.current.openDatastore(
-        schemaUrl,
-        config
-      )
-
-      logger.info("Verida datastore succesfully opened", {
-        schemaUrl,
-        config,
-      })
-      return datastore
-    },
-    [webUserInstanceRef]
-  )
+  }, [account, webUserInstanceRef])
 
   const contextValue: VeridaContextType = useMemo(
     () => ({
-      isReady: isConnected && !!did,
+      client,
+      account,
+      context,
       isConnected,
       isConnecting,
       isDisconnecting,
@@ -204,10 +214,10 @@ export function VeridaProvider(props: VeridaProviderProps) {
       connect,
       disconnect,
       getAccountSessionToken,
-      openDatastore,
-      webUserInstanceRef,
     }),
     [
+      context,
+      account,
       isConnected,
       isConnecting,
       isDisconnecting,
@@ -215,8 +225,6 @@ export function VeridaProvider(props: VeridaProviderProps) {
       connect,
       disconnect,
       getAccountSessionToken,
-      openDatastore,
-      webUserInstanceRef,
     ]
   )
 

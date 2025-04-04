@@ -1,21 +1,18 @@
-import { type DatastoreOpenConfig, type IDatastore } from "@verida/types"
-import { type WebUser } from "@verida/web-helpers"
-import { type MutableRefObject, createContext } from "react"
+import type { Account } from "@verida/account"
+import type { Client, Context } from "@verida/client-ts"
+import { createContext } from "react"
 
 export type VeridaContextType = {
-  webUserInstanceRef: MutableRefObject<WebUser>
-  isReady: boolean
+  client: Client
+  account: Account | null
+  did: string | null
+  context: Context | null
   isConnected: boolean
   isConnecting: boolean
   isDisconnecting: boolean
-  did: string | null
   connect: () => Promise<void>
   disconnect: () => Promise<void>
   getAccountSessionToken: () => Promise<string>
-  openDatastore: (
-    schemaUrl: string,
-    config?: DatastoreOpenConfig
-  ) => Promise<IDatastore>
 }
 
 export const VeridaContext = createContext<VeridaContextType | null>(null)
