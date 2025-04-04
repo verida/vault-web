@@ -3,7 +3,7 @@ import { QueryClient, useQuery } from "@tanstack/react-query"
 import { Logger } from "@/features/telemetry/logger"
 import { VeridaProfileQueryKeys } from "@/features/verida-profile/queries"
 import {
-  getVeridaProfileFromClient,
+  getAnyVeridaProfile,
   getVeridaProfileFromContext,
 } from "@/features/verida-profile/utils"
 import { useVerida } from "@/features/verida/hooks/use-verida"
@@ -15,13 +15,13 @@ type UseVeridaProfileArgs = {
 }
 
 export function useVeridaProfile({ did }: UseVeridaProfileArgs) {
-  const { client, did: currentUserDid, context } = useVerida()
+  const { did: currentUserDid, context } = useVerida()
 
   const { data, ...query } = useQuery({
     queryKey: VeridaProfileQueryKeys.profile(did),
-    enabled: !!did && !!client,
+    enabled: !!did,
     queryFn: () => {
-      if (!did || !client) {
+      if (!did) {
         // To satisfy the type checker
         // Should not happen as the hook is disabled if !did
         throw new Error("DID is required")
@@ -33,8 +33,7 @@ export function useVeridaProfile({ did }: UseVeridaProfileArgs) {
         })
       }
 
-      return getVeridaProfileFromClient({
-        client,
+      return getAnyVeridaProfile({
         did,
       })
     },

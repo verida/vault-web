@@ -1,6 +1,7 @@
 import { Client, Context } from "@verida/client-ts"
 import { type IProfile, Network } from "@verida/types"
 
+import { commonConfig } from "@/config/common"
 import { Logger } from "@/features/telemetry/logger"
 import { VERIDA_PROFILE_DB_NAME } from "@/features/verida-profile/constants"
 import { VeridaProfileApiResponseSchema } from "@/features/verida-profile/schemas"
@@ -99,35 +100,43 @@ export async function getVeridaProfileFromContext({
   }
 }
 
-type GetVeridaProfileFromClientArgs = {
-  client: Client
+type GetAnyVeridaProfileArgs = {
   did: string
 }
 
 /**
- * Retrieves a Verida profile using the Verida client.
+ * Get any Verida profile.
  *
  * @param args - The arguments for retrieving the profile.
- * @param args.client - The authenticated Verida client instance.
  * @param args.did - The DID of the user to retrieve the profile for.
  * @returns The retrieved Verida profile.
  * @throws If the DID is invalid or if retrieval fails.
  */
-export async function getVeridaProfileFromClient({
-  client,
+export async function getAnyVeridaProfile({
   did,
-}: GetVeridaProfileFromClientArgs): Promise<VeridaProfile> {
-  logger.info("Fetching Verida profile from Verida client")
+}: GetAnyVeridaProfileArgs): Promise<VeridaProfile> {
+  logger.info("Getting a Verida profile")
 
   if (!isValidVeridaDid(did)) {
     throw new Error("Invalid Verida DID")
   }
 
   try {
+    // Creating a new client. For some reason the client instance from the
+    // connected user is not able to get the profile of other users.
+    const client = new Client({
+      network: commonConfig.VERIDA_NETWORK,
+      didClientConfig: {
+        network: commonConfig.VERIDA_NETWORK,
+        rpcUrl: commonConfig.VERIDA_RPC_URL,
+      },
+    })
+
     const profileDb = await client.openPublicProfile(
       did,
       VERIDA_VAULT_CONTEXT_NAME,
-      VERIDA_PROFILE_DB_NAME
+      VERIDA_PROFILE_DB_NAME,
+      VERIDA_VAULT_CONTEXT_NAME
     )
 
     if (!profileDb) {
