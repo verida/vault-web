@@ -12,6 +12,7 @@ import {
   useCallback,
   useEffect,
   useMemo,
+  useRef,
   useState,
 } from "react"
 
@@ -42,7 +43,9 @@ export function VeridaProvider(props: VeridaProviderProps) {
   const [did, setDid] = useState<string | null>(null)
   const [context, setContext] = useState<Context | null>(null)
   const [sessionToken, setSessionToken] = useState<string | null>(null)
+  const connectingRef = useRef(false)
   const [isConnecting, setIsConnecting] = useState(false)
+  const disconnectingRef = useRef(false)
   const [isDisconnecting, setIsDisconnecting] = useState(false)
 
   const isConnected = useMemo(() => {
@@ -56,11 +59,21 @@ export function VeridaProvider(props: VeridaProviderProps) {
     setContext(null)
     setSessionToken(null)
     Sentry.setUser(null)
+    connectingRef.current = false
+    disconnectingRef.current = false
   }, [])
 
   const connectAccount = useCallback(
     async (accountToConnect: Account) => {
-      if (isConnecting || isDisconnecting) {
+      if (connectingRef.current) {
+        logger.warn("User already connecting to Verida. Aborting connection.")
+        return
+      }
+
+      if (disconnectingRef.current) {
+        logger.warn(
+          "User currently disconnecting from Verida. Aborting connection."
+        )
         return
       }
 
@@ -71,6 +84,7 @@ export function VeridaProvider(props: VeridaProviderProps) {
       logger.info("Connecting user to Verida")
 
       try {
+        connectingRef.current = true
         setIsConnecting(true)
 
         const _context = await NetworkClient.connect({
@@ -88,6 +102,7 @@ export function VeridaProvider(props: VeridaProviderProps) {
         })
 
         if (!_context) {
+          connectingRef.current = false
           setIsConnecting(false)
           logger.warn("User did not connect to Verida")
           throw new VeridaConnectionAbortedError()
@@ -114,11 +129,13 @@ export function VeridaProvider(props: VeridaProviderProps) {
         setContext(_context)
         Sentry.setUser({ id: _did })
 
+        connectingRef.current = false
         setIsConnecting(false)
 
         logger.info("Connection to Verida successful")
       } catch (error) {
         clearStates()
+        connectingRef.current = false
         setIsConnecting(false)
 
         if (error instanceof VeridaConnectionAbortedError) {
@@ -130,7 +147,7 @@ export function VeridaProvider(props: VeridaProviderProps) {
         })
       }
     },
-    [isConnected, isConnecting, isDisconnecting, clearStates]
+    [isConnected, clearStates]
   )
 
   const connectLegacyAccount = useCallback(async () => {
@@ -149,15 +166,28 @@ export function VeridaProvider(props: VeridaProviderProps) {
 
     if (hasSession(VERIDA_VAULT_CONTEXT_NAME)) {
       logger.info("Existing Verida session found, connecting automatically...")
-      connectLegacyAccount()
+      return connectLegacyAccount()
     }
 
     logger.info("No existing Verida session found, skipping connection")
   }, [connectLegacyAccount])
 
   const disconnect = useCallback(async () => {
+    if (connectingRef.current) {
+      logger.warn("User currently connecting to Verida. Aborting disconnect.")
+      return
+    }
+
+    if (disconnectingRef.current) {
+      logger.warn(
+        "User already disconnecting from Verida. Aborting disconnect."
+      )
+      return
+    }
+
     logger.info("Disconnecting user from Verida")
 
+    disconnectingRef.current = true
     setIsDisconnecting(true)
 
     try {
@@ -181,6 +211,7 @@ export function VeridaProvider(props: VeridaProviderProps) {
       })
     } finally {
       clearStates()
+      disconnectingRef.current = false
       setIsDisconnecting(false)
     }
   }, [context, clearStates])
@@ -193,12 +224,12 @@ export function VeridaProvider(props: VeridaProviderProps) {
   }, [sessionToken])
 
   useEffect(() => {
-    if (isConnected || isConnecting || isDisconnecting) {
+    if (isConnected || connectingRef.current || disconnectingRef.current) {
       return
     }
 
     void autoConnect()
-  }, [isConnected, isConnecting, isDisconnecting, autoConnect])
+  }, [isConnected, autoConnect])
 
   const contextValue: VeridaContextType = useMemo(
     () => ({
