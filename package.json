@@ -78,7 +78,7 @@
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.16",
-    "@tanstack/react-query-devtools": "^5.71.5",
+    "@tanstack/react-query-devtools": "^5.71.10",
     "@trivago/prettier-plugin-sort-imports": "^5.2.2",
     "@types/node": "^18.19.86",
     "@types/react": "^18.3.12",
@@ -98,7 +98,7 @@
     "prettier-plugin-tailwindcss": "^0.6.11",
     "tailwindcss": "^3.4.17",
     "tailwindcss-animate": "^1.0.7",
-    "typescript": "^5.8.2"
+    "typescript": "^5.8.3"
   },
   "resolutions": {
     "qrcode-with-logos": "1.0.3",
