@@ -11,7 +11,7 @@ import {
   VERIDA_WEBSITE_URL,
 } from "@/constants/app"
 import { VERIDA_PLATFORMS } from "@/features/landing/verida-platforms"
-import { OnboardingButton } from "@/features/onboarding/components/onboarding-button"
+import { ThirdwebConnectEmbed } from "@/features/thirdweb/components/thirdweb-connect-embed"
 
 export const metadata: Metadata = {
   title: {
@@ -36,14 +36,7 @@ export default function RootPage() {
           </div>
           <div className="flex flex-col gap-8">
             <div className="flex flex-col gap-2">
-              <Typography
-                variant="heading-5"
-                component="p"
-                className="text-center"
-              >
-                New to Verida?
-              </Typography>
-              <OnboardingButton />
+              <ThirdwebConnectEmbed />
             </div>
             <div className="flex flex-col gap-2">
               <Typography
@@ -51,7 +44,7 @@ export default function RootPage() {
                 component="p"
                 className="text-center"
               >
-                Already have a Verida Identity?
+                Using the Verida Wallet?
               </Typography>
               <VeridaConnectButton
                 variant="outline"

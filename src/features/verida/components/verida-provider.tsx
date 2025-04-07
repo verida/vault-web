@@ -15,6 +15,11 @@ import {
   useRef,
   useState,
 } from "react"
+import {
+  useActiveAccount,
+  useActiveWallet,
+  useDisconnect,
+} from "thirdweb/react"
 
 import { commonConfig } from "@/config/common"
 import { Logger } from "@/features/telemetry/logger"
@@ -29,7 +34,12 @@ import { VeridaConnectionAbortedError } from "@/features/verida/errors/verida-co
 import { VeridaConnectionError } from "@/features/verida/errors/verida-connection-error"
 import { VeridaDisconnectionError } from "@/features/verida/errors/verida-disconnection-error"
 import { VeridaNotConnectedError } from "@/features/verida/errors/verida-not-connected-error"
-import { buildSession, buildSessionToken } from "@/features/verida/utils"
+import {
+  buildSession,
+  buildSessionToken,
+  buildVeridaAccountFromThirdWeb,
+  checkAccountExists,
+} from "@/features/verida/utils"
 
 const logger = Logger.create("verida")
 
@@ -38,14 +48,28 @@ export interface VeridaProviderProps {
 }
 
 export function VeridaProvider(props: VeridaProviderProps) {
+  const thirdWebWallet = useActiveWallet()
+  const thirdWebSmartAccount = useActiveAccount()
+  const { disconnect: disconnectThirdWeb } = useDisconnect()
+
+  const thirdWebAdminAccount = useMemo(() => {
+    if (!thirdWebWallet || !thirdWebSmartAccount) {
+      return undefined
+    }
+    return thirdWebWallet.getAdminAccount?.()
+  }, [thirdWebWallet, thirdWebSmartAccount])
+
+  const accountTypeRef = useRef<"legacy" | "thirdweb" | null>(null)
+  const statusRef = useRef<
+    "connected" | "disconnected" | "connecting" | "disconnecting"
+  >("disconnected")
+
   const [client, setClient] = useState<Client | null>(null)
   const [account, setAccount] = useState<Account | null>(null)
   const [did, setDid] = useState<string | null>(null)
   const [context, setContext] = useState<Context | null>(null)
   const [sessionToken, setSessionToken] = useState<string | null>(null)
-  const connectingRef = useRef(false)
   const [isConnecting, setIsConnecting] = useState(false)
-  const disconnectingRef = useRef(false)
   const [isDisconnecting, setIsDisconnecting] = useState(false)
 
   const isConnected = useMemo(() => {
@@ -53,38 +77,28 @@ export function VeridaProvider(props: VeridaProviderProps) {
   }, [client, account, context, did])
 
   const clearStates = useCallback(() => {
+    logger.debug("Clearing states")
+
     setClient(null)
     setAccount(null)
     setDid(null)
     setContext(null)
     setSessionToken(null)
     Sentry.setUser(null)
-    connectingRef.current = false
-    disconnectingRef.current = false
+    statusRef.current = "disconnected"
+    accountTypeRef.current = null
   }, [])
 
   const connectAccount = useCallback(
     async (accountToConnect: Account) => {
-      if (connectingRef.current) {
-        logger.warn("User already connecting to Verida. Aborting connection.")
-        return
-      }
-
-      if (disconnectingRef.current) {
-        logger.warn(
-          "User currently disconnecting from Verida. Aborting connection."
-        )
-        return
-      }
-
-      if (isConnected) {
+      if (statusRef.current === "connected") {
         throw new VeridaAlreadyConnectedError()
       }
 
       logger.info("Connecting user to Verida")
 
       try {
-        connectingRef.current = true
+        statusRef.current = "connecting"
         setIsConnecting(true)
 
         const _context = await NetworkClient.connect({
@@ -102,7 +116,7 @@ export function VeridaProvider(props: VeridaProviderProps) {
         })
 
         if (!_context) {
-          connectingRef.current = false
+          statusRef.current = "disconnected"
           setIsConnecting(false)
           logger.warn("User did not connect to Verida")
           throw new VeridaConnectionAbortedError()
@@ -129,13 +143,14 @@ export function VeridaProvider(props: VeridaProviderProps) {
         setContext(_context)
         Sentry.setUser({ id: _did })
 
-        connectingRef.current = false
+        statusRef.current = "connected"
         setIsConnecting(false)
 
-        logger.info("Connection to Verida successful")
+        logger.info("Connection to Verida successful", {
+          did: _did,
+        })
       } catch (error) {
         clearStates()
-        connectingRef.current = false
         setIsConnecting(false)
 
         if (error instanceof VeridaConnectionAbortedError) {
@@ -147,10 +162,29 @@ export function VeridaProvider(props: VeridaProviderProps) {
         })
       }
     },
-    [isConnected, clearStates]
+    [clearStates]
   )
 
   const connectLegacyAccount = useCallback(async () => {
+    logger.debug("Connecting legacy account")
+
+    if (accountTypeRef.current === "thirdweb") {
+      logger.debug("Already connected with thirdweb account. Aborting.")
+      return
+    }
+
+    if (
+      statusRef.current === "connected" ||
+      statusRef.current === "connecting" ||
+      statusRef.current === "disconnecting"
+    ) {
+      return
+    }
+
+    accountTypeRef.current = "legacy"
+    statusRef.current = "connecting"
+    setIsConnecting(true)
+
     return connectAccount(
       new VaultAccount({
         request: {
@@ -162,6 +196,13 @@ export function VeridaProvider(props: VeridaProviderProps) {
   }, [connectAccount])
 
   const autoConnect = useCallback(async () => {
+    if (
+      accountTypeRef.current === "thirdweb" ||
+      statusRef.current !== "disconnected"
+    ) {
+      return
+    }
+
     logger.info("Checking for existing Verida session")
 
     if (hasSession(VERIDA_VAULT_CONTEXT_NAME)) {
@@ -173,48 +214,45 @@ export function VeridaProvider(props: VeridaProviderProps) {
   }, [connectLegacyAccount])
 
   const disconnect = useCallback(async () => {
-    if (connectingRef.current) {
+    if (statusRef.current === "connecting") {
       logger.warn("User currently connecting to Verida. Aborting disconnect.")
       return
     }
 
-    if (disconnectingRef.current) {
+    if (statusRef.current === "disconnecting") {
       logger.warn(
         "User already disconnecting from Verida. Aborting disconnect."
       )
       return
     }
 
+    if (!context) {
+      logger.warn("User already disconnected from Verida. Aborting disconnect.")
+      throw new VeridaNotConnectedError()
+    }
+
     logger.info("Disconnecting user from Verida")
 
-    disconnectingRef.current = true
+    statusRef.current = "disconnecting"
     setIsDisconnecting(true)
 
     try {
-      if (!context) {
-        logger.warn(
-          "User already disconnected from Verida. Aborting disconnect."
-        )
-        throw new VeridaNotConnectedError()
-      }
-
       await context.disconnect()
+
+      if (thirdWebWallet) {
+        disconnectThirdWeb(thirdWebWallet)
+      }
 
       logger.info("User successfully disconnected from Verida")
     } catch (error) {
-      if (error instanceof VeridaNotConnectedError) {
-        throw error
-      }
-
       throw new VeridaDisconnectionError({
         cause: error,
       })
     } finally {
       clearStates()
-      disconnectingRef.current = false
       setIsDisconnecting(false)
     }
-  }, [context, clearStates])
+  }, [context, clearStates, disconnectThirdWeb, thirdWebWallet])
 
   const getAccountSessionToken = useCallback(async () => {
     if (!sessionToken) {
@@ -224,12 +262,61 @@ export function VeridaProvider(props: VeridaProviderProps) {
   }, [sessionToken])
 
   useEffect(() => {
-    if (isConnected || connectingRef.current || disconnectingRef.current) {
+    if (statusRef.current !== "disconnected") {
       return
     }
 
     void autoConnect()
-  }, [isConnected, autoConnect])
+  }, [autoConnect])
+
+  useEffect(() => {
+    if (accountTypeRef.current === "legacy") {
+      return
+    }
+
+    if (
+      statusRef.current === "connected" ||
+      statusRef.current === "connecting" ||
+      statusRef.current === "disconnecting"
+    ) {
+      return
+    }
+
+    if (!thirdWebAdminAccount || !thirdWebSmartAccount) {
+      clearStates()
+      return
+    }
+
+    const execute = async () => {
+      accountTypeRef.current = "thirdweb"
+      statusRef.current = "connecting"
+      setIsConnecting(true)
+
+      try {
+        const _account = await buildVeridaAccountFromThirdWeb(
+          thirdWebAdminAccount,
+          thirdWebSmartAccount
+        )
+
+        const accountExists = await checkAccountExists(_account)
+
+        if (!accountExists) {
+          logger.debug("Account does not exist yet")
+          // Guide user to fill profile before connecting
+        }
+
+        logger.debug("Connecting thirdweb account")
+        await connectAccount(_account)
+      } catch (error) {
+        logger.error(error)
+      }
+    }
+
+    execute().catch((error) => {
+      logger.error(error)
+      clearStates()
+    })
+  }, [thirdWebAdminAccount, thirdWebSmartAccount, clearStates, connectAccount])
 
   const contextValue: VeridaContextType = useMemo(
     () => ({
