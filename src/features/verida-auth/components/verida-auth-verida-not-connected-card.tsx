@@ -5,8 +5,7 @@ import { type ComponentProps } from "react"
 
 import { Card, CardBody } from "@/components/ui/card"
 import { Typography } from "@/components/ui/typography"
-import { VeridaConnectButton } from "@/components/verida/verida-connect-button"
-import { OnboardingButton } from "@/features/onboarding/components/onboarding-button"
+import { VeridaConnectionOptions } from "@/components/verida/verida-connection-options"
 import { VeridaAuthCardHeader } from "@/features/verida-auth/components/verida-auth-card-header"
 import type { ValidVeridaAuthRequest } from "@/features/verida-auth/types"
 import { cn } from "@/styles/utils"
@@ -38,31 +37,7 @@ export function VeridaAuthVeridaNotConnectedCard(
             <Typography>
               Connect to your Verida Vault using your Verida Wallet.
             </Typography>
-            <div className="flex flex-col gap-8">
-              <div className="flex flex-col gap-2">
-                <Typography
-                  variant="heading-5"
-                  component="p"
-                  className="text-center"
-                >
-                  New to Verida?
-                </Typography>
-                <OnboardingButton />
-              </div>
-              <div className="flex flex-col gap-2">
-                <Typography
-                  variant="heading-5"
-                  component="p"
-                  className="text-center"
-                >
-                  Already have a Verida Identity?
-                </Typography>
-                <VeridaConnectButton
-                  variant="outline"
-                  label="Connect with Verida Wallet"
-                />
-              </div>
-            </div>
+            <VeridaConnectionOptions />
           </div>
           <div className="text-muted-foreground">
             <Typography>

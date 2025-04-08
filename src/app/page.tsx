@@ -4,14 +4,13 @@ import Link from "next/link"
 import { RootConnectionHandler } from "@/components/root-connection-handler"
 import { Button } from "@/components/ui/button"
 import { Typography } from "@/components/ui/typography"
-import { VeridaConnectButton } from "@/components/verida/verida-connect-button"
+import { VeridaConnectionOptions } from "@/components/verida/verida-connection-options"
 import {
   APP_TITLE_FOR_LANDING,
   TERMS_AND_CONDITIONS_URL,
   VERIDA_WEBSITE_URL,
 } from "@/constants/app"
 import { VERIDA_PLATFORMS } from "@/features/landing/verida-platforms"
-import { ThirdwebConnectEmbed } from "@/features/thirdweb/components/thirdweb-connect-embed"
 
 export const metadata: Metadata = {
   title: {
@@ -34,24 +33,7 @@ export default function RootPage() {
               Securely manage your personal data with the Verida Vault.
             </Typography>
           </div>
-          <div className="flex flex-col gap-8">
-            <div className="flex flex-col gap-2">
-              <ThirdwebConnectEmbed />
-            </div>
-            <div className="flex flex-col gap-2">
-              <Typography
-                variant="heading-5"
-                component="p"
-                className="text-center"
-              >
-                Using the Verida Wallet?
-              </Typography>
-              <VeridaConnectButton
-                variant="outline"
-                label="Connect with Verida Wallet"
-              />
-            </div>
-          </div>
+          <VeridaConnectionOptions />
         </div>
         <div className="flex flex-row items-center gap-2 self-center">
           {VERIDA_PLATFORMS.map((platform) => (
