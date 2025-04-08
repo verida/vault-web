@@ -2,6 +2,12 @@ import type { Metadata } from "next"
 import Link from "next/link"
 
 import { RootConnectionHandler } from "@/components/root-connection-handler"
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
 import { Button } from "@/components/ui/button"
 import { Typography } from "@/components/ui/typography"
 import { VeridaConnectionOptions } from "@/components/verida/verida-connection-options"
@@ -24,8 +30,8 @@ export default function RootPage() {
   return (
     <RootConnectionHandler>
       <div className="flex h-full min-h-fit flex-col gap-8 px-4 py-6">
-        <div className="flex flex-1 flex-col items-center justify-center gap-10">
-          <div className="flex flex-col gap-2 text-center">
+        <div className="flex flex-1 flex-col items-center gap-10">
+          <div className="flex max-w-3xl flex-col gap-2 text-center">
             <Typography variant="heading-1">
               Take control of your personal data
             </Typography>
@@ -34,6 +40,39 @@ export default function RootPage() {
             </Typography>
           </div>
           <VeridaConnectionOptions />
+          <Accordion type="multiple" className="w-full max-w-3xl">
+            <AccordionItem value="what-is-verida">
+              <AccordionTrigger>What is Verida?</AccordionTrigger>
+              <AccordionContent className="flex flex-col gap-3">
+                <Typography>
+                  Verida allows you to take back the control of your personal
+                  data by extracting them from your usual services and storing
+                  them in a secured way.
+                </Typography>
+                <Typography>
+                  The Verida Network guarantees the security of your data by
+                  using decentralised storage nodes and cryptographic techniques
+                  where you are the owner of your data.
+                </Typography>
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="what-is-verida-vault">
+              <AccordionTrigger>What is Verida Vault?</AccordionTrigger>
+              <AccordionContent className="flex flex-col gap-3">
+                <Typography>
+                  The Verida Vault is the web application to manage your data.
+                  You can connect your web2 platforms to extract your data as
+                  well as see all your data.
+                </Typography>
+                <Typography>
+                  The Verida Vault also allows you to manage the access to your
+                  stored data. You can authorize third-party applications such
+                  as AI agents to access your data, and revoke their access at
+                  any time.
+                </Typography>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
         </div>
         <div className="flex flex-row items-center gap-2 self-center">
           {VERIDA_PLATFORMS.map((platform) => (
