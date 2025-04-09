@@ -3428,7 +3428,7 @@
     pouchdb-find "^9.0.0"
     uuid "^8.3.2"
 
-"@verida/did-client@4.4.3-pr2", "@verida/did-client@^4.4.1":
+"@verida/did-client@4.4.3-pr2", "@verida/did-client@^4.4.1", "@verida/did-client@^4.4.3-pr2":
   version "4.4.3-pr2"
   resolved "https://registry.yarnpkg.com/@verida/did-client/-/did-client-4.4.3-pr2.tgz#c3d4aeb5320cbc6b74479bcde1b2d5047b21c6c8"
   integrity sha512-DmwYRosH8eKE92ujOqE2vr8qwdzq32lhGd11JObP4vypwGkjVFA6X1MXSuQCkIK35G76M8Wyg8mkNzOSYrlJ+A==

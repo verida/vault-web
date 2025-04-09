@@ -1,6 +1,7 @@
 import { AutoAccount } from "@verida/account-node"
 import type { Context } from "@verida/client-ts"
 import StorageEngineVerida from "@verida/client-ts/dist/context/engines/verida/database/engine"
+import { DIDClient } from "@verida/did-client"
 import type {
   AccountNodeDIDClientConfig,
   AuthTypeConfig,
@@ -26,13 +27,15 @@ export function isValidVeridaDid(maybeDid: string) {
   return VERIDA_DID_REGEXP.test(maybeDid)
 }
 
-export async function checkAccountExists(account: AutoAccount) {
+export async function checkAccountExists(did: string) {
   try {
-    const did = await account.did()
     logger.info("Checking account exists", { did })
 
     // Fetching DID document
-    const didClient = account.getDIDClient()
+    const didClient = new DIDClient({
+      network: commonConfig.VERIDA_NETWORK,
+      rpcUrl: commonConfig.VERIDA_RPC_URL,
+    })
     const didDocument = await didClient.get(did)
 
     if (didDocument) {
@@ -73,7 +76,6 @@ export async function buildVeridaAccountFromThirdWeb(
   thirdWebAccount: ThirdWebAccount,
   sponsoringAccount: ThirdWebAccount
 ) {
-  logger.debug("================================================")
   logger.debug("Building verida account")
 
   const consentMessage = buildConnectionConsentMessage(thirdWebAccount.address)
@@ -83,19 +85,15 @@ export async function buildVeridaAccountFromThirdWeb(
   const signedConsentMessage = await thirdWebAccount.signMessage({
     message: consentMessage,
   })
-  logger.debug(`Signed consent message: ${signedConsentMessage}`)
+  logger.debug("Consent message signed")
 
   // Generating an entropy based on the deterministic signature of the consent message
   // 0x + 64 hex chars = 32 bytes
   const entropy = signedConsentMessage.slice(0, 66)
   const mnemonic = ethers.utils.entropyToMnemonic(entropy)
-  logger.debug(`Mnemonic: ${mnemonic}`)
+  logger.debug(`Mnemonic generated`)
 
   const veridaAccountControllerWallet = ethers.Wallet.fromMnemonic(mnemonic)
-  logger.debug(`Controller address: ${veridaAccountControllerWallet.address}`)
-  logger.debug(
-    `Controller private key: ${veridaAccountControllerWallet.privateKey}`
-  )
 
   const signer = await getEthersSignerForAccount(
     thirdWebClient,
@@ -113,7 +111,6 @@ export async function buildVeridaAccountFromThirdWeb(
     didClientConfig,
   })
 
-  logger.debug("================================================")
   return account
 }
 

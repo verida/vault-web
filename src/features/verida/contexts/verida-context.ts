@@ -11,6 +11,7 @@ export type VeridaContextType = {
   isConnected: boolean
   isConnecting: boolean
   isDisconnecting: boolean
+  connectAccount: (account: Account) => Promise<void>
   connectLegacyAccount: () => Promise<void>
   disconnect: () => Promise<void>
 
