@@ -8,7 +8,7 @@ import {
   type Context,
   Network as NetworkClient,
 } from "@verida/client-ts"
-import { useRouter } from "next/navigation"
+import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import {
   type ReactNode,
   useCallback,
@@ -24,6 +24,7 @@ import {
 } from "thirdweb/react"
 
 import { commonConfig } from "@/config/common"
+import { useOnboardingEntryQueryState } from "@/features/onboarding/hooks/use-onboarding-entry-query-state"
 import { getOnboardingPageRoute } from "@/features/routes/utils"
 import { Logger } from "@/features/telemetry/logger"
 import { Sentry } from "@/features/telemetry/sentry"
@@ -57,8 +58,12 @@ export interface VeridaProviderProps {
 }
 
 export function VeridaProvider(props: VeridaProviderProps) {
+  const pathName = usePathname()
+  const searchParams = useSearchParams()
   const router = useRouter()
   const queryClient = useQueryClient()
+
+  const { serializeOnboardingEntryPath } = useOnboardingEntryQueryState()
 
   const thirdWebWallet = useActiveWallet()
   const thirdWebSmartAccount = useActiveAccount()
@@ -311,6 +316,15 @@ export function VeridaProvider(props: VeridaProviderProps) {
     })
   }, [thirdWebAdminAccount, thirdWebSmartAccount, clearStates, connectAccount])
 
+  const onboardingUrl = useMemo(() => {
+    return serializeOnboardingEntryPath(
+      `${getOnboardingPageRoute()}${searchParams.toString() ? `?${searchParams.toString()}` : ""}`,
+      {
+        onboardingEntryPath: pathName,
+      }
+    )
+  }, [pathName, searchParams, serializeOnboardingEntryPath])
+
   useEffect(() => {
     if (
       accountTypeRef.current !== "thirdweb" ||
@@ -325,7 +339,7 @@ export function VeridaProvider(props: VeridaProviderProps) {
       logger.debug("Account does not exist yet. Redirecting to onboarding.")
 
       statusRef.current = "creating"
-      router.push(getOnboardingPageRoute()) // TODO: Handle existing searchParams
+      router.push(onboardingUrl)
       return
     }
 
@@ -334,7 +348,14 @@ export function VeridaProvider(props: VeridaProviderProps) {
     connectAccount(account).catch((error) => {
       logger.error(error)
     })
-  }, [router, accountExists, account, clearStates, connectAccount])
+  }, [
+    router,
+    accountExists,
+    account,
+    clearStates,
+    connectAccount,
+    onboardingUrl,
+  ])
 
   const contextValue: VeridaContextType = useMemo(
     () => ({
