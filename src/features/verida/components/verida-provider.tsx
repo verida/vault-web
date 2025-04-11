@@ -231,7 +231,7 @@ export function VeridaProvider(props: VeridaProviderProps) {
   const disconnect = useCallback(async () => {
     logger.info("Disconnecting user from Verida")
 
-    if (statusRef.current === "disconnected" || !context) {
+    if (statusRef.current === "disconnected") {
       logger.warn("User already disconnected from Verida. Aborting disconnect.")
       return
     }
@@ -252,7 +252,9 @@ export function VeridaProvider(props: VeridaProviderProps) {
     setIsDisconnecting(true)
 
     try {
-      await context.disconnect()
+      if (context) {
+        await context.disconnect()
+      }
 
       if (thirdWebWallet) {
         disconnectThirdWeb(thirdWebWallet)

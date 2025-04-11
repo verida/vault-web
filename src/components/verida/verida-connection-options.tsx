@@ -16,6 +16,7 @@ import {
   LoadingBlockDescription,
   LoadingBlockSpinner,
 } from "@/components/ui/loading"
+import { Separator } from "@/components/ui/separator"
 import { Typography } from "@/components/ui/typography"
 import { VeridaConnectButton } from "@/components/verida/verida-connect-button"
 import { useOnboardingEntryQueryState } from "@/features/onboarding/hooks/use-onboarding-entry-query-state"
@@ -35,7 +36,8 @@ export function VeridaConnectionOptions(props: VeridaConnectionOptionsProps) {
   const wallet = useAdminWallet()
   const { data: walletInfo } = useWalletInfo(wallet?.id)
 
-  const { account, isConnected, requestThirdWebConsentSignature } = useVerida()
+  const { account, isConnected, disconnect, requestThirdWebConsentSignature } =
+    useVerida()
   // If the account is defined and the verida account exists but it is not connected, something went wrong, may need to reconnect manually. Handle it if such cases is detected.
 
   const pathName = usePathname()
@@ -70,6 +72,13 @@ export function VeridaConnectionOptions(props: VeridaConnectionOptionsProps) {
                   <Link href={onboardingUrl}>
                     Finalise your Verida identity
                   </Link>
+                </Button>
+                <Separator />
+                <LoadingBlockDescription>
+                  {`You are connected with ${walletInfo?.name}`}
+                </LoadingBlockDescription>
+                <Button variant="outline" onClick={disconnect}>
+                  Change connection methods
                 </Button>
               </>
             ) : (
