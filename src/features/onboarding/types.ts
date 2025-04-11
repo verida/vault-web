@@ -1,4 +1,4 @@
 export type OnboardingStep = {
-  path: string
+  id: string
   breadcrumbTitle: string
 }
