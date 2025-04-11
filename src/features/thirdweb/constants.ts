@@ -1,7 +1,7 @@
 import { BlockchainAnchor } from "@verida/types"
 import { DefaultNetworkBlockchainAnchors } from "@verida/vda-common"
 import { polygon, polygonAmoy } from "thirdweb/chains"
-import { inAppWallet } from "thirdweb/wallets"
+import { createWallet, inAppWallet } from "thirdweb/wallets"
 
 import { commonConfig } from "@/config/common"
 
@@ -22,8 +22,11 @@ export const THIRDWEB_WALLETS_OPTIONS = [
         "discord",
         "telegram",
         "x",
-        "wallet",
       ],
     },
   }),
+  createWallet("io.metamask"),
+  createWallet("app.phantom"),
+  createWallet("co.family.wallet"),
+  createWallet("io.rabby"),
 ]
