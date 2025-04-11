@@ -12,14 +12,18 @@ const logger = Logger.create("verida-profile")
 
 type UseVeridaProfileArgs = {
   did: string | null | undefined
+  enabled?: boolean
 }
 
-export function useVeridaProfile({ did }: UseVeridaProfileArgs) {
+export function useVeridaProfile({
+  did,
+  enabled = true,
+}: UseVeridaProfileArgs) {
   const { did: currentUserDid, context } = useVerida()
 
   const { data, ...query } = useQuery({
     queryKey: VeridaProfileQueryKeys.profile(did),
-    enabled: !!did,
+    enabled: !!did && enabled,
     queryFn: () => {
       if (!did) {
         // To satisfy the type checker

@@ -2,9 +2,12 @@ import { useVeridaProfile } from "@/features/verida-profile/hooks/use-verida-pro
 import { useVerida } from "@/features/verida/hooks/use-verida"
 
 export function useUserProfile() {
-  const { did } = useVerida()
+  const { did, isConnected } = useVerida()
 
-  const { profile, ...query } = useVeridaProfile({ did })
+  const { profile, ...query } = useVeridaProfile({
+    did,
+    enabled: isConnected,
+  })
 
   return {
     did,
