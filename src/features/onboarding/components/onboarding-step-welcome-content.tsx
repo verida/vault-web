@@ -34,8 +34,8 @@ export function OnboardingStepWelcomeContent(
       <CardHeader>
         <CardTitle>Welcome to the Verida Vault</CardTitle>
         <CardDescription>
-          We will guide in setting up your account, but first a few words about
-          Verida.
+          We will guide in setting up your Verida identity (account), but first
+          a few words about Verida.
         </CardDescription>
       </CardHeader>
       <CardBody className="flex flex-col gap-8">

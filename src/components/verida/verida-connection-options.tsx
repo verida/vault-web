@@ -75,7 +75,7 @@ export function VeridaConnectionOptions(props: VeridaConnectionOptionsProps) {
                 </Button>
                 <Separator />
                 <LoadingBlockDescription>
-                  {`You are connected with ${walletInfo?.name}`}
+                  {`You are connecting with ${walletInfo?.name}`}
                 </LoadingBlockDescription>
                 <Button variant="outline" onClick={disconnect}>
                   Change connection methods
