@@ -30,3 +30,5 @@ export const THIRDWEB_WALLETS_OPTIONS = [
   createWallet("co.family.wallet"),
   createWallet("io.rabby"),
 ]
+
+export const THIRDWEB_IN_APP_WALLET_ID = "inApp"
