@@ -3,6 +3,7 @@
 import { AutoAccount } from "@verida/account-node"
 import Link from "next/link"
 import { useCallback, useState } from "react"
+import { useAdminWallet, useWalletInfo } from "thirdweb/react"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -31,9 +32,11 @@ import {
   SuccessBlockImage,
   SuccessBlockTitle,
 } from "@/components/ui/success"
+import { Typography } from "@/components/ui/typography"
 import { commonConfig } from "@/config/common"
 import { getCountryCode } from "@/features/countries/utils"
 import { Logger } from "@/features/telemetry/logger"
+import { THIRDWEB_IN_APP_WALLET_ID } from "@/features/thirdweb/constants"
 import { useUpdateVeridaProfile } from "@/features/verida-profile/hooks/use-update-verida-profile"
 import type { VeridaProfileFormData } from "@/features/verida-profile/types"
 import { VERIDA_DEFAULT_STORAGE_NODE_COUNTRY_CODE } from "@/features/verida/constants"
@@ -67,6 +70,9 @@ export function OnboardingStepConnectContent(
   const { isConnecting, isConnected, account, connectAccount } = useVerida()
   const { updateProfileAsync } = useUpdateVeridaProfile()
 
+  const wallet = useAdminWallet()
+  const { data: walletInfo } = useWalletInfo(wallet?.id)
+
   const [isSavingProfile, setIsSavingProfile] = useState(false)
   const [hasFailedConnecting, setHasFailedConnecting] = useState(false)
   const [hasFailedSavingProfile, setHasFailedSavingProfile] = useState(false)
@@ -76,6 +82,8 @@ export function OnboardingStepConnectContent(
       // Should not happen as the parent component ensures that the account is defined
       return
     }
+
+    logger.info("Initiating connection of a new Verida account")
 
     setHasFailedConnecting(false)
     setHasFailedSavingProfile(false)
@@ -87,6 +95,9 @@ export function OnboardingStepConnectContent(
         const countryCode = profileFormData.country
           ? getCountryCode(profileFormData.country)
           : undefined
+
+        logger.debug("Loading default storage nodes")
+
         await account.loadDefaultStorageNodes(
           countryCode || VERIDA_DEFAULT_STORAGE_NODE_COUNTRY_CODE,
           3,
@@ -103,17 +114,19 @@ export function OnboardingStepConnectContent(
     } catch (error) {
       logger.error(error)
       _failedConnecting = true
+      setHasFailedConnecting(true)
     }
-
-    setHasFailedConnecting(_failedConnecting)
 
     if (_failedConnecting) {
       return
     }
 
     try {
+      logger.debug("Saving profile in new Verida account")
+
       setIsSavingProfile(true)
 
+      // Wait for the storage nodes to be synchronised
       await wait()
 
       await updateProfileAsync({
@@ -133,7 +146,9 @@ export function OnboardingStepConnectContent(
       <CardHeader>
         <CardTitle>Connect to Verida</CardTitle>
         <CardDescription>
-          {"Let's get you connected to the Verida Network"}
+          {
+            "Your Verida identity hasn't been finalised yet. Let's get you connected to the Verida Network to finalise it"
+          }
         </CardDescription>
       </CardHeader>
       <CardBody>
@@ -156,7 +171,7 @@ export function OnboardingStepConnectContent(
             </ErrorBlockDescription>
             <Button
               variant="primary"
-              className="w-fit self-center"
+              className="w-fit"
               onClick={handleConnect}
               disabled={isConnecting}
             >
@@ -164,14 +179,24 @@ export function OnboardingStepConnectContent(
             </Button>
           </ErrorBlock>
         ) : isConnecting ? (
-          <LoadingBlock>
-            <LoadingBlockSpinner />
-            <LoadingBlockTitle>Connecting to Verida...</LoadingBlockTitle>
-            <LoadingBlockDescription>
-              Please wait while we establish a secure connection. This might
-              take a moment.
-            </LoadingBlockDescription>
-          </LoadingBlock>
+          <div className="flex flex-col gap-4">
+            <Typography>
+              {`You are connecting with ${walletInfo?.name}`}
+            </Typography>
+            {wallet?.id !== THIRDWEB_IN_APP_WALLET_ID ? (
+              <Typography>
+                {`A few signatures will be required in ${walletInfo?.name} to finalise your Verida identity`}
+              </Typography>
+            ) : null}
+            <LoadingBlock>
+              <LoadingBlockSpinner />
+              <LoadingBlockTitle>Connecting to Verida...</LoadingBlockTitle>
+              <LoadingBlockDescription>
+                Please wait while we establish a secure connection. This might
+                take a moment.
+              </LoadingBlockDescription>
+            </LoadingBlock>
+          </div>
         ) : isSavingProfile ? (
           <LoadingBlock>
             <LoadingBlockSpinner />
@@ -192,15 +217,25 @@ export function OnboardingStepConnectContent(
             </SuccessBlockDescription>
           </SuccessBlock>
         ) : (
-          <div className="flex h-52 flex-row items-center justify-between">
-            <Button
-              variant="primary"
-              className="w-fit self-center"
-              onClick={handleConnect}
-              disabled={isConnecting}
-            >
-              {isConnecting ? "Connecting..." : "Connect with Verida"}
-            </Button>
+          <div className="flex flex-col gap-4">
+            <Typography>
+              {`You are connecting with ${walletInfo?.name}`}
+            </Typography>
+            {wallet?.id !== THIRDWEB_IN_APP_WALLET_ID ? (
+              <Typography>
+                {`A few signatures will be required in ${walletInfo?.name} to finalise your Verida identity`}
+              </Typography>
+            ) : null}
+            <div className="flex h-52 flex-row items-center justify-center">
+              <Button
+                variant="primary"
+                className="w-fit"
+                onClick={handleConnect}
+                disabled={isConnecting}
+              >
+                {isConnecting ? "Connecting..." : "Connect with Verida"}
+              </Button>
+            </div>
           </div>
         )}
       </CardBody>

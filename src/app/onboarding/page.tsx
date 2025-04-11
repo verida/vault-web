@@ -69,6 +69,17 @@ export default function OnboardingPage() {
   const { onboardingEntryPath, serializeOnboardingEntryPath } =
     useOnboardingEntryQueryState()
 
+  // TODO: Try to use the profile details to pre-fill the Verida profile form
+  // const { data: profiles } = useProfiles({
+  //   client: thirdwebClient,
+  // })
+
+  // const initialName = useMemo(() => {
+  //   const profile = profiles?.at(0)
+  //   // @ts-expect-error - The name is not typed because it's specific to some profile types
+  //   return profile?.details.name || ""
+  // }, [profiles])
+
   const [profileFormData, setProfileFormData] = useState<VeridaProfileFormData>(
     {
       name: "",

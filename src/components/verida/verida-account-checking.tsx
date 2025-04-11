@@ -18,10 +18,10 @@ export function VeridaAccountChecking(props: VeridaAccountCheckingProps) {
     <LoadingBlock className={cn(className)} {...loadingBlockProps}>
       <LoadingBlockSpinner />
       <LoadingBlockTitle variant="heading-1">
-        Checking your Verida account...
+        Checking your Verida identity...
       </LoadingBlockTitle>
       <LoadingBlockDescription variant="base-l">
-        Please wait while we check if your Verida account exists. This might
+        Please wait while we check if your Verida identity exists. This might
         take a moment.
       </LoadingBlockDescription>
     </LoadingBlock>
