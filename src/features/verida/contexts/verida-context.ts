@@ -12,6 +12,7 @@ export type VeridaContextType = {
   isConnecting: boolean
   isDisconnecting: boolean
   connectAccount: (account: Account) => Promise<void>
+  requestThirdWebConsentSignature: () => Promise<void>
   connectLegacyAccount: () => Promise<void>
   disconnect: () => Promise<void>
 

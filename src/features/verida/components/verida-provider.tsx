@@ -281,6 +281,21 @@ export function VeridaProvider(props: VeridaProviderProps) {
     void autoConnect()
   }, [autoConnect])
 
+  const requestThirdWebConsentSignature = useCallback(async () => {
+    if (!thirdWebAdminAccount || !thirdWebSmartAccount) {
+      return
+    }
+
+    const _account = await buildVeridaAccountFromThirdWeb(
+      thirdWebAdminAccount,
+      thirdWebSmartAccount
+    )
+    const _did = await _account.did()
+
+    setAccount(_account)
+    setDid(_did)
+  }, [thirdWebAdminAccount, thirdWebSmartAccount])
+
   useEffect(() => {
     if (accountTypeRef.current === "legacy") {
       return
@@ -299,22 +314,16 @@ export function VeridaProvider(props: VeridaProviderProps) {
 
     logger.info("Setting up thirdweb account")
 
-    const execute = async () => {
-      const _account = await buildVeridaAccountFromThirdWeb(
-        thirdWebAdminAccount,
-        thirdWebSmartAccount
-      )
-      const _did = await _account.did()
-
-      setAccount(_account)
-      setDid(_did)
-    }
-
-    execute().catch((error) => {
+    requestThirdWebConsentSignature().catch((error) => {
       logger.error(error)
       clearStates()
     })
-  }, [thirdWebAdminAccount, thirdWebSmartAccount, clearStates, connectAccount])
+  }, [
+    thirdWebAdminAccount,
+    thirdWebSmartAccount,
+    clearStates,
+    requestThirdWebConsentSignature,
+  ])
 
   const onboardingUrl = useMemo(() => {
     return serializeOnboardingEntryPath(
@@ -368,6 +377,7 @@ export function VeridaProvider(props: VeridaProviderProps) {
       isConnecting,
       isDisconnecting,
       connectAccount,
+      requestThirdWebConsentSignature,
       connectLegacyAccount,
       disconnect,
       getAccountSessionToken,
@@ -382,6 +392,7 @@ export function VeridaProvider(props: VeridaProviderProps) {
       isConnecting,
       isDisconnecting,
       connectAccount,
+      requestThirdWebConsentSignature,
       connectLegacyAccount,
       disconnect,
       getAccountSessionToken,
