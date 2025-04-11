@@ -34,6 +34,10 @@ export const CommonConfigSchema = z.object({
               ? Network.LOCAL
               : Network.BANKSIA
     }),
+  VERIDA_NOTIFICATION_SERVER_URL: z
+    .union([z.string().url(), z.literal("")])
+    .optional()
+    .transform((value) => (value === "" ? undefined : value)),
   VERIDA_RPC_URL: z
     .union([z.string().url(), z.literal("")])
     .optional()
