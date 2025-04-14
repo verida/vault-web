@@ -3,11 +3,7 @@
 import { useQueryClient } from "@tanstack/react-query"
 import type { Account } from "@verida/account"
 import { VaultAccount, hasSession } from "@verida/account-web-vault"
-import {
-  Client,
-  type Context,
-  Network as NetworkClient,
-} from "@verida/client-ts"
+import { Client, type Context } from "@verida/client-ts"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import {
   type ReactNode,
@@ -121,19 +117,27 @@ export function VeridaProvider(props: VeridaProviderProps) {
         statusRef.current = "connecting"
         setIsConnecting(true)
 
-        const _context = await NetworkClient.connect({
-          client: {
+        const _client = new Client({
+          network: commonConfig.VERIDA_NETWORK,
+          didClientConfig: {
             network: commonConfig.VERIDA_NETWORK,
-            didClientConfig: {
-              network: commonConfig.VERIDA_NETWORK,
-              rpcUrl: commonConfig.VERIDA_RPC_URL,
-            },
-          },
-          account: accountToConnect,
-          context: {
-            name: VERIDA_VAULT_CONTEXT_NAME,
+            rpcUrl: commonConfig.VERIDA_RPC_URL,
           },
         })
+
+        await _client.connect(accountToConnect)
+
+        let _context: Context | undefined
+        try {
+          _context = (await _client.openContext(
+            VERIDA_VAULT_CONTEXT_NAME,
+            true
+          )) as Context | undefined
+        } catch (error) {
+          logger.warn(
+            "Failed to open context. User may have cancelled the connection."
+          )
+        }
 
         if (!_context) {
           logger.warn("User did not connect to Verida")
@@ -142,7 +146,6 @@ export function VeridaProvider(props: VeridaProviderProps) {
         }
 
         const _did = await accountToConnect.did()
-        const _client = _context.getClient()
 
         const session =
           accountToConnect instanceof VaultAccount
@@ -359,14 +362,7 @@ export function VeridaProvider(props: VeridaProviderProps) {
     connectAccount(account).catch((error) => {
       logger.error(error)
     })
-  }, [
-    router,
-    accountExists,
-    account,
-    clearStates,
-    connectAccount,
-    onboardingUrl,
-  ])
+  }, [router, accountExists, account, connectAccount, onboardingUrl])
 
   const contextValue: VeridaContextType = useMemo(
     () => ({
