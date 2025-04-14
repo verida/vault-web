@@ -2,7 +2,7 @@
 
 import { AutoAccount } from "@verida/account-node"
 import Link from "next/link"
-import { useCallback, useState } from "react"
+import { useCallback, useMemo, useState } from "react"
 import { useAdminWallet, useWalletInfo } from "thirdweb/react"
 
 import { Button } from "@/components/ui/button"
@@ -73,9 +73,39 @@ export function OnboardingStepConnectContent(
   const wallet = useAdminWallet()
   const { data: walletInfo } = useWalletInfo(wallet?.id)
 
+  const [isConnectingTemp, setIsConnectingTemp] = useState(false)
   const [isSavingProfile, setIsSavingProfile] = useState(false)
   const [hasFailedConnecting, setHasFailedConnecting] = useState(false)
   const [hasFailedSavingProfile, setHasFailedSavingProfile] = useState(false)
+
+  const isVeridaConnecting = useMemo(() => {
+    return isConnectingTemp || isConnecting
+  }, [isConnecting, isConnectingTemp])
+
+  const handleSaveProfile = useCallback(async () => {
+    if (!account) {
+      // Should not happen as the parent component ensures that the account is defined
+      return
+    }
+
+    setHasFailedSavingProfile(false)
+
+    try {
+      logger.debug("Saving profile in new Verida account")
+
+      setIsSavingProfile(true)
+
+      await updateProfileAsync({
+        profileToSave: profileFormData,
+      })
+
+      setIsSavingProfile(false)
+    } catch (error) {
+      logger.error(error)
+      setIsSavingProfile(false)
+      setHasFailedSavingProfile(true)
+    }
+  }, [account, profileFormData, updateProfileAsync])
 
   const handleConnect = useCallback(async () => {
     if (!account) {
@@ -87,6 +117,7 @@ export function OnboardingStepConnectContent(
 
     setHasFailedConnecting(false)
     setHasFailedSavingProfile(false)
+    setIsConnectingTemp(true)
 
     let _failedConnecting = false
 
@@ -111,35 +142,22 @@ export function OnboardingStepConnectContent(
       }
 
       await connectAccount(account)
+      setIsConnectingTemp(false)
     } catch (error) {
       logger.error(error)
       _failedConnecting = true
       setHasFailedConnecting(true)
+      setIsConnectingTemp(false)
     }
 
     if (_failedConnecting) {
       return
     }
 
-    try {
-      logger.debug("Saving profile in new Verida account")
-
-      setIsSavingProfile(true)
-
-      // Wait for the storage nodes to be synchronised
-      await wait()
-
-      await updateProfileAsync({
-        profileToSave: profileFormData,
-      })
-
-      setIsSavingProfile(false)
-    } catch (error) {
-      logger.error(error)
-      setIsSavingProfile(false)
-      setHasFailedSavingProfile(true)
-    }
-  }, [account, connectAccount, profileFormData, updateProfileAsync])
+    setIsSavingProfile(true)
+    await wait()
+    await handleSaveProfile()
+  }, [account, connectAccount, profileFormData, handleSaveProfile])
 
   return (
     <Card>
@@ -152,12 +170,10 @@ export function OnboardingStepConnectContent(
         </CardDescription>
       </CardHeader>
       <CardBody>
-        {hasFailedConnecting || hasFailedSavingProfile ? (
+        {hasFailedConnecting ? (
           <ErrorBlock>
             <ErrorBlockImage />
-            <ErrorBlockTitle>
-              {`Failed to ${hasFailedConnecting ? "connect" : "save profile"}`}
-            </ErrorBlockTitle>
+            <ErrorBlockTitle>Failed to connect</ErrorBlockTitle>
             <ErrorBlockDescription>
               Please try again. If the problem persists, please contact our
               support on
@@ -173,21 +189,49 @@ export function OnboardingStepConnectContent(
               variant="primary"
               className="w-fit"
               onClick={handleConnect}
-              disabled={isConnecting}
+              disabled={isVeridaConnecting}
             >
-              {isConnecting ? "Connecting..." : "Connect with Verida"}
+              {isVeridaConnecting
+                ? "Connecting..."
+                : "Retry connect with Verida"}
             </Button>
           </ErrorBlock>
-        ) : isConnecting ? (
-          <div className="flex flex-col gap-4">
-            <Typography>
-              {`You are connecting with ${walletInfo?.name}`}
-            </Typography>
-            {wallet?.id !== THIRDWEB_IN_APP_WALLET_ID ? (
+        ) : hasFailedSavingProfile ? (
+          <ErrorBlock>
+            <ErrorBlockImage />
+            <ErrorBlockTitle>Failed to save profile</ErrorBlockTitle>
+            <ErrorBlockDescription>
+              Please try again. If the problem persists, please contact our
+              support on
+              <Link
+                href="https://discord.verida.io/"
+                target="_blank"
+                className="underline"
+              >
+                Discord
+              </Link>
+            </ErrorBlockDescription>
+            <Button
+              variant="primary"
+              className="w-fit"
+              onClick={handleSaveProfile}
+              disabled={isSavingProfile}
+            >
+              {isSavingProfile ? "Saving..." : "Retry save profile"}
+            </Button>
+          </ErrorBlock>
+        ) : isVeridaConnecting ? (
+          <div className="flex flex-col gap-12">
+            <div className="flex flex-col gap-4">
               <Typography>
-                {`A few signatures will be required in ${walletInfo?.name} to finalise your Verida identity`}
+                {`You are connecting with ${walletInfo?.name}`}
               </Typography>
-            ) : null}
+              {wallet?.id !== THIRDWEB_IN_APP_WALLET_ID ? (
+                <Typography>
+                  {`A few signatures will be required in ${walletInfo?.name} to finalise your Verida identity`}
+                </Typography>
+              ) : null}
+            </div>
             <LoadingBlock>
               <LoadingBlockSpinner />
               <LoadingBlockTitle>Connecting to Verida...</LoadingBlockTitle>
@@ -231,9 +275,9 @@ export function OnboardingStepConnectContent(
                 variant="primary"
                 className="w-fit"
                 onClick={handleConnect}
-                disabled={isConnecting}
+                disabled={isVeridaConnecting}
               >
-                {isConnecting ? "Connecting..." : "Connect with Verida"}
+                {isVeridaConnecting ? "Connecting..." : "Connect with Verida"}
               </Button>
             </div>
           </div>
@@ -243,7 +287,7 @@ export function OnboardingStepConnectContent(
         <Button
           variant="outline"
           onClick={onPreviousStepClick}
-          disabled={isConnecting || isSavingProfile}
+          disabled={isVeridaConnecting || isSavingProfile}
           className="w-full sm:w-fit"
         >
           {previousStepButtonLabel}
@@ -256,7 +300,7 @@ export function OnboardingStepConnectContent(
           }
           onClick={onNextStepClick}
           disabled={
-            isConnecting ||
+            isVeridaConnecting ||
             !isConnected ||
             hasFailedConnecting ||
             isSavingProfile
