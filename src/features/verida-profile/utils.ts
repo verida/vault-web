@@ -83,7 +83,7 @@ export async function getVeridaProfileFromContext({
   logger.info("Getting Verida profile from Context")
 
   try {
-    const profileDatastore = await context.openProfile()
+    const profileDatastore = await context.openProfile(VERIDA_PROFILE_DB_NAME)
 
     if (!profileDatastore) {
       throw new Error("Verida profile datastore unavailable")
@@ -166,6 +166,9 @@ async function getVeridaProfileFromDatastore(
   profileDatastore: IProfile
 ): Promise<VeridaProfile> {
   // Fetch profile data concurrently
+
+  logger.info("Getting Verida profile from datastore")
+
   const [
     nameResult,
     avatarResult,
@@ -219,7 +222,7 @@ export async function updateVeridaProfile({
 
   try {
     logger.debug("Opening profile datastore")
-    const profileDatastore = await context.openProfile()
+    const profileDatastore = await context.openProfile(VERIDA_PROFILE_DB_NAME)
 
     if (!profileDatastore) {
       logger.debug("Profile datastore unavailable")
