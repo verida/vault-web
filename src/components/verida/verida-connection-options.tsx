@@ -36,7 +36,7 @@ export function VeridaConnectionOptions(props: VeridaConnectionOptionsProps) {
   const wallet = useAdminWallet()
   const { data: walletInfo } = useWalletInfo(wallet?.id)
 
-  const { account, isConnected, disconnect, requestThirdWebConsentSignature } =
+  const { account, status, disconnect, requestThirdWebConsentSignature } =
     useVerida()
   // If the account is defined and the verida account exists but it is not connected, something went wrong, may need to reconnect manually. Handle it if such cases is detected.
 
@@ -54,7 +54,7 @@ export function VeridaConnectionOptions(props: VeridaConnectionOptionsProps) {
 
   return (
     <div className={cn("flex flex-col gap-8", className)} {...divProps}>
-      {isConnected ? null : thirdWebStatus !== "connected" ? (
+      {status === "connected" ? null : thirdWebStatus !== "connected" ? (
         <ThirdwebConnectEmbed />
       ) : (
         <Card className="rounded-[20px]">
@@ -96,6 +96,9 @@ export function VeridaConnectionOptions(props: VeridaConnectionOptionsProps) {
                   onClick={requestThirdWebConsentSignature}
                 >
                   Retry
+                </Button>
+                <Button variant="outline" onClick={disconnect}>
+                  Cancel
                 </Button>
               </>
             )}

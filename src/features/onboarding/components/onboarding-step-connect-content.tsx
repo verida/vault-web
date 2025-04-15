@@ -67,7 +67,7 @@ export function OnboardingStepConnectContent(
     profileFormData,
   } = props
 
-  const { isConnecting, isConnected, account, connectAccount } = useVerida()
+  const { status, account, connectAccount } = useVerida()
   const { updateProfileAsync } = useUpdateVeridaProfile()
 
   const wallet = useAdminWallet()
@@ -79,8 +79,8 @@ export function OnboardingStepConnectContent(
   const [hasFailedSavingProfile, setHasFailedSavingProfile] = useState(false)
 
   const isVeridaConnecting = useMemo(() => {
-    return isConnectingTemp || isConnecting
-  }, [isConnecting, isConnectingTemp])
+    return isConnectingTemp || status === "connecting"
+  }, [status, isConnectingTemp])
 
   const handleSaveProfile = useCallback(async () => {
     if (!account) {
@@ -249,7 +249,7 @@ export function OnboardingStepConnectContent(
               Please wait while we save your profile. This might take a moment.
             </LoadingBlockDescription>
           </LoadingBlock>
-        ) : isConnected ? (
+        ) : status === "connected" ? (
           <SuccessBlock>
             <SuccessBlockImage />
             <SuccessBlockTitle>Connected!</SuccessBlockTitle>
@@ -294,14 +294,14 @@ export function OnboardingStepConnectContent(
         </Button>
         <Button
           variant={
-            isConnected && !isSavingProfile && !hasFailedConnecting
+            status === "connected" && !isSavingProfile && !hasFailedConnecting
               ? "primary"
               : "outline"
           }
           onClick={onNextStepClick}
           disabled={
             isVeridaConnecting ||
-            !isConnected ||
+            status !== "connected" ||
             hasFailedConnecting ||
             isSavingProfile
           }

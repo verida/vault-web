@@ -44,7 +44,7 @@ export function OnboardingStepSetupConnectionsContent(
     nextStepButtonLabel = "Next",
   } = props
 
-  const { isConnected } = useVerida()
+  const { status } = useVerida()
   const { providers, isLoading, isError } = useDataProviders()
 
   const filteredProviders = useMemo(
@@ -63,7 +63,7 @@ export function OnboardingStepSetupConnectionsContent(
         </CardDescription>
       </CardHeader>
       <CardBody className="flex flex-col gap-8">
-        {!isConnected ? (
+        {status !== "connected" ? (
           <ErrorBlock>
             <ErrorBlockImage />
             <ErrorBlockTitle>You are not connected</ErrorBlockTitle>

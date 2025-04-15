@@ -19,9 +19,9 @@ export function AppConnectionHandler(props: AppConnectionHandlerProps) {
 
   const { serializeRedirectPath } = useRedirectPathQueryState()
 
-  const { isConnected } = useVerida()
+  const { status } = useVerida()
 
-  if (!isConnected) {
+  if (status !== "connected") {
     redirect(
       serializeRedirectPath(getRootPageRoute(), {
         redirectPath: `${pathName}${searchParams.toString() ? `?${searchParams.toString()}` : ""}`,

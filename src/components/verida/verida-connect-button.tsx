@@ -25,21 +25,21 @@ export function VeridaConnectButton(props: VeridaConnectButtonProps) {
     ...buttonProps
   } = props
 
-  const { connectLegacyAccount, isConnecting, isConnected } = useVerida()
+  const { connectLegacyAccount, status } = useVerida()
 
   const handleButtonClick = useCallback(() => {
-    if (isConnecting || isConnected) {
+    if (status === "connecting" || status === "connected") {
       return
     }
     connectLegacyAccount()
-  }, [connectLegacyAccount, isConnecting, isConnected])
+  }, [connectLegacyAccount, status])
 
   return (
     <Button
       variant={variant}
       className={cn("flex flex-row items-center gap-1", className)}
       onClick={handleButtonClick}
-      disabled={isConnecting}
+      disabled={status === "connecting"}
       {...buttonProps}
     >
       <Image
@@ -48,7 +48,7 @@ export function VeridaConnectButton(props: VeridaConnectButtonProps) {
         width={24}
         height={24}
       />
-      <span>{isConnecting ? connectingLabel : label}</span>
+      <span>{status === "connecting" ? connectingLabel : label}</span>
     </Button>
   )
 }

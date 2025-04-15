@@ -19,16 +19,16 @@ export interface RootConnectionHandlerProps {
 export function RootConnectionHandler(props: RootConnectionHandlerProps) {
   const { children } = props
 
-  const { isConnected, isConnecting, did } = useVerida()
+  const { status, did } = useVerida()
   const { isLoading: isCheckingAccount } = useVeridaAccountExists(did)
 
   const { redirectPath } = useRedirectPathQueryState()
 
-  if (isConnected) {
+  if (status === "connected") {
     redirect(redirectPath || DEFAULT_REDIRECT_PATH)
   }
 
-  if (isConnecting) {
+  if (status === "connecting") {
     return (
       <div className="flex h-full w-full flex-col items-center justify-center gap-8 p-4">
         <VeridaConnectionLoading />
