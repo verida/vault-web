@@ -1,3 +1,15 @@
+# 1.0.0 (2025-04-16)
+
+First official release
+
+## Enhancements
+
+- Support alternative sign-in methods (Google, Apple, Discord, Telegram, X, Passkeys, Email, Crypto Wallets)
+
+## Misc
+
+- Update dependencies
+
 # 0.18.0 (2025-03-12)
 
 ## Enhancements
