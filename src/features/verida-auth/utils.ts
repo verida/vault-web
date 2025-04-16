@@ -1,4 +1,4 @@
-import { WebUser } from "@verida/web-helpers"
+import type { Account } from "@verida/account"
 
 import { commonConfig } from "@/config/common"
 import { Logger } from "@/features/telemetry/logger"
@@ -185,10 +185,10 @@ function resolveVeridaAuthScopePermission(
 }
 
 export interface AllowVeridaAuthRequestArgs {
-  payload: VeridaAuthRequestPayload
-  sessionToken: string
+  account: Account
   userDid: string
-  webUserInstance: WebUser
+  sessionToken: string
+  payload: VeridaAuthRequestPayload
 }
 
 export interface AllowVeridaAuthRequestOutput {
@@ -207,10 +207,10 @@ export interface AllowVeridaAuthRequestOutput {
  * @throws Error if API config is invalid, payload is malformed, or request fails
  */
 export async function allowVeridaAuthRequest({
-  payload,
-  sessionToken,
+  account,
   userDid,
-  webUserInstance,
+  sessionToken,
+  payload,
 }: AllowVeridaAuthRequestArgs): Promise<AllowVeridaAuthRequestOutput> {
   logger.info("Allowing Auth request")
 
@@ -232,8 +232,7 @@ export async function allowVeridaAuthRequest({
     timestamp: now,
   }
 
-  const userAccount = webUserInstance.getAccount()
-  const userKeyring = await userAccount.keyring(VERIDA_VAULT_CONTEXT_NAME)
+  const userKeyring = await account.keyring(VERIDA_VAULT_CONTEXT_NAME)
   const user_sig = await userKeyring.sign(JSON.stringify(authRequest))
 
   const body: VeridaAuthApiV1RequestBody = {

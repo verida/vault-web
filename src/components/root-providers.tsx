@@ -2,6 +2,7 @@
 
 import { NuqsAdapter } from "nuqs/adapters/next/app"
 import { type ReactNode, Suspense } from "react"
+import { ThirdwebProvider } from "thirdweb/react"
 
 import { Toaster } from "@/components/ui/toaster"
 import { TooltipProvider } from "@/components/ui/tooltip"
@@ -26,15 +27,17 @@ export function RootProviders(props: RootProvidersProps) {
         <ThemesProvider>
           <TooltipProvider>
             <QueriesProvider>
-              <VeridaProvider>
-                <RestrictedAccessProvider>
-                  <DataConnectionsBroadcastProvider>
-                    <VeridaInboxProvider>
-                      <CommandProvider>{children}</CommandProvider>
-                    </VeridaInboxProvider>
-                  </DataConnectionsBroadcastProvider>
-                </RestrictedAccessProvider>
-              </VeridaProvider>
+              <ThirdwebProvider>
+                <VeridaProvider>
+                  <RestrictedAccessProvider>
+                    <DataConnectionsBroadcastProvider>
+                      <VeridaInboxProvider>
+                        <CommandProvider>{children}</CommandProvider>
+                      </VeridaInboxProvider>
+                    </DataConnectionsBroadcastProvider>
+                  </RestrictedAccessProvider>
+                </VeridaProvider>
+              </ThirdwebProvider>
             </QueriesProvider>
             <Toaster />
           </TooltipProvider>

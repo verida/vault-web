@@ -2,6 +2,7 @@ node_modules
 .next
 build
 patches
+.yalc
 
 .eslintrc
 .prettierrc

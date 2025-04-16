@@ -1,11 +1,11 @@
 import type { ComponentProps, ComponentType } from "react"
 
-import { Discord } from "@/components/icons/discord"
-import { Linkedin } from "@/components/icons/linkedin"
-import { Medium } from "@/components/icons/medium"
-import { Telegram } from "@/components/icons/telegram"
-import { Twitter } from "@/components/icons/twitter"
-import { Youtube } from "@/components/icons/youtube"
+import { DiscordLogo } from "@/features/landing/components/discord-logo"
+import { LinkedinLogo } from "@/features/landing/components/linkedin-logo"
+import { MediumLogo } from "@/features/landing/components/medium-logo"
+import { TelegramLogo } from "@/features/landing/components/telegram-logo"
+import { XLogo } from "@/features/landing/components/x-logo"
+import { YoutubeLogo } from "@/features/landing/components/youtube-logo"
 
 export type VeridaPlatform = {
   label: string
@@ -16,44 +16,44 @@ export type VeridaPlatform = {
 export const VERIDA_PLATFORMS: VeridaPlatform[] = [
   {
     label: "Verida on X",
-    url: "https://twitter.com/verida_io",
+    url: "https://x.com/verida_io",
     icon: (props: ComponentProps<"svg">) => (
-      <Twitter height="100%" width="100%" {...props} />
+      <XLogo height="100%" width="100%" {...props} />
     ),
   },
   {
     label: "Verida on Discord",
     url: "https://discord.verida.io/",
     icon: (props: ComponentProps<"svg">) => (
-      <Discord height="100%" width="100%" {...props} />
+      <DiscordLogo height="100%" width="100%" {...props} />
     ),
   },
   {
     label: "Verida on Telegram",
     url: "https://t.me/verida_community",
     icon: (props: ComponentProps<"svg">) => (
-      <Telegram height="100%" width="100%" {...props} />
+      <TelegramLogo height="100%" width="100%" {...props} />
     ),
   },
   {
     label: "Verida on Medium",
     url: "https://news.verida.io/",
     icon: (props: ComponentProps<"svg">) => (
-      <Medium height="100%" width="100%" {...props} />
+      <MediumLogo height="100%" width="100%" {...props} />
     ),
   },
   {
     label: "Verida on YouTube",
     url: "https://www.youtube.com/@verida_io",
     icon: (props: ComponentProps<"svg">) => (
-      <Youtube height="100%" width="100%" {...props} />
+      <YoutubeLogo height="100%" width="100%" {...props} />
     ),
   },
   {
     label: "Verida on LinkedIn",
     url: "https://www.linkedin.com/company/verida-technology",
     icon: (props: ComponentProps<"svg">) => (
-      <Linkedin height="100%" width="100%" {...props} />
+      <LinkedinLogo height="100%" width="100%" {...props} />
     ),
   },
 ]

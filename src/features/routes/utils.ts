@@ -104,22 +104,6 @@ export function getOnboardingPageRoute() {
   return `/onboarding`
 }
 
-export function getOnboardingInstallWalletPageRoute() {
-  return `/onboarding/install-wallet`
-}
-
-export function getOnboardingCreateIdentityPageRoute() {
-  return `/onboarding/create-identity`
-}
-
-export function getOnboardingConnectVaultPageRoute() {
-  return `/onboarding/connect-vault`
-}
-
-export function getOnboardingExtractDataPageRoute() {
-  return `/onboarding/extract-data`
-}
-
 export function getDiscoverPageRoute() {
   return `/discover`
 }

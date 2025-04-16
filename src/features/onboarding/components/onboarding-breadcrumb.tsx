@@ -5,48 +5,41 @@ import { type ComponentProps, Fragment } from "react"
 import {
   Breadcrumb,
   BreadcrumbItem,
-  BreadcrumbLink,
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
-import { ONBOARDING_STEPS } from "@/features/onboarding/constants"
-import { useOnboarding } from "@/features/onboarding/hooks/use-onboarding"
+import type { OnboardingStep } from "@/features/onboarding/types"
+import { cn } from "@/styles/utils"
 
 export interface OnboardingBreadcrumbProps
-  extends ComponentProps<typeof Breadcrumb> {}
+  extends Omit<ComponentProps<typeof Breadcrumb>, "children"> {
+  steps: OnboardingStep[]
+  currentStepIndex: number
+}
 
 export function OnboardingBreadcrumb(props: OnboardingBreadcrumbProps) {
-  const { className, ...BreadcrumbProps } = props
+  const { steps, className, currentStepIndex, ...BreadcrumbProps } = props
 
-  const { currentStepIndex, goToStep } = useOnboarding()
-
-  // TODO: Make a responsive breadcrumb nicely adapting to the screen size
   return (
     <Breadcrumb className={className} {...BreadcrumbProps}>
       <BreadcrumbList>
-        {ONBOARDING_STEPS.map((step, index) => (
-          <Fragment key={step.path}>
+        {steps.map((step, index) => (
+          <Fragment key={step.id}>
             <BreadcrumbItem>
-              {index === currentStepIndex ? (
-                <BreadcrumbPage className="text-primary">
-                  {step.breadcrumbTitle}
-                </BreadcrumbPage>
-              ) : index < currentStepIndex ? (
-                <BreadcrumbLink asChild className="underline">
-                  <button onClick={() => goToStep(index)}>
-                    {step.breadcrumbTitle}
-                  </button>
-                </BreadcrumbLink>
-              ) : (
-                <BreadcrumbPage className="text-muted-foreground">
-                  {step.breadcrumbTitle}
-                </BreadcrumbPage>
-              )}
+              <BreadcrumbPage
+                className={cn(
+                  index === currentStepIndex
+                    ? "text-primary-hover"
+                    : index < currentStepIndex
+                      ? "text-primary"
+                      : "text-muted-foreground"
+                )}
+              >
+                {step.breadcrumbTitle}
+              </BreadcrumbPage>
             </BreadcrumbItem>
-            {index < ONBOARDING_STEPS.length - 1 ? (
-              <BreadcrumbSeparator />
-            ) : null}
+            {index < steps.length - 1 ? <BreadcrumbSeparator /> : null}
           </Fragment>
         ))}
       </BreadcrumbList>

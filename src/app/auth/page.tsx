@@ -10,10 +10,10 @@ import { useVeridaAuthRequest } from "@/features/verida-auth/hooks/use-verida-au
 import { useVerida } from "@/features/verida/hooks/use-verida"
 
 export default function AuthPage() {
-  const { isConnected, isConnecting } = useVerida()
+  const { status } = useVerida()
   const request = useVeridaAuthRequest()
 
-  if (request.status !== "processing" && isConnecting) {
+  if (request.status !== "processing" && status === "connecting") {
     return <VeridaConnectionLoading />
   }
 
@@ -23,7 +23,7 @@ export default function AuthPage() {
         <VeridaAuthProcessingRequestCard className="h-full min-h-0" />
       ) : request.status === "valid" ? (
         <>
-          {isConnected ? (
+          {status === "connected" ? (
             <VeridaAuthConsentCard
               request={request}
               className="h-full min-h-0"

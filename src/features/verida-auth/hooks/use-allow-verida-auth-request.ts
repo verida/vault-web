@@ -11,22 +11,22 @@ export interface UseAllowVeridaAuthRequestArgs {
 export function useAllowVeridaAuthRequest({
   payload,
 }: UseAllowVeridaAuthRequestArgs) {
-  const { did, getAccountSessionToken, webUserInstanceRef } = useVerida()
+  const { account, did, getAccountSessionToken } = useVerida()
 
   const allow = useCallback(async () => {
-    if (!did) {
+    if (!did || !account) {
       throw new Error("User not connected")
     }
 
     const sessionToken = await getAccountSessionToken()
 
     return await allowVeridaAuthRequest({
-      payload,
-      sessionToken,
+      account,
       userDid: did,
-      webUserInstance: webUserInstanceRef.current,
+      sessionToken,
+      payload,
     })
-  }, [payload, did, getAccountSessionToken, webUserInstanceRef])
+  }, [account, did, getAccountSessionToken, payload])
 
   return {
     allow,

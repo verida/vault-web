@@ -1,10 +1,6 @@
 import type { Metadata } from "next"
 import type { ReactNode } from "react"
 
-import { OnboardingBreadcrumb } from "@/features/onboarding/components/onboarding-breadcrumb"
-import { OnboardingProvider } from "@/features/onboarding/components/onboarding-provider"
-import { OnboardingStepNav } from "@/features/onboarding/components/onboarding-step-nav"
-
 export const metadata: Metadata = {
   title: "Onboarding",
 }
@@ -19,11 +15,7 @@ export default function OnboardingLayout(props: OnboardingLayoutProps) {
   return (
     <div className="flex flex-1 flex-col items-center pb-4 md:pb-6 xl:pb-8">
       <div className="flex w-full max-w-screen-lg flex-col gap-4">
-        <OnboardingProvider>
-          <OnboardingBreadcrumb />
-          {children}
-          <OnboardingStepNav />
-        </OnboardingProvider>
+        {children}
       </div>
     </div>
   )

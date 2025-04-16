@@ -26,9 +26,13 @@ export function HeaderInboxButton(props: HeaderInboxButtonProps) {
   const { variant = "ghost", size = "sm", className } = props
 
   const { access } = useRestrictedAccess()
-  const { isConnected } = useVerida()
+  const { status } = useVerida()
 
-  if (!featureFlags.inbox.enabled || access !== "allowed" || !isConnected) {
+  if (
+    !featureFlags.inbox.enabled ||
+    access !== "allowed" ||
+    status !== "connected"
+  ) {
     return null
   }
 
