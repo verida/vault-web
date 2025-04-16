@@ -83,7 +83,7 @@
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.16",
-    "@tanstack/react-query-devtools": "^5.71.5",
+    "@tanstack/react-query-devtools": "^5.74.3",
     "@trivago/prettier-plugin-sort-imports": "^5.2.2",
     "@types/node": "^18.19.86",
     "@types/react": "^18.3.12",
@@ -93,8 +93,8 @@
     "@typescript-eslint/parser": "^7.18.0",
     "autoprefixer": "^10.4.21",
     "eslint": "^8.57.0",
-    "eslint-config-next": "15.2.4",
-    "eslint-config-prettier": "10.1.1",
+    "eslint-config-next": "15.3.0",
+    "eslint-config-prettier": "10.1.2",
     "eslint-plugin-prettier": "^5.2.6",
     "file-loader": "^6.2.0",
     "genversion": "^3.2.0",
@@ -103,7 +103,7 @@
     "prettier-plugin-tailwindcss": "^0.6.11",
     "tailwindcss": "^3.4.17",
     "tailwindcss-animate": "^1.0.7",
-    "typescript": "^5.8.2"
+    "typescript": "^5.8.3"
   },
   "resolutions": {
     "qrcode-with-logos": "1.0.3",
