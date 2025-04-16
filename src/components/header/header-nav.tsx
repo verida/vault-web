@@ -39,11 +39,11 @@ export interface HeaderNavBarProps
 export function HeaderNavBar(props: HeaderNavBarProps) {
   const { className } = props
 
-  const { isConnected } = useVerida()
+  const { status } = useVerida()
 
   const path = usePathname()
 
-  if (!isConnected) {
+  if (status !== "connected") {
     return null
   }
 
@@ -145,7 +145,7 @@ export interface HeaderNavMenuProps
 export function HeaderNavMenu(props: HeaderNavMenuProps) {
   const { className } = props
 
-  const { isConnected } = useVerida()
+  const { status } = useVerida()
 
   const path = usePathname()
   const [isOpen, setIsOpen] = useState(false)
@@ -162,7 +162,7 @@ export function HeaderNavMenu(props: HeaderNavMenuProps) {
     setIsOpen(false)
   }, [])
 
-  if (!isConnected) {
+  if (status !== "connected") {
     return null
   }
 

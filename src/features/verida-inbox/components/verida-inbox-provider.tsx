@@ -40,7 +40,7 @@ export function VeridaInboxProvider(props: VeridaInboxProviderProps) {
 
   const { toast } = useToast()
 
-  const { webUserInstanceRef, isConnected } = useVerida()
+  const { context } = useVerida()
 
   const queryClient = useQueryClient()
 
@@ -79,7 +79,7 @@ export function VeridaInboxProvider(props: VeridaInboxProviderProps) {
 
   useEffect(() => {
     const init = async () => {
-      if (!isConnected) {
+      if (!context) {
         setMessagingEngineStatus("idle")
         setMessagingEngine(null)
         return
@@ -87,8 +87,7 @@ export function VeridaInboxProvider(props: VeridaInboxProviderProps) {
       setMessagingEngineStatus("loading")
 
       try {
-        const veridaContext = webUserInstanceRef.current.getContext()
-        const _messagingEngine = await veridaContext.getMessaging()
+        const _messagingEngine = await context.getMessaging()
 
         setMessagingEngine(_messagingEngine)
         setMessagingEngineStatus("ready")
@@ -106,7 +105,7 @@ export function VeridaInboxProvider(props: VeridaInboxProviderProps) {
     return () => {
       messagingEngine?.offMessage(newMessageHandler)
     }
-  }, [isConnected, webUserInstanceRef, newMessageHandler, messagingEngine])
+  }, [context, newMessageHandler, messagingEngine])
 
   const contextValue: VeridaInboxContextType = useMemo(
     () => ({

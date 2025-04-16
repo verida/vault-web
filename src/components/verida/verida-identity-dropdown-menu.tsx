@@ -69,7 +69,7 @@ export function VeridaIdentityDropdownMenu(
   const router = useRouter()
 
   const { access } = useRestrictedAccess()
-  const { isConnected, did, disconnect } = useVerida()
+  const { status, did, disconnect } = useVerida()
   const { profile, isLoading } = useUserProfile()
 
   const { openForm: openUserFeedbackForm, isReady: isUserFeedbackReady } =
@@ -95,7 +95,7 @@ export function VeridaIdentityDropdownMenu(
     router.push(getProfilePageRoute())
   }, [router])
 
-  if (!isConnected && displayNotConnectedSkeleton) {
+  if (status !== "connected" && displayNotConnectedSkeleton) {
     return (
       <VeridaIdentityNotConnectedDropdownMenuButton className={className} />
     )
@@ -231,7 +231,7 @@ export function VeridaIdentityDropdownMenu(
         {!hideDisconnect ? (
           <IdentityDropdownMenuItem
             onClick={disconnect}
-            disabled={!isConnected}
+            disabled={status !== "connected"}
             className="text-destructive"
           >
             <Logout />

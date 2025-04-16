@@ -1,5 +1,6 @@
 "use client"
 
+import Image from "next/image"
 import { type ComponentProps, type ReactNode, useCallback } from "react"
 
 import { Button } from "@/components/ui/button"
@@ -24,24 +25,30 @@ export function VeridaConnectButton(props: VeridaConnectButtonProps) {
     ...buttonProps
   } = props
 
-  const { connect, isConnecting, isConnected } = useVerida()
+  const { connectLegacyAccount, status } = useVerida()
 
   const handleButtonClick = useCallback(() => {
-    if (isConnecting || isConnected) {
+    if (status === "connecting" || status === "connected") {
       return
     }
-    connect()
-  }, [connect, isConnecting, isConnected])
+    connectLegacyAccount()
+  }, [connectLegacyAccount, status])
 
   return (
     <Button
       variant={variant}
-      className={cn(className)}
+      className={cn("flex flex-row items-center gap-1", className)}
       onClick={handleButtonClick}
-      disabled={isConnecting}
+      disabled={status === "connecting"}
       {...buttonProps}
     >
-      {isConnecting ? connectingLabel : label}
+      <Image
+        src="/assets/verida-wallet-logo.svg"
+        alt="Verida Wallet"
+        width={24}
+        height={24}
+      />
+      <span>{status === "connecting" ? connectingLabel : label}</span>
     </Button>
   )
 }

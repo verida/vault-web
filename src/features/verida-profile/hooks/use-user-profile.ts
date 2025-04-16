@@ -1,20 +1,17 @@
-import { useMemo } from "react"
-
 import { useVeridaProfile } from "@/features/verida-profile/hooks/use-verida-profile"
 import { useVerida } from "@/features/verida/hooks/use-verida"
 
 export function useUserProfile() {
-  const { did } = useVerida()
+  const { did, status } = useVerida()
 
-  const { profile, ...query } = useVeridaProfile({ did })
-
-  const resolvedProfile = useMemo(() => {
-    return did ? profile : undefined
-  }, [did, profile])
+  const { profile, ...query } = useVeridaProfile({
+    did,
+    enabled: status === "connected",
+  })
 
   return {
     did,
-    profile: resolvedProfile,
+    profile,
     ...query,
   }
 }

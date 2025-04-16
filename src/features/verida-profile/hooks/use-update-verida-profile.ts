@@ -4,6 +4,7 @@ import { useToast } from "@/features/toasts/use-toast"
 import { VeridaProfileQueryKeys } from "@/features/verida-profile/queries"
 import type { VeridaProfile } from "@/features/verida-profile/types"
 import { updateVeridaProfile } from "@/features/verida-profile/utils"
+import { VeridaNotConnectedError } from "@/features/verida/errors/verida-not-connected-error"
 import { useVerida } from "@/features/verida/hooks/use-verida"
 
 type UpdateProfileArgs = {
@@ -24,7 +25,7 @@ export function useUpdateVeridaProfile(
   const { toast } = useToast()
 
   const queryClient = useQueryClient()
-  const { did, webUserInstanceRef } = useVerida()
+  const { did, context } = useVerida()
 
   const { mutate, mutateAsync, ...mutation } = useMutation<
     VeridaProfile,
@@ -33,12 +34,12 @@ export function useUpdateVeridaProfile(
     UpdateProfileMutationContext
   >({
     mutationFn: async ({ profileToSave }) => {
-      if (!did) {
-        throw new Error("DID is required to update profile")
+      if (!did || !context) {
+        throw new VeridaNotConnectedError()
       }
 
       return updateVeridaProfile({
-        webUserInstance: webUserInstanceRef.current,
+        context,
         profileToSave,
       })
     },

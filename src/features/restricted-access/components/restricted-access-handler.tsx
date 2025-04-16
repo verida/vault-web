@@ -13,10 +13,10 @@ export interface RestrictedAccessHandlerProps {
 export function RestrictedAccessHandler(props: RestrictedAccessHandlerProps) {
   const { children } = props
 
-  const { isConnected } = useVerida()
+  const { status } = useVerida()
   const { access, isLoading, isError } = useRestrictedAccess()
 
-  if (access === "allowed" || !isConnected) {
+  if (access === "allowed" || status !== "connected") {
     return <>{children}</>
   }
 

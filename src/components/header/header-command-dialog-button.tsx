@@ -24,7 +24,7 @@ export function HeaderCommandDialogButton(
   const { variant = "ghost", size = "sm", className, ...buttonProps } = props
 
   const { access } = useRestrictedAccess()
-  const { isConnected } = useVerida()
+  const { status } = useVerida()
 
   const { openCommand } = useCommand()
 
@@ -40,7 +40,7 @@ export function HeaderCommandDialogButton(
   if (
     !featureFlags.commandDialog.enabled ||
     access !== "allowed" ||
-    !isConnected
+    status !== "connected"
   ) {
     return null
   }
