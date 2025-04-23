@@ -1,3 +1,13 @@
+# 1.0.1 (2025-04-23)
+
+## Bug Fixes
+
+- Fix ThirdWeb RPC usage
+
+## Misc
+
+- Update dependencies
+
 # 1.0.0 (2025-04-16)
 
 First official release
