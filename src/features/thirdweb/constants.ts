@@ -1,6 +1,6 @@
 import { BlockchainAnchor } from "@verida/types"
 import { DefaultNetworkBlockchainAnchors } from "@verida/vda-common"
-import { polygon, polygonAmoy } from "thirdweb/chains"
+import { defineChain, polygon, polygonAmoy } from "thirdweb/chains"
 import { createWallet, inAppWallet } from "thirdweb/wallets"
 
 import { commonConfig } from "@/config/common"
@@ -8,8 +8,13 @@ import { commonConfig } from "@/config/common"
 const VERIDA_BLOCKCHAIN_ANCHOR: BlockchainAnchor =
   DefaultNetworkBlockchainAnchors[commonConfig.VERIDA_NETWORK]
 
-export const THIRDWEB_CHAIN =
+const CHAIN_CONFIG =
   VERIDA_BLOCKCHAIN_ANCHOR === BlockchainAnchor.POLPOS ? polygon : polygonAmoy
+
+export const THIRDWEB_CHAIN = defineChain({
+  ...CHAIN_CONFIG,
+  rpc: commonConfig.VERIDA_RPC_URL || CHAIN_CONFIG.rpc,
+})
 
 export const THIRDWEB_WALLETS_OPTIONS = [
   inAppWallet({
