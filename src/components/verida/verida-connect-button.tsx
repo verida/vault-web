@@ -4,8 +4,11 @@ import Image from "next/image"
 import { type ComponentProps, type ReactNode, useCallback } from "react"
 
 import { Button } from "@/components/ui/button"
+import { Logger } from "@/features/telemetry/logger"
 import { useVerida } from "@/features/verida/hooks/use-verida"
 import { cn } from "@/styles/utils"
+
+const logger = Logger.create("verida")
 
 export interface VeridaConnectButtonProps
   extends Omit<
@@ -31,7 +34,7 @@ export function VeridaConnectButton(props: VeridaConnectButtonProps) {
     if (status === "connecting" || status === "connected") {
       return
     }
-    connectLegacyAccount()
+    connectLegacyAccount().catch(logger.error)
   }, [connectLegacyAccount, status])
 
   return (
