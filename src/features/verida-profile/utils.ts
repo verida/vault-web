@@ -6,7 +6,10 @@ import { Logger } from "@/features/telemetry/logger"
 import { VERIDA_PROFILE_DB_NAME } from "@/features/verida-profile/constants"
 import { VeridaProfileApiResponseSchema } from "@/features/verida-profile/schemas"
 import type { VeridaProfile } from "@/features/verida-profile/types"
-import { VERIDA_VAULT_CONTEXT_NAME } from "@/features/verida/constants"
+import {
+  VERIDA_RPC_URL,
+  VERIDA_VAULT_CONTEXT_NAME,
+} from "@/features/verida/constants"
 import { isValidVeridaDid } from "@/features/verida/utils"
 
 const logger = Logger.create("verida-profile")
@@ -128,7 +131,7 @@ export async function getAnyVeridaProfile({
       network: commonConfig.VERIDA_NETWORK,
       didClientConfig: {
         network: commonConfig.VERIDA_NETWORK,
-        rpcUrl: commonConfig.VERIDA_RPC_URL,
+        rpcUrl: VERIDA_RPC_URL,
       },
     })
 
