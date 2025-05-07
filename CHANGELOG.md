@@ -1,3 +1,9 @@
+# 1.0.3 (2025-05-07)
+
+## Bug Fixes
+
+- Fix RPC issue for account creation
+
 # 1.0.2 (2025-05-05)
 
 ## Bug Fixes

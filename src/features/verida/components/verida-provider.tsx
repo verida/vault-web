@@ -2,6 +2,7 @@
 
 import { useQueryClient } from "@tanstack/react-query"
 import type { Account } from "@verida/account"
+import { AutoAccount } from "@verida/account-node"
 import { VaultAccount, hasSession } from "@verida/account-web-vault"
 import { Client, type Context } from "@verida/client-ts"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
@@ -25,7 +26,10 @@ import { useOnboardingEntryQueryState } from "@/features/onboarding/hooks/use-on
 import { getOnboardingPageRoute } from "@/features/routes/utils"
 import { Logger } from "@/features/telemetry/logger"
 import { Sentry } from "@/features/telemetry/sentry"
-import { VERIDA_VAULT_CONTEXT_NAME } from "@/features/verida/constants"
+import {
+  VERIDA_RPC_URL,
+  VERIDA_VAULT_CONTEXT_NAME,
+} from "@/features/verida/constants"
 import {
   VeridaContext,
   type VeridaContextType,
@@ -131,22 +135,33 @@ export function VeridaProvider(props: VeridaProviderProps) {
           network: commonConfig.VERIDA_NETWORK,
           didClientConfig: {
             network: commonConfig.VERIDA_NETWORK,
-            rpcUrl: commonConfig.VERIDA_RPC_URL,
+            rpcUrl: VERIDA_RPC_URL,
           },
+        })
+
+        logger.debug("Connecting account to client", {
+          accountToConnect,
         })
 
         await _client.connect(accountToConnect)
 
         let _context: Context | undefined
         try {
+          logger.debug("Opening context")
           _context = (await _client.openContext(
             VERIDA_VAULT_CONTEXT_NAME,
             true
           )) as Context | undefined
         } catch (error) {
-          logger.warn(
-            "Failed to open context. User may have cancelled the connection."
-          )
+          if (accountToConnect instanceof AutoAccount) {
+            clearStates()
+            throw new Error("Failed to open context", { cause: error })
+          } else {
+            logger.warn(
+              "Failed to open context. User may have cancelled the connection."
+            )
+            logger.error(error)
+          }
         }
 
         if (!_context) {
@@ -154,6 +169,8 @@ export function VeridaProvider(props: VeridaProviderProps) {
           clearStates()
           return
         }
+
+        logger.debug("Context opened successfully")
 
         const _did = await accountToConnect.did()
 

@@ -18,6 +18,7 @@ import { THIRDWEB_CHAIN } from "@/features/thirdweb/constants"
 import { getEthersSignerForAccount } from "@/features/thirdweb/utils"
 import {
   VERIDA_DID_REGEXP,
+  VERIDA_RPC_URL,
   VERIDA_VAULT_CONTEXT_NAME,
 } from "@/features/verida/constants"
 
@@ -34,7 +35,7 @@ export async function checkAccountExists(did: string) {
     // Fetching DID document
     const didClient = new DIDClient({
       network: commonConfig.VERIDA_NETWORK,
-      rpcUrl: commonConfig.VERIDA_RPC_URL,
+      rpcUrl: VERIDA_RPC_URL,
     })
     const didDocument = await didClient.get(did)
 
@@ -100,10 +101,7 @@ export async function buildVeridaAccountFromThirdWeb(
     THIRDWEB_CHAIN,
     sponsoringAccount
   )
-  const didClientConfig = buildDidClientConfig(
-    signer,
-    commonConfig.VERIDA_RPC_URL
-  )
+  const didClientConfig = buildDidClientConfig(signer, VERIDA_RPC_URL)
 
   const account = new AutoAccount({
     privateKey: veridaAccountControllerWallet.privateKey,
