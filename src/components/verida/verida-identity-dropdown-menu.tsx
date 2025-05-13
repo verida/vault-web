@@ -26,6 +26,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { Typography } from "@/components/ui/typography"
+import { commonConfig } from "@/config/common"
 import { featureFlags } from "@/config/features"
 import { version } from "@/config/version"
 import { APP_NAME, TERMS_AND_CONDITIONS_URL } from "@/constants/app"
@@ -240,7 +241,7 @@ export function VeridaIdentityDropdownMenu(
         ) : null}
         <DropdownMenuSeparator />
         <DropdownMenuLabel className="flex flex-col items-center gap-0 rounded-none text-center text-xs font-normal">
-          <span>{`${APP_NAME} ${version}`}</span>
+          <span>{`${APP_NAME} ${version}${commonConfig.IS_BETA ? " (Beta)" : ""}`}</span>
           <Link
             href={TERMS_AND_CONDITIONS_URL}
             target="_blank"

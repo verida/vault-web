@@ -5,6 +5,10 @@ import { LLM_MODELS, LLM_PROVIDERS } from "@/features/assistants/schemas"
 
 export const CommonConfigSchema = z.object({
   BASE_URL: z.string().url(),
+  IS_BETA: z
+    .string()
+    .optional()
+    .transform((value) => value === "true"),
   DEV_MODE: z
     .string()
     .optional()
