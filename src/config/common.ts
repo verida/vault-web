@@ -6,6 +6,7 @@ const commonConfigCheckResult = CommonConfigSchema.safeParse({
   // and replaced at build time only if they are explicitly used somewhere in
   // the code(like here). It also allows us to have shorter names.
   BASE_URL: process.env.NEXT_PUBLIC_BASE_URL,
+  IS_BETA: process.env.NEXT_PUBLIC_IS_BETA,
   DEV_MODE: process.env.NEXT_PUBLIC_DEV_MODE,
   PLAUSIBLE_DOMAIN: process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN,
   LOG_LEVEL: process.env.NEXT_PUBLIC_LOG_LEVEL,

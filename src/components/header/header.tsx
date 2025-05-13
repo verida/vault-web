@@ -4,7 +4,9 @@ import { type ComponentProps } from "react"
 import { HeaderCommandDialogButton } from "@/components/header/header-command-dialog-button"
 import { HeaderInboxButton } from "@/components/header/header-inbox-button"
 import { HeaderNavBar, HeaderNavMenu } from "@/components/header/header-nav"
+import { Badge } from "@/components/ui/badge"
 import { VeridaIdentityDropdownMenu } from "@/components/verida/verida-identity-dropdown-menu"
+import { commonConfig } from "@/config/common"
 import { cn } from "@/styles/utils"
 
 export interface HeaderProps
@@ -24,13 +26,21 @@ export function Header(props: HeaderProps) {
             <div className="flex flex-row items-center md:hidden">
               <HeaderNavMenu className="-mx-2" />
             </div>
-            <div className="flex shrink-0 flex-row items-center">
+            <div className="relative flex shrink-0 flex-row items-center">
               <Image
                 src="/logo.svg"
                 alt="Verida Vault Logo"
                 height={32}
                 width={95}
               />
+              {commonConfig.IS_BETA ? (
+                <Badge
+                  variant="primary-inverse"
+                  className="absolute -right-4 bottom-3 -rotate-12 px-1 py-0 font-normal"
+                >
+                  Beta
+                </Badge>
+              ) : null}
             </div>
             <HeaderNavBar className="hidden md:flex" />
           </div>
