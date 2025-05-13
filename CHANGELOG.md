@@ -1,3 +1,13 @@
+# 1.1.0 (2025-05-13)
+
+## Enhancements
+
+- Add beta badge in header
+
+## Misc
+
+- Update dependencies
+
 # 1.0.3 (2025-05-07)
 
 ## Bug Fixes
